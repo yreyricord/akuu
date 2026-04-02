@@ -1,0 +1,43 @@
+[
+  {
+    "id": "musee-shapishiko",
+    "titre": "Musée Shapishiko",
+    "statut": "en_cours",
+    "annee_debut": 2023,
+    "description": "Construction d'un espace culturel à Puerto Miguel pour préserver et valoriser la culture Kukama.",
+    "image": "/images/musee/galerie-musee-1.jpg",
+    "lien": "/musee-shapishiko"
+  },
+  {
+    "id": "casa-akuu",
+    "titre": "Casa AKUU",
+    "statut": "realise",
+    "annee_debut": 2017,
+    "description": "Maison communautaire pour accueillir les bénévoles et mener les activités de l'association.",
+    "image": "/images/casa-akuu.jpg"
+  },
+  {
+    "id": "cours-anglais",
+    "titre": "Cours d'anglais",
+    "statut": "en_preparation",
+    "annee_debut": 2017,
+    "description": "Enseignement de l'anglais aux habitants de Puerto Miguel pour favoriser le développement économique. Suspendu depuis le COVID, faute de moyens financiers — relance en préparation.",
+    "image": "/images/cours-anglais.jpg"
+  },
+  {
+    "id": "hydrama",
+    "titre": "HYDRAMA — Énergie propre",
+    "statut": "en_preparation",
+    "annee_debut": 2018,
+    "description": "Test d'une turbine hydroélectrique dans la rivière amazonienne pour Vista Alegre. Suspendu depuis le COVID, faute de moyens financiers — relance en préparation.",
+    "image": "/images/hero-projets.jpg"
+  },
+  {
+    "id": "sensibilisation-climat",
+    "titre": "AKUUVision",
+    "statut": "en_cours",
+    "annee_debut": 2019,
+    "description": "Sensibilisation aux enjeux climatiques et amazoniens à travers AKUUVision : ateliers Fresque du Climat, Planet'AKUU, Forever le Jeu — en France et à Puerto Miguel.",
+    "image": "/images/sensibilisation.jpg"
+  }
+]

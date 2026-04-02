@@ -1,0 +1,236 @@
+<template>
+  <div class="relative" ref="containerRef">
+
+    <!-- SVG chemin animé — desktop uniquement -->
+    <svg
+      v-if="svgReady"
+      class="hidden md:block absolute top-0 left-0 pointer-events-none overflow-visible"
+      :width="svgWidth"
+      :height="svgHeight"
+    >
+      <!-- Guide en pointillés gris -->
+      <path :d="pathD" fill="none" stroke="#3A4040" stroke-width="1.5" stroke-opacity="0.1" stroke-dasharray="6 5" />
+      <!-- Chemin animé -->
+      <path
+        ref="pathRef"
+        :d="pathD"
+        fill="none"
+        stroke="url(#museeGradient)"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        :stroke-dasharray="pathLength"
+        :stroke-dashoffset="dashOffset"
+      />
+      <defs>
+        <linearGradient id="museeGradient" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2D6915" />
+          <stop offset="70%" stop-color="#04488F" />
+          <stop offset="100%" stop-color="#A6C639" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <!-- Étapes -->
+    <div
+      v-for="(step, index) in steps"
+      :key="index"
+      class="relative grid md:grid-cols-2 gap-0"
+    >
+      <!-- Colonne contenu -->
+      <div :class="['relative pb-10', index % 2 === 1 ? 'md:order-2 md:pl-16' : 'md:order-1 md:pr-16']">
+
+        <!-- Point de connexion -->
+        <div
+          :ref="(el) => setDotRef(el, index)"
+          class="hidden md:block absolute top-5 z-10 rounded-full ring-4 ring-white shadow-lg transition-all duration-500"
+          :class="[
+            index % 2 === 1 ? '-left-[2.6rem]' : '-right-[2.6rem]',
+            step.status === 'pending' ? 'w-4 h-4 mt-0.5 border-2 border-dashed bg-white' : activeIndex >= index ? 'w-5 h-5' : 'w-3.5 h-3.5 mt-[3px]'
+          ]"
+          :style="step.status === 'pending'
+            ? { borderColor: stepColor(step.status) }
+            : { backgroundColor: stepColor(step.status) }"
+        />
+
+        <!-- Card -->
+        <div
+          class="rounded-2xl p-5 border transition-all duration-500"
+          :class="[
+            step.status === 'pending'
+              ? 'bg-white/60 border-dashed border-night/20 shadow-none'
+              : activeIndex === index
+                ? 'bg-white shadow-xl border-forest/20 -translate-y-0.5'
+                : 'bg-white shadow-sm border-night/5 hover:shadow-md hover:border-forest/15'
+          ]"
+        >
+          <div class="flex items-center gap-2 mb-2 flex-wrap">
+            <!-- Badge statut -->
+            <span
+              class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider"
+              :style="{ backgroundColor: stepColor(step.status) + '18', color: stepColor(step.status) }"
+            >
+              <span v-if="step.status === 'in_progress'" class="w-1.5 h-1.5 rounded-full animate-pulse" :style="{ backgroundColor: stepColor(step.status) }" />
+              {{ stepLabel(step.status) }}
+            </span>
+            <!-- Badge "À venir" pour pending -->
+            <span v-if="step.status === 'pending'" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-leaf/10 text-leaf border border-leaf/25 animate-pulse">
+              <svg class="w-2 h-2" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
+              À venir
+            </span>
+          </div>
+          <h3
+            class="font-serif font-bold text-base leading-snug transition-colors duration-300"
+            :class="step.status === 'pending' ? 'text-night/45 italic' : activeIndex === index ? 'text-forest' : 'text-night'"
+          >
+            {{ step.label }}
+          </h3>
+        </div>
+      </div>
+
+      <!-- Colonne année -->
+      <div :class="['hidden md:flex items-start pb-10', index % 2 === 1 ? 'md:order-1 md:justify-end md:pr-16' : 'md:order-2 md:justify-start md:pl-16']">
+        <div class="pt-1 select-none">
+          <span
+            class="block font-serif font-black leading-none transition-all duration-500"
+            :class="step.year.length > 4 ? 'text-3xl' : 'text-5xl'"
+            :style="{ color: activeIndex >= index ? stepColor(step.status) : '#3A404020' }"
+          >
+            {{ step.year }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Mobile -->
+      <div class="md:hidden col-span-2 pb-8 pl-8 relative">
+        <div class="absolute left-0 top-0 bottom-0 w-0.5 transition-colors duration-500"
+          :style="{ backgroundColor: activeIndex >= index ? stepColor(step.status) : '#3A404015' }" />
+        <div class="absolute top-4 left-0 rounded-full ring-2 ring-white -translate-x-[5px] transition-all duration-500"
+          :class="activeIndex >= index ? 'w-3 h-3' : 'w-2 h-2'"
+          :style="{ backgroundColor: stepColor(step.status) }" />
+        <div class="rounded-2xl p-4 border"
+          :class="step.status === 'pending' ? 'bg-white/60 border-dashed border-night/20' : 'bg-white shadow-sm border-night/5'">
+          <span class="text-xl font-serif font-black block mb-2 transition-colors duration-500"
+            :style="{ color: activeIndex >= index ? stepColor(step.status) : '#3A404040' }">
+            {{ step.year }}
+          </span>
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider mb-2"
+            :style="{ backgroundColor: stepColor(step.status) + '18', color: stepColor(step.status) }">
+            {{ stepLabel(step.status) }}
+          </span>
+          <p class="text-sm font-medium leading-snug"
+            :class="step.status === 'pending' ? 'text-night/40 italic' : 'text-night'">
+            {{ step.label }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+
+const props = defineProps({
+  steps: { type: Array, required: true }
+})
+
+const containerRef = ref(null)
+const pathRef = ref(null)
+const dotElements = ref([])
+const pathD = ref('')
+const pathLength = ref(2000)
+const dashOffset = ref(2000)
+const svgWidth = ref(0)
+const svgHeight = ref(0)
+const svgReady = ref(false)
+const activeIndex = ref(-1)
+
+function setDotRef(el, index) {
+  if (el) dotElements.value[index] = el
+}
+
+function stepColor(status) {
+  if (status === 'done') return '#2D6915'
+  if (status === 'in_progress') return '#04488F'
+  return '#A6C639'
+}
+
+function stepLabel(status) {
+  if (status === 'done') return 'Réalisé'
+  if (status === 'in_progress') return 'En cours'
+  return 'Prévu'
+}
+
+function buildPath() {
+  const container = containerRef.value
+  if (!container) return
+
+  const containerRect = container.getBoundingClientRect()
+  svgWidth.value = containerRect.width
+  svgHeight.value = containerRect.height
+
+  const points = dotElements.value
+    .map(dot => {
+      if (!dot) return null
+      const r = dot.getBoundingClientRect()
+      return { x: containerRect.width / 2, y: r.top - containerRect.top + r.height / 2 }
+    })
+    .filter(Boolean)
+
+  if (points.length < 2) return
+
+  let d = `M ${points[0].x} ${points[0].y}`
+  for (let i = 1; i < points.length; i++) {
+    const p = points[i - 1]
+    const c = points[i]
+    const mid = (p.y + c.y) / 2
+    const wave = (i % 2 === 0) ? 50 : -50
+    d += ` C ${p.x + wave} ${mid - 20}, ${c.x - wave} ${mid + 20}, ${c.x} ${c.y}`
+  }
+
+  pathD.value = d
+  svgReady.value = true
+
+  nextTick(() => {
+    if (pathRef.value) {
+      const len = pathRef.value.getTotalLength()
+      pathLength.value = len
+      dashOffset.value = len
+      handleScroll()
+    }
+  })
+}
+
+function handleScroll() {
+  const container = containerRef.value
+  if (!container || !pathLength.value) return
+
+  const rect = container.getBoundingClientRect()
+  const wh = window.innerHeight
+  const scrolled = wh * 0.55 - rect.top
+  const progress = Math.max(0, Math.min(1, scrolled / rect.height))
+
+  dashOffset.value = pathLength.value * (1 - progress)
+
+  let newActive = -1
+  dotElements.value.forEach((dot, i) => {
+    if (!dot) return
+    if (dot.getBoundingClientRect().top < wh * 0.6) newActive = i
+  })
+  activeIndex.value = newActive
+}
+
+let resizeObs = null
+onMounted(() => {
+  nextTick(() => {
+    buildPath()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    resizeObs = new ResizeObserver(() => buildPath())
+    if (containerRef.value) resizeObs.observe(containerRef.value)
+  })
+})
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+  if (resizeObs) resizeObs.disconnect()
+})
+</script>

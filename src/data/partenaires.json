@@ -1,0 +1,17 @@
+[
+  { "nom": "E&D", "logo": "/images/partenaires/ed.png", "url": "https://www.engagees-determinees.org/" },
+  { "nom": "FONJEP", "logo": "/images/partenaires/fonjep.png", "url": "https://www.fonjep.org" },
+  { "nom": "France Volontaires", "logo": "/images/partenaires/france-volontaires.png", "url": "https://www.france-volontaires.org" },
+  { "nom": "AIME ONG", "logo": "/images/partenaires/aime.png", "url": "https://aime-ong.org/" },
+  { "nom": "ICAM", "logo": "/images/partenaires/icam.png", "url": "https://www.icam.fr" },
+  { "nom": "HelloAsso", "logo": "/images/partenaires/helloasso.png", "url": "https://www.helloasso.com" },
+  { "nom": "WindAid", "logo": "/images/partenaires/windaid.png", "url": "https://www.windaid.org" },
+  { "nom": "RESES", "logo": "/images/partenaires/RESES.png", "url": "https://le-reses.org" },
+  { "nom": "UGA", "logo": "/images/partenaires/UGA.png", "url": "https://www.univ-grenoble-alpes.fr" },
+  { "nom": "FNH", "logo": "/images/partenaires/fnh.png", "url": "https://www.fnh.org" },
+  { "nom": "INP", "logo": "/images/partenaires/inp.png", "url": "https://www.grenoble-inp.fr" },
+  { "nom": "PCM Cultura", "logo": "/images/partenaires/PCM-Cultura.png", "url": "https://www.gob.pe/cultura" },
+  { "nom": "FAVER", "logo": "/images/partenaires/faver.png", "url": "https://www.fondofaver.org/" },
+  { "nom": "IDEX", "logo": "/images/partenaires/idex.png", "url": "https://www.univ-grenoble-alpes.fr/universite/ambition-et-strategie/l-initiative-d-excellence-idex/" },
+  { "nom": "ASSHUME", "logo": "/images/partenaires/asshume.png", "url": "https://asshume.wixsite.com/monsite" }
+]

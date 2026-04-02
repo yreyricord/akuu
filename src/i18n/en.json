@@ -1,0 +1,196 @@
+{
+  "nav": {
+    "home": "Home",
+    "association": "About us",
+    "projets": "Our projects",
+    "musee": "Shapishiko Museum",
+    "volontaires": "Volunteer",
+    "soutenir": "Support us",
+    "contact": "Contact"
+  },
+  "hero": {
+    "tagline": "AKUU TOGETHER — Protect what's alive",
+    "tagline_badge": "AKUU TOGETHER",
+    "tagline_line1": "Protect",
+    "tagline_line2": "what's alive",
+    "subtitle": "In the Amazon and in France, AKUU connects volunteers and local communities around concrete solidarity projects.",
+    "cta_projets": "Discover our projects",
+    "cta_don": "Donate"
+  },
+  "stats": {
+    "founded": "Year founded",
+    "years": "Years of action",
+    "village": "Villages supported",
+    "volunteers": "Volunteers mobilized"
+  },
+  "mission": {
+    "title": "Our mission",
+    "text": "AKUU works for sustainable, solidarity-based development that respects Amazonian populations, placing local cooperation, knowledge sharing and environmental protection at the heart of its actions.",
+    "cta": "Learn more"
+  },
+  "featured_project": {
+    "title": "Featured project",
+    "subtitle": "Shapishiko Museum",
+    "description": "A cultural space in the heart of the Amazon to preserve and promote Kukama culture.",
+    "cta": "Discover the project"
+  },
+  "donation": {
+    "title": "Support our actions",
+    "text": "Every donation directly contributes to the sustainable development of Puerto Miguel village and the preservation of Kukama culture.",
+    "cta": "Make a donation",
+    "tax_info": "66% of your donation is tax-deductible"
+  },
+  "social": {
+    "title": "Follow us",
+    "subtitle": "Follow our adventures and projects in real time on social media"
+  },
+  "partners": {
+    "title": "Our partners",
+    "subtitle": "They trust us and support our projects",
+    "trusted": "They trust us"
+  },
+  "association": {
+    "hero_title": "The AKUU Association",
+    "hero_subtitle": "Since 2016, serving Amazonian communities",
+    "who_title": "Who are we?",
+    "who_text": "AKUU is a French non-profit (loi 1901), founded on November 23, 2016. It carries out field missions in the Peruvian Amazon — mainly in Puerto Miguel — and conducts awareness campaigns in the home countries of its volunteers.",
+    "quote": "AKUU is a project I believe in with all my strength. AKUU reminds me of my connection with nature, with traditions. This word means the sharing of energies, the respect for the forest, its fauna, its flora...",
+    "quote_author": "Marlon Diaz, co-founder",
+    "values_title": "Our values",
+    "values": {
+      "durable": { "title": "Sustainable development", "text": "Promoting solutions that respect the environment and local resources." },
+      "solidarite": { "title": "International solidarity", "text": "Building bridges between cultures and fostering mutual aid between peoples." },
+      "culture": { "title": "Respect for local cultures", "text": "Valuing and preserving the ancestral knowledge of Kukama communities." },
+      "savoirs": { "title": "Knowledge sharing", "text": "Sharing knowledge to strengthen community autonomy." },
+      "environnement": { "title": "Environmental protection", "text": "Taking concrete action to preserve the Amazon rainforest." },
+      "echanges": { "title": "Intercultural exchanges", "text": "Fostering mutual understanding through sharing and meeting." }
+    },
+    "odd_title": "Contribution to Sustainable Development Goals",
+    "odd_subtitle": "AKUU's actions are directly aligned with the United Nations 2030 Agenda. Each of our projects contributes to at least one SDG.",
+    "history_title": "Our history",
+    "team_title": "The team",
+    "legal_title": "Legal information",
+    "legal": {
+      "siret": "SIRET: 831 603 402 00015",
+      "rna": "RNA: W061008697",
+      "siege": "Headquarters: 889 Chemin de Jylloue, 06 250 Mougins, France",
+      "contact": "Contact: contact{'@'}akuu.org"
+    }
+  },
+  "projets": {
+    "hero_title": "Our projects",
+    "hero_subtitle": "Concrete actions for a sustainable future in the Amazon",
+    "filter_all": "All",
+    "filter_en_cours": "Ongoing",
+    "filter_realise": "Completed",
+    "filter_en_preparation": "In preparation",
+    "status": {
+      "en_cours": "Ongoing",
+      "realise": "Completed",
+      "en_preparation": "In preparation"
+    },
+    "since": "Since",
+    "discover": "Discover the project"
+  },
+  "musee": {
+    "hero_title": "Shapishiko Museum",
+    "hero_subtitle": "A cultural space to preserve and promote Kukama culture",
+    "description_title": "The project",
+    "description_text": "The Shapishiko Museum is AKUU's flagship project: building a cultural space in the heart of Puerto Miguel village, in the Peruvian Amazon. This museum will be dedicated to preserving and promoting Kukama culture, the indigenous people of the region. It will host exhibitions of local art, workshops for sharing ancestral knowledge, and serve as a meeting place between local communities and visitors.",
+    "progress_title": "Project progress",
+    "gallery_title": "Photo gallery",
+    "support_title": "Support this project",
+    "support_text": "Contribute to the construction of the Shapishiko Museum and help us preserve Kukama culture for future generations."
+  },
+  "volontaires": {
+    "hero_title": "Become a volunteer",
+    "hero_subtitle": "Live a unique experience in the heart of the Peruvian Amazon",
+    "why_title": "Why go with AKUU?",
+    "why_items": {
+      "immersion": { "title": "Real responsibilities", "text": "AKUU is a human-scale association. You're not a number — you respond to a need expressed directly by the community and own your mission from start to finish." },
+      "impact": { "title": "Act for the Amazon", "text": "The people who live in the Amazon forest are its greatest protectors. Working with them is the most concrete and honest way to contribute to its preservation." },
+      "skills": { "title": "Learn, don't teach", "text": "Kukama communities hold knowledge found nowhere else. Every former volunteer comes back with a different understanding of time, life and community." },
+      "community": { "title": "A mission that matters", "text": "No boxes to tick, no photo opportunities. A useful presence, within a lasting project, alongside people who have chosen to welcome you." }
+    },
+    "process_title": "How does it work?",
+    "process_steps": {
+      "step1": { "title": "Application", "text": "Send your application via our contact form." },
+      "step2": { "title": "Interview", "text": "Discussion with the team to validate your motivation and skills." },
+      "step3": { "title": "Preparation", "text": "Pre-departure training and logistical support." },
+      "step4": { "title": "Mission", "text": "Departure for Puerto Miguel and immersion in projects." }
+    },
+    "missions_title": "Types of missions",
+    "missions": {
+      "civique": { "title": "Civic service", "text": "Via AIME ONG / France Volontaires. 6 to 12 months." },
+      "benevole": { "title": "Long-term volunteering", "text": "3 to 6 month field mission." },
+      "stage": { "title": "Internship", "text": "Supervised internship of 2 to 6 months." }
+    },
+    "testimonials_title": "They volunteered with AKUU",
+    "cta_title": "Ready to go?",
+    "cta_text": "Contact us to learn more about available missions.",
+    "cta_button": "Contact us"
+  },
+  "soutien": {
+    "label": "Take action",
+    "hero_line1": "Your donation goes",
+    "hero_line2": "directly",
+    "hero_line3": "into our projects",
+    "hero_text1": "All of AKUU's running costs — banking, logistics, website — are covered by our volunteers and close supporters.",
+    "hero_text2_prefix": "Every euro you give funds ",
+    "hero_text2_highlight": "only our projects",
+    "hero_text2_suffix": ", starting with the Shapishiko Museum.",
+    "simulator_title": "Estimate your tax deduction",
+    "simulator_give": "I give",
+    "simulator_month": "month",
+    "simulator_annual": "Annual gift",
+    "simulator_reduction": "Tax saving",
+    "simulator_real": "Real cost",
+    "simulator_monthly_label": "That's a real cost of ",
+    "simulator_note": "66% tax deduction for French residents (art. 200 CGI)",
+    "widget_badge": "Monthly donation recommended · Cancel anytime · Automatic tax receipt",
+    "widget_secure": "Secure payment by HelloAsso · Zero fees on your donation",
+    "stat_terrain": "years on the ground",
+    "stat_beneficiaires": "direct beneficiaries",
+    "stat_benevoles": "volunteers mobilized",
+    "stat_impots": "tax-deductible",
+    "other_title": "Other ways to get involved",
+    "other_subtitle": "Beyond donating, join the AKUU adventure",
+    "recommended": "Recommended",
+    "adherer_title": "Become a member",
+    "adherer_text": "From €10/year, become a member, attend general assemblies and receive our activity reports.",
+    "adherer_cta": "Join now",
+    "benevole_title": "Go on a mission",
+    "benevole_text": "3 to 6 months in Puerto Miguel or in France for AKUUVision. Construction, education, culture — a unique human experience.",
+    "benevole_cta": "See missions",
+    "partenaire_title": "Institutional partnership",
+    "partenaire_text": "Company, institution, university — join us for a lasting and visible impact.",
+    "partenaire_cta": "Let's talk"
+  },
+  "contact": {
+    "hero_title": "Contact",
+    "hero_subtitle": "A question? Want to join us? Write to us!",
+    "name": "Your name",
+    "email": "Your email",
+    "subject": "Subject",
+    "subjects": {
+      "don": "Donation / partnership",
+      "volontaire": "Become a volunteer",
+      "presse": "Press / media",
+      "autre": "Other"
+    },
+    "message": "Your message",
+    "send": "Send",
+    "success": "Message sent! We will get back to you as soon as possible.",
+    "info_title": "Contact information",
+    "address": "889 Chemin de Jylloue, 06 250 Mougins, France",
+    "find_us": "Find us in Puerto Miguel"
+  },
+  "footer": {
+    "slogan": "In the Amazon and in France, AKUU connects volunteers and local communities around concrete solidarity projects.",
+    "nav_title": "Navigation",
+    "contact_title": "Contact",
+    "social_title": "Follow us",
+    "legal": "© {year} AKUU — French non-profit association (loi 1901)",
+    "don_cta": "Donate"
+  }
+}
