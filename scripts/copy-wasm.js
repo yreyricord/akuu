@@ -7,7 +7,7 @@ const wasmSrc = resolve(__dirname, '../node_modules/web-ifc')
 const wasmDest = resolve(__dirname, '../public/wasm')
 
 if (!existsSync(wasmSrc)) {
-  console.warn('⚠️  web-ifc not found in node_modules — skipping WASM copy')
+  console.warn('⚠️  web-ifc not found in node_modules, skipping WASM copy')
   process.exit(0)
 }
 
@@ -24,7 +24,7 @@ for (const file of files) {
     console.log(`✅ Copied ${file} → /public/wasm/`)
     copied++
   } else {
-    console.warn(`⚠️  ${file} not found in web-ifc — skipping`)
+    console.warn(`⚠️  ${file} not found in web-ifc, skipping`)
   }
 }
 

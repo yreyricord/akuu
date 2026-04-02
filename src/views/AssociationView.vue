@@ -24,8 +24,8 @@
               <p class="text-night/70 italic text-lg leading-relaxed mb-3">
                 "{{ $t('association.quote') }}"
               </p>
-              <cite class="text-forest font-semibold text-sm not-italic">
-                — {{ $t('association.quote_author') }}
+              <cite class="text-forest font-semibold text-sm not-italic block mt-1">
+                {{ $t('association.quote_author') }}
               </cite>
             </blockquote>
           </div>

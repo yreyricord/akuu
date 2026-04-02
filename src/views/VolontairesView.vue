@@ -92,7 +92,7 @@
               </div>
               <div>
                 <h4 class="font-serif font-bold text-night">{{ temoignage.prenom }}</h4>
-                <p class="text-xs text-night/40">{{ temoignage.mission }} — {{ temoignage.annee }}</p>
+                <p class="text-xs text-night/40">{{ temoignage.mission }}, {{ temoignage.annee }}</p>
               </div>
             </div>
             <blockquote class="text-night/60 text-sm leading-relaxed italic">

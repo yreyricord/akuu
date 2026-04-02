@@ -9,7 +9,7 @@
     "contact": "Contact"
   },
   "hero": {
-    "tagline": "AKUU TOGETHER — Protect what's alive",
+    "tagline": "AKUU TOGETHER. Protect what's alive",
     "tagline_badge": "AKUU TOGETHER",
     "tagline_line1": "Protect",
     "tagline_line2": "what's alive",
@@ -53,7 +53,7 @@
     "hero_title": "The AKUU Association",
     "hero_subtitle": "Since 2016, serving Amazonian communities",
     "who_title": "Who are we?",
-    "who_text": "AKUU is a French non-profit (loi 1901), founded on November 23, 2016. It carries out field missions in the Peruvian Amazon — mainly in Puerto Miguel — and conducts awareness campaigns in the home countries of its volunteers.",
+    "who_text": "AKUU is a French non-profit (loi 1901), founded on November 23, 2016. It carries out field missions in the Peruvian Amazon, mainly in Puerto Miguel, and runs awareness campaigns in the home countries of its volunteers.",
     "quote": "AKUU is a project I believe in with all my strength. AKUU reminds me of my connection with nature, with traditions. This word means the sharing of energies, the respect for the forest, its fauna, its flora...",
     "quote_author": "Marlon Diaz, co-founder",
     "values_title": "Our values",
@@ -97,17 +97,67 @@
     "hero_subtitle": "A cultural space to preserve and promote Kukama culture",
     "description_title": "The project",
     "description_text": "The Shapishiko Museum is AKUU's flagship project: building a cultural space in the heart of Puerto Miguel village, in the Peruvian Amazon. This museum will be dedicated to preserving and promoting Kukama culture, the indigenous people of the region. It will host exhibitions of local art, workshops for sharing ancestral knowledge, and serve as a meeting place between local communities and visitors.",
+    "plans_title": "Museum plans",
+    "plans_intro": "Site plan, architectural perspectives and the interactive ArchiCAD model. The section view of the spaces is shown higher on this page.",
     "progress_title": "Project progress",
+    "gallery_kicker": "In pictures",
     "gallery_title": "Photo gallery",
+    "gallery_subtitle": "The Shapishiko Museum build, from design to work on the ground.",
     "support_title": "Support this project",
-    "support_text": "Contribute to the construction of the Shapishiko Museum and help us preserve Kukama culture for future generations."
+    "support_text": "Contribute to the construction of the Shapishiko Museum and help us preserve Kukama culture for future generations.",
+    "coupe": {
+      "section_kicker": "Architecture",
+      "title": "Museum spaces",
+      "intro": "The section drawing stays on screen while you scroll: each level is introduced in sequence. You can also tap a zone on the plan or the numbered buttons.",
+      "scroll_hint": "Keep scrolling to explore all five spaces",
+      "levels_nav": "Quick access to levels",
+      "alt": "Architectural section of the Shapishiko Museum",
+      "spaces_legend": "Spaces and levels",
+      "zones": {
+        "kuruara": {
+          "etage": "Level 1, guardian of the second world",
+          "nom": "Sala Kuruara",
+          "nomKukama": "The depths of the river",
+          "description": "The Kuruara is a spirit being who rules the submerged second world in Kukama cosmology. It rises from the depths, beautiful pink dolphin, shifting lights, water sounds. An outstretched hand on the ceiling wraps you in the heart of the floodable forest.",
+          "tags": ["River & water", "Pink dolphin", "Kukama cosmology"]
+        },
+        "iwrati": {
+          "etage": "Level 2, guardian of the dense forest",
+          "nom": "Sala Iw Rati Tuwa",
+          "nomKukama": "The deep forest world",
+          "description": "The Iw Rati Tuwa is a mischievous spirit roaming the forest depths, luring travellers only to lead them astray. Follow its trail and slip into the skin of the jaguar, the tapir and other dwellers of the dense forest.",
+          "tags": ["Amazon wildlife", "Dense forest", "Mythology"]
+        },
+        "tsumi": {
+          "etage": "Level 3, between sky and earth",
+          "nom": "Sala Tsumi",
+          "nomKukama": "The forest canopy",
+          "description": "The Tsumi is the most powerful of Kukama healers, a spiritual traveller who can dive under water, rise into the air and take the shape of any animal. From the room at the top of the museum, look out over the forest canopy and follow the journeys of these sages whose art is fading today.",
+          "tags": ["Kukama spirituality", "Canopy", "Intangible heritage"]
+        },
+        "tsakarita": {
+          "etage": "Passage, the walkway",
+          "nom": "La Tsakarita",
+          "nomKukama": "The direct connection",
+          "description": "In Kukama, tsakarita means a shortcut, a direct link between two points. This walkway draws a straight line through time, plunging Kukama culture back into its pre-Columbian roots before reaching the exhibition space.",
+          "tags": ["Passage", "Time connection", "Living culture"]
+        },
+        "ikuachiru": {
+          "etage": "Ground floor, cultural space",
+          "nom": "La Ikuachiru",
+          "nomKukama": "Shared knowledge",
+          "description": "In Kukama, ikuachiru is the place where knowledge lives. The last stop on the visit, both gallery and workshop: its walls tell stories, its tables host creation. Kukama art and craft are lived and passed on. A shop offers work by local artisans.",
+          "tags": ["Gallery", "Workshop", "Kukama craft"]
+        }
+      }
+    }
   },
   "volontaires": {
     "hero_title": "Become a volunteer",
     "hero_subtitle": "Live a unique experience in the heart of the Peruvian Amazon",
     "why_title": "Why go with AKUU?",
     "why_items": {
-      "immersion": { "title": "Real responsibilities", "text": "AKUU is a human-scale association. You're not a number — you respond to a need expressed directly by the community and own your mission from start to finish." },
+      "immersion": { "title": "Real responsibilities", "text": "AKUU is a human-scale association. You're not a number: you respond to a need expressed directly by the community and own your mission from start to finish." },
       "impact": { "title": "Act for the Amazon", "text": "The people who live in the Amazon forest are its greatest protectors. Working with them is the most concrete and honest way to contribute to its preservation." },
       "skills": { "title": "Learn, don't teach", "text": "Kukama communities hold knowledge found nowhere else. Every former volunteer comes back with a different understanding of time, life and community." },
       "community": { "title": "A mission that matters", "text": "No boxes to tick, no photo opportunities. A useful presence, within a lasting project, alongside people who have chosen to welcome you." }
@@ -135,7 +185,7 @@
     "hero_line1": "Your donation goes",
     "hero_line2": "directly",
     "hero_line3": "into our projects",
-    "hero_text1": "All of AKUU's running costs — banking, logistics, website — are covered by our volunteers and close supporters.",
+    "hero_text1": "All of AKUU's running costs (banking, logistics, website) are covered by our volunteers and close supporters.",
     "hero_text2_prefix": "Every euro you give funds ",
     "hero_text2_highlight": "only our projects",
     "hero_text2_suffix": ", starting with the Shapishiko Museum.",
@@ -160,10 +210,10 @@
     "adherer_text": "From €10/year, become a member, attend general assemblies and receive our activity reports.",
     "adherer_cta": "Join now",
     "benevole_title": "Go on a mission",
-    "benevole_text": "3 to 6 months in Puerto Miguel or in France for AKUUVision. Construction, education, culture — a unique human experience.",
+    "benevole_text": "3 to 6 months in Puerto Miguel or in France for AKUUVision. Construction, education, culture: a unique human experience.",
     "benevole_cta": "See missions",
     "partenaire_title": "Institutional partnership",
-    "partenaire_text": "Company, institution, university — join us for a lasting and visible impact.",
+    "partenaire_text": "Company, institution, university: join us for a lasting and visible impact.",
     "partenaire_cta": "Let's talk"
   },
   "contact": {
@@ -190,7 +240,7 @@
     "nav_title": "Navigation",
     "contact_title": "Contact",
     "social_title": "Follow us",
-    "legal": "© {year} AKUU — French non-profit association (loi 1901)",
+    "legal": "© {year} AKUU, French non-profit association (loi 1901)",
     "don_cta": "Donate"
   }
 }

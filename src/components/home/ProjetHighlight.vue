@@ -9,7 +9,7 @@
         <div class="relative overflow-hidden rounded-2xl shadow-xl">
           <img
             src="/images/projet-highlight.jpg"
-            alt="Musée Shapishiko — Projet culturel à Puerto Miguel"
+            alt="Musée Shapishiko, projet culturel à Puerto Miguel"
             class="w-full h-[300px] md:h-[450px] object-cover transition-transform duration-700 group-hover:scale-105"
             loading="lazy"
           />

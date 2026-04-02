@@ -25,7 +25,7 @@
           <svg class="w-4 h-4 text-forest" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
           </svg>
-          <span class="text-sm font-semibold text-night/70">Croquis d'implantation — musée dans son environnement</span>
+          <span class="text-sm font-semibold text-night/70">Croquis d'implantation du musée dans son environnement</span>
         </div>
         <div class="p-4 bg-stone-50">
           <img
@@ -38,43 +38,63 @@
       </div>
     </div>
 
-    <!-- Coupe programmatique -->
-    <div v-show="activeTab === 'coupe'">
+    <!-- Perspectives, carrousel -->
+    <div v-show="activeTab === 'perspectives'">
       <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-night/5">
-        <div class="bg-night/3 px-6 py-3 border-b border-night/8 flex items-center gap-2">
-          <svg class="w-4 h-4 text-forest" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
-          </svg>
-          <span class="text-sm font-semibold text-night/70">Coupe programmatique — organisation intérieure</span>
+        <div class="bg-night/3 px-6 py-3 border-b border-night/8 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-forest" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+            </svg>
+            <span class="text-sm font-semibold text-night/70">Perspectives architecturales</span>
+          </div>
+          <span class="text-xs text-night/40 font-medium">{{ carouselIndex + 1 }} / {{ lumionImages.length }}</span>
         </div>
-        <div class="p-4 bg-stone-50">
-          <img
-            src="/images/musee/coupe_musee_progra.jpg"
-            alt="Coupe programmatique du Musée Shapishiko — organisation intérieure"
-            class="w-full h-auto rounded-xl object-contain"
-            style="max-height: 620px;"
-          />
-        </div>
-      </div>
-    </div>
 
-    <!-- Rendus Lumion -->
-    <div v-show="activeTab === 'lumion'">
-      <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-night/5">
-        <div class="bg-night/3 px-6 py-3 border-b border-night/8 flex items-center gap-2">
-          <svg class="w-4 h-4 text-forest" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
-          </svg>
-          <span class="text-sm font-semibold text-night/70">Rendus 3D — visualisations du projet</span>
+        <!-- Image principale -->
+        <div class="relative overflow-hidden bg-stone-100" style="height: 480px;">
+          <transition name="carousel-fade" mode="out-in">
+            <img
+              :key="carouselIndex"
+              :src="lumionImages[carouselIndex].src"
+              :alt="lumionImages[carouselIndex].alt"
+              class="w-full h-full object-contain"
+            />
+          </transition>
+
+          <!-- Flèches -->
+          <button
+            v-if="lumionImages.length > 1"
+            @click="carouselPrev"
+            class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-night/40 hover:bg-night/70 text-white flex items-center justify-center backdrop-blur transition"
+          >
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+            </svg>
+          </button>
+          <button
+            v-if="lumionImages.length > 1"
+            @click="carouselNext"
+            class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-night/40 hover:bg-night/70 text-white flex items-center justify-center backdrop-blur transition"
+          >
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
         </div>
-        <div class="p-4 bg-stone-50 grid grid-cols-1 gap-4">
-          <img
-            v-for="img in lumionImages"
-            :key="img.src"
-            :src="img.src"
-            :alt="img.alt"
-            class="w-full h-auto rounded-xl object-cover shadow-sm"
-          />
+
+        <!-- Miniatures -->
+        <div class="flex gap-2 p-3 bg-stone-50 overflow-x-auto">
+          <button
+            v-for="(img, i) in lumionImages"
+            :key="i"
+            @click="carouselIndex = i"
+            class="flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border-2 transition"
+            :class="carouselIndex === i ? 'border-forest' : 'border-transparent opacity-60 hover:opacity-100'"
+          >
+            <img :src="img.src" :alt="img.alt" class="w-full h-full object-cover" />
+          </button>
         </div>
       </div>
     </div>
@@ -175,19 +195,24 @@
             </button>
           </div>
 
+          <!-- Coordonnées au clic (debug) -->
+          <div v-if="clickCoords" class="absolute top-4 left-4 bg-black/70 text-leaf text-sm font-mono px-4 py-2.5 rounded-xl backdrop-blur z-20">
+            Clic : x={{ clickCoords.x }}, y={{ clickCoords.y }}, z={{ clickCoords.z }}
+          </div>
+
           <!-- Légende -->
           <div class="absolute bottom-4 left-4 text-white/35 text-xs space-y-0.5">
             <div class="flex items-center gap-1.5">
               <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5"/></svg>
-              Clic gauche — Rotation
+              Clic gauche, rotation
             </div>
             <div class="flex items-center gap-1.5">
               <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5"/></svg>
-              Clic droit — Déplacement
+              Clic droit, déplacement
             </div>
             <div class="flex items-center gap-1.5">
               <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5"/></svg>
-              Molette — Zoom
+              Molette, zoom
             </div>
           </div>
         </template>
@@ -203,31 +228,30 @@ import { ref, onUnmounted } from 'vue'
 
 const tabs = [
   {
+    id: '3d',
+    label: 'Modèle 3D',
+    icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />',
+  },
+  {
     id: 'croquis',
     label: 'Croquis',
     icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />',
   },
   {
-    id: 'coupe',
-    label: 'Coupe programmatique',
-    icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />',
-  },
-  {
-    id: 'lumion',
-    label: 'Rendus 3D',
-    icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />',
-  },
-  {
-    id: '3d',
-    label: 'Modèle 3D',
-    icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />',
+    id: 'perspectives',
+    label: 'Perspectives',
+    icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />',
   },
 ]
 
-const activeTab = ref('croquis')
+const activeTab    = ref('3d')
+const carouselIndex = ref(0)
+
+function carouselNext() { carouselIndex.value = (carouselIndex.value + 1) % lumionImages.length }
+function carouselPrev() { carouselIndex.value = (carouselIndex.value - 1 + lumionImages.length) % lumionImages.length }
 
 const lumionImages = [
-  { src: '/images/hero-musee.jpg',      alt: 'Vue extérieure du Musée Shapishiko' },
+  { src: '/images/musee/rendu-3.jpg',      alt: 'Vue extérieure du Musée Shapishiko' },
   { src: '/images/musee/rendu-1.jpg', alt: 'Perspective du musée' },
   { src: '/images/musee/rendu-2.jpg', alt: 'Vue d\'ensemble du musée' },
 ]
@@ -238,10 +262,11 @@ function switchTab(id) {
 
 // ─── État 3D ──────────────────────────────────────────────────────────────────
 
-const ifcState  = ref('idle')  // idle | loading | loaded | missing | parse-error | webgl-error
-const ifcError  = ref('')
-const ifcCanvas = ref(null)
-const wireframe = ref(false)
+const ifcState    = ref('idle')  // idle | loading | loaded | missing | parse-error | webgl-error
+const ifcError    = ref('')
+const ifcCanvas   = ref(null)
+const wireframe   = ref(false)
+const clickCoords = ref(null)
 
 let THREE_ref   = null
 let renderer    = null
@@ -258,7 +283,8 @@ async function initIFC() {
   ifcState.value = 'loading'
 
   try {
-    const check = await fetch('/plan_akuu.ifc', { method: 'HEAD' })
+    const ifcUrl = '/plan_akuu.ifc'
+    const check = await fetch(ifcUrl, { method: 'HEAD', cache: 'no-store' })
     if (!check.ok) {
       ifcState.value = 'missing'
       return
@@ -315,19 +341,127 @@ async function initIFC() {
     const loader = new IFCLoader()
     await loader.ifcManager.setWasmPath('/wasm/')
 
-    const buffer = await (await fetch('/plan_akuu.ifc')).arrayBuffer()
+    const buffer = await (await fetch(ifcUrl, { cache: 'no-store' })).arrayBuffer()
     ifcModel = await loader.parse(buffer)
     scene.add(ifcModel)
+
+    // ── Nettoyage des lignes parasites (grilles ArchiCAD) ─────────
+    // Enveloppé dans try-catch : si ça échoue, le modèle s'affiche quand même
+    try {
+      const allChildren = []
+      ifcModel.traverse((child) => {
+        if (!child.geometry) return
+        try {
+          child.geometry.computeBoundingBox()
+          const bb = child.geometry.boundingBox
+          if (!bb) return
+          const sx = bb.max.x - bb.min.x
+          const sy = bb.max.y - bb.min.y
+          const sz = bb.max.z - bb.min.z
+          if (!isFinite(sx) || !isFinite(sy) || !isFinite(sz)) return
+          const maxAxis = Math.max(sx, sy, sz)
+          const minAxis = Math.min(sx, sy, sz)
+          allChildren.push({ obj: child, maxAxis, minAxis })
+        } catch (_) { /* skip degenerate geometry */ }
+      })
+
+      const sizes = allChildren.map((c) => c.maxAxis).sort((a, b) => a - b)
+      const median = sizes.length > 0 ? sizes[Math.floor(sizes.length * 0.5)] : 1
+      const sizeThreshold = Math.max(median * 5, 30)
+
+      const toRemove = []
+      for (const { obj, maxAxis, minAxis } of allChildren) {
+        const type = obj.type || ''
+        const isLine = type === 'Line' || type === 'LineSegments' || type === 'LineLoop'
+          || obj.isLine || obj.isLineSegments || obj.isLineLoop
+        const isThin = maxAxis > 8 && minAxis < 0.05
+        const isHuge = maxAxis > sizeThreshold
+        if (isLine || isThin || isHuge) toRemove.push(obj)
+      }
+      for (const obj of toRemove) {
+        if (obj.geometry) obj.geometry.dispose()
+        if (obj.material) {
+          const mats = Array.isArray(obj.material) ? obj.material : [obj.material]
+          mats.forEach((m) => m.dispose())
+        }
+        if (obj.parent) obj.parent.remove(obj)
+      }
+    } catch (cleanErr) {
+      console.warn('[MuseePlanViewer] Grid cleanup failed:', cleanErr)
+    }
 
     const box    = new THREE.Box3().setFromObject(ifcModel)
     const center = box.getCenter(new THREE.Vector3())
     const size   = box.getSize(new THREE.Vector3())
     const maxDim = Math.max(size.x, size.y, size.z)
+
+    // Personnages (repère d'échelle) placés entre les deux bâtiments
+    function createHuman(height, color) {
+      const s = height / 1.75
+      const g = new THREE.Group()
+      const mat = new THREE.MeshStandardMaterial({ color, roughness: 0.55 })
+      const head = new THREE.Mesh(new THREE.SphereGeometry(0.12 * s, 12, 10), mat)
+      head.position.y = 1.63 * s
+      const torso = new THREE.Mesh(new THREE.CylinderGeometry(0.16 * s, 0.14 * s, 0.55 * s, 10), mat)
+      torso.position.y = 1.24 * s
+      const hips = new THREE.Mesh(new THREE.CylinderGeometry(0.14 * s, 0.12 * s, 0.2 * s, 10), mat)
+      hips.position.y = 0.87 * s
+      const legGeo = new THREE.CylinderGeometry(0.07 * s, 0.05 * s, 0.85 * s, 8)
+      const lL = new THREE.Mesh(legGeo, mat)
+      lL.position.set(0.08 * s, 0.425 * s, 0)
+      const lR = new THREE.Mesh(legGeo, mat)
+      lR.position.set(-0.08 * s, 0.425 * s, 0)
+      const armGeo = new THREE.CylinderGeometry(0.045 * s, 0.04 * s, 0.6 * s, 8)
+      const aL = new THREE.Mesh(armGeo, mat)
+      aL.position.set(0.22 * s, 1.18 * s, 0)
+      aL.rotation.z = 0.12
+      const aR = new THREE.Mesh(armGeo, mat)
+      aR.position.set(-0.22 * s, 1.18 * s, 0)
+      aR.rotation.z = -0.12
+      g.add(head, torso, hips, lL, lR, aL, aR)
+      g.traverse((c) => { if (c.isMesh) c.castShadow = true })
+      return g
+    }
+
+    const people = [
+      { height: 1.78, color: 0x2d6a4f, dx:  0,    dz: 0,    ry: 0.5 },
+      { height: 1.65, color: 0x52b788, dx:  1.2,   dz: 0.6,  ry: 0.9 },
+      { height: 1.82, color: 0x1b4332, dx: -1.0,   dz: 0.8,  ry: -0.3 },
+      { height: 1.10, color: 0x40916c, dx:  0.5,   dz: -0.5, ry: 1.2 },
+      { height: 1.72, color: 0x3a5a40, dx: -0.7,   dz: -0.7, ry: -0.8 },
+    ]
+    for (const p of people) {
+      const h = createHuman(p.height, p.color)
+      h.position.set(46.0 + p.dx, 0, -18.34 + p.dz)
+      h.rotation.y = p.ry
+      scene.add(h)
+    }
+
+
     camera.position.set(center.x + maxDim, center.y + maxDim * 0.7, center.z + maxDim)
     controls.target.copy(center)
     controls.update()
 
     ifcState.value = 'loaded'
+
+    // Raycaster pour identifier les coordonnées au clic
+    const raycaster = new THREE.Raycaster()
+    const mouse = new THREE.Vector2()
+    canvas.addEventListener('dblclick', (e) => {
+      const rect = canvas.getBoundingClientRect()
+      mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1
+      mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1
+      raycaster.setFromCamera(mouse, camera)
+      const hits = raycaster.intersectObjects(scene.children, true)
+      if (hits.length > 0) {
+        const p = hits[0].point
+        clickCoords.value = {
+          x: p.x.toFixed(2),
+          y: p.y.toFixed(2),
+          z: p.z.toFixed(2),
+        }
+      }
+    })
 
     const animate = () => {
       animationId = requestAnimationFrame(animate)
@@ -379,3 +513,14 @@ onUnmounted(() => {
   window.removeEventListener('resize', handleResize)
 })
 </script>
+
+<style scoped>
+.carousel-fade-enter-active,
+.carousel-fade-leave-active {
+  transition: opacity 0.35s ease;
+}
+.carousel-fade-enter-from,
+.carousel-fade-leave-to {
+  opacity: 0;
+}
+</style>

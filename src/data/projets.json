@@ -21,15 +21,15 @@
     "titre": "Cours d'anglais",
     "statut": "en_preparation",
     "annee_debut": 2017,
-    "description": "Enseignement de l'anglais aux habitants de Puerto Miguel pour favoriser le développement économique. Suspendu depuis le COVID, faute de moyens financiers — relance en préparation.",
+    "description": "Enseignement de l'anglais aux habitants de Puerto Miguel pour favoriser le développement économique. Suspendu depuis le COVID, faute de moyens financiers ; relance en préparation.",
     "image": "/images/cours-anglais.jpg"
   },
   {
     "id": "hydrama",
-    "titre": "HYDRAMA — Énergie propre",
+    "titre": "HYDRAMA, énergie propre",
     "statut": "en_preparation",
     "annee_debut": 2018,
-    "description": "Test d'une turbine hydroélectrique dans la rivière amazonienne pour Vista Alegre. Suspendu depuis le COVID, faute de moyens financiers — relance en préparation.",
+    "description": "Test d'une turbine hydroélectrique dans la rivière amazonienne pour Vista Alegre. Suspendu depuis le COVID, faute de moyens financiers ; relance en préparation.",
     "image": "/images/hero-projets.jpg"
   },
   {
@@ -37,7 +37,7 @@
     "titre": "AKUUVision",
     "statut": "en_cours",
     "annee_debut": 2019,
-    "description": "Sensibilisation aux enjeux climatiques et amazoniens à travers AKUUVision : ateliers Fresque du Climat, Planet'AKUU, Forever le Jeu — en France et à Puerto Miguel.",
+    "description": "Sensibilisation aux enjeux climatiques et amazoniens à travers AKUUVision : ateliers Fresque du Climat, Planet'AKUU, Forever le Jeu, en France et à Puerto Miguel.",
     "image": "/images/sensibilisation.jpg"
   }
 ]

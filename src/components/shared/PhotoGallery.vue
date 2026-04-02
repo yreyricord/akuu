@@ -1,5 +1,12 @@
 <template>
-  <div>
+  <div class="photo-gallery-root">
+    <!-- En-tête optionnel : styles scoped en dur (ne dépend pas de Tailwind pour le titre) -->
+    <header v-if="headlineTitle" class="pg-head">
+      <p v-if="headlineKicker" class="pg-head__kicker">{{ headlineKicker }}</p>
+      <h2 class="pg-head__title">{{ headlineTitle }}</h2>
+      <p v-if="headlineSubtitle" class="pg-head__sub">{{ headlineSubtitle }}</p>
+    </header>
+
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       <button
         v-for="(photo, index) in photos"
@@ -65,7 +72,10 @@
 import { ref } from 'vue'
 
 const props = defineProps({
-  photos: { type: Array, required: true }
+  photos: { type: Array, required: true },
+  headlineKicker: { type: String, default: '' },
+  headlineTitle: { type: String, default: '' },
+  headlineSubtitle: { type: String, default: '' }
 })
 
 const lightboxOpen = ref(false)
@@ -90,3 +100,51 @@ function next() {
   currentIndex.value = (currentIndex.value + 1) % props.photos.length
 }
 </script>
+
+<style scoped>
+/* Forcer la typo du titre : indépendant de l’ordre / purge Tailwind */
+.pg-head {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .pg-head {
+    margin-bottom: 3.5rem;
+  }
+}
+
+.pg-head__kicker {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #2d6915;
+  margin: 0 0 1rem;
+}
+
+.pg-head__title {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.875rem, 5.5vw, 3rem);
+  font-weight: 700;
+  color: #171a1a;
+  line-height: 1.12;
+  margin: 0 0 1.25rem;
+}
+
+.pg-head__sub {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: #5c6060;
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .pg-head__sub {
+    font-size: 1.125rem;
+  }
+}
+</style>

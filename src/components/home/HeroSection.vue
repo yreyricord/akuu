@@ -3,7 +3,7 @@
     <!-- Image de fond -->
     <img
       src="/images/hero-amazon.jpg"
-      alt="Amazonie péruvienne — forêt tropicale et rivière"
+      alt="Amazonie péruvienne, forêt tropicale et rivière"
       class="absolute inset-0 w-full h-full object-cover"
     />
     <!-- Gradient sombre -->
@@ -29,14 +29,14 @@
         </span>
       </div>
 
-      <!-- Ligne 1 : "Préservons" — grande, serif -->
+      <!-- Ligne 1 : "Préservons", grande, serif -->
       <div class="overflow-hidden mb-1 md:mb-2">
         <h1 class="hero-item text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-serif font-bold leading-none tracking-tight" style="--delay: 280ms">
           {{ $t('hero.tagline_line1') }}
         </h1>
       </div>
 
-      <!-- Ligne 2 : "le vivant" — italic + couleur verte -->
+      <!-- Ligne 2 : "le vivant", italic et vert -->
       <div class="overflow-hidden mb-8 md:mb-10">
         <h1 class="hero-item text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-serif font-bold italic leading-none tracking-tight text-leaf" style="--delay: 420ms">
           {{ $t('hero.tagline_line2') }}

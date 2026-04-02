@@ -9,7 +9,7 @@
     "contact": "Contact"
   },
   "hero": {
-    "tagline": "AKUU ENSEMBLE — Préservons le vivant",
+    "tagline": "AKUU ENSEMBLE. Préservons le vivant",
     "tagline_badge": "AKUU ENSEMBLE",
     "tagline_line1": "Préservons",
     "tagline_line2": "le vivant",
@@ -53,7 +53,7 @@
     "hero_title": "L'association AKUU",
     "hero_subtitle": "Depuis 2016, au service des communautés amazoniennes",
     "who_title": "Qui sommes-nous ?",
-    "who_text": "AKUU est une association loi 1901, créée le 23 novembre 2016. Elle réalise des missions de terrain en Amazonie péruvienne — principalement à Puerto Miguel — et mène des actions de sensibilisation dans les pays de ses bénévoles.",
+    "who_text": "AKUU est une association loi 1901, créée le 23 novembre 2016. Elle réalise des missions de terrain en Amazonie péruvienne, surtout à Puerto Miguel, et mène des actions de sensibilisation dans les pays de ses bénévoles.",
     "quote": "AKUU est un projet en lequel je crois avec force. AKUU me rappelle mon lien avec la nature, les traditions. Ce mot signifie le partage d'énergies, le respect de la forêt, de sa faune, de sa flore...",
     "quote_author": "Marlon Diaz, co-fondateur",
     "values_title": "Nos valeurs",
@@ -97,19 +97,69 @@
     "hero_subtitle": "Un espace culturel pour préserver et valoriser la culture Kukama",
     "description_title": "Le projet",
     "description_text": "Le Musée Shapishiko est le projet phare d'AKUU : la construction d'un espace culturel au cœur du village de Puerto Miguel, en Amazonie péruvienne. Ce musée sera dédié à la préservation et à la valorisation de la culture Kukama, peuple autochtone de la région. Il accueillera des expositions d'art local, des ateliers de transmission des savoirs ancestraux, et servira de lieu de rencontre entre les communautés locales et les visiteurs.",
+    "plans_title": "Les plans du musée",
+    "plans_intro": "Croquis d'implantation, perspectives architecturales et modèle interactif issu d'ArchiCAD. La coupe des espaces est présentée plus haut sur la page.",
     "progress_title": "Avancement du projet",
+    "gallery_kicker": "En images",
     "gallery_title": "Galerie photos",
+    "gallery_subtitle": "Le chantier du Musée Shapishiko, de la conception à la réalisation sur le terrain.",
     "support_title": "Soutenir ce projet",
-    "support_text": "Contribuez à la construction du Musée Shapishiko et aidez-nous à préserver la culture Kukama pour les générations futures."
+    "support_text": "Contribuez à la construction du Musée Shapishiko et aidez-nous à préserver la culture Kukama pour les générations futures.",
+    "coupe": {
+      "section_kicker": "Architecture",
+      "title": "Les espaces du musée",
+      "intro": "La coupe architecturale reste fixe à l’écran pendant que vous défilez : chaque niveau se présente l’un après l’autre. Vous pouvez aussi cliquer sur une zone du plan ou sur les numéros.",
+      "scroll_hint": "Continuez à défiler pour parcourir les cinq espaces",
+      "levels_nav": "Accès rapide aux niveaux",
+      "alt": "Coupe architecturale du Musée Shapishiko",
+      "spaces_legend": "Espaces et niveaux",
+      "zones": {
+        "kuruara": {
+          "etage": "Niveau 1, gardien du deuxième monde",
+          "nom": "Sala Kuruara",
+          "nomKukama": "Les profondeurs de la rivière",
+          "description": "Le Kuruara est un être spirituel régnant sur le deuxième monde submergé de la cosmologie Kukama. Il émerge des profondeurs, beau et dauphin rosé, lumières mouvantes, sons aquatiques. Une main tendue au plafond vous enveloppant au cœur de la forêt inondable.",
+          "tags": ["Rivière & eau", "Dauphin rose", "Cosmologie Kukama"]
+        },
+        "iwrati": {
+          "etage": "Niveau 2, gardien de la forêt dense",
+          "nom": "Sala Iw Rati Tuwa",
+          "nomKukama": "Le monde de la forêt profonde",
+          "description": "L'Iw Rati Tuwa est un esprit malicieux qui rôde dans les profondeurs de la forêt, attirant les voyageurs pour mieux les égarer. Suivez sa trace et glissez-vous dans la peau du jaguar, du tapir et des autres habitants de la forêt dense.",
+          "tags": ["Faune amazonienne", "Forêt dense", "Mythologie"]
+        },
+        "tsumi": {
+          "etage": "Niveau 3, entre ciel et terre",
+          "nom": "Sala Tsumi",
+          "nomKukama": "Le sommet de la forêt",
+          "description": "Le Tsumi est le plus puissant des guérisseurs Kukama, voyageur spirituel capable de plonger sous les eaux, de s'élever dans les airs et de prendre la forme de n'importe quel animal. Depuis la salle au sommet du musée, surplombez la canopée de la forêt et suivez les voyages de ces sages dont l'art se perd aujourd'hui.",
+          "tags": ["Spiritualité Kukama", "Canopée", "Patrimoine immatériel"]
+        },
+        "tsakarita": {
+          "etage": "Passage, la passerelle",
+          "nom": "La Tsakarita",
+          "nomKukama": "La connexion directe",
+          "description": "En Kukama, la tsakarita désigne un raccourci, une connexion directe entre deux points. Cette passerelle trace une ligne directe dans le temps, replongeant la culture Kukama dans ses racines précolombiennes, avant d'arriver dans la salle d'exposition.",
+          "tags": ["Passage", "Connexion temporelle", "Culture vivante"]
+        },
+        "ikuachiru": {
+          "etage": "Rez-de-chaussée, espace culturel",
+          "nom": "La Ikuachiru",
+          "nomKukama": "Le savoir partagé",
+          "description": "En Kukama, l'ikuachiru désigne le lieu où il y a de la connaissance. Dernier espace du parcours, à la fois galerie et atelier : ses murs racontent, ses tables créent. L'art et l'artisanat Kukama se vivent et se transmettent. Une boutique propose les créations des artisans locaux.",
+          "tags": ["Galerie", "Atelier", "Artisanat Kukama"]
+        }
+      }
+    }
   },
   "volontaires": {
     "hero_title": "Devenir volontaire",
     "hero_subtitle": "Vivez une expérience unique au cœur de l'Amazonie péruvienne",
     "why_title": "Pourquoi partir avec AKUU ?",
     "why_items": {
-      "immersion": { "title": "Des responsabilités réelles", "text": "AKUU est une association à taille humaine. Ici, vous n'êtes pas un numéro — vous répondez à un besoin exprimé directement par la communauté et vous portez votre mission de A à Z." },
+      "immersion": { "title": "Des responsabilités réelles", "text": "AKUU est une association à taille humaine. Ici, vous n'êtes pas un numéro : vous répondez à un besoin exprimé directement par la communauté et vous portez votre mission de A à Z." },
       "impact": { "title": "Agir pour l'Amazonie", "text": "Les habitant·es de la forêt amazonienne en sont les premiers protecteurs. Travailler avec eux, c'est la façon la plus concrète et la plus juste de contribuer à sa préservation." },
-      "skills": { "title": "Apprendre, pas enseigner", "text": "Les communautés Kukama ont des savoirs que l'on ne trouve nulle part ailleurs. Repartir avec une autre vision du temps, du vivant et du collectif — c'est ce que disent tous nos anciens bénévoles." },
+      "skills": { "title": "Apprendre, pas enseigner", "text": "Les communautés Kukama ont des savoirs que l'on ne trouve nulle part ailleurs. Repartir avec une autre vision du temps, du vivant et du collectif, c'est ce que disent tous nos anciens bénévoles." },
       "community": { "title": "Une mission qui a du sens", "text": "Pas de cases à cocher, pas de photo souvenir. Une présence utile, dans un projet qui dure, auprès de personnes qui ont choisi de vous accueillir." }
     },
     "process_title": "Comment ça marche ?",
@@ -135,7 +185,7 @@
     "hero_line1": "Votre don va",
     "hero_line2": "directement",
     "hero_line3": "dans les projets",
-    "hero_text1": "Tous les frais de fonctionnement d'AKUU — banque, logistique, site web — sont pris en charge par nos bénévoles et nos proches.",
+    "hero_text1": "Tous les frais de fonctionnement d'AKUU (banque, logistique, site web) sont pris en charge par nos bénévoles et nos proches.",
     "hero_text2_prefix": "Chaque euro que vous donnez finance ",
     "hero_text2_highlight": "uniquement les projets",
     "hero_text2_suffix": ", à commencer par le Musée Shapishiko.",
@@ -160,10 +210,10 @@
     "adherer_text": "Dès 10€/an, devenez membre et participez aux assemblées générales, recevez nos rapports d'activité.",
     "adherer_cta": "Adhérer maintenant",
     "benevole_title": "Partir en mission",
-    "benevole_text": "3 à 6 mois à Puerto Miguel ou en France pour AKUUVision. Construction, éducation, culture — une expérience humaine unique.",
+    "benevole_text": "3 à 6 mois à Puerto Miguel ou en France pour AKUUVision. Construction, éducation, culture : une expérience humaine unique.",
     "benevole_cta": "Voir les missions",
     "partenaire_title": "Partenariat institutionnel",
-    "partenaire_text": "Entreprise, collectivité, université — engagez-vous à nos côtés pour un impact durable et visible.",
+    "partenaire_text": "Entreprise, collectivité, université : engagez-vous à nos côtés pour un impact durable et visible.",
     "partenaire_cta": "Discutons ensemble"
   },
   "contact": {
@@ -190,7 +240,7 @@
     "nav_title": "Navigation",
     "contact_title": "Contact",
     "social_title": "Suivez-nous",
-    "legal": "© {year} AKUU — Association loi 1901",
+    "legal": "© {year} AKUU, association loi 1901",
     "don_cta": "Faire un don"
   }
 }

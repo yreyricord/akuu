@@ -21,7 +21,7 @@
           <div class="fade-in-up">
             <img
               src="/images/musee/musee-description.jpg"
-              alt="Musée Shapishiko — Puerto Miguel"
+              alt="Musée Shapishiko à Puerto Miguel"
               class="rounded-2xl shadow-xl w-full object-cover aspect-[4/3]"
               loading="lazy"
             />
@@ -43,25 +43,36 @@
       </div>
     </section>
 
-    <!-- Plans architecturaux -->
+    <!-- Coupe animée interactive -->
+    <section class="section-padding bg-cream">
+      <div class="container-narrow">
+        <MuseeCoupeAnimee />
+      </div>
+    </section>
+
+    <!-- Plans architecturaux complets -->
     <section class="section-padding bg-white">
       <div class="container-narrow">
         <div class="text-center mb-10">
           <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">Architecture</p>
-          <h2 class="text-3xl md:text-4xl font-serif font-bold text-night">Les plans du musée</h2>
+          <h2 class="text-3xl md:text-4xl font-serif font-bold text-night">{{ $t('musee.plans_title') }}</h2>
           <p class="text-night/50 mt-3 max-w-xl mx-auto">
-            Croquis d'implantation, coupe programmatique, rendus 3D et modèle interactif issu d'ArchiCAD.
+            {{ $t('musee.plans_intro') }}
           </p>
         </div>
         <MuseePlanViewer />
       </div>
     </section>
 
-    <!-- Galerie -->
+    <!-- Galerie : en-tête dans PhotoGallery (CSS scoped, tailles en rem, indépendant de Tailwind) -->
     <section class="section-padding bg-cream">
       <div class="container-narrow">
-        <SectionTitle>{{ $t('musee.gallery_title') }}</SectionTitle>
-        <PhotoGallery :photos="galleryPhotos" />
+        <PhotoGallery
+          :photos="galleryPhotos"
+          :headline-kicker="$t('musee.gallery_kicker')"
+          :headline-title="$t('musee.gallery_title')"
+          :headline-subtitle="$t('musee.gallery_subtitle')"
+        />
       </div>
     </section>
 
@@ -76,14 +87,29 @@ import PhotoGallery from '@/components/shared/PhotoGallery.vue'
 import DonSection from '@/components/home/DonSection.vue'
 import TheMuseeMilestones from '@/components/shared/TheMuseeMilestones.vue'
 import MuseePlanViewer from '@/components/shared/MuseePlanViewer.vue'
+import MuseeCoupeAnimee from '@/components/shared/MuseeCoupeAnimee.vue'
 
 const milestones = [
   { label: 'Étude d\'impact terrain', year: '2023', status: 'done' },
-  { label: 'Financement FONJEP/JSI obtenu', year: '2024', status: 'done' },
-  { label: 'Rénovation bâtiments', year: '2024', status: 'done' },
-  { label: 'Subvention Ministère Culture Pérou', year: '2025', status: 'done' },
-  { label: 'Casa AKUU améliorée', year: '2025', status: 'done' },
-  { label: 'Conception artistique', year: '2025', status: 'done' },
+  {
+    label: 'Financement et rénovation',
+    year: '2024',
+    status: 'done',
+    items: [
+      'Financement FONJEP/JSI obtenu',
+      'Rénovation bâtiments'
+    ]
+  },
+  {
+    label: 'Subvention, Casa AKUU et conception artistique',
+    year: '2025',
+    status: 'done',
+    items: [
+      'Subvention Ministère Culture Pérou',
+      'Casa AKUU améliorée',
+      'Conception artistique'
+    ]
+  },
   { label: 'Production des œuvres (peintures, sculptures, fibres de chambira)', year: '2026', status: 'in_progress' },
   { label: 'Ouverture partielle du musée', year: 'Sept. 2026', status: 'pending' }
 ]

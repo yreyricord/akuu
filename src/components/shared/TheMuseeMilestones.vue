@@ -1,7 +1,7 @@
 <template>
   <div class="relative" ref="containerRef">
 
-    <!-- SVG chemin animé — desktop uniquement -->
+    <!-- SVG chemin animé (desktop) -->
     <svg
       v-if="svgReady"
       class="hidden md:block absolute top-0 left-0 pointer-events-none overflow-visible"
@@ -30,11 +30,15 @@
       </defs>
     </svg>
 
-    <!-- Étapes -->
+    <!-- Étapes : apparition dans l'ordre au scroll -->
     <div
       v-for="(step, index) in steps"
       :key="index"
-      class="relative grid md:grid-cols-2 gap-0"
+      :ref="(el) => setStepRowRef(el, index)"
+      :data-milestone-index="index"
+      class="relative grid md:grid-cols-2 gap-0 milestone-step-row"
+      :class="index <= revealUpTo ? 'milestone-step-row--visible' : 'milestone-step-row--hidden'"
+      :style="{ '--milestone-stagger': String(index) }"
     >
       <!-- Colonne contenu -->
       <div :class="['relative pb-10', index % 2 === 1 ? 'md:order-2 md:pl-16' : 'md:order-1 md:pr-16']">
@@ -84,6 +88,13 @@
           >
             {{ step.label }}
           </h3>
+          <ul
+            v-if="step.items?.length"
+            class="mt-3 space-y-1.5 text-sm leading-snug list-disc pl-4 marker:text-forest/50"
+            :class="step.status === 'pending' ? 'text-night/40' : 'text-night/70'"
+          >
+            <li v-for="(item, j) in step.items" :key="j">{{ item }}</li>
+          </ul>
         </div>
       </div>
 
@@ -121,6 +132,13 @@
             :class="step.status === 'pending' ? 'text-night/40 italic' : 'text-night'">
             {{ step.label }}
           </p>
+          <ul
+            v-if="step.items?.length"
+            class="mt-2 space-y-1 text-sm leading-snug list-disc pl-4 marker:text-forest/50"
+            :class="step.status === 'pending' ? 'text-night/40' : 'text-night/70'"
+          >
+            <li v-for="(item, j) in step.items" :key="j">{{ item }}</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -145,8 +163,16 @@ const svgHeight = ref(0)
 const svgReady = ref(false)
 const activeIndex = ref(-1)
 
+/** Lignes de frise pour révéler les cartes dans l'ordre au scroll */
+const stepRowElements = ref([])
+const revealUpTo = ref(-1)
+
 function setDotRef(el, index) {
   if (el) dotElements.value[index] = el
+}
+
+function setStepRowRef(el, index) {
+  if (el) stepRowElements.value[index] = el
 }
 
 function stepColor(status) {
@@ -177,7 +203,10 @@ function buildPath() {
     })
     .filter(Boolean)
 
-  if (points.length < 2) return
+  if (points.length < 2) {
+    scheduleCardRevealCheck()
+    return
+  }
 
   let d = `M ${points[0].x} ${points[0].y}`
   for (let i = 1; i < points.length; i++) {
@@ -197,40 +226,134 @@ function buildPath() {
       pathLength.value = len
       dashOffset.value = len
       handleScroll()
+      scheduleCardRevealCheck()
     }
+  })
+}
+
+function updateCardReveal() {
+  const wh = window.innerHeight
+  // Ligne « déclenchée » dès qu’elle entre sensiblement dans le viewport (pas seulement le haut de l’écran)
+  const triggerBottom = wh * 0.92
+  let maxIdx = revealUpTo.value
+  const n = props.steps.length
+  for (let i = 0; i < n; i++) {
+    const el = stepRowElements.value[i]
+    if (!el) continue
+    const r = el.getBoundingClientRect()
+    if (r.top < triggerBottom && r.bottom > wh * 0.06) maxIdx = Math.max(maxIdx, i)
+  }
+  revealUpTo.value = maxIdx
+}
+
+/** Double rAF : refs + layout SVG après le 1er paint */
+function scheduleCardRevealCheck() {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => updateCardReveal())
   })
 }
 
 function handleScroll() {
   const container = containerRef.value
-  if (!container || !pathLength.value) return
+  if (!container) return
 
-  const rect = container.getBoundingClientRect()
+  const len = pathLength.value
+  if (len > 0) {
+    const rect = container.getBoundingClientRect()
+    const wh = window.innerHeight
+    const scrolled = wh * 0.55 - rect.top
+    const progress = Math.max(0, Math.min(1, scrolled / rect.height))
+    dashOffset.value = len * (1 - progress)
+  }
+
   const wh = window.innerHeight
-  const scrolled = wh * 0.55 - rect.top
-  const progress = Math.max(0, Math.min(1, scrolled / rect.height))
-
-  dashOffset.value = pathLength.value * (1 - progress)
-
   let newActive = -1
   dotElements.value.forEach((dot, i) => {
     if (!dot) return
     if (dot.getBoundingClientRect().top < wh * 0.6) newActive = i
   })
   activeIndex.value = newActive
+
+  updateCardReveal()
 }
 
 let resizeObs = null
+let cardRevealObs = null
+
+function observeMilestoneRows() {
+  if (cardRevealObs) {
+    cardRevealObs.disconnect()
+    cardRevealObs = null
+  }
+  cardRevealObs = new IntersectionObserver(
+    (entries) => {
+      let max = revealUpTo.value
+      for (const e of entries) {
+        if (!e.isIntersecting) continue
+        const raw = e.target.getAttribute('data-milestone-index')
+        const i = raw == null ? NaN : Number(raw)
+        if (!Number.isNaN(i)) max = Math.max(max, i)
+      }
+      revealUpTo.value = max
+    },
+    {
+      root: null,
+      // Zone d’activation un peu au-dessus du bas de l’écran (effet « au scroll »)
+      rootMargin: '0px 0px -12% 0px',
+      threshold: [0, 0.05, 0.1, 0.25, 0.5, 0.75, 1]
+    }
+  )
+  for (let i = 0; i < props.steps.length; i++) {
+    const el = stepRowElements.value[i]
+    if (el) cardRevealObs.observe(el)
+  }
+}
+
 onMounted(() => {
   nextTick(() => {
     buildPath()
     window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('resize', handleScroll, { passive: true })
     resizeObs = new ResizeObserver(() => buildPath())
     if (containerRef.value) resizeObs.observe(containerRef.value)
+    nextTick(() => {
+      observeMilestoneRows()
+      scheduleCardRevealCheck()
+    })
   })
 })
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('resize', handleScroll)
   if (resizeObs) resizeObs.disconnect()
+  if (cardRevealObs) {
+    cardRevealObs.disconnect()
+    cardRevealObs = null
+  }
 })
 </script>
+
+<style scoped>
+/* Cartes : masquées puis révélées une par une (ordre du scroll) */
+.milestone-step-row--hidden > * {
+  opacity: 0;
+  transform: translateY(1.35rem);
+}
+.milestone-step-row--visible > * {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--milestone-stagger) * 70ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .milestone-step-row--hidden > *,
+  .milestone-step-row--visible > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+</style>

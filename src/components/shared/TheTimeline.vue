@@ -1,7 +1,7 @@
 <template>
   <div class="relative" ref="containerRef">
 
-    <!-- SVG chemin animé — desktop uniquement -->
+    <!-- SVG chemin animé (desktop) -->
     <svg
       v-if="svgReady"
       class="hidden md:block absolute top-0 left-0 pointer-events-none overflow-visible"
