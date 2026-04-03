@@ -12,12 +12,12 @@
     <!-- Contenu principal -->
     <div class="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
 
-      <!-- Logo -->
+      <!-- Colibri (symbole AKUU) -->
       <div class="mb-10 md:mb-12 hero-item" style="--delay: 0ms">
         <img
-          src="/images/LOGOAKUU.png"
+          src="/images/collibri-akuu.png"
           alt="AKUU"
-          class="h-28 sm:h-32 md:h-40 lg:h-44 w-auto max-w-[min(90vw,28rem)] mx-auto drop-shadow-2xl"
+          class="h-32 sm:h-36 md:h-44 lg:h-48 w-auto max-w-[min(88vw,22rem)] mx-auto object-contain drop-shadow-2xl"
         />
       </div>
 
