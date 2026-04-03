@@ -106,14 +106,15 @@
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import {
   computeTrailBirdLayout,
-  TRAIL_BIRD_ANGLE_OFFSET_VERTICAL_FRIZE
+  TRAIL_BIRD_ANGLE_OFFSET_HORIZONTAL_PATH
 } from '@/composables/useTrailBirdOnPath'
 
 const props = defineProps({
   steps: { type: Array, required: true },
   trailBirdSrc: { type: String, default: '' },
   trailBirdAlt: { type: String, default: '' },
-  trailBirdAngleOffset: { type: Number, default: TRAIL_BIRD_ANGLE_OFFSET_VERTICAL_FRIZE }
+  /** Chemin horizontal des étapes : tangente seule (pas l’offset -90° des frises verticales). */
+  trailBirdAngleOffset: { type: Number, default: TRAIL_BIRD_ANGLE_OFFSET_HORIZONTAL_PATH }
 })
 
 const containerRef = ref(null)

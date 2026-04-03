@@ -7,6 +7,13 @@
     "lien": "/musee-shapishiko"
   },
   {
+    "id": "sensibilisation-climat",
+    "statut": "en_cours",
+    "annee_debut": 2019,
+    "image": "/images/sensibilisation.jpg",
+    "lien": "/akuuvision"
+  },
+  {
     "id": "casa-akuu",
     "statut": "realise",
     "annee_debut": 2017,
@@ -23,14 +30,7 @@
     "id": "hydrama",
     "statut": "suspendu",
     "annee_debut": 2018,
-    "image": "/images/hero-projets.jpg",
+    "image": "/images/hydrama/hydrama-vista-alegre.jpg",
     "lien": "/hydrama"
-  },
-  {
-    "id": "sensibilisation-climat",
-    "statut": "en_cours",
-    "annee_debut": 2019,
-    "image": "/images/sensibilisation.jpg",
-    "lien": "/akuuvision"
   }
 ]

@@ -15,7 +15,7 @@
         ref="pathRef"
         :d="pathD"
         fill="none"
-        stroke="url(#museeGradient)"
+        :stroke="`url(#${gradientId})`"
         stroke-width="2.5"
         stroke-linecap="round"
         :stroke-dasharray="pathLength"
@@ -36,7 +36,7 @@
         <title v-if="trailBirdAlt">{{ trailBirdAlt }}</title>
       </image>
       <defs>
-        <linearGradient id="museeGradient" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient :id="gradientId" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stop-color="#2D6915" />
           <stop offset="70%" stop-color="#04488F" />
           <stop offset="100%" stop-color="#A6C639" />
@@ -93,7 +93,7 @@
             <!-- Badge "À venir" pour pending -->
             <span v-if="step.status === 'pending'" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-leaf/10 text-leaf border border-leaf/25 animate-pulse">
               <svg class="w-2 h-2" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
-              {{ t('musee.milestone_ui.upcoming') }}
+              {{ t(`${labelNamespace}.upcoming`) }}
             </span>
           </div>
           <h3
@@ -173,7 +173,11 @@ const props = defineProps({
   trailBirdSrc: { type: String, default: '' },
   trailBirdAlt: { type: String, default: '' },
   /** Décalage en degrés pour l’orientation du PNG (ex. vol plus horizontal). */
-  trailBirdAngleOffset: { type: Number, default: TRAIL_BIRD_ANGLE_OFFSET_VERTICAL_FRIZE }
+  trailBirdAngleOffset: { type: Number, default: TRAIL_BIRD_ANGLE_OFFSET_VERTICAL_FRIZE },
+  /** Préfixe i18n pour les badges (ex. musee.milestone_ui ou hydrama.timeline_ui). */
+  labelNamespace: { type: String, default: 'musee.milestone_ui' },
+  /** Id unique du linearGradient SVG (évite les conflits si plusieurs frises sur le site). */
+  gradientId: { type: String, default: 'museeMilestoneGradient' }
 })
 
 const birdSize = 80
@@ -217,9 +221,10 @@ function stepColor(status) {
 }
 
 function stepLabel(status) {
-  if (status === 'done') return t('musee.milestone_ui.status_done')
-  if (status === 'in_progress') return t('musee.milestone_ui.status_in_progress')
-  return t('musee.milestone_ui.status_pending')
+  const ns = props.labelNamespace
+  if (status === 'done') return t(`${ns}.status_done`)
+  if (status === 'in_progress') return t(`${ns}.status_in_progress`)
+  return t(`${ns}.status_pending`)
 }
 
 function buildPath() {

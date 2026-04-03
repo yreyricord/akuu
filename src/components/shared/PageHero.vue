@@ -1,12 +1,24 @@
 <template>
   <section class="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
     <img
+      v-if="image"
       :src="image"
       :alt="title"
       class="absolute inset-0 w-full h-full object-cover"
       loading="eager"
     />
-    <div class="absolute inset-0 bg-gradient-to-b from-night/60 via-night/40 to-night/70" />
+    <div
+      v-else
+      class="absolute inset-0 bg-gradient-to-br from-night/85 via-forest/75 to-night/90 flex items-center justify-center border-b border-white/10"
+    >
+      <p v-if="imagePlaceholder" class="text-white/50 text-sm font-medium px-6 text-center max-w-md z-[1]">
+        {{ imagePlaceholder }}
+      </p>
+    </div>
+    <div
+      v-if="image"
+      class="absolute inset-0 bg-gradient-to-b from-night/60 via-night/40 to-night/70"
+    />
     <div class="relative z-10 text-center text-white px-4 max-w-3xl mx-auto">
       <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 text-balance">
         {{ title }}
@@ -22,6 +34,8 @@
 defineProps({
   title: { type: String, required: true },
   subtitle: { type: String, default: '' },
-  image: { type: String, default: '/images/hero-amazon.jpg' }
+  image: { type: String, default: '/images/hero-amazon.jpg' },
+  /** Shown when `image` is empty (placeholder visuel) */
+  imagePlaceholder: { type: String, default: '' }
 })
 </script>

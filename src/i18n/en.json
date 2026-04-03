@@ -69,14 +69,34 @@
     "who_text": "AKUU is a French non-profit (loi 1901), founded on November 23, 2016. It carries out field missions in the Peruvian Amazon, mainly in Puerto Miguel, and runs awareness campaigns in the home countries of its volunteers.",
     "quote": "AKUU is a project I believe in with all my strength. AKUU reminds me of my connection with nature, with traditions. This word means the sharing of energies, the respect for the forest, its fauna, its flora...",
     "quote_author": "Marlon Diaz, co-founder",
+    "who_image_alt": "AKUU volunteers in the field",
+    "itv_section_title": "AKUU on video",
     "values_title": "Our values",
     "values": {
-      "durable": { "title": "Sustainable development", "text": "Promoting solutions that respect the environment and local resources." },
-      "solidarite": { "title": "International solidarity", "text": "Building bridges between cultures and fostering mutual aid between peoples." },
-      "culture": { "title": "Respect for local cultures", "text": "Valuing and preserving the ancestral knowledge of Kukama communities." },
-      "savoirs": { "title": "Knowledge sharing", "text": "Sharing knowledge to strengthen community autonomy." },
-      "environnement": { "title": "Environmental protection", "text": "Taking concrete action to preserve the Amazon rainforest." },
-      "echanges": { "title": "Intercultural exchanges", "text": "Fostering mutual understanding through sharing and meeting." }
+      "durable": {
+        "title": "Sustainable development",
+        "text": "Promoting solutions that respect the environment and local resources."
+      },
+      "solidarite": {
+        "title": "International solidarity",
+        "text": "Building bridges between cultures and fostering mutual aid between peoples."
+      },
+      "culture": {
+        "title": "Respect for local cultures",
+        "text": "Valuing and preserving the ancestral knowledge of Kukama communities."
+      },
+      "savoirs": {
+        "title": "Knowledge sharing",
+        "text": "Sharing knowledge to strengthen community autonomy."
+      },
+      "environnement": {
+        "title": "Environmental protection",
+        "text": "Taking concrete action to preserve the Amazon rainforest."
+      },
+      "echanges": {
+        "title": "Intercultural exchanges",
+        "text": "Fostering mutual understanding through sharing and meeting."
+      }
     },
     "odd_title": "Contribution to Sustainable Development Goals",
     "odd_subtitle": "AKUU's actions are directly aligned with the United Nations 2030 Agenda. Each of our projects contributes to at least one SDG.",
@@ -115,56 +135,215 @@
     "timeline_upcoming_badge": "Coming soon",
     "timeline_eras": {
       "foundation": "Foundation",
-      "development": "Growth",
+      "development": "Development",
       "pause": "Pause",
       "relaunch": "Relaunch",
       "soon": "Soon",
-      "museum": "Shapishiko Museum"
+      "museum": "Shapishiko Museum",
+      "new_course": "New chapter",
+      "construction": "Construction",
+      "acceleration": "Acceleration"
     },
     "timeline": {
       "2016": {
         "title": "Founding of the association",
-        "description": "AKUU is officially founded on November 23, 2016, in Mougins, France."
+        "description": "AKUU is founded on 23 November 2016 to promote sustainable management of Amazonian resources.",
+        "parts": [
+          {
+            "title": "",
+            "text": "AKUU is officially founded on 23 November 2016, with a mission to foster sustainable management of Amazonian resources through solidarity projects and awareness campaigns."
+          },
+          {
+            "title": "Founding partners",
+            "text": "INP Foundation, Engagé.e.s et Déterminé.e.s, WindAid Institute."
+          }
+        ]
       },
       "2017": {
-        "title": "First steps in Puerto Miguel",
-        "description": "First volunteers sent to Puerto Miguel. Start of English classes and construction of Casa AKUU."
+        "title": "First steps",
+        "description": "First field missions in Puerto Miguel and first awareness actions in France.",
+        "parts": [
+          {
+            "title": "Arrival in Puerto Miguel",
+            "text": "First field missions in Puerto Miguel. Start of impact assessments, meetings with communities, and groundbreaking for Casa AKUU, the association’s future hub."
+          },
+          {
+            "title": "First awareness events",
+            "text": "First awareness actions in France on climate issues and Amazon conservation."
+          }
+        ]
       },
       "2018": {
-        "title": "WindAid partnership & energy",
-        "description": "Partnership with WindAid. Launch of hydro and solar projects for the village."
+        "title": "Growth",
+        "description": "Casa AKUU opens, English classes, Hydr'Ama, energy, water, and outreach in France.",
+        "parts": [
+          {
+            "title": "Opening of Casa AKUU",
+            "text": "Opening of the community house in Puerto Miguel, a shared living and working space for volunteers and residents."
+          },
+          {
+            "title": "English classes",
+            "text": "Launch of the English programme in Puerto Miguel, at the request of the village school head. Three groups: niños, secundarios, adultos."
+          },
+          {
+            "title": "Hydr'Ama project",
+            "text": "Design and build of a hydrokinetic turbine with WindAid Institute. Deployment in Vista Alegre with strong community involvement in the floating platform. Approval by Loreto regional authorities."
+          },
+          {
+            "title": "Solar power",
+            "text": "Solar panels installed in Puerto Miguel and Vista Alegre to power the community house, the art school, and shared spaces."
+          },
+          {
+            "title": "Drinking water",
+            "text": "Rainwater harvesting and filtration system installed in Vista Alegre."
+          },
+          {
+            "title": "Awareness in France",
+            "text": "Climax festival in Bordeaux, student events (INP Foundation, Phelma), signing of the appeal for an ecological constitution."
+          },
+          {
+            "title": "New partners",
+            "text": "ASSHUME, Foundation for Nature and Humankind, FONJEP, RESES."
+          }
+        ]
       },
       "2019": {
-        "title": "Year of innovation",
-        "description": "AKUUbe team, AKUUVision (PIEED prize €5,000). Climate Fresk workshops and environmental awareness."
+        "title": "Innovation",
+        "description": "AKUU'Be, Hydr'Ama follow-up, Solid'AKUU, Bagazan, AKUUVision, Humanos, outreach.",
+        "parts": [
+          {
+            "title": "AKUU'Be project",
+            "text": "Plastic waste management mission in Puerto Miguel: building recycling machines (shredder, injection), collection loop, agreement with Nauta municipality for waste treatment, a first in the Amazon."
+          },
+          {
+            "title": "Hydr'Ama: follow-up mission",
+            "text": "Field mission in Vista Alegre to test the turbine in real conditions and plan upgrades. Identification of other potential villages."
+          },
+          {
+            "title": "Solid'AKUU",
+            "text": "Continued drinking-water projects with student association Solida'rire."
+          },
+          {
+            "title": "Bagazan project",
+            "text": "Impact assessment mission in Bagazan village (Ucayali River) ahead of future projects."
+          },
+          {
+            "title": "AKUUVision",
+            "text": "Augmented reality project for climate awareness. Winner of the national PIEED competition in Paris."
+          },
+          {
+            "title": "Humanos de Puerto Miguel",
+            "text": "Portraits and testimonies from Puerto Miguel residents, shared on social media to show life in the Amazon."
+          },
+          {
+            "title": "Awareness",
+            "text": "Imaginarium Festival at UTC Compiègne, Climate Fresk training, talks in secondary schools and universities."
+          },
+          {
+            "title": "New partners",
+            "text": "IDEX, Université Grenoble Alpes (UGA)."
+          }
+        ]
       },
       "2020": {
         "title": "COVID halt",
-        "description": "The pandemic interrupts field missions. The team keeps the link remotely."
+        "description": "The pandemic stops field missions; the team stays connected remotely.",
+        "parts": [
+          {
+            "title": "",
+            "text": "The global pandemic halts all field missions. The team keeps in touch remotely with Puerto Miguel and begins strategic thinking on the association’s future."
+          }
+        ]
       },
       "2021": {
         "title": "Restructuring",
-        "description": "Internal restructuring and strategic thinking on future projects."
-      },
-      "2022": {
-        "title": "Museum project preparation",
-        "description": "Preliminary studies and dossier for the Shapishiko Museum project."
+        "description": "Governance overhaul and priorities refocused on one long-term flagship project.",
+        "parts": [
+          {
+            "title": "Internal reset",
+            "text": "Restructuring how the association works. Simpler governance, renewed teams, and priorities reshaped around one central long-term project."
+          }
+        ]
       },
       "2023": {
-        "title": "Museum launch",
-        "description": "Official launch of the Shapishiko Museum project. FONJEP/JSI fundraising."
+        "title": "New chapter",
+        "description": "Shapishiko Museum project, renovation in Puerto Miguel, FONJEP partnership.",
+        "parts": [
+          {
+            "title": "Birth of the Shapishiko Museum project",
+            "text": "Preliminary studies and dossier for a museum dedicated to Kukama culture in Puerto Miguel. First field missions after COVID."
+          },
+          {
+            "title": "Renovation and missions",
+            "text": "Start of building renovation in Puerto Miguel. Several volunteer missions relaunch activity on the ground."
+          },
+          {
+            "title": "Partner",
+            "text": "FONJEP (renewal)."
+          }
+        ]
       },
       "2024": {
-        "title": "Field missions & renovation",
-        "description": "Missions by Léa, Inès, Raphaël then Dylan and Paul. Building renovation in Puerto Miguel."
+        "title": "Construction",
+        "description": "Regular missions in Puerto Miguel: Casa AKUU, museum, community ties.",
+        "parts": [
+          {
+            "title": "Field missions",
+            "text": "Regular missions in Puerto Miguel: Casa AKUU renovation, progress on the Shapishiko Museum, stronger links with the local community and Kukama artisans."
+          }
+        ]
       },
       "2025": {
-        "title": "Casa AKUU & official recognition",
-        "description": "Casa AKUU improvements. Grant from the Peruvian Ministry of Culture (19,960 soles) for Museo Shapishiko."
+        "title": "Acceleration",
+        "description": "Main structure of the cultural interpretation centre, Casa renovated, museum production, civic service, outreach, new partners.",
+        "parts": [
+          {
+            "title": "Main structure of the cultural interpretation centre",
+            "text": "Construction of the full main structure of the cultural interpretation centre (Shapishiko Museum project) in Puerto Miguel, shell and building envelope."
+          },
+          {
+            "title": "Casa AKUU renovated",
+            "text": "Major upgrades: sanitation, kitchen, solar electricity, bedrooms. Casa AKUU becomes a real year-round home for volunteers."
+          },
+          {
+            "title": "Shapishiko Museum: producing works",
+            "text": "First museum pieces produced with local artists: paintings, sculptures, chambira fibre creations. Grant from the Peruvian Ministry of Culture to support artistic production."
+          },
+          {
+            "title": "Civic service",
+            "text": "First civic service volunteers on long missions in Puerto Miguel through the partnership with AIME ONG and France Volontaires."
+          },
+          {
+            "title": "Awareness",
+            "text": "Continued outreach in France: social media, newsletter, school visits."
+          },
+          {
+            "title": "New partners",
+            "text": "AIME ONG, France Volontaires, ICAM, PCM-Cultura."
+          }
+        ]
       },
       "2026": {
-        "title": "Opening of the Shapishiko Museum",
-        "description": "Planned opening of the Shapishiko Museum in Puerto Miguel, a living space for Shipibo-Conibo culture and knowledge."
+        "title": "On the horizon",
+        "description": "Interior finishing for the interpretation centre, museum opening, Peruvian NGO registration, partner ONG Faver.",
+        "parts": [
+          {
+            "title": "Interior finishing of the cultural interpretation centre",
+            "text": "Interior fitting, scenography, finishes and equipment to prepare for welcoming the public."
+          },
+          {
+            "title": "Opening of the Shapishiko Museum",
+            "text": "Planned opening of the Shapishiko Museum in Puerto Miguel: a living space for Kukama culture and knowledge, open to residents, travellers, and researchers."
+          },
+          {
+            "title": "Official registration in Peru",
+            "text": "AKUU plans to reopen its Peruvian association, closed since COVID, to strengthen its local institutional footing."
+          },
+          {
+            "title": "Partner",
+            "text": "ONG Faver."
+          }
+        ]
       }
     }
   },
@@ -195,11 +374,11 @@
       },
       "cours-anglais": {
         "title": "English classes",
-        "description": "Teaching English to Puerto Miguel residents to support economic development. Suspended since COVID for lack of funds; relaunch in preparation."
+        "description": "Community-led programme (children, teens, adults) for local ecotourism. Suspended since COVID; relaunch in preparation."
       },
       "hydrama": {
-        "title": "HYDRAMA, clean energy",
-        "description": "Testing a hydroelectric turbine in the Amazon river for Vista Alegre. Suspended since COVID for lack of funds; relaunch in preparation."
+        "title": "HYDR'AMA, river energy",
+        "description": "River turbine with WindAid Institute in Vista Alegre: clean power without a dam, open-source approach, communities at the centre. Suspended since COVID; relaunch in preparation."
       },
       "sensibilisation-climat": {
         "title": "AKUUVision",
@@ -288,10 +467,18 @@
     "gallery_title": "Photo gallery",
     "gallery_subtitle": "The Shapishiko Museum build, from design to work on the ground.",
     "side_visuals": {
-      "context": { "alt": "Amazon forest and land around Puerto Miguel" },
-      "governance": { "alt": "Community life and decisions in the village" },
-      "teams": { "alt": "Build site and teams on the ground" },
-      "progress": { "alt": "Museum construction progress" }
+      "context": {
+        "alt": "Amazon forest and land around Puerto Miguel"
+      },
+      "governance": {
+        "alt": "Community life and decisions in the village"
+      },
+      "teams": {
+        "alt": "Build site and teams on the ground"
+      },
+      "progress": {
+        "alt": "Museum construction progress"
+      }
     },
     "support_title": "Support this project",
     "support_text": "Contribute to the construction of the Shapishiko Museum and help us preserve Kukama culture for future generations.",
@@ -309,35 +496,55 @@
           "nom": "Sala Kuruara",
           "nomKukama": "The depths of the river",
           "description": "The Kuruara is a spirit being who rules the submerged second world in Kukama cosmology. It rises from the depths, beautiful pink dolphin, shifting lights, water sounds. An outstretched hand on the ceiling wraps you in the heart of the floodable forest.",
-          "tags": ["River & water", "Pink dolphin", "Kukama cosmology"]
+          "tags": [
+            "River & water",
+            "Pink dolphin",
+            "Kukama cosmology"
+          ]
         },
         "iwrati": {
           "etage": "Level 2, guardian of the dense forest",
           "nom": "Sala Iw Rati Tuwa",
           "nomKukama": "The deep forest world",
           "description": "The Iw Rati Tuwa is a mischievous spirit roaming the forest depths, luring travellers only to lead them astray. Follow its trail and slip into the skin of the jaguar, the tapir and other dwellers of the dense forest.",
-          "tags": ["Amazon wildlife", "Dense forest", "Mythology"]
+          "tags": [
+            "Amazon wildlife",
+            "Dense forest",
+            "Mythology"
+          ]
         },
         "tsumi": {
           "etage": "Level 3, between sky and earth",
           "nom": "Sala Tsumi",
           "nomKukama": "The forest canopy",
           "description": "The Tsumi is the most powerful of Kukama healers, a spiritual traveller who can dive under water, rise into the air and take the shape of any animal. From the room at the top of the museum, look out over the forest canopy and follow the journeys of these sages whose art is fading today.",
-          "tags": ["Kukama spirituality", "Canopy", "Intangible heritage"]
+          "tags": [
+            "Kukama spirituality",
+            "Canopy",
+            "Intangible heritage"
+          ]
         },
         "tsakarita": {
           "etage": "Passage, the walkway",
           "nom": "La Tsakarita",
           "nomKukama": "The direct connection",
           "description": "In Kukama, tsakarita means a shortcut, a direct link between two points. This walkway draws a straight line through time, plunging Kukama culture back into its pre-Columbian roots before reaching the exhibition space.",
-          "tags": ["Passage", "Time connection", "Living culture"]
+          "tags": [
+            "Passage",
+            "Time connection",
+            "Living culture"
+          ]
         },
         "ikuachiru": {
           "etage": "Ground floor, cultural space",
           "nom": "La Ikuachiru",
           "nomKukama": "Shared knowledge",
           "description": "In Kukama, ikuachiru is the place where knowledge lives. The last stop on the visit, both gallery and workshop: its walls tell stories, its tables host creation. Kukama art and craft are lived and passed on. A shop offers work by local artisans.",
-          "tags": ["Gallery", "Workshop", "Kukama craft"]
+          "tags": [
+            "Gallery",
+            "Workshop",
+            "Kukama craft"
+          ]
         }
       }
     },
@@ -352,38 +559,40 @@
         ]
       },
       "financement": {
-        "label": "Funding and renovation",
+        "label": "2024: Casa Redonda build, funding and renovation",
         "items": [
+          "Construction of the Casa Redonda cultural interpretation centre (main site work shown in the photo gallery)",
           "FONJEP/JSI funding secured",
           "Building renovation"
         ]
       },
       "subvention_casa": {
-        "label": "Grant, Casa AKUU and artistic design",
+        "label": "2025: Casa Redonda continued, grant and Casa AKUU",
         "items": [
+          "Further work on Casa Redonda and the interpretation centre structure",
           "Grant from the Peruvian Ministry of Culture",
           "Casa AKUU improved",
           "Artistic design of the interpretation centre"
         ]
       },
       "production": {
-        "label": "2026: fit-out, works and training",
+        "label": "2026: interior finishing, works and training",
         "items": [
-          "Purchase and production of works (wave 1, April-June 2026)",
-          "Works and fit-out: first floor of the interpretation centre, cultural space, sanitation (April-July 2026)",
-          "Initial training for the management committee (May-September 2026)",
+          "Purchase and production of works (wave 1, April to June 2026)",
+          "Works and interior finishing, first floor of the interpretation centre, cultural space, sanitation (April to July 2026)",
+          "Initial training for the management committee (May to September 2026)",
           "Cultural programme and first public workshops (from September 2026)",
-          "Completion of other levels, Tsakarita walkway, exterior (October 2026 - January 2027)",
-          "Purchases and materials, wave 2 (November 2026 - March 2027)"
+          "Completion of other levels, Tsakarita walkway, exterior (October 2026 to January 2027)",
+          "Purchases and materials, wave 2 (November 2026 to March 2027)"
         ]
       },
       "ouverture": {
-        "label": "Opening and consolidation (2026-2027)",
+        "label": "Opening and consolidation (2026 to 2027)",
         "items": [
           "Partial opening planned for September 2026",
-          "Further committee training (January-May 2027)",
+          "Further committee training (January to May 2027)",
           "Full official opening planned for June 2027",
-          "Cultural programme and evaluation period (June-December 2027)"
+          "Cultural programme and evaluation period (June to December 2027)"
         ]
       }
     },
@@ -428,24 +637,57 @@
     "hero_subtitle": "Live a unique experience in the heart of the Peruvian Amazon",
     "why_title": "Why go with AKUU?",
     "why_items": {
-      "immersion": { "title": "Real responsibilities", "text": "AKUU is a human-scale association. You're not a number: you respond to a need expressed directly by the community and own your mission from start to finish." },
-      "impact": { "title": "Act for the Amazon", "text": "The people who live in the Amazon forest are its greatest protectors. Working with them is the most concrete and honest way to contribute to its preservation." },
-      "skills": { "title": "Learn, don't teach", "text": "Kukama communities hold knowledge found nowhere else. Every former volunteer comes back with a different understanding of time, life and community." },
-      "community": { "title": "A mission that matters", "text": "No boxes to tick, no photo opportunities. A useful presence, within a lasting project, alongside people who have chosen to welcome you." }
+      "immersion": {
+        "title": "Real responsibilities",
+        "text": "You respond to a need voiced directly by the community and carry your mission through from start to finish."
+      },
+      "impact": {
+        "title": "Concrete action for the Amazon",
+        "text": "People who live in the forest are its first protectors. Working with them is the most direct way to contribute."
+      },
+      "skills": {
+        "title": "Learn as much as you teach",
+        "text": "Amazonian communities hold knowledge and a worldview that change those who come to meet them."
+      },
+      "community": {
+        "title": "An experience that counts",
+        "text": "Within a long-term project, alongside people who have chosen to welcome you."
+      }
     },
     "process_kicker": "In 4 steps",
     "process_title": "How does it work?",
     "process_steps": {
-      "step1": { "title": "Application", "text": "Send your application via our contact form." },
-      "step2": { "title": "Interview", "text": "Discussion with the team to validate your motivation and skills." },
-      "step3": { "title": "Preparation", "text": "Pre-departure training and logistical support." },
-      "step4": { "title": "Mission", "text": "Departure for Puerto Miguel and immersion in projects." }
+      "step1": {
+        "title": "Application",
+        "text": "Send your application via our contact form."
+      },
+      "step2": {
+        "title": "Interview",
+        "text": "Discussion with the team to validate your motivation and skills."
+      },
+      "step3": {
+        "title": "Preparation",
+        "text": "Pre-departure training and logistical support."
+      },
+      "step4": {
+        "title": "Mission",
+        "text": "Departure for Puerto Miguel and immersion in projects."
+      }
     },
     "missions_title": "Types of missions",
     "missions": {
-      "civique": { "title": "Civic service", "text": "Via AIME ONG / France Volontaires. 6 to 12 months." },
-      "benevole": { "title": "Long-term volunteering", "text": "3 to 6 month field mission." },
-      "stage": { "title": "Internship", "text": "Supervised internship of 2 to 6 months." }
+      "civique": {
+        "title": "Civic service",
+        "text": "Via AIME ONG / France Volontaires. 6 to 12 months."
+      },
+      "benevole": {
+        "title": "Long-term volunteering",
+        "text": "3 to 6 month field mission."
+      },
+      "stage": {
+        "title": "Internship",
+        "text": "Supervised internship of 2 to 6 months."
+      }
     },
     "testimonials_title": "They volunteered with AKUU",
     "testimonials": {
@@ -528,98 +770,133 @@
     "map_iframe_title": "Puerto Miguel, Loreto, Peru"
   },
   "hydrama": {
-    "tag_energy": "Renewable energy",
-    "tag_amazon": "Amazonia",
-    "tag_suspended": "Suspended project",
-    "location_value": "Vista Alegre, Amazonia",
-    "video_kicker": "Video",
-    "hero_title": "HYDRAMA",
-    "hero_subtitle": "Clean energy for isolated Amazonian communities",
-    "suspended_notice": "This project is currently suspended since COVID due to lack of funding. Its relaunch is being planned.",
-    "what_title": "What is HYDRAMA?",
-    "what_text": "HYDRAMA is a project to install a hydroelectric turbine in the Amazon river, to bring clean, renewable energy to the isolated community of Vista Alegre. The goal is to replace polluting generators with a sustainable energy source that respects the Amazonian environment.",
-    "info_start": "Started",
-    "info_status": "Status",
-    "info_status_value": "Suspended",
-    "info_location": "Location",
-    "video_title": "Discover HYDRAMA",
-    "goals_title": "Our goals",
-    "goal_1_title": "Clean energy",
-    "goal_1_text": "Provide renewable electricity to Vista Alegre with no environmental impact.",
-    "goal_2_title": "Local autonomy",
-    "goal_2_text": "Enable the community to manage its own energy source independently.",
-    "goal_3_title": "Replicable model",
-    "goal_3_text": "Develop a model transferable to other isolated Amazonian communities."
+    "hero_title": "HYDR'AMA",
+    "hero_subtitle": "River energy at the service of Amazonian communities",
+    "suspended_notice": "On hold since COVID (funding). The sections below expand the story and what it means; the timeline then summarizes the key dates.",
+    "timeline_kicker": "Timeline",
+    "timeline_title": "Hydr'Ama through the years",
+    "timeline_steps": {
+      "utc_2017": {
+        "label": "2017 · UTC Compiègne",
+        "items": [
+          "Bespoke design, turbine tailored to river constraints: low current, seasonal variation, logistical isolation."
+        ]
+      },
+      "trujillo": {
+        "label": "Feb. to Jun. 2018 · WindAid workshops, Trujillo",
+        "items": [
+          "Manufacturing in the workshop alongside WindAid technicians. Parts, rotor, basin tests. Locally available materials, fully manual assembly."
+        ]
+      },
+      "turbine_ready": {
+        "label": "Jun. 2018 · Prototype delivered",
+        "items": [
+          "First AKUU and WindAid hydrokinetic turbine completed."
+        ]
+      },
+      "vista_install": {
+        "label": "Jul. 2018 · Vista Alegre",
+        "items": [
+          "Convoy to Amazonia. Floating platform co-built with residents of Puerto Miguel and Vista Alegre. Maintenance training. Integrated marker lighting."
+        ]
+      },
+      "loreto": {
+        "label": "End of 2018 · Loreto region",
+        "items": [
+          "Official authorization to install in the waters of the Amazon River."
+        ]
+      },
+      "field_2019": {
+        "label": "2019 · Follow-up mission",
+        "items": [
+          "Testing under real conditions. Performance measurements, identification of new candidate villages."
+        ]
+      },
+      "suspendu": {
+        "label": "Since 2020 · On hold",
+        "items": [
+          "Interrupted by COVID. Relaunch to be structured: data and open-source documentation available."
+        ]
+      }
+    },
+    "caption_groupe": "Diesel generator in Puerto Miguel",
+    "caption_rotor": "Turbine rotor",
+    "caption_chaine": "Transmission chain",
+    "caption_plateforme": "Turbine on the platform",
+    "caption_windaid": "Work with WindAid Institute",
+    "caption_vista": "Turbine and community in Vista Alegre",
+    "video_title": "HYDR'AMA on video",
+    "video_windaid_facebook_line1": "WindAid Institute",
+    "video_windaid_facebook_line2": "Facebook page · opens in a new tab",
+    "video_windaid_facebook_aria": "WindAid Institute Facebook page, opens in a new tab",
+    "join_cta_volunteers": "Volunteer with us",
+    "join_cta_contact": "Contact us"
   },
   "akuuvision": {
-    "tag_awareness": "Awareness",
-    "tag_climate": "Climate",
-    "tag_ongoing": "Ongoing",
+    "intro_kicker": "Augmented reality",
     "location_value": "France & Amazonia",
     "video_kicker": "Video",
     "hero_title": "AKUUVision",
-    "hero_subtitle": "Raising awareness on climate and Amazonian issues, in France and Peru",
+    "hero_subtitle": "Discover the Amazon in a new way through an augmented reality app",
     "what_title": "What is AKUUVision?",
-    "what_text": "AKUUVision is AKUU's awareness arm. Through participatory workshops, talks, and fun educational tools, we raise public awareness about climate issues and Amazonian communities. Our activities take place in France (schools, universities, companies) and in Puerto Miguel.",
+    "what_para1": "AKUUVision is an augmented reality app developed by AKUU to help people discover the Amazon differently. The rainforest often feels abstract to most people, so the association set out to build a concrete tool that everyone can use.",
+    "what_para2": "The app combines field photos, residents' voices, and immersive views of the forest and river. At events, visitors scan physical materials to unlock content brought straight from Puerto Miguel: faces, voices, plants, water. A way to make real what is happening thousands of kilometres away.",
+    "what_para3": "AKUUVision has been shown at many awareness events, including the Climax festival in Bordeaux and the Imaginarium Festival at UTC Compiègne. It was also presented on the Grenoble university campus through the IDEX Université Grenoble Alpes programme. In 2019, it won the national PIEED competition in Paris.",
     "info_start": "Started",
     "info_status": "Status",
     "info_status_value": "Ongoing",
     "info_location": "Location",
     "video_title": "AKUUVision on video",
-    "activities_title": "Our activities",
-    "act_1_title": "Climate Fresk",
-    "act_1_text": "Collaborative workshops to understand climate change mechanisms.",
-    "act_2_title": "Planet'AKUU",
-    "act_2_text": "School and university talks on Amazonian biodiversity.",
-    "act_3_title": "Forever the Game",
-    "act_3_text": "Educational board game on environmental issues, created by AKUU."
+    "diffusion_title": "Outreach and recognition",
+    "diffusion_1_title": "Festivals and public events",
+    "diffusion_1_text": "Climax in Bordeaux, the Imaginarium Festival at UTC Compiègne, and other awareness events.",
+    "diffusion_2_title": "Campus and IDEX",
+    "diffusion_2_text": "Showcase on the Grenoble university campus as part of the IDEX Université Grenoble Alpes programme.",
+    "diffusion_3_title": "PIEED competition",
+    "diffusion_3_text": "In 2019, the project won the national PIEED competition in Paris."
   },
   "cours_anglais": {
-    "tag_education": "Education",
-    "tag_location": "Puerto Miguel",
-    "tag_suspended": "Suspended project",
-    "location_value": "Puerto Miguel, Amazonia",
-    "hero_title": "English Classes",
-    "hero_subtitle": "Teaching English in Puerto Miguel to open new opportunities",
+    "hero_title": "English courses in Puerto Miguel",
+    "hero_subtitle": "Giving residents English skills to take part in ecotourism on their own territory",
     "suspended_notice": "This project is currently suspended since COVID due to lack of funding. Its relaunch is being planned.",
-    "what_title": "A development lever",
-    "what_text": "Since 2017, AKUU provided free English classes to Puerto Miguel residents. English is essential for local ecotourism development and offers new professional opportunities for young community members. Classes reached over 60 students, children and adults, before being suspended by the pandemic.",
-    "info_start": "Started",
-    "info_status": "Status",
-    "info_status_value": "Suspended",
-    "info_location": "Location",
-    "impact_title": "Our impact",
-    "impact_1": "Students trained",
-    "impact_2": "Years of classes",
-    "impact_3": "Active period"
+    "caption_contexte": "Puerto Miguel and daily life by the river",
+    "caption_programme": "Launching the programme with AKUU volunteers on site",
+    "caption_groupes": "Classes and activities with learner groups",
+    "caption_continuite": "Day-to-day teaching and exchange at Casa AKUU",
+    "caption_resultats": "Collective learning and ties with the community",
+    "impact_kicker": "Key figures",
+    "impact_title": "At a glance",
+    "impact_1": "Learners reached by the programme",
+    "impact_2": "Volunteer teachers involved",
+    "impact_3": "Active period before the pause"
   },
   "equipe": {
     "yoann": {
       "role": "Co-president · Co-founder",
       "bio": "Co-founder of the association, Climate Fresk facilitator."
     },
+    "aude": {
+      "role": "Co-president",
+      "bio": "To be completed."
+    },
     "marlon": {
       "role": "Co-founder",
       "bio": "From a small Amazonian village, Marlon is the essential link between AKUU and local communities."
     },
-    "copresident-2": {
-      "role": "Co-president",
+    "francois": {
+      "role": "Co-treasurer",
       "bio": "To be completed."
     },
-    "tresorier": {
-      "role": "Treasurer",
+    "tom": {
+      "role": "Co-treasurer",
       "bio": "To be completed."
     },
-    "vice-tresorier": {
-      "role": "Deputy treasurer",
+    "lea": {
+      "role": "Co-secretary",
       "bio": "To be completed."
     },
-    "secretaire": {
-      "role": "Secretary",
-      "bio": "To be completed."
-    },
-    "vice-secretaire": {
-      "role": "Deputy secretary",
+    "alice": {
+      "role": "Co-secretary",
       "bio": "To be completed."
     }
   },

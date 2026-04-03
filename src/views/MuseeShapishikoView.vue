@@ -6,7 +6,7 @@
       image="/images/hero-musee.jpg"
     />
 
-    <!-- Description — proportions : src/data/musee-section-layouts.js → description -->
+    <!-- Description / proportions : src/data/musee-section-layouts.js → description -->
     <section class="section-padding bg-cream">
       <div class="container-narrow">
         <MuseeSectionWithSideVisual

@@ -3,105 +3,173 @@
     <PageHero
       :title="$t('hydrama.hero_title')"
       :subtitle="$t('hydrama.hero_subtitle')"
-      image="/images/hero-projets.jpg"
+      image="/images/hydrama/hydrama-vista-alegre.jpg"
     />
 
-    <!-- Badge suspendu -->
-    <section class="section-padding bg-cream">
-      <div class="container-narrow">
-        <div class="max-w-3xl mx-auto">
-          <div class="flex items-center gap-3 px-5 py-3 rounded-xl bg-amber-50 border border-amber-200 mb-10">
-            <svg class="w-5 h-5 text-amber-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
-            </svg>
-            <p class="text-sm text-amber-800 font-medium">{{ $t('hydrama.suspended_notice') }}</p>
-          </div>
+    <!-- Contexte projet (tout en haut) -->
+    <section class="section-padding bg-cream border-b border-night/[0.06]">
+      <div class="container-narrow max-w-4xl mx-auto">
+        <div class="flex items-start gap-3 px-5 py-4 rounded-xl bg-amber-50 border border-amber-200">
+          <svg class="w-5 h-5 text-amber-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+          </svg>
+          <p class="text-sm md:text-base text-amber-900 font-medium leading-relaxed">
+            {{ $t('hydrama.suspended_notice') }}
+          </p>
+        </div>
+      </div>
+    </section>
 
-          <div class="grid md:grid-cols-2 gap-12 items-start">
-            <div class="fade-in-up">
-              <h2 class="text-3xl md:text-4xl font-serif font-bold text-night mb-6">
-                {{ $t('hydrama.what_title') }}
+    <!-- Récit de présentation -->
+    <section class="section-padding bg-cream">
+      <div class="container-narrow max-w-4xl mx-auto">
+        <article class="space-y-14 md:space-y-16 text-night/80 text-lg leading-relaxed">
+          <section
+            v-for="(block, i) in narrative.sections"
+            :key="i"
+          >
+            <template v-if="sectionVisuals[i]">
+              <div class="grid md:grid-cols-2 gap-8 lg:gap-10 items-start">
+                <div :class="i % 2 === 1 ? 'md:order-2' : ''">
+                  <h2 class="text-2xl md:text-3xl font-serif font-bold text-night mb-5 text-balance">
+                    {{ block.title }}
+                  </h2>
+                  <div class="space-y-4">
+                    <p v-for="(para, j) in block.paragraphs" :key="j">
+                      {{ para }}
+                    </p>
+                  </div>
+                </div>
+                <figure
+                  class="m-0 shrink-0"
+                  :class="i % 2 === 1 ? 'md:order-1' : ''"
+                >
+                  <div class="overflow-hidden rounded-2xl border border-night/[0.08] shadow-sm bg-night/[0.02]">
+                    <img
+                      :src="sectionVisuals[i].src"
+                      :alt="$t(sectionVisuals[i].captionKey)"
+                      class="w-full aspect-[4/3] object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <figcaption class="mt-2 text-sm text-night/55 leading-snug">
+                    {{ $t(sectionVisuals[i].captionKey) }}
+                  </figcaption>
+                </figure>
+              </div>
+            </template>
+            <template v-else>
+              <h2 class="text-2xl md:text-3xl font-serif font-bold text-night mb-5 text-balance">
+                {{ block.title }}
               </h2>
-              <p class="text-night/60 text-lg leading-relaxed mb-4">
-                {{ $t('hydrama.what_text') }}
-              </p>
-              <div class="flex flex-wrap gap-2 mt-6">
-                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-forest/10 text-forest">{{ $t('hydrama.tag_energy') }}</span>
-                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-bleu/10 text-bleu">{{ $t('hydrama.tag_amazon') }}</span>
-                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-700">{{ $t('hydrama.tag_suspended') }}</span>
+              <div class="space-y-4">
+                <p v-for="(para, j) in block.paragraphs" :key="j">
+                  {{ para }}
+                </p>
               </div>
-            </div>
-            <div class="fade-in-up">
-              <div class="p-6 rounded-2xl bg-white border border-night/[0.06] shadow-sm">
-                <dl class="space-y-4 text-sm">
-                  <div class="flex justify-between">
-                    <dt class="text-night/40 font-medium">{{ $t('hydrama.info_start') }}</dt>
-                    <dd class="text-night font-semibold">2018</dd>
-                  </div>
-                  <div class="border-t border-night/[0.06]" />
-                  <div class="flex justify-between">
-                    <dt class="text-night/40 font-medium">{{ $t('hydrama.info_status') }}</dt>
-                    <dd class="text-amber-600 font-semibold">{{ $t('hydrama.info_status_value') }}</dd>
-                  </div>
-                  <div class="border-t border-night/[0.06]" />
-                  <div class="flex justify-between">
-                    <dt class="text-night/40 font-medium">{{ $t('hydrama.info_location') }}</dt>
-                    <dd class="text-night font-semibold">Vista Alegre, Amazonie</dd>
-                  </div>
-                </dl>
-              </div>
-            </div>
-          </div>
+            </template>
+          </section>
+        </article>
+      </div>
+    </section>
+
+    <!-- Frise chronologique (après le texte) -->
+    <section class="section-padding bg-white">
+      <div class="container-narrow">
+        <div class="text-center mb-14">
+          <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">
+            {{ $t('hydrama.timeline_kicker') }}
+          </p>
+          <h2 class="text-3xl md:text-4xl font-serif font-bold text-night">
+            {{ $t('hydrama.timeline_title') }}
+          </h2>
+        </div>
+        <div class="relative max-w-4xl mx-auto">
+          <TheMuseeMilestones
+            :steps="hydramaTimelineSteps"
+            trail-bird-src="/images/collibri-akuu.png"
+            :trail-bird-alt="$t('common.colibri_trail_alt')"
+            gradient-id="hydramaMilestoneGradient"
+          />
         </div>
       </div>
     </section>
 
     <!-- Vidéo -->
-    <section class="section-padding bg-white">
+    <section class="section-padding bg-cream">
       <div class="container-narrow max-w-3xl mx-auto">
         <div class="text-center mb-8">
-          <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">{{ $t('hydrama.video_kicker') }}</p>
-          <h2 class="text-3xl md:text-4xl font-serif font-bold text-night">{{ $t('hydrama.video_title') }}</h2>
+          <h2 class="text-2xl md:text-4xl font-serif font-bold text-night tracking-tight">
+            {{ $t('hydrama.video_title') }}
+          </h2>
         </div>
+        <p class="text-night/70 text-center text-base md:text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
+          {{ narrative.video_intro }}
+        </p>
         <VideoEmbed
           video-id="PUpAEcFQg4w"
           :title="$t('hydrama.hero_title')"
         />
+        <div class="mt-8 flex justify-center">
+          <a
+            href="https://www.facebook.com/Windaid/"
+            class="group inline-flex items-center gap-2.5 rounded-full border border-night/12 bg-white/80 px-5 py-2.5 text-sm font-medium text-night shadow-sm transition-colors hover:border-forest/25 hover:bg-forest/[0.06] hover:text-forest"
+            target="_blank"
+            rel="noopener noreferrer"
+            :aria-label="$t('hydrama.video_windaid_facebook_aria')"
+          >
+            <span
+              class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#1877F2]/10 text-[#1877F2] transition-colors group-hover:bg-[#1877F2]/15"
+              aria-hidden="true"
+            >
+              <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+              </svg>
+            </span>
+            <span class="text-left leading-snug">
+              {{ $t('hydrama.video_windaid_facebook_line1') }}
+              <span class="block text-xs font-normal text-night/50 group-hover:text-forest/70">
+                {{ $t('hydrama.video_windaid_facebook_line2') }}
+              </span>
+            </span>
+            <svg
+              class="h-4 w-4 shrink-0 text-night/35 transition-colors group-hover:text-forest/60"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+            </svg>
+          </a>
+        </div>
       </div>
     </section>
 
-    <!-- Objectifs -->
-    <section class="section-padding bg-cream">
-      <div class="container-narrow max-w-3xl mx-auto">
-        <h2 class="text-2xl font-serif font-bold text-night mb-8 text-center">{{ $t('hydrama.goals_title') }}</h2>
-        <div class="grid sm:grid-cols-3 gap-6">
-          <div class="p-5 rounded-2xl bg-white border border-night/[0.06] text-center">
-            <div class="w-12 h-12 rounded-xl bg-forest/10 flex items-center justify-center mx-auto mb-3">
-              <svg class="w-6 h-6 text-forest" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-              </svg>
-            </div>
-            <h3 class="font-serif font-bold text-night mb-1">{{ $t('hydrama.goal_1_title') }}</h3>
-            <p class="text-xs text-night/50">{{ $t('hydrama.goal_1_text') }}</p>
-          </div>
-          <div class="p-5 rounded-2xl bg-white border border-night/[0.06] text-center">
-            <div class="w-12 h-12 rounded-xl bg-bleu/10 flex items-center justify-center mx-auto mb-3">
-              <svg class="w-6 h-6 text-bleu" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M20.893 13.393l-1.135-1.135a2.252 2.252 0 0 1-.421-.585l-1.08-2.16a.414.414 0 0 0-.663-.107.827.827 0 0 1-.812.21l-1.273-.363a.89.89 0 0 0-.738 1.595l.587.39c.59.395.674 1.23.172 1.732l-.2.2c-.212.212-.33.498-.33.796v.41c0 .409-.11.809-.32 1.158l-1.315 2.191a2.11 2.11 0 0 1-1.81 1.025 1.055 1.055 0 0 1-1.055-1.055v-1.172c0-.92-.56-1.747-1.414-2.089l-.655-.261a2.25 2.25 0 0 1-1.383-2.46l.007-.042a2.25 2.25 0 0 1 .29-.787l.09-.15a2.25 2.25 0 0 1 2.37-1.048l1.178.236a1.125 1.125 0 0 0 1.302-.795l.208-.73a1.125 1.125 0 0 0-.578-1.315l-.665-.332-.091.091a2.25 2.25 0 0 1-1.591.659h-.18c-.249 0-.487.1-.662.274a.931.931 0 0 1-1.458-1.137l1.411-2.353a2.25 2.25 0 0 0 .286-.76m11.928 9.869A9 9 0 0 0 8.965 3.525m11.928 9.868A9 9 0 1 1 8.965 3.525" />
-              </svg>
-            </div>
-            <h3 class="font-serif font-bold text-night mb-1">{{ $t('hydrama.goal_2_title') }}</h3>
-            <p class="text-xs text-night/50">{{ $t('hydrama.goal_2_text') }}</p>
-          </div>
-          <div class="p-5 rounded-2xl bg-white border border-night/[0.06] text-center">
-            <div class="w-12 h-12 rounded-xl bg-leaf/20 flex items-center justify-center mx-auto mb-3">
-              <svg class="w-6 h-6 text-forest" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-              </svg>
-            </div>
-            <h3 class="font-serif font-bold text-night mb-1">{{ $t('hydrama.goal_3_title') }}</h3>
-            <p class="text-xs text-night/50">{{ $t('hydrama.goal_3_text') }}</p>
-          </div>
+    <!-- Rejoindre -->
+    <section class="section-padding bg-white">
+      <div class="container-narrow max-w-3xl mx-auto text-center">
+        <h2 class="text-2xl md:text-3xl font-serif font-bold text-night mb-6">
+          {{ narrative.join_title }}
+        </h2>
+        <div class="space-y-4 text-night/75 text-lg leading-relaxed text-left sm:text-center max-w-2xl mx-auto mb-8">
+          <p>{{ narrative.join_p1 }}</p>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4">
+          <router-link
+            to="/volontaires"
+            class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-forest text-white font-semibold hover:bg-forest/90 transition-colors"
+          >
+            {{ $t('hydrama.join_cta_volunteers') }}
+          </router-link>
+          <router-link
+            to="/contact"
+            class="inline-flex items-center justify-center px-6 py-3 rounded-full border-2 border-forest text-forest font-semibold hover:bg-forest/5 transition-colors"
+          >
+            {{ $t('hydrama.join_cta_contact') }}
+          </router-link>
         </div>
       </div>
     </section>
@@ -111,7 +179,53 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import PageHero from '@/components/shared/PageHero.vue'
 import VideoEmbed from '@/components/shared/VideoEmbed.vue'
 import DonSection from '@/components/home/DonSection.vue'
+import TheMuseeMilestones from '@/components/shared/TheMuseeMilestones.vue'
+import hydramaNarrative from '@/data/hydrama-narrative.json'
+
+const { locale, t, tm } = useI18n()
+
+const narrative = computed(() => {
+  const loc = locale.value
+  return hydramaNarrative[loc] || hydramaNarrative.fr
+})
+
+const hydramaTimelineDefs = [
+  { key: 'utc_2017', year: '2017', status: 'done' },
+  { key: 'trujillo', year: '2018', status: 'done' },
+  { key: 'turbine_ready', year: '2018', status: 'done' },
+  { key: 'vista_install', year: '2018', status: 'done' },
+  { key: 'loreto', year: '2018', status: 'done' },
+  { key: 'field_2019', year: '2019', status: 'done' },
+  { key: 'suspendu', year: '2020…', status: 'pending' }
+]
+
+const hydramaTimelineSteps = computed(() =>
+  hydramaTimelineDefs.map((d) => {
+    const rawItems = tm(`hydrama.timeline_steps.${d.key}.items`)
+    const items = Array.isArray(rawItems) ? rawItems : []
+    return {
+      label: t(`hydrama.timeline_steps.${d.key}.label`),
+      year: d.year,
+      status: d.status,
+      items
+    }
+  })
+)
+
+/** Une entrée par chapitre du récit (index = ordre dans hydrama-narrative.json) ; null = texte seul */
+const sectionVisuals = [
+  { src: '/images/hydrama/hydrama-groupe-electrogene.jpg', captionKey: 'hydrama.caption_groupe' },
+  { src: '/images/hydrama/hydrama-windaid.jpg', captionKey: 'hydrama.caption_windaid' },
+  { src: '/images/hydrama/hydrama-rotor.jpg', captionKey: 'hydrama.caption_rotor' },
+  { src: '/images/hydrama/hydrama-plateforme-eau.jpg', captionKey: 'hydrama.caption_plateforme' },
+  null,
+  { src: '/images/hydrama/hydrama-chaine-transmission.jpg', captionKey: 'hydrama.caption_chaine' },
+  null,
+  { src: '/images/hydrama/hydrama-vista-alegre.jpg', captionKey: 'hydrama.caption_vista' }
+]
 </script>

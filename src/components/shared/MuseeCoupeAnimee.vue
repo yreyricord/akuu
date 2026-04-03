@@ -22,19 +22,18 @@
       :style="stageStyle"
       :aria-label="$t('musee.coupe.title')"
     >
-      <div class="coupe-sticky sticky top-0 h-[100dvh] flex flex-col">
-        <div class="w-full max-w-7xl mx-auto flex flex-col flex-1 min-h-0">
-
-          <!-- Plan : remplit tout l'espace disponible au-dessus de la card -->
+      <div class="coupe-sticky sticky top-0 min-h-[100dvh] flex flex-col justify-center py-4 md:py-6">
+        <div class="w-full max-w-7xl mx-auto flex flex-col gap-4 md:gap-5 shrink-0">
+          <!-- Plan : hauteur = ratio naturel de l’image (pas flex-1 / pas object-contain plein cadre) ; carte toujours en dessous -->
           <div
-            class="coupe-plan-wrapper relative w-full flex-1 min-h-0 bg-black/[0.02] overflow-hidden"
+            class="coupe-plan-wrapper relative w-full rounded-2xl shadow-xl bg-night/[0.04] border border-night/[0.06] ring-1 ring-black/[0.04] overflow-hidden"
           >
             <!-- Wrapper zoomable (img + SVG se transforment ensemble) -->
-            <div class="coupe-zoomable absolute inset-0 flex items-center justify-center" :style="zoomStyle">
+            <div class="coupe-zoomable relative w-full" :style="zoomStyle">
               <img
                 src="/images/musee/coupe_final.png"
                 :alt="$t('musee.coupe.alt')"
-                class="w-full h-full object-contain block coupe-image"
+                class="w-full h-auto block coupe-image"
                 :class="{ revealed: imageRevealed }"
                 @load="onImageLoad"
               />

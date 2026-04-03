@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
       <div
         v-for="v in videos"
         :key="v.id"
         class="rounded-2xl overflow-hidden shadow-xl bg-night/5 border border-night/[0.06]"
       >
-        <div class="relative w-full max-w-[400px] mx-auto bg-night">
+        <div class="relative w-full mx-auto bg-night">
           <div class="relative w-full" style="padding-bottom: 177.78%;">
             <iframe
               :src="`https://www.tiktok.com/player/v1/${v.id}?music_info=1&description=1`"
@@ -17,7 +17,7 @@
             />
           </div>
         </div>
-        <div v-if="v.share_url" class="px-4 py-3 bg-white border-t border-night/[0.06] text-center">
+        <div v-if="v.share_url" class="px-2 py-2 md:px-3 md:py-2.5 bg-white border-t border-night/[0.06] text-center">
           <a
             :href="v.share_url"
             target="_blank"

@@ -7,17 +7,21 @@
         : 'bg-transparent'
     ]"
   >
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16 md:h-20">
-        <router-link to="/" class="flex items-center gap-3 group" @click="menuOpen = false">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-visible">
+      <div class="relative flex justify-between h-16 md:h-20 overflow-visible">
+        <router-link
+          to="/"
+          class="flex items-start shrink-0 z-10 -ml-0.5 sm:ml-0 group"
+          @click="menuOpen = false"
+        >
           <img
             src="/images/LOGOAKUU.png"
             alt="AKUU"
-            class="h-10 w-auto drop-shadow-md"
+            class="h-24 w-auto md:h-[7.5rem] drop-shadow-lg group-hover:opacity-95 transition-opacity"
           />
         </router-link>
 
-        <div class="hidden lg:flex items-center gap-1">
+        <div class="hidden lg:flex items-center gap-1 self-center">
           <router-link
             v-for="item in navItems"
             :key="item.path"
@@ -36,14 +40,14 @@
           </router-link>
         </div>
 
-        <div class="hidden lg:flex items-center gap-3">
+        <div class="hidden lg:flex items-center gap-3 self-center">
           <LanguageSwitch :transparent="!scrolled" />
           <DonButton :label="$t('footer.don_cta')" />
         </div>
 
         <button
           @click="menuOpen = !menuOpen"
-          class="lg:hidden p-2 rounded-lg transition-colors"
+          class="lg:hidden p-2 rounded-lg transition-colors self-center"
           :class="scrolled || menuOpen ? 'text-night hover:bg-gray-100' : 'text-white hover:bg-white/10'"
           aria-label="Menu"
         >

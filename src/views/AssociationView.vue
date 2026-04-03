@@ -30,15 +30,13 @@
             </blockquote>
           </div>
           <div class="fade-in-up rounded-2xl shadow-xl overflow-hidden bg-night/5">
-            <video
-              src="/videos/itv.mp4"
-              controls
-              preload="metadata"
-              playsinline
+            <img
+              src="/images/hero-volontaires.jpg"
+              :alt="$t('association.who_image_alt')"
               class="w-full h-auto block"
-            >
-              {{ $t('common.video_not_supported') }}
-            </video>
+              loading="lazy"
+              decoding="async"
+            />
           </div>
         </div>
       </div>
@@ -68,23 +66,6 @@
       </div>
     </section>
 
-    <!-- Timeline -->
-    <section class="section-padding bg-cream">
-      <div class="container-narrow">
-        <div class="text-center mb-14">
-          <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">Depuis 2016</p>
-          <h2 class="text-3xl md:text-4xl font-serif font-bold text-night">{{ $t('association.history_title') }}</h2>
-        </div>
-        <div class="relative max-w-4xl mx-auto">
-          <TheTimeline
-            :items="sortedTimeline"
-            trail-bird-src="/images/collibri-akuu.png"
-            :trail-bird-alt="$t('common.colibri_trail_alt')"
-          />
-        </div>
-      </div>
-    </section>
-
     <!-- Équipe -->
     <section class="section-padding bg-white">
       <div class="container-narrow">
@@ -95,10 +76,49 @@
             :key="member.id ?? `${member.prenom}-${member.nom}`"
             :prenom="member.prenom || $t('common.placeholder_firstname')"
             :nom="member.nom || $t('common.placeholder_lastname')"
-            :role="$t(`equipe.${member.id}.role`)"
+            :role="$t(`equipe.${String(member.id).toLowerCase()}.role`)"
             :photo="member.photo"
-            :bio="$t(`equipe.${member.id}.bio`)"
+            :bio="$t(`equipe.${String(member.id).toLowerCase()}.bio`)"
           />
+        </div>
+      </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="section-padding bg-cream">
+      <div class="max-w-7xl mx-auto w-full">
+        <div class="text-center mb-14">
+          <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">{{ $t('association.history_since') }}</p>
+          <h2 class="text-3xl md:text-4xl font-serif font-bold text-night">{{ $t('association.history_title') }}</h2>
+        </div>
+        <div class="relative w-full">
+          <TheTimeline
+            :items="sortedTimeline"
+            trail-bird-src="/images/collibri-akuu.png"
+            :trail-bird-alt="$t('common.colibri_trail_alt')"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Reportage ITV -->
+    <section class="section-padding bg-white">
+      <div class="container-narrow">
+        <div class="text-center mb-8 md:mb-10">
+          <h2 class="text-2xl md:text-3xl font-serif font-bold text-night">
+            {{ $t('association.itv_section_title') }}
+          </h2>
+        </div>
+        <div class="max-w-3xl mx-auto rounded-2xl shadow-xl overflow-hidden bg-night/5">
+          <video
+            src="/videos/itv.mp4"
+            controls
+            preload="metadata"
+            playsinline
+            class="w-full h-auto block"
+          >
+            {{ $t('common.video_not_supported') }}
+          </video>
         </div>
       </div>
     </section>
@@ -178,7 +198,7 @@
             />
             <div
               v-else-if="manualTiktokUrls.length"
-              class="grid grid-cols-1 sm:grid-cols-2 gap-8"
+              class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4"
             >
               <TikTokEmbed
                 v-for="(url, idx) in manualTiktokUrls"
@@ -190,14 +210,15 @@
                 :hint-text="$t('association.social_fallback_tiktok')"
               />
             </div>
-            <TikTokEmbed
-              v-else
-              :video-url="reseaux.tiktok.videoUrl"
-              :profile-url="reseaux.tiktok.profileUrl"
-              :title="$t('association.social_tiktok_title')"
-              :cta-text="$t('association.social_tiktok_cta')"
-              :hint-text="$t('association.social_fallback_tiktok')"
-            />
+            <div v-else class="max-w-sm mx-auto w-full">
+              <TikTokEmbed
+                :video-url="reseaux.tiktok.videoUrl"
+                :profile-url="reseaux.tiktok.profileUrl"
+                :title="$t('association.social_tiktok_title')"
+                :cta-text="$t('association.social_tiktok_cta')"
+                :hint-text="$t('association.social_fallback_tiktok')"
+              />
+            </div>
           </div>
         </div>
       </div>

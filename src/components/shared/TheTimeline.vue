@@ -2,9 +2,10 @@
   <div class="relative" ref="containerRef">
 
     <!-- SVG chemin animé (desktop) -->
+    <!-- Au-dessus des cartes : sinon le fil + colibri passent sous les fonds blancs (invisibles) -->
     <svg
       v-if="svgReady"
-      class="hidden md:block absolute top-0 left-0 pointer-events-none overflow-visible"
+      class="hidden md:block absolute top-0 left-0 z-20 pointer-events-none overflow-visible"
       :width="svgWidth"
       :height="svgHeight"
     >
@@ -35,7 +36,6 @@
         :y="birdLayout.y - birdSize / 2"
         :width="birdSize"
         :height="birdSize"
-        class="trail-bird-on-path"
         :transform="`rotate(${birdLayout.angle} ${birdLayout.x} ${birdLayout.y})`"
         preserveAspectRatio="xMidYMid meet"
         pointer-events="none"
@@ -55,17 +55,17 @@
     <div
       v-for="(item, index) in items"
       :key="item.annee"
-      class="relative grid md:grid-cols-2 gap-0 fade-in-up"
+      class="relative z-0 grid md:grid-cols-2 gap-0 fade-in-up"
     >
       <!-- Colonne contenu -->
-      <div :class="['relative pb-12', index % 2 === 1 ? 'md:order-2 md:pl-16' : 'md:order-1 md:pr-16']">
+      <div :class="['relative pb-12', index % 2 === 1 ? 'md:order-2 md:pl-8 lg:pl-10' : 'md:order-1 md:pr-8 lg:pr-10']">
 
         <!-- Point de connexion -->
         <div
           :ref="(el) => setDotRef(el, index)"
           class="hidden md:block absolute top-6 z-10 rounded-full ring-4 ring-cream shadow-lg transition-all duration-500"
           :class="[
-            index % 2 === 1 ? '-left-[2.6rem]' : '-right-[2.6rem]',
+            index % 2 === 1 ? '-left-[2.35rem]' : '-right-[2.35rem]',
             item.futur
               ? 'w-4 h-4 mt-0.5 bg-cream border-2 border-dashed'
               : activeIndex >= index ? 'w-5 h-5' : 'w-3.5 h-3.5 mt-[3px]'
@@ -77,7 +77,7 @@
 
         <!-- Card -->
         <div
-          class="rounded-2xl p-6 border transition-all duration-500"
+          class="rounded-2xl p-6 md:p-7 border transition-all duration-500"
           :class="item.futur
             ? 'bg-white/60 border-dashed border-leaf/40 shadow-none backdrop-blur-sm'
             : activeIndex === index
@@ -100,25 +100,47 @@
             </span>
           </div>
           <h3
-            class="text-lg font-serif font-bold mb-2 transition-colors duration-300"
+            class="text-lg font-serif font-bold mb-3 transition-colors duration-300"
             :class="item.futur ? 'text-night/50' : activeIndex === index ? 'text-forest' : 'text-night'"
           >
             {{ t(`association.timeline.${item.annee}.title`) }}
           </h3>
-          <p class="text-sm leading-relaxed" :class="item.futur ? 'text-night/35 italic' : 'text-night/55'">
+          <div
+            v-if="timelineParts(item.annee)"
+            class="space-y-4"
+            :class="item.futur ? 'text-night/35 italic' : 'text-night/60'"
+          >
+            <div v-for="(part, pi) in timelineParts(item.annee)" :key="pi">
+              <p
+                v-if="part.title"
+                class="text-sm font-semibold text-night/85 mb-1.5"
+                :class="item.futur ? 'text-night/45' : ''"
+              >
+                {{ part.title }}
+              </p>
+              <p class="text-sm leading-relaxed" :class="item.futur ? 'text-night/35' : 'text-night/60'">
+                {{ part.text }}
+              </p>
+            </div>
+          </div>
+          <p
+            v-else
+            class="text-sm leading-relaxed"
+            :class="item.futur ? 'text-night/35 italic' : 'text-night/55'"
+          >
             {{ t(`association.timeline.${item.annee}.description`) }}
           </p>
         </div>
       </div>
 
       <!-- Colonne année -->
-      <div :class="['hidden md:flex items-start pb-12', index % 2 === 1 ? 'md:order-1 md:justify-end md:pr-16' : 'md:order-2 md:justify-start md:pl-16']">
+      <div :class="['hidden md:flex items-start pb-12 shrink-0', index % 2 === 1 ? 'md:order-1 md:justify-end md:pr-8 lg:pr-10' : 'md:order-2 md:justify-start md:pl-8 lg:pl-10']">
         <div class="pt-2 select-none">
           <span
             class="block text-5xl font-serif font-black leading-none transition-all duration-500"
             :style="{ color: activeIndex >= index ? eraColor(item.annee) : '#3A404022' }"
           >
-            {{ item.annee }}
+            {{ item.label || item.annee }}
           </span>
         </div>
       </div>
@@ -138,7 +160,7 @@
           class="text-2xl font-serif font-black block mb-3 transition-colors duration-500"
           :style="{ color: activeIndex >= index ? eraColor(item.annee) : '#3A404040' }"
         >
-          {{ item.annee }}
+          {{ item.label || item.annee }}
         </span>
         <div
           class="rounded-2xl p-5 border"
@@ -156,8 +178,24 @@
               {{ t('association.timeline_upcoming_badge') }}
             </span>
           </div>
-          <h3 class="text-base font-serif font-bold mb-1.5" :class="item.futur ? 'text-night/50' : 'text-night'">{{ t(`association.timeline.${item.annee}.title`) }}</h3>
-          <p class="text-sm leading-relaxed" :class="item.futur ? 'text-night/35 italic' : 'text-night/55'">{{ t(`association.timeline.${item.annee}.description`) }}</p>
+          <h3 class="text-base font-serif font-bold mb-2" :class="item.futur ? 'text-night/50' : 'text-night'">{{ t(`association.timeline.${item.annee}.title`) }}</h3>
+          <div
+            v-if="timelineParts(item.annee)"
+            class="space-y-3.5"
+            :class="item.futur ? 'text-night/35 italic' : ''"
+          >
+            <div v-for="(part, pi) in timelineParts(item.annee)" :key="pi">
+              <p
+                v-if="part.title"
+                class="text-sm font-semibold text-night/85 mb-1"
+                :class="item.futur ? 'text-night/45 not-italic' : ''"
+              >
+                {{ part.title }}
+              </p>
+              <p class="text-sm leading-relaxed" :class="item.futur ? 'text-night/35' : 'text-night/60'">{{ part.text }}</p>
+            </div>
+          </div>
+          <p v-else class="text-sm leading-relaxed" :class="item.futur ? 'text-night/35 italic' : 'text-night/55'">{{ t(`association.timeline.${item.annee}.description`) }}</p>
         </div>
       </div>
     </div>
@@ -179,7 +217,19 @@ const props = defineProps({
   trailBirdAngleOffset: { type: Number, default: TRAIL_BIRD_ANGLE_OFFSET_VERTICAL_FRIZE }
 })
 
-const { t } = useI18n()
+const { t, tm } = useI18n()
+
+function timelineParts(annee) {
+  const raw = tm(`association.timeline.${annee}.parts`)
+  if (!Array.isArray(raw) || raw.length === 0) return null
+  const cleaned = raw
+    .map((p) => ({
+      title: typeof p?.title === 'string' ? p.title.trim() : '',
+      text: typeof p?.text === 'string' ? p.text.trim() : ''
+    }))
+    .filter((p) => p.text)
+  return cleaned.length ? cleaned : null
+}
 
 const containerRef = ref(null)
 const pathRef = ref(null)
@@ -208,7 +258,10 @@ function getEraKey(annee) {
   if (annee <= 2017) return 'foundation'
   if (annee <= 2019) return 'development'
   if (annee === 2020) return 'pause'
-  if (annee <= 2022) return 'relaunch'
+  if (annee <= 2021) return 'relaunch'
+  if (annee === 2023) return 'new_course'
+  if (annee === 2024) return 'construction'
+  if (annee === 2025) return 'acceleration'
   if (annee >= 2026) return 'soon'
   return 'museum'
 }
@@ -216,8 +269,11 @@ function getEraKey(annee) {
 const eraColors = {
   foundation: '#2D6915',
   development: '#04488F',
-  pause: '#3A4040',
+  pause: '#DC2626',
   relaunch: '#4071A6',
+  new_course: '#A6C639',
+  construction: '#7A9238',
+  acceleration: '#2D6915',
   soon: '#A6C639',
   museum: '#A6C639'
 }
@@ -238,12 +294,13 @@ function buildPath() {
   svgWidth.value = containerRect.width
   svgHeight.value = containerRect.height
 
+  const w = containerRect.width
   const points = dotElements.value
-    .map(dot => {
+    .map((dot) => {
       if (!dot) return null
       const r = dot.getBoundingClientRect()
       return {
-        x: containerRect.width / 2,
+        x: r.left - containerRect.left + r.width / 2,
         y: r.top - containerRect.top + r.height / 2
       }
     })
@@ -251,14 +308,18 @@ function buildPath() {
 
   if (points.length < 2) return
 
-  // Chemin avec courbes de Bézier pour un tracé organique
+  // Amplitude latérale : augmente avec la largeur du bloc pour que le colibri « contourne » visuellement les cartes
+  const waveMag = Math.min(140, Math.max(76, w * 0.1))
+
+  // Chemin en courbes de Bézier : ancrages sur les pastilles réelles (zigzag gauche/droite), contrôles déviés pour un arc généreux
   let d = `M ${points[0].x} ${points[0].y}`
   for (let i = 1; i < points.length; i++) {
     const p = points[i - 1]
     const c = points[i]
     const mid = (p.y + c.y) / 2
-    const wave = (i % 2 === 0) ? 55 : -55
-    d += ` C ${p.x + wave} ${mid - 25}, ${c.x - wave} ${mid + 25}, ${c.x} ${c.y}`
+    const dy = Math.min(48, Math.max(18, (c.y - p.y) * 0.12))
+    const wave = (i % 2 === 0) ? waveMag : -waveMag
+    d += ` C ${p.x + wave} ${mid - dy}, ${c.x - wave} ${mid + dy}, ${c.x} ${c.y}`
   }
 
   pathD.value = d
@@ -326,9 +387,3 @@ onUnmounted(() => {
   if (resizeObs) resizeObs.disconnect()
 })
 </script>
-
-<style scoped>
-.trail-bird-on-path {
-  filter: drop-shadow(0 4px 14px rgb(45 105 21 / 0.2));
-}
-</style>

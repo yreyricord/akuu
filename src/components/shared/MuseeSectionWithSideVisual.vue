@@ -132,7 +132,7 @@ const props = defineProps({
     validator: (v) =>
       ['none', 'xs', 'sm', 'md', 'lg', 'xl'].includes(v)
   },
-  /** top | center | stretch — stretch = même hauteur que le texte (md+), photo en object-cover */
+  /** top | center | stretch (stretch = même hauteur que le texte md+, photo en object-cover) */
   align: {
     type: String,
     default: 'top',

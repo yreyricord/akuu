@@ -1,44 +1,44 @@
 [
-  {
-    "id": "yoann",
-    "prenom": "Yoann",
-    "nom": "Rey-Ricord",
-    "photo": "/images/Yoann_PM.jpg"
-  },
-  {
-    "id": "copresident-2",
-    "prenom": "",
-    "nom": "",
-    "photo": ""
-  },
-  {
-    "id": "marlon",
+    {
+    "id": "Marlon",
     "prenom": "Marlon",
     "nom": "Diaz",
-    "photo": "/images/marlon.jpg"
+    "photo": "/images/equipe/Marlon_Diaz.jpg"
   },
   {
-    "id": "tresorier",
-    "prenom": "",
-    "nom": "",
-    "photo": ""
+    "id": "Yoann",
+    "prenom": "Yoann",
+    "nom": "Rey-Ricord",
+    "photo": "/images/equipe/Yoann_Rey-Ricord.jpg"
   },
   {
-    "id": "vice-tresorier",
-    "prenom": "",
-    "nom": "",
-    "photo": ""
+    "id": "Aude",
+    "prenom": "Aude",
+    "nom": "Lainé",
+    "photo": "/images/equipe/Aude_Laine.jpg"
   },
   {
-    "id": "secretaire",
-    "prenom": "",
-    "nom": "",
-    "photo": ""
+    "id": "Francois",
+    "prenom": "Francois",
+    "nom": "Million",
+    "photo": "/images/equipe/Francois_Million.jpg"
   },
   {
-    "id": "vice-secretaire",
-    "prenom": "",
-    "nom": "",
-    "photo": ""
+    "id": "Tom",
+    "prenom": "Tom",
+    "nom": "Ruel",
+    "photo": "/images/equipe/Tom_Ruel.jpg"
+  },
+  {
+    "id": "Lea",
+    "prenom": "Léa",
+    "nom": "Loiret",
+    "photo": "/images/equipe/Lea_Loiret.jpg"
+  },
+  {
+    "id": "Alice",
+    "prenom": "Alice",
+    "nom": "Lainé",
+    "photo": "/images/equipe/Alice_Laine.jpg"
   }
 ]
