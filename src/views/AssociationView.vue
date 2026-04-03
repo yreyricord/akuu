@@ -135,14 +135,7 @@
           </p>
         </div>
 
-        <p
-          v-if="feedLoading"
-          class="text-center text-sm text-night/40 py-10"
-        >
-          {{ $t('association.social_feed_loading') }}
-        </p>
-
-        <div v-else class="max-w-6xl mx-auto space-y-16">
+        <div class="max-w-6xl mx-auto space-y-16">
           <!-- Instagram -->
           <div>
             <h3 class="text-sm font-semibold uppercase tracking-widest text-night/45 mb-6">
@@ -247,7 +240,6 @@ import reseauxAssociation from '@/data/reseaux-association.json'
 const store = useDataStore()
 const reseaux = reseauxAssociation
 
-const feedLoading = ref(true)
 const instagramFeed = ref([])
 const tiktokFeed = ref([])
 
@@ -272,25 +264,25 @@ function socialFeedRequestUrl() {
 }
 
 async function loadSocialFeed() {
-  feedLoading.value = true
   const url = socialFeedRequestUrl()
-  if (!url) {
-    instagramFeed.value = []
-    tiktokFeed.value = []
-    feedLoading.value = false
-    return
-  }
+  if (!url) return
+
+  const ctrl = new AbortController()
+  const t = setTimeout(() => ctrl.abort(), 15000)
   try {
-    const res = await fetch(url)
-    if (!res.ok) throw new Error('social feed')
+    const res = await fetch(url, { signal: ctrl.signal })
+    if (!res.ok) return
     const data = await res.json()
-    instagramFeed.value = Array.isArray(data.instagram) ? data.instagram : []
-    tiktokFeed.value = Array.isArray(data.tiktok) ? data.tiktok : []
+    if (Array.isArray(data.instagram) && data.instagram.length) {
+      instagramFeed.value = data.instagram
+    }
+    if (Array.isArray(data.tiktok) && data.tiktok.length) {
+      tiktokFeed.value = data.tiktok
+    }
   } catch {
-    instagramFeed.value = []
-    tiktokFeed.value = []
+    /* replis déjà affichés (JSON / cartes) */
   } finally {
-    feedLoading.value = false
+    clearTimeout(t)
   }
 }
 
