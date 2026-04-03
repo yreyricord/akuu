@@ -838,7 +838,6 @@
   },
   "akuuvision": {
     "intro_kicker": "Réalité augmentée",
-    "location_value": "France & Amazonie",
     "video_kicker": "Vidéo",
     "hero_title": "AKUUVision",
     "hero_subtitle": "Découvrir l'Amazonie autrement grâce à une application de réalité augmentée",
@@ -846,10 +845,6 @@
     "what_para1": "AKUUVision est une application de réalité augmentée développée par AKUU pour faire découvrir l'Amazonie autrement. Partant du constat que la forêt reste abstraite pour la plupart des gens, l'association a voulu créer un outil concret, accessible à tous.",
     "what_para2": "Le projet prend la forme d'une application combinant photos de terrain, témoignages d'habitants et immersion dans les paysages de la forêt et du fleuve. En scannant des supports physiques lors d'événements, les visiteurs accèdent à des contenus ramenés directement depuis Puerto Miguel : visages, voix, végétation, eau. Une façon de rendre tangible ce qui se passe à des milliers de kilomètres.",
     "what_para3": "AKUUVision a été présenté dans plusieurs événements de sensibilisation, dont le festival Climax à Bordeaux et l'Imaginarium Festival de l'UTC Compiègne. Le projet a également été exposé sur le campus universitaire de Grenoble dans le cadre de l'IDEX Université Grenoble Alpes. En 2019, il remporte le concours national PIEED à Paris.",
-    "info_start": "Lancement",
-    "info_status": "Statut",
-    "info_status_value": "En cours",
-    "info_location": "Lieu",
     "video_title": "AKUUVision en vidéo",
     "diffusion_title": "Diffusion et reconnaissance",
     "diffusion_1_title": "Festivals et grand public",
@@ -891,7 +886,7 @@
       "role": "Co-trésorier",
       "bio": "À compléter."
     },
-    "tom": {
+    "raphael": {
       "role": "Co-trésorier",
       "bio": "À compléter."
     },

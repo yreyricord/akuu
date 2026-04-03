@@ -12,34 +12,14 @@
         <p class="text-night/45 text-xs font-semibold uppercase tracking-[0.2em] mb-4">
           {{ $t('akuuvision.intro_kicker') }}
         </p>
-        <div class="grid md:grid-cols-2 gap-10 lg:gap-14 items-start">
-          <div class="fade-in-up min-w-0 space-y-6">
-            <h2 class="text-2xl md:text-3xl font-serif font-bold text-night text-balance leading-snug">
-              {{ $t('akuuvision.what_title') }}
-            </h2>
-            <div class="space-y-5 text-night/75 text-base md:text-lg leading-[1.65]">
-              <p>{{ $t('akuuvision.what_para1') }}</p>
-              <p>{{ $t('akuuvision.what_para2') }}</p>
-              <p>{{ $t('akuuvision.what_para3') }}</p>
-            </div>
-          </div>
-          <div class="fade-in-up min-w-0">
-            <div class="rounded-2xl bg-cream border border-night/[0.08] p-6 md:p-7 shadow-sm">
-              <dl class="space-y-0">
-                <div class="flex justify-between gap-6 items-baseline py-4 border-b border-night/[0.08] first:pt-0">
-                  <dt class="text-sm font-medium text-night/45 shrink-0">{{ $t('akuuvision.info_start') }}</dt>
-                  <dd class="text-lg font-semibold text-night tabular-nums text-right">2019</dd>
-                </div>
-                <div class="flex justify-between gap-6 items-baseline py-4 border-b border-night/[0.08]">
-                  <dt class="text-sm font-medium text-night/45 shrink-0">{{ $t('akuuvision.info_status') }}</dt>
-                  <dd class="text-lg font-semibold text-forest tabular-nums text-right">{{ $t('akuuvision.info_status_value') }}</dd>
-                </div>
-                <div class="flex justify-between gap-6 items-baseline py-4 last:pb-0">
-                  <dt class="text-sm font-medium text-night/45 shrink-0">{{ $t('akuuvision.info_location') }}</dt>
-                  <dd class="text-base font-semibold text-night text-right leading-snug">{{ $t('akuuvision.location_value') }}</dd>
-                </div>
-              </dl>
-            </div>
+        <div class="fade-in-up max-w-3xl space-y-6">
+          <h2 class="text-2xl md:text-3xl font-serif font-bold text-night text-balance leading-snug">
+            {{ $t('akuuvision.what_title') }}
+          </h2>
+          <div class="space-y-5 text-night/75 text-base md:text-lg leading-[1.65]">
+            <p>{{ $t('akuuvision.what_para1') }}</p>
+            <p>{{ $t('akuuvision.what_para2') }}</p>
+            <p>{{ $t('akuuvision.what_para3') }}</p>
           </div>
         </div>
       </div>

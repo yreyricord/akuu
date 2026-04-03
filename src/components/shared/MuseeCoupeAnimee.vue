@@ -22,7 +22,7 @@
       :style="stageStyle"
       :aria-label="$t('musee.coupe.title')"
     >
-      <div class="coupe-sticky sticky top-0 min-h-[100dvh] flex flex-col justify-center py-4 md:py-6">
+      <div class="coupe-sticky sticky top-0 min-h-[100dvh] flex flex-col justify-center pt-4 pb-8 md:pt-6 md:pb-11">
         <div class="w-full max-w-7xl mx-auto flex flex-col gap-4 md:gap-5 shrink-0">
           <!-- Plan : hauteur = ratio naturel de l’image (pas flex-1 / pas object-contain plein cadre) ; carte toujours en dessous -->
           <div
@@ -188,7 +188,7 @@
           </div>
 
           <!-- Card unique pleine largeur, collée sous la coupe -->
-          <div class="w-full shrink-0 pb-2">
+          <div class="w-full shrink-0 pb-3">
             <transition name="card-swap" mode="out-in">
               <article
                 v-if="imageReady && activeZone"
