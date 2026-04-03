@@ -87,8 +87,8 @@
                     />
                   </div>
 
-                  <button type="submit" class="btn-primary w-full" :disabled="submitted">
-                    {{ $t('contact.send') }}
+                  <button type="submit" class="btn-primary w-full" :disabled="submitting">
+                    {{ submitting ? $t('contact.sending') : $t('contact.send') }}
                   </button>
 
                   <Transition
@@ -96,8 +96,17 @@
                     enter-from-class="opacity-0 -translate-y-2"
                     enter-to-class="opacity-100 translate-y-0"
                   >
-                    <div v-if="submitted" class="p-4 rounded-xl bg-leaf/10 text-forest text-sm text-center font-medium">
+                    <div v-if="submitSuccess" class="p-4 rounded-xl bg-leaf/10 text-forest text-sm text-center font-medium">
                       {{ $t('contact.success') }}
+                    </div>
+                  </Transition>
+                  <Transition
+                    enter-active-class="transition ease-out duration-300"
+                    enter-from-class="opacity-0 -translate-y-2"
+                    enter-to-class="opacity-100 translate-y-0"
+                  >
+                    <div v-if="submitError" class="p-4 rounded-xl bg-red-50 text-red-800 text-sm text-center font-medium">
+                      {{ $t('contact.error') }}
                     </div>
                   </Transition>
                 </div>
@@ -112,13 +121,13 @@
                 {{ $t('contact.info_title') }}
               </h3>
               <div class="space-y-4">
-                <a href="mailto:contact@akuu.org" class="flex items-center gap-3 text-night/60 hover:text-forest transition-colors group">
+                <a href="mailto:akuu.asso@gmail.com" class="flex items-center gap-3 text-night/60 hover:text-forest transition-colors group">
                   <div class="w-10 h-10 rounded-xl bg-forest/10 flex items-center justify-center shrink-0 group-hover:bg-forest group-hover:text-white transition-colors">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   </div>
-                  <span class="text-sm">contact@akuu.org</span>
+                  <span class="text-sm">akuu.asso@gmail.com</span>
                 </a>
                 <div class="flex items-start gap-3 text-night/60">
                   <div class="w-10 h-10 rounded-xl bg-forest/10 flex items-center justify-center shrink-0">
@@ -194,27 +203,38 @@ const form = reactive({
   message: ''
 })
 
-const submitted = ref(false)
+const submitting = ref(false)
+const submitSuccess = ref(false)
+const submitError = ref(false)
 
-function handleSubmit() {
-  const formData = new FormData()
-  formData.append('form-name', 'contact')
-  Object.entries(form).forEach(([key, value]) => formData.append(key, value))
-
-  fetch('/', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams(formData).toString()
+async function handleSubmit() {
+  submitError.value = false
+  submitSuccess.value = false
+  submitting.value = true
+  const params = new URLSearchParams({
+    'form-name': 'contact',
+    name: form.name,
+    email: form.email,
+    subject: form.subject,
+    message: form.message,
+    'bot-field': ''
   })
-    .then(() => {
-      submitted.value = true
-      form.name = ''
-      form.email = ''
-      form.subject = 'autre'
-      form.message = ''
+  try {
+    const res = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString()
     })
-    .catch(() => {
-      submitted.value = true
-    })
+    if (!res.ok) throw new Error('netlify form')
+    submitSuccess.value = true
+    form.name = ''
+    form.email = ''
+    form.subject = 'autre'
+    form.message = ''
+  } catch {
+    submitError.value = true
+  } finally {
+    submitting.value = false
+  }
 }
 </script>

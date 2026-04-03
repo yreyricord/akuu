@@ -11,6 +11,14 @@
     <meta name="description" content="AKUU agit pour un développement durable, solidaire et respectueux des populations amazoniennes au village de Puerto Miguel, Pérou." />
   </head>
   <body class="bg-cream text-night font-sans antialiased selection:bg-leaf/30 selection:text-forest">
+    <!-- Requis par Netlify Forms (SPA) : mêmes champs que ContactView ; l’envoi est fait en fetch depuis Vue. -->
+    <form name="contact" netlify netlify-honeypot="bot-field" data-netlify="true" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="subject" />
+      <textarea name="message"></textarea>
+      <input name="bot-field" />
+    </form>
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
   </body>
