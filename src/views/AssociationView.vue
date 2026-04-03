@@ -76,7 +76,11 @@
           <h2 class="text-3xl md:text-4xl font-serif font-bold text-night">{{ $t('association.history_title') }}</h2>
         </div>
         <div class="relative max-w-4xl mx-auto">
-          <TheTimeline :items="sortedTimeline" />
+          <TheTimeline
+            :items="sortedTimeline"
+            trail-bird-src="/images/collibri-akuu.png"
+            :trail-bird-alt="$t('common.colibri_trail_alt')"
+          />
         </div>
       </div>
     </section>
@@ -128,16 +132,16 @@
             {{ $t('association.social_kicker') }}
           </p>
           <h2 class="text-3xl md:text-4xl font-serif font-bold text-night mb-4">
-            {{ $t('association.social_title') }}
+            {{ showInstagramSection ? $t('association.social_title') : $t('association.social_title_tiktok_only') }}
           </h2>
           <p class="text-night/60 text-lg leading-relaxed">
-            {{ $t('association.social_subtitle') }}
+            {{ showInstagramSection ? $t('association.social_subtitle') : $t('association.social_subtitle_tiktok_only') }}
           </p>
         </div>
 
         <div class="max-w-6xl mx-auto space-y-16">
           <!-- Instagram -->
-          <div>
+          <div v-if="showInstagramSection">
             <h3 class="text-sm font-semibold uppercase tracking-widest text-night/45 mb-6">
               {{ $t('association.social_instagram_label') }}
             </h3>
@@ -159,7 +163,10 @@
 
           <!-- TikTok -->
           <div>
-            <h3 class="text-sm font-semibold uppercase tracking-widest text-night/45 mb-6">
+            <h3
+              v-if="showInstagramSection"
+              class="text-sm font-semibold uppercase tracking-widest text-night/45 mb-6"
+            >
               {{ $t('association.social_tiktok_label') }}
             </h3>
             <TikTokFeedGrid
@@ -249,6 +256,12 @@ const manualTiktokUrls = computed(() => {
   if (reseaux.tiktok?.videoUrl) return [reseaux.tiktok.videoUrl]
   return []
 })
+
+const showInstagramSection = computed(
+  () =>
+    instagramFeed.value.length > 0 ||
+    !!(reseaux.instagram?.postUrlOrShortcode && String(reseaux.instagram.postUrlOrShortcode).trim())
+)
 
 function socialFeedRequestUrl() {
   const ig = reseaux.feed?.instagramLimit ?? 6

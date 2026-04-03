@@ -40,7 +40,11 @@
           <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">{{ $t('volontaires.process_kicker') }}</p>
           <h2 class="text-3xl md:text-4xl font-serif font-bold text-night">{{ $t('volontaires.process_title') }}</h2>
         </div>
-        <TheProcessSteps :steps="processSteps" />
+        <TheProcessSteps
+          :steps="processSteps"
+          trail-bird-src="/images/collibri-akuu.png"
+          :trail-bird-alt="$t('common.colibri_trail_alt')"
+        />
       </div>
     </section>
 

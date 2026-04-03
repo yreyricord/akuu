@@ -1,6 +1,6 @@
 <template>
   <div class="musee-coupe-animee" ref="rootEl">
-    <div class="text-center mb-8 md:mb-10">
+    <div v-if="!omitSectionHeader" class="text-center mb-8 md:mb-10">
       <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">
         {{ $t('musee.coupe.section_kicker') }}
       </p>
@@ -250,6 +250,13 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
+
+defineProps({
+  omitSectionHeader: {
+    type: Boolean,
+    default: false
+  }
+})
 
 const COLORS = {
   bleu: '#04488F',

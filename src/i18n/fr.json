@@ -6,7 +6,8 @@
     "years_suffix": " ans",
     "honeypot_label": "Ne pas remplir :",
     "amazonie_france": "Amazonie · France",
-    "youtube_video": "Vidéo YouTube"
+    "youtube_video": "Vidéo YouTube",
+    "colibri_trail_alt": "Colibri AKUU suivant la frise"
   },
   "nav": {
     "home": "Accueil",
@@ -86,13 +87,15 @@
     "video_parole_2": "Parole d'Amazonie (2)",
     "social_kicker": "Réseaux sociaux",
     "social_title": "Instagram & TikTok",
+    "social_title_tiktok_only": "TikTok",
     "social_subtitle": "Suivez nos actualités, photos et vidéos depuis le terrain et la vie de l’association.",
+    "social_subtitle_tiktok_only": "Vidéos et publications depuis le terrain et la vie de l’association.",
     "social_instagram_title": "Publication Instagram",
     "social_tiktok_title": "Vidéo TikTok",
     "social_instagram_cta": "Ouvrir Instagram",
     "social_tiktok_cta": "Ouvrir TikTok",
     "social_fallback_instagram": "Actus, reels et coulisses sur {'@'}akuu_association.",
-    "social_fallback_tiktok": "Formats courts sur nos projets — {'@'}akuu_asso.",
+    "social_fallback_tiktok": "Formats courts sur nos projets, {'@'}akuu_asso.",
     "social_instagram_label": "Instagram",
     "social_tiktok_label": "TikTok",
     "social_feed_loading": "Chargement des publications…",
@@ -206,11 +209,74 @@
   },
   "musee": {
     "hero_title": "Musée Shapishiko",
-    "hero_subtitle": "Un espace culturel pour préserver et valoriser la culture Kukama",
+    "hero_subtitle": "Culture kukama, cosmovision et territoire, à Puerto Miguel, là où l'Ucayali et le Marañón donnent naissance à l'Amazone.",
     "description_title": "Le projet",
-    "description_text": "Le Musée Shapishiko est le projet phare d'AKUU : la construction d'un espace culturel au cœur du village de Puerto Miguel, en Amazonie péruvienne. Ce musée sera dédié à la préservation et à la valorisation de la culture Kukama, peuple autochtone de la région. Il accueillera des expositions d'art local, des ateliers de transmission des savoirs ancestraux, et servira de lieu de rencontre entre les communautés locales et les visiteurs.",
+    "description_intro": "Le Musée Shapishiko naît de l'initiative des artisanes Las Mariposas, avec le soutien d'AKUU et la communauté de Puerto Miguel. Au cœur du territoire Kukama, sur les rives de l'Ucayali, ce lieu vivant vise à faire rayonner la culture autochtone tout en accueillir villageois·es et visiteurs.",
+    "description_objectives_lead": "Quatre objectifs, définis en concertation :",
+    "description_objectives": [
+      "Faire vivre et rayonner la culture Kukama",
+      "Sensibiliser à la préservation de la forêt amazonienne",
+      "Rediriger une partie du tourisme existant vers le village et renforcer les revenus locaux",
+      "Créer un lieu vivant d'échanges et de transmission"
+    ],
+    "description_committee": "Un comité de gestion villageois, 17 membres, femmes et hommes de 21 à 82 ans, co-pilote le projet avec AKUU. Les avancées sont présentées régulièrement en assemblées villageoises.",
+    "context_kicker": "Pourquoi ce musée",
+    "context_title": "Contexte",
+    "context_p1": "Le changement climatique et la déforestation menacent l'Amazonie ; protéger et valoriser les territoires indigènes y contribue. Notre approche relie culture, environnement et économie locale.",
+    "context_p2": "Puerto Miguel compte environ 400 habitant·es, en majorité descendants des peuples Kukama-Kukamiria. La langue et les savoirs ancestraux sont fragiles ; pourtant des initiatives locales, Las Mariposas, la Radio Ucamara, les artistes du village, portent une résilience et une créativité fortes.",
+    "context_p3": "Le village vit au cœur d'une zone touristique (lodges sur l'Ucayali) dont les bénéfices retentissent peu au village. Le musée veut devenir un point d'intérêt au sein de Puerto Miguel pour redistribuer la valeur et l'attention vers la communauté.",
+    "actors_kicker": "Partenaires",
+    "actors_title": "Acteurs du projet",
+    "actors": {
+      "mariposas": {
+        "title": "Las Mariposas",
+        "text": "Association d'artisanes du village, à l'origine du projet : valorisation du chambira et certification ; la boutique du musée complète sans concurrencer leurs points de vente.",
+        "photo_alt": "Las Mariposas, artisanes du village"
+      },
+      "nelvis": {
+        "title": "Nelvis Parades Pacaya",
+        "text": "Artiste-peintre du village ; transmission bénévole des cultures Shipibo et Kukama pour préserver les savoirs et intéresser les jeunes.",
+        "photo_alt": "Nelvis Parades Pacaya, artiste-peintre"
+      },
+      "ecole_art": {
+        "title": "École d'art de Puerto Miguel",
+        "text": "Directrice : Casilda Pinches Sanchez. Lieu de formation et de création pour les jeunes du village, en lien avec le projet du musée et les artistes locaux.",
+        "photo_alt": "École d'art de Puerto Miguel, Casilda Pinches Sanchez"
+      },
+      "ucamara": {
+        "title": "Radio Ucamara",
+        "text": "Défense du territoire et du fleuve, promotion de la culture kukama, recherche et éducation ; partenaire clé de visibilité et de contenus.",
+        "photo_alt": "Radio Ucamara"
+      },
+      "chullachaqui": {
+        "title": "Écomusée Chullachaqui",
+        "text": "Près d'Iquitos ; échange d'expériences sur les cultures amazoniennes, formation de guides locaux et coopération sur les contenus du musée.",
+        "photo_alt": "Écomusée Chullachaqui"
+      },
+      "akuu": {
+        "title": "AKUU",
+        "text": "Association loi 1901 qui accompagne le projet depuis l'évaluation d'impact, mobilise des bénévoles et des financements, et s'efface progressivement au profit de la gouvernance villageoise.",
+        "photo_alt": "Association AKUU"
+      }
+    },
+    "coupe_path_kicker": "Architecture",
+    "coupe_path_title": "Parcours et espaces du musée",
+    "coupe_path_lead": "Le parcours va du centre d'interprétation sur trois niveaux (eau, forêt dense, canopée) à l'espace culturel via la passerelle Tsakarita (Ikuachiru), puis à la boutique et à la carte des artisan·es du village. La coupe interactive ci-dessous détaille chaque espace ; faites défiler pour les parcourir et découvrir leurs noms en kukama.",
+    "governance_kicker": "Gouvernance",
+    "governance_title": "Une gouvernance villageoise",
+    "governance_body": "Las Mariposas gèrent la boutique du musée ; une partie des recettes contribue à l'entretien du lieu. AKUU aspire à un rôle d'appui plutôt qu'à la décision à la place des habitant·es.\n\nLe projet vise aussi la reconnaissance du musée dans le réseau des musées du Pérou (démarche en cours auprès d'iPeru et des institutions compétentes).",
+    "teams_kicker": "Sur le terrain",
+    "teams_title": "Équipes de chantier et bénévolat",
+    "teams_body": "Des équipes de bénévoles AKUU se succèdent sur le chantier ; le génie civil et l'encadrement local sont coordonnés avec le village, notamment par Abraham Macuyama, chef de chantier expérimenté de Puerto Miguel, avec une équipe d'environ onze ouvriers qualifiés.",
+    "visit_kicker": "Visite",
+    "visit_title": "Durée et tarifs (indicatifs)",
+    "visit_intro": "Les modalités définitives seront fixées avec le comité et les autorités locales.",
+    "visit_duration": "Environ trente minutes par grande salle d'interprétation sont prévues ; le parcours complet (interprétation, espace culturel, boutique) peut représenter environ deux heures selon le rythme du groupe.",
+    "visit_rates": "Tarification indicative inspirée de modèles régionaux : environ 40 soles (l'équivalent d'une dizaine d'euros) pour les visiteurs étrangers, gratuité ou tarif préférentiel pour les résident·es locaux·es, sous réserve de validation sur place.",
+    "visit_disclaimer": "Informations non contractuelles ; merci de vous renseigner auprès du musée avant votre venue.",
+    "visit_photo_alt": "Puerto Miguel, village sur l’Ucayali",
     "plans_title": "Les plans du musée",
-    "plans_intro": "Croquis d'implantation, perspectives architecturales et modèle interactif issu d'ArchiCAD. La coupe des espaces est présentée plus haut sur la page.",
+    "plans_intro": "Croquis d'implantation, perspectives architecturales et modèle interactif issu d'ArchiCAD. La coupe des espaces est présentée plus haut sur la page. Les plans ont été travaillés par l'architecte Maria Agustina Pistolesi, en s'inspirant notamment du Tree House Lodge de Puerto Miguel.",
     "progress_title": "Avancement du projet",
     "video_kicker": "Vidéo",
     "video_title": "Le musée en vidéo",
@@ -221,6 +287,12 @@
     "gallery_kicker": "En images",
     "gallery_title": "Galerie photos",
     "gallery_subtitle": "Le chantier du Musée Shapishiko, de la conception à la réalisation sur le terrain.",
+    "side_visuals": {
+      "context": { "alt": "Forêt amazonienne et territoire autour de Puerto Miguel" },
+      "governance": { "alt": "Vie collective et décisions au village" },
+      "teams": { "alt": "Chantier et équipes sur le terrain" },
+      "progress": { "alt": "Évolution du chantier du musée" }
+    },
     "support_title": "Soutenir ce projet",
     "support_text": "Contribuez à la construction du Musée Shapishiko et aidez-nous à préserver la culture Kukama pour les générations futures.",
     "coupe": {
@@ -271,31 +343,48 @@
     },
     "milestones_steps": {
       "impact_terrain": {
-        "label": "Étude d'impact terrain",
-        "items": []
+        "label": "Concertation et étude d'impact (2019-2023)",
+        "items": [
+          "Idée portée par Las Mariposas ; enquête auprès des habitant·es de Puerto Miguel",
+          "Interruption et leçons du COVID ; renforcement des partenariats",
+          "Constitution du comité de gestion villageois (17 membres, 21-82 ans)",
+          "Partenariats : Radio Ucamara, Écomusée Chullachaqui, FAVER, Ministère de la Culture (soutien au contenu artistique)"
+        ]
       },
       "financement": {
         "label": "Financement et rénovation",
         "items": [
           "Financement FONJEP/JSI obtenu",
-          "Rénovation bâtiments"
+          "Rénovation des bâtiments"
         ]
       },
       "subvention_casa": {
         "label": "Subvention, Casa AKUU et conception artistique",
         "items": [
-          "Subvention Ministère Culture Pérou",
+          "Subvention du Ministère de la Culture péruvien",
           "Casa AKUU améliorée",
-          "Conception artistique"
+          "Conception artistique du centre d'interprétation"
         ]
       },
       "production": {
-        "label": "Production des œuvres (peintures, sculptures, fibres de chambira)",
-        "items": []
+        "label": "2026 : aménagement, œuvres et formation",
+        "items": [
+          "Achat et production d'œuvres (vague 1, avril-juin 2026)",
+          "Travaux et aménagement : 1er étage du centre d'interprétation, espace culturel, sanitaires (avril-juillet 2026)",
+          "Formation initiale du comité de gestion (mai-septembre 2026)",
+          "Programmation culturelle et premiers ateliers publics (dès septembre 2026)",
+          "Finalisation des autres niveaux, passerelle Tsakarita, extérieur (octobre 2026 - janvier 2027)",
+          "Achat et supports, vague 2 (novembre 2026 - mars 2027)"
+        ]
       },
       "ouverture": {
-        "label": "Ouverture partielle du musée",
-        "items": []
+        "label": "Ouverture et consolidation (2026-2027)",
+        "items": [
+          "Ouverture partielle prévue en septembre 2026",
+          "Formation complémentaire du comité (janvier-mai 2027)",
+          "Ouverture complète et officielle prévue en juin 2027",
+          "Programmation culturelle et période d'évaluation (juin-décembre 2027)"
+        ]
       }
     },
     "planviewer": {
@@ -542,7 +631,7 @@
     "contact_title": "Contact",
     "social_title": "Suivez-nous",
     "legal": "© {year} AKUU, association loi 1901",
-    "copyright_detail": "AKUU — Association loi 1901",
+    "copyright_detail": "AKUU, Association loi 1901",
     "don_cta": "Faire un don"
   }
 }

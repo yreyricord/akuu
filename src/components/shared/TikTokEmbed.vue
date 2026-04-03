@@ -41,10 +41,10 @@ const props = defineProps({
 })
 
 const videoId = computed(() => {
-  const s = String(props.videoUrl || '').trim()
+  const s = String(props.videoUrl || '').trim().split('?')[0]
   if (!s) return ''
   if (/^\d+$/.test(s)) return s
-  const m = s.match(/video\/(\d+)/)
+  const m = s.match(/(?:video|photo)\/(\d+)/)
   return m ? m[1] : ''
 })
 </script>

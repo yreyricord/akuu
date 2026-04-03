@@ -248,8 +248,8 @@ const activeTab    = ref('3d')
 const carouselIndex = ref(0)
 
 const lumionImages = computed(() => [
-  { src: '/images/musee/rendu-3.jpg', alt: t('musee.planviewer.rendu_ext_alt') },
-  { src: '/images/musee/rendu-1.jpg', alt: t('musee.planviewer.rendu_1_alt') },
+  { src: '/images/musee/rendu-3.jpg', alt: t('musee.planviewer.rendu_3_alt') },
+  { src: '/images/musee/rendu-1.png', alt: t('musee.planviewer.rendu_1_alt') },
   { src: '/images/musee/rendu-2.jpg', alt: t('musee.planviewer.rendu_2_alt') },
 ])
 

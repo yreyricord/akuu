@@ -2,7 +2,16 @@
   "feed": {
     "instagramLimit": 6,
     "tiktokLimit": 6,
-    "tiktokVideoUrls": []
+    "tiktokVideoUrls": [
+      "https://www.tiktok.com/@akuu_asso/photo/7555909407175904520",
+      "https://www.tiktok.com/@akuu_asso/video/7545521067696213266",
+      "https://www.tiktok.com/@akuu_asso/photo/7623830946126630152",
+      "https://www.tiktok.com/@akuu_asso/video/7619770113054510344",
+      "https://www.tiktok.com/@akuu_asso/photo/7615645532458913042",
+      "https://www.tiktok.com/@akuu_asso/photo/7606367319870278930",
+      "https://www.tiktok.com/@akuu_asso/photo/7604873759190715656",
+      "https://www.tiktok.com/@akuu_asso/photo/7604179937741769992"
+    ]
   },
   "instagram": {
     "postUrlOrShortcode": "",

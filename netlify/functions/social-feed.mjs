@@ -3,12 +3,9 @@
  *
  * Variables Netlify (Site settings → Environment variables) :
  *
- * Instagram (compte professionnel ou créateur lié à une Page Facebook) :
- *   INSTAGRAM_BUSINESS_ACCOUNT_ID — ID du compte Instagram Business (chiffres)
- *   INSTAGRAM_ACCESS_TOKEN      — Jeton d’accès Page Facebook longue durée avec au minimum
- *                                 les permissions pour lire les médias du compte IG lié.
- *   Étapes côté Meta : application Facebook → Instagram Graph API → générer un jeton
- *   pour la Page qui possède le compte Instagram.
+ * Instagram (compte pro/créateur + Page Facebook liée) :
+ *   INSTAGRAM_ACCESS_TOKEN — obligatoire (jeton Page Facebook longue durée)
+ *   + INSTAGRAM_BUSINESS_ACCOUNT_ID OU FACEBOOK_PAGE_ID (ID de la Page, souvent plus simple)
  *
  * TikTok (optionnel, plus technique — le jeton utilisateur expire ; prévoir refresh OAuth) :
  *   TIKTOK_ACCESS_TOKEN — Bearer obtenu via OAuth avec le scope video.list
@@ -19,6 +16,22 @@
  */
 
 const GRAPH_VERSION = 'v21.0'
+
+async function resolveInstagramBusinessAccountId(accessToken) {
+  const direct = process.env.INSTAGRAM_BUSINESS_ACCOUNT_ID
+  if (direct) return direct
+  const pageId = process.env.FACEBOOK_PAGE_ID
+  if (!pageId) return null
+  const params = new URLSearchParams({
+    fields: 'instagram_business_account',
+    access_token: accessToken
+  })
+  const url = `https://graph.facebook.com/${GRAPH_VERSION}/${pageId}?${params.toString()}`
+  const res = await fetch(url)
+  const data = await res.json()
+  if (data.error) return null
+  return data.instagram_business_account?.id || null
+}
 
 function corsHeaders() {
   return {
@@ -56,10 +69,17 @@ function normalizeInstagramPost(raw) {
 }
 
 async function fetchInstagramMedia(limit) {
-  const igId = process.env.INSTAGRAM_BUSINESS_ACCOUNT_ID
   const token = process.env.INSTAGRAM_ACCESS_TOKEN
-  if (!igId || !token) {
+  if (!token) {
     return { items: [], error: null }
+  }
+  const igId = await resolveInstagramBusinessAccountId(token)
+  if (!igId) {
+    return {
+      items: [],
+      error:
+        'Instagram : définir INSTAGRAM_ACCESS_TOKEN et (INSTAGRAM_BUSINESS_ACCOUNT_ID ou FACEBOOK_PAGE_ID). Voir docs/SETUP-FLUX-RESEAUX.md'
+    }
   }
   const fields =
     'id,caption,media_type,media_url,thumbnail_url,permalink,timestamp,children{media_url,media_type,thumbnail_url}'

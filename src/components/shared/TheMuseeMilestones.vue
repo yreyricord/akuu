@@ -21,6 +21,20 @@
         :stroke-dasharray="pathLength"
         :stroke-dashoffset="dashOffset"
       />
+      <image
+        v-if="trailBirdSrc && svgReady && birdLayout.visible"
+        :href="trailBirdSrc"
+        :x="birdLayout.x - birdSize / 2"
+        :y="birdLayout.y - birdSize / 2"
+        :width="birdSize"
+        :height="birdSize"
+        class="trail-bird-on-path"
+        :transform="`rotate(${birdLayout.angle} ${birdLayout.x} ${birdLayout.y})`"
+        preserveAspectRatio="xMidYMid meet"
+        pointer-events="none"
+      >
+        <title v-if="trailBirdAlt">{{ trailBirdAlt }}</title>
+      </image>
       <defs>
         <linearGradient id="museeGradient" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stop-color="#2D6915" />
@@ -148,9 +162,27 @@
 <script setup>
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
+import {
+  computeTrailBirdLayout,
+  TRAIL_BIRD_ANGLE_OFFSET_VERTICAL_FRIZE
+} from '@/composables/useTrailBirdOnPath'
 
 const props = defineProps({
-  steps: { type: Array, required: true }
+  steps: { type: Array, required: true },
+  /** PNG transparent : suit le fil du temps (desktop uniquement, même SVG que la courbe). */
+  trailBirdSrc: { type: String, default: '' },
+  trailBirdAlt: { type: String, default: '' },
+  /** Décalage en degrés pour l’orientation du PNG (ex. vol plus horizontal). */
+  trailBirdAngleOffset: { type: Number, default: TRAIL_BIRD_ANGLE_OFFSET_VERTICAL_FRIZE }
+})
+
+const birdSize = 80
+
+const birdLayout = ref({
+  x: 0,
+  y: 0,
+  angle: 0,
+  visible: false
 })
 
 const { t } = useI18n()
@@ -256,6 +288,17 @@ function scheduleCardRevealCheck() {
   })
 }
 
+function updateTrailBird () {
+  if (!props.trailBirdSrc || !pathRef.value) {
+    birdLayout.value = { x: 0, y: 0, angle: 0, visible: false }
+    return
+  }
+  const len = pathLength.value
+  birdLayout.value = computeTrailBirdLayout(pathRef.value, len, dashOffset.value, {
+    angleOffset: props.trailBirdAngleOffset
+  })
+}
+
 function handleScroll() {
   const container = containerRef.value
   if (!container) return
@@ -278,6 +321,7 @@ function handleScroll() {
   activeIndex.value = newActive
 
   updateCardReveal()
+  updateTrailBird()
 }
 
 let resizeObs = null
@@ -358,5 +402,9 @@ onUnmounted(() => {
     transform: none;
     transition: none;
   }
+}
+
+.trail-bird-on-path {
+  filter: drop-shadow(0 4px 14px rgb(45 105 21 / 0.2));
 }
 </style>

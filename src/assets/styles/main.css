@@ -57,6 +57,35 @@
     @apply opacity-100 translate-y-0;
   }
 
+  /* Visuels latéraux page musée : léger mouvement + zoom au survol */
+  .musee-side-visual-wrap {
+    will-change: transform;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .musee-side-visual-wrap {
+      animation: musee-side-float 10s ease-in-out infinite;
+    }
+
+    .musee-side-visual-img {
+      @apply transition-transform duration-700 ease-out;
+    }
+
+    .musee-side-visual-wrap:hover .musee-side-visual-img {
+      transform: scale(1.045);
+    }
+  }
+
+  @keyframes musee-side-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
   .card {
     @apply bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
   }

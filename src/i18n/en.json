@@ -6,7 +6,8 @@
     "years_suffix": " years",
     "honeypot_label": "Do not fill in:",
     "amazonie_france": "Amazonia · France",
-    "youtube_video": "YouTube video"
+    "youtube_video": "YouTube video",
+    "colibri_trail_alt": "AKUU hummingbird following the timeline"
   },
   "nav": {
     "home": "Home",
@@ -86,13 +87,15 @@
     "video_parole_2": "Voices from the Amazon (2)",
     "social_kicker": "Social media",
     "social_title": "Instagram & TikTok",
+    "social_title_tiktok_only": "TikTok",
     "social_subtitle": "Follow our news, photos and videos from the field and the life of the association.",
+    "social_subtitle_tiktok_only": "Videos and posts from the field and the life of the association.",
     "social_instagram_title": "Instagram post",
     "social_tiktok_title": "TikTok video",
     "social_instagram_cta": "Open Instagram",
     "social_tiktok_cta": "Open TikTok",
     "social_fallback_instagram": "Updates, reels and behind the scenes on {'@'}akuu_association.",
-    "social_fallback_tiktok": "Short videos about our projects — {'@'}akuu_asso.",
+    "social_fallback_tiktok": "Short videos about our projects, {'@'}akuu_asso.",
     "social_instagram_label": "Instagram",
     "social_tiktok_label": "TikTok",
     "social_feed_loading": "Loading latest posts…",
@@ -206,11 +209,74 @@
   },
   "musee": {
     "hero_title": "Shapishiko Museum",
-    "hero_subtitle": "A cultural space to preserve and promote Kukama culture",
+    "hero_subtitle": "Kukama culture, cosmovision and territory, in Puerto Miguel, where the Ucayali and Marañón meet to form the Amazon.",
     "description_title": "The project",
-    "description_text": "The Shapishiko Museum is AKUU's flagship project: building a cultural space in the heart of Puerto Miguel village, in the Peruvian Amazon. This museum will be dedicated to preserving and promoting Kukama culture, the indigenous people of the region. It will host exhibitions of local art, workshops for sharing ancestral knowledge, and serve as a meeting place between local communities and visitors.",
+    "description_intro": "The Shapishiko Museum grew from the Las Mariposas artisans' initiative, with AKUU's support and the Puerto Miguel community. At the heart of Kukama territory on the Ucayali, this living space aims to uplift Indigenous culture while welcoming villagers and visitors.",
+    "description_objectives_lead": "Four objectives, agreed in consultation:",
+    "description_objectives": [
+      "Keep Kukama culture alive and visible",
+      "Raise awareness of Amazon forest conservation",
+      "Redirect part of existing tourism toward the village and strengthen local income",
+      "Create a lively place for exchange and transmission"
+    ],
+    "description_committee": "A village management committee, 17 members, women and men aged 21 to 82, co-steers the project with AKUU. Progress is shared regularly at village assemblies.",
+    "context_kicker": "Why this museum",
+    "context_title": "Context",
+    "context_p1": "Climate change and deforestation threaten the Amazon; protecting and valuing Indigenous territories helps address that. Our approach links culture, environment and the local economy.",
+    "context_p2": "Puerto Miguel has about 400 residents, mostly descendants of the Kukama-Kukamiria peoples. The language and ancestral knowledge are fragile; yet local initiatives, Las Mariposas, Radio Ucamara, village artists, show strong resilience and creativity.",
+    "context_p3": "The village sits in a tourist area (lodges on the Ucayali) where benefits rarely reach the community. The museum aims to become a draw within Puerto Miguel so value and attention flow back to residents.",
+    "actors_kicker": "Partners",
+    "actors_title": "Project actors",
+    "actors": {
+      "mariposas": {
+        "title": "Las Mariposas",
+        "text": "Village artisans' association that sparked the project: chambira value chain and certification; the museum shop complements their sales points without competing with them.",
+        "photo_alt": "Las Mariposas, village artisans"
+      },
+      "nelvis": {
+        "title": "Nelvis Parades Pacaya",
+        "text": "Painter from the village; volunteers to pass on Shipibo and Kukama cultures to preserve knowledge and engage young people.",
+        "photo_alt": "Nelvis Parades Pacaya, painter"
+      },
+      "ecole_art": {
+        "title": "Puerto Miguel art school",
+        "text": "Director: Casilda Pinches Sanchez. A place for training and creativity for young people in the village, linked to the museum project and local artists.",
+        "photo_alt": "Puerto Miguel art school, Casilda Pinches Sanchez"
+      },
+      "ucamara": {
+        "title": "Radio Ucamara",
+        "text": "Territory and river advocacy, promotion of Kukama culture, research and education; a key partner for visibility and content.",
+        "photo_alt": "Radio Ucamara"
+      },
+      "chullachaqui": {
+        "title": "Chullachaqui Ecomuseum",
+        "text": "Near Iquitos; exchange on Amazonian cultures, training local guides and cooperation on museum content.",
+        "photo_alt": "Chullachaqui Ecomuseum"
+      },
+      "akuu": {
+        "title": "AKUU",
+        "text": "French nonprofit supporting the project from the impact study, mobilising volunteers and funding, and gradually stepping back in favour of village governance.",
+        "photo_alt": "AKUU association"
+      }
+    },
+    "coupe_path_kicker": "Architecture",
+    "coupe_path_title": "Visit route and museum spaces",
+    "coupe_path_lead": "The route runs from the interpretation centre on three levels (water, dense forest, canopy) to the cultural space via the Tsakarita walkway (Ikuachiru), then the shop and map of village artisans. The interactive section below shows each space in detail; scroll to explore and discover their Kukama names.",
+    "governance_kicker": "Governance",
+    "governance_title": "Village-led governance",
+    "governance_body": "Las Mariposas run the museum shop; part of the income helps maintain the site. AKUU aims to support rather than decide on behalf of residents.\n\nThe project also seeks recognition within Peru's museum network (process underway with iPeru and relevant institutions).",
+    "teams_kicker": "On the ground",
+    "teams_title": "Build teams and volunteering",
+    "teams_body": "Successive AKUU volunteer teams work on site; civil works and local supervision are coordinated with the village, notably by Abraham Macuyama, an experienced construction lead from Puerto Miguel, with a team of about eleven skilled workers.",
+    "visit_kicker": "Visit",
+    "visit_title": "Duration and fees (indicative)",
+    "visit_intro": "Final arrangements will be set with the committee and local authorities.",
+    "visit_duration": "About thirty minutes per main interpretation room is planned; the full route (interpretation, cultural space, shop) may take around two hours depending on the group.",
+    "visit_rates": "Indicative pricing inspired by regional models: about 40 soles (roughly ten euros) for foreign visitors, free or preferential rates for local residents, subject to confirmation on site.",
+    "visit_disclaimer": "Non-binding information; please check with the museum before you travel.",
+    "visit_photo_alt": "Puerto Miguel village on the Ucayali River",
     "plans_title": "Museum plans",
-    "plans_intro": "Site plan, architectural perspectives and the interactive ArchiCAD model. The section view of the spaces is shown higher on this page.",
+    "plans_intro": "Site plan, architectural perspectives and the interactive ArchiCAD model. The section view of the spaces appears higher on this page. Drawings were developed by architect Maria Agustina Pistolesi, drawing inspiration notably from the Tree House Lodge in Puerto Miguel.",
     "progress_title": "Project progress",
     "video_kicker": "Video",
     "video_title": "The museum on video",
@@ -221,6 +287,12 @@
     "gallery_kicker": "In pictures",
     "gallery_title": "Photo gallery",
     "gallery_subtitle": "The Shapishiko Museum build, from design to work on the ground.",
+    "side_visuals": {
+      "context": { "alt": "Amazon forest and land around Puerto Miguel" },
+      "governance": { "alt": "Community life and decisions in the village" },
+      "teams": { "alt": "Build site and teams on the ground" },
+      "progress": { "alt": "Museum construction progress" }
+    },
     "support_title": "Support this project",
     "support_text": "Contribute to the construction of the Shapishiko Museum and help us preserve Kukama culture for future generations.",
     "coupe": {
@@ -271,8 +343,13 @@
     },
     "milestones_steps": {
       "impact_terrain": {
-        "label": "Field impact study",
-        "items": []
+        "label": "Consultation and impact study (2019-2023)",
+        "items": [
+          "Idea led by Las Mariposas; survey of Puerto Miguel residents",
+          "COVID pause and lessons; stronger partnerships",
+          "Village management committee formed (17 members, ages 21-82)",
+          "Partners: Radio Ucamara, Chullachaqui Ecomuseum, FAVER, Ministry of Culture (support for artistic content)"
+        ]
       },
       "financement": {
         "label": "Funding and renovation",
@@ -284,18 +361,30 @@
       "subvention_casa": {
         "label": "Grant, Casa AKUU and artistic design",
         "items": [
-          "Peruvian Ministry of Culture grant",
+          "Grant from the Peruvian Ministry of Culture",
           "Casa AKUU improved",
-          "Artistic design"
+          "Artistic design of the interpretation centre"
         ]
       },
       "production": {
-        "label": "Production of works (paintings, sculptures, chambira fibre)",
-        "items": []
+        "label": "2026: fit-out, works and training",
+        "items": [
+          "Purchase and production of works (wave 1, April-June 2026)",
+          "Works and fit-out: first floor of the interpretation centre, cultural space, sanitation (April-July 2026)",
+          "Initial training for the management committee (May-September 2026)",
+          "Cultural programme and first public workshops (from September 2026)",
+          "Completion of other levels, Tsakarita walkway, exterior (October 2026 - January 2027)",
+          "Purchases and materials, wave 2 (November 2026 - March 2027)"
+        ]
       },
       "ouverture": {
-        "label": "Partial opening of the museum",
-        "items": []
+        "label": "Opening and consolidation (2026-2027)",
+        "items": [
+          "Partial opening planned for September 2026",
+          "Further committee training (January-May 2027)",
+          "Full official opening planned for June 2027",
+          "Cultural programme and evaluation period (June-December 2027)"
+        ]
       }
     },
     "planviewer": {
@@ -370,7 +459,7 @@
       },
       "raphael": {
         "mission": "Education & awareness",
-        "quote": "Teaching English to children in Puerto Miguel opens a window on the world for them—and I learned so much from them in return."
+        "quote": "Teaching English to children in Puerto Miguel opens a window on the world for them, and I learned so much from them in return."
       }
     },
     "video_kicker": "In the field",
@@ -542,7 +631,7 @@
     "contact_title": "Contact",
     "social_title": "Follow us",
     "legal": "© {year} AKUU, French non-profit association (loi 1901)",
-    "copyright_detail": "AKUU — French non-profit (loi 1901)",
+    "copyright_detail": "AKUU, French non-profit (loi 1901)",
     "don_cta": "Donate"
   }
 }

@@ -28,6 +28,20 @@
         :stroke-dasharray="pathLength"
         :stroke-dashoffset="dashOffset"
       />
+      <image
+        v-if="trailBirdSrc && svgReady && birdLayout.visible"
+        :href="trailBirdSrc"
+        :x="birdLayout.x - birdSize / 2"
+        :y="birdLayout.y - birdSize / 2"
+        :width="birdSize"
+        :height="birdSize"
+        class="trail-bird-on-path"
+        :transform="`rotate(${birdLayout.angle} ${birdLayout.x} ${birdLayout.y})`"
+        preserveAspectRatio="xMidYMid meet"
+        pointer-events="none"
+      >
+        <title v-if="trailBirdAlt">{{ trailBirdAlt }}</title>
+      </image>
       <defs>
         <linearGradient id="timelineGradient" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stop-color="#2D6915" />
@@ -153,9 +167,16 @@
 <script setup>
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
+import {
+  computeTrailBirdLayout,
+  TRAIL_BIRD_ANGLE_OFFSET_VERTICAL_FRIZE
+} from '@/composables/useTrailBirdOnPath'
 
 const props = defineProps({
-  items: { type: Array, required: true }
+  items: { type: Array, required: true },
+  trailBirdSrc: { type: String, default: '' },
+  trailBirdAlt: { type: String, default: '' },
+  trailBirdAngleOffset: { type: Number, default: TRAIL_BIRD_ANGLE_OFFSET_VERTICAL_FRIZE }
 })
 
 const { t } = useI18n()
@@ -170,6 +191,14 @@ const svgWidth = ref(0)
 const svgHeight = ref(0)
 const svgReady = ref(false)
 const activeIndex = ref(-1)
+
+const birdSize = 80
+const birdLayout = ref({
+  x: 0,
+  y: 0,
+  angle: 0,
+  visible: false
+})
 
 function setDotRef(el, index) {
   if (el) dotElements.value[index] = el
@@ -245,18 +274,30 @@ function buildPath() {
   })
 }
 
+function updateTrailBird () {
+  if (!props.trailBirdSrc || !pathRef.value) {
+    birdLayout.value = { x: 0, y: 0, angle: 0, visible: false }
+    return
+  }
+  const len = pathLength.value
+  birdLayout.value = computeTrailBirdLayout(pathRef.value, len, dashOffset.value, {
+    angleOffset: props.trailBirdAngleOffset
+  })
+}
+
 function handleScroll() {
   const container = containerRef.value
-  if (!container || !pathLength.value) return
+  if (!container) return
 
-  const rect = container.getBoundingClientRect()
+  if (pathLength.value > 0) {
+    const rect = container.getBoundingClientRect()
+    const wh = window.innerHeight
+    const scrolled = wh * 0.55 - rect.top
+    const progress = Math.max(0, Math.min(1, scrolled / rect.height))
+    dashOffset.value = pathLength.value * (1 - progress)
+  }
+
   const wh = window.innerHeight
-  const scrolled = wh * 0.55 - rect.top
-  const progress = Math.max(0, Math.min(1, scrolled / rect.height))
-
-  dashOffset.value = pathLength.value * (1 - progress)
-
-  // Index actif = dernier point passé le seuil 55% de la fenêtre
   let newActive = -1
   dotElements.value.forEach((dot, i) => {
     if (!dot) return
@@ -264,6 +305,7 @@ function handleScroll() {
     if (dr.top < wh * 0.6) newActive = i
   })
   activeIndex.value = newActive
+  updateTrailBird()
 }
 
 let resizeObs = null
@@ -272,6 +314,7 @@ onMounted(() => {
   nextTick(() => {
     buildPath()
     window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('resize', handleScroll, { passive: true })
     resizeObs = new ResizeObserver(() => { buildPath() })
     if (containerRef.value) resizeObs.observe(containerRef.value)
   })
@@ -279,6 +322,13 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('resize', handleScroll)
   if (resizeObs) resizeObs.disconnect()
 })
 </script>
+
+<style scoped>
+.trail-bird-on-path {
+  filter: drop-shadow(0 4px 14px rgb(45 105 21 / 0.2));
+}
+</style>
