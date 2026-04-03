@@ -1,16 +1,44 @@
 [
   {
+    "id": "yoann",
     "prenom": "Yoann",
     "nom": "Rey-Ricord",
-    "role": "Co-président",
-    "photo": "/images/Yoann_PM.jpg",
-    "bio": "Co-fondateur de l'association, formateur Fresque du Climat."
+    "photo": "/images/Yoann_PM.jpg"
   },
   {
+    "id": "copresident-2",
+    "prenom": "",
+    "nom": "",
+    "photo": ""
+  },
+  {
+    "id": "marlon",
     "prenom": "Marlon",
     "nom": "Diaz",
-    "role": "Co-fondateur",
-    "photo": "/images/marlon.jpg",
-    "bio": "Originaire de Puerto Miguel, Marlon est le lien essentiel entre AKUU et les communautés locales."
+    "photo": "/images/marlon.jpg"
+  },
+  {
+    "id": "tresorier",
+    "prenom": "",
+    "nom": "",
+    "photo": ""
+  },
+  {
+    "id": "vice-tresorier",
+    "prenom": "",
+    "nom": "",
+    "photo": ""
+  },
+  {
+    "id": "secretaire",
+    "prenom": "",
+    "nom": "",
+    "photo": ""
+  },
+  {
+    "id": "vice-secretaire",
+    "prenom": "",
+    "nom": "",
+    "photo": ""
   }
 ]

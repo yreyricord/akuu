@@ -1,4 +1,13 @@
 {
+  "common": {
+    "placeholder_firstname": "First name",
+    "placeholder_lastname": "Last name",
+    "video_not_supported": "Your browser does not support video playback.",
+    "years_suffix": " years",
+    "honeypot_label": "Do not fill in:",
+    "amazonie_france": "Amazonia · France",
+    "youtube_video": "YouTube video"
+  },
   "nav": {
     "home": "Home",
     "association": "About us",
@@ -15,7 +24,8 @@
     "tagline_line2": "what's alive",
     "subtitle": "In the Amazon and in France, AKUU connects volunteers and local communities around concrete solidarity projects.",
     "cta_projets": "Discover our projects",
-    "cta_don": "Donate"
+    "cta_don": "Donate",
+    "image_alt": "Peruvian Amazon, tropical forest and river"
   },
   "stats": {
     "founded": "Year founded",
@@ -26,13 +36,15 @@
   "mission": {
     "title": "Our mission",
     "text": "AKUU works for sustainable, solidarity-based development that respects Amazonian populations, placing local cooperation, knowledge sharing and environmental protection at the heart of its actions.",
-    "cta": "Learn more"
+    "cta": "Learn more",
+    "image_alt": "Puerto Miguel village in the Amazon"
   },
   "featured_project": {
     "title": "Featured project",
     "subtitle": "Shapishiko Museum",
     "description": "A cultural space in the heart of the Amazon to preserve and promote Kukama culture.",
-    "cta": "Discover the project"
+    "cta": "Discover the project",
+    "image_alt": "Shapishiko Museum, cultural project in Puerto Miguel"
   },
   "donation": {
     "title": "Support our actions",
@@ -69,12 +81,88 @@
     "odd_subtitle": "AKUU's actions are directly aligned with the United Nations 2030 Agenda. Each of our projects contributes to at least one SDG.",
     "history_title": "Our history",
     "team_title": "The team",
+    "videos_title": "Voices from the Amazon",
+    "video_parole_1": "Voices from the Amazon",
+    "video_parole_2": "Voices from the Amazon (2)",
+    "social_kicker": "Social media",
+    "social_title": "Instagram & TikTok",
+    "social_subtitle": "Follow our news, photos and videos from the field and the life of the association.",
+    "social_instagram_title": "Instagram post",
+    "social_tiktok_title": "TikTok video",
+    "social_instagram_cta": "Open Instagram",
+    "social_tiktok_cta": "Open TikTok",
+    "social_fallback_instagram": "Updates, reels and behind the scenes on @akuu_association.",
+    "social_fallback_tiktok": "Short videos about our projects — @akuu_asso.",
+    "social_instagram_label": "Instagram",
+    "social_tiktok_label": "TikTok",
+    "social_feed_loading": "Loading latest posts…",
+    "social_see_all_instagram": "See all on Instagram",
+    "social_see_all_tiktok": "See all on TikTok",
+    "social_open_on_tiktok": "Open in TikTok",
     "legal_title": "Legal information",
     "legal": {
       "siret": "SIRET: 831 603 402 00015",
       "rna": "RNA: W061008697",
       "siege": "Headquarters: 889 Chemin de Jylloue, 06 250 Mougins, France",
       "contact": "Contact: contact{'@'}akuu.org"
+    },
+    "history_since": "Since 2016",
+    "legal_accordion_siege": "Registered office",
+    "legal_accordion_contact": "Contact",
+    "timeline_upcoming_badge": "Coming soon",
+    "timeline_eras": {
+      "foundation": "Foundation",
+      "development": "Growth",
+      "pause": "Pause",
+      "relaunch": "Relaunch",
+      "soon": "Soon",
+      "museum": "Shapishiko Museum"
+    },
+    "timeline": {
+      "2016": {
+        "title": "Founding of the association",
+        "description": "AKUU is officially founded on November 23, 2016, in Mougins, France."
+      },
+      "2017": {
+        "title": "First steps in Puerto Miguel",
+        "description": "First volunteers sent to Puerto Miguel. Start of English classes and construction of Casa AKUU."
+      },
+      "2018": {
+        "title": "WindAid partnership & energy",
+        "description": "Partnership with WindAid. Launch of hydro and solar projects for the village."
+      },
+      "2019": {
+        "title": "Year of innovation",
+        "description": "AKUUbe team, AKUUVision (PIEED prize €5,000). Climate Fresk workshops and environmental awareness."
+      },
+      "2020": {
+        "title": "COVID halt",
+        "description": "The pandemic interrupts field missions. The team keeps the link remotely."
+      },
+      "2021": {
+        "title": "Restructuring",
+        "description": "Internal restructuring and strategic thinking on future projects."
+      },
+      "2022": {
+        "title": "Museum project preparation",
+        "description": "Preliminary studies and dossier for the Shapishiko Museum project."
+      },
+      "2023": {
+        "title": "Museum launch",
+        "description": "Official launch of the Shapishiko Museum project. FONJEP/JSI fundraising."
+      },
+      "2024": {
+        "title": "Field missions & renovation",
+        "description": "Missions by Léa, Inès, Raphaël then Dylan and Paul. Building renovation in Puerto Miguel."
+      },
+      "2025": {
+        "title": "Casa AKUU & official recognition",
+        "description": "Casa AKUU improvements. Grant from the Peruvian Ministry of Culture (19,960 soles) for Museo Shapishiko."
+      },
+      "2026": {
+        "title": "Opening of the Shapishiko Museum",
+        "description": "Planned opening of the Shapishiko Museum in Puerto Miguel, a living space for Shipibo-Conibo culture and knowledge."
+      }
     }
   },
   "projets": {
@@ -84,13 +172,37 @@
     "filter_en_cours": "Ongoing",
     "filter_realise": "Completed",
     "filter_en_preparation": "In preparation",
+    "filter_suspendu": "Suspended",
     "status": {
       "en_cours": "Ongoing",
       "realise": "Completed",
-      "en_preparation": "In preparation"
+      "en_preparation": "In preparation",
+      "suspendu": "Suspended"
     },
     "since": "Since",
-    "discover": "Discover the project"
+    "discover": "Discover the project",
+    "catalog": {
+      "musee-shapishiko": {
+        "title": "Shapishiko Museum",
+        "description": "Building a cultural space in Puerto Miguel to preserve and promote Kukama culture."
+      },
+      "casa-akuu": {
+        "title": "Casa AKUU",
+        "description": "Community house to host volunteers and run the association's activities."
+      },
+      "cours-anglais": {
+        "title": "English classes",
+        "description": "Teaching English to Puerto Miguel residents to support economic development. Suspended since COVID for lack of funds; relaunch in preparation."
+      },
+      "hydrama": {
+        "title": "HYDRAMA, clean energy",
+        "description": "Testing a hydroelectric turbine in the Amazon river for Vista Alegre. Suspended since COVID for lack of funds; relaunch in preparation."
+      },
+      "sensibilisation-climat": {
+        "title": "AKUUVision",
+        "description": "Raising awareness on climate and Amazonian issues through AKUUVision: Climate Fresk workshops, Planet'AKUU, Forever the Game, in France and Puerto Miguel."
+      }
+    }
   },
   "musee": {
     "hero_title": "Shapishiko Museum",
@@ -100,6 +212,12 @@
     "plans_title": "Museum plans",
     "plans_intro": "Site plan, architectural perspectives and the interactive ArchiCAD model. The section view of the spaces is shown higher on this page.",
     "progress_title": "Project progress",
+    "video_kicker": "Video",
+    "video_title": "The museum on video",
+    "progress_kicker": "Since 2023",
+    "plans_kicker": "Architecture",
+    "description_image_alt": "Shapishiko Museum in Puerto Miguel",
+    "gallery_image_alt": "Shapishiko Museum",
     "gallery_kicker": "In pictures",
     "gallery_title": "Photo gallery",
     "gallery_subtitle": "The Shapishiko Museum build, from design to work on the ground.",
@@ -150,6 +268,70 @@
           "tags": ["Gallery", "Workshop", "Kukama craft"]
         }
       }
+    },
+    "milestones_steps": {
+      "impact_terrain": {
+        "label": "Field impact study",
+        "items": []
+      },
+      "financement": {
+        "label": "Funding and renovation",
+        "items": [
+          "FONJEP/JSI funding secured",
+          "Building renovation"
+        ]
+      },
+      "subvention_casa": {
+        "label": "Grant, Casa AKUU and artistic design",
+        "items": [
+          "Peruvian Ministry of Culture grant",
+          "Casa AKUU improved",
+          "Artistic design"
+        ]
+      },
+      "production": {
+        "label": "Production of works (paintings, sculptures, chambira fibre)",
+        "items": []
+      },
+      "ouverture": {
+        "label": "Partial opening of the museum",
+        "items": []
+      }
+    },
+    "planviewer": {
+      "tab_3d": "3D model",
+      "tab_sketch": "Sketches",
+      "tab_perspectives": "Views",
+      "sketch_caption": "Museum site plan in its environment",
+      "sketch_alt": "Site plan of the Shapishiko Museum in its environment",
+      "perspectives_caption": "Architectural perspectives",
+      "interactive_title": "Interactive 3D model",
+      "interactive_subtitle": "Free navigation in the ArchiCAD model",
+      "load_model": "Load model",
+      "loading_title": "Loading 3D model...",
+      "loading_hint": "This may take a few seconds",
+      "error_missing_title": "IFC file not found",
+      "error_missing_body": "Place plan_akuu.ifc in the /public/ folder.",
+      "error_parse_title": "Loading error",
+      "error_parse_body": "The IFC file was found but could not be parsed.",
+      "webgl_title": "Browser not supported",
+      "webgl_body": "3D rendering requires WebGL. Try an up-to-date Chrome or Firefox.",
+      "controls_rotate": "Left click: rotate",
+      "controls_pan": "Right click: pan",
+      "controls_zoom": "Scroll: zoom",
+      "reset_camera": "Reset view",
+      "view_wireframe": "Wireframe",
+      "view_solid": "Solid view",
+      "click_debug": "Click: x={x}, y={y}, z={z}",
+      "rendu_ext_alt": "Exterior view of the Shapishiko Museum",
+      "rendu_1_alt": "Museum perspective",
+      "rendu_2_alt": "Museum overview"
+    },
+    "milestone_ui": {
+      "upcoming": "Coming soon",
+      "status_done": "Completed",
+      "status_in_progress": "In progress",
+      "status_pending": "Planned"
     }
   },
   "volontaires": {
@@ -162,6 +344,7 @@
       "skills": { "title": "Learn, don't teach", "text": "Kukama communities hold knowledge found nowhere else. Every former volunteer comes back with a different understanding of time, life and community." },
       "community": { "title": "A mission that matters", "text": "No boxes to tick, no photo opportunities. A useful presence, within a lasting project, alongside people who have chosen to welcome you." }
     },
+    "process_kicker": "In 4 steps",
     "process_title": "How does it work?",
     "process_steps": {
       "step1": { "title": "Application", "text": "Send your application via our contact form." },
@@ -176,6 +359,22 @@
       "stage": { "title": "Internship", "text": "Supervised internship of 2 to 6 months." }
     },
     "testimonials_title": "They volunteered with AKUU",
+    "testimonials": {
+      "lea": {
+        "mission": "Renovation & community support",
+        "quote": "My time in Puerto Miguel changed how I see the world. Living alongside Kukama communities taught me what matters: sharing and respect for nature."
+      },
+      "dylan": {
+        "mission": "Construction & local development",
+        "quote": "Helping build the museum was the most rewarding experience of my life. You feel you're contributing to something lasting."
+      },
+      "raphael": {
+        "mission": "Education & awareness",
+        "quote": "Teaching English to children in Puerto Miguel opens a window on the world for them—and I learned so much from them in return."
+      }
+    },
+    "video_kicker": "In the field",
+    "video_title": "Life in Puerto Miguel",
     "cta_title": "Ready to go?",
     "cta_text": "Contact us to learn more about available missions.",
     "cta_button": "Contact us"
@@ -233,14 +432,115 @@
     "success": "Message sent! We will get back to you as soon as possible.",
     "info_title": "Contact information",
     "address": "889 Chemin de Jylloue, 06 250 Mougins, France",
-    "find_us": "Find us in Puerto Miguel"
+    "find_us": "Find us in Puerto Miguel",
+    "map_caption": "Puerto Miguel, Loreto, Peru",
+    "map_iframe_title": "Puerto Miguel, Loreto, Peru"
+  },
+  "hydrama": {
+    "tag_energy": "Renewable energy",
+    "tag_amazon": "Amazonia",
+    "tag_suspended": "Suspended project",
+    "location_value": "Vista Alegre, Amazonia",
+    "video_kicker": "Video",
+    "hero_title": "HYDRAMA",
+    "hero_subtitle": "Clean energy for isolated Amazonian communities",
+    "suspended_notice": "This project is currently suspended since COVID due to lack of funding. Its relaunch is being planned.",
+    "what_title": "What is HYDRAMA?",
+    "what_text": "HYDRAMA is a project to install a hydroelectric turbine in the Amazon river, to bring clean, renewable energy to the isolated community of Vista Alegre. The goal is to replace polluting generators with a sustainable energy source that respects the Amazonian environment.",
+    "info_start": "Started",
+    "info_status": "Status",
+    "info_status_value": "Suspended",
+    "info_location": "Location",
+    "video_title": "Discover HYDRAMA",
+    "goals_title": "Our goals",
+    "goal_1_title": "Clean energy",
+    "goal_1_text": "Provide renewable electricity to Vista Alegre with no environmental impact.",
+    "goal_2_title": "Local autonomy",
+    "goal_2_text": "Enable the community to manage its own energy source independently.",
+    "goal_3_title": "Replicable model",
+    "goal_3_text": "Develop a model transferable to other isolated Amazonian communities."
+  },
+  "akuuvision": {
+    "tag_awareness": "Awareness",
+    "tag_climate": "Climate",
+    "tag_ongoing": "Ongoing",
+    "location_value": "France & Amazonia",
+    "video_kicker": "Video",
+    "hero_title": "AKUUVision",
+    "hero_subtitle": "Raising awareness on climate and Amazonian issues, in France and Peru",
+    "what_title": "What is AKUUVision?",
+    "what_text": "AKUUVision is AKUU's awareness arm. Through participatory workshops, talks, and fun educational tools, we raise public awareness about climate issues and Amazonian communities. Our activities take place in France (schools, universities, companies) and in Puerto Miguel.",
+    "info_start": "Started",
+    "info_status": "Status",
+    "info_status_value": "Ongoing",
+    "info_location": "Location",
+    "video_title": "AKUUVision on video",
+    "activities_title": "Our activities",
+    "act_1_title": "Climate Fresk",
+    "act_1_text": "Collaborative workshops to understand climate change mechanisms.",
+    "act_2_title": "Planet'AKUU",
+    "act_2_text": "School and university talks on Amazonian biodiversity.",
+    "act_3_title": "Forever the Game",
+    "act_3_text": "Educational board game on environmental issues, created by AKUU."
+  },
+  "cours_anglais": {
+    "tag_education": "Education",
+    "tag_location": "Puerto Miguel",
+    "tag_suspended": "Suspended project",
+    "location_value": "Puerto Miguel, Amazonia",
+    "hero_title": "English Classes",
+    "hero_subtitle": "Teaching English in Puerto Miguel to open new opportunities",
+    "suspended_notice": "This project is currently suspended since COVID due to lack of funding. Its relaunch is being planned.",
+    "what_title": "A development lever",
+    "what_text": "Since 2017, AKUU provided free English classes to Puerto Miguel residents. English is essential for local ecotourism development and offers new professional opportunities for young community members. Classes reached over 60 students, children and adults, before being suspended by the pandemic.",
+    "info_start": "Started",
+    "info_status": "Status",
+    "info_status_value": "Suspended",
+    "info_location": "Location",
+    "impact_title": "Our impact",
+    "impact_1": "Students trained",
+    "impact_2": "Years of classes",
+    "impact_3": "Active period"
+  },
+  "equipe": {
+    "yoann": {
+      "role": "Co-president · Co-founder",
+      "bio": "Co-founder of the association, Climate Fresk facilitator."
+    },
+    "marlon": {
+      "role": "Co-founder",
+      "bio": "From a small Amazonian village, Marlon is the essential link between AKUU and local communities."
+    },
+    "copresident-2": {
+      "role": "Co-president",
+      "bio": "To be completed."
+    },
+    "tresorier": {
+      "role": "Treasurer",
+      "bio": "To be completed."
+    },
+    "vice-tresorier": {
+      "role": "Deputy treasurer",
+      "bio": "To be completed."
+    },
+    "secretaire": {
+      "role": "Secretary",
+      "bio": "To be completed."
+    },
+    "vice-secretaire": {
+      "role": "Deputy secretary",
+      "bio": "To be completed."
+    }
   },
   "footer": {
     "slogan": "In the Amazon and in France, AKUU connects volunteers and local communities around concrete solidarity projects.",
+    "address_line1": "889 Chemin de Jylloue",
+    "address_line2": "06 250 Mougins",
     "nav_title": "Navigation",
     "contact_title": "Contact",
     "social_title": "Follow us",
     "legal": "© {year} AKUU, French non-profit association (loi 1901)",
+    "copyright_detail": "AKUU — French non-profit (loi 1901)",
     "don_cta": "Donate"
   }
 }

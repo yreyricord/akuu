@@ -20,7 +20,7 @@
         <div class="fade-in-up relative">
           <img
             src="/images/mission-akuu.jpg"
-            alt="Village de Puerto Miguel en Amazonie"
+            :alt="$t('mission.image_alt')"
             class="rounded-2xl shadow-xl w-full object-cover aspect-[4/3]"
             loading="lazy"
           />

@@ -3,7 +3,7 @@
     <!-- Image de fond -->
     <img
       src="/images/hero-amazon.jpg"
-      alt="Amazonie péruvienne, forêt tropicale et rivière"
+      :alt="$t('hero.image_alt')"
       class="absolute inset-0 w-full h-full object-cover"
     />
     <!-- Gradient sombre -->

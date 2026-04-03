@@ -37,7 +37,7 @@
     <section class="section-padding bg-white">
       <div class="container-narrow">
         <div class="text-center mb-12">
-          <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">En 4 étapes</p>
+          <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">{{ $t('volontaires.process_kicker') }}</p>
           <h2 class="text-3xl md:text-4xl font-serif font-bold text-night">{{ $t('volontaires.process_title') }}</h2>
         </div>
         <TheProcessSteps :steps="processSteps" />
@@ -76,7 +76,7 @@
         <div class="grid md:grid-cols-3 gap-6">
           <div
             v-for="temoignage in volontairesInfo.temoignages"
-            :key="temoignage.prenom"
+            :key="temoignage.id"
             class="fade-in-up card p-6"
           >
             <div class="flex items-center gap-4 mb-4">
@@ -92,14 +92,28 @@
               </div>
               <div>
                 <h4 class="font-serif font-bold text-night">{{ temoignage.prenom }}</h4>
-                <p class="text-xs text-night/40">{{ temoignage.mission }}, {{ temoignage.annee }}</p>
+                <p class="text-xs text-night/40">{{ $t(`volontaires.testimonials.${temoignage.id}.mission`) }}, {{ temoignage.annee }}</p>
               </div>
             </div>
             <blockquote class="text-night/60 text-sm leading-relaxed italic">
-              "{{ temoignage.citation }}"
+              "{{ $t(`volontaires.testimonials.${temoignage.id}.quote`) }}"
             </blockquote>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- Vidéo : La vie à Puerto Miguel -->
+    <section class="section-padding bg-white">
+      <div class="container-narrow max-w-3xl mx-auto">
+        <div class="text-center mb-8">
+          <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">{{ $t('volontaires.video_kicker') }}</p>
+          <h2 class="text-3xl md:text-4xl font-serif font-bold text-night">{{ $t('volontaires.video_title') }}</h2>
+        </div>
+        <VideoEmbed
+          video-id="dVRrRclq1i8"
+          :title="$t('volontaires.video_title')"
+        />
       </div>
     </section>
 
@@ -124,6 +138,7 @@ import PageHero from '@/components/shared/PageHero.vue'
 import SectionTitle from '@/components/shared/SectionTitle.vue'
 import CTABanner from '@/components/shared/CTABanner.vue'
 import TheProcessSteps from '@/components/shared/TheProcessSteps.vue'
+import VideoEmbed from '@/components/shared/VideoEmbed.vue'
 
 const store = useDataStore()
 const volontairesInfo = store.volontairesInfo

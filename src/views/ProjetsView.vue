@@ -60,7 +60,8 @@ const filters = [
   { value: 'all', labelKey: 'projets.filter_all' },
   { value: 'en_cours', labelKey: 'projets.filter_en_cours' },
   { value: 'realise', labelKey: 'projets.filter_realise' },
-  { value: 'en_preparation', labelKey: 'projets.filter_en_preparation' }
+  { value: 'en_preparation', labelKey: 'projets.filter_en_preparation' },
+  { value: 'suspendu', labelKey: 'projets.filter_suspendu' }
 ]
 
 const filteredProjets = computed(() => {

@@ -29,13 +29,16 @@
               </cite>
             </blockquote>
           </div>
-          <div class="fade-in-up">
-            <img
-              src="/images/who-akuu.jpg"
-              alt="L'équipe AKUU à Puerto Miguel"
-              class="rounded-2xl shadow-xl w-full object-cover aspect-[4/3]"
-              loading="lazy"
-            />
+          <div class="fade-in-up rounded-2xl shadow-xl overflow-hidden bg-night/5">
+            <video
+              src="/videos/itv.mp4"
+              controls
+              preload="metadata"
+              playsinline
+              class="w-full h-auto block"
+            >
+              {{ $t('common.video_not_supported') }}
+            </video>
           </div>
         </div>
       </div>
@@ -82,16 +85,120 @@
     <section class="section-padding bg-white">
       <div class="container-narrow">
         <SectionTitle>{{ $t('association.team_title') }}</SectionTitle>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
           <TeamCard
             v-for="member in equipe"
-            :key="member.prenom"
-            :prenom="member.prenom"
-            :nom="member.nom"
-            :role="member.role"
+            :key="member.id ?? `${member.prenom}-${member.nom}`"
+            :prenom="member.prenom || $t('common.placeholder_firstname')"
+            :nom="member.nom || $t('common.placeholder_lastname')"
+            :role="$t(`equipe.${member.id}.role`)"
             :photo="member.photo"
-            :bio="member.bio"
+            :bio="$t(`equipe.${member.id}.bio`)"
           />
+        </div>
+      </div>
+    </section>
+
+    <!-- Parole d'Amazonie -->
+    <section class="section-padding bg-cream">
+      <div class="container-narrow">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-serif font-bold text-night">{{ $t('association.videos_title') }}</h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <VideoEmbed
+            video-id="8j-P2ey0MMM"
+            :title="$t('association.video_parole_1')"
+            :caption="$t('association.video_parole_1')"
+          />
+          <VideoEmbed
+            video-id="UXAm7o4lWek"
+            :title="$t('association.video_parole_2')"
+            :caption="$t('association.video_parole_2')"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Réseaux sociaux -->
+    <section class="section-padding bg-white">
+      <div class="container-narrow">
+        <div class="text-center mb-12 max-w-2xl mx-auto">
+          <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">
+            {{ $t('association.social_kicker') }}
+          </p>
+          <h2 class="text-3xl md:text-4xl font-serif font-bold text-night mb-4">
+            {{ $t('association.social_title') }}
+          </h2>
+          <p class="text-night/60 text-lg leading-relaxed">
+            {{ $t('association.social_subtitle') }}
+          </p>
+        </div>
+
+        <p
+          v-if="feedLoading"
+          class="text-center text-sm text-night/40 py-10"
+        >
+          {{ $t('association.social_feed_loading') }}
+        </p>
+
+        <div v-else class="max-w-6xl mx-auto space-y-16">
+          <!-- Instagram -->
+          <div>
+            <h3 class="text-sm font-semibold uppercase tracking-widest text-night/45 mb-6">
+              {{ $t('association.social_instagram_label') }}
+            </h3>
+            <InstagramFeedGrid
+              v-if="instagramFeed.length"
+              :posts="instagramFeed"
+              :profile-url="reseaux.instagram.profileUrl"
+              :see-all-label="$t('association.social_see_all_instagram')"
+            />
+            <InstagramPostEmbed
+              v-else
+              :source="reseaux.instagram.postUrlOrShortcode"
+              :profile-url="reseaux.instagram.profileUrl"
+              :title="$t('association.social_instagram_title')"
+              :cta-text="$t('association.social_instagram_cta')"
+              :hint-text="$t('association.social_fallback_instagram')"
+            />
+          </div>
+
+          <!-- TikTok -->
+          <div>
+            <h3 class="text-sm font-semibold uppercase tracking-widest text-night/45 mb-6">
+              {{ $t('association.social_tiktok_label') }}
+            </h3>
+            <TikTokFeedGrid
+              v-if="tiktokFeed.length"
+              :videos="tiktokFeed"
+              :profile-url="reseaux.tiktok.profileUrl"
+              :see-all-label="$t('association.social_see_all_tiktok')"
+              :open-on-tiktok-label="$t('association.social_open_on_tiktok')"
+            />
+            <div
+              v-else-if="manualTiktokUrls.length"
+              class="grid grid-cols-1 sm:grid-cols-2 gap-8"
+            >
+              <TikTokEmbed
+                v-for="(url, idx) in manualTiktokUrls"
+                :key="`${url}-${idx}`"
+                :video-url="url"
+                :profile-url="reseaux.tiktok.profileUrl"
+                :title="$t('association.social_tiktok_title')"
+                :cta-text="$t('association.social_tiktok_cta')"
+                :hint-text="$t('association.social_fallback_tiktok')"
+              />
+            </div>
+            <TikTokEmbed
+              v-else
+              :video-url="reseaux.tiktok.videoUrl"
+              :profile-url="reseaux.tiktok.profileUrl"
+              :title="$t('association.social_tiktok_title')"
+              :cta-text="$t('association.social_tiktok_cta')"
+              :hint-text="$t('association.social_fallback_tiktok')"
+            />
+          </div>
         </div>
       </div>
     </section>
@@ -107,10 +214,10 @@
           <AccordionItem :title="$t('association.legal.rna').split(':')[0]">
             <p>{{ $t('association.legal.rna') }}</p>
           </AccordionItem>
-          <AccordionItem title="Siège social">
+          <AccordionItem :title="$t('association.legal_accordion_siege')">
             <p>{{ $t('association.legal.siege') }}</p>
           </AccordionItem>
-          <AccordionItem title="Contact">
+          <AccordionItem :title="$t('association.legal_accordion_contact')">
             <p>{{ $t('association.legal.contact') }}</p>
           </AccordionItem>
         </div>
@@ -122,7 +229,7 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useDataStore } from '@/store'
 import PageHero from '@/components/shared/PageHero.vue'
 import SectionTitle from '@/components/shared/SectionTitle.vue'
@@ -130,8 +237,63 @@ import TheTimeline from '@/components/shared/TheTimeline.vue'
 import TeamCard from '@/components/shared/TeamCard.vue'
 import AccordionItem from '@/components/shared/AccordionItem.vue'
 import DonSection from '@/components/home/DonSection.vue'
+import VideoEmbed from '@/components/shared/VideoEmbed.vue'
+import InstagramPostEmbed from '@/components/shared/InstagramPostEmbed.vue'
+import InstagramFeedGrid from '@/components/shared/InstagramFeedGrid.vue'
+import TikTokEmbed from '@/components/shared/TikTokEmbed.vue'
+import TikTokFeedGrid from '@/components/shared/TikTokFeedGrid.vue'
+import reseauxAssociation from '@/data/reseaux-association.json'
 
 const store = useDataStore()
+const reseaux = reseauxAssociation
+
+const feedLoading = ref(true)
+const instagramFeed = ref([])
+const tiktokFeed = ref([])
+
+const manualTiktokUrls = computed(() => {
+  const fromFeed = reseaux.feed?.tiktokVideoUrls
+  if (Array.isArray(fromFeed) && fromFeed.length) return fromFeed.filter(Boolean)
+  if (reseaux.tiktok?.videoUrl) return [reseaux.tiktok.videoUrl]
+  return []
+})
+
+function socialFeedRequestUrl() {
+  const ig = reseaux.feed?.instagramLimit ?? 6
+  const tt = reseaux.feed?.tiktokLimit ?? 6
+  const qs = new URLSearchParams({
+    instagramLimit: String(ig),
+    tiktokLimit: String(tt)
+  })
+  const path = `/.netlify/functions/social-feed?${qs}`
+  if (import.meta.env.PROD) return path
+  const origin = import.meta.env.VITE_NETLIFY_FUNCTIONS_ORIGIN || ''
+  return origin ? `${origin.replace(/\/$/, '')}${path}` : ''
+}
+
+async function loadSocialFeed() {
+  feedLoading.value = true
+  const url = socialFeedRequestUrl()
+  if (!url) {
+    instagramFeed.value = []
+    tiktokFeed.value = []
+    feedLoading.value = false
+    return
+  }
+  try {
+    const res = await fetch(url)
+    if (!res.ok) throw new Error('social feed')
+    const data = await res.json()
+    instagramFeed.value = Array.isArray(data.instagram) ? data.instagram : []
+    tiktokFeed.value = Array.isArray(data.tiktok) ? data.tiktok : []
+  } catch {
+    instagramFeed.value = []
+    tiktokFeed.value = []
+  } finally {
+    feedLoading.value = false
+  }
+}
+
 const sortedTimeline = store.sortedTimeline
 const equipe = store.equipe
 
@@ -156,39 +318,6 @@ const values = {
   }
 }
 
-const odds = [
-  {
-    number: 4,
-    label: 'Éducation de qualité',
-    color: '#C5192D',
-    desc: 'Cours d\'anglais à Puerto Miguel, ateliers pédagogiques pour les enfants de la communauté Kukama.'
-  },
-  {
-    number: 5,
-    label: 'Égalité entre les sexes',
-    color: '#FF3A21',
-    desc: 'Programmes d\'autonomisation des femmes et de la jeunesse au sein des communautés amazoniennes.'
-  },
-  {
-    number: 8,
-    label: 'Travail décent & croissance',
-    color: '#A21942',
-    desc: 'Développement de filières locales durables et création d\'opportunités économiques pour les habitants de Puerto Miguel.'
-  },
-  {
-    number: 15,
-    label: 'Vie terrestre',
-    color: '#56C02B',
-    desc: 'Protection de la forêt amazonienne, sensibilisation climatique avec AKUUVision et la Fresque du Climat.'
-  },
-  {
-    number: 17,
-    label: 'Partenariats pour les objectifs',
-    color: '#19486A',
-    desc: 'Réseau de partenaires institutionnels (UGA, FONJEP, France Volontaires…) pour amplifier notre impact.'
-  }
-]
-
 let observer = null
 
 onMounted(() => {
@@ -197,6 +326,7 @@ onMounted(() => {
     { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
   )
   document.querySelectorAll('.fade-in-up').forEach((el) => observer.observe(el))
+  loadSocialFeed()
 })
 
 onUnmounted(() => { if (observer) observer.disconnect() })

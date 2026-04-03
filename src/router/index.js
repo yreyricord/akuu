@@ -35,6 +35,21 @@ const routes = [
     path: '/contact',
     name: 'contact',
     component: () => import('@/views/ContactView.vue')
+  },
+  {
+    path: '/hydrama',
+    name: 'hydrama',
+    component: () => import('@/views/HydramaView.vue')
+  },
+  {
+    path: '/akuuvision',
+    name: 'akuuvision',
+    component: () => import('@/views/AkuuVisionView.vue')
+  },
+  {
+    path: '/cours-anglais',
+    name: 'cours-anglais',
+    component: () => import('@/views/CoursAnglaisView.vue')
   }
 ]
 

@@ -1,0 +1,15 @@
+{
+  "feed": {
+    "instagramLimit": 6,
+    "tiktokLimit": 6,
+    "tiktokVideoUrls": []
+  },
+  "instagram": {
+    "postUrlOrShortcode": "",
+    "profileUrl": "https://www.instagram.com/akuu_association/"
+  },
+  "tiktok": {
+    "videoUrl": "",
+    "profileUrl": "https://www.tiktok.com/@akuu_asso"
+  }
+}

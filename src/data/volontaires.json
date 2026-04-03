@@ -1,25 +1,7 @@
 {
   "temoignages": [
-    {
-      "prenom": "Léa",
-      "annee": 2024,
-      "mission": "Rénovation & accompagnement communautaire",
-      "citation": "Mon expérience à Puerto Miguel a changé ma vision du monde. Vivre au contact des communautés Kukama m'a appris l'essentiel : le partage et le respect de la nature.",
-      "photo": ""
-    },
-    {
-      "prenom": "Dylan",
-      "annee": 2024,
-      "mission": "Construction & développement local",
-      "citation": "Participer à la construction du musée a été l'expérience la plus enrichissante de ma vie. On sent qu'on contribue à quelque chose de durable.",
-      "photo": ""
-    },
-    {
-      "prenom": "Raphaël",
-      "annee": 2024,
-      "mission": "Éducation & sensibilisation",
-      "citation": "Enseigner l'anglais aux enfants de Puerto Miguel, c'est leur ouvrir une fenêtre sur le monde tout en apprenant tellement d'eux.",
-      "photo": ""
-    }
+    { "id": "lea", "prenom": "Léa", "annee": 2024, "photo": "" },
+    { "id": "dylan", "prenom": "Dylan", "annee": 2024, "photo": "" },
+    { "id": "raphael", "prenom": "Raphaël", "annee": 2024, "photo": "" }
   ]
 }

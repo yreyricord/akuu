@@ -4,7 +4,7 @@
     <!-- ═══════════════════════════════════════════════
          HERO + WIDGET
     ═══════════════════════════════════════════════ -->
-    <section class="relative min-h-screen flex flex-col lg:flex-row overflow-hidden">
+    <section class="relative min-h-screen flex flex-col overflow-hidden">
 
       <!-- Fond photo + overlay -->
       <div class="absolute inset-0 z-0">
@@ -12,8 +12,12 @@
         <div class="absolute inset-0 bg-gradient-to-r from-forest/95 via-forest/80 to-forest/40" />
       </div>
 
+      <!-- Bloc centré : texte + widget rapprochés (évite le vide au milieu de l’écran) -->
+      <div
+        class="relative z-10 flex flex-1 flex-col lg:flex-row lg:items-center lg:justify-center gap-12 lg:gap-10 xl:gap-14 w-full max-w-[1100px] mx-auto px-6 sm:px-8 md:px-10 py-28 lg:py-24"
+      >
       <!-- Colonne gauche -->
-      <div class="relative z-10 flex flex-col justify-center px-8 md:px-16 lg:px-20 py-32 lg:py-0 lg:w-1/2 text-white">
+      <div class="flex flex-col justify-center w-full lg:w-auto lg:max-w-[min(100%,28rem)] xl:max-w-[30rem] shrink-0 text-white">
         <span class="inline-flex items-center gap-2 text-leaf font-semibold text-sm uppercase tracking-widest mb-6">
           <span class="w-8 h-px bg-leaf"></span>
           {{ $t('soutien.label') }}
@@ -89,8 +93,8 @@
       </div>
 
       <!-- Colonne droite : widget HelloAsso -->
-      <div class="relative z-10 flex items-center justify-center lg:w-1/2 px-6 pb-16 lg:py-24">
-        <div class="w-full max-w-md">
+      <div class="flex items-stretch justify-center w-full max-w-md lg:max-w-[420px] shrink-0 pb-8 lg:pb-0">
+        <div class="w-full">
 
           <!-- Badge -->
           <div class="flex items-center gap-2 bg-leaf/20 border border-leaf/30 rounded-xl px-4 py-2.5 mb-4">
@@ -120,6 +124,7 @@
             {{ $t('soutien.widget_secure') }}
           </p>
         </div>
+      </div>
       </div>
 
     </section>

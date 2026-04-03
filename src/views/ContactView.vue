@@ -21,7 +21,7 @@
               >
                 <input type="hidden" name="form-name" value="contact" />
                 <p class="hidden">
-                  <label>Ne pas remplir : <input name="bot-field" /></label>
+                  <label>{{ $t('common.honeypot_label') }} <input name="bot-field" /></label>
                 </p>
 
                 <div class="space-y-6">
@@ -173,7 +173,7 @@
                 allowfullscreen=""
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
-                title="Puerto Miguel, Loreto, Pérou"
+                :title="$t('contact.map_iframe_title')"
               />
             </div>
           </div>

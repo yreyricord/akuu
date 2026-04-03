@@ -22,19 +22,19 @@
       :style="stageStyle"
       :aria-label="$t('musee.coupe.title')"
     >
-      <div class="coupe-sticky sticky top-0 min-h-[100dvh] flex flex-col justify-center py-6 md:py-8 px-3 sm:px-4 md:px-6">
-        <div class="w-full max-w-6xl xl:max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-stretch gap-5 lg:gap-6 xl:gap-8">
+      <div class="coupe-sticky sticky top-0 h-[100dvh] flex flex-col">
+        <div class="w-full max-w-7xl mx-auto flex flex-col flex-1 min-h-0">
 
-          <!-- Plan : overflow-hidden clip le zoom -->
+          <!-- Plan : remplit tout l'espace disponible au-dessus de la card -->
           <div
-            class="coupe-plan-wrapper relative flex-1 min-w-0 rounded-2xl shadow-xl bg-night/[0.04] border border-night/[0.06] ring-1 ring-black/[0.04] overflow-hidden"
+            class="coupe-plan-wrapper relative w-full flex-1 min-h-0 bg-black/[0.02] overflow-hidden"
           >
             <!-- Wrapper zoomable (img + SVG se transforment ensemble) -->
-            <div class="coupe-zoomable relative" :style="zoomStyle">
+            <div class="coupe-zoomable absolute inset-0 flex items-center justify-center" :style="zoomStyle">
               <img
                 src="/images/musee/coupe_final.png"
                 :alt="$t('musee.coupe.alt')"
-                class="w-full h-auto block coupe-image"
+                class="w-full h-full object-contain block coupe-image"
                 :class="{ revealed: imageRevealed }"
                 @load="onImageLoad"
               />
@@ -181,20 +181,20 @@
               <div
                 class="h-full transition-all duration-500 ease-out"
                 :style="{
-                  width: `${((activeStep + 1) / stepCount) * 100}%`,
+                  width: `${((activeStep + 1) / zoneCount) * 100}%`,
                   background: `linear-gradient(90deg, ${COLORS.bleu}, ${COLORS.forest}, ${COLORS.leaf})`
                 }"
               />
             </div>
           </div>
 
-          <!-- Panneau texte -->
-          <div class="w-full shrink-0 lg:w-auto lg:max-w-[20rem] xl:max-w-[22rem]">
+          <!-- Card unique pleine largeur, collée sous la coupe -->
+          <div class="w-full shrink-0 pb-2">
             <transition name="card-swap" mode="out-in">
               <article
                 v-if="imageReady && activeZone"
                 :key="activeZone.id"
-                class="flex flex-col rounded-2xl border border-forest/12 bg-white shadow-[0_4px_24px_-4px_rgba(4,72,143,0.12),0_12px_40px_-12px_rgba(45,105,21,0.08)] overflow-hidden"
+                class="w-full rounded-2xl border border-forest/12 bg-white shadow-[0_4px_24px_-4px_rgba(4,72,143,0.12),0_12px_40px_-12px_rgba(45,105,21,0.08)] overflow-hidden"
                 role="region"
                 :aria-label="activeZone.nom"
               >
@@ -202,37 +202,39 @@
                   class="h-1 w-full shrink-0 bg-gradient-to-r from-bleu via-forest to-leaf"
                   aria-hidden="true"
                 />
-
-                <div class="p-4 sm:p-5 flex flex-col flex-1">
-                  <div class="flex items-center justify-between gap-2 mb-3">
-                    <div class="flex gap-1.5 items-center">
-                      <span
-                        v-for="(_, si) in zonesSorted"
-                        :key="si"
-                        class="h-1 rounded-full transition-all duration-300"
-                        :class="si === activeStep ? 'w-7' : 'w-1.5 opacity-30'"
-                        :style="
-                          si === activeStep
-                            ? { backgroundColor: COLORS.bleu }
-                            : { backgroundColor: COLORS.forest }
-                        "
-                      />
-                    </div>
-                    <span class="text-[10px] font-bold uppercase tracking-[0.18em] text-night/35 tabular-nums">
-                      {{ String(activeStep + 1).padStart(2, '0') }} / {{ String(stepCount).padStart(2, '0') }}
+                <div class="px-5 py-3.5 sm:px-6 sm:py-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
+                  <div class="flex items-center gap-4 sm:min-w-0 sm:shrink-0">
+                    <span
+                      class="flex items-center justify-center w-10 h-10 rounded-full text-white text-sm font-bold font-serif shrink-0"
+                      :style="{ backgroundColor: COLORS.bleu }"
+                    >
+                      {{ activeZone.badge }}
                     </span>
+                    <div class="min-w-0">
+                      <p class="text-[10px] font-semibold uppercase tracking-[0.12em] text-bleu mb-0.5">
+                        {{ activeZone.etage }}
+                      </p>
+                      <h3 class="text-lg font-serif font-bold text-night leading-tight truncate">
+                        {{ activeZone.nom }}
+                      </h3>
+                      <p class="text-xs text-forest/70 italic mt-0.5">{{ activeZone.nomKukama }}</p>
+                    </div>
                   </div>
-
-                  <p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-bleu mb-1">
-                    {{ activeZone.etage }}
-                  </p>
-                  <h3 class="text-xl font-serif font-bold text-night leading-tight">
-                    {{ activeZone.nom }}
-                  </h3>
-                  <p class="text-xs text-forest/70 italic mt-1 mb-3">{{ activeZone.nomKukama }}</p>
-                  <p class="text-[13px] text-night/70 leading-relaxed flex-1 pb-1">
+                  <div class="hidden sm:block w-px self-stretch bg-night/8" />
+                  <p class="text-[13px] text-night/70 leading-relaxed flex-1 min-w-0">
                     {{ activeZone.description }}
                   </p>
+                  <div class="hidden sm:flex flex-col items-center gap-1.5 shrink-0 pl-2">
+                    <span
+                      v-for="(_, si) in zonesSorted"
+                      :key="si"
+                      class="w-1.5 rounded-full transition-all duration-300"
+                      :class="si === activeStep ? 'h-6' : 'h-1.5 opacity-30'"
+                      :style="si === activeStep
+                        ? { backgroundColor: COLORS.bleu }
+                        : { backgroundColor: COLORS.forest }"
+                    />
+                  </div>
                 </div>
               </article>
             </transition>
@@ -439,20 +441,11 @@ onUnmounted(() => {
 }
 .card-swap-enter-from {
   opacity: 0;
-  transform: translateX(0.75rem);
+  transform: translateY(0.5rem);
 }
 .card-swap-leave-to {
   opacity: 0;
-  transform: translateX(-0.35rem);
-}
-
-@media (max-width: 1023px) {
-  .card-swap-enter-from {
-    transform: translateY(0.75rem);
-  }
-  .card-swap-leave-to {
-    transform: translateY(-0.35rem);
-  }
+  transform: translateY(-0.25rem);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -3,7 +3,7 @@
     <div class="max-w-5xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-center">
       <div v-for="stat in stats" :key="stat.labelKey" class="flex flex-col items-center">
         <span class="text-4xl md:text-5xl lg:text-6xl font-bold font-serif mb-2 tabular-nums">
-          {{ stat.display }}{{ stat.suffix }}
+          {{ stat.display }}{{ stat.suffixKey ? $t(stat.suffixKey) : stat.suffix }}
         </span>
         <span class="text-leaf text-xs sm:text-sm uppercase tracking-[0.15em] font-medium">
           {{ $t(stat.labelKey) }}
@@ -21,10 +21,10 @@ const sectionRef = ref(null)
 const hasAnimated = ref(false)
 
 const stats = reactive([
-  { value: 2016, display: '2016', suffix: '', labelKey: 'stats.founded', isYear: true },
-  { value: 10, display: '0', suffix: ' ans', labelKey: 'stats.years', isYear: false },
-  { value: 3, display: '0', suffix: '', labelKey: 'stats.village', isYear: false },
-  { value: 150, display: '0', suffix: '+', labelKey: 'stats.volunteers', isYear: false }
+  { value: 2016, display: '2016', suffix: '', suffixKey: null, labelKey: 'stats.founded', isYear: true },
+  { value: 10, display: '0', suffix: '', suffixKey: 'common.years_suffix', labelKey: 'stats.years', isYear: false },
+  { value: 3, display: '0', suffix: '', suffixKey: null, labelKey: 'stats.village', isYear: false },
+  { value: 150, display: '0', suffix: '+', suffixKey: null, labelKey: 'stats.volunteers', isYear: false }
 ])
 
 useIntersectionObserver(sectionRef, ([{ isIntersecting }]) => {

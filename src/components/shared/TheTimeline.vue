@@ -82,17 +82,17 @@
               <svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 8 8">
                 <circle cx="4" cy="4" r="4"/>
               </svg>
-              À venir
+              {{ t('association.timeline_upcoming_badge') }}
             </span>
           </div>
           <h3
             class="text-lg font-serif font-bold mb-2 transition-colors duration-300"
             :class="item.futur ? 'text-night/50' : activeIndex === index ? 'text-forest' : 'text-night'"
           >
-            {{ item.titre }}
+            {{ t(`association.timeline.${item.annee}.title`) }}
           </h3>
           <p class="text-sm leading-relaxed" :class="item.futur ? 'text-night/35 italic' : 'text-night/55'">
-            {{ item.description }}
+            {{ t(`association.timeline.${item.annee}.description`) }}
           </p>
         </div>
       </div>
@@ -139,11 +139,11 @@
             </span>
             <span v-if="item.futur" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-leaf/10 text-leaf border border-leaf/25 animate-pulse">
               <svg class="w-2 h-2" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
-              À venir
+              {{ t('association.timeline_upcoming_badge') }}
             </span>
           </div>
-          <h3 class="text-base font-serif font-bold mb-1.5" :class="item.futur ? 'text-night/50' : 'text-night'">{{ item.titre }}</h3>
-          <p class="text-sm leading-relaxed" :class="item.futur ? 'text-night/35 italic' : 'text-night/55'">{{ item.description }}</p>
+          <h3 class="text-base font-serif font-bold mb-1.5" :class="item.futur ? 'text-night/50' : 'text-night'">{{ t(`association.timeline.${item.annee}.title`) }}</h3>
+          <p class="text-sm leading-relaxed" :class="item.futur ? 'text-night/35 italic' : 'text-night/55'">{{ t(`association.timeline.${item.annee}.description`) }}</p>
         </div>
       </div>
     </div>
@@ -152,10 +152,13 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   items: { type: Array, required: true }
 })
+
+const { t } = useI18n()
 
 const containerRef = ref(null)
 const pathRef = ref(null)
@@ -172,17 +175,31 @@ function setDotRef(el, index) {
   if (el) dotElements.value[index] = el
 }
 
-function getEra(annee) {
-  if (annee <= 2017) return { color: '#2D6915', label: 'Fondation' }
-  if (annee <= 2019) return { color: '#04488F', label: 'Développement' }
-  if (annee === 2020) return { color: '#3A4040', label: 'Pause' }
-  if (annee <= 2022) return { color: '#4071A6', label: 'Relance' }
-  if (annee >= 2026) return { color: '#A6C639', label: 'Bientôt' }
-  return { color: '#A6C639', label: 'Musée Shapishiko' }
+function getEraKey(annee) {
+  if (annee <= 2017) return 'foundation'
+  if (annee <= 2019) return 'development'
+  if (annee === 2020) return 'pause'
+  if (annee <= 2022) return 'relaunch'
+  if (annee >= 2026) return 'soon'
+  return 'museum'
 }
 
-function eraColor(annee) { return getEra(annee).color }
-function eraLabel(annee) { return getEra(annee).label }
+const eraColors = {
+  foundation: '#2D6915',
+  development: '#04488F',
+  pause: '#3A4040',
+  relaunch: '#4071A6',
+  soon: '#A6C639',
+  museum: '#A6C639'
+}
+
+function eraColor(annee) {
+  return eraColors[getEraKey(annee)]
+}
+
+function eraLabel(annee) {
+  return t(`association.timeline_eras.${getEraKey(annee)}`)
+}
 
 function buildPath() {
   const container = containerRef.value

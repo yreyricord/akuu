@@ -79,7 +79,7 @@
             <!-- Badge "À venir" pour pending -->
             <span v-if="step.status === 'pending'" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-leaf/10 text-leaf border border-leaf/25 animate-pulse">
               <svg class="w-2 h-2" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
-              À venir
+              {{ t('musee.milestone_ui.upcoming') }}
             </span>
           </div>
           <h3
@@ -147,10 +147,13 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   steps: { type: Array, required: true }
 })
+
+const { t } = useI18n()
 
 const containerRef = ref(null)
 const pathRef = ref(null)
@@ -182,9 +185,9 @@ function stepColor(status) {
 }
 
 function stepLabel(status) {
-  if (status === 'done') return 'Réalisé'
-  if (status === 'in_progress') return 'En cours'
-  return 'Prévu'
+  if (status === 'done') return t('musee.milestone_ui.status_done')
+  if (status === 'in_progress') return t('musee.milestone_ui.status_in_progress')
+  return t('musee.milestone_ui.status_pending')
 }
 
 function buildPath() {
