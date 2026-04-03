@@ -5,3 +5,9 @@ dist
 .env
 .env.*
 vite.config.js.timestamp-*
+
+# Brouillons locaux
+Info_musee_brouillon.md
+
+# Imports bruts type downloadgram (ne pas versionner)
+**/downloadgram*

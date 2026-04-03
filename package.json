@@ -5,9 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "npm run i18n:check && npm run i18n:check-narratives",
     "build": "vite build",
     "preview": "vite preview",
-    "postinstall": "node scripts/copy-wasm.js"
+    "postinstall": "node scripts/copy-wasm.js",
+    "i18n:check": "node scripts/check-i18n-parity.mjs",
+    "i18n:check-narratives": "node scripts/check-narrative-structure.mjs"
   },
   "dependencies": {
     "@vueuse/core": "^10.9.0",

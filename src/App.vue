@@ -13,8 +13,28 @@
 </template>
 
 <script setup>
+import { onMounted, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import NavBar from '@/components/layout/NavBar.vue'
 import Footer from '@/components/layout/Footer.vue'
+
+const { locale, t } = useI18n()
+
+function syncDocumentSeo () {
+  const loc = locale.value
+  document.documentElement.lang = loc === 'en' ? 'en' : loc === 'es' ? 'es' : 'fr'
+  document.title = t('seo.title')
+  let meta = document.querySelector('meta[name="description"]')
+  if (!meta) {
+    meta = document.createElement('meta')
+    meta.setAttribute('name', 'description')
+    document.head.appendChild(meta)
+  }
+  meta.setAttribute('content', t('seo.description'))
+}
+
+onMounted(syncDocumentSeo)
+watch(locale, syncDocumentSeo)
 </script>
 
 <style>
