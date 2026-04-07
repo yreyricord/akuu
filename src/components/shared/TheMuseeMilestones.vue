@@ -1,10 +1,10 @@
 <template>
   <div class="relative" ref="containerRef">
 
-    <!-- SVG chemin animé (desktop) -->
+    <!-- SVG chemin animé : desktop (frise centrale) + mobile (pastilles à gauche, courbe sur le côté) -->
     <svg
       v-if="svgReady"
-      class="hidden md:block absolute top-0 left-0 pointer-events-none overflow-visible"
+      class="absolute top-0 left-0 z-[5] pointer-events-none overflow-visible"
       :width="svgWidth"
       :height="svgHeight"
     >
@@ -24,10 +24,10 @@
       <image
         v-if="trailBirdSrc && svgReady && birdLayout.visible"
         :href="trailBirdSrc"
-        :x="birdLayout.x - birdSize / 2"
-        :y="birdLayout.y - birdSize / 2"
-        :width="birdSize"
-        :height="birdSize"
+        :x="birdLayout.x - birdSizePx / 2"
+        :y="birdLayout.y - birdSizePx / 2"
+        :width="birdSizePx"
+        :height="birdSizePx"
         class="trail-bird-on-path"
         :transform="`rotate(${birdLayout.angle} ${birdLayout.x} ${birdLayout.y})`"
         preserveAspectRatio="xMidYMid meet"
@@ -54,12 +54,12 @@
       :class="index <= revealUpTo ? 'milestone-step-row--visible' : 'milestone-step-row--hidden'"
       :style="{ '--milestone-stagger': String(index) }"
     >
-      <!-- Colonne contenu -->
-      <div :class="['relative pb-10', index % 2 === 1 ? 'md:order-2 md:pl-16' : 'md:order-1 md:pr-16']">
+      <!-- Colonne contenu (desktop uniquement) -->
+      <div :class="['relative pb-10 hidden md:block', index % 2 === 1 ? 'md:order-2 md:pl-16' : 'md:order-1 md:pr-16']">
 
         <!-- Point de connexion -->
         <div
-          :ref="(el) => setDotRef(el, index)"
+          :ref="(el) => setDesktopDotRef(el, index)"
           class="hidden md:block absolute top-5 z-10 rounded-full ring-4 ring-white shadow-lg transition-all duration-500"
           :class="[
             index % 2 === 1 ? '-left-[2.6rem]' : '-right-[2.6rem]',
@@ -112,9 +112,14 @@
         </div>
       </div>
 
-      <!-- Colonne année -->
-      <div :class="['hidden md:flex items-start pb-10', index % 2 === 1 ? 'md:order-1 md:justify-end md:pr-16' : 'md:order-2 md:justify-start md:pl-16']">
-        <div class="pt-1 select-none">
+      <!-- Colonne année + visuel en face du texte (synchronisé avec le colibri) -->
+      <div
+        :class="[
+          'hidden md:flex flex-col gap-5 pb-10',
+          index % 2 === 1 ? 'md:order-1 md:items-end md:pr-16' : 'md:order-2 md:items-start md:pl-16'
+        ]"
+      >
+        <div class="pt-1 select-none shrink-0">
           <span
             class="block font-serif font-black leading-none transition-all duration-500"
             :class="step.year.length > 4 ? 'text-3xl' : 'text-5xl'"
@@ -123,15 +128,24 @@
             {{ step.year }}
           </span>
         </div>
+        <FriseOppositeVisual
+          v-if="showOppositeVisuals"
+          :revealed="milestoneVisualRevealed(index)"
+          :number="index + 1"
+          :src="oppositeVisualSrc(index)"
+          :alt="oppositeVisualAlt(index)"
+          :side="index % 2 === 0 ? 'right' : 'left'"
+        />
       </div>
 
-      <!-- Mobile -->
+      <!-- Mobile (colibri animé = même SVG que desktop, calé sur les pastilles) -->
       <div class="md:hidden col-span-2 pb-8 pl-8 relative">
-        <div class="absolute left-0 top-0 bottom-0 w-0.5 transition-colors duration-500"
-          :style="{ backgroundColor: activeIndex >= index ? stepColor(step.status) : '#3A404015' }" />
-        <div class="absolute top-4 left-0 rounded-full ring-2 ring-white -translate-x-[5px] transition-all duration-500"
+        <div
+          :ref="(el) => setMobileDotRef(el, index)"
+          class="absolute top-4 left-0 rounded-full ring-2 ring-white -translate-x-[5px] transition-all duration-500 motion-reduce:transition-none"
           :class="activeIndex >= index ? 'w-3 h-3' : 'w-2 h-2'"
-          :style="{ backgroundColor: stepColor(step.status) }" />
+          :style="{ backgroundColor: stepColor(step.status) }"
+        />
         <div class="rounded-2xl p-4 border"
           :class="step.status === 'pending' ? 'bg-white/60 border-dashed border-night/20' : 'bg-white shadow-sm border-night/5'">
           <span class="text-xl font-serif font-black block mb-2 transition-colors duration-500"
@@ -154,6 +168,15 @@
             <li v-for="(item, j) in step.items" :key="j">{{ item }}</li>
           </ul>
         </div>
+        <FriseOppositeVisual
+          v-if="showOppositeVisuals"
+          class="mt-5"
+          :revealed="milestoneVisualRevealed(index)"
+          :number="index + 1"
+          :src="oppositeVisualSrc(index)"
+          :alt="oppositeVisualAlt(index)"
+          side="below"
+        />
       </div>
     </div>
   </div>
@@ -164,11 +187,20 @@ import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
   computeTrailBirdLayout,
-  TRAIL_BIRD_ANGLE_OFFSET_VERTICAL_FRIZE
+  TRAIL_BIRD_ANGLE_OFFSET_VERTICAL_FRIZE,
+  approximateTravelledForPathY
 } from '@/composables/useTrailBirdOnPath'
+import FriseOppositeVisual from '@/components/shared/FriseOppositeVisual.vue'
 
 const props = defineProps({
   steps: { type: Array, required: true },
+  /**
+   * Images optionnelles en regard du texte, même ordre que steps.
+   * Laisser vide pour afficher le placeholder numéroté (1, 2, …).
+   */
+  visualSrcs: { type: Array, default: () => [] },
+  /** Alts i18n-friendly, même longueur que visualSrcs quand des images sont fournies */
+  visualAlts: { type: Array, default: () => [] },
   /** PNG transparent : suit le fil du temps (desktop uniquement, même SVG que la courbe). */
   trailBirdSrc: { type: String, default: '' },
   trailBirdAlt: { type: String, default: '' },
@@ -177,10 +209,13 @@ const props = defineProps({
   /** Préfixe i18n pour les badges (ex. musee.milestone_ui ou hydrama.timeline_ui). */
   labelNamespace: { type: String, default: 'musee.milestone_ui' },
   /** Id unique du linearGradient SVG (évite les conflits si plusieurs frises sur le site). */
-  gradientId: { type: String, default: 'museeMilestoneGradient' }
+  gradientId: { type: String, default: 'museeMilestoneGradient' },
+  /** Afficher la colonne photos / placeholders en regard du texte (désactiver ex. page Hydr’Ama). */
+  showOppositeVisuals: { type: Boolean, default: true }
 })
 
-const birdSize = 80
+/** Taille du PNG sur le chemin (plus petit sur mobile) */
+const birdSizePx = ref(80)
 
 const birdLayout = ref({
   x: 0,
@@ -191,9 +226,37 @@ const birdLayout = ref({
 
 const { t } = useI18n()
 
+/** Photos visibles dès que l’étape est révélée au scroll (comme la carte), pas seulement quand le colibri passe. */
+function milestoneVisualRevealed(index) {
+  if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return true
+  }
+  return index <= revealUpTo.value || activeIndex.value >= index
+}
+
+function oppositeVisualSrc(index) {
+  const fromProp = props.visualSrcs[index]
+  if (fromProp) return fromProp
+  const fromStep = props.steps[index]?.visualSrc
+  return typeof fromStep === 'string' ? fromStep : ''
+}
+
+function oppositeVisualAlt(index) {
+  const fromProp = props.visualAlts[index]
+  if (fromProp) return fromProp
+  const fromStep = props.steps[index]?.visualAlt
+  return typeof fromStep === 'string' ? fromStep : ''
+}
+
 const containerRef = ref(null)
 const pathRef = ref(null)
-const dotElements = ref([])
+const dotElementsDesktop = ref([])
+const dotElementsMobile = ref([])
+
+function dotsForViewport() {
+  if (typeof window === 'undefined') return dotElementsDesktop.value
+  return window.matchMedia('(min-width: 768px)').matches ? dotElementsDesktop.value : dotElementsMobile.value
+}
 const pathD = ref('')
 const pathLength = ref(2000)
 const dashOffset = ref(2000)
@@ -206,8 +269,11 @@ const activeIndex = ref(-1)
 const stepRowElements = ref([])
 const revealUpTo = ref(-1)
 
-function setDotRef(el, index) {
-  if (el) dotElements.value[index] = el
+function setDesktopDotRef(el, index) {
+  if (el) dotElementsDesktop.value[index] = el
+}
+function setMobileDotRef(el, index) {
+  if (el) dotElementsMobile.value[index] = el
 }
 
 function setStepRowRef(el, index) {
@@ -235,25 +301,39 @@ function buildPath() {
   svgWidth.value = containerRect.width
   svgHeight.value = containerRect.height
 
-  const points = dotElements.value
-    .map(dot => {
+  const isMdUp = typeof window !== 'undefined' && window.matchMedia('(min-width: 768px)').matches
+  birdSizePx.value = isMdUp ? 80 : 48
+
+  const dots = isMdUp ? dotElementsDesktop.value : dotElementsMobile.value
+  const points = dots
+    .map((dot) => {
       if (!dot) return null
       const r = dot.getBoundingClientRect()
-      return { x: containerRect.width / 2, y: r.top - containerRect.top + r.height / 2 }
+      if (r.width === 0 && r.height === 0) return null
+      const cy = r.top - containerRect.top + r.height / 2
+      const cx = r.left - containerRect.left + r.width / 2
+      if (isMdUp) {
+        return { x: containerRect.width / 2, y: cy }
+      }
+      return { x: cx, y: cy }
     })
     .filter(Boolean)
 
   if (points.length < 2) {
+    svgReady.value = false
     scheduleCardRevealCheck()
     return
   }
+
+  const w = containerRect.width
+  const waveBase = isMdUp ? 50 : Math.min(34, Math.max(20, w * 0.065))
 
   let d = `M ${points[0].x} ${points[0].y}`
   for (let i = 1; i < points.length; i++) {
     const p = points[i - 1]
     const c = points[i]
     const mid = (p.y + c.y) / 2
-    const wave = (i % 2 === 0) ? 50 : -50
+    const wave = (i % 2 === 0) ? waveBase : -waveBase
     d += ` C ${p.x + wave} ${mid - 20}, ${c.x - wave} ${mid + 20}, ${c.x} ${c.y}`
   }
 
@@ -309,21 +389,46 @@ function handleScroll() {
   if (!container) return
 
   const len = pathLength.value
-  if (len > 0) {
-    const rect = container.getBoundingClientRect()
-    const wh = window.innerHeight
-    const scrolled = wh * 0.55 - rect.top
-    const progress = Math.max(0, Math.min(1, scrolled / rect.height))
-    dashOffset.value = len * (1 - progress)
-  }
-
+  const pathEl = pathRef.value
+  const rect = container.getBoundingClientRect()
   const wh = window.innerHeight
-  let newActive = -1
-  dotElements.value.forEach((dot, i) => {
-    if (!dot) return
-    if (dot.getBoundingClientRect().top < wh * 0.6) newActive = i
-  })
-  activeIndex.value = newActive
+  const n = props.steps.length
+
+  /**
+   * Colibri maintenu au centre vertical du viewport : on résout la position sur le path
+   * pour que le point du fil tombe sous le milieu de l’écran (repère du bloc frise).
+   */
+  if (len > 0 && pathEl) {
+    if (rect.top > wh) {
+      dashOffset.value = len
+      activeIndex.value = -1
+    } else if (rect.bottom < 36) {
+      dashOffset.value = 0
+      activeIndex.value = n > 0 ? n - 1 : -1
+    } else {
+      const targetSvgY = wh * 0.5 - rect.top
+      const travelled = approximateTravelledForPathY(pathEl, len, targetSvgY)
+      dashOffset.value = len - travelled
+      const birdPt = pathEl.getPointAtLength(travelled)
+      let newActive = -1
+      dotsForViewport().forEach((dot, i) => {
+        if (!dot) return
+        const dr = dot.getBoundingClientRect()
+        if (dr.width <= 0 && dr.height <= 0) return
+        const dotCy = dr.top + dr.height / 2 - rect.top
+        if (dotCy <= birdPt.y + 28) newActive = i
+      })
+      activeIndex.value = newActive
+    }
+  } else {
+    let newActive = -1
+    dotsForViewport().forEach((dot, i) => {
+      if (!dot) return
+      const dr = dot.getBoundingClientRect()
+      if (dr.height > 0 && dr.top < wh * 0.6) newActive = i
+    })
+    activeIndex.value = newActive
+  }
 
   updateCardReveal()
   updateTrailBird()
@@ -371,6 +476,9 @@ onMounted(() => {
     nextTick(() => {
       observeMilestoneRows()
       scheduleCardRevealCheck()
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => buildPath())
+      })
     })
   })
 })

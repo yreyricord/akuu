@@ -1,6 +1,7 @@
 <template>
   <div class="min-h-screen flex flex-col">
     <NavBar />
+    <ScrollProgressBar />
     <main class="flex-1">
       <router-view v-slot="{ Component }">
         <Transition name="page" mode="out-in">
@@ -16,6 +17,7 @@
 import { onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import NavBar from '@/components/layout/NavBar.vue'
+import ScrollProgressBar from '@/components/layout/ScrollProgressBar.vue'
 import Footer from '@/components/layout/Footer.vue'
 
 const { locale, t } = useI18n()

@@ -7,10 +7,10 @@ Les fichiers sont à placer sous **`public/`** : un chemin `/images/...` corresp
 | # | Section (sur la page) | Où c’est défini | Chemin actuel | Image souhaitée (à remplir) |
 |---|------------------------|-----------------|---------------|-----------------------------|
 | 1 | **En-tête (hero)** | `MuseeShapishikoView.vue` → `PageHero` | `/images/hero-musee.jpg` | |
-| 2 | **Le projet** (bloc texte + photo à droite) | `MuseeShapishikoView.vue` | `/images/musee/musee-description.jpg` | |
+| 2 | **Le projet** (bloc texte + photo à droite) | `MuseeShapishikoView.vue` | `/images/musee/galerie-musee-3.jpg` | |
 | 3 | **Contexte** | `src/data/musee-side-visuals.json` → `context` | `/images/musee/galerie-musee-1.jpg` | |
 | 4 | **Carte Las Mariposas** | `src/data/musee-acteurs.json` | `/images/musee/acteurs/mariposas.jpg` | |
-| 5 | **Carte Nelvis Parades Pacaya** | `src/data/musee-acteurs.json` | `/images/musee/acteurs/nelvis.jpg` | |
+| 5 | **Carte Nelvis Paredes Pacaya** | `src/data/musee-acteurs.json` | `/images/musee/acteurs/nelvis.jpg` | |
 | 6 | **Carte École d’art Puerto Miguel** | `src/data/musee-acteurs.json` | `/images/musee/acteurs/ecole-art.jpg` | |
 | 7 | **Carte Radio Ucamara** | `src/data/musee-acteurs.json` | `/images/musee/acteurs/ucamara.jpg` | |
 | 8 | **Carte Écomusée Chullachaqui** | `src/data/musee-acteurs.json` | `/images/musee/acteurs/chullachaqui.jpg` | |

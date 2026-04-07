@@ -7,10 +7,14 @@
     "honeypot_label": "Do not fill in:",
     "amazonie_france": "Amazonia · France",
     "youtube_video": "YouTube video",
-    "colibri_trail_alt": "AKUU hummingbird following the timeline"
+    "colibri_trail_alt": "AKUU hummingbird following the timeline",
+    "scroll_progress_aria": "Page scroll progress",
+    "frise_visual_placeholder_kicker": "Photo",
+    "frise_visual_placeholder_alt": "Step {n} illustration (to be added)",
+    "frise_histoire_photo_alt": "AKUU timeline, {year}, photo {index}"
   },
   "seo": {
-    "title": "AKUU — international solidarity in the Peruvian Amazon",
+    "title": "AKUU, international solidarity in the Peruvian Amazon",
     "description": "AKUU works for sustainable, solidarity-based development that respects Amazonian communities in Puerto Miguel, Peru."
   },
   "nav": {
@@ -30,7 +34,8 @@
     "subtitle": "In the Amazon and in France, AKUU connects volunteers and local communities around concrete solidarity projects.",
     "cta_projets": "Discover our projects",
     "cta_don": "Donate",
-    "image_alt": "Peruvian Amazon, tropical forest and river"
+    "image_alt": "Peruvian Amazon, tropical forest and river",
+    "colibri_alt": "AKUU hummingbird, the association’s emblem"
   },
   "stats": {
     "founded": "Year founded",
@@ -75,6 +80,7 @@
     "quote_author": "Marlon Diaz, co-founder",
     "who_image_alt": "AKUU volunteers in the field",
     "itv_section_title": "AKUU on video",
+    "itv_placeholder": "Report video coming soon. In the meantime, see the “Voices from the Amazon” interviews below.",
     "values_title": "Our values",
     "values": {
       "durable": {
@@ -130,7 +136,7 @@
     "legal": {
       "siret": "SIRET: 831 603 402 00015",
       "rna": "RNA: W061008697",
-      "siege": "Headquarters: 889 Chemin de Jylloue, 06 250 Mougins, France",
+      "siege": "Headquarters in France. Postal address available on request via the contact form.",
       "contact": "Contact: contact{'@'}akuu.org"
     },
     "history_since": "Since 2016",
@@ -241,7 +247,7 @@
           },
           {
             "title": "Awareness",
-            "text": "Imaginarium Festival at UTC Compiègne, Climate Fresk training, talks in secondary schools and universities."
+            "text": "Imaginarium Festival at UTC Compiègne, Climate Fresk training, talks in secondary schools and universities, participation in an awareness event in Iquitos, Peru."
           },
           {
             "title": "New partners",
@@ -275,7 +281,7 @@
         "parts": [
           {
             "title": "Birth of the Shapishiko Museum project",
-            "text": "Preliminary studies and dossier for a museum dedicated to Kukama culture in Puerto Miguel. First field missions after COVID."
+            "text": "A museum project had first been imagined in 2019 with the Las Mariposas artisans; taken up again in 2023, it moves forward with preliminary studies and a dossier for a museum dedicated to Kukama culture in Puerto Miguel. First field missions after COVID."
           },
           {
             "title": "Renovation and missions",
@@ -413,17 +419,17 @@
     "actors": {
       "mariposas": {
         "title": "Las Mariposas",
-        "text": "Village artisans' association that sparked the project: chambira value chain and certification; the museum shop complements their sales points without competing with them.",
+        "text": "Village artisans' association that sparked the project: chambira value chain and certification. They help create the museum's artworks alongside village artists.",
         "photo_alt": "Las Mariposas, village artisans"
       },
       "nelvis": {
-        "title": "Nelvis Parades Pacaya",
-        "text": "Painter from the village; volunteers to pass on Shipibo and Kukama cultures to preserve knowledge and engage young people.",
-        "photo_alt": "Nelvis Parades Pacaya, painter"
+        "title": "Nelvis Paredes Pacaya",
+        "text": "Painter from the village; he teaches painting to local young people, who take part in creating the museum's artworks. He also volunteers to pass on Shipibo and Kukama cultures to preserve knowledge.",
+        "photo_alt": "Nelvis Paredes Pacaya, painter"
       },
       "ecole_art": {
         "title": "Puerto Miguel art school",
-        "text": "Director: Casilda Pinches Sanchez. A place for training and creativity for young people in the village, linked to the museum project and local artists.",
+        "text": "Director: Casilda Pinches Sanchez. With extensive experience teaching art to the village’s children, she makes the studio a place of sharing knowledge and creation. Her commitment remains rooted in ties to the museum project and local artists.",
         "photo_alt": "Puerto Miguel art school, Casilda Pinches Sanchez"
       },
       "ucamara": {
@@ -447,10 +453,10 @@
     "coupe_path_lead": "The route runs from the interpretation centre on three levels (water, dense forest, canopy) to the cultural space via the Tsakarita walkway (Ikuachiru), then the shop and map of village artisans. The interactive section below shows each space in detail; scroll to explore and discover their Kukama names.",
     "governance_kicker": "Governance",
     "governance_title": "Village-led governance",
-    "governance_body": "Las Mariposas run the museum shop; part of the income helps maintain the site. AKUU aims to support rather than decide on behalf of residents.\n\nThe project also seeks recognition within Peru's museum network (process underway with iPeru and relevant institutions).",
+    "governance_body": "The museum shop complements local offerings; part of the income helps maintain the site. Las Mariposas contribute to creating artworks rather than running that shop. AKUU aims to support rather than decide on behalf of residents.\n\nThe project also seeks recognition within Peru's museum network (process underway with iPeru and relevant institutions).",
     "teams_kicker": "On the ground",
     "teams_title": "Build teams and volunteering",
-    "teams_body": "Successive AKUU volunteer teams work on site; civil works and local supervision are coordinated with the village, notably by Abraham Macuyama, an experienced construction lead from Puerto Miguel, with a team of about eleven skilled workers.",
+    "teams_body": "Successive AKUU volunteer teams work on site; civil works and local supervision are coordinated with the village, notably by Abraham Fababa, an experienced construction lead from Puerto Miguel, with a team of about eleven skilled workers.",
     "visit_kicker": "Visit",
     "visit_title": "Duration and fees (indicative)",
     "visit_intro": "Final arrangements will be set with the committee and local authorities.",
@@ -463,7 +469,8 @@
     "progress_title": "Project progress",
     "video_kicker": "Video",
     "video_title": "The museum on video",
-    "progress_kicker": "Since 2023",
+    "progress_kicker": "Since 2019",
+    "milestone_photo_alt": "Shapishiko Museum, project progress, step {step}",
     "plans_kicker": "Architecture",
     "description_image_alt": "Shapishiko Museum in Puerto Miguel",
     "gallery_image_alt": "Shapishiko Museum",
@@ -491,6 +498,10 @@
       "title": "Museum spaces",
       "intro": "The section drawing stays on screen while you scroll: each level is introduced in sequence. You can also tap a zone on the plan or the numbered buttons.",
       "scroll_hint": "Keep scrolling to explore all five spaces",
+      "scroll_track_aria": "Progress through the section drawing tour",
+      "scroll_track_intro": "Scroll to reveal {count} spaces ahead",
+      "scroll_track_zone": "Space {current} of {total}, keep scrolling for the next",
+      "scroll_track_outro": "End of the drawing tour, more of the page below",
       "levels_nav": "Quick access to levels",
       "alt": "Architectural section of the Shapishiko Museum",
       "spaces_legend": "Spaces and levels",
@@ -558,8 +569,7 @@
         "items": [
           "Idea led by Las Mariposas; survey of Puerto Miguel residents",
           "COVID pause and lessons; stronger partnerships",
-          "Village management committee formed (17 members, ages 21-82)",
-          "Partners: Radio Ucamara, Chullachaqui Ecomuseum, FAVER, Ministry of Culture (support for artistic content)"
+          "Partners: Radio Ucamara, Chullachaqui Ecomuseum"
         ]
       },
       "financement": {
@@ -574,6 +584,7 @@
         "label": "2025: Casa Redonda continued, grant and Casa AKUU",
         "items": [
           "Further work on Casa Redonda and the interpretation centre structure",
+          "Village management committee formed (17 members, ages 21-82)",
           "Grant from the Peruvian Ministry of Culture",
           "Casa AKUU improved",
           "Artistic design of the interpretation centre"
@@ -582,6 +593,8 @@
       "production": {
         "label": "2026: interior finishing, works and training",
         "items": [
+          "Ministry of Culture (support for artistic content)",
+          "FAVER (project support)",
           "Purchase and production of works (wave 1, April to June 2026)",
           "Works and interior finishing, first floor of the interpretation centre, cultural space, sanitation (April to July 2026)",
           "Initial training for the management committee (May to September 2026)",
@@ -667,7 +680,7 @@
       },
       "step2": {
         "title": "Interview",
-        "text": "Discussion with the team to validate your motivation and skills."
+        "text": "Discussion with the team to validate your motivation."
       },
       "step3": {
         "title": "Preparation",
@@ -768,7 +781,7 @@
     "success": "Message sent! We will get back to you as soon as possible.",
     "error": "Something went wrong. Please try again or email us at {'@'}akuu.asso@gmail.com.",
     "info_title": "Contact information",
-    "address": "889 Chemin de Jylloue, 06 250 Mougins, France",
+    "address": "Headquarters in France, contact us for a postal address.",
     "find_us": "Find us in Puerto Miguel",
     "map_caption": "Puerto Miguel, Loreto, Peru",
     "map_iframe_title": "Puerto Miguel, Loreto, Peru"
@@ -872,7 +885,7 @@
   "equipe": {
     "yoann": {
       "role": "Co-president · Co-founder",
-      "bio": "Co-founder of the association, Climate Fresk facilitator."
+      "bio": "Co-founder of the association."
     },
     "aude": {
       "role": "Co-president",
@@ -901,8 +914,8 @@
   },
   "footer": {
     "slogan": "In the Amazon and in France, AKUU connects volunteers and local communities around concrete solidarity projects.",
-    "address_line1": "889 Chemin de Jylloue",
-    "address_line2": "06 250 Mougins",
+    "address_line1": "Nonprofit under French law (1901)",
+    "address_line2": "France",
     "nav_title": "Navigation",
     "contact_title": "Contact",
     "social_title": "Follow us",

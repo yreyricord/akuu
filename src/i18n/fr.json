@@ -7,7 +7,11 @@
     "honeypot_label": "Ne pas remplir :",
     "amazonie_france": "Amazonie · France",
     "youtube_video": "Vidéo YouTube",
-    "colibri_trail_alt": "Colibri AKUU suivant la frise"
+    "colibri_trail_alt": "Colibri AKUU suivant la frise",
+    "scroll_progress_aria": "Progression de défilement dans la page",
+    "frise_visual_placeholder_kicker": "Photo",
+    "frise_visual_placeholder_alt": "Illustration étape {n} (à fournir)",
+    "frise_histoire_photo_alt": "Chronologie AKUU, {year}, photo {index}"
   },
   "seo": {
     "title": "AKUU, solidarité internationale en Amazonie péruvienne",
@@ -30,7 +34,8 @@
     "subtitle": "En Amazonie et en France, AKUU engage bénévoles et communautés locales autour de projets solidaires concrets.",
     "cta_projets": "Découvrir nos projets",
     "cta_don": "Faire un don",
-    "image_alt": "Amazonie péruvienne, forêt tropicale et rivière"
+    "image_alt": "Amazonie péruvienne, forêt tropicale et rivière",
+    "colibri_alt": "Colibri AKUU, symbole de l’association"
   },
   "stats": {
     "founded": "Année de création",
@@ -75,6 +80,7 @@
     "quote_author": "Marlon Diaz, co-fondateur",
     "who_image_alt": "Bénévoles AKUU sur le terrain",
     "itv_section_title": "AKUU en vidéo",
+    "itv_placeholder": "Vidéo du reportage à venir ici. En attendant, retrouvez les témoignages « Parole d'Amazonie » ci-dessous.",
     "values_title": "Nos valeurs",
     "values": {
       "durable": {
@@ -130,7 +136,7 @@
     "legal": {
       "siret": "SIRET : 831 603 402 00015",
       "rna": "RNA : W061008697",
-      "siege": "Siège social : 889 Chemin de Jylloue, 06 250 Mougins",
+      "siege": "Siège social en France. Adresse postale communiquée sur demande via le formulaire de contact.",
       "contact": "Contact : contact{'@'}akuu.org"
     },
     "history_since": "Depuis 2016",
@@ -241,7 +247,7 @@
           },
           {
             "title": "Sensibilisation",
-            "text": "Présence à l'Imaginarium Festival de l'UTC Compiègne, formation Fresque du Climat, interventions dans des lycées et universités."
+            "text": "Présence à l'Imaginarium Festival de l'UTC Compiègne, formation Fresque du Climat, interventions dans des lycées et universités, participation à un événement de sensibilisation à Iquitos, au Pérou."
           },
           {
             "title": "Nouveaux partenaires",
@@ -275,7 +281,7 @@
         "parts": [
           {
             "title": "Naissance du projet Musée Shapishiko",
-            "text": "Études préliminaires et montage du dossier pour la création d'un musée dédié à la culture Kukama à Puerto Miguel. Premières missions de terrain depuis le COVID."
+            "text": "Un projet de création de musée avait été initialement imaginé en 2019 en collaboration avec les artisanes Las Mariposas ; repris en 2023, il donne lieu à des études préliminaires et au montage du dossier pour un musée dédié à la culture Kukama à Puerto Miguel. Premières missions de terrain depuis le COVID."
           },
           {
             "title": "Rénovation et missions",
@@ -413,17 +419,17 @@
     "actors": {
       "mariposas": {
         "title": "Las Mariposas",
-        "text": "Association d'artisanes du village, à l'origine du projet : valorisation du chambira et certification ; la boutique du musée complète sans concurrencer leurs points de vente.",
+        "text": "Association d'artisanes du village, à l'origine du projet : valorisation du chambira et certification. Elles participent à la création des œuvres du musée aux côtés des artistes du village.",
         "photo_alt": "Las Mariposas, artisanes du village"
       },
       "nelvis": {
-        "title": "Nelvis Parades Pacaya",
-        "text": "Artiste-peintre du village ; transmission bénévole des cultures Shipibo et Kukama pour préserver les savoirs et intéresser les jeunes.",
-        "photo_alt": "Nelvis Parades Pacaya, artiste-peintre"
+        "title": "Nelvis Paredes Pacaya",
+        "text": "Artiste-peintre du village ; il enseigne la peinture aux jeunes du village, qui participent à la création des œuvres du musée. Il transmet aussi bénévolement les cultures Shipibo et Kukama pour préserver les savoirs.",
+        "photo_alt": "Nelvis Paredes Pacaya, artiste-peintre"
       },
       "ecole_art": {
         "title": "École d'art de Puerto Miguel",
-        "text": "Directrice : Casilda Pinches Sanchez. Lieu de formation et de création pour les jeunes du village, en lien avec le projet du musée et les artistes locaux.",
+        "text": "Directrice : Casilda Pinches Sanchez. Forte d'une grande expérience dans l'enseignement artistique auprès des enfants du village, elle fait de l'atelier un lieu de transmission et de création. Le lien avec le projet du musée et les artistes locaux demeure au cœur de son engagement.",
         "photo_alt": "École d'art de Puerto Miguel, Casilda Pinches Sanchez"
       },
       "ucamara": {
@@ -447,10 +453,10 @@
     "coupe_path_lead": "Le parcours va du centre d'interprétation sur trois niveaux (eau, forêt dense, canopée) à l'espace culturel via la passerelle Tsakarita (Ikuachiru), puis à la boutique et à la carte des artisan·es du village. La coupe interactive ci-dessous détaille chaque espace ; faites défiler pour les parcourir et découvrir leurs noms en kukama.",
     "governance_kicker": "Gouvernance",
     "governance_title": "Une gouvernance villageoise",
-    "governance_body": "Las Mariposas gèrent la boutique du musée ; une partie des recettes contribue à l'entretien du lieu. AKUU aspire à un rôle d'appui plutôt qu'à la décision à la place des habitant·es.\n\nLe projet vise aussi la reconnaissance du musée dans le réseau des musées du Pérou (démarche en cours auprès d'iPeru et des institutions compétentes).",
+    "governance_body": "La boutique du musée complète l'offre locale ; une partie des recettes contribue à l'entretien du lieu. Las Mariposas participent à la création des œuvres plutôt qu'à la gestion de cette boutique. AKUU aspire à un rôle d'appui plutôt qu'à la décision à la place des habitant·es.\n\nLe projet vise aussi la reconnaissance du musée dans le réseau des musées du Pérou (démarche en cours auprès d'iPeru et des institutions compétentes).",
     "teams_kicker": "Sur le terrain",
     "teams_title": "Équipes de chantier et bénévolat",
-    "teams_body": "Des équipes de bénévoles AKUU se succèdent sur le chantier ; le génie civil et l'encadrement local sont coordonnés avec le village, notamment par Abraham Macuyama, chef de chantier expérimenté de Puerto Miguel, avec une équipe d'environ onze ouvriers qualifiés.",
+    "teams_body": "Des équipes de bénévoles AKUU se succèdent sur le chantier ; le génie civil et l'encadrement local sont coordonnés avec le village, notamment par Abraham Fababa, chef de chantier expérimenté de Puerto Miguel, avec une équipe d'environ onze ouvriers qualifiés.",
     "visit_kicker": "Visite",
     "visit_title": "Durée et tarifs (indicatifs)",
     "visit_intro": "Les modalités définitives seront fixées avec le comité et les autorités locales.",
@@ -463,7 +469,8 @@
     "progress_title": "Avancement du projet",
     "video_kicker": "Vidéo",
     "video_title": "Le musée en vidéo",
-    "progress_kicker": "Depuis 2023",
+    "progress_kicker": "Depuis 2019",
+    "milestone_photo_alt": "Musée Shapishiko, avancement du projet, étape {step}",
     "plans_kicker": "Architecture",
     "description_image_alt": "Musée Shapishiko à Puerto Miguel",
     "gallery_image_alt": "Musée Shapishiko",
@@ -491,6 +498,10 @@
       "title": "Les espaces du musée",
       "intro": "La coupe architecturale reste fixe à l’écran pendant que vous défilez : chaque niveau se présente l’un après l’autre. Vous pouvez aussi cliquer sur une zone du plan ou sur les numéros.",
       "scroll_hint": "Continuez à défiler pour parcourir les cinq espaces",
+      "scroll_track_aria": "Progression dans le parcours du plan",
+      "scroll_track_intro": "Faites défiler : {count} espaces à découvrir dans la suite",
+      "scroll_track_zone": "Espace {current} sur {total}, continuez pour le suivant",
+      "scroll_track_outro": "Parcours du plan terminé, la page continue plus bas",
       "levels_nav": "Accès rapide aux niveaux",
       "alt": "Coupe architecturale du Musée Shapishiko",
       "spaces_legend": "Espaces et niveaux",
@@ -558,8 +569,7 @@
         "items": [
           "Idée portée par Las Mariposas ; enquête auprès des habitant·es de Puerto Miguel",
           "Interruption et leçons du COVID ; renforcement des partenariats",
-          "Constitution du comité de gestion villageois (17 membres, 21-82 ans)",
-          "Partenariats : Radio Ucamara, Écomusée Chullachaqui, FAVER, Ministère de la Culture (soutien au contenu artistique)"
+          "Partenariats : Radio Ucamara, Écomusée Chullachaqui"
         ]
       },
       "financement": {
@@ -574,6 +584,7 @@
         "label": "2025 : poursuite Casa Redonda, subvention et Casa AKUU",
         "items": [
           "Poursuite du chantier Casa Redonda et de l'enveloppe du centre d'interprétation",
+          "Constitution du comité de gestion villageois (17 membres, 21-82 ans)",
           "Subvention du Ministère de la Culture péruvien",
           "Casa AKUU améliorée",
           "Conception artistique du centre d'interprétation"
@@ -582,6 +593,8 @@
       "production": {
         "label": "2026 : aménagement, œuvres et formation",
         "items": [
+          "Ministère de la Culture (soutien au contenu artistique)",
+          "FAVER (soutien au projet)",
           "Achat et production d'œuvres (vague 1, avril-juin 2026)",
           "Travaux et aménagement : 1er étage du centre d'interprétation, espace culturel, sanitaires (avril-juillet 2026)",
           "Formation initiale du comité de gestion (mai-septembre 2026)",
@@ -667,7 +680,7 @@
       },
       "step2": {
         "title": "Entretien",
-        "text": "Échange avec l'équipe pour valider votre motivation et vos compétences."
+        "text": "Échange avec l'équipe pour valider votre motivation."
       },
       "step3": {
         "title": "Préparation",
@@ -768,7 +781,7 @@
     "success": "Message envoyé ! Nous vous répondrons dans les plus brefs délais.",
     "error": "L’envoi a échoué. Réessayez ou écrivez-nous à {'@'}akuu.asso@gmail.com.",
     "info_title": "Coordonnées",
-    "address": "889 Chemin de Jylloue, 06 250 Mougins",
+    "address": "Siège en France, écrivez-nous pour toute demande d’adresse postale.",
     "find_us": "Nous retrouver à Puerto Miguel",
     "map_caption": "Puerto Miguel, Loreto, Pérou",
     "map_iframe_title": "Puerto Miguel, Loreto, Pérou"
@@ -872,7 +885,7 @@
   "equipe": {
     "yoann": {
       "role": "Co-président · Co-fondateur",
-      "bio": "Co-fondateur de l'association, formateur Fresque du Climat."
+      "bio": "Co-fondateur de l'association."
     },
     "aude": {
       "role": "Co-présidente",
@@ -901,8 +914,8 @@
   },
   "footer": {
     "slogan": "En Amazonie et en France, AKUU engage bénévoles et communautés locales autour de projets solidaires concrets.",
-    "address_line1": "889 Chemin de Jylloue",
-    "address_line2": "06 250 Mougins",
+    "address_line1": "Association loi 1901",
+    "address_line2": "France",
     "nav_title": "Navigation",
     "contact_title": "Contact",
     "social_title": "Suivez-nous",

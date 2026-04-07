@@ -1,5 +1,31 @@
 <template>
-  <div ref="containerRef" class="relative">
+  <!-- Hauteur étendue : le scroll « consomme » d’abord l’animation (trait + colibri + étapes) avant de poursuivre la page -->
+  <div
+    ref="scrollStageRef"
+    class="process-steps-scroll-stage relative min-h-[200vh] md:min-h-[220vh] motion-reduce:min-h-0"
+  >
+    <div
+      ref="containerRef"
+      class="sticky top-24 md:top-[7.5rem] py-2 md:py-4 relative"
+    >
+    <!-- Titre de section (sticky avec les étapes : reste visible au scroll) -->
+    <div
+      v-if="headingKicker || headingTitle"
+      class="text-center mb-8 md:mb-10"
+    >
+      <p
+        v-if="headingKicker"
+        class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3"
+      >
+        {{ headingKicker }}
+      </p>
+      <h2
+        v-if="headingTitle"
+        class="text-3xl md:text-4xl font-serif font-bold text-night text-balance"
+      >
+        {{ headingTitle }}
+      </h2>
+    </div>
 
     <!-- SVG chemin horizontal (desktop) -->
     <svg
@@ -99,6 +125,7 @@
       </div>
     </div>
 
+    </div>
   </div>
 </template>
 
@@ -111,12 +138,17 @@ import {
 
 const props = defineProps({
   steps: { type: Array, required: true },
+  /** Sous-titre au-dessus du titre (ex. « En 4 étapes ») — affiché dans le bloc sticky. */
+  headingKicker: { type: String, default: '' },
+  /** Titre principal de la section — affiché dans le bloc sticky avec les numéros d’étapes. */
+  headingTitle: { type: String, default: '' },
   trailBirdSrc: { type: String, default: '' },
   trailBirdAlt: { type: String, default: '' },
   /** Chemin horizontal des étapes : tangente seule (pas l’offset -90° des frises verticales). */
   trailBirdAngleOffset: { type: Number, default: TRAIL_BIRD_ANGLE_OFFSET_HORIZONTAL_PATH }
 })
 
+const scrollStageRef = ref(null)
 const containerRef = ref(null)
 const pathRef = ref(null)
 const dotElements = ref([])
@@ -201,24 +233,40 @@ function updateTrailBird () {
 }
 
 function handleScroll() {
+  const stage = scrollStageRef.value
   const container = containerRef.value
-  if (!container) return
+  if (!stage || !container) return
+
+  const wh = window.innerHeight
+  const n = props.steps.length
+  const reducedMotion = typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  let progress = 0
+
+  if (reducedMotion) {
+    const cr = container.getBoundingClientRect()
+    progress = cr.top < wh * 0.62 && cr.bottom > wh * 0.18 ? 1 : 0
+  } else {
+    const scrollable = stage.offsetHeight - wh
+    if (scrollable <= 0) {
+      const sr = stage.getBoundingClientRect()
+      progress = sr.top < wh * 0.4 ? 1 : 0
+    } else {
+      const rect = stage.getBoundingClientRect()
+      progress = Math.max(0, Math.min(1, -rect.top / scrollable))
+    }
+  }
 
   if (pathLength.value > 0) {
-    const rect = container.getBoundingClientRect()
-    const wh = window.innerHeight
-    const progress = Math.max(0, Math.min(1, (wh * 0.65 - rect.top) / (rect.height + wh * 0.3)))
     dashOffset.value = pathLength.value * (1 - progress)
   }
 
-  const wh = window.innerHeight
-  let newActive = -1
-  dotElements.value.forEach((dot, i) => {
-    if (!dot) return
-    const dr = dot.getBoundingClientRect()
-    if (dr.left < window.innerWidth * 0.85 && dr.top < wh * 0.75) newActive = i
-  })
-  activeIndex.value = newActive
+  // Même progression que le trait / colibri (aucune étape « active » tant que le scroll n’a pas commencé dans la zone)
+  activeIndex.value = n <= 0
+    ? -1
+    : Math.min(n - 1, Math.max(-1, Math.ceil(progress * n) - 1))
+
   updateTrailBird()
 }
 
@@ -230,6 +278,13 @@ onMounted(() => {
     window.addEventListener('resize', handleScroll, { passive: true })
     resizeObs = new ResizeObserver(() => buildPath())
     if (containerRef.value) resizeObs.observe(containerRef.value)
+    if (scrollStageRef.value) resizeObs.observe(scrollStageRef.value)
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        buildPath()
+        handleScroll()
+      })
+    })
   })
 })
 onUnmounted(() => {

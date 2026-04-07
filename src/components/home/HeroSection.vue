@@ -1,5 +1,7 @@
 <template>
-  <section class="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
+  <section
+    class="relative z-0 isolate h-screen min-h-[600px] flex flex-col items-center justify-center overflow-hidden pt-[7.25rem] md:pt-[8.5rem] pb-10"
+  >
     <!-- Image de fond -->
     <img
       src="/images/hero-amazon.jpg"
@@ -10,14 +12,14 @@
     <div class="absolute inset-0 bg-gradient-to-b from-night/60 via-night/35 to-night/70" />
 
     <!-- Contenu principal -->
-    <div class="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
+    <div class="relative z-[1] text-center text-white px-4 max-w-4xl mx-auto w-full min-h-0">
 
-      <!-- Colibri (symbole AKUU) -->
-      <div class="mb-10 md:mb-12 hero-item" style="--delay: 0ms">
+      <!-- Colibri : sous la zone du menu fixe (z-50) ; max-h évite qu’il remonte quand la fenêtre est basse -->
+      <div class="mb-6 sm:mb-10 md:mb-12 hero-item shrink-0" style="--delay: 0ms">
         <img
           src="/images/collibri-akuu.png"
-          alt="AKUU"
-          class="h-32 sm:h-36 md:h-44 lg:h-48 w-auto max-w-[min(88vw,22rem)] mx-auto object-contain drop-shadow-2xl"
+          :alt="$t('hero.colibri_alt')"
+          class="h-32 sm:h-36 md:h-44 lg:h-48 max-h-[min(12rem,22dvh)] sm:max-h-[min(13.5rem,24dvh)] md:max-h-[min(11rem,26dvh)] lg:max-h-[min(12rem,28dvh)] w-auto max-w-[min(88vw,22rem)] mx-auto object-contain object-bottom drop-shadow-2xl"
         />
       </div>
 

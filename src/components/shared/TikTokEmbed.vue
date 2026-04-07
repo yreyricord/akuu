@@ -3,7 +3,7 @@
     <div v-if="videoId" class="relative w-full bg-night">
       <div class="relative w-full" style="padding-bottom: 177.78%;">
         <iframe
-          :src="`https://www.tiktok.com/player/v1/${videoId}?music_info=1&description=1`"
+          :src="`https://www.tiktok.com/player/v1/${videoId}?music_info=1&description=1&muted=1`"
           :title="title"
           class="absolute inset-0 w-full h-full border-0"
           allowfullscreen
