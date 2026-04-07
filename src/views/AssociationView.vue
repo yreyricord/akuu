@@ -109,16 +109,18 @@
             {{ $t('association.itv_section_title') }}
           </h2>
         </div>
-        <div class="max-w-3xl mx-auto rounded-2xl shadow-xl overflow-hidden bg-night/5">
-          <video
-            src="/videos/itv.mp4"
-            controls
-            preload="metadata"
-            playsinline
-            class="w-full h-auto block"
+        <div class="max-w-3xl mx-auto">
+          <VideoEmbed
+            v-if="itvYoutubeId"
+            :video-id="itvYoutubeId"
+            :title="$t('association.itv_section_title')"
+          />
+          <div
+            v-else
+            class="rounded-2xl border border-dashed border-night/20 bg-cream/80 px-6 py-12 text-center text-night/55 text-sm leading-relaxed"
           >
-            {{ $t('common.video_not_supported') }}
-          </video>
+            {{ $t('association.itv_placeholder') }}
+          </div>
         </div>
       </div>
     </section>
@@ -264,8 +266,15 @@ import InstagramFeedGrid from '@/components/shared/InstagramFeedGrid.vue'
 import TikTokEmbed from '@/components/shared/TikTokEmbed.vue'
 import TikTokFeedGrid from '@/components/shared/TikTokFeedGrid.vue'
 import reseauxAssociation from '@/data/reseaux-association.json'
+import associationMedia from '@/data/association-media.json'
 
 const store = useDataStore()
+
+/** ID YouTube du reportage ITV : .env VITE_ASSOCIATION_ITV_YOUTUBE_ID ou association-media.json */
+const itvYoutubeId = (
+  String(import.meta.env.VITE_ASSOCIATION_ITV_YOUTUBE_ID || '').trim() ||
+  String(associationMedia.itvYoutubeVideoId || '').trim()
+)
 const reseaux = reseauxAssociation
 
 const instagramFeed = ref([])

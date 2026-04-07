@@ -1,10 +1,10 @@
 <template>
   <div class="relative" ref="containerRef">
 
-    <!-- SVG chemin animé (desktop) -->
+    <!-- SVG chemin animé : desktop (frise centrale) + mobile (pastilles à gauche, courbe sur le côté) -->
     <svg
       v-if="svgReady"
-      class="hidden md:block absolute top-0 left-0 pointer-events-none overflow-visible"
+      class="absolute top-0 left-0 z-[5] pointer-events-none overflow-visible"
       :width="svgWidth"
       :height="svgHeight"
     >
@@ -24,10 +24,10 @@
       <image
         v-if="trailBirdSrc && svgReady && birdLayout.visible"
         :href="trailBirdSrc"
-        :x="birdLayout.x - birdSize / 2"
-        :y="birdLayout.y - birdSize / 2"
-        :width="birdSize"
-        :height="birdSize"
+        :x="birdLayout.x - birdSizePx / 2"
+        :y="birdLayout.y - birdSizePx / 2"
+        :width="birdSizePx"
+        :height="birdSizePx"
         class="trail-bird-on-path"
         :transform="`rotate(${birdLayout.angle} ${birdLayout.x} ${birdLayout.y})`"
         preserveAspectRatio="xMidYMid meet"
@@ -54,12 +54,12 @@
       :class="index <= revealUpTo ? 'milestone-step-row--visible' : 'milestone-step-row--hidden'"
       :style="{ '--milestone-stagger': String(index) }"
     >
-      <!-- Colonne contenu -->
-      <div :class="['relative pb-10', index % 2 === 1 ? 'md:order-2 md:pl-16' : 'md:order-1 md:pr-16']">
+      <!-- Colonne contenu (desktop uniquement) -->
+      <div :class="['relative pb-10 hidden md:block', index % 2 === 1 ? 'md:order-2 md:pl-16' : 'md:order-1 md:pr-16']">
 
         <!-- Point de connexion -->
         <div
-          :ref="(el) => setDotRef(el, index)"
+          :ref="(el) => setDesktopDotRef(el, index)"
           class="hidden md:block absolute top-5 z-10 rounded-full ring-4 ring-white shadow-lg transition-all duration-500"
           :class="[
             index % 2 === 1 ? '-left-[2.6rem]' : '-right-[2.6rem]',
@@ -125,13 +125,16 @@
         </div>
       </div>
 
-      <!-- Mobile -->
+      <!-- Mobile (colibri animé = même SVG que desktop, calé sur les pastilles) -->
       <div class="md:hidden col-span-2 pb-8 pl-8 relative">
         <div class="absolute left-0 top-0 bottom-0 w-0.5 transition-colors duration-500"
           :style="{ backgroundColor: activeIndex >= index ? stepColor(step.status) : '#3A404015' }" />
-        <div class="absolute top-4 left-0 rounded-full ring-2 ring-white -translate-x-[5px] transition-all duration-500"
+        <div
+          :ref="(el) => setMobileDotRef(el, index)"
+          class="absolute top-4 left-0 rounded-full ring-2 ring-white -translate-x-[5px] transition-all duration-500 motion-reduce:transition-none"
           :class="activeIndex >= index ? 'w-3 h-3' : 'w-2 h-2'"
-          :style="{ backgroundColor: stepColor(step.status) }" />
+          :style="{ backgroundColor: stepColor(step.status) }"
+        />
         <div class="rounded-2xl p-4 border"
           :class="step.status === 'pending' ? 'bg-white/60 border-dashed border-night/20' : 'bg-white shadow-sm border-night/5'">
           <span class="text-xl font-serif font-black block mb-2 transition-colors duration-500"
@@ -180,7 +183,8 @@ const props = defineProps({
   gradientId: { type: String, default: 'museeMilestoneGradient' }
 })
 
-const birdSize = 80
+/** Taille du PNG sur le chemin (plus petit sur mobile) */
+const birdSizePx = ref(80)
 
 const birdLayout = ref({
   x: 0,
@@ -193,7 +197,13 @@ const { t } = useI18n()
 
 const containerRef = ref(null)
 const pathRef = ref(null)
-const dotElements = ref([])
+const dotElementsDesktop = ref([])
+const dotElementsMobile = ref([])
+
+function dotsForViewport() {
+  if (typeof window === 'undefined') return dotElementsDesktop.value
+  return window.matchMedia('(min-width: 768px)').matches ? dotElementsDesktop.value : dotElementsMobile.value
+}
 const pathD = ref('')
 const pathLength = ref(2000)
 const dashOffset = ref(2000)
@@ -206,8 +216,11 @@ const activeIndex = ref(-1)
 const stepRowElements = ref([])
 const revealUpTo = ref(-1)
 
-function setDotRef(el, index) {
-  if (el) dotElements.value[index] = el
+function setDesktopDotRef(el, index) {
+  if (el) dotElementsDesktop.value[index] = el
+}
+function setMobileDotRef(el, index) {
+  if (el) dotElementsMobile.value[index] = el
 }
 
 function setStepRowRef(el, index) {
@@ -235,25 +248,39 @@ function buildPath() {
   svgWidth.value = containerRect.width
   svgHeight.value = containerRect.height
 
-  const points = dotElements.value
-    .map(dot => {
+  const isMdUp = typeof window !== 'undefined' && window.matchMedia('(min-width: 768px)').matches
+  birdSizePx.value = isMdUp ? 80 : 48
+
+  const dots = isMdUp ? dotElementsDesktop.value : dotElementsMobile.value
+  const points = dots
+    .map((dot) => {
       if (!dot) return null
       const r = dot.getBoundingClientRect()
-      return { x: containerRect.width / 2, y: r.top - containerRect.top + r.height / 2 }
+      if (r.width === 0 && r.height === 0) return null
+      const cy = r.top - containerRect.top + r.height / 2
+      const cx = r.left - containerRect.left + r.width / 2
+      if (isMdUp) {
+        return { x: containerRect.width / 2, y: cy }
+      }
+      return { x: cx, y: cy }
     })
     .filter(Boolean)
 
   if (points.length < 2) {
+    svgReady.value = false
     scheduleCardRevealCheck()
     return
   }
+
+  const w = containerRect.width
+  const waveBase = isMdUp ? 50 : Math.min(34, Math.max(20, w * 0.065))
 
   let d = `M ${points[0].x} ${points[0].y}`
   for (let i = 1; i < points.length; i++) {
     const p = points[i - 1]
     const c = points[i]
     const mid = (p.y + c.y) / 2
-    const wave = (i % 2 === 0) ? 50 : -50
+    const wave = (i % 2 === 0) ? waveBase : -waveBase
     d += ` C ${p.x + wave} ${mid - 20}, ${c.x - wave} ${mid + 20}, ${c.x} ${c.y}`
   }
 
@@ -319,9 +346,10 @@ function handleScroll() {
 
   const wh = window.innerHeight
   let newActive = -1
-  dotElements.value.forEach((dot, i) => {
+  dotsForViewport().forEach((dot, i) => {
     if (!dot) return
-    if (dot.getBoundingClientRect().top < wh * 0.6) newActive = i
+    const dr = dot.getBoundingClientRect()
+    if (dr.height > 0 && dr.top < wh * 0.6) newActive = i
   })
   activeIndex.value = newActive
 
@@ -371,6 +399,9 @@ onMounted(() => {
     nextTick(() => {
       observeMilestoneRows()
       scheduleCardRevealCheck()
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => buildPath())
+      })
     })
   })
 })

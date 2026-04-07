@@ -1,11 +1,11 @@
 <template>
   <div class="relative" ref="containerRef">
 
-    <!-- SVG chemin animé (desktop) -->
+    <!-- SVG chemin animé : desktop (zigzag) + mobile (pastilles à gauche, courbe sur le côté) -->
     <!-- Au-dessus des cartes : sinon le fil + colibri passent sous les fonds blancs (invisibles) -->
     <svg
       v-if="svgReady"
-      class="hidden md:block absolute top-0 left-0 z-20 pointer-events-none overflow-visible"
+      class="absolute top-0 left-0 z-20 pointer-events-none overflow-visible"
       :width="svgWidth"
       :height="svgHeight"
     >
@@ -32,10 +32,10 @@
       <image
         v-if="trailBirdSrc && svgReady && birdLayout.visible"
         :href="trailBirdSrc"
-        :x="birdLayout.x - birdSize / 2"
-        :y="birdLayout.y - birdSize / 2"
-        :width="birdSize"
-        :height="birdSize"
+        :x="birdLayout.x - birdSizePx / 2"
+        :y="birdLayout.y - birdSizePx / 2"
+        :width="birdSizePx"
+        :height="birdSizePx"
         :transform="`rotate(${birdLayout.angle} ${birdLayout.x} ${birdLayout.y})`"
         preserveAspectRatio="xMidYMid meet"
         pointer-events="none"
@@ -57,12 +57,12 @@
       :key="item.annee"
       class="relative z-0 grid md:grid-cols-2 gap-0 fade-in-up"
     >
-      <!-- Colonne contenu -->
-      <div :class="['relative pb-12', index % 2 === 1 ? 'md:order-2 md:pl-8 lg:pl-10' : 'md:order-1 md:pr-8 lg:pr-10']">
+      <!-- Colonne contenu (desktop uniquement : la version mobile est dans le bloc md:hidden ci-dessous) -->
+      <div :class="['relative pb-12 hidden md:block', index % 2 === 1 ? 'md:order-2 md:pl-8 lg:pl-10' : 'md:order-1 md:pr-8 lg:pr-10']">
 
         <!-- Point de connexion -->
         <div
-          :ref="(el) => setDotRef(el, index)"
+          :ref="(el) => setDesktopDotRef(el, index)"
           class="hidden md:block absolute top-6 z-10 rounded-full ring-4 ring-cream shadow-lg transition-all duration-500"
           :class="[
             index % 2 === 1 ? '-left-[2.35rem]' : '-right-[2.35rem]',
@@ -145,14 +145,15 @@
         </div>
       </div>
 
-      <!-- Layout mobile -->
+      <!-- Layout mobile (colibri = SVG animé sur le fil) -->
       <div class="md:hidden col-span-2 pb-10 pl-8 relative">
         <div
           class="absolute left-0 top-0 bottom-0 w-0.5 transition-colors duration-500"
           :style="{ backgroundColor: activeIndex >= index ? eraColor(item.annee) : '#3A404020' }"
         />
         <div
-          class="absolute top-6 left-0 rounded-full ring-2 ring-cream -translate-x-[5px] transition-all duration-500"
+          :ref="(el) => setMobileDotRef(el, index)"
+          class="absolute top-6 left-0 rounded-full ring-2 ring-cream -translate-x-[5px] transition-all duration-500 motion-reduce:transition-none"
           :class="activeIndex >= index ? 'w-3 h-3' : 'w-2 h-2'"
           :style="{ backgroundColor: eraColor(item.annee) }"
         />
@@ -233,7 +234,13 @@ function timelineParts(annee) {
 
 const containerRef = ref(null)
 const pathRef = ref(null)
-const dotElements = ref([])
+const dotElementsDesktop = ref([])
+const dotElementsMobile = ref([])
+
+function dotsForViewport() {
+  if (typeof window === 'undefined') return dotElementsDesktop.value
+  return window.matchMedia('(min-width: 768px)').matches ? dotElementsDesktop.value : dotElementsMobile.value
+}
 const pathD = ref('')
 const pathLength = ref(2000)
 const dashOffset = ref(2000)
@@ -242,7 +249,7 @@ const svgHeight = ref(0)
 const svgReady = ref(false)
 const activeIndex = ref(-1)
 
-const birdSize = 80
+const birdSizePx = ref(80)
 const birdLayout = ref({
   x: 0,
   y: 0,
@@ -250,8 +257,11 @@ const birdLayout = ref({
   visible: false
 })
 
-function setDotRef(el, index) {
-  if (el) dotElements.value[index] = el
+function setDesktopDotRef(el, index) {
+  if (el) dotElementsDesktop.value[index] = el
+}
+function setMobileDotRef(el, index) {
+  if (el) dotElementsMobile.value[index] = el
 }
 
 function getEraKey(annee) {
@@ -295,23 +305,34 @@ function buildPath() {
   svgHeight.value = containerRect.height
 
   const w = containerRect.width
-  const points = dotElements.value
+  const isMdUp = typeof window !== 'undefined' && window.matchMedia('(min-width: 768px)').matches
+  birdSizePx.value = isMdUp ? 80 : 48
+
+  const dots = isMdUp ? dotElementsDesktop.value : dotElementsMobile.value
+  const points = dots
     .map((dot) => {
       if (!dot) return null
       const r = dot.getBoundingClientRect()
-      return {
-        x: r.left - containerRect.left + r.width / 2,
-        y: r.top - containerRect.top + r.height / 2
+      if (r.width === 0 && r.height === 0) return null
+      const cy = r.top - containerRect.top + r.height / 2
+      const cx = r.left - containerRect.left + r.width / 2
+      if (isMdUp) {
+        return { x: w / 2, y: cy }
       }
+      return { x: cx, y: cy }
     })
     .filter(Boolean)
 
-  if (points.length < 2) return
+  if (points.length < 2) {
+    svgReady.value = false
+    return
+  }
 
-  // Amplitude latérale : augmente avec la largeur du bloc pour que le colibri « contourne » visuellement les cartes
-  const waveMag = Math.min(140, Math.max(76, w * 0.1))
+  // Amplitude latérale : desktop = large zigzag ; mobile = vague plus serrée le long du rail gauche
+  const waveMag = isMdUp
+    ? Math.min(140, Math.max(76, w * 0.1))
+    : Math.min(36, Math.max(22, w * 0.08))
 
-  // Chemin en courbes de Bézier : ancrages sur les pastilles réelles (zigzag gauche/droite), contrôles déviés pour un arc généreux
   let d = `M ${points[0].x} ${points[0].y}`
   for (let i = 1; i < points.length; i++) {
     const p = points[i - 1]
@@ -360,10 +381,10 @@ function handleScroll() {
 
   const wh = window.innerHeight
   let newActive = -1
-  dotElements.value.forEach((dot, i) => {
+  dotsForViewport().forEach((dot, i) => {
     if (!dot) return
     const dr = dot.getBoundingClientRect()
-    if (dr.top < wh * 0.6) newActive = i
+    if (dr.height > 0 && dr.top < wh * 0.6) newActive = i
   })
   activeIndex.value = newActive
   updateTrailBird()
@@ -378,6 +399,9 @@ onMounted(() => {
     window.addEventListener('resize', handleScroll, { passive: true })
     resizeObs = new ResizeObserver(() => { buildPath() })
     if (containerRef.value) resizeObs.observe(containerRef.value)
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => buildPath())
+    })
   })
 })
 

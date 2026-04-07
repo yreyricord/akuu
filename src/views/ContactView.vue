@@ -175,7 +175,7 @@
                 <p class="text-xs text-night/40">Puerto Miguel, Loreto, Pérou</p>
               </div>
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15952.5!2d-73.3!3d-4.4!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNMKwMjQnMDAuMCJTIDczwrAxOCcwMC4wIlc!5e0!3m2!1sfr!2sfr!4v1"
+                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d10943.450983960287!2d-73.43265239704242!3d-4.540510391254221!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sfr!2sfr!4v1775551587864!5m2!1sfr!2sfr"
                 width="100%"
                 height="250"
                 style="border:0;"
