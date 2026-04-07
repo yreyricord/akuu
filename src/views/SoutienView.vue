@@ -213,7 +213,7 @@
           <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">{{ $t('partners.trusted') }}</p>
           <h2 class="text-2xl font-serif font-bold text-night">{{ $t('partners.title') }}</h2>
         </div>
-        <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 items-center">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 gap-y-6 sm:gap-5 md:gap-6 items-center">
           <PartnerCard
             v-for="partner in store.partenaires"
             :key="partner.nom"

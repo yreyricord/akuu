@@ -45,6 +45,11 @@
     @apply py-16 md:py-24 px-4;
   }
 
+  /** Page musée : blocs avant / après « acteurs » moins hauts sur petit écran */
+  .section-padding-musee-mobile {
+    @apply py-10 md:py-24 px-4;
+  }
+
   .container-narrow {
     @apply max-w-6xl mx-auto;
   }

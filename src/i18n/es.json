@@ -15,7 +15,49 @@
   },
   "seo": {
     "title": "AKUU, solidaridad internacional en la Amazonía peruana",
-    "description": "AKUU actúa por un desarrollo sostenible y solidario que respeta a las comunidades amazónicas en Puerto Miguel, Perú."
+    "description": "AKUU actúa por un desarrollo sostenible y solidario que respeta a las comunidades amazónicas en Puerto Miguel, Perú.",
+    "routes": {
+      "home": {
+        "title": "AKUU, solidaridad internacional en la Amazonía peruana",
+        "description": "AKUU actúa por un desarrollo sostenible y solidario que respeta a las comunidades amazónicas en Puerto Miguel, Perú."
+      },
+      "association": {
+        "title": "La asociación AKUU | Solidaridad en la Amazonía, Puerto Miguel",
+        "description": "Conoce AKUU: historia, gobernanza y misión para un desarrollo sostenible con las comunidades de Puerto Miguel, Perú."
+      },
+      "projets": {
+        "title": "Nuestros proyectos | AKUU en Puerto Miguel",
+        "description": "Proyectos solidarios en Puerto Miguel: museo Shapishiko, educación, microhidro, ecoturismo y apoyo a comunidades amazónicas."
+      },
+      "museeShapishiko": {
+        "title": "Museo Shapishiko | Cultura shipibo-kukama | AKUU",
+        "description": "Museo comunitario en Puerto Miguel: culturas shipibo y kukama, creación colectiva, visitas y sensibilización."
+      },
+      "volontaires": {
+        "title": "Ser voluntario | AKUU Amazonía peruana",
+        "description": "Únete a AKUU como voluntario: misiones de campo en Puerto Miguel y apoyo a los proyectos desde Francia."
+      },
+      "soutenir": {
+        "title": "Apoyar a AKUU | Donaciones y membresía",
+        "description": "Apoya a AKUU con una donación o membresía: financia proyectos solidarios en la Amazonía peruana."
+      },
+      "contact": {
+        "title": "Contacto | Asociación AKUU",
+        "description": "Contacta al equipo de AKUU: consultas sobre proyectos, alianzas, voluntariado y prensa."
+      },
+      "hydrama": {
+        "title": "HYDR’AMA | Microhidro AKUU y WindAid | Amazonía",
+        "description": "Proyecto de microhidro flotante con comunidades de la Amazonía peruana: cronología, alianza WindAid y documentación."
+      },
+      "akuuvision": {
+        "title": "AKUUVision | Realidad aumentada Amazonía | AKUU",
+        "description": "Aplicación de realidad aumentada para descubrir la Amazonía: contenidos de Puerto Miguel, festivales y difusión."
+      },
+      "coursAnglais": {
+        "title": "Cursos de inglés en Puerto Miguel | AKUU",
+        "description": "Programa de inglés para habitantes vinculado al ecoturismo local: objetivos, impacto y perspectivas."
+      }
+    }
   },
   "nav": {
     "home": "Inicio",

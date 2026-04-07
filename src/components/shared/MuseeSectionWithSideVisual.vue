@@ -1,6 +1,6 @@
 <template>
   <div
-    class="grid md:grid-cols-12 gap-10 md:gap-14 lg:gap-16"
+    class="grid md:grid-cols-12 gap-6 md:gap-14 lg:gap-16"
     :class="gridItemsAlignClass"
   >
     <div
@@ -20,12 +20,12 @@
       <!-- intrinsic + align stretch : photo = toute la hauteur de la ligne (comme le bloc texte) -->
       <div
         v-if="intrinsicFrame && fillColumnHeight"
-        class="relative w-full min-h-[12rem] max-h-[72vh] overflow-hidden rounded-2xl shadow-xl ring-1 ring-night/10 bg-night/5 md:max-h-none md:min-h-0 md:flex-1"
+        class="relative w-full min-h-[10.5rem] max-h-[60vh] overflow-hidden rounded-2xl shadow-xl ring-1 ring-night/10 bg-night/5 sm:max-h-[65vh] md:max-h-none md:min-h-0 md:flex-1"
       >
         <img
           :src="visualSrc"
           :alt="visualAlt"
-          class="musee-side-visual-img block h-52 w-full object-cover sm:h-60 md:absolute md:inset-0 md:h-full md:w-full md:max-h-none md:object-cover"
+          class="musee-side-visual-img block h-44 w-full object-cover sm:h-52 md:absolute md:inset-0 md:h-full md:w-full md:max-h-none md:object-cover"
           loading="lazy"
           decoding="async"
         />
