@@ -7,7 +7,7 @@
     />
 
     <!-- Description / proportions : src/data/musee-section-layouts.js → description -->
-    <section class="section-padding bg-cream">
+    <section class="section-padding-musee-mobile bg-cream">
       <div class="container-narrow">
         <MuseeSectionWithSideVisual
           v-bind="museeSectionLayout.description"
@@ -15,7 +15,7 @@
           :visual-alt="$t('musee.description_image_alt')"
         >
           <div>
-            <h2 class="text-3xl md:text-4xl font-serif font-bold text-night mb-6">
+            <h2 class="text-3xl md:text-4xl font-serif font-bold text-night mb-4 md:mb-6">
               {{ $t('musee.description_title') }}
             </h2>
             <p class="text-night/60 text-lg leading-relaxed mb-4">
@@ -38,16 +38,16 @@
     </section>
 
     <!-- Contexte -->
-    <section class="section-padding bg-white">
+    <section class="section-padding-musee-mobile bg-white">
       <div class="container-narrow">
         <MuseeSectionWithSideVisual
           v-bind="museeSectionLayout.context"
           :visual-src="museeSideVisualImages.context"
           :visual-alt="$t('musee.side_visuals.context.alt')"
         >
-          <div class="text-center md:text-left mb-8 md:mb-0">
+          <div class="text-center md:text-left mb-5 md:mb-0">
             <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">{{ $t('musee.context_kicker') }}</p>
-            <h2 class="text-3xl md:text-4xl font-serif font-bold text-night mb-8 text-balance">
+            <h2 class="text-3xl md:text-4xl font-serif font-bold text-night mb-5 md:mb-8 text-balance">
               {{ $t('musee.context_title') }}
             </h2>
           </div>
@@ -100,16 +100,16 @@
     </section>
 
     <!-- Gouvernance -->
-    <section class="section-padding bg-white">
+    <section class="section-padding-musee-mobile bg-white">
       <div class="container-narrow">
         <MuseeSectionWithSideVisual
           v-bind="museeSectionLayout.governance"
           :visual-src="museeSideVisualImages.governance"
           :visual-alt="$t('musee.side_visuals.governance.alt')"
         >
-          <div class="text-center md:text-left mb-8 md:mb-0">
+          <div class="text-center md:text-left mb-5 md:mb-0">
             <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">{{ $t('musee.governance_kicker') }}</p>
-            <h2 class="text-3xl md:text-4xl font-serif font-bold text-night mb-8 text-balance">
+            <h2 class="text-3xl md:text-4xl font-serif font-bold text-night mb-5 md:mb-8 text-balance">
               {{ $t('musee.governance_title') }}
             </h2>
           </div>
@@ -121,16 +121,16 @@
     </section>
 
     <!-- Équipes terrain -->
-    <section class="section-padding bg-cream">
+    <section class="section-padding-musee-mobile bg-cream">
       <div class="container-narrow">
         <MuseeSectionWithSideVisual
           v-bind="museeSectionLayout.teams"
           :visual-src="museeSideVisualImages.teams"
           :visual-alt="$t('musee.side_visuals.teams.alt')"
         >
-          <div class="text-center md:text-left mb-8 md:mb-0">
+          <div class="text-center md:text-left mb-5 md:mb-0">
             <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">{{ $t('musee.teams_kicker') }}</p>
-            <h2 class="text-3xl md:text-4xl font-serif font-bold text-night mb-8 text-balance">
+            <h2 class="text-3xl md:text-4xl font-serif font-bold text-night mb-5 md:mb-8 text-balance">
               {{ $t('musee.teams_title') }}
             </h2>
           </div>

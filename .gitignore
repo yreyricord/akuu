@@ -1,5 +1,9 @@
 node_modules
 dist
+
+# Générés par scripts/generate-seo-files.mjs (prebuild / dev)
+public/robots.txt
+public/sitemap.xml
 .DS_Store
 *.local
 .env

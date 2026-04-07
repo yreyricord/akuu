@@ -15,7 +15,49 @@
   },
   "seo": {
     "title": "AKUU, international solidarity in the Peruvian Amazon",
-    "description": "AKUU works for sustainable, solidarity-based development that respects Amazonian communities in Puerto Miguel, Peru."
+    "description": "AKUU works for sustainable, solidarity-based development that respects Amazonian communities in Puerto Miguel, Peru.",
+    "routes": {
+      "home": {
+        "title": "AKUU, international solidarity in the Peruvian Amazon",
+        "description": "AKUU works for sustainable, solidarity-based development that respects Amazonian communities in Puerto Miguel, Peru."
+      },
+      "association": {
+        "title": "About AKUU | Solidarity in the Amazon, Puerto Miguel",
+        "description": "Learn about AKUU: history, governance and mission for sustainable development with communities in Puerto Miguel, Peru."
+      },
+      "projets": {
+        "title": "Our projects | AKUU in Puerto Miguel",
+        "description": "Solidarity projects in Puerto Miguel: Shapishiko museum, education, micro-hydro, ecotourism and support for Amazonian communities."
+      },
+      "museeShapishiko": {
+        "title": "Shapishiko Museum | Shipibo-Kukama culture | AKUU",
+        "description": "Community museum in Puerto Miguel: Shipibo and Kukama cultures, collective creation, visits and awareness."
+      },
+      "volontaires": {
+        "title": "Volunteer with AKUU | Peruvian Amazon",
+        "description": "Join AKUU as a volunteer: field missions in Puerto Miguel and support for projects from France."
+      },
+      "soutenir": {
+        "title": "Support AKUU | Donations and membership",
+        "description": "Support AKUU through a donation or membership: fund solidarity projects in the Peruvian Amazon."
+      },
+      "contact": {
+        "title": "Contact | AKUU nonprofit",
+        "description": "Contact the AKUU team: questions about projects, partnerships, volunteering and press."
+      },
+      "hydrama": {
+        "title": "HYDR’AMA | AKUU micro-hydro & WindAid | Amazon",
+        "description": "Floating micro-hydro project with communities in the Peruvian Amazon: timeline, WindAid partnership and documentation."
+      },
+      "akuuvision": {
+        "title": "AKUUVision | Amazon augmented reality | AKUU",
+        "description": "Augmented reality app to discover the Amazon: content from Puerto Miguel, festivals and outreach."
+      },
+      "coursAnglais": {
+        "title": "English courses in Puerto Miguel | AKUU",
+        "description": "English program for residents linked to local ecotourism: goals, impact and outlook."
+      }
+    }
   },
   "nav": {
     "home": "Home",

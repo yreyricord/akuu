@@ -14,29 +14,46 @@
 </template>
 
 <script setup>
-import { onMounted, watch } from 'vue'
+import { watch, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import NavBar from '@/components/layout/NavBar.vue'
 import ScrollProgressBar from '@/components/layout/ScrollProgressBar.vue'
 import Footer from '@/components/layout/Footer.vue'
+import { applyRouteDocumentSeo, injectOrganizationJsonLd } from '@/utils/documentSeo.js'
 
-const { locale, t } = useI18n()
+const route = useRoute()
+const { locale, t, te } = useI18n()
 
-function syncDocumentSeo () {
+function syncHtmlLang () {
   const loc = locale.value
   document.documentElement.lang = loc === 'en' ? 'en' : loc === 'es' ? 'es' : 'fr'
-  document.title = t('seo.title')
-  let meta = document.querySelector('meta[name="description"]')
-  if (!meta) {
-    meta = document.createElement('meta')
-    meta.setAttribute('name', 'description')
-    document.head.appendChild(meta)
-  }
-  meta.setAttribute('content', t('seo.description'))
 }
 
-onMounted(syncDocumentSeo)
-watch(locale, syncDocumentSeo)
+function syncRouteSeo () {
+  syncHtmlLang()
+  const seoKey = route.meta.seoRoute || 'home'
+  const titleKey = `seo.routes.${seoKey}.title`
+  const descKey = `seo.routes.${seoKey}.description`
+  const title = te(titleKey) ? t(titleKey) : t('seo.title')
+  const description = te(descKey) ? t(descKey) : t('seo.description')
+  applyRouteDocumentSeo({
+    title,
+    description,
+    path: route.path,
+    locale: locale.value
+  })
+}
+
+onMounted(() => {
+  injectOrganizationJsonLd()
+})
+
+watch(
+  () => [route.path, route.meta.seoRoute, locale.value],
+  () => syncRouteSeo(),
+  { immediate: true }
+)
 </script>
 
 <style>

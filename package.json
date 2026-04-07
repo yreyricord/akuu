@@ -4,8 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run musee:gallery && vite",
-    "prebuild": "npm run musee:gallery && npm run i18n:check && npm run i18n:check-narratives",
+    "dev": "npm run seo:files && npm run musee:gallery && vite",
+    "seo:files": "node scripts/generate-seo-files.mjs",
+    "prebuild": "npm run musee:gallery && npm run seo:files && npm run i18n:check && npm run i18n:check-narratives",
     "musee:gallery": "node scripts/sync-musee-gallery.mjs",
     "build": "vite build",
     "preview": "vite preview",
