@@ -1,6 +1,6 @@
 <template>
   <section
-    class="relative z-0 isolate h-screen min-h-[600px] flex flex-col items-center justify-center overflow-hidden pt-[7.25rem] md:pt-[8.5rem] pb-10"
+    class="hero-home relative z-0 isolate flex flex-col items-center justify-center overflow-x-hidden pt-[7.25rem] md:pt-[8.5rem] pb-[max(6rem,env(safe-area-inset-bottom,0px)+4.5rem)]"
   >
     <!-- Image de fond -->
     <img
@@ -15,7 +15,7 @@
     <div class="relative z-[1] text-center text-white px-4 max-w-4xl mx-auto w-full min-h-0">
 
       <!-- Colibri : sous la zone du menu fixe (z-50) ; max-h évite qu’il remonte quand la fenêtre est basse -->
-      <div class="mb-6 sm:mb-10 md:mb-12 hero-item shrink-0" style="--delay: 0ms">
+      <div class="mb-4 sm:mb-10 md:mb-12 hero-item shrink-0" style="--delay: 0ms">
         <img
           src="/images/collibri-akuu.png"
           :alt="$t('hero.colibri_alt')"
@@ -24,7 +24,7 @@
       </div>
 
       <!-- Badge animé -->
-      <div class="flex justify-center mb-6 hero-item" style="--delay: 150ms">
+      <div class="flex justify-center mb-4 sm:mb-6 hero-item" style="--delay: 150ms">
         <span class="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-leaf/50 bg-leaf/10 backdrop-blur-sm text-leaf text-xs font-bold uppercase tracking-[0.3em]">
           <span class="w-1.5 h-1.5 rounded-full bg-leaf animate-pulse flex-shrink-0" />
           {{ $t('hero.tagline_badge') }}
@@ -39,19 +39,19 @@
       </div>
 
       <!-- Ligne 2 : "le vivant", italic et vert -->
-      <div class="overflow-hidden mb-8 md:mb-10">
+      <div class="overflow-hidden mb-5 sm:mb-8 md:mb-10">
         <h1 class="hero-item text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-serif font-bold italic leading-none tracking-tight text-leaf" style="--delay: 420ms">
           {{ $t('hero.tagline_line2') }}
         </h1>
       </div>
 
       <!-- Sous-titre -->
-      <p class="hero-item text-base md:text-lg text-white/70 max-w-xl mx-auto leading-relaxed mb-10" style="--delay: 560ms">
+      <p class="hero-item text-base md:text-lg text-white/70 max-w-xl mx-auto leading-relaxed mb-6 sm:mb-8 md:mb-10" style="--delay: 560ms">
         {{ $t('hero.subtitle') }}
       </p>
 
-      <!-- CTAs -->
-      <div class="hero-item flex flex-col sm:flex-row gap-4 justify-center" style="--delay: 700ms">
+      <!-- CTAs : shrink-0 + z pour rester au-dessus du fond et toujours visibles (pas rognés par un hero trop court) -->
+      <div class="hero-item flex shrink-0 flex-col gap-3 sm:flex-row sm:gap-4 justify-center relative z-[2]" style="--delay: 700ms">
         <router-link
           to="/projets"
           class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/30 hover:border-white/60 text-white rounded-full font-semibold text-base transition-all duration-300 hover:-translate-y-0.5"
@@ -74,7 +74,7 @@
     </div>
 
     <!-- Flèche scroll -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/50 animate-bounce">
+    <div class="pointer-events-none absolute bottom-[max(1rem,env(safe-area-inset-bottom,0px)+0.25rem)] left-1/2 z-[1] -translate-x-1/2 text-white/50 animate-bounce">
       <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
       </svg>
@@ -83,6 +83,16 @@
 </template>
 
 <style scoped>
+/* Au moins une hauteur d’écran ; le bloc peut s’allonger si le contenu dépasse (évite de couper les CTA). */
+.hero-home {
+  min-height: max(37.5rem, 100vh);
+}
+@supports (height: 100dvh) {
+  .hero-home {
+    min-height: max(37.5rem, 100dvh);
+  }
+}
+
 .hero-item {
   opacity: 0;
   transform: translateY(28px);

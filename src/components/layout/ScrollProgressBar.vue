@@ -4,8 +4,9 @@
     Formule : scrollY / (scrollHeight - innerHeight). rAF au scroll.
   -->
   <div
-    class="pointer-events-none fixed left-0 right-0 bottom-[env(safe-area-inset-bottom,0px)] z-[60] h-1 sm:h-1.5 motion-reduce:h-0.5 ring-1 ring-t ring-night/15 shadow-[0_-2px_12px_rgba(10,21,32,0.08)]"
+    class="pointer-events-none fixed left-0 right-0 z-[60] h-1 sm:h-1.5 motion-reduce:h-0.5 ring-1 ring-t ring-night/15 shadow-[0_-2px_12px_rgba(10,21,32,0.08)]"
     :class="showBar ? 'opacity-100' : 'opacity-0'"
+    :style="{ bottom: barBottom }"
     role="progressbar"
     :aria-valuenow="ariaNow"
     aria-valuemin="0"
@@ -31,6 +32,12 @@ const route = useRoute()
 const progress = ref(0)
 const scrollablePx = ref(0)
 const mounted = ref(false)
+/** Écart layout vs fenêtre visible (barre d’adresse mobile / visualViewport) pour coller la barre au bas de l’écran */
+const visualBottomGapPx = ref(0)
+
+const barBottom = computed(
+  () => `calc(env(safe-area-inset-bottom, 0px) + ${visualBottomGapPx.value}px)`
+)
 
 const showBar = computed(
   () => mounted.value && scrollablePx.value >= MIN_SCROLLABLE_PX
@@ -66,19 +73,35 @@ function onScrollOrResize() {
   raf = requestAnimationFrame(() => {
     raf = null
     measure()
+    syncVisualViewportBottom()
   })
+}
+
+function syncVisualViewportBottom () {
+  const vv = window.visualViewport
+  if (!vv) {
+    visualBottomGapPx.value = 0
+    return
+  }
+  const gap = window.innerHeight - vv.offsetTop - vv.height
+  visualBottomGapPx.value = Math.max(0, Math.round(gap))
 }
 
 onMounted(() => {
   mounted.value = true
   measure()
+  syncVisualViewportBottom()
   window.addEventListener('scroll', onScrollOrResize, { passive: true })
   window.addEventListener('resize', onScrollOrResize, { passive: true })
+  window.visualViewport?.addEventListener('resize', onScrollOrResize, { passive: true })
+  window.visualViewport?.addEventListener('scroll', onScrollOrResize, { passive: true })
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', onScrollOrResize)
   window.removeEventListener('resize', onScrollOrResize)
+  window.visualViewport?.removeEventListener('resize', onScrollOrResize)
+  window.visualViewport?.removeEventListener('scroll', onScrollOrResize)
   if (raf != null) cancelAnimationFrame(raf)
 })
 

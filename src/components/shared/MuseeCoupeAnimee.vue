@@ -31,14 +31,18 @@
           <div
             class="coupe-visual-group flex flex-col rounded-2xl shadow-xl bg-white border border-night/[0.06] ring-1 ring-black/[0.04] overflow-hidden"
           >
-            <div class="coupe-plan-wrapper relative w-full bg-night/[0.04] shrink-0 min-h-0">
+            <div class="coupe-plan-wrapper relative w-full bg-night/[0.04] shrink-0 min-h-0 overflow-hidden">
               <!-- Cadre à ratio fixe + plafond de hauteur : garde de la place pour la légende dans la fenêtre -->
               <div
-                class="relative w-full max-h-[min(46dvh,calc(100dvh-18.5rem))] md:max-h-[min(52dvh,calc(100dvh-21.5rem))] mx-auto"
+                class="relative w-full max-h-[min(46dvh,calc(100dvh-18.5rem))] md:max-h-[min(52dvh,calc(100dvh-21.5rem))] mx-auto overflow-hidden isolate"
                 :style="{ aspectRatio: `${IMG_W} / ${IMG_H}` }"
               >
-                <!-- Wrapper zoomable (img + SVG se transforment ensemble) -->
-                <div class="coupe-zoomable absolute inset-0 overflow-hidden" :style="zoomStyle">
+                <!--
+                  Clip sur un parent sans transform : scale() sur le même nœud que overflow:hidden
+                  laisse souvent déborder l’image (Safari / Chrome) au-dessus de la légende.
+                -->
+                <div class="absolute inset-0 overflow-hidden">
+                  <div class="coupe-zoom-inner absolute inset-0" :style="zoomStyle">
                   <img
                     src="/images/musee/coupe_final.png"
                     :alt="$t('musee.coupe.alt')"
@@ -179,6 +183,7 @@
                   </text>
                 </g>
               </svg>
+                  </div>
                 </div>
 
                 <!-- Barre de progression (zones visitées sur le plan) -->
@@ -363,8 +368,12 @@ const activeZone = computed(() => {
   return zonesSorted.value[activeStep.value] ?? null
 })
 
+const coupeStageMinHeightUnit =
+  typeof CSS !== 'undefined' && CSS.supports?.('min-height', '10dvh') ? 'dvh' : 'vh'
+
+/** dvh ≈ fenêtre visible sur mobile ; aligné avec viewportHeightForCoupeScroll (visualViewport). */
 const stageStyle = computed(() => ({
-  minHeight: `${totalSlices.value * SLICE_VH}vh`
+  minHeight: `${totalSlices.value * SLICE_VH}${coupeStageMinHeightUnit}`
 }))
 
 /** Barre sous l’image : progression par zone uniquement (0 % intro, 100 % dernière zone ou outro) */
@@ -435,10 +444,24 @@ function onImageLoad() {
 }
 
 let scrollRaf = null
-function updateActiveStepFromScroll() {
+
+/**
+ * Hauteur « viewport » cohérente avec la hauteur réelle du stage (min-height en dvh).
+ * innerHeight seul sur mobile varie quand la barre d’adresse se cache → scrollable change
+ * au milieu du geste : les salles semblent avoir des plages de scroll inégales ou reculent.
+ */
+function viewportHeightForCoupeScroll () {
+  const vv = window.visualViewport
+  if (vv && vv.height > 0) return vv.height
+  const ch = document.documentElement?.clientHeight
+  if (ch && ch > 0) return ch
+  return window.innerHeight
+}
+
+function updateActiveStepFromScroll () {
   const stage = stageRef.value
   if (!stage || !totalSlices.value) return
-  const vh = window.innerHeight
+  const vh = viewportHeightForCoupeScroll()
   const scrollable = stage.offsetHeight - vh
   if (scrollable <= 0) return
   const rect = stage.getBoundingClientRect()
@@ -480,6 +503,8 @@ onMounted(() => {
 
   window.addEventListener('scroll', onScrollOrResize, { passive: true })
   window.addEventListener('resize', onScrollOrResize, { passive: true })
+  window.visualViewport?.addEventListener('resize', onScrollOrResize, { passive: true })
+  window.visualViewport?.addEventListener('scroll', onScrollOrResize, { passive: true })
   requestAnimationFrame(() => {
     requestAnimationFrame(() => updateActiveStepFromScroll())
   })
@@ -489,6 +514,8 @@ onUnmounted(() => {
   if (enterObserver) enterObserver.disconnect()
   window.removeEventListener('scroll', onScrollOrResize)
   window.removeEventListener('resize', onScrollOrResize)
+  window.visualViewport?.removeEventListener('resize', onScrollOrResize)
+  window.visualViewport?.removeEventListener('scroll', onScrollOrResize)
   if (scrollRaf != null) cancelAnimationFrame(scrollRaf)
 })
 </script>
@@ -536,7 +563,7 @@ onUnmounted(() => {
     transition: none;
     clip-path: inset(0% 0 0 0);
   }
-  .coupe-zoomable {
+  .coupe-zoom-inner {
     transition: none;
   }
   .coupe-zone-bar-fill,

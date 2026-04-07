@@ -4,7 +4,7 @@
     <!-- ═══════════════════════════════════════════════
          HERO + WIDGET
     ═══════════════════════════════════════════════ -->
-    <section class="relative min-h-screen flex flex-col overflow-hidden">
+    <section class="relative min-h-screen min-h-dvh flex flex-col overflow-hidden">
 
       <!-- Fond photo + overlay -->
       <div class="absolute inset-0 z-0">

@@ -56,7 +56,7 @@ export function injectOrganizationJsonLd () {
   const sameAs = [
     'https://www.facebook.com/AKUUAssociation/',
     'https://www.instagram.com/akuu_association/',
-    'https://www.linkedin.com/company/akuu/',
+    'https://www.linkedin.com/company/akuu-association/',
     'https://www.tiktok.com/@akuu_asso',
     'https://www.helloasso.com/associations/akuu'
   ]

@@ -1,5 +1,5 @@
 <template>
-  <section class="section-padding bg-white">
+  <section class="bg-white px-4 pt-8 md:pt-10 pb-16 md:pb-24">
     <div class="container-narrow">
       <SectionTitle :subtitle="$t('partners.subtitle')">
         {{ $t('partners.title') }}
