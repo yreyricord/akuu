@@ -8,7 +8,10 @@
     "amazonie_france": "Amazonía · Francia",
     "youtube_video": "Vídeo de YouTube",
     "colibri_trail_alt": "Colibrí AKUU siguiendo la línea de tiempo",
-    "scroll_progress_aria": "Progreso de desplazamiento en la página"
+    "scroll_progress_aria": "Progreso de desplazamiento en la página",
+    "frise_visual_placeholder_kicker": "Foto",
+    "frise_visual_placeholder_alt": "Ilustración del paso {n} (por añadir)",
+    "frise_histoire_photo_alt": "Línea de tiempo AKUU, {year}, foto {index}"
   },
   "seo": {
     "title": "AKUU, solidaridad internacional en la Amazonía peruana",
@@ -31,7 +34,8 @@
     "subtitle": "En la Amazonía y en Francia, AKUU conecta voluntarios y comunidades locales en torno a proyectos solidarios concretos.",
     "cta_projets": "Descubrir nuestros proyectos",
     "cta_don": "Hacer una donación",
-    "image_alt": "Amazonía peruana, bosque tropical y río"
+    "image_alt": "Amazonía peruana, bosque tropical y río",
+    "colibri_alt": "Colibrí AKUU, emblema de la asociación"
   },
   "stats": {
     "founded": "Año de creación",
@@ -243,7 +247,7 @@
           },
           {
             "title": "Sensibilización",
-            "text": "Festival Imaginarium de la UTC Compiègne, formación Fresco del Clima, intervenciones en institutos y universidades."
+            "text": "Festival Imaginarium de la UTC Compiègne, formación Fresco del Clima, intervenciones en institutos y universidades, participación en un acto de sensibilización en Iquitos, Perú."
           },
           {
             "title": "Nuevos socios",
@@ -277,7 +281,7 @@
         "parts": [
           {
             "title": "Nacimiento del proyecto Museo Shapishiko",
-            "text": "Estudios preliminares y expediente para un museo dedicado a la cultura Kukama en Puerto Miguel. Primeras misiones de campo tras el COVID."
+            "text": "Un proyecto de creación de museo ya se había planteado en 2019 en colaboración con las artesanas Las Mariposas; retomado en 2023, avanza con estudios preliminares y el expediente para un museo dedicado a la cultura Kukama en Puerto Miguel. Primeras misiones de campo tras el COVID."
           },
           {
             "title": "Renovación y misiones",
@@ -425,7 +429,7 @@
       },
       "ecole_art": {
         "title": "Escuela de arte de Puerto Miguel",
-        "text": "Directora: Casilda Pinches Sanchez. El taller trabaja hoy sobre todo con turistas (talleres y visitas); el vínculo con el proyecto del museo y los artistas locales sigue siendo central.",
+        "text": "Directora: Casilda Pinches Sanchez. Con una gran experiencia en la enseñanza artística a la infancia del pueblo, convierte el taller en un espacio de transmisión y creación. El vínculo con el proyecto del museo y los artistas locales sigue siendo el corazón de su compromiso.",
         "photo_alt": "Escuela de arte de Puerto Miguel, Casilda Pinches Sanchez"
       },
       "ucamara": {
@@ -465,7 +469,8 @@
     "progress_title": "Avance del proyecto",
     "video_kicker": "Vídeo",
     "video_title": "El museo en vídeo",
-    "progress_kicker": "Desde 2023",
+    "progress_kicker": "Desde 2019",
+    "milestone_photo_alt": "Museo Shapishiko, avance del proyecto, etapa {step}",
     "plans_kicker": "Arquitectura",
     "description_image_alt": "Museo Shapishiko en Puerto Miguel",
     "gallery_image_alt": "Museo Shapishiko",
@@ -495,8 +500,8 @@
       "scroll_hint": "Sigue desplazándote para recorrer los cinco espacios",
       "scroll_track_aria": "Progreso en el recorrido del plano",
       "scroll_track_intro": "Desplázate: {count} espacios por descubrir a continuación",
-      "scroll_track_zone": "Espacio {current} de {total} — sigue para el siguiente",
-      "scroll_track_outro": "Recorrido del plano terminado — la página continúa abajo",
+      "scroll_track_zone": "Espacio {current} de {total}, sigue para el siguiente",
+      "scroll_track_outro": "Recorrido del plano terminado, la página continúa abajo",
       "levels_nav": "Acceso rápido a los niveles",
       "alt": "Corte arquitectónico del Museo Shapishiko",
       "spaces_legend": "Espacios y niveles",
@@ -564,8 +569,7 @@
         "items": [
           "Idea impulsada por Las Mariposas; encuesta a habitantes de Puerto Miguel",
           "Interrupción y lecciones del COVID; refuerzo de alianzas",
-          "Constitución del comité de gestión del pueblo (17 miembros, 21-82 años)",
-          "Alianzas: Radio Ucamara, Ecomuseo Chullachaqui, FAVER, Ministerio de Cultura (apoyo al contenido artístico)"
+          "Alianzas: Radio Ucamara, Ecomuseo Chullachaqui"
         ]
       },
       "financement": {
@@ -580,6 +584,7 @@
         "label": "2025: seguimiento Casa Redonda, subvención y Casa AKUU",
         "items": [
           "Continuación de la obra Casa Redonda y del volumen del centro de interpretación",
+          "Constitución del comité de gestión del pueblo (17 miembros, 21-82 años)",
           "Subvención del Ministerio de Cultura del Perú",
           "Casa AKUU mejorada",
           "Diseño artístico del centro de interpretación"
@@ -588,6 +593,8 @@
       "production": {
         "label": "2026: acondicionamiento, obras y formación",
         "items": [
+          "Ministerio de Cultura (apoyo al contenido artístico)",
+          "FAVER (apoyo al proyecto)",
           "Compra y producción de obras (ola 1, abril-junio 2026)",
           "Obras y acondicionamiento: 1.º piso del centro de interpretación, espacio cultural, sanitarios (abril-julio 2026)",
           "Formación inicial del comité de gestión (mayo-septiembre 2026)",
@@ -774,7 +781,7 @@
     "success": "¡Mensaje enviado! Te responderemos lo antes posible.",
     "error": "No se ha podido enviar. Inténtelo de nuevo o escríbanos a {'@'}akuu.asso@gmail.com.",
     "info_title": "Datos de contacto",
-    "address": "Sede en Francia — escríbanos para una dirección postal.",
+    "address": "Sede en Francia, escríbanos para una dirección postal.",
     "find_us": "Encuéntranos en Puerto Miguel",
     "map_caption": "Puerto Miguel, Loreto, Perú",
     "map_iframe_title": "Puerto Miguel, Loreto, Perú"

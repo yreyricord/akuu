@@ -8,7 +8,10 @@
     "amazonie_france": "Amazonie · France",
     "youtube_video": "Vidéo YouTube",
     "colibri_trail_alt": "Colibri AKUU suivant la frise",
-    "scroll_progress_aria": "Progression de défilement dans la page"
+    "scroll_progress_aria": "Progression de défilement dans la page",
+    "frise_visual_placeholder_kicker": "Photo",
+    "frise_visual_placeholder_alt": "Illustration étape {n} (à fournir)",
+    "frise_histoire_photo_alt": "Chronologie AKUU, {year}, photo {index}"
   },
   "seo": {
     "title": "AKUU, solidarité internationale en Amazonie péruvienne",
@@ -31,7 +34,8 @@
     "subtitle": "En Amazonie et en France, AKUU engage bénévoles et communautés locales autour de projets solidaires concrets.",
     "cta_projets": "Découvrir nos projets",
     "cta_don": "Faire un don",
-    "image_alt": "Amazonie péruvienne, forêt tropicale et rivière"
+    "image_alt": "Amazonie péruvienne, forêt tropicale et rivière",
+    "colibri_alt": "Colibri AKUU, symbole de l’association"
   },
   "stats": {
     "founded": "Année de création",
@@ -243,7 +247,7 @@
           },
           {
             "title": "Sensibilisation",
-            "text": "Présence à l'Imaginarium Festival de l'UTC Compiègne, formation Fresque du Climat, interventions dans des lycées et universités."
+            "text": "Présence à l'Imaginarium Festival de l'UTC Compiègne, formation Fresque du Climat, interventions dans des lycées et universités, participation à un événement de sensibilisation à Iquitos, au Pérou."
           },
           {
             "title": "Nouveaux partenaires",
@@ -277,7 +281,7 @@
         "parts": [
           {
             "title": "Naissance du projet Musée Shapishiko",
-            "text": "Études préliminaires et montage du dossier pour la création d'un musée dédié à la culture Kukama à Puerto Miguel. Premières missions de terrain depuis le COVID."
+            "text": "Un projet de création de musée avait été initialement imaginé en 2019 en collaboration avec les artisanes Las Mariposas ; repris en 2023, il donne lieu à des études préliminaires et au montage du dossier pour un musée dédié à la culture Kukama à Puerto Miguel. Premières missions de terrain depuis le COVID."
           },
           {
             "title": "Rénovation et missions",
@@ -425,7 +429,7 @@
       },
       "ecole_art": {
         "title": "École d'art de Puerto Miguel",
-        "text": "Directrice : Casilda Pinches Sanchez. L'atelier travaille aujourd'hui surtout avec les touristes (ateliers et visites) ; le lien avec le projet du musée et les artistes locaux reste au cœur du lieu.",
+        "text": "Directrice : Casilda Pinches Sanchez. Forte d'une grande expérience dans l'enseignement artistique auprès des enfants du village, elle fait de l'atelier un lieu de transmission et de création. Le lien avec le projet du musée et les artistes locaux demeure au cœur de son engagement.",
         "photo_alt": "École d'art de Puerto Miguel, Casilda Pinches Sanchez"
       },
       "ucamara": {
@@ -465,7 +469,8 @@
     "progress_title": "Avancement du projet",
     "video_kicker": "Vidéo",
     "video_title": "Le musée en vidéo",
-    "progress_kicker": "Depuis 2023",
+    "progress_kicker": "Depuis 2019",
+    "milestone_photo_alt": "Musée Shapishiko, avancement du projet, étape {step}",
     "plans_kicker": "Architecture",
     "description_image_alt": "Musée Shapishiko à Puerto Miguel",
     "gallery_image_alt": "Musée Shapishiko",
@@ -495,8 +500,8 @@
       "scroll_hint": "Continuez à défiler pour parcourir les cinq espaces",
       "scroll_track_aria": "Progression dans le parcours du plan",
       "scroll_track_intro": "Faites défiler : {count} espaces à découvrir dans la suite",
-      "scroll_track_zone": "Espace {current} sur {total} — continuez pour le suivant",
-      "scroll_track_outro": "Parcours du plan terminé — la page continue plus bas",
+      "scroll_track_zone": "Espace {current} sur {total}, continuez pour le suivant",
+      "scroll_track_outro": "Parcours du plan terminé, la page continue plus bas",
       "levels_nav": "Accès rapide aux niveaux",
       "alt": "Coupe architecturale du Musée Shapishiko",
       "spaces_legend": "Espaces et niveaux",
@@ -564,8 +569,7 @@
         "items": [
           "Idée portée par Las Mariposas ; enquête auprès des habitant·es de Puerto Miguel",
           "Interruption et leçons du COVID ; renforcement des partenariats",
-          "Constitution du comité de gestion villageois (17 membres, 21-82 ans)",
-          "Partenariats : Radio Ucamara, Écomusée Chullachaqui, FAVER, Ministère de la Culture (soutien au contenu artistique)"
+          "Partenariats : Radio Ucamara, Écomusée Chullachaqui"
         ]
       },
       "financement": {
@@ -580,6 +584,7 @@
         "label": "2025 : poursuite Casa Redonda, subvention et Casa AKUU",
         "items": [
           "Poursuite du chantier Casa Redonda et de l'enveloppe du centre d'interprétation",
+          "Constitution du comité de gestion villageois (17 membres, 21-82 ans)",
           "Subvention du Ministère de la Culture péruvien",
           "Casa AKUU améliorée",
           "Conception artistique du centre d'interprétation"
@@ -588,6 +593,8 @@
       "production": {
         "label": "2026 : aménagement, œuvres et formation",
         "items": [
+          "Ministère de la Culture (soutien au contenu artistique)",
+          "FAVER (soutien au projet)",
           "Achat et production d'œuvres (vague 1, avril-juin 2026)",
           "Travaux et aménagement : 1er étage du centre d'interprétation, espace culturel, sanitaires (avril-juillet 2026)",
           "Formation initiale du comité de gestion (mai-septembre 2026)",
@@ -774,7 +781,7 @@
     "success": "Message envoyé ! Nous vous répondrons dans les plus brefs délais.",
     "error": "L’envoi a échoué. Réessayez ou écrivez-nous à {'@'}akuu.asso@gmail.com.",
     "info_title": "Coordonnées",
-    "address": "Siège en France — écrivez-nous pour toute demande d’adresse postale.",
+    "address": "Siège en France, écrivez-nous pour toute demande d’adresse postale.",
     "find_us": "Nous retrouver à Puerto Miguel",
     "map_caption": "Puerto Miguel, Loreto, Pérou",
     "map_iframe_title": "Puerto Miguel, Loreto, Pérou"

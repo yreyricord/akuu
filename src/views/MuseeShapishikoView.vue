@@ -149,8 +149,11 @@
           <h2 class="text-3xl md:text-4xl font-serif font-bold text-night">{{ $t('musee.progress_title') }}</h2>
         </div>
         <div class="relative max-w-4xl mx-auto fade-in-up">
+          <!-- Visuels en regard : :visual-srcs="['/images/...', ...]" (même ordre que les étapes) ; sinon placeholders 1–5 -->
           <TheMuseeMilestones
             :steps="milestones"
+            :visual-srcs="milestoneVisualSrcs"
+            :visual-alts="milestoneVisualAlts"
             trail-bird-src="/images/collibri-akuu.png"
             :trail-bird-alt="$t('common.colibri_trail_alt')"
           />
@@ -263,6 +266,7 @@ import MuseeCoupeAnimee from '@/components/shared/MuseeCoupeAnimee.vue'
 import VideoEmbed from '@/components/shared/VideoEmbed.vue'
 import MuseeSectionWithSideVisual from '@/components/shared/MuseeSectionWithSideVisual.vue'
 import museeActeurs from '@/data/musee-acteurs.json'
+import museeGallerySrcs from '@/data/musee-gallery.json'
 import museeSideVisualImages from '@/data/musee-side-visuals.json'
 import { museeSectionLayout } from '@/data/musee-section-layouts.js'
 
@@ -275,6 +279,19 @@ const milestoneDefs = [
   { key: 'production', year: '2026', status: 'in_progress' },
   { key: 'ouverture', year: '2026-2027', status: 'pending' }
 ]
+
+/** Une image par étape d’avancement (ordre = milestoneDefs) — public/images/projets/shapishiko/ */
+const milestoneVisualSrcs = [
+  '/images/projets/shapishiko/1.jpg',
+  '/images/projets/shapishiko/2.jpeg',
+  '/images/projets/shapishiko/3.jpg',
+  '/images/projets/shapishiko/4.jpeg',
+  '/images/projets/shapishiko/5.jpeg'
+]
+
+const milestoneVisualAlts = computed(() =>
+  milestoneVisualSrcs.map((_, i) => t('musee.milestone_photo_alt', { step: i + 1 }))
+)
 
 const milestones = computed(() =>
   milestoneDefs.map((d) => {
@@ -294,21 +311,9 @@ const descriptionObjectives = computed(() => {
   return Array.isArray(raw) ? raw : []
 })
 
-const gallerySrcs = [
-  '/images/musee/galerie-musee-1.jpg',
-  '/images/musee/galerie-musee-2.jpg',
-  '/images/musee/galerie-musee-3.jpg',
-  '/images/musee/galerie-musee-4.jpg',
-  '/images/musee/galerie-musee-5.jpg',
-  '/images/musee/galerie-musee-6.jpg',
-  '/images/musee/galerie-musee-7.jpg',
-  '/images/musee/galerie-musee-8.jpg',
-  '/images/musee/galerie-musee-9.JPG'
-]
-
 const galleryPhotos = computed(() => {
   const alt = t('musee.gallery_image_alt')
-  return gallerySrcs.map((src) => ({ src, alt }))
+  return museeGallerySrcs.map((src) => ({ src, alt }))
 })
 
 let observer = null

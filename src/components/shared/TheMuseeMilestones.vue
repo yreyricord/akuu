@@ -112,9 +112,14 @@
         </div>
       </div>
 
-      <!-- Colonne année -->
-      <div :class="['hidden md:flex items-start pb-10', index % 2 === 1 ? 'md:order-1 md:justify-end md:pr-16' : 'md:order-2 md:justify-start md:pl-16']">
-        <div class="pt-1 select-none">
+      <!-- Colonne année + visuel en face du texte (synchronisé avec le colibri) -->
+      <div
+        :class="[
+          'hidden md:flex flex-col gap-5 pb-10',
+          index % 2 === 1 ? 'md:order-1 md:items-end md:pr-16' : 'md:order-2 md:items-start md:pl-16'
+        ]"
+      >
+        <div class="pt-1 select-none shrink-0">
           <span
             class="block font-serif font-black leading-none transition-all duration-500"
             :class="step.year.length > 4 ? 'text-3xl' : 'text-5xl'"
@@ -123,12 +128,18 @@
             {{ step.year }}
           </span>
         </div>
+        <FriseOppositeVisual
+          v-if="showOppositeVisuals"
+          :revealed="milestoneVisualRevealed(index)"
+          :number="index + 1"
+          :src="oppositeVisualSrc(index)"
+          :alt="oppositeVisualAlt(index)"
+          :side="index % 2 === 0 ? 'right' : 'left'"
+        />
       </div>
 
       <!-- Mobile (colibri animé = même SVG que desktop, calé sur les pastilles) -->
       <div class="md:hidden col-span-2 pb-8 pl-8 relative">
-        <div class="absolute left-0 top-0 bottom-0 w-0.5 transition-colors duration-500"
-          :style="{ backgroundColor: activeIndex >= index ? stepColor(step.status) : '#3A404015' }" />
         <div
           :ref="(el) => setMobileDotRef(el, index)"
           class="absolute top-4 left-0 rounded-full ring-2 ring-white -translate-x-[5px] transition-all duration-500 motion-reduce:transition-none"
@@ -157,6 +168,15 @@
             <li v-for="(item, j) in step.items" :key="j">{{ item }}</li>
           </ul>
         </div>
+        <FriseOppositeVisual
+          v-if="showOppositeVisuals"
+          class="mt-5"
+          :revealed="milestoneVisualRevealed(index)"
+          :number="index + 1"
+          :src="oppositeVisualSrc(index)"
+          :alt="oppositeVisualAlt(index)"
+          side="below"
+        />
       </div>
     </div>
   </div>
@@ -167,11 +187,20 @@ import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
   computeTrailBirdLayout,
-  TRAIL_BIRD_ANGLE_OFFSET_VERTICAL_FRIZE
+  TRAIL_BIRD_ANGLE_OFFSET_VERTICAL_FRIZE,
+  approximateTravelledForPathY
 } from '@/composables/useTrailBirdOnPath'
+import FriseOppositeVisual from '@/components/shared/FriseOppositeVisual.vue'
 
 const props = defineProps({
   steps: { type: Array, required: true },
+  /**
+   * Images optionnelles en regard du texte, même ordre que steps.
+   * Laisser vide pour afficher le placeholder numéroté (1, 2, …).
+   */
+  visualSrcs: { type: Array, default: () => [] },
+  /** Alts i18n-friendly, même longueur que visualSrcs quand des images sont fournies */
+  visualAlts: { type: Array, default: () => [] },
   /** PNG transparent : suit le fil du temps (desktop uniquement, même SVG que la courbe). */
   trailBirdSrc: { type: String, default: '' },
   trailBirdAlt: { type: String, default: '' },
@@ -180,7 +209,9 @@ const props = defineProps({
   /** Préfixe i18n pour les badges (ex. musee.milestone_ui ou hydrama.timeline_ui). */
   labelNamespace: { type: String, default: 'musee.milestone_ui' },
   /** Id unique du linearGradient SVG (évite les conflits si plusieurs frises sur le site). */
-  gradientId: { type: String, default: 'museeMilestoneGradient' }
+  gradientId: { type: String, default: 'museeMilestoneGradient' },
+  /** Afficher la colonne photos / placeholders en regard du texte (désactiver ex. page Hydr’Ama). */
+  showOppositeVisuals: { type: Boolean, default: true }
 })
 
 /** Taille du PNG sur le chemin (plus petit sur mobile) */
@@ -194,6 +225,28 @@ const birdLayout = ref({
 })
 
 const { t } = useI18n()
+
+/** Photos visibles dès que l’étape est révélée au scroll (comme la carte), pas seulement quand le colibri passe. */
+function milestoneVisualRevealed(index) {
+  if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return true
+  }
+  return index <= revealUpTo.value || activeIndex.value >= index
+}
+
+function oppositeVisualSrc(index) {
+  const fromProp = props.visualSrcs[index]
+  if (fromProp) return fromProp
+  const fromStep = props.steps[index]?.visualSrc
+  return typeof fromStep === 'string' ? fromStep : ''
+}
+
+function oppositeVisualAlt(index) {
+  const fromProp = props.visualAlts[index]
+  if (fromProp) return fromProp
+  const fromStep = props.steps[index]?.visualAlt
+  return typeof fromStep === 'string' ? fromStep : ''
+}
 
 const containerRef = ref(null)
 const pathRef = ref(null)
@@ -336,22 +389,46 @@ function handleScroll() {
   if (!container) return
 
   const len = pathLength.value
-  if (len > 0) {
-    const rect = container.getBoundingClientRect()
-    const wh = window.innerHeight
-    const scrolled = wh * 0.55 - rect.top
-    const progress = Math.max(0, Math.min(1, scrolled / rect.height))
-    dashOffset.value = len * (1 - progress)
-  }
-
+  const pathEl = pathRef.value
+  const rect = container.getBoundingClientRect()
   const wh = window.innerHeight
-  let newActive = -1
-  dotsForViewport().forEach((dot, i) => {
-    if (!dot) return
-    const dr = dot.getBoundingClientRect()
-    if (dr.height > 0 && dr.top < wh * 0.6) newActive = i
-  })
-  activeIndex.value = newActive
+  const n = props.steps.length
+
+  /**
+   * Colibri maintenu au centre vertical du viewport : on résout la position sur le path
+   * pour que le point du fil tombe sous le milieu de l’écran (repère du bloc frise).
+   */
+  if (len > 0 && pathEl) {
+    if (rect.top > wh) {
+      dashOffset.value = len
+      activeIndex.value = -1
+    } else if (rect.bottom < 36) {
+      dashOffset.value = 0
+      activeIndex.value = n > 0 ? n - 1 : -1
+    } else {
+      const targetSvgY = wh * 0.5 - rect.top
+      const travelled = approximateTravelledForPathY(pathEl, len, targetSvgY)
+      dashOffset.value = len - travelled
+      const birdPt = pathEl.getPointAtLength(travelled)
+      let newActive = -1
+      dotsForViewport().forEach((dot, i) => {
+        if (!dot) return
+        const dr = dot.getBoundingClientRect()
+        if (dr.width <= 0 && dr.height <= 0) return
+        const dotCy = dr.top + dr.height / 2 - rect.top
+        if (dotCy <= birdPt.y + 28) newActive = i
+      })
+      activeIndex.value = newActive
+    }
+  } else {
+    let newActive = -1
+    dotsForViewport().forEach((dot, i) => {
+      if (!dot) return
+      const dr = dot.getBoundingClientRect()
+      if (dr.height > 0 && dr.top < wh * 0.6) newActive = i
+    })
+    activeIndex.value = newActive
+  }
 
   updateCardReveal()
   updateTrailBird()

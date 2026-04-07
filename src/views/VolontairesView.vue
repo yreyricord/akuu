@@ -36,12 +36,10 @@
     <!-- Process -->
     <section class="section-padding bg-white">
       <div class="container-narrow">
-        <div class="text-center mb-12">
-          <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">{{ $t('volontaires.process_kicker') }}</p>
-          <h2 class="text-3xl md:text-4xl font-serif font-bold text-night">{{ $t('volontaires.process_title') }}</h2>
-        </div>
         <TheProcessSteps
           :steps="processSteps"
+          :heading-kicker="$t('volontaires.process_kicker')"
+          :heading-title="$t('volontaires.process_title')"
           trail-bird-src="/images/collibri-akuu.png"
           :trail-bird-alt="$t('common.colibri_trail_alt')"
         />

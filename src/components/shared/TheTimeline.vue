@@ -133,9 +133,14 @@
         </div>
       </div>
 
-      <!-- Colonne année -->
-      <div :class="['hidden md:flex items-start pb-12 shrink-0', index % 2 === 1 ? 'md:order-1 md:justify-end md:pr-8 lg:pr-10' : 'md:order-2 md:justify-start md:pl-8 lg:pl-10']">
-        <div class="pt-2 select-none">
+      <!-- Colonne année + visuel en face du texte -->
+      <div
+        :class="[
+          'hidden md:flex flex-col gap-5 pb-12 shrink-0',
+          index % 2 === 1 ? 'md:order-1 md:items-end md:pr-8 lg:pr-10' : 'md:order-2 md:items-start md:pl-8 lg:pl-10'
+        ]"
+      >
+        <div class="pt-2 select-none shrink-0">
           <span
             class="block text-5xl font-serif font-black leading-none transition-all duration-500"
             :style="{ color: activeIndex >= index ? eraColor(item.annee) : '#3A404022' }"
@@ -143,14 +148,16 @@
             {{ item.label || item.annee }}
           </span>
         </div>
+        <FriseOppositeVisual
+          :revealed="activeIndex >= index"
+          :number="index + 1"
+          :images="oppositeItemImages(item, index)"
+          :side="index % 2 === 0 ? 'right' : 'left'"
+        />
       </div>
 
       <!-- Layout mobile (colibri = SVG animé sur le fil) -->
       <div class="md:hidden col-span-2 pb-10 pl-8 relative">
-        <div
-          class="absolute left-0 top-0 bottom-0 w-0.5 transition-colors duration-500"
-          :style="{ backgroundColor: activeIndex >= index ? eraColor(item.annee) : '#3A404020' }"
-        />
         <div
           :ref="(el) => setMobileDotRef(el, index)"
           class="absolute top-6 left-0 rounded-full ring-2 ring-cream -translate-x-[5px] transition-all duration-500 motion-reduce:transition-none"
@@ -198,6 +205,13 @@
           </div>
           <p v-else class="text-sm leading-relaxed" :class="item.futur ? 'text-night/35 italic' : 'text-night/55'">{{ t(`association.timeline.${item.annee}.description`) }}</p>
         </div>
+        <FriseOppositeVisual
+          class="mt-5"
+          :revealed="activeIndex >= index"
+          :number="index + 1"
+          :images="oppositeItemImages(item, index)"
+          side="below"
+        />
       </div>
     </div>
   </div>
@@ -208,11 +222,20 @@ import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
   computeTrailBirdLayout,
-  TRAIL_BIRD_ANGLE_OFFSET_VERTICAL_FRIZE
+  TRAIL_BIRD_ANGLE_OFFSET_VERTICAL_FRIZE,
+  approximateTravelledForPathY
 } from '@/composables/useTrailBirdOnPath'
+import FriseOppositeVisual from '@/components/shared/FriseOppositeVisual.vue'
+import { histoireUrlsForYear } from '@/data/timelineHistoireImages'
 
 const props = defineProps({
   items: { type: Array, required: true },
+  /**
+   * Visuels optionnels par entrée (même ordre que items).
+   * Chaque entrée : URL string, ou tableau d’URLs pour plusieurs photos (prioritaire sur /images/Histoire).
+   */
+  itemVisualSrcs: { type: Array, default: () => [] },
+  itemVisualAlts: { type: Array, default: () => [] },
   trailBirdSrc: { type: String, default: '' },
   trailBirdAlt: { type: String, default: '' },
   trailBirdAngleOffset: { type: Number, default: TRAIL_BIRD_ANGLE_OFFSET_VERTICAL_FRIZE }
@@ -296,6 +319,38 @@ function eraLabel(annee) {
   return t(`association.timeline_eras.${getEraKey(annee)}`)
 }
 
+function oppositeItemImages(item, index) {
+  const yearLabel = item.label || item.annee
+  const photoAlt = (i) =>
+    t('common.frise_histoire_photo_alt', { year: yearLabel, index: i + 1 })
+
+  const fromProp = props.itemVisualSrcs[index]
+  if (fromProp) {
+    const urls = Array.isArray(fromProp) ? fromProp : [fromProp]
+    const alts = props.itemVisualAlts[index]
+    const altList = Array.isArray(alts) ? alts : null
+    return urls
+      .filter((u) => typeof u === 'string' && u.trim())
+      .map((src, i) => ({
+        src: src.trim(),
+        alt: (altList && altList[i]) || (typeof alts === 'string' && urls.length === 1 ? alts : '') || photoAlt(i)
+      }))
+  }
+
+  const fromItem = props.items[index]?.visualSrc
+  if (typeof fromItem === 'string' && fromItem.trim()) {
+    const alt =
+      (typeof props.items[index]?.visualAlt === 'string' && props.items[index].visualAlt) ||
+      photoAlt(0)
+    return [{ src: fromItem.trim(), alt }]
+  }
+
+  return histoireUrlsForYear(item.annee).map((src, i) => ({
+    src,
+    alt: photoAlt(i)
+  }))
+}
+
 function buildPath() {
   const container = containerRef.value
   if (!container) return
@@ -371,22 +426,44 @@ function handleScroll() {
   const container = containerRef.value
   if (!container) return
 
-  if (pathLength.value > 0) {
-    const rect = container.getBoundingClientRect()
-    const wh = window.innerHeight
-    const scrolled = wh * 0.55 - rect.top
-    const progress = Math.max(0, Math.min(1, scrolled / rect.height))
-    dashOffset.value = pathLength.value * (1 - progress)
+  const len = pathLength.value
+  const pathEl = pathRef.value
+  const rect = container.getBoundingClientRect()
+  const wh = window.innerHeight
+  const n = props.items.length
+
+  if (len > 0 && pathEl) {
+    if (rect.top > wh) {
+      dashOffset.value = len
+      activeIndex.value = -1
+    } else if (rect.bottom < 36) {
+      dashOffset.value = 0
+      activeIndex.value = n > 0 ? n - 1 : -1
+    } else {
+      const targetSvgY = wh * 0.5 - rect.top
+      const travelled = approximateTravelledForPathY(pathEl, len, targetSvgY)
+      dashOffset.value = len - travelled
+      const birdPt = pathEl.getPointAtLength(travelled)
+      let newActive = -1
+      dotsForViewport().forEach((dot, i) => {
+        if (!dot) return
+        const dr = dot.getBoundingClientRect()
+        if (dr.width <= 0 && dr.height <= 0) return
+        const dotCy = dr.top + dr.height / 2 - rect.top
+        if (dotCy <= birdPt.y + 28) newActive = i
+      })
+      activeIndex.value = newActive
+    }
+  } else {
+    let newActive = -1
+    dotsForViewport().forEach((dot, i) => {
+      if (!dot) return
+      const dr = dot.getBoundingClientRect()
+      if (dr.height > 0 && dr.top < wh * 0.6) newActive = i
+    })
+    activeIndex.value = newActive
   }
 
-  const wh = window.innerHeight
-  let newActive = -1
-  dotsForViewport().forEach((dot, i) => {
-    if (!dot) return
-    const dr = dot.getBoundingClientRect()
-    if (dr.height > 0 && dr.top < wh * 0.6) newActive = i
-  })
-  activeIndex.value = newActive
   updateTrailBird()
 }
 

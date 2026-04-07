@@ -8,6 +8,24 @@
       ref="containerRef"
       class="sticky top-24 md:top-[7.5rem] py-2 md:py-4 relative"
     >
+    <!-- Titre de section (sticky avec les étapes : reste visible au scroll) -->
+    <div
+      v-if="headingKicker || headingTitle"
+      class="text-center mb-8 md:mb-10"
+    >
+      <p
+        v-if="headingKicker"
+        class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3"
+      >
+        {{ headingKicker }}
+      </p>
+      <h2
+        v-if="headingTitle"
+        class="text-3xl md:text-4xl font-serif font-bold text-night text-balance"
+      >
+        {{ headingTitle }}
+      </h2>
+    </div>
 
     <!-- SVG chemin horizontal (desktop) -->
     <svg
@@ -120,6 +138,10 @@ import {
 
 const props = defineProps({
   steps: { type: Array, required: true },
+  /** Sous-titre au-dessus du titre (ex. « En 4 étapes ») — affiché dans le bloc sticky. */
+  headingKicker: { type: String, default: '' },
+  /** Titre principal de la section — affiché dans le bloc sticky avec les numéros d’étapes. */
+  headingTitle: { type: String, default: '' },
   trailBirdSrc: { type: String, default: '' },
   trailBirdAlt: { type: String, default: '' },
   /** Chemin horizontal des étapes : tangente seule (pas l’offset -90° des frises verticales). */

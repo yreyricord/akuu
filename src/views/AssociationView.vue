@@ -92,6 +92,7 @@
           <h2 class="text-3xl md:text-4xl font-serif font-bold text-night">{{ $t('association.history_title') }}</h2>
         </div>
         <div class="relative w-full">
+          <!-- Visuels : :item-visual-srcs="['/images/...', ...]" (ordre = années) ; sinon placeholders numérotés -->
           <TheTimeline
             :items="sortedTimeline"
             trail-bird-src="/images/collibri-akuu.png"

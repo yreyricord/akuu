@@ -86,8 +86,10 @@
           </h2>
         </div>
         <div class="relative max-w-4xl mx-auto">
+          <!-- Visuels latéraux désactivés pour l’instant (:show-opposite-visuals="false") -->
           <TheMuseeMilestones
             :steps="hydramaTimelineSteps"
+            :show-opposite-visuals="false"
             trail-bird-src="/images/collibri-akuu.png"
             :trail-bird-alt="$t('common.colibri_trail_alt')"
             gradient-id="hydramaMilestoneGradient"

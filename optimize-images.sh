@@ -80,6 +80,37 @@ for f in "$IMG_DIR"/hydrama/hydrama-*.jpg; do
 done
 
 echo ""
+echo "--- Frise association / Histoire (max 1600px wide) ---"
+if [ -d "$IMG_DIR/Histoire" ]; then
+  while IFS= read -r -d '' f; do
+    resize_image "$f" 1600 "HISTOIRE"
+  done < <(find "$IMG_DIR/Histoire" -maxdepth 1 \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \) -print0 2>/dev/null)
+fi
+
+echo ""
+echo "--- Projet Musée Shapishiko / carte projets (max 1200px) ---"
+if [ -d "$IMG_DIR/projets/shapishiko" ]; then
+  while IFS= read -r -d '' f; do
+    resize_image "$f" 1200 "PROJET_SHAP"
+  done < <(find "$IMG_DIR/projets/shapishiko" -maxdepth 1 \( -iname "*.jpg" -o -iname "*.jpeg" \) -print0 2>/dev/null)
+fi
+
+echo ""
+echo "--- Équipe (max 1200px) ---"
+if [ -d "$IMG_DIR/equipe" ]; then
+  while IFS= read -r -d '' f; do
+    resize_image "$f" 1200 "EQUIPE"
+  done < <(find "$IMG_DIR/equipe" -maxdepth 1 \( -iname "*.jpg" -o -iname "*.jpeg" \) -print0 2>/dev/null)
+fi
+
+echo ""
+echo "--- Musée : autres JPEG (contexte, équipe chantier, rendus ; max 1600px) ---"
+for f in "$IMG_DIR"/musee/musee_context.jpg "$IMG_DIR"/musee/equipe.jpg "$IMG_DIR"/musee/rendu-2.jpg "$IMG_DIR"/musee/rendu-3.jpg; do
+  [ -e "$f" ] || continue
+  resize_image "$f" 1600 "MUSEE_EXTRA"
+done
+
+echo ""
 echo "=== Done! ==="
 echo ""
 
