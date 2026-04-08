@@ -8,7 +8,7 @@
   >
     <div
       v-show="scrolled || menuOpen"
-      class="pointer-events-none absolute inset-x-0 top-0 bottom-0 z-[1] w-full bg-white/95 backdrop-blur-md shadow-[0_4px_6px_-1px_rgba(0,0,0,0.07),0_2px_4px_-2px_rgba(0,0,0,0.05)] transition-opacity duration-500"
+      class="pointer-events-none absolute inset-x-0 top-0 h-16 md:h-20 z-[1] w-full bg-white/95 backdrop-blur-md shadow-[0_4px_6px_-1px_rgba(0,0,0,0.07),0_2px_4px_-2px_rgba(0,0,0,0.05)] transition-opacity duration-500"
       aria-hidden="true"
     />
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-visible pointer-events-auto relative z-[2]">
@@ -51,8 +51,10 @@
 
         <button
           @click="menuOpen = !menuOpen"
-          class="lg:hidden p-2 rounded-lg transition-colors self-center"
+          class="lg:hidden p-2 rounded-lg transition-colors self-center focus:outline-none focus-visible:ring-2 focus-visible:ring-forest focus-visible:ring-offset-2"
           :class="scrolled || menuOpen ? 'text-night hover:bg-gray-100' : 'text-white hover:bg-white/10'"
+          :aria-expanded="menuOpen"
+          aria-controls="mobile-menu"
           aria-label="Menu"
         >
           <svg v-if="!menuOpen" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -73,7 +75,7 @@
       leave-from-class="opacity-100 translate-y-0"
       leave-to-class="opacity-0 -translate-y-4"
     >
-      <div v-if="menuOpen" class="lg:hidden bg-white border-t border-gray-100 shadow-xl pointer-events-auto">
+      <div v-if="menuOpen" id="mobile-menu" class="lg:hidden bg-white border-t border-gray-100 shadow-xl pointer-events-auto">
         <div class="max-w-7xl mx-auto px-4 py-4 space-y-1">
           <router-link
             v-for="item in navItems"

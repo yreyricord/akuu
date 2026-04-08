@@ -9,6 +9,7 @@
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen
         loading="lazy"
+        sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"
       />
     </div>
     <div v-if="caption" class="px-5 py-3 bg-white">

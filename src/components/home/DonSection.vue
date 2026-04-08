@@ -33,7 +33,7 @@
             {{ $t('donation.title') }}
           </h2>
 
-          <p class="text-white/60 text-lg leading-relaxed mb-10 max-w-md">
+          <p class="text-white/75 text-lg leading-relaxed mb-10 max-w-md">
             {{ $t('donation.text') }}
           </p>
 
@@ -58,7 +58,7 @@
             <!-- Slider -->
             <div class="mb-6">
               <div class="flex justify-between items-baseline mb-3">
-                <span class="text-white/60 text-sm">{{ $t('soutien.simulator_give') }}</span>
+                <span class="text-white/75 text-sm">{{ $t('soutien.simulator_give') }}</span>
                 <span class="text-3xl font-serif font-bold text-white">
                   {{ donAmount }}€
                   <span class="text-sm font-sans font-normal text-white/40">/{{ $t('soutien.simulator_month') }}</span>
@@ -93,7 +93,7 @@
 
             <!-- Résumé mensuel -->
             <div class="bg-leaf/10 border border-leaf/20 rounded-2xl px-4 py-3 text-center">
-              <p class="text-white/60 text-xs">
+              <p class="text-white/75 text-xs">
                 {{ $t('soutien.simulator_monthly_label') }}
                 <span class="text-leaf font-bold text-sm">{{ realCostMonthly }}€/{{ $t('soutien.simulator_month') }}</span>
               </p>

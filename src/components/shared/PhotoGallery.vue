@@ -39,10 +39,13 @@
       >
         <div
           v-if="lightboxOpen"
+          id="lightbox-panel"
+          role="dialog"
+          aria-modal="true"
           class="fixed inset-0 z-[100] bg-night/95 flex items-center justify-center p-4"
           @click.self="closeLightbox"
         >
-          <button @click="closeLightbox" class="absolute top-4 right-4 text-white/80 hover:text-white p-2" aria-label="Fermer">
+          <button ref="closeBtn" @click="closeLightbox" class="absolute top-4 right-4 text-white/80 hover:text-white p-2" aria-label="Fermer">
             <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -62,6 +65,23 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
           </button>
+
+          <!-- Compteur + barre de progression -->
+          <div v-if="photos.length > 1" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+            <span class="text-white/60 text-xs font-medium tabular-nums">
+              {{ currentIndex + 1 }} / {{ photos.length }}
+            </span>
+            <div class="flex gap-1">
+              <button
+                v-for="(_, i) in photos"
+                :key="i"
+                @click="currentIndex = i"
+                class="h-0.5 rounded-full transition-all duration-300"
+                :class="i === currentIndex ? 'w-6 bg-white' : 'w-2 bg-white/35 hover:bg-white/60'"
+                :aria-label="`Photo ${i + 1}`"
+              />
+            </div>
+          </div>
         </div>
       </Transition>
     </Teleport>
@@ -69,7 +89,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, nextTick } from 'vue'
 
 const props = defineProps({
   photos: { type: Array, required: true },
@@ -80,16 +100,41 @@ const props = defineProps({
 
 const lightboxOpen = ref(false)
 const currentIndex = ref(0)
+const closeBtn = ref(null)
 
-function openLightbox(index) {
+function handleKey(e) {
+  if (e.key === 'Escape') { closeLightbox(); return }
+  if (e.key === 'ArrowLeft')  { prev(); return }
+  if (e.key === 'ArrowRight') { next(); return }
+  // Focus trap: keep Tab within the lightbox
+  if (e.key === 'Tab') {
+    const lightbox = document.getElementById('lightbox-panel')
+    if (!lightbox) return
+    const focusable = Array.from(lightbox.querySelectorAll('button'))
+    if (!focusable.length) return
+    const first = focusable[0]
+    const last  = focusable[focusable.length - 1]
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus() }
+    } else {
+      if (document.activeElement === last)  { e.preventDefault(); first.focus() }
+    }
+  }
+}
+
+async function openLightbox(index) {
   currentIndex.value = index
   lightboxOpen.value = true
   document.body.style.overflow = 'hidden'
+  window.addEventListener('keydown', handleKey)
+  await nextTick()
+  closeBtn.value?.focus()
 }
 
 function closeLightbox() {
   lightboxOpen.value = false
   document.body.style.overflow = ''
+  window.removeEventListener('keydown', handleKey)
 }
 
 function prev() {

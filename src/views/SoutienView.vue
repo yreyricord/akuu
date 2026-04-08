@@ -46,7 +46,7 @@
           <!-- Slider -->
           <div class="mb-5">
             <div class="flex justify-between items-baseline mb-2">
-              <span class="text-white/60 text-sm">{{ $t('soutien.simulator_give') }}</span>
+              <span class="text-white/75 text-sm">{{ $t('soutien.simulator_give') }}</span>
               <span class="text-2xl font-serif font-bold text-white">{{ donAmount }}€
                 <span class="text-sm font-sans font-normal text-white/50">/{{ $t('soutien.simulator_month') }}</span>
               </span>
@@ -109,14 +109,14 @@
           <!-- Widget HelloAsso (langue dynamique) -->
           <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
             <iframe
+              ref="haWidget"
               :key="widgetSrc"
-              id="haWidgetLight"
               allowtransparency="true"
               allow="payment"
               scrolling="auto"
               :src="widgetSrc"
               style="width: 100%; min-height: 500px; border: none; display: block;"
-              onload="window.addEventListener('message', function(e) { const dataHeight = e.data.height; const el = document.getElementById('haWidgetLight'); if (el && dataHeight > parseFloat(el.height || 0)) { el.height = dataHeight + 'px';}})"
+              sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
             />
           </div>
 
@@ -237,6 +237,7 @@ import PartnerCard from '@/components/shared/PartnerCard.vue'
 const store = useDataStore()
 const { locale } = useI18n()
 
+const haWidget = ref(null)
 const donAmount = ref(20)
 
 const annualAmount = computed(() => donAmount.value * 12)
@@ -258,13 +259,28 @@ const stats = [
   { id: 'tax', value: '66%', labelKey: 'soutien.stat_impots' }
 ]
 
+function onHelloAssoMessage(e) {
+  if (e.origin !== 'https://www.helloasso.com') return
+  const height = Number(e.data?.height)
+  if (!Number.isFinite(height) || height <= 0) return
+  const el = haWidget.value
+  if (el && height > parseFloat(el.style.minHeight || 0)) {
+    el.style.minHeight = height + 'px'
+  }
+}
+
 let observer = null
 onMounted(() => {
+  window.addEventListener('message', onHelloAssoMessage)
+
   observer = new IntersectionObserver(
     (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible') }),
     { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
   )
   document.querySelectorAll('.fade-in-up').forEach((el) => observer.observe(el))
 })
-onUnmounted(() => { if (observer) observer.disconnect() })
+onUnmounted(() => {
+  window.removeEventListener('message', onHelloAssoMessage)
+  if (observer) observer.disconnect()
+})
 </script>

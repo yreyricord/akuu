@@ -5,24 +5,11 @@
 import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { flatten, diffLocales } from './lib/i18n-utils.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const root = join(__dirname, '..')
 const locales = ['fr', 'en', 'es']
-
-function flatten(obj, prefix = '') {
-  const out = new Set()
-  for (const k of Object.keys(obj)) {
-    const path = prefix ? `${prefix}.${k}` : k
-    const v = obj[k]
-    if (v !== null && typeof v === 'object' && !Array.isArray(v)) {
-      for (const p of flatten(v, path)) out.add(p)
-    } else {
-      out.add(path)
-    }
-  }
-  return out
-}
 
 const sets = {}
 for (const loc of locales) {
@@ -33,13 +20,11 @@ for (const loc of locales) {
 let exit = 0
 const fr = sets.fr
 for (const loc of ['en', 'es']) {
-  const other = sets[loc]
-  const onlyFr = [...fr].filter((k) => !other.has(k)).sort()
-  const onlyOther = [...other].filter((k) => !fr.has(k)).sort()
-  if (onlyFr.length || onlyOther.length) {
+  const { onlyInBase: onlyFr, onlyInOther } = diffLocales(fr, sets[loc])
+  if (onlyFr.length || onlyInOther.length) {
     console.error(`\nMismatch vs fr ↔ ${loc}:`)
     if (onlyFr.length) console.error(`  Only in fr (${onlyFr.length}):`, onlyFr.slice(0, 40).join(', '), onlyFr.length > 40 ? '…' : '')
-    if (onlyOther.length) console.error(`  Only in ${loc} (${onlyOther.length}):`, onlyOther.slice(0, 40).join(', '), onlyOther.length > 40 ? '…' : '')
+    if (onlyInOther.length) console.error(`  Only in ${loc} (${onlyInOther.length}):`, onlyInOther.slice(0, 40).join(', '), onlyInOther.length > 40 ? '…' : '')
     exit = 1
   }
 }

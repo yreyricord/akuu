@@ -9,6 +9,7 @@
     "youtube_video": "Vidéo YouTube",
     "colibri_trail_alt": "Colibri AKUU suivant la frise",
     "scroll_progress_aria": "Progression de défilement dans la page",
+    "back_to_top": "Retour en haut de page",
     "frise_visual_placeholder_kicker": "Photo",
     "frise_visual_placeholder_alt": "Illustration étape {n} (à fournir)",
     "frise_histoire_photo_alt": "Chronologie AKUU, {year}, photo {index}",
@@ -1016,14 +1017,23 @@
   },
   "footer": {
     "slogan": "En Amazonie et en France, AKUU engage bénévoles et communautés locales autour de projets solidaires concrets.",
+    "manifeste": "Construire des ponts entre les peuples, préserver ce qui nous fait vivre.",
     "address_line1": "Association loi 1901",
     "address_line2": "France",
     "nav_title": "Navigation",
+    "nav_links_title": "Liens rapides",
     "contact_title": "Contact",
     "social_title": "Suivez-nous",
     "legal": "© {year} AKUU, association loi 1901",
     "copyright_detail": "AKUU, Association loi 1901",
-    "don_cta": "Faire un don"
+    "don_cta": "Faire un don",
+    "rna": "RNA W061008697",
+    "loi1901": "Association loi 1901",
+    "newsletter_title": "Rester informé",
+    "newsletter_placeholder": "votre@email.com",
+    "newsletter_submit": "S'inscrire",
+    "newsletter_success": "Merci ! Nous vous tiendrons informés.",
+    "newsletter_honeypot": "Ne pas remplir"
   },
   "gestion_dechets": {
     "hero_title": "Gestion des déchets à Puerto Miguel",

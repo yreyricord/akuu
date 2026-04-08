@@ -92,12 +92,18 @@
                   </button>
 
                   <Transition
-                    enter-active-class="transition ease-out duration-300"
-                    enter-from-class="opacity-0 -translate-y-2"
-                    enter-to-class="opacity-100 translate-y-0"
+                    enter-active-class="transition ease-out duration-500"
+                    enter-from-class="opacity-0 scale-95"
+                    enter-to-class="opacity-100 scale-100"
                   >
-                    <div v-if="submitSuccess" class="p-4 rounded-xl bg-leaf/10 text-forest text-sm text-center font-medium">
-                      {{ $t('contact.success') }}
+                    <div v-if="submitSuccess" role="status" aria-live="polite" class="p-6 rounded-2xl bg-leaf/10 border border-leaf/20 flex flex-col items-center gap-3 text-center">
+                      <div class="check-circle">
+                        <svg class="w-8 h-8 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                          <circle cx="12" cy="12" r="10" class="check-ring" />
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M6 12l4 4 8-8" class="check-tick" />
+                        </svg>
+                      </div>
+                      <p class="text-forest font-semibold text-sm">{{ $t('contact.success') }}</p>
                     </div>
                   </Transition>
                   <Transition
@@ -105,7 +111,7 @@
                     enter-from-class="opacity-0 -translate-y-2"
                     enter-to-class="opacity-100 translate-y-0"
                   >
-                    <div v-if="submitError" class="p-4 rounded-xl bg-red-50 text-red-800 text-sm text-center font-medium">
+                    <div v-if="submitError" role="alert" aria-live="assertive" class="p-4 rounded-xl bg-red-50 text-red-800 text-sm text-center font-medium">
                       {{ $t('contact.error') }}
                     </div>
                   </Transition>
@@ -182,6 +188,7 @@
                 allowfullscreen=""
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
+                sandbox="allow-scripts allow-same-origin"
                 :title="$t('contact.map_iframe_title')"
               />
             </div>
@@ -238,3 +245,34 @@ async function handleSubmit() {
   }
 }
 </script>
+
+<style scoped>
+/* Cercle du check : se dessine via stroke-dasharray */
+.check-ring {
+  stroke: #A6C639;
+  stroke-width: 2;
+  fill: none;
+  stroke-dasharray: 63;
+  stroke-dashoffset: 63;
+  animation: draw-ring 0.45s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
+}
+
+/* Coche : se dessine après le cercle */
+.check-tick {
+  stroke: #2D6915;
+  stroke-dasharray: 22;
+  stroke-dashoffset: 22;
+  animation: draw-tick 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+}
+
+@keyframes draw-ring {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes draw-tick {
+  to { stroke-dashoffset: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .check-ring, .check-tick { animation: none; stroke-dashoffset: 0; }
+}
+</style>

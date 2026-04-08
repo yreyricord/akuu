@@ -8,6 +8,7 @@
         style="min-height: 540px;"
         loading="lazy"
         allowfullscreen
+        sandbox="allow-scripts allow-same-origin allow-popups"
       />
     </div>
     <a

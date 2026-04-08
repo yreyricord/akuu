@@ -9,6 +9,7 @@
     "youtube_video": "Vídeo de YouTube",
     "colibri_trail_alt": "Colibrí AKUU siguiendo la línea de tiempo",
     "scroll_progress_aria": "Progreso de desplazamiento en la página",
+    "back_to_top": "Volver arriba",
     "frise_visual_placeholder_kicker": "Foto",
     "frise_visual_placeholder_alt": "Ilustración del paso {n} (por añadir)",
     "frise_histoire_photo_alt": "Línea de tiempo AKUU, {year}, foto {index}",
@@ -1016,14 +1017,23 @@
   },
   "footer": {
     "slogan": "En la Amazonía y en Francia, AKUU conecta voluntarios y comunidades locales en torno a proyectos solidarios concretos.",
+    "manifeste": "Construyendo puentes entre pueblos, preservando lo que nos da vida.",
     "address_line1": "Asociación francesa (ley 1901)",
     "address_line2": "Francia",
     "nav_title": "Navegación",
+    "nav_links_title": "Vínculos rápidos",
     "contact_title": "Contacto",
     "social_title": "Síguenos",
     "legal": "© {year} AKUU, asociación francesa (loi 1901)",
     "copyright_detail": "AKUU, Asociación francesa (ley 1901)",
-    "don_cta": "Donar"
+    "don_cta": "Donar",
+    "rna": "RNA W061008697",
+    "loi1901": "Asociación francesa (ley 1901)",
+    "newsletter_title": "Mantenerse informado",
+    "newsletter_placeholder": "tu@email.com",
+    "newsletter_submit": "Suscribirse",
+    "newsletter_success": "¡Gracias! Le mantendremos informado.",
+    "newsletter_honeypot": "No rellenar"
   },
   "gestion_dechets": {
     "hero_title": "Gestión de residuos en Puerto Miguel",

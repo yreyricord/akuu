@@ -2,13 +2,16 @@
   <div class="border border-forest/10 rounded-xl overflow-hidden">
     <button
       @click="open = !open"
-      class="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-forest-50/50 transition-colors"
+      :aria-expanded="open"
+      :aria-controls="contentId"
+      class="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-forest-50/50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-forest focus-visible:ring-offset-2 rounded-xl"
     >
       <span class="font-semibold text-night">{{ title }}</span>
       <svg
         class="w-5 h-5 text-forest transition-transform duration-300 shrink-0 ml-4"
         :class="{ 'rotate-180': open }"
         fill="none" viewBox="0 0 24 24" stroke="currentColor"
+        aria-hidden="true"
       >
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
       </svg>
@@ -21,7 +24,7 @@
       leave-from-class="max-h-96 opacity-100"
       leave-to-class="max-h-0 opacity-0"
     >
-      <div v-if="open" class="overflow-hidden">
+      <div v-if="open" :id="contentId" role="region" class="overflow-hidden">
         <div class="px-6 pb-4 text-night/60 leading-relaxed">
           <slot />
         </div>
@@ -38,4 +41,5 @@ defineProps({
 })
 
 const open = ref(false)
+const contentId = `accordion-${Math.random().toString(36).slice(2, 9)}`
 </script>

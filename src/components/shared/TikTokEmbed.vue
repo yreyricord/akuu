@@ -8,6 +8,7 @@
           class="absolute inset-0 w-full h-full border-0"
           allowfullscreen
           loading="lazy"
+          sandbox="allow-scripts allow-same-origin allow-popups"
         />
       </div>
     </div>

@@ -9,6 +9,7 @@
     "youtube_video": "YouTube video",
     "colibri_trail_alt": "AKUU hummingbird following the timeline",
     "scroll_progress_aria": "Page scroll progress",
+    "back_to_top": "Back to top",
     "frise_visual_placeholder_kicker": "Photo",
     "frise_visual_placeholder_alt": "Step {n} illustration (to be added)",
     "frise_histoire_photo_alt": "AKUU timeline, {year}, photo {index}",
@@ -1016,14 +1017,23 @@
   },
   "footer": {
     "slogan": "In the Amazon and in France, AKUU connects volunteers and local communities around concrete solidarity projects.",
+    "manifeste": "Building bridges between peoples, preserving what sustains us.",
     "address_line1": "Nonprofit under French law (1901)",
     "address_line2": "France",
     "nav_title": "Navigation",
+    "nav_links_title": "Quick links",
     "contact_title": "Contact",
     "social_title": "Follow us",
     "legal": "© {year} AKUU, French non-profit association (loi 1901)",
     "copyright_detail": "AKUU, French non-profit (loi 1901)",
-    "don_cta": "Donate"
+    "don_cta": "Donate",
+    "rna": "RNA W061008697",
+    "loi1901": "French non-profit (loi 1901)",
+    "newsletter_title": "Stay informed",
+    "newsletter_placeholder": "your@email.com",
+    "newsletter_submit": "Subscribe",
+    "newsletter_success": "Thank you! We'll keep you posted.",
+    "newsletter_honeypot": "Do not fill"
   },
   "gestion_dechets": {
     "hero_title": "Waste management in Puerto Miguel",

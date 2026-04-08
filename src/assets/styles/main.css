@@ -15,34 +15,70 @@
     @apply font-serif;
   }
 
+  /* Échelle typographique de référence (overridable par les utilities Tailwind) */
+  h1 {
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+  h2 {
+    font-size: clamp(1.75rem, 5vw, 3.25rem);
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+  }
+
   ::selection {
     @apply bg-leaf/30 text-forest;
+  }
+
+  :focus-visible {
+    outline: 2px solid theme('colors.leaf');
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Zones tactiles min 44×44px (WCAG 2.5.5) */
+  button,
+  [role="button"],
+  input[type="submit"],
+  input[type="reset"],
+  input[type="button"] {
+    min-height: 44px;
+    min-width: 44px;
   }
 }
 
 @layer components {
   .btn-primary {
     @apply inline-flex items-center justify-center px-8 py-4 bg-forest text-white font-semibold rounded-full
-           hover:bg-forest-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5;
+           hover:bg-forest-600 transition-all duration-300 shadow-lg
+           hover:shadow-xl hover:shadow-forest/30 hover:-translate-y-1 hover:scale-[1.02]
+           active:translate-y-0 active:scale-100 active:shadow-md;
   }
 
   .btn-accent {
     @apply inline-flex items-center justify-center px-8 py-4 bg-leaf text-white font-semibold rounded-full
-           hover:bg-forest transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5;
+           hover:bg-forest transition-all duration-300 shadow-lg
+           hover:shadow-xl hover:shadow-leaf/30 hover:-translate-y-1 hover:scale-[1.02]
+           active:translate-y-0 active:scale-100 active:shadow-md;
   }
 
   .btn-outline {
     @apply inline-flex items-center justify-center px-8 py-4 border-2 border-forest text-forest font-semibold rounded-full
-           hover:bg-forest hover:text-white transition-all duration-300;
+           hover:bg-forest hover:text-white transition-all duration-300
+           hover:-translate-y-0.5 hover:scale-[1.02]
+           active:translate-y-0 active:scale-100;
   }
 
   .btn-bleu {
     @apply inline-flex items-center justify-center px-8 py-4 bg-bleu text-white font-semibold rounded-full
-           hover:bg-bleu-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5;
+           hover:bg-bleu-600 transition-all duration-300 shadow-lg
+           hover:shadow-xl hover:shadow-bleu/30 hover:-translate-y-1 hover:scale-[1.02]
+           active:translate-y-0 active:scale-100 active:shadow-md;
   }
 
   .section-padding {
-    @apply py-10 md:py-10 px-4;
+    @apply py-10 md:py-16 lg:py-24 px-4;
   }
 
   /** Page musée : blocs avant / après « acteurs » moins hauts sur petit écran */
@@ -61,6 +97,13 @@
   .fade-in-up.visible {
     @apply opacity-100 translate-y-0;
   }
+
+  /* Stagger automatique dans les grilles */
+  .fade-in-up:nth-child(2) { transition-delay: 80ms; }
+  .fade-in-up:nth-child(3) { transition-delay: 160ms; }
+  .fade-in-up:nth-child(4) { transition-delay: 240ms; }
+  .fade-in-up:nth-child(5) { transition-delay: 320ms; }
+  .fade-in-up:nth-child(6) { transition-delay: 400ms; }
 
   /* Visuels latéraux page musée : léger mouvement + zoom au survol */
   .musee-side-visual-wrap {

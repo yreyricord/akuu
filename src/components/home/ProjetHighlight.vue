@@ -10,14 +10,11 @@
           <img
             src="/images/projet-highlight.jpg"
             :alt="$t('featured_project.image_alt')"
-            class="w-full h-[300px] md:h-[450px] object-cover transition-transform duration-700 group-hover:scale-105"
+            class="w-full aspect-[16/9] md:aspect-[21/9] object-cover transition-transform duration-700 group-hover:scale-105"
             loading="lazy"
           />
-          <div class="absolute inset-0 bg-gradient-to-t from-night/80 via-night/20 to-transparent" />
+          <div class="absolute inset-0 bg-gradient-to-t from-night/95 via-night/40 to-transparent" />
           <div class="absolute bottom-0 left-0 right-0 p-8 md:p-12 flex flex-col gap-4">
-            <span class="inline-block self-start px-3 py-1 bg-leaf text-white text-xs font-semibold rounded-full">
-              {{ $t('projets.status.en_cours') }}
-            </span>
             <h3 class="text-2xl md:text-4xl font-serif font-bold text-white">
               {{ $t('featured_project.subtitle') }}
             </h3>
