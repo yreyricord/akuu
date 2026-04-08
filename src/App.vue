@@ -9,7 +9,7 @@
         </Transition>
       </router-view>
     </main>
-    <Footer />
+    <Footer class="shrink-0" />
 
     <!-- Bouton retour en haut -->
     <Transition

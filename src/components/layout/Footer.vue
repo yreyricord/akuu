@@ -28,7 +28,7 @@
       <div class="mx-auto max-w-[1060px] grid grid-cols-1 sm:grid-cols-3 gap-10 lg:gap-16 items-center">
 
         <!-- Marque + manifeste + réseaux -->
-        <div class="footer-reveal space-y-4 text-center sm:text-left" style="--delay: 0.06s">
+        <div class="space-y-4 text-center sm:text-left">
           <router-link to="/" class="inline-flex items-center gap-3.5 group justify-center sm:justify-start">
             <img src="/images/LOGOAKUU.png" alt="AKUU" class="h-11 w-auto group-hover:scale-105 transition-transform duration-300" />
             <span class="text-2xl font-serif font-bold tracking-wide text-white group-hover:text-leaf transition-colors duration-300">AKUU</span>
@@ -44,7 +44,7 @@
         </div>
 
         <!-- Liens rapides -->
-        <div class="footer-reveal text-center sm:text-left" style="--delay: 0.12s">
+        <div class="text-center sm:text-left">
           <p class="footer-label sm:text-left text-center">{{ $t('footer.nav_links_title') }}</p>
           <nav :aria-label="$t('footer.nav_links_title')">
             <ul class="space-y-3">
@@ -62,7 +62,7 @@
         </div>
 
         <!-- Contact + Newsletter -->
-        <div class="footer-reveal space-y-6 text-center sm:text-left" style="--delay: 0.18s">
+        <div class="space-y-6 text-center sm:text-left">
           <div>
             <p class="footer-label sm:text-left text-center">{{ $t('footer.contact_title') }}</p>
             <ul class="space-y-3 inline-block text-left">
@@ -323,30 +323,6 @@ const socials = [
   box-shadow: 0 6px 20px rgb(166 198 57 / 0.25);
 }
 
-/*
- * Entrée du contenu : animation CSS uniquement (pas d’IntersectionObserver).
- * Avec observer + opacity:0, certains navigateurs / viewports (mobile, barre d’adresse)
- * ne déclenchaient jamais le seuil → footer visuellement « absent ».
- */
-.footer-reveal {
-  transform: translateY(20px);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .footer-reveal {
-    opacity: 0;
-    animation: footerRevealUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: var(--delay, 0s);
-  }
-}
-
-@keyframes footerRevealUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* Colibri : cadre avec marge pour la traînée ; animation sans fuite vers la droite */
 .colibri-frame {
   display: flex;
@@ -441,10 +417,5 @@ const socials = [
 @media (prefers-reduced-motion: reduce) {
   .colibri-float { animation: none; }
   .social-icon:hover { transform: none; }
-  .footer-reveal {
-    opacity: 1;
-    transform: none;
-    animation: none;
-  }
 }
 </style>
