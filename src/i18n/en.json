@@ -1033,6 +1033,7 @@
     "newsletter_placeholder": "your@email.com",
     "newsletter_submit": "Subscribe",
     "newsletter_success": "Thank you! We'll keep you posted.",
+    "newsletter_error": "Could not send. Try again on the live site or email us.",
     "newsletter_honeypot": "Do not fill"
   },
   "gestion_dechets": {

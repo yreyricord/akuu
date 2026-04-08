@@ -1033,6 +1033,7 @@
     "newsletter_placeholder": "tu@email.com",
     "newsletter_submit": "Suscribirse",
     "newsletter_success": "¡Gracias! Le mantendremos informado.",
+    "newsletter_error": "No se pudo enviar. Pruebe en el sitio publicado o escríbanos por correo.",
     "newsletter_honeypot": "No rellenar"
   },
   "gestion_dechets": {

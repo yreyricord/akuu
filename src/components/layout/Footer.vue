@@ -1,5 +1,5 @@
 <template>
-  <footer ref="footerEl" class="footer-root relative bg-night text-white overflow-hidden">
+  <footer class="footer-root relative bg-night text-white overflow-hidden">
 
     <!-- Subtle ambient glow -->
     <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
@@ -91,9 +91,22 @@
           <!-- Newsletter -->
           <div>
             <p class="footer-label text-center sm:text-left">{{ $t('footer.newsletter_title') }}</p>
-            <form v-if="!newsletterSent" name="newsletter" method="POST" data-netlify="true" @submit.prevent="submitNewsletter" class="flex gap-2 max-w-[260px] mx-auto sm:mx-0">
+            <form
+              v-if="!newsletterSent"
+              name="newsletter"
+              method="POST"
+              data-netlify="true"
+              netlify-honeypot="bot-field"
+              @submit.prevent="submitNewsletter"
+              class="flex gap-2 max-w-[260px] mx-auto sm:mx-0"
+            >
               <input type="hidden" name="form-name" value="newsletter" />
-              <p class="hidden"><label>{{ $t('footer.newsletter_honeypot') }} <input name="bot-field" /></label></p>
+              <!-- Honeypot : autocomplete/tabindex évitent que le navigateur remplisse le champ → sinon Netlify classe en spam. -->
+              <p class="hidden" aria-hidden="true">
+                <label>{{ $t('footer.newsletter_honeypot') }}
+                  <input name="bot-field" type="text" tabindex="-1" autocomplete="off" />
+                </label>
+              </p>
               <input
                 v-model="newsletterEmail"
                 type="email"
@@ -108,7 +121,8 @@
                 </svg>
               </button>
             </form>
-            <p v-else class="text-[12px] text-leaf/80 italic">{{ $t('footer.newsletter_success') }}</p>
+            <p v-if="newsletterError" class="text-[12px] text-red-300/90 mt-2 max-w-[260px] mx-auto sm:mx-0">{{ $t('footer.newsletter_error') }}</p>
+            <p v-else-if="newsletterSent" class="text-[12px] text-leaf/80 italic">{{ $t('footer.newsletter_success') }}</p>
           </div>
         </div>
       </div>
@@ -158,13 +172,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { locale } = useI18n()
-const footerEl = ref(null)
 const newsletterEmail = ref('')
 const newsletterSent = ref(false)
+const newsletterError = ref(false)
 
 const languages = [
   { code: 'fr', label: 'Français' },
@@ -178,11 +192,27 @@ function switchLang(code) {
 }
 
 async function submitNewsletter() {
-  const params = new URLSearchParams({ 'form-name': 'newsletter', email: newsletterEmail.value, 'bot-field': '' })
+  newsletterError.value = false
+  const params = new URLSearchParams({
+    'form-name': 'newsletter',
+    email: newsletterEmail.value.trim(),
+    'bot-field': '',
+  })
   try {
-    await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: params.toString() })
-  } catch { /* silently fail */ }
-  newsletterSent.value = true
+    const res = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString(),
+    })
+    if (res.ok) {
+      newsletterSent.value = true
+      newsletterEmail.value = ''
+    } else {
+      newsletterError.value = true
+    }
+  } catch {
+    newsletterError.value = true
+  }
 }
 
 const navLinks = [
@@ -193,24 +223,6 @@ const navLinks = [
   { to: '/soutenir',         key: 'nav.soutenir' },
   { to: '/contact',          key: 'nav.contact' },
 ]
-
-onMounted(() => {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible')
-          observer.unobserve(entry.target)
-        }
-      })
-    },
-    { threshold: 0.15 }
-  )
-
-  footerEl.value?.querySelectorAll('.footer-reveal').forEach((el) => {
-    observer.observe(el)
-  })
-})
 
 const socials = [
   {
@@ -311,17 +323,28 @@ const socials = [
   box-shadow: 0 6px 20px rgb(166 198 57 / 0.25);
 }
 
-/* Scroll reveal */
+/*
+ * Entrée du contenu : animation CSS uniquement (pas d’IntersectionObserver).
+ * Avec observer + opacity:0, certains navigateurs / viewports (mobile, barre d’adresse)
+ * ne déclenchaient jamais le seuil → footer visuellement « absent ».
+ */
 .footer-reveal {
-  opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-  transition-delay: var(--delay, 0s);
 }
-.footer-reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+
+@media (prefers-reduced-motion: no-preference) {
+  .footer-reveal {
+    opacity: 0;
+    animation: footerRevealUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: var(--delay, 0s);
+  }
+}
+
+@keyframes footerRevealUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Colibri : cadre avec marge pour la traînée ; animation sans fuite vers la droite */
@@ -418,6 +441,10 @@ const socials = [
 @media (prefers-reduced-motion: reduce) {
   .colibri-float { animation: none; }
   .social-icon:hover { transform: none; }
-  .footer-reveal { opacity: 1; transform: none; transition: none; }
+  .footer-reveal {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
 }
 </style>
