@@ -6,20 +6,6 @@
       image="/images/hero-association.jpg"
     />
 
-    <section class="py-10 bg-white border-b border-forest/10">
-      <div class="container-narrow max-w-3xl mx-auto text-center text-night/70 text-lg leading-relaxed px-6">
-        <p>{{ $t('association.intro_lead') }}</p>
-        <p class="mt-5">
-          <router-link
-            to="/musee-shapishiko"
-            class="text-forest font-semibold underline underline-offset-4 decoration-forest/40 hover:decoration-forest"
-          >
-            {{ $t('association.intro_musee_link') }}
-          </router-link>
-        </p>
-      </div>
-    </section>
-
     <!-- Qui sommes-nous -->
     <section class="section-padding bg-cream">
       <div class="container-narrow">
@@ -31,17 +17,30 @@
             <p class="text-night/60 text-lg leading-relaxed mb-8">
               {{ $t('association.who_text') }}
             </p>
-            <blockquote class="relative pl-6 border-l-4 border-forest">
-              <svg class="absolute -top-2 -left-1 w-8 h-8 text-forest/20" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-              </svg>
-              <p class="text-night/70 italic text-lg leading-relaxed mb-3">
-                "{{ $t('association.quote') }}"
-              </p>
-              <cite class="text-forest font-semibold text-sm not-italic block mt-1">
-                {{ $t('association.quote_author') }}
-              </cite>
-            </blockquote>
+            <figure class="flex gap-5 md:gap-6 items-start">
+              <div class="shrink-0 pt-1">
+                <img
+                  src="/images/equipe/Marlon_Diaz_2.jpg"
+                  :alt="$t('association.quote_portrait_alt')"
+                  class="w-[4.5rem] h-[4.5rem] md:w-24 md:h-24 rounded-2xl object-cover shadow-md ring-2 ring-forest/15"
+                  width="96"
+                  height="96"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <blockquote class="relative pl-6 border-l-4 border-forest min-w-0 flex-1">
+                <svg class="absolute -top-2 -left-1 w-8 h-8 text-forest/20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                </svg>
+                <p class="text-night/70 italic text-lg leading-relaxed mb-3">
+                  "{{ $t('association.quote') }}"
+                </p>
+                <cite class="text-forest font-semibold text-sm not-italic block mt-1">
+                  {{ $t('association.quote_author') }}
+                </cite>
+              </blockquote>
+            </figure>
           </div>
           <div class="fade-in-up rounded-2xl shadow-xl overflow-hidden bg-night/5">
             <img

@@ -68,7 +68,8 @@ resize_image "$IMG_DIR/musee/musee_1.jpg" 2000 "MUSEE_PLAN"
 
 echo ""
 echo "--- Cours d'anglais (illustrations page, max 1600px) ---"
-for f in "$IMG_DIR"/anglais/20180612-P1000124.jpg "$IMG_DIR"/anglais/20180612-P1000129.jpg "$IMG_DIR"/anglais/20180612-P1000136.jpg "$IMG_DIR"/anglais/20180612-P1000156.jpg "$IMG_DIR"/anglais/20180612-P1000175.jpg; do
+for f in "$IMG_DIR"/anglais/*.jpg "$IMG_DIR"/anglais/*.jpeg "$IMG_DIR"/anglais/*.JPG; do
+  [ -e "$f" ] || continue
   resize_image "$f" 1600 "ANGLAIS"
 done
 

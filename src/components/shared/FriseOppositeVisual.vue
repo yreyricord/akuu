@@ -51,22 +51,42 @@
         <div
           class="aspect-[4/3] relative bg-gradient-to-br from-night/[0.06] via-forest/[0.05] to-bleu/[0.06]"
         >
-          <img
-            :src="img.src"
-            :alt="img.alt || fallbackAlt"
-            class="absolute inset-0 w-full h-full object-cover"
-            loading="lazy"
-            decoding="async"
-          />
+          <button
+            type="button"
+            class="group/frise absolute inset-0 block h-full w-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-forest focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            :aria-label="$t('common.team_lightbox_expand')"
+            :aria-expanded="lightboxOpen"
+            aria-haspopup="dialog"
+            @click="openLightbox(img)"
+          >
+            <img
+              :src="img.src"
+              :alt="img.alt || fallbackAlt"
+              class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover/frise:scale-[1.04]"
+              loading="lazy"
+              decoding="async"
+            />
+            <span
+              class="pointer-events-none absolute inset-0 bg-night/0 transition-colors duration-300 ease-out group-hover/frise:bg-night/20 group-focus-visible/frise:bg-night/25"
+              aria-hidden="true"
+            />
+          </button>
         </div>
       </div>
     </div>
+
+    <ImagePreviewLightbox
+      v-model="lightboxOpen"
+      :image-src="lightboxSrc"
+      :image-alt="lightboxAlt"
+    />
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import ImagePreviewLightbox from '@/components/shared/ImagePreviewLightbox.vue'
 
 const props = defineProps({
   /** Afficher l’animation (ex. quand le colibri a atteint cette étape au scroll) */
@@ -93,9 +113,19 @@ const props = defineProps({
 
 const { t } = useI18n()
 
+const lightboxOpen = ref(false)
+const lightboxSrc = ref('')
+const lightboxAlt = ref('')
+
 const fallbackAlt = computed(() =>
   t('common.frise_visual_placeholder_alt', { n: props.number })
 )
+
+function openLightbox (img) {
+  lightboxSrc.value = img.src
+  lightboxAlt.value = (img.alt && img.alt.trim()) || fallbackAlt.value
+  lightboxOpen.value = true
+}
 
 const displayImages = computed(() => {
   const list = Array.isArray(props.images) ? props.images : []

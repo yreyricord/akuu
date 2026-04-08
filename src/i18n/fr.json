@@ -11,7 +11,10 @@
     "scroll_progress_aria": "Progression de défilement dans la page",
     "frise_visual_placeholder_kicker": "Photo",
     "frise_visual_placeholder_alt": "Illustration étape {n} (à fournir)",
-    "frise_histoire_photo_alt": "Chronologie AKUU, {year}, photo {index}"
+    "frise_histoire_photo_alt": "Chronologie AKUU, {year}, photo {index}",
+    "team_lightbox_expand": "Agrandir la photo",
+    "team_lightbox_close": "Fermer la fenêtre",
+    "team_learn_more": "En savoir plus"
   },
   "seo": {
     "title": "AKUU | Association solidarité Amazonie & France",
@@ -112,7 +115,6 @@
     "title": "Projet phare",
     "subtitle": "Musée Shapishiko",
     "description": "Un espace culturel au cœur de l'Amazonie pour préserver et valoriser la culture Kukama.",
-    "cta": "Découvrir le musée Shapishiko à Puerto Miguel",
     "image_alt": "Musée Shapishiko, projet culturel à Puerto Miguel"
   },
   "donation": {
@@ -133,12 +135,11 @@
   "association": {
     "hero_title": "L'association AKUU",
     "hero_subtitle": "Association de solidarité internationale entre la France et l’Amazonie péruvienne, au service des communautés depuis 2016.",
-    "intro_lead": "Basée en France, AKUU coordonne le soutien aux projets sur le terrain, dont le musée communautaire Shapishiko à Puerto Miguel, et la sensibilisation auprès du public français.",
-    "intro_musee_link": "Découvrir le musée Shapishiko à Puerto Miguel",
     "who_title": "Qui sommes-nous ?",
     "who_text": "AKUU est une association loi 1901, créée le 23 novembre 2016, avec un siège social en France. Elle réalise des missions de terrain en Amazonie péruvienne, surtout à Puerto Miguel, et mène des actions de sensibilisation dans les pays de ses bénévoles.",
     "quote": "AKUU est un projet en lequel je crois avec force. AKUU me rappelle mon lien avec la nature, les traditions. Ce mot signifie le partage d'énergies, le respect de la forêt, de sa faune, de sa flore...",
     "quote_author": "Marlon Diaz, co-fondateur",
+    "quote_portrait_alt": "Portrait de Marlon Diaz, co-fondateur d’AKUU",
     "who_image_alt": "Bénévoles AKUU sur le terrain",
     "itv_section_title": "AKUU en vidéo",
     "itv_placeholder": "Vidéo du reportage à venir ici. En attendant, retrouvez les témoignages « Parole d'Amazonie » ci-dessous.",
@@ -986,11 +987,11 @@
   "equipe": {
     "yoann": {
       "role": "Co-président · Co-fondateur",
-      "bio": "Co-fondateur de l'association."
+      "bio": "Co-fondateur d'AKUU en 2016, à 22 ans. Plus de 24 mois cumulés sur le terrain entre 2016 et 2020. A participé à presque tous les projets de l'association : Casa AKUU, cours d'anglais, Hydr'Ama, Musée Shapishiko, Bagazan, AKUUvision. Coordonne l'association depuis Toulouse."
     },
     "aude": {
       "role": "Co-présidente",
-      "bio": "À compléter."
+      "bio": "A rejoint AKUU en 2025 dans le cadre d'un service civique à Puerto Miguel. Plus de 12 mois sur le terrain, travaillant principalement sur le Musée Shapishiko."
     },
     "marlon": {
       "role": "Co-fondateur",
@@ -998,19 +999,19 @@
     },
     "francois": {
       "role": "Co-trésorier",
-      "bio": "À compléter."
+      "bio": "A rejoint AKUU en 2025. En mission à Puerto Miguel depuis juillet 2025, il travaille sur le Musée Shapishiko tout en assurant la trésorerie de l'association."
     },
     "raphael": {
       "role": "Co-trésorier",
-      "bio": "À compléter."
+      "bio": "A rejoint AKUU en 2023. Travaille depuis la France sur la gestion comptable et les levées de fonds. Mission de 4 mois à Puerto Miguel en 2024 sur le Musée Shapishiko."
     },
     "lea": {
       "role": "Co-secrétaire",
-      "bio": "À compléter."
+      "bio": "A rejoint AKUU en 2023. Contribue depuis la France à la gestion administrative, la communication et les levées de fonds. Mission de 4 mois à Puerto Miguel en 2024 sur le Musée Shapishiko."
     },
     "alice": {
       "role": "Co-secrétaire",
-      "bio": "À compléter."
+      "bio": "A découvert AKUU lors d'un séjour à Puerto Miguel, avant de rejoindre l'association à son retour en France début 2026. Basée à Bruxelles, elle vient d'intégrer l'équipe."
     }
   },
   "footer": {

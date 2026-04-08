@@ -24,12 +24,6 @@
             <p class="text-white/80 text-lg max-w-xl">
               {{ $t('featured_project.description') }}
             </p>
-            <span class="inline-flex items-center gap-2 text-leaf font-semibold group-hover:gap-3 transition-all pt-1">
-              {{ $t('featured_project.cta') }}
-              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </span>
           </div>
         </div>
       </router-link>

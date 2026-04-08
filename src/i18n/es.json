@@ -11,7 +11,10 @@
     "scroll_progress_aria": "Progreso de desplazamiento en la página",
     "frise_visual_placeholder_kicker": "Foto",
     "frise_visual_placeholder_alt": "Ilustración del paso {n} (por añadir)",
-    "frise_histoire_photo_alt": "Línea de tiempo AKUU, {year}, foto {index}"
+    "frise_histoire_photo_alt": "Línea de tiempo AKUU, {year}, foto {index}",
+    "team_lightbox_expand": "Ampliar la foto",
+    "team_lightbox_close": "Cerrar ventana",
+    "team_learn_more": "Más información"
   },
   "seo": {
     "title": "AKUU | Asociación solidaridad Amazonía y Francia",
@@ -112,7 +115,6 @@
     "title": "Proyecto destacado",
     "subtitle": "Museo Shapishiko",
     "description": "Un espacio cultural en el corazón de la Amazonía para preservar y valorar la cultura Kukama.",
-    "cta": "Descubrir el museo Shapishiko en Puerto Miguel",
     "image_alt": "Museo Shapishiko, proyecto cultural en Puerto Miguel"
   },
   "donation": {
@@ -133,12 +135,11 @@
   "association": {
     "hero_title": "La asociación AKUU",
     "hero_subtitle": "Asociación de solidaridad internacional entre Francia y la Amazonía peruana, al servicio de las comunidades desde 2016.",
-    "intro_lead": "Con sede en Francia, AKUU coordina el apoyo a los proyectos de campo, incluido el museo comunitario Shapishiko en Puerto Miguel, y la sensibilización del público francés.",
-    "intro_musee_link": "Descubrir el museo Shapishiko en Puerto Miguel",
     "who_title": "¿Quiénes somos?",
     "who_text": "AKUU es una asociación francesa (loi 1901), creada el 23 de noviembre de 2016, con domicilio social en Francia. Realiza misiones de campo en la Amazonía peruana, sobre todo en Puerto Miguel, y lleva a cabo acciones de sensibilización en los países de sus voluntarios.",
     "quote": "AKUU es un proyecto en el que creo con fuerza. AKUU me recuerda mi conexión con la naturaleza, con las tradiciones. Esta palabra significa el compartir de energías, el respeto por el bosque, su fauna, su flora...",
     "quote_author": "Marlon Diaz, cofundador",
+    "quote_portrait_alt": "Retrato de Marlon Diaz, cofundador de AKUU",
     "who_image_alt": "Voluntarios de AKUU en el terreno",
     "itv_section_title": "AKUU en vídeo",
     "itv_placeholder": "Vídeo del reportaje disponible próximamente. Mientras tanto, consulta los testimonios «Voces de la Amazonía» más abajo.",
@@ -986,11 +987,11 @@
   "equipe": {
     "yoann": {
       "role": "Copresidente · Cofundador",
-      "bio": "Cofundador de la asociación."
+      "bio": "Cofundador de AKUU en 2016, a los 22 años. Más de 24 meses acumulados en el terreno entre 2016 y 2020. Ha participado en casi todos los proyectos de la asociación: Casa AKUU, clases de inglés, Hydr'Ama, museo Shapishiko, Bagazan, AKUUVision. Coordina la asociación desde Toulouse."
     },
     "aude": {
       "role": "Copresidenta",
-      "bio": "Por completar."
+      "bio": "Se unió a AKUU en 2025 en el marco de un servicio cívico en Puerto Miguel. Más de 12 meses en el terreno, trabajando principalmente en el museo Shapishiko."
     },
     "marlon": {
       "role": "Cofundador",
@@ -998,19 +999,19 @@
     },
     "francois": {
       "role": "Co-tesorero",
-      "bio": "Por completar."
+      "bio": "Se unió a AKUU en 2025. En misión en Puerto Miguel desde julio de 2025, trabaja en el museo Shapishiko mientras asume la tesorería de la asociación."
     },
     "raphael": {
       "role": "Co-tesorero",
-      "bio": "Por completar."
+      "bio": "Se unió a AKUU en 2023. Trabaja desde Francia en la gestión contable y la captación de fondos. Misión de 4 meses en Puerto Miguel en 2024 en el museo Shapishiko."
     },
     "lea": {
       "role": "Co-secretaria",
-      "bio": "Por completar."
+      "bio": "Se unió a AKUU en 2023. Contribuye desde Francia a la gestión administrativa, la comunicación y la captación de fondos. Misión de 4 meses en Puerto Miguel en 2024 en el museo Shapishiko."
     },
     "alice": {
       "role": "Co-secretaria",
-      "bio": "Por completar."
+      "bio": "Descubrió AKUU durante una estancia en Puerto Miguel, antes de unirse a la asociación a su regreso a Francia a principios de 2026. Con base en Bruselas, acaba de incorporarse al equipo."
     }
   },
   "footer": {

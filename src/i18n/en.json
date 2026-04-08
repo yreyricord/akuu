@@ -11,7 +11,10 @@
     "scroll_progress_aria": "Page scroll progress",
     "frise_visual_placeholder_kicker": "Photo",
     "frise_visual_placeholder_alt": "Step {n} illustration (to be added)",
-    "frise_histoire_photo_alt": "AKUU timeline, {year}, photo {index}"
+    "frise_histoire_photo_alt": "AKUU timeline, {year}, photo {index}",
+    "team_lightbox_expand": "View larger photo",
+    "team_lightbox_close": "Close dialog",
+    "team_learn_more": "Learn more"
   },
   "seo": {
     "title": "AKUU | French nonprofit, Amazon solidarity & France",
@@ -112,7 +115,6 @@
     "title": "Featured project",
     "subtitle": "Shapishiko Museum",
     "description": "A cultural space in the heart of the Amazon to preserve and promote Kukama culture.",
-    "cta": "Discover the Shapishiko Museum in Puerto Miguel",
     "image_alt": "Shapishiko Museum, cultural project in Puerto Miguel"
   },
   "donation": {
@@ -133,12 +135,11 @@
   "association": {
     "hero_title": "The AKUU Association",
     "hero_subtitle": "International solidarity between France and the Peruvian Amazon, serving communities since 2016.",
-    "intro_lead": "Headquartered in France, AKUU coordinates support for field projects, including the Shapishiko community museum in Puerto Miguel, and public outreach in France.",
-    "intro_musee_link": "Discover the Shapishiko Museum in Puerto Miguel",
     "who_title": "Who are we?",
     "who_text": "AKUU is a French non-profit (loi 1901), founded on November 23, 2016, with its registered office in France. It carries out field missions in the Peruvian Amazon, mainly in Puerto Miguel, and runs awareness campaigns in the home countries of its volunteers.",
     "quote": "AKUU is a project I believe in with all my strength. AKUU reminds me of my connection with nature, with traditions. This word means the sharing of energies, the respect for the forest, its fauna, its flora...",
     "quote_author": "Marlon Diaz, co-founder",
+    "quote_portrait_alt": "Portrait of Marlon Diaz, AKUU co-founder",
     "who_image_alt": "AKUU volunteers in the field",
     "itv_section_title": "AKUU on video",
     "itv_placeholder": "Report video coming soon. In the meantime, see the “Voices from the Amazon” interviews below.",
@@ -986,11 +987,11 @@
   "equipe": {
     "yoann": {
       "role": "Co-president · Co-founder",
-      "bio": "Co-founder of the association."
+      "bio": "Co-founded AKUU in 2016 at age 22. More than 24 months in the field between 2016 and 2020 in total. Has taken part in almost all of the association's projects: Casa AKUU, English classes, Hydr'Ama, Shapishiko Museum, Bagazan, AKUUVision. Coordinates the association from Toulouse."
     },
     "aude": {
       "role": "Co-president",
-      "bio": "To be completed."
+      "bio": "Joined AKUU in 2025 through civic service in Puerto Miguel. More than 12 months in the field, focused mainly on the Shapishiko Museum."
     },
     "marlon": {
       "role": "Co-founder",
@@ -998,19 +999,19 @@
     },
     "francois": {
       "role": "Co-treasurer",
-      "bio": "To be completed."
+      "bio": "Joined AKUU in 2025. On mission in Puerto Miguel since July 2025, working on the Shapishiko Museum while also serving as treasurer for the association."
     },
     "raphael": {
       "role": "Co-treasurer",
-      "bio": "To be completed."
+      "bio": "Joined AKUU in 2023. Works from France on accounting and fundraising. Four-month mission in Puerto Miguel in 2024 on the Shapishiko Museum."
     },
     "lea": {
       "role": "Co-secretary",
-      "bio": "To be completed."
+      "bio": "Joined AKUU in 2023. Contributes from France to administration, communications and fundraising. Four-month mission in Puerto Miguel in 2024 on the Shapishiko Museum."
     },
     "alice": {
       "role": "Co-secretary",
-      "bio": "To be completed."
+      "bio": "Discovered AKUU during a stay in Puerto Miguel, then joined the association on returning to France in early 2026. Based in Brussels, she has just joined the team."
     }
   },
   "footer": {
