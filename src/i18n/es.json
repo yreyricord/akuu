@@ -1030,7 +1030,7 @@
     "rna": "RNA W061008697",
     "loi1901": "Asociación francesa (ley 1901)",
     "newsletter_title": "Mantenerse informado",
-    "newsletter_placeholder": "tu@email.com",
+    "newsletter_placeholder": "tu{'@'}email.com",
     "newsletter_submit": "Suscribirse",
     "newsletter_success": "¡Gracias! Le mantendremos informado.",
     "newsletter_error": "No se pudo enviar. Pruebe en el sitio publicado o escríbanos por correo.",

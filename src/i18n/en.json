@@ -1030,7 +1030,7 @@
     "rna": "RNA W061008697",
     "loi1901": "French non-profit (loi 1901)",
     "newsletter_title": "Stay informed",
-    "newsletter_placeholder": "your@email.com",
+    "newsletter_placeholder": "your{'@'}email.com",
     "newsletter_submit": "Subscribe",
     "newsletter_success": "Thank you! We'll keep you posted.",
     "newsletter_error": "Could not send. Try again on the live site or email us.",

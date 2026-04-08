@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer-root relative bg-night text-white overflow-hidden">
+  <footer id="site-footer" class="footer-root relative z-20 bg-night text-white overflow-hidden">
 
     <!-- Subtle ambient glow -->
     <div class="absolute inset-0 pointer-events-none" aria-hidden="true">

@@ -1030,7 +1030,7 @@
     "rna": "RNA W061008697",
     "loi1901": "Association loi 1901",
     "newsletter_title": "Rester informé",
-    "newsletter_placeholder": "votre@email.com",
+    "newsletter_placeholder": "votre{'@'}email.com",
     "newsletter_submit": "S'inscrire",
     "newsletter_success": "Merci ! Nous vous tiendrons informés.",
     "newsletter_error": "Envoi impossible. Réessayez depuis le site en ligne ou contactez-nous par email.",
