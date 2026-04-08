@@ -138,9 +138,9 @@ import {
 
 const props = defineProps({
   steps: { type: Array, required: true },
-  /** Sous-titre au-dessus du titre (ex. « En 4 étapes ») — affiché dans le bloc sticky. */
+  /** Sous-titre au-dessus du titre (ex. « En 4 étapes »), affiché dans le bloc sticky. */
   headingKicker: { type: String, default: '' },
-  /** Titre principal de la section — affiché dans le bloc sticky avec les numéros d’étapes. */
+  /** Titre principal de la section, affiché dans le bloc sticky avec les numéros d’étapes. */
   headingTitle: { type: String, default: '' },
   trailBirdSrc: { type: String, default: '' },
   trailBirdAlt: { type: String, default: '' },

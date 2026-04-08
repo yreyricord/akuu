@@ -17,7 +17,15 @@
     "id": "casa-akuu",
     "statut": "realise",
     "annee_debut": 2017,
-    "image": "/images/casa-akuu.jpg"
+    "image": "/images/casa-akuu.jpg",
+    "lien": "/casa-akuu"
+  },
+  {
+    "id": "gestion-dechets",
+    "statut": "realise",
+    "annee_debut": 2019,
+    "image": "/images/gestion-dechets/6.jpg",
+    "lien": "/gestion-dechets"
   },
   {
     "id": "cours-anglais",

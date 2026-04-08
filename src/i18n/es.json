@@ -14,24 +14,24 @@
     "frise_histoire_photo_alt": "Línea de tiempo AKUU, {year}, foto {index}"
   },
   "seo": {
-    "title": "AKUU, solidaridad internacional en la Amazonía peruana",
-    "description": "AKUU actúa por un desarrollo sostenible y solidario que respeta a las comunidades amazónicas en Puerto Miguel, Perú.",
+    "title": "AKUU | Asociación solidaridad Amazonía y Francia",
+    "description": "Asociación francesa de solidaridad internacional en la Amazonía peruana (Puerto Miguel). Proyectos como el museo Shapishiko, voluntariado y sensibilización.",
     "routes": {
       "home": {
-        "title": "AKUU, solidaridad internacional en la Amazonía peruana",
-        "description": "AKUU actúa por un desarrollo sostenible y solidario que respeta a las comunidades amazónicas en Puerto Miguel, Perú."
+        "title": "AKUU | Asociación solidaridad Amazonía y Francia",
+        "description": "Asociación francesa de solidaridad internacional en la Amazonía peruana (Puerto Miguel). Proyectos como el museo Shapishiko, voluntariado y sensibilización."
       },
       "association": {
-        "title": "La asociación AKUU | Solidaridad en la Amazonía, Puerto Miguel",
-        "description": "Conoce AKUU: historia, gobernanza y misión para un desarrollo sostenible con las comunidades de Puerto Miguel, Perú."
+        "title": "Asociación AKUU · Amazonía peruana y Francia | Solidaridad",
+        "description": "ONG francesa (ley 1901): misiones en la Amazonía en Puerto Miguel, sensibilización en Francia. Historia, equipo y proyectos, incluido el museo Shapishiko."
       },
       "projets": {
-        "title": "Nuestros proyectos | AKUU en Puerto Miguel",
-        "description": "Proyectos solidarios en Puerto Miguel: museo Shapishiko, educación, microhidro, ecoturismo y apoyo a comunidades amazónicas."
+        "title": "Nuestros proyectos | Museo Shapishiko, educación | AKUU",
+        "description": "Proyectos de la asociación AKUU en Puerto Miguel: museo Shapishiko, Casa AKUU, microhidro, clima y comunidades amazónicas."
       },
       "museeShapishiko": {
-        "title": "Museo Shapishiko | Cultura shipibo-kukama | AKUU",
-        "description": "Museo comunitario en Puerto Miguel: culturas shipibo y kukama, creación colectiva, visitas y sensibilización."
+        "title": "Museo Shapishiko | Puerto Miguel | AKUU, asociación francesa",
+        "description": "Proyecto cultural kukama en Puerto Miguel, co-liderado con la asociación francesa AKUU y la comunidad. Visitas, gobernanza local, apoyo desde Francia."
       },
       "volontaires": {
         "title": "Ser voluntario | AKUU Amazonía peruana",
@@ -56,6 +56,14 @@
       "coursAnglais": {
         "title": "Cursos de inglés en Puerto Miguel | AKUU",
         "description": "Programa de inglés para habitantes vinculado al ecoturismo local: objetivos, impacto y perspectivas."
+      },
+      "casaAkuu": {
+        "title": "La Casa AKUU | Casa comunitaria en Puerto Miguel | AKUU",
+        "description": "La Casa AKUU: espacio de vida compartida entre voluntarios y habitantes en Puerto Miguel, punto de anclaje de los proyectos de la asociación (inglés, residuos, energía solar, museo)."
+      },
+      "gestionDechets": {
+        "title": "Gestión de residuos | Puerto Miguel | AKUU",
+        "description": "Reciclaje Precious Plastic, envío a Nauta, sensibilización Planet'AKUU: misión 2019 en Puerto Miguel con Grenoble INP ENSE3."
       }
     }
   },
@@ -70,37 +78,46 @@
   },
   "hero": {
     "tagline": "AKUU JUNTOS. Preservemos lo vivo",
-    "tagline_badge": "AKUU JUNTOS",
+    "tagline_badge_lead": "AKUU",
+    "tagline_badge_emphasis": "juntos",
     "tagline_line1": "Preservemos",
     "tagline_line2": "lo vivo",
-    "subtitle": "En la Amazonía y en Francia, AKUU conecta voluntarios y comunidades locales en torno a proyectos solidarios concretos.",
+    "subtitle": "En la Amazonía y en Francia, la asociación AKUU reúne voluntarios y comunidades en torno a proyectos solidarios concretos.",
     "cta_projets": "Descubrir nuestros proyectos",
     "cta_don": "Hacer una donación",
     "image_alt": "Amazonía peruana, bosque tropical y río",
     "colibri_alt": "Colibrí AKUU, emblema de la asociación"
   },
+  "home_anniversary": {
+    "badge": "2016 - 2026",
+    "title_before": "AKUU, ¡",
+    "title_after": " años ya!",
+    "subtitle": "Una década de solidaridad en la Amazonía y en Francia: descubre quiénes somos y nuestros proyectos."
+  },
   "stats": {
     "founded": "Año de creación",
     "years": "Años de acción",
     "village": "Pueblos acompañados",
-    "volunteers": "Voluntarios movilizados"
+    "volunteers": "Voluntarios movilizados",
+    "projects": "Proyectos impulsados",
+    "beneficiaries": "Beneficiarios directos"
   },
   "mission": {
     "title": "Nuestra misión",
-    "text": "AKUU trabaja por un desarrollo sostenible, solidario y respetuoso de las poblaciones amazónicas, colocando la cooperación local, la transmisión de saberes y la protección del medio ambiente en el centro de sus acciones.",
-    "cta": "Saber más",
+    "text": "En AKUU, nuestras acciones buscan preservar la Amazonía apoyando a las comunidades locales, las mejor situadas para proteger sus ecosistemas y su patrimonio cultural. Favorecemos la cooperación, la transmisión de saberes tradicionales y el reconocimiento de las prácticas locales, reforzando así la capacidad de las poblaciones de proteger su medio ambiente y mantener viva su cultura.",
+    "cta": "La asociación AKUU: misión y equipo",
     "image_alt": "Pueblo de Puerto Miguel en la Amazonía"
   },
   "featured_project": {
     "title": "Proyecto destacado",
     "subtitle": "Museo Shapishiko",
     "description": "Un espacio cultural en el corazón de la Amazonía para preservar y valorar la cultura Kukama.",
-    "cta": "Descubrir el proyecto",
+    "cta": "Descubrir el museo Shapishiko en Puerto Miguel",
     "image_alt": "Museo Shapishiko, proyecto cultural en Puerto Miguel"
   },
   "donation": {
     "title": "Apoya nuestras acciones",
-    "text": "Cada donación contribuye directamente al desarrollo sostenible del pueblo de Puerto Miguel y a la preservación de la cultura Kukama.",
+    "text": "Cada donación contribuye a preservar la Amazonía apoyando a las comunidades locales, las mejor situadas para proteger sus equilibrios ecológicos y su riqueza cultural.",
     "cta": "Hacer una donación",
     "tax_info": "El 66% de tu donación es deducible de impuestos"
   },
@@ -115,9 +132,11 @@
   },
   "association": {
     "hero_title": "La asociación AKUU",
-    "hero_subtitle": "Desde 2016, al servicio de las comunidades amazónicas",
+    "hero_subtitle": "Asociación de solidaridad internacional entre Francia y la Amazonía peruana, al servicio de las comunidades desde 2016.",
+    "intro_lead": "Con sede en Francia, AKUU coordina el apoyo a los proyectos de campo, incluido el museo comunitario Shapishiko en Puerto Miguel, y la sensibilización del público francés.",
+    "intro_musee_link": "Descubrir el museo Shapishiko en Puerto Miguel",
     "who_title": "¿Quiénes somos?",
-    "who_text": "AKUU es una asociación francesa (loi 1901), creada el 23 de noviembre de 2016. Realiza misiones de campo en la Amazonía peruana, sobre todo en Puerto Miguel, y lleva a cabo acciones de sensibilización en los países de sus voluntarios.",
+    "who_text": "AKUU es una asociación francesa (loi 1901), creada el 23 de noviembre de 2016, con domicilio social en Francia. Realiza misiones de campo en la Amazonía peruana, sobre todo en Puerto Miguel, y lleva a cabo acciones de sensibilización en los países de sus voluntarios.",
     "quote": "AKUU es un proyecto en el que creo con fuerza. AKUU me recuerda mi conexión con la naturaleza, con las tradiciones. Esta palabra significa el compartir de energías, el respeto por el bosque, su fauna, su flora...",
     "quote_author": "Marlon Diaz, cofundador",
     "who_image_alt": "Voluntarios de AKUU en el terreno",
@@ -435,14 +454,18 @@
       "sensibilisation-climat": {
         "title": "AKUUVision",
         "description": "Sensibilización sobre el clima y la Amazonía a través de AKUUVision: talleres de la Fresca del Clima, Planet'AKUU, Forever el Juego, en Francia y Puerto Miguel."
+      },
+      "gestion-dechets": {
+        "title": "Gestión de residuos",
+        "description": "Reciclaje Precious Plastic, envío a Nauta, contenedores y exposición Planet'AKUU, misión 2019 con Grenoble INP ENSE3."
       }
     }
   },
   "musee": {
     "hero_title": "Museo Shapishiko",
-    "hero_subtitle": "Cultura kukama, cosmovisión y territorio, en Puerto Miguel, donde el Ucayali y el Marañón dan nacimiento al Amazonas.",
+    "hero_subtitle": "Proyecto liderado por la comunidad de Puerto Miguel y la asociación francesa AKUU: cultura kukama, cosmovisión y territorio, donde el Ucayali y el Marañón dan nacimiento al Amazonas.",
     "description_title": "El proyecto",
-    "description_intro": "El Museo Shapishiko nace de la iniciativa de las artesanas Las Mariposas, con el apoyo de AKUU y la comunidad de Puerto Miguel. En el corazón del territorio kukama, a orillas del Ucayali, este espacio vivo busca hacer brillar la cultura indígena acogiendo a vecinas y visitantes.",
+    "description_intro": "El Museo Shapishiko nace de la iniciativa de las artesanas Las Mariposas, con el apoyo de AKUU, asociación francesa loi 1901, y la comunidad de Puerto Miguel. En el corazón del territorio kukama, a orillas del Ucayali, este espacio vivo tiene por vocación hacer brillar la cultura de los pueblos originarios acogiendo, en un espíritu de apertura y de intercambio, a vecinos y vecinas del pueblo así como a visitantes.",
     "description_objectives_lead": "Cuatro objetivos, definidos en concertación:",
     "description_objectives": [
       "Dar vida y visibilidad a la cultura Kukama",
@@ -453,7 +476,7 @@
     "description_committee": "Un comité de gestión del pueblo, 17 miembros, mujeres y hombres de 21 a 82 años, copilota el proyecto con AKUU. Los avances se presentan regularmente en asambleas comunitarias.",
     "context_kicker": "Por qué este museo",
     "context_title": "Contexto",
-    "context_p1": "El cambio climático y la deforestación amenazan la Amazonía; proteger y valorar los territorios indígenas contribuye a ello. Nuestro enfoque une cultura, medio ambiente y economía local.",
+    "context_p1": "El cambio climático y la deforestación amenazan la Amazonía; proteger y valorar los territorios de los pueblos originarios contribuye a ello. Nuestro enfoque une cultura, medio ambiente y economía local.",
     "context_p2": "Puerto Miguel cuenta con unos 400 habitantes, en su mayoría descendientes de los pueblos Kukama-Kukamiria. La lengua y los saberes ancestrales son frágiles; sin embargo iniciativas locales, Las Mariposas, Radio Ucamara, artistas del pueblo, muestran una gran resiliencia y creatividad.",
     "context_p3": "El pueblo está en una zona turística (albergues en el Ucayali) de la que poco beneficio llega a la comunidad. El museo quiere ser un punto de interés dentro de Puerto Miguel para redistribuir valor y atención hacia la población.",
     "actors_kicker": "Socios",
@@ -480,9 +503,9 @@
         "photo_alt": "Radio Ucamara"
       },
       "chullachaqui": {
-        "title": "Ecomuseo Chullachaqui",
-        "text": "Cerca de Iquitos; intercambio sobre culturas amazónicas, formación de guías locales y cooperación en los contenidos del museo.",
-        "photo_alt": "Ecomuseo Chullachaqui"
+        "title": "Ecomuseo Chullachaqui (Colombia)",
+        "text": "En Puerto Nariño, Colombia, este ecomuseo trabaja desde hace más de veinte años junto a las comunidades locales para valorar las culturas amazónicas. Se desarrolló una alianza en torno al intercambio de saberes: jóvenes de Puerto Miguel fueron enviados allí para formarse en buenas prácticas, mediación cultural y modos de gobernanza participativa del museo.",
+        "photo_alt": "Ecomuseo Chullachaqui, Puerto Nariño (Colombia)"
       },
       "akuu": {
         "title": "AKUU",
@@ -505,9 +528,15 @@
     "visit_duration": "Se prevén unos treinta minutos por gran sala de interpretación; el recorrido completo (interpretación, espacio cultural, tienda) puede ser de unas dos horas según el ritmo del grupo.",
     "visit_rates": "Tarificación indicativa inspirada en modelos regionales: unos 40 soles (equivalente a una decena de euros) para visitantes extranjeros, gratuidad o tarifa preferencial para residentes locales, sujeto a validación in situ.",
     "visit_disclaimer": "Información no contractual; conviene confirmar con el museo antes de desplazarse.",
+    "pursue_kicker": "Participar",
+    "pursue_title": "La asociación AKUU en Francia",
+    "pursue_intro": "Desde Francia puedes apoyar este proyecto y el resto de acciones de AKUU con las comunidades amazónicas.",
+    "pursue_link_association": "Presentación de la asociación AKUU",
+    "pursue_link_soutenir": "Hacer una donación o asociarse",
+    "pursue_link_contact": "Contactar al equipo AKUU",
     "visit_photo_alt": "Puerto Miguel, pueblo en el Ucayali",
     "plans_title": "Planos del museo",
-    "plans_intro": "Croquis de implantación, perspectivas arquitectónicas y modelo interactivo desde ArchiCAD. El corte de los espacios se muestra más arriba en la página. Los planos fueron elaborados por la arquitecta Maria Agustina Pistolesi, inspirándose entre otros en el Tree House Lodge de Puerto Miguel.",
+    "plans_intro": "Croquis de implantación, perspectivas arquitectónicas y modelo interactivo desde ArchiCAD. El corte de los espacios se muestra más arriba en la página. Los planos fueron realizados por las arquitectas Maria Agustina Pistolesi, Maya Herin y Delphine Dubois, inspirándose entre otros en el Tree House Lodge de Puerto Miguel.",
     "progress_title": "Avance del proyecto",
     "video_kicker": "Vídeo",
     "video_title": "El museo en vídeo",
@@ -552,7 +581,7 @@
           "etage": "Nivel 1, guardián del segundo mundo",
           "nom": "Sala Kuruara",
           "nomKukama": "Las profundidades del río",
-          "description": "El Kuruara es un ser espiritual que reina sobre el segundo mundo sumergido de la cosmología Kukama. Surge de las profundidades, hermoso delfín rosado, luces movedizas, sonidos acuáticos. Una mano tendida en el techo te envuelve en el corazón del bosque inundado.",
+          "description": "En el corazón de la cosmología kukama, el Kuruara, espíritu de las aguas, reina sobre el segundo mundo sumergido. Surge de las profundidades en forma de delfín rosado. En esta sala te rodean luces movedizas y sonidos acuáticos; el techo te envuelve con un efecto subacuático, en el corazón del bosque inundado.",
           "tags": [
             "Río y agua",
             "Delfín rosado",
@@ -611,7 +640,7 @@
         "items": [
           "Idea impulsada por Las Mariposas; encuesta a habitantes de Puerto Miguel",
           "Interrupción y lecciones del COVID; refuerzo de alianzas",
-          "Alianzas: Radio Ucamara, Ecomuseo Chullachaqui"
+          "Alianzas: Radio Ucamara, Ecomuseo Chullachaqui (Colombia)"
         ]
       },
       "financement": {
@@ -791,6 +820,7 @@
     "stat_terrain": "años sobre el terreno",
     "stat_beneficiaires": "beneficiarios directos",
     "stat_benevoles": "voluntarios movilizados",
+    "stat_collecte": "recaudados para los proyectos (orden de magnitud)",
     "stat_impots": "deducible de impuestos",
     "other_title": "Otras formas de comprometerse",
     "other_subtitle": "Más allá de la donación, únete a la aventura AKUU",
@@ -909,6 +939,35 @@
     "diffusion_3_title": "Concurso PIEED",
     "diffusion_3_text": "En 2019, el proyecto obtuvo el concurso nacional PIEED en París."
   },
+  "casa_akuu": {
+    "hero_title": "La Casa AKUU",
+    "hero_subtitle": "Un anclaje permanente en Puerto Miguel",
+    "photo_01_kicker": "Foto 1, cabecera",
+    "photo_01_expected": "Imagen panorámica horizontal (ideal 16:9, ≥ 1920 px de ancho): conjunto de la Casa AKUU y/o Puerto Miguel, fachada, camino, río o selva al fondo. Luz suave (mañana o tarde); pocas personas o siluetas para dar escala.",
+    "photo_02_kicker": "Foto 2, introducción",
+    "photo_02_alt": "Vida compartida en torno a la Casa AKUU en Puerto Miguel",
+    "photo_02_expected": "Escena cotidiana: habitantes y voluntarios cerca de la Casa (porche, sala común o exterior), conversación, ambiente acogedor. Formato 4:3 o 16:9; priorizar personas, no solo el edificio vacío.",
+    "photo_03_kicker": "Foto 3, construcción e instalaciones",
+    "photo_03_alt": "Construcción, inauguración o instalaciones de la Casa AKUU",
+    "photo_03_expected": "Elegir un enfoque: obra o estructura en curso (2017–2018), momento de la inauguración (marzo 2018), paneles solares, depósitos o filtrado de agua pluvial, o taller / sala común en uso.",
+    "photo_04_kicker": "Foto 4, renovación",
+    "photo_04_alt": "Obras de renovación o Casa AKUU acondicionada",
+    "photo_04_expected": "Ilustrar la vuelta tras la COVID: aseos, cubierta, cableado solar, interior, dormitorios o cocina, obra en curso o resultado acabado (ideal 2024–2025).",
+    "photo_05_kicker": "Foto 5, lo que la Casa hace posible",
+    "photo_05_alt": "Proyectos y encuentros en la Casa AKUU",
+    "photo_05_expected": "Acción concreta: máquinas de reciclaje, taller ligado al museo Shapishiko, voluntarios en servicio cívico, o intercambio entre voluntarios internacionales y vecinos. Mostrar el vínculo humano y el hacer.",
+    "intro": "La Casa AKUU es la casa comunitaria del pueblo de Puerto Miguel. Es un lugar de vida compartida entre voluntarios y habitantes, donde unos y otros conviven, intercambian y plantean las problemáticas cotidianas. De esos intercambios nacieron todos los proyectos de AKUU: las clases de inglés, la gestión de residuos, la energía solar, el museo.",
+    "construction_title": "Construcción e inauguración",
+    "construction_p1": "La construcción de la Casa AKUU comienza en 2017, desde las primeras misiones de campo. En marzo de 2018, la casa se inaugura en presencia de los habitantes de Puerto Miguel y de los voluntarios presentes. Justo después de la inauguración se lanzan las clases de inglés, arrancan los primeros proyectos y el pueblo se convierte de verdad en el centro de operaciones de la asociación.",
+    "construction_p2": "Concebida desde el principio como espacio compartido, la Casa AKUU es a la vez hogar para los voluntarios, taller para los proyectos técnicos y sala común abierta a los habitantes. Pronto dispone de paneles solares para la electricidad, lo que permite también las clases nocturnas, y de un sistema de recuperación y filtración de aguas pluviales.",
+    "renovation_title": "Una renovación progresiva",
+    "renovation_p1": "En uso desde 2017, la Casa AKUU permaneció desocupada durante los años de la COVID. Al reanudarse las misiones, fueron necesarias obras de renovación para devolver el lugar a buen estado: aseos, electricidad solar, cubierta, acondicionamiento interior.",
+    "renovation_p2": "En 2025, la casa recobra plenamente su papel de base de vida y de trabajo para los voluntarios presentes en Puerto Miguel.",
+    "possible_title": "Lo que la Casa AKUU hace posible",
+    "possible_p1": "La casa comunitaria es mucho más que un alojamiento. Es el punto de partida de cada proyecto que AKUU lleva a cabo en Puerto Miguel: allí se montaron las máquinas de reciclaje, los voluntarios en servicio cívico viven y trabajan, los artistas locales acuden a los talleres vinculados al Museo Shapishiko.",
+    "possible_p2": "También es un espacio de encuentro entre voluntarios internacionales y habitantes del pueblo. Un lugar donde se transmiten oficios, se tejen vínculos y cada misión deja algo concreto detrás.",
+    "video_title": "La Casa AKUU en vídeo"
+  },
   "cours_anglais": {
     "hero_title": "Clases de inglés en Puerto Miguel",
     "hero_subtitle": "Dar a los habitantes las claves del inglés para participar en el ecoturismo de su territorio",
@@ -964,5 +1023,43 @@
     "legal": "© {year} AKUU, asociación francesa (loi 1901)",
     "copyright_detail": "AKUU, Asociación francesa (ley 1901)",
     "don_cta": "Donar"
+  },
+  "gestion_dechets": {
+    "hero_title": "Gestión de residuos en Puerto Miguel",
+    "hero_subtitle": "Precious Plastic · misión 2019 con Grenoble INP ENSE3",
+    "photo_01_kicker": "Foto 1, cabecera",
+    "photo_01_expected": "Panorámica (16:9): el pueblo y el río, o una imagen que evoque el reto de los residuos en la Amazonía (sin poner en riesgo a las personas).",
+    "photo_02_kicker": "Foto 2, el problema",
+    "photo_02_alt": "Plásticos y entorno en Puerto Miguel",
+    "photo_02_expected": "Ilustrar la ausencia de alternativas: quema, orillas del río, plásticos, siempre con respeto a las personas y a la normativa.",
+    "photo_03_kicker": "Foto 3, el proyecto en el terreno",
+    "photo_03_alt": "Estudiantes de ingeniería y habitantes trabajando en residuos",
+    "photo_03_expected": "Seis estudiantes ENSE3 con la comunidad: reuniones, talleres, co-construcción de la respuesta.",
+    "photo_04_kicker": "Foto 4, las máquinas",
+    "photo_04_alt": "Trituradora e inyectora Precious Plastic",
+    "photo_04_expected": "Trituradora, inyección, virutas u objetos moldeados, equipo fabricado en Iquitos y operativo.",
+    "photo_05_kicker": "Foto 5, logística hacia Nauta",
+    "photo_05_alt": "Recogida y clasificación, vínculo con Nauta",
+    "photo_05_expected": "Barco hacia Nauta, cubos de clasificación, autoridades o voluntarios en la recogida.",
+    "photo_06_kicker": "Foto 6, sensibilización",
+    "photo_06_alt": "Exposición Planet'AKUU en el pueblo",
+    "photo_06_expected": "Planet'AKUU: puestos, escolares por la mañana, demostración de máquinas con todo el pueblo.",
+    "probleme_title": "El problema",
+    "probleme_p1": "En Puerto Miguel, como en la mayoría de los pueblos aislados de la cuenca amazónica, hasta 2019 no existía ningún sistema de recogida de residuos. Los plásticos acababan quemados o arrojados al río, por falta de alternativa. Un riesgo sanitario real para los habitantes y una contaminación directa de uno de los ecosistemas más valiosos del mundo.",
+    "projet_title": "El proyecto",
+    "projet_p1": "En 2019, seis estudiantes de ingeniería de Grenoble INP ENSE3 se instalan en Puerto Miguel durante tres meses para trabajar en este problema con los habitantes. El objetivo: encontrar una solución concreta, viable con los medios disponibles y duradera después de su marcha.",
+    "projet_p2": "El proyecto se articula en dos ejes: construir máquinas para triturar y reciclar el plástico in situ, y poner en marcha una cadena de recogida que enlace el pueblo con un centro de clasificación de la región.",
+    "machines_title": "Las máquinas",
+    "machines_p1": "El equipo se apoya en los planos abiertos del movimiento Precious Plastic, que propone máquinas de reciclaje de bajo coste. Dos máquinas se fabrican en Iquitos con los recursos disponibles.",
+    "machines_p2": "La trituradora (shredder) corta botellas y plásticos en virutas. La máquina de inyección funde esas virutas y las moldea en objetos reutilizables. Se crean tres moldes. Las dos máquinas quedan operativas al final de la misión y permanecen en el pueblo.",
+    "cycle_title": "Recogida y envío de los residuos",
+    "cycle_p1": "En paralelo, el equipo contacta con Joël INGA, responsable de medio ambiente del municipio de Nauta, la ciudad más cercana, a unas dos horas en barco. Una reunión reúne a las autoridades de Nauta y de Puerto Miguel. Se acuerda que los plásticos del pueblo se enviarán cada semana al centro de clasificación de Nauta.",
+    "cycle_p2": "Las autoridades de Puerto Miguel se comprometen a construir contenedores de clasificación y a organizar las rutas de recogida. Es la primera vez que se pone en marcha un sistema estructurado de gestión de residuos en Puerto Miguel.",
+    "sensi_title": "Sensibilización",
+    "sensi_p1": "Para arraigar el proyecto en la comunidad, se organiza en el pueblo una exposición de dos días, Planet'AKUU: talleres educativos y lúdicos sobre el recorrido de los residuos y el reciclaje del plástico, y demostraciones de las máquinas con la participación de los habitantes. Por la mañana acuden los alumnos de la escuela; por la tarde, se suma todo el pueblo.",
+    "sensi_p2": "También se realiza un evento similar en Iquitos para presentar el proyecto a un público más amplio y reforzar su visibilidad a escala regional.",
+    "reste_title": "Lo que queda",
+    "reste_p1": "Al término de la misión, las dos máquinas están instaladas, los envíos regulares a Nauta están en marcha y los contenedores de clasificación están colocados. El proyecto contó con el apoyo de la Fondation INP y con una campaña de micromecenazgo muy exitosa.",
+    "reste_p2": "Este proyecto cuenta entre los más concretos impulsados por AKUU en Puerto Miguel: una respuesta a un problema real, co-construida con los habitantes durante la misión de 2019."
   }
 }

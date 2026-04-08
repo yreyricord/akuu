@@ -10,7 +10,7 @@
           <p class="text-night/60 text-lg leading-relaxed mb-8">
             {{ $t('mission.text') }}
           </p>
-          <router-link to="/association" class="btn-primary">
+          <router-link to="/association" class="btn-primary inline-flex">
             {{ $t('mission.cta') }}
             <svg class="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />

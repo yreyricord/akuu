@@ -15,20 +15,27 @@
     <div class="relative z-[1] text-center text-white px-4 max-w-4xl mx-auto w-full min-h-0">
 
       <!-- Colibri : sous la zone du menu fixe (z-50) ; max-h évite qu’il remonte quand la fenêtre est basse -->
-      <div class="mb-4 sm:mb-10 md:mb-12 hero-item shrink-0" style="--delay: 0ms">
+      <div class="mb-4 sm:mb-10 md:mb-12 hero-item shrink-0 flex justify-center" style="--delay: 0ms">
         <img
           src="/images/collibri-akuu.png"
           :alt="$t('hero.colibri_alt')"
-          class="h-32 sm:h-36 md:h-44 lg:h-48 max-h-[min(12rem,22dvh)] sm:max-h-[min(13.5rem,24dvh)] md:max-h-[min(11rem,26dvh)] lg:max-h-[min(12rem,28dvh)] w-auto max-w-[min(88vw,22rem)] mx-auto object-contain object-bottom drop-shadow-2xl"
+          class="hero-colibri h-32 sm:h-36 md:h-44 lg:h-48 max-h-[min(12rem,22dvh)] sm:max-h-[min(13.5rem,24dvh)] md:max-h-[min(11rem,26dvh)] lg:max-h-[min(12rem,28dvh)] w-auto max-w-[min(88vw,22rem)] object-contain object-bottom drop-shadow-2xl will-change-transform"
         />
       </div>
 
-      <!-- Badge animé -->
+      <!-- Signature hero : marque + mot d’union (lisible, sans capsule « startup ») -->
       <div class="flex justify-center mb-4 sm:mb-6 hero-item" style="--delay: 150ms">
-        <span class="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-leaf/50 bg-leaf/10 backdrop-blur-sm text-leaf text-xs font-bold uppercase tracking-[0.3em]">
-          <span class="w-1.5 h-1.5 rounded-full bg-leaf animate-pulse flex-shrink-0" />
-          {{ $t('hero.tagline_badge') }}
-        </span>
+        <p
+          class="inline-flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1 px-6 py-3 sm:px-8 sm:py-3.5 md:px-9 md:py-4 rounded-2xl bg-white/[0.08] backdrop-blur-md border border-white/[0.16] shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]"
+        >
+          <span class="text-lg sm:text-xl md:text-2xl font-semibold tracking-[0.12em] text-white uppercase">
+            {{ $t('hero.tagline_badge_lead') }}
+          </span>
+          <span class="text-white/35 text-xl sm:text-2xl md:text-3xl leading-none pb-1 select-none" aria-hidden="true">·</span>
+          <span class="text-xl sm:text-2xl md:text-3xl font-serif italic font-medium text-leaf leading-none">
+            {{ $t('hero.tagline_badge_emphasis') }}
+          </span>
+        </p>
       </div>
 
       <!-- Ligne 1 : "Préservons", grande, serif -->
@@ -104,6 +111,30 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Vol stationnaire léger après l’entrée du hero ; désactivé si reduced-motion */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-colibri {
+    animation: colibriHover 4.2s ease-in-out infinite;
+    animation-delay: 0.85s;
+  }
+}
+
+@keyframes colibriHover {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-1.5deg);
+  }
+  25% {
+    transform: translate3d(5px, -10px, 0) rotate(0.75deg);
+  }
+  50% {
+    transform: translate3d(-3px, -16px, 0) rotate(1.75deg);
+  }
+  75% {
+    transform: translate3d(-7px, -7px, 0) rotate(-0.5deg);
   }
 }
 </style>

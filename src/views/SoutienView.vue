@@ -134,8 +134,8 @@
     ═══════════════════════════════════════════════ -->
     <section class="bg-night text-white py-16 px-4">
       <div class="container-narrow">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          <div v-for="stat in stats" :key="stat.value" class="fade-in-up">
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 text-center">
+          <div v-for="stat in stats" :key="stat.id" class="fade-in-up">
             <div class="text-3xl md:text-4xl font-serif font-bold text-leaf mb-1">{{ stat.value }}</div>
             <div class="text-white/50 text-sm">{{ $t(stat.labelKey) }}</div>
           </div>
@@ -251,10 +251,11 @@ const widgetSrc = computed(() =>
 )
 
 const stats = [
-  { value: '10 ans', labelKey: 'soutien.stat_terrain' },
-  { value: '500+',  labelKey: 'soutien.stat_beneficiaires' },
-  { value: '30+',   labelKey: 'soutien.stat_benevoles' },
-  { value: '66%',   labelKey: 'soutien.stat_impots' }
+  { id: 'years', value: '10 ans', labelKey: 'soutien.stat_terrain' },
+  { id: 'benef', value: '500+', labelKey: 'soutien.stat_beneficiaires' },
+  { id: 'funds', value: '70 k€+', labelKey: 'soutien.stat_collecte' },
+  { id: 'vol', value: '150+', labelKey: 'soutien.stat_benevoles' },
+  { id: 'tax', value: '66%', labelKey: 'soutien.stat_impots' }
 ]
 
 let observer = null

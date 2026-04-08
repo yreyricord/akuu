@@ -6,6 +6,20 @@
       image="/images/hero-association.jpg"
     />
 
+    <section class="py-10 bg-white border-b border-forest/10">
+      <div class="container-narrow max-w-3xl mx-auto text-center text-night/70 text-lg leading-relaxed px-6">
+        <p>{{ $t('association.intro_lead') }}</p>
+        <p class="mt-5">
+          <router-link
+            to="/musee-shapishiko"
+            class="text-forest font-semibold underline underline-offset-4 decoration-forest/40 hover:decoration-forest"
+          >
+            {{ $t('association.intro_musee_link') }}
+          </router-link>
+        </p>
+      </div>
+    </section>
+
     <!-- Qui sommes-nous -->
     <section class="section-padding bg-cream">
       <div class="container-narrow">

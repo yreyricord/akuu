@@ -14,5 +14,11 @@ export default defineConfig({
     // web-ifc-three importe web-ifc dynamiquement et écraserait l'analyse esbuild
     exclude: ['web-ifc-three', 'web-ifc']
   },
-  assetsInclude: ['**/*.wasm']
+  assetsInclude: ['**/*.wasm'],
+  build: {
+    // web-ifc-three produit un chunk > 500 kB (normal pour l’IFC) ; évite un avertissement trompeur
+    chunkSizeWarningLimit: 3500,
+    // Ne pas recalculer gzip sur chaque fichier en fin de build (un peu plus rapide, logs plus clairs)
+    reportCompressedSize: false
+  }
 })

@@ -1,8 +1,8 @@
 <template>
   <div>
     <HeroSection />
-    <ImpactNumbers />
     <MissionSection />
+    <HomeAnniversaryBanner />
     <ProjetHighlight />
     <DonSection />
     <SocialSection />
@@ -13,7 +13,7 @@
 <script setup>
 import { onMounted, onUnmounted } from 'vue'
 import HeroSection from '@/components/home/HeroSection.vue'
-import ImpactNumbers from '@/components/home/ImpactNumbers.vue'
+import HomeAnniversaryBanner from '@/components/home/HomeAnniversaryBanner.vue'
 import MissionSection from '@/components/home/MissionSection.vue'
 import ProjetHighlight from '@/components/home/ProjetHighlight.vue'
 import DonSection from '@/components/home/DonSection.vue'

@@ -345,7 +345,7 @@ const imageReady = ref(false)
 const imageRevealed = ref(false)
 const zonesVisible = ref(false)
 const hovered = ref(null)
-/** -1 intro, 0…N-1 zones, N outro — aligné sur le premier calcul scroll */
+/** -1 intro, 0…N-1 zones, N outro, aligné sur le premier calcul scroll */
 const activeStep = ref(-1)
 /** 0 → 1 sur toute la hauteur de scroll du bloc coupe (affichage barre globale) */
 const stageScrollProgress = ref(0)

@@ -67,6 +67,8 @@ export function injectOrganizationJsonLd () {
         '@type': 'Organization',
         '@id': `${origin}/#organization`,
         name: 'AKUU',
+        description:
+          'Association française de solidarité internationale : projets avec les communautés amazoniennes au Pérou (notamment Puerto Miguel et le musée Shapishiko), sensibilisation et mobilisation depuis la France.',
         url: origin,
         logo: { '@type': 'ImageObject', url: logo },
         email: 'contact@akuu.org',

@@ -21,7 +21,9 @@ const paths = [
   '/contact',
   '/hydrama',
   '/akuuvision',
-  '/cours-anglais'
+  '/cours-anglais',
+  '/casa-akuu',
+  '/gestion-dechets'
 ]
 
 const lastmod = new Date().toISOString().slice(0, 10)

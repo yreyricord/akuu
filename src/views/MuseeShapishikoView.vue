@@ -250,6 +250,34 @@
       </div>
     </section>
 
+    <section class="section-padding bg-cream border-t border-forest/10">
+      <div class="container-narrow text-center max-w-2xl mx-auto px-6">
+        <p class="text-forest text-xs font-semibold uppercase tracking-widest mb-3">{{ $t('musee.pursue_kicker') }}</p>
+        <h2 class="text-2xl md:text-3xl font-serif font-bold text-night mb-4">{{ $t('musee.pursue_title') }}</h2>
+        <p class="text-night/65 text-lg leading-relaxed mb-8">{{ $t('musee.pursue_intro') }}</p>
+        <nav aria-label="Liens utiles" class="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center items-stretch sm:items-center">
+          <router-link
+            to="/association"
+            class="inline-flex items-center justify-center px-5 py-3 rounded-full bg-forest text-white font-semibold hover:bg-forest/90 transition-colors"
+          >
+            {{ $t('musee.pursue_link_association') }}
+          </router-link>
+          <router-link
+            to="/soutenir"
+            class="inline-flex items-center justify-center px-5 py-3 rounded-full border-2 border-forest text-forest font-semibold hover:bg-forest/5 transition-colors"
+          >
+            {{ $t('musee.pursue_link_soutenir') }}
+          </router-link>
+          <router-link
+            to="/contact"
+            class="inline-flex items-center justify-center px-5 py-3 rounded-full border-2 border-night/20 text-night font-semibold hover:border-night/40 transition-colors"
+          >
+            {{ $t('musee.pursue_link_contact') }}
+          </router-link>
+        </nav>
+      </div>
+    </section>
+
     <DonSection />
   </div>
 </template>
@@ -280,7 +308,7 @@ const milestoneDefs = [
   { key: 'ouverture', year: '2026-2027', status: 'pending' }
 ]
 
-/** Une image par étape d’avancement (ordre = milestoneDefs) — public/images/projets/shapishiko/ */
+/** Une image par étape d’avancement (ordre = milestoneDefs), public/images/projets/shapishiko/ */
 const milestoneVisualSrcs = [
   '/images/projets/shapishiko/1.jpg',
   '/images/projets/shapishiko/2.jpeg',

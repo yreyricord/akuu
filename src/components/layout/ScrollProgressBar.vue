@@ -1,12 +1,11 @@
 <template>
   <!--
-    Progression de scroll : barre fine en bas d’écran (au-dessus de la safe area iOS).
-    Formule : scrollY / (scrollHeight - innerHeight). rAF au scroll.
+    Barre horizontale sous la rangée du menu (top-16 / md:top-20 = h du flex nav).
+    z-40 : sous la nav (z-50), donc sous le logo qui dépasse du bandeau blanc.
   -->
   <div
-    class="pointer-events-none fixed left-0 right-0 z-[60] h-1 sm:h-1.5 motion-reduce:h-0.5 ring-1 ring-t ring-night/15 shadow-[0_-2px_12px_rgba(10,21,32,0.08)]"
+    class="pointer-events-none fixed left-0 right-0 top-16 md:top-20 z-40 h-1.5 sm:h-[9px] motion-reduce:h-[3px] overflow-hidden bg-night/10 shadow-[0_1px_0_rgba(255,255,255,0.06)_inset]"
     :class="showBar ? 'opacity-100' : 'opacity-0'"
-    :style="{ bottom: barBottom }"
     role="progressbar"
     :aria-valuenow="ariaNow"
     aria-valuemin="0"
@@ -32,12 +31,6 @@ const route = useRoute()
 const progress = ref(0)
 const scrollablePx = ref(0)
 const mounted = ref(false)
-/** Écart layout vs fenêtre visible (barre d’adresse mobile / visualViewport) pour coller la barre au bas de l’écran */
-const visualBottomGapPx = ref(0)
-
-const barBottom = computed(
-  () => `calc(env(safe-area-inset-bottom, 0px) + ${visualBottomGapPx.value}px)`
-)
 
 const showBar = computed(
   () => mounted.value && scrollablePx.value >= MIN_SCROLLABLE_PX
@@ -73,24 +66,12 @@ function onScrollOrResize() {
   raf = requestAnimationFrame(() => {
     raf = null
     measure()
-    syncVisualViewportBottom()
   })
-}
-
-function syncVisualViewportBottom () {
-  const vv = window.visualViewport
-  if (!vv) {
-    visualBottomGapPx.value = 0
-    return
-  }
-  const gap = window.innerHeight - vv.offsetTop - vv.height
-  visualBottomGapPx.value = Math.max(0, Math.round(gap))
 }
 
 onMounted(() => {
   mounted.value = true
   measure()
-  syncVisualViewportBottom()
   window.addEventListener('scroll', onScrollOrResize, { passive: true })
   window.addEventListener('resize', onScrollOrResize, { passive: true })
   window.visualViewport?.addEventListener('resize', onScrollOrResize, { passive: true })

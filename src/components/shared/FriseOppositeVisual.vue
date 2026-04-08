@@ -76,7 +76,7 @@ const props = defineProps({
   /** Image unique (rétrocompat) */
   src: { type: String, default: '' },
   alt: { type: String, default: '' },
-  /** Plusieurs images : { src, alt? }[] — prioritaire sur src */
+  /** Plusieurs images : { src, alt? }[], prioritaire sur src */
   images: { type: Array, default: () => [] },
   /**
    * Côté de la colonne visuel par rapport au fil :

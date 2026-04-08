@@ -1,13 +1,17 @@
 <template>
+  <!--
+    Bandeau blanc pleine largeur au scroll ; le logo (plus haut que la rangée) reste au-dessus
+    de la barre de progression horizontale (ScrollProgressBar z-40).
+  -->
   <nav
-    :class="[
-      'fixed top-0 w-full z-50 transition-all duration-500',
-      scrolled || menuOpen
-        ? 'bg-white/95 backdrop-blur-md shadow-md'
-        : 'bg-transparent'
-    ]"
+    class="fixed top-0 w-full z-50 pointer-events-none transition-all duration-500 bg-transparent"
   >
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-visible">
+    <div
+      v-show="scrolled || menuOpen"
+      class="pointer-events-none absolute inset-x-0 top-0 bottom-0 z-[1] w-full bg-white/95 backdrop-blur-md shadow-[0_4px_6px_-1px_rgba(0,0,0,0.07),0_2px_4px_-2px_rgba(0,0,0,0.05)] transition-opacity duration-500"
+      aria-hidden="true"
+    />
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-visible pointer-events-auto relative z-[2]">
       <div class="relative flex justify-between h-16 md:h-20 overflow-visible">
         <router-link
           to="/"
@@ -69,7 +73,7 @@
       leave-from-class="opacity-100 translate-y-0"
       leave-to-class="opacity-0 -translate-y-4"
     >
-      <div v-if="menuOpen" class="lg:hidden bg-white border-t border-gray-100 shadow-xl">
+      <div v-if="menuOpen" class="lg:hidden bg-white border-t border-gray-100 shadow-xl pointer-events-auto">
         <div class="max-w-7xl mx-auto px-4 py-4 space-y-1">
           <router-link
             v-for="item in navItems"
