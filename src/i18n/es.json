@@ -779,19 +779,29 @@
         "text": "Pasantía supervisada de 2 a 6 meses."
       }
     },
-    "testimonials_title": "Ellos fueron voluntarios con AKUU",
+    "testimonials_title": "Testimonios",
+    "testimonials_submit_intro": "Para añadir tu testimonio, envía una foto y un mensaje a ",
     "testimonials": {
-      "lea": {
-        "mission": "Renovación y acompañamiento comunitario",
-        "quote": "Mi experiencia en Puerto Miguel cambió mi visión del mundo. Vivir junto a las comunidades Kukama me enseñó lo esencial: el compartir y el respeto a la naturaleza."
+      "ilona": {
+        "kicker": "Testimonio",
+        "name": "Ilona Crozes",
+        "mission": "Museo Shapishiko, Puerto Miguel",
+        "photo_alt": "Retrato de Ilona Crozes, voluntaria de AKUU",
+        "quote": "En Puerto Miguel, el proyecto del museo Shapishiko me ofreció una experiencia memorable: participar en un proyecto concreto e impregnarme del modo de vida y los valores de la comunidad."
       },
-      "dylan": {
-        "mission": "Construcción y desarrollo local",
-        "quote": "Participar en la construcción del museo fue la experiencia más enriquecedora de mi vida. Sientes que contribuyes a algo duradero."
+      "aude": {
+        "kicker": "Testimonio",
+        "name": "Aude Lainé",
+        "mission": "Copresidenta · AKUU",
+        "photo_alt": "Retrato de Aude Lainé, copresidenta de AKUU",
+        "quote": "Además de descubrir la misión sobre el terreno y la vida en Puerto Miguel, esta experiencia me permitió implicarme en una asociación y recuperar una motivación de verdad. Ahora tengo un proyecto que me importa y al que quiero aportar plenamente. También me dio la oportunidad de conocer a personas increíbles, tanto entre los habitantes de Puerto Miguel como en el equipo de AKUU 🫶"
       },
-      "raphael": {
-        "mission": "Educación y sensibilización",
-        "quote": "Enseñar inglés a los niños de Puerto Miguel es abrirles una ventana al mundo mientras uno aprende tanto de ellos."
+      "marlon": {
+        "kicker": "Testimonio",
+        "name": "Marlon Diaz",
+        "mission": "Cofundador · AKUU",
+        "photo_alt": "Retrato de Marlon Diaz, cofundador de AKUU",
+        "quote": "AKUU es un proyecto en el que creo con fuerza. AKUU me recuerda mi vínculo con la naturaleza, con las tradiciones. Esta palabra significa compartir energías, respetar el bosque, su fauna, su flora..."
       }
     },
     "video_kicker": "En el terreno",
@@ -830,6 +840,11 @@
     "adherer_title": "Hacerse miembro",
     "adherer_text": "Desde 12€/año, sé miembro, asiste a las asambleas generales y recibe nuestros informes de actividad.",
     "adherer_cta": "Unirse ahora",
+    "member_spotlight_kicker": "Voz de una miembra",
+    "member_spotlight_quote": "En Puerto Miguel, el proyecto del museo Shapishiko me ofreció una experiencia memorable: participar en un proyecto concreto e impregnarme del modo de vida y los valores de la comunidad.",
+    "member_spotlight_name": "Ilona Crozes",
+    "member_spotlight_role": "Miembra de AKUU · museo Shapishiko, Amazonía peruana",
+    "member_spotlight_photo_alt": "Retrato de Ilona Crozes, miembra de AKUU",
     "benevole_title": "Ir en misión",
     "benevole_text": "3 a 6 meses en Puerto Miguel o en Francia para AKUUVision. Construcción, educación, cultura: una experiencia humana única.",
     "benevole_cta": "Ver misiones",

@@ -1,7 +1,22 @@
 {
   "temoignages": [
-    { "id": "lea", "prenom": "Léa", "annee": 2024, "photo": "/images/equipe/Lea_Loiret.jpg" },
-    { "id": "dylan", "prenom": "Dylan", "annee": 2024, "photo": "/images/equipe/Dylan_cluzel.jpeg" },
-    { "id": "raphael", "prenom": "Raphaël", "annee": 2024, "photo": "/images/equipe/Raphael_Moreau.jpg" }
+    {
+      "id": "aude",
+      "prenom": "Aude",
+      "annee": 2025,
+      "photo": "/images/equipe/Aude_Laine_2.jpeg"
+    },
+    {
+      "id": "ilona",
+      "prenom": "Ilona",
+      "annee": 2025,
+      "photo": "/images/equipe/Ilona_Crozes.jpeg"
+    },
+    {
+      "id": "marlon",
+      "prenom": "Marlon",
+      "annee": 2026,
+      "photo": "/images/equipe/Marlon_Diaz.jpg"
+    }
   ]
 }

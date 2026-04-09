@@ -78,12 +78,12 @@
   }
 
   .section-padding {
-    @apply py-10 md:py-16 lg:py-24 px-4;
+    @apply py-8 md:py-12 lg:py-16 px-4;
   }
 
   /** Page musée : blocs avant / après « acteurs » moins hauts sur petit écran */
   .section-padding-musee-mobile {
-    @apply py-10 md:py-24 px-4;
+    @apply py-8 md:py-12 lg:py-16 px-4;
   }
 
   .container-narrow {

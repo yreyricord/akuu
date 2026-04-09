@@ -104,7 +104,7 @@
     <!-- Timeline -->
     <section class="section-padding bg-cream">
       <div class="max-w-7xl mx-auto w-full">
-        <div class="text-center mb-14">
+        <div class="text-center mb-10">
           <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">{{ $t('association.history_since') }}</p>
           <h2 class="text-3xl md:text-4xl font-serif font-bold text-night">{{ $t('association.history_title') }}</h2>
         </div>
@@ -146,7 +146,7 @@
     <!-- Parole d'Amazonie -->
     <section class="section-padding bg-cream">
       <div class="container-narrow">
-        <div class="text-center mb-12">
+        <div class="text-center mb-8">
           <h2 class="text-3xl md:text-4xl font-serif font-bold text-night">{{ $t('association.videos_title') }}</h2>
         </div>
         <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -167,7 +167,7 @@
     <!-- Réseaux sociaux -->
     <section class="section-padding bg-white">
       <div class="container-narrow">
-        <div class="text-center mb-12 max-w-2xl mx-auto">
+        <div class="text-center mb-8 max-w-2xl mx-auto">
           <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">
             {{ $t('association.social_kicker') }}
           </p>
@@ -179,7 +179,7 @@
           </p>
         </div>
 
-        <div class="max-w-6xl mx-auto space-y-16">
+        <div class="max-w-6xl mx-auto space-y-12">
           <!-- Instagram -->
           <div v-if="showInstagramSection">
             <h3 class="text-sm font-semibold uppercase tracking-widest text-night/45 mb-6">

@@ -17,20 +17,21 @@
             </svg>
           </router-link>
         </div>
-        <div class="fade-in-up relative">
-          <img
-            src="/images/mission-akuu.jpg"
-            :alt="$t('mission.image_alt')"
-            class="rounded-2xl shadow-xl w-full object-cover aspect-[4/3]"
-            loading="lazy"
+        <router-link
+          to="/association"
+          class="group block w-full cursor-pointer rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-forest focus-visible:ring-offset-4 focus-visible:ring-offset-cream"
+          :aria-label="$t('mission.cta')"
+        >
+          <ForestScrollVisual
+            aria-hidden
+            wrapper-class="fade-in-up transition-transform duration-300 ease-out group-hover:scale-[1.015] group-active:scale-[0.99]"
           />
-          <div class="absolute -bottom-4 -left-4 w-24 h-24 bg-leaf/20 rounded-2xl -z-10" />
-          <div class="absolute -top-4 -right-4 w-32 h-32 bg-ochre/10 rounded-full -z-10" />
-        </div>
+        </router-link>
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
+import ForestScrollVisual from '@/components/shared/ForestScrollVisual.vue'
 </script>

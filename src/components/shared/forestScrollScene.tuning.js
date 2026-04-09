@@ -5,10 +5,14 @@
  *
  * Utilisation
  * -----------
- * Le composant `ForestScrollScene.vue` importe `forestSceneTuning` et
- * `forestScrollEasings`. En modifiant CE fichier, tu changes l’animation et la
- * mise en page sans toucher à la logique Vue (sauf si tu ajoutes de nouvelles
- * clés : il faudra alors les lire dans le `.vue`).
+ * `ForestScrollVisual.vue` (et le wrapper optionnel `ForestScrollScene.vue`)
+ * importent `forestSceneTuning` et `forestScrollEasings`. En modifiant CE fichier,
+ * tu changes l’animation sans toucher à la logique Vue (sauf nouvelles clés).
+ *
+ * Mise en page (accueil)
+ * ----------------------
+ * `ForestScrollVisual` : carte seule (ex. colonne « Notre mission »).
+ * `ForestScrollScene` : section crème + grille + slot `#aside` si besoin.
  *
  * Principe visuel
  * ---------------
@@ -96,8 +100,8 @@ export const forestSceneTuning = {
      *   du calque). Utilise `'100% 100%'` si tu veux ancrer le zoom au coin bas-droit.
      */
     scroll: {
-      scaleStart: 1.1,
-      scaleEnd: 1,
+      scaleStart: 1.5,
+      scaleEnd: 1.2,
       driftXMaxPx: 14,
       transformOrigin: '50% 50%'
     },
@@ -153,35 +157,41 @@ export const forestSceneTuning = {
       endOpacity: 1,
       arriveFromRightPx: 80,
       arriveFromBottomPx: 160,
-      scaleStart: 0.45,
-      scaleEnd: 1,
+      scaleStart: 0.9,
+      scaleEnd: 1.1,
       /** Taille globale forêt : > 1 agrandit (ex. 1.1), < 1 réduit (ex. 0.9) */
       visualScale: 1,
-      transformOrigin: '100% 100%'
+      transformOrigin: '50% 50%'
     },
-    dropShadow: '-10px 6px 20px rgba(8, 16, 24, 0.32)'
+    dropShadow: '0 10px 28px rgba(45, 105, 21, 0.14)'
   },
 
   /**
-   * Dimensions et fond du conteneur `.forest-scene`
-   * ------------------------------------------------
-   * La hauteur CSS est :
-   *   clamp(minHeightPx, min(preferredVw vw, preferredVh vh), maxHeightPx)
+   * Dimensions et fond du conteneur `.forest-scene` (carte à gauche du texte)
+   * -------------------------------------------------------------------------
+   * **Hauteur — tu peux régler de trois façons (combinables avec min / max) :**
    *
-   * - `minHeightPx` : hauteur minimum (évite un bandeau trop plat sur mobile).
-   * - `preferredVw` / `preferredVh` : le milieu du clamp prend le PLUS PETIT des
-   *   deux (ex. 78vw vs 68vh) pour rester lisible sur écran large ou court.
-   * - `maxHeightPx` : plafond pour ne pas occuper toute la fenêtre sur grands écrans.
-   * - `background` : couleur derrière les SVG (transparence, chargement, bandes si
-   *   le ratio du bloc ne colle pas aux illustrations). Ciel et arbres : même cadre,
-   *   `object-fit: contain`, `object-position: center` — pas de crop, resize identique.
+   * 1. **`aspectRatio`** (mode par défaut) — tant que `heightCss` vaut `null`,
+   *    la hauteur = largeur de la carte ÷ ratio. Ex. `'4 / 3'` ≈ plus haut que
+   *    `'16 / 9'` pour la même largeur.
+   * 2. **`heightCss`** — si tu mets une valeur CSS (`'420px'`, `'min(55vh, 480px)'`,
+   *    `'clamp(280px, 40vw, 460px)'`, etc.), elle devient la `height` de la boîte
+   *    et **`aspectRatio` est ignoré** pour le dimensionnement vertical.
+   * 3. **`minHeightPx` / `maxHeightPx`** — plancher et plafond (pixels), toujours
+   *    appliqués en `min-height` / `max-height` sur la carte.
    */
   scene: {
-    minHeightPx: 520,
-    preferredVw: 78,
-    preferredVh: 68,
-    maxHeightPx: 960,
-    background: '#152a38'
+    /** Même ratio que `viewBox` des SVG 1.svg / 2.svg (1920×1080). */
+    aspectRatio: '16 / 9',
+    /** `null` = hauteur suivant `aspectRatio` ; sinon chaîne CSS pour `height`. */
+    heightCss: null,
+    minHeightPx: 220,
+    maxHeightPx: 640,
+    /**
+     * Fond derrière les SVG : tons crème / vert très léger (aligné `bg-cream`).
+     */
+    background:
+      'linear-gradient(165deg, #FEFDFC 0%, #F5F2ED 45%, #F0F7EC 100%)'
   },
 
   /**
@@ -208,14 +218,14 @@ export const forestSceneTuning = {
    *   `borderWidthPx + 1` (après le double `box-shadow` du cadre).
    */
   frame: {
-    borderWidthPx: 2,
+    borderWidthPx: 0,
     clipInsetPx: null,
-    /** Contraste avec `scene.background` : tons chauds pour que le cadre se lise */
-    borderColor: 'rgba(210, 195, 168, 0.55)',
-    innerHighlight: 'rgba(255, 252, 245, 0.42)',
-    topMaskHeightPx: 64,
-    topMaskOpaqueStopPct: 42,
-    topMaskColor: ''
+    borderColor: 'rgba(45, 105, 21, 0.14)',
+    innerHighlight: 'rgba(255, 255, 255, 0.22)',
+    /** 0 = pas de dégradé crème en haut sur l’illustration */
+    topMaskHeightPx: 0,
+    topMaskOpaqueStopPct: 38,
+    topMaskColor: '#FEFDFC'
   },
 
   /**
@@ -226,42 +236,15 @@ export const forestSceneTuning = {
    * modes changent fortement le rendu sur le ciel sombre.
    */
   atmo: {
+    /** Pas de blanc en haut : léger leaf optionnel, sinon mettre gradient à `transparent`. */
     gradient:
-      'radial-gradient(115% 75% at 0% 0%, rgba(255, 253, 248, 0.12) 0%, transparent 58%)',
+      'radial-gradient(85% 65% at 20% 10%, rgba(166, 198, 57, 0.06) 0%, transparent 52%)',
     mixBlendMode: 'soft-light'
   },
 
-  /**
-   * Vignette (assombrit surtout le coin bas-droit)
-   * ----------------------------------------------
-   * Purement décoratif ; chaîne `gradient` complète comme pour `atmo`.
-   */
+  /** Vignette très légère sur fond clair (profondeur sans assombrir) */
   vignette: {
     gradient:
-      'radial-gradient(125% 95% at 100% 100%, transparent 35%, rgba(8, 18, 28, 0.4) 100%)'
-  },
-
-  /**
-   * Slot Vue (contenu texte / boutons au centre de la scène)
-   * ---------------------------------------------------------
-   * `padding` : valeur CSS brute (ex. `'2rem'`, `'1.5rem 2rem'`).
-   */
-  content: {
-    padding: '2rem'
-  },
-
-  /**
-   * Fondu en bas de section
-   * ------------------------
-   * Bande en `linear-gradient` du transparent vers `colorEnd` pour enchaîner
-   * visuellement avec le fond « cream » de la page suivante.
-   *
-   * - `heightPx` : hauteur de cette bande.
-   * - `colorEnd` : doit idéalement matcher le fond de la section dessous (ex.
-   *   couleur Tailwind `cream` du thème).
-   */
-  fade: {
-    heightPx: 2,
-    colorEnd: '#fefdfc'
+      'radial-gradient(120% 100% at 50% 108%, transparent 55%, rgba(45, 105, 21, 0.06) 100%)'
   }
 }
