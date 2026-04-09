@@ -779,19 +779,29 @@
         "text": "Supervised internship of 2 to 6 months."
       }
     },
-    "testimonials_title": "They volunteered with AKUU",
+    "testimonials_title": "Testimonials",
+    "testimonials_submit_intro": "To add your testimonial, send a photo and a message to ",
     "testimonials": {
-      "lea": {
-        "mission": "Renovation & community support",
-        "quote": "My time in Puerto Miguel changed how I see the world. Living alongside Kukama communities taught me what matters: sharing and respect for nature."
+      "ilona": {
+        "kicker": "Volunteer story",
+        "name": "Ilona Crozes",
+        "mission": "Shapishiko Museum, Puerto Miguel",
+        "photo_alt": "Portrait of Ilona Crozes, AKUU volunteer",
+        "quote": "In Puerto Miguel, the Shapishiko museum project gave me a memorable experience: taking part in something concrete, and soaking up the community’s way of life and values."
       },
-      "dylan": {
-        "mission": "Construction & local development",
-        "quote": "Helping build the museum was the most rewarding experience of my life. You feel you're contributing to something lasting."
+      "aude": {
+        "kicker": "Volunteer story",
+        "name": "Aude Lainé",
+        "mission": "Co-president · AKUU",
+        "photo_alt": "Portrait of Aude Lainé, AKUU co-president",
+        "quote": "Beyond discovering the mission in the field and life in Puerto Miguel, this experience helped me get involved with an association and find real motivation again. I now have a cause close to my heart that I want to give fully to. It also gave me the chance to meet incredible people—among residents of Puerto Miguel and within the AKUU team 🫶"
       },
-      "raphael": {
-        "mission": "Education & awareness",
-        "quote": "Teaching English to children in Puerto Miguel opens a window on the world for them, and I learned so much from them in return."
+      "marlon": {
+        "kicker": "Volunteer story",
+        "name": "Marlon Diaz",
+        "mission": "Co-founder · AKUU",
+        "photo_alt": "Portrait of Marlon Diaz, AKUU co-founder",
+        "quote": "AKUU is a project I believe in deeply. It reminds me of my bond with nature and with tradition. The word stands for sharing energy, and respect for the forest, its wildlife, and its plants..."
       }
     },
     "video_kicker": "In the field",
@@ -830,6 +840,11 @@
     "adherer_title": "Become a member",
     "adherer_text": "From €12/year, become a member, attend general assemblies and receive our activity reports.",
     "adherer_cta": "Join now",
+    "member_spotlight_kicker": "A member’s voice",
+    "member_spotlight_quote": "In Puerto Miguel, the Shapishiko museum project gave me a memorable experience: taking part in something concrete, and soaking up the community’s way of life and values.",
+    "member_spotlight_name": "Ilona Crozes",
+    "member_spotlight_role": "AKUU member · Shapishiko Museum, Peruvian Amazon",
+    "member_spotlight_photo_alt": "Portrait of Ilona Crozes, AKUU member",
     "benevole_title": "Go on a mission",
     "benevole_text": "3 to 6 months in Puerto Miguel or in France for AKUUVision. Construction, education, culture: a unique human experience.",
     "benevole_cta": "See missions",

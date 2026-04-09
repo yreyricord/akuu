@@ -73,42 +73,93 @@
       </div>
     </section>
 
-    <!-- Témoignages -->
-    <section class="section-padding bg-cream">
+    <!-- Témoignages : une colonne, photo cliquable (lightbox) + texte à côté -->
+    <section class="section-padding bg-cream pb-8 md:pb-10 lg:pb-12">
       <div class="container-narrow">
-        <SectionTitle>{{ $t('volontaires.testimonials_title') }}</SectionTitle>
-        <div class="grid md:grid-cols-3 gap-6">
-          <div
-            v-for="temoignage in volontairesInfo.temoignages"
+        <h2 class="text-center text-3xl md:text-4xl font-serif font-bold text-night mb-3 md:mb-4">
+          {{ $t('volontaires.testimonials_title') }}
+        </h2>
+        <div class="mx-auto mb-10 flex max-w-md items-center justify-center gap-2 md:mb-12">
+          <span class="block h-0.5 w-10 rounded-full bg-forest md:w-12" />
+          <svg class="h-4 w-4 text-forest" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z" />
+          </svg>
+          <span class="block h-0.5 w-10 rounded-full bg-forest md:w-12" />
+        </div>
+
+        <div class="flex flex-col gap-6 md:gap-8">
+          <article
+            v-for="temoignage in temoignagesList"
             :key="temoignage.id"
-            class="fade-in-up card p-6"
+            class="fade-in-up mx-auto flex w-full max-w-4xl flex-col gap-5 rounded-2xl bg-white p-5 shadow-md ring-1 ring-night/5 transition hover:shadow-lg sm:flex-row sm:items-start sm:gap-6 md:p-6"
           >
-            <div class="flex items-center gap-4 mb-4">
+            <button
+              type="button"
+              class="group/photo mx-auto w-full max-w-[280px] shrink-0 cursor-zoom-in overflow-hidden rounded-xl ring-1 ring-night/10 transition hover:ring-forest/35 focus:outline-none focus-visible:ring-2 focus-visible:ring-forest focus-visible:ring-offset-2 sm:mx-0 sm:max-w-none sm:w-48 md:w-56"
+              :aria-label="$t('common.team_lightbox_expand')"
+              @click="openTestimonialLightbox(temoignage.id, temoignage.photo)"
+            >
               <img
-                v-if="temoignage.photo"
                 :src="temoignage.photo"
-                :alt="temoignage.prenom"
-                class="w-14 h-14 rounded-full object-cover"
+                :alt="$t(`volontaires.testimonials.${temoignage.id}.photo_alt`)"
+                class="aspect-[3/4] w-full object-cover object-center transition duration-300 group-hover/photo:scale-[1.02]"
                 loading="lazy"
+                decoding="async"
               />
-              <div v-else class="w-14 h-14 rounded-full bg-forest/10 flex items-center justify-center shrink-0">
-                <svg class="w-7 h-7 text-forest/40" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-              </div>
-              <div>
-                <h4 class="font-serif font-bold text-night">{{ temoignage.prenom }}</h4>
-                <p class="text-xs text-night/40">{{ $t(`volontaires.testimonials.${temoignage.id}.mission`) }}, {{ temoignage.annee }}</p>
+            </button>
+            <div class="min-w-0 flex-1">
+              <blockquote
+                class="border-l-2 border-leaf py-0.5 pl-3 text-sm font-serif leading-relaxed text-night/85 md:pl-3.5 md:text-[0.9375rem]"
+              >
+                <p class="text-pretty">{{ $t(`volontaires.testimonials.${temoignage.id}.quote`) }}</p>
+              </blockquote>
+              <div class="mt-4 border-t border-night/10 pt-3">
+                <p class="text-sm font-semibold leading-tight text-night">
+                  {{ $t(`volontaires.testimonials.${temoignage.id}.name`) }}
+                </p>
+                <p class="mt-0.5 text-[11px] leading-snug text-night/45">
+                  {{ $t(`volontaires.testimonials.${temoignage.id}.mission`) }} · {{ temoignage.annee }}
+                </p>
               </div>
             </div>
-            <blockquote class="text-night/60 text-sm leading-relaxed italic">
-              "{{ $t(`volontaires.testimonials.${temoignage.id}.quote`) }}"
-            </blockquote>
-          </div>
+          </article>
+        </div>
+
+        <p class="mx-auto mt-8 max-w-2xl text-center text-sm leading-relaxed text-night/80 md:mt-10 md:text-[0.9375rem]">
+          {{ $t('volontaires.testimonials_submit_intro') }}
+          <a
+            href="mailto:testimonials@akuu.org"
+            class="font-semibold text-forest underline decoration-forest/35 underline-offset-2 transition hover:text-forest/90 hover:decoration-forest"
+          >testimonials@akuu.org</a>.
+        </p>
+
+        <ImagePreviewLightbox
+          v-model="testimonialLightboxOpen"
+          :image-src="testimonialLightboxSrc"
+          :image-alt="testimonialLightboxAlt"
+        />
+
+        <div class="mt-5 flex justify-center fade-in-up md:mt-6">
+          <router-link
+            to="/contact"
+            class="inline-flex items-center gap-2 rounded-full bg-forest px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-forest/90 hover:gap-3"
+          >
+            {{ $t('volontaires.cta_button') }}
+            <svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
+            </svg>
+          </router-link>
         </div>
       </div>
     </section>
 
     <!-- Vidéo : La vie à Puerto Miguel -->
-    <section class="section-padding bg-white">
+    <section class="section-padding bg-white pt-8 md:pt-10 lg:pt-12">
       <div class="container-narrow max-w-3xl mx-auto">
         <div class="text-center mb-8">
           <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">{{ $t('volontaires.video_kicker') }}</p>
@@ -135,7 +186,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useDataStore } from '@/store'
 import PageHero from '@/components/shared/PageHero.vue'
@@ -143,9 +194,22 @@ import SectionTitle from '@/components/shared/SectionTitle.vue'
 import CTABanner from '@/components/shared/CTABanner.vue'
 import TheProcessSteps from '@/components/shared/TheProcessSteps.vue'
 import VideoEmbed from '@/components/shared/VideoEmbed.vue'
+import ImagePreviewLightbox from '@/components/shared/ImagePreviewLightbox.vue'
 
 const store = useDataStore()
-const volontairesInfo = store.volontairesInfo
+const { t } = useI18n()
+
+const testimonialLightboxOpen = ref(false)
+const testimonialLightboxSrc = ref('')
+const testimonialLightboxAlt = ref('')
+
+function openTestimonialLightbox (id, src) {
+  testimonialLightboxSrc.value = src
+  testimonialLightboxAlt.value = t(`volontaires.testimonials.${id}.photo_alt`)
+  testimonialLightboxOpen.value = true
+}
+
+const temoignagesList = computed(() => store.volontairesInfo.temoignages)
 
 const whyItems = [
   {
@@ -170,7 +234,6 @@ const whyItems = [
   }
 ]
 
-const { t } = useI18n()
 const processSteps = computed(() => [
   { key: 'step1', title: t('volontaires.process_steps.step1.title'), text: t('volontaires.process_steps.step1.text') },
   { key: 'step2', title: t('volontaires.process_steps.step2.title'), text: t('volontaires.process_steps.step2.text') },

@@ -153,22 +153,77 @@
           <p class="text-night/50 max-w-xl mx-auto">{{ $t('soutien.other_subtitle') }}</p>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-6">
+        <div class="flex flex-col gap-6 md:gap-8">
 
-          <!-- Adhérer -->
-          <div class="fade-in-up group relative bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-br from-forest/5 to-leaf/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <div class="relative">
-              <div class="w-14 h-14 bg-forest/10 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-forest group-hover:scale-110 transition-all duration-300">🤝</div>
-              <h3 class="text-xl font-serif font-bold text-night mb-3">{{ $t('soutien.adherer_title') }}</h3>
-              <p class="text-night/55 text-sm leading-relaxed mb-6">{{ $t('soutien.adherer_text') }}</p>
-              <a href="https://www.helloasso.com/associations/akuu/adhesions/adhesion-annuelle" target="_blank" rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 text-forest font-semibold text-sm group-hover:gap-3 transition-all">
-                {{ $t('soutien.adherer_cta') }}
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-              </a>
+          <!-- Adhérer + témoignage Ilona Crozes -->
+          <div
+            class="fade-in-up group relative overflow-hidden rounded-3xl bg-white p-6 shadow-sm transition-all duration-500 hover:shadow-xl sm:p-8 md:p-10"
+          >
+            <div
+              class="pointer-events-none absolute inset-0 bg-gradient-to-br from-forest/5 to-leaf/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+            />
+            <div class="relative grid gap-8 md:grid-cols-12 md:items-center md:gap-10 lg:gap-12">
+              <div class="md:col-span-5 lg:col-span-4">
+                <figure class="mx-auto max-w-xs md:mx-0">
+                  <img
+                    src="/images/equipe/Ilona_Crozes.jpeg"
+                    :alt="$t('soutien.member_spotlight_photo_alt')"
+                    class="aspect-[4/5] w-full rounded-2xl object-cover object-center shadow-lg ring-1 ring-night/10"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <figcaption class="mt-3 text-center text-sm text-night/50 md:text-left">
+                    <span class="font-semibold text-night">{{ $t('soutien.member_spotlight_name') }}</span>
+                    <span class="mt-0.5 block text-xs leading-snug">{{ $t('soutien.member_spotlight_role') }}</span>
+                  </figcaption>
+                </figure>
+              </div>
+              <div class="flex flex-col md:col-span-7 lg:col-span-8">
+                <span
+                  class="mb-3 inline-flex w-fit items-center gap-2 rounded-full bg-forest/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-forest"
+                >
+                  {{ $t('soutien.member_spotlight_kicker') }}
+                </span>
+                <blockquote
+                  class="mb-6 border-l-4 border-leaf pl-4 text-lg font-serif leading-relaxed text-night md:text-xl md:pl-5"
+                >
+                  <p class="text-pretty">{{ $t('soutien.member_spotlight_quote') }}</p>
+                </blockquote>
+                <div class="mb-6 h-px w-full max-w-md bg-night/10" />
+                <div class="flex flex-wrap items-center gap-3 md:gap-4">
+                  <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-forest/10 text-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-forest group-hover:text-white">
+                    🤝
+                  </div>
+                  <div class="min-w-0 flex-1">
+                    <h3 class="font-serif text-xl font-bold text-night">
+                      {{ $t('soutien.adherer_title') }}
+                    </h3>
+                    <p class="mt-1 text-sm leading-relaxed text-night/55">
+                      {{ $t('soutien.adherer_text') }}
+                    </p>
+                  </div>
+                </div>
+                <a
+                  href="https://www.helloasso.com/associations/akuu/adhesions/adhesion-annuelle"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="mt-6 inline-flex w-fit items-center gap-2 text-sm font-semibold text-forest transition-all group-hover:gap-3"
+                >
+                  {{ $t('soutien.adherer_cta') }}
+                  <svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
+                  </svg>
+                </a>
+              </div>
             </div>
           </div>
+
+          <div class="grid gap-6 md:grid-cols-2">
 
           <!-- Bénévole -->
           <div class="fade-in-up group relative bg-forest rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden text-white">
@@ -200,6 +255,7 @@
             </div>
           </div>
 
+          </div>
         </div>
       </div>
     </section>

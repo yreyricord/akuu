@@ -63,7 +63,7 @@
     <!-- Acteurs -->
     <section class="section-padding bg-cream">
       <div class="container-narrow">
-        <div class="text-center mb-12 fade-in-up">
+        <div class="text-center mb-8 fade-in-up">
           <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">{{ $t('musee.actors_kicker') }}</p>
           <h2 class="text-3xl md:text-4xl font-serif font-bold text-night">{{ $t('musee.actors_title') }}</h2>
         </div>
@@ -144,7 +144,7 @@
     <!-- Progress tracker -->
     <section class="section-padding bg-white">
       <div class="container-narrow">
-        <div class="text-center mb-14 fade-in-up">
+        <div class="text-center mb-10 fade-in-up">
           <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">{{ $t('musee.progress_kicker') }}</p>
           <h2 class="text-3xl md:text-4xl font-serif font-bold text-night">{{ $t('musee.progress_title') }}</h2>
         </div>
@@ -164,7 +164,7 @@
     <!-- Parcours + espaces (texte unifié + coupe interactive) -->
     <section class="section-padding bg-cream">
       <div class="container-narrow">
-        <div class="max-w-3xl mx-auto text-center mb-10 md:mb-12 fade-in-up">
+        <div class="max-w-3xl mx-auto text-center mb-8 md:mb-10 fade-in-up">
           <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">
             {{ $t('musee.coupe_path_kicker') }}
           </p>
@@ -186,7 +186,7 @@
     <!-- Durée et tarifs, puis plans du musée -->
     <section class="section-padding bg-white">
       <div class="container-narrow">
-        <div class="mb-12 md:mb-14 pb-12 md:pb-14 border-b border-night/10">
+        <div class="mb-8 md:mb-10 pb-8 md:pb-10 border-b border-night/10">
           <MuseeSectionWithSideVisual
             v-bind="museeSectionLayout.visit"
             visual-src="/images/puerto_miguel.jpg"
@@ -207,7 +207,7 @@
           </MuseeSectionWithSideVisual>
         </div>
 
-        <div class="text-center md:text-left mb-10 fade-in-up max-w-3xl md:max-w-none">
+        <div class="text-center md:text-left mb-8 fade-in-up max-w-3xl md:max-w-none">
           <p class="text-night/40 text-xs font-semibold uppercase tracking-widest mb-3">{{ $t('musee.plans_kicker') }}</p>
           <h2 class="text-3xl md:text-4xl font-serif font-bold text-night mb-4">
             {{ $t('musee.plans_title') }}
