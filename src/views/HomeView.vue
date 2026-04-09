@@ -4,6 +4,7 @@
     <MissionSection />
     <HomeAnniversaryBanner />
     <ProjetHighlight />
+    <ForestScrollScene />
     <DonSection />
     <SocialSection />
     <PartenairesSection />
@@ -19,6 +20,7 @@ import ProjetHighlight from '@/components/home/ProjetHighlight.vue'
 import DonSection from '@/components/home/DonSection.vue'
 import SocialSection from '@/components/home/SocialSection.vue'
 import PartenairesSection from '@/components/home/PartenairesSection.vue'
+import ForestScrollScene from '@/components/shared/ForestScrollScene.vue'
 
 let observer = null
 
