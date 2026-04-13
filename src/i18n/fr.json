@@ -122,7 +122,8 @@
     "title": "Soutenez nos actions",
     "text": "Chaque don contribue à la préservation de l'Amazonie en soutenant les communautés locales, les mieux placées pour en protéger les équilibres écologiques et la richesse culturelle.",
     "cta": "Faire un don",
-    "tax_info": "66% de votre don est déductible de vos impôts"
+    "tax_info": "66% de votre don est déductible de vos impôts",
+    "badge": "Chaque don compte"
   },
   "social": {
     "title": "Suivez-nous",
@@ -461,7 +462,8 @@
         "title": "Gestion des déchets",
         "description": "Recyclage plastique Precious Plastic, collecte vers Nauta, poubelles de tri et exposition Planet'AKUU, mission 2019 avec Grenoble INP ENSE3."
       }
-    }
+    },
+    "empty_state": "Aucun projet dans cette catégorie."
   },
   "musee": {
     "hero_title": "Musée Shapishiko",
@@ -1049,7 +1051,8 @@
     "newsletter_submit": "S'inscrire",
     "newsletter_success": "Merci ! Nous vous tiendrons informés.",
     "newsletter_error": "Envoi impossible. Réessayez depuis le site en ligne ou contactez-nous par email.",
-    "newsletter_honeypot": "Ne pas remplir"
+    "newsletter_honeypot": "Ne pas remplir",
+    "location_short": "Puerto Miguel · France"
   },
   "gestion_dechets": {
     "hero_title": "Gestion des déchets à Puerto Miguel",
@@ -1088,5 +1091,30 @@
     "reste_title": "Ce qui reste",
     "reste_p1": "À la fin de la mission, les deux machines sont en place, le cycle de collecte vers Nauta est lancé, et les poubelles de tri sont installées. Le projet a été soutenu par la Fondation INP et a fait l'objet d'une campagne de financement participatif couronnée de succès.",
     "reste_p2": "Ce projet compte parmi les plus concrets menés par AKUU à Puerto Miguel : une solution née d'un problème réel, co-construite avec les habitants lors de la mission 2019."
+  },
+  "cta_banner": {
+    "badge": "Agir maintenant",
+    "tax_deduction": "66 % de votre don déductible des impôts",
+    "stat_years": "ans",
+    "stat_years_label": "sur le terrain",
+    "stat_villages": "villages",
+    "stat_benevoles": "bénévoles"
+  },
+  "lightbox": {
+    "close": "Fermer",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "photo_n": "Photo {n}"
+  },
+  "a11y": {
+    "menu": "Menu",
+    "breadcrumb": "Fil d'Ariane"
+  },
+  "breadcrumb": {
+    "casa_akuu": "La Casa AKUU",
+    "hydrama": "HYDR'AMA",
+    "akuuvision": "AKUUVision",
+    "gestion_dechets": "Gestion des déchets",
+    "cours_anglais": "Cours d'anglais"
   }
 }

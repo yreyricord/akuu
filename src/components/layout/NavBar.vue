@@ -55,7 +55,7 @@
           :class="scrolled || menuOpen ? 'text-night hover:bg-gray-100' : 'text-white hover:bg-white/10'"
           :aria-expanded="menuOpen"
           aria-controls="mobile-menu"
-          aria-label="Menu"
+          :aria-label="$t('a11y.menu')"
         >
           <svg v-if="!menuOpen" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />

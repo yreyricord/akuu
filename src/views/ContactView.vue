@@ -178,7 +178,7 @@
             <div class="card overflow-hidden">
               <div class="p-4 bg-forest/5">
                 <h3 class="font-serif font-bold text-night text-sm mb-1">{{ $t('contact.find_us') }}</h3>
-                <p class="text-xs text-night/40">Puerto Miguel, Loreto, Pérou</p>
+                <p class="text-xs text-night/40">{{ $t('contact.map_caption') }}</p>
               </div>
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d10943.450983960287!2d-73.43265239704242!3d-4.540510391254221!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sfr!2sfr!4v1775551587864!5m2!1sfr!2sfr"

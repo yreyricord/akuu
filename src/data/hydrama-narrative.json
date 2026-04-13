@@ -178,5 +178,125 @@
     "video_intro": "Otras imágenes, con material rodado junto a WindAid, complementan el vídeo de síntesis siguiente.",
     "join_title": "Unirse a la aventura",
     "join_p1": "Para el relanzamiento de Hydr’Ama u otros frentes de AKUU, encajamos competencias con necesidades reales: escríbenos para conversarlo."
+  },
+  "pt": {
+    "sections": [
+      {
+        "title": "Um desafio energético no coração da Amazônia",
+        "paragraphs": [
+          "Ao longo do rio Amazonas e de seus afluentes, centenas de comunidades vivem até hoje em isolamento profundo. Longe de qualquer rede elétrica nacional, dependem de grupos geradores a diesel para iluminação, equipamentos coletivos e atividades econômicas — energia cara, poluente e de fornecimento incerto. Diante desse diagnóstico, compartilhado com os moradores de Puerto Miguel e das comunidades vizinhas, a AKUU imaginou uma resposta à altura do desafio: captar a energia diretamente da força do grande rio."
+        ]
+      },
+      {
+        "title": "Um projeto nascido de uma parceria entre duas associações",
+        "paragraphs": [
+          "O Hydr'Ama é fruto da colaboração entre a AKUU e o WindAid Institute, uma ONG sediada em Trujillo, no Peru, especializada no desenvolvimento e na implementação de tecnologias de energias renováveis (turbinas eólicas) em comunidades isoladas. Essa parceria está no cerne da identidade da AKUU desde a sua fundação em 2016.",
+          "A ambição do projeto é clara: conceber, construir e instalar uma turbina hidrocinética no rio Amazonas, capaz de produzir eletricidade limpa só com a força da correnteza."
+        ]
+      },
+      {
+        "title": "Da concepção na França à oficina em Trujillo",
+        "paragraphs": [
+          "Durante a fase de concepção da hidroturbina em código aberto, várias restrições essenciais foram consideradas: a baixa velocidade das correntezas, as cheias sazonais e a necessidade de conceber e fabricar todas as peças localmente no Peru, com técnicas acessíveis (bobinagem, enrolamento manual). Também se deu atenção especial à redução do impacto sobre a vida aquática.",
+          "Em Trujillo, em colaboração com a WindAid, a AKUU concebeu o conjunto da hidroturbina, das peças ao rotor, e realizou testes em rio até obter um protótipo validado. O objetivo: desenvolver uma máquina robusta, reproduzível e adaptada aos meios disponíveis em campo."
+        ]
+      },
+      {
+        "title": "Uma comunidade escolhida, uma mobilização coletiva",
+        "paragraphs": [
+          "O local foi escolhido antes mesmo do fim da montagem, com base em critérios precisos: velocidade da correnteza medida, proximidade da água e das moradias, viabilidade técnica e, sobretudo, adesão das autoridades locais e das famílias. Vista Alegre, vizinha à comunidade-piloto da AKUU em Puerto Miguel, reuniu todas essas condições.",
+          "Em campo, o compromisso com as comunidades ganhou todo o sentido: os moradores das duas localidades coconstruíram a plataforma a partir dos planos fornecidos pela equipe técnica. Duas semanas de trabalho coletivo permitiram tanto a montagem da instalação quanto a transmissão dos gestos essenciais de manutenção."
+        ]
+      },
+      {
+        "title": "O aval verde das autoridades regionais",
+        "paragraphs": [
+          "Além da obra, um reconhecimento oficial era indispensável numa região onde as questões ligadas à água, ao meio ambiente e aos direitos dos povos indígenas são particularmente sensíveis. O aval das autoridades de Loreto legitimou o projeto, muito além do interesse técnico."
+        ]
+      },
+      {
+        "title": "De volta ao campo: medições e confiança",
+        "paragraphs": [
+          "Patrice, Amandine e Valentin realizaram uma missão de acompanhamento no local: instrumentar a hidroturbina em condições reais, confrontar os modelos teóricos com os dados medidos e reforçar a relação de confiança com a comunidade de Vista Alegre. Os dados coletados seguem alimentando hoje as iterações de concepção.",
+          "Em paralelo, outra equipe, treinada pela WindAid nos protocolos de avaliação comunitária, mapeou várias comunidades candidatas e identificou contatos locais capazes de apoiar uma eventual replicação, sem duplicar o trabalho já em curso no local piloto."
+        ]
+      },
+      {
+        "title": "Uma tecnologia open source a serviço de todos",
+        "paragraphs": [
+          "Desde o início, a AKUU optou pela transparência e pelo compartilhamento. Toda a documentação técnica do projeto Hydr'Ama (cálculos de modelagem, plantas de construção, resultados de testes e opções de concepção) foi reunida em um dossiê livremente acessível. Qualquer pessoa interessada pode solicitá-lo e receber um link de compartilhamento."
+        ]
+      },
+      {
+        "title": "O que esse projeto significa",
+        "paragraphs": [
+          "O Hydr'Ama não é só um projeto de engenharia. É a demonstração de que uma pequena associação estudantil, munida de competências técnicas e de uma parceria sólida, pode trazer respostas concretas a desafios energéticos que os grandes atores do desenvolvimento muitas vezes não alcançam.",
+          "É também a prova de que a transição energética não se faz contra as populações, mas com elas — desde que se reserve tempo para ouvi-las, sentar ao lado delas e construir junto."
+        ]
+      }
+    ],
+    "video_intro": "Outras imagens, incluindo sequências feitas com a WindAid, completam o vídeo de síntese abaixo.",
+    "join_title": "Entrar na aventura",
+    "join_p1": "Para o relançamento do Hydr'Ama ou para outros eixos da associação, aliamos competências a necessidades reais: escreva para conversarmos."
+  },
+  "de": {
+    "sections": [
+      {
+        "title": "Eine energetische Herausforderung im Herzen Amazoniens",
+        "paragraphs": [
+          "Entlang des Amazonas und seiner Nebenflüsse leben Hunderte von Dörfern noch heute in tiefer Abgeschiedenheit. Fernab jedes nationalen Stromnetzes sind sie bei Beleuchtung, Gemeinschaftsausrüstung und wirtschaftlichen Aktivitäten auf Dieselgeneratoren angewiesen – teure, umweltschädliche Energie mit unsicherer Versorgung. Angesichts dieser Situation, geteilt mit den Bewohnern von Puerto Miguel und benachbarter Dörfer, erdachte AKUU eine Antwort, die der Herausforderung gewachsen ist: Energie direkt aus der Kraft des großen Flusses gewinnen."
+        ]
+      },
+      {
+        "title": "Ein Projekt aus der Partnerschaft zweier Vereine",
+        "paragraphs": [
+          "Hydr'Ama entstand aus der Zusammenarbeit zwischen AKUU und WindAid Institute, einer peruanischen NGO mit Sitz in Trujillo, die auf Entwicklung und Einsatz erneuerbarer Energietechnologien (Windkraftanlagen) in abgelegenen Gemeinschaften spezialisiert ist. Diese Partnerschaft steht seit der Gründung 2016 im Zentrum der Identität von AKUU.",
+          "Das Ziel des Projekts ist klar: eine Flussturbine am Amazonas entwerfen, bauen und installieren, die sauberen Strom allein aus der Kraft der Strömung erzeugen kann."
+        ]
+      },
+      {
+        "title": "Vom Entwurf in Frankreich zur Werkstatt in Trujillo",
+        "paragraphs": [
+          "Bei der Entwurfsphase der Open-Source-Flussturbine wurden mehrere wesentliche Randbedingungen berücksichtigt: geringe Strömungsgeschwindigkeiten, saisonale Hochwasser sowie die Notwendigkeit, alle Teile vor Ort in Peru mit zugänglichen Techniken (Wickeln, Handwalzen) zu konstruieren und herzustellen. Besonderes Augenmerk galt auch der Verringerung der Auswirkungen auf das Wasserleben.",
+          "In Trujillo entwarf AKUU in Zusammenarbeit mit WindAid die gesamte Turbine, von den Einzelteilen bis zum Rotor, und führte Flusstests durch, bis ein validierter Prototyp vorlag. Das Ziel: eine robuste, reproduzierbare Maschine, angepasst an die vor Ort verfügbaren Mittel."
+        ]
+      },
+      {
+        "title": "Ein Dorf ausgewählt, eine Gemeinschaft mobilisiert",
+        "paragraphs": [
+          "Der Standort wurde noch vor Ende der Montage anhand klarer Kriterien ausgewählt: gemessene Strömungsgeschwindigkeit, Nähe zum Wasser und zu den Häusern, technische Machbarkeit und vor allem die Zustimmung lokaler Behörden und Familien. Vista Alegre, Nachbardorf des AKUU-Pilotdorfes Puerto Miguel, erfüllte alle diese Voraussetzungen.",
+          "Vor Ort nahm das Engagement \u201Emit den Gemeinschaften\u201C seine volle Bedeutung an: Die Bewohner beider Dörfer bauten die Plattform gemeinsam nach den Plänen des Technikteams. Zwei Wochen kollektiver Arbeit umfassten sowohl die Montage der Anlage als auch die Vermittlung grundlegender Betriebs- und Wartungspraktiken."
+        ]
+      },
+      {
+        "title": "Grünes Licht von den Regionalbehörden",
+        "paragraphs": [
+          "Über die Baustelle hinaus war eine offizielle Anerkennung in einer Region unerlässlich, in der Fragen zu Wasser, Umwelt und den Rechten indigener Völker besonders sensibel sind. Die Genehmigung durch die Behörden von Loreto legitimierte das Projekt weit über seinen rein technischen Wert hinaus."
+        ]
+      },
+      {
+        "title": "Zurück im Feld: Messungen und Vertrauen",
+        "paragraphs": [
+          "Patrice, Amandine und Valentin führten einen Nachfolgeeinsatz vor Ort durch: die Flussturbine unter realen Bedingungen instrumentieren, theoretische Modelle mit gemessenen Daten abgleichen und die Vertrauensbeziehung zur Gemeinschaft von Vista Alegre stärken. Die gesammelten Daten fließen noch heute in die Entwurfsiterationen ein.",
+          "Parallel dazu kartierte ein weiteres Team, das von WindAid in Protokollen zur Gemeinschaftsbewertung geschult worden war, mehrere Kandidatendörfer und identifizierte lokale Ansprechpartner, die eine mögliche Nachbildung unterstützen könnten, ohne die bereits am Pilotstandort geleistete Arbeit zu duplizieren."
+        ]
+      },
+      {
+        "title": "Open-Source-Technologie für alle",
+        "paragraphs": [
+          "Von Beginn an entschied sich AKUU für Transparenz und Teilen. Die gesamte technische Dokumentation des Hydr'Ama-Projekts (Modellierungsberechnungen, Baupläne, Testergebnisse und Entwurfsentscheidungen) wurde in einem frei zugänglichen Dossier zusammengestellt. Jeder Interessierte kann Zugang beantragen und einen Freigabelink erhalten."
+        ]
+      },
+      {
+        "title": "Was dieses Projekt bedeutet",
+        "paragraphs": [
+          "Hydr'Ama ist mehr als ein Ingenieursprojekt. Es zeigt, dass ein kleiner studentischer Verein mit soliden technischen Fähigkeiten und Partnerschaften praktische Antworten auf Energieherausforderungen liefern kann, die große Entwicklungsakteure oft nicht erreichen.",
+          "Es ist auch der Beweis, dass die Energiewende nicht gegen die Menschen vollzogen wird, sondern mit ihnen – wenn man sich die Zeit nimmt, zuzuhören, sich an ihre Seite zu setzen und gemeinsam aufzubauen."
+        ]
+      }
+    ],
+    "video_intro": "Weitere Aufnahmen, darunter Material mit WindAid, ergänzen das zusammenfassende Video unten.",
+    "join_title": "Das Abenteuer miterleben",
+    "join_p1": "Ob für den Neustart von Hydr'Ama oder andere AKUU-Projekte: Wir verbinden Kompetenzen mit konkreten Bedürfnissen. Schreiben Sie uns, um darüber zu sprechen."
   }
 }

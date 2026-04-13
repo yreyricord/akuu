@@ -42,13 +42,14 @@ import NavBar from '@/components/layout/NavBar.vue'
 import ScrollProgressBar from '@/components/layout/ScrollProgressBar.vue'
 import Footer from '@/components/layout/Footer.vue'
 import { applyRouteDocumentSeo, injectOrganizationJsonLd } from '@/utils/documentSeo.js'
+import { HTML_LANG, DEFAULT_LOCALE } from '@/config/locales.js'
 
 const route = useRoute()
 const { locale, t, te } = useI18n()
 
 function syncHtmlLang () {
   const loc = locale.value
-  document.documentElement.lang = loc === 'en' ? 'en' : loc === 'es' ? 'es' : 'fr'
+  document.documentElement.lang = HTML_LANG[loc] ?? HTML_LANG[DEFAULT_LOCALE] ?? DEFAULT_LOCALE
 }
 
 function syncRouteSeo () {

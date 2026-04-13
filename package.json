@@ -17,6 +17,7 @@
     "postinstall": "node scripts/copy-wasm.js",
     "i18n:check": "node scripts/check-i18n-parity.mjs",
     "i18n:check-narratives": "node scripts/check-narrative-structure.mjs",
+    "i18n:audit": "node scripts/check-i18n-values.mjs",
     "test": "node --test scripts/__tests__/build-scripts.test.mjs"
   },
   "dependencies": {

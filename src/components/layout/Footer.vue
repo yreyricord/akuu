@@ -83,7 +83,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                   </svg>
                 </span>
-                <span class="text-[13.5px] text-white/55 leading-relaxed">Puerto Miguel · France</span>
+                <span class="text-[13.5px] text-white/55 leading-relaxed">{{ $t('footer.location_short') }}</span>
               </li>
             </ul>
           </div>
@@ -174,17 +174,14 @@
 <script setup>
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { UI_LANGUAGES } from '@/config/locales.js'
 
 const { locale } = useI18n()
 const newsletterEmail = ref('')
 const newsletterSent = ref(false)
 const newsletterError = ref(false)
 
-const languages = [
-  { code: 'fr', label: 'Français' },
-  { code: 'en', label: 'English' },
-  { code: 'es', label: 'Español' },
-]
+const languages = UI_LANGUAGES
 
 function switchLang(code) {
   locale.value = code

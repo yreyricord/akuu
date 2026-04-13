@@ -122,7 +122,8 @@
     "title": "Apoya nuestras acciones",
     "text": "Cada donación contribuye a preservar la Amazonía apoyando a las comunidades locales, las mejor situadas para proteger sus equilibrios ecológicos y su riqueza cultural.",
     "cta": "Hacer una donación",
-    "tax_info": "El 66% de tu donación es deducible de impuestos"
+    "tax_info": "El 66% de tu donación es deducible de impuestos",
+    "badge": "Cada donación cuenta"
   },
   "social": {
     "title": "Síguenos",
@@ -461,7 +462,8 @@
         "title": "Gestión de residuos",
         "description": "Reciclaje Precious Plastic, envío a Nauta, contenedores y exposición Planet'AKUU, misión 2019 con Grenoble INP ENSE3."
       }
-    }
+    },
+    "empty_state": "No hay proyectos en esta categoría."
   },
   "musee": {
     "hero_title": "Museo Shapishiko",
@@ -1049,7 +1051,8 @@
     "newsletter_submit": "Suscribirse",
     "newsletter_success": "¡Gracias! Le mantendremos informado.",
     "newsletter_error": "No se pudo enviar. Pruebe en el sitio publicado o escríbanos por correo.",
-    "newsletter_honeypot": "No rellenar"
+    "newsletter_honeypot": "No rellenar",
+    "location_short": "Puerto Miguel · Francia"
   },
   "gestion_dechets": {
     "hero_title": "Gestión de residuos en Puerto Miguel",
@@ -1088,5 +1091,30 @@
     "reste_title": "Lo que queda",
     "reste_p1": "Al término de la misión, las dos máquinas están instaladas, los envíos regulares a Nauta están en marcha y los contenedores de clasificación están colocados. El proyecto contó con el apoyo de la Fondation INP y con una campaña de micromecenazgo muy exitosa.",
     "reste_p2": "Este proyecto cuenta entre los más concretos impulsados por AKUU en Puerto Miguel: una respuesta a un problema real, co-construida con los habitantes durante la misión de 2019."
+  },
+  "cta_banner": {
+    "badge": "Actuar ahora",
+    "tax_deduction": "66% de tu donación es deducible de impuestos",
+    "stat_years": "años",
+    "stat_years_label": "en el terreno",
+    "stat_villages": "aldeas",
+    "stat_benevoles": "voluntarios"
+  },
+  "lightbox": {
+    "close": "Cerrar",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "photo_n": "Foto {n}"
+  },
+  "a11y": {
+    "menu": "Menú",
+    "breadcrumb": "Migas de pan"
+  },
+  "breadcrumb": {
+    "casa_akuu": "La Casa AKUU",
+    "hydrama": "HYDR'AMA",
+    "akuuvision": "AKUUVision",
+    "gestion_dechets": "Gestión de residuos",
+    "cours_anglais": "Clases de inglés"
   }
 }

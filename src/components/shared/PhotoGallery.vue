@@ -45,12 +45,12 @@
           class="fixed inset-0 z-[100] bg-night/95 flex items-center justify-center p-4"
           @click.self="closeLightbox"
         >
-          <button ref="closeBtn" @click="closeLightbox" class="absolute top-4 right-4 text-white/80 hover:text-white p-2" aria-label="Fermer">
+          <button ref="closeBtn" @click="closeLightbox" class="absolute top-4 right-4 text-white/80 hover:text-white p-2" :aria-label="t('lightbox.close')">
             <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
-          <button v-if="photos.length > 1" @click="prev" class="absolute left-4 text-white/80 hover:text-white p-2" aria-label="Précédent">
+          <button v-if="photos.length > 1" @click="prev" class="absolute left-4 text-white/80 hover:text-white p-2" :aria-label="t('lightbox.previous')">
             <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
@@ -60,7 +60,7 @@
             :alt="photos[currentIndex]?.alt || ''"
             class="max-w-full max-h-[85vh] object-contain rounded-lg"
           />
-          <button v-if="photos.length > 1" @click="next" class="absolute right-4 text-white/80 hover:text-white p-2" aria-label="Suivant">
+          <button v-if="photos.length > 1" @click="next" class="absolute right-4 text-white/80 hover:text-white p-2" :aria-label="t('lightbox.next')">
             <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
@@ -78,7 +78,7 @@
                 @click="currentIndex = i"
                 class="h-0.5 rounded-full transition-all duration-300"
                 :class="i === currentIndex ? 'w-6 bg-white' : 'w-2 bg-white/35 hover:bg-white/60'"
-                :aria-label="`Photo ${i + 1}`"
+                :aria-label="t('lightbox.photo_n', { n: i + 1 })"
               />
             </div>
           </div>
@@ -90,6 +90,9 @@
 
 <script setup>
 import { ref, nextTick } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const props = defineProps({
   photos: { type: Array, required: true },

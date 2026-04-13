@@ -122,7 +122,8 @@
     "title": "Support our actions",
     "text": "Every donation helps protect the Amazon by supporting local communities, who are best placed to safeguard its ecological balance and cultural richness.",
     "cta": "Make a donation",
-    "tax_info": "66% of your donation is tax-deductible"
+    "tax_info": "66% of your donation is tax-deductible",
+    "badge": "Every donation counts"
   },
   "social": {
     "title": "Follow us",
@@ -461,7 +462,8 @@
         "title": "Waste management",
         "description": "Precious Plastic recycling, collection to Nauta, sorting bins and Planet'AKUU exhibition, 2019 mission with Grenoble INP ENSE3."
       }
-    }
+    },
+    "empty_state": "No projects in this category."
   },
   "musee": {
     "hero_title": "Shapishiko Museum",
@@ -1049,7 +1051,8 @@
     "newsletter_submit": "Subscribe",
     "newsletter_success": "Thank you! We'll keep you posted.",
     "newsletter_error": "Could not send. Try again on the live site or email us.",
-    "newsletter_honeypot": "Do not fill"
+    "newsletter_honeypot": "Do not fill",
+    "location_short": "Puerto Miguel · France"
   },
   "gestion_dechets": {
     "hero_title": "Waste management in Puerto Miguel",
@@ -1088,5 +1091,30 @@
     "reste_title": "What remains",
     "reste_p1": "At the end of the mission, both machines were in place, the collection loop to Nauta was running, and sorting bins had been installed. The project was supported by the INP Foundation and a successful crowdfunding campaign.",
     "reste_p2": "This project stands among the most tangible AKUU has carried out in Puerto Miguel: a response to a real need, co-built with residents during the 2019 mission."
+  },
+  "cta_banner": {
+    "badge": "Act now",
+    "tax_deduction": "66% of your donation is tax-deductible",
+    "stat_years": "years",
+    "stat_years_label": "on the ground",
+    "stat_villages": "villages",
+    "stat_benevoles": "volunteers"
+  },
+  "lightbox": {
+    "close": "Close",
+    "previous": "Previous",
+    "next": "Next",
+    "photo_n": "Photo {n}"
+  },
+  "a11y": {
+    "menu": "Menu",
+    "breadcrumb": "Breadcrumb"
+  },
+  "breadcrumb": {
+    "casa_akuu": "La Casa AKUU",
+    "hydrama": "HYDR'AMA",
+    "akuuvision": "AKUUVision",
+    "gestion_dechets": "Waste management",
+    "cours_anglais": "English classes"
   }
 }

@@ -4,7 +4,7 @@
     <MissionSection />
     <HomeAnniversaryBanner />
     <ProjetHighlight />
-    <DonSection />
+    <DonSection no-expand />
     <SocialSection />
     <PartenairesSection />
   </div>

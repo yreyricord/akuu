@@ -2,7 +2,7 @@
   <section class="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
     <!-- Breadcrumb -->
     <nav
-      aria-label="Fil d'Ariane"
+      :aria-label="$t('a11y.breadcrumb')"
       class="absolute bottom-4 left-0 right-0 z-20 px-4 md:px-8"
     >
       <ol class="flex items-center gap-1.5 text-xs text-white/60 max-w-6xl mx-auto">
@@ -78,11 +78,11 @@ const crumbMap = {
   '/volontaires':       { label: () => t('nav.volontaires') },
   '/soutenir':          { label: () => t('nav.soutenir') },
   '/contact':           { label: () => t('nav.contact') },
-  '/casa-akuu':         { label: () => 'La Casa AKUU',          parent: projetsParent },
-  '/hydrama':           { label: () => "HYDR'AMA",              parent: projetsParent },
-  '/akuuvision':        { label: () => 'AKUUVision',            parent: projetsParent },
-  '/gestion-dechets':   { label: () => 'Gestion des déchets',   parent: projetsParent },
-  '/cours-anglais':     { label: () => "Cours d'anglais",       parent: projetsParent },
+  '/casa-akuu':         { label: () => t('breadcrumb.casa_akuu'),       parent: projetsParent },
+  '/hydrama':           { label: () => t('breadcrumb.hydrama'),         parent: projetsParent },
+  '/akuuvision':        { label: () => t('breadcrumb.akuuvision'),      parent: projetsParent },
+  '/gestion-dechets':   { label: () => t('breadcrumb.gestion_dechets'), parent: projetsParent },
+  '/cours-anglais':     { label: () => t('breadcrumb.cours_anglais'),   parent: projetsParent },
 }
 
 const breadcrumbs = computed(() => {

@@ -106,7 +106,7 @@
             </p>
           </div>
 
-          <!-- Widget HelloAsso (langue dynamique) -->
+          <!-- Widget HelloAsso (langue via getHelloAssoWidgetLang + ?lang= sur l’URL) -->
           <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
             <iframe
               ref="haWidget"
@@ -288,6 +288,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useDataStore } from '@/store'
+import { getHelloAssoWidgetLang } from '@/config/locales.js'
 import PartnerCard from '@/components/shared/PartnerCard.vue'
 
 const store = useDataStore()
@@ -301,11 +302,11 @@ const taxReduction = computed(() => Math.round(annualAmount.value * 0.66))
 const realCost = computed(() => annualAmount.value - taxReduction.value)
 const realCostMonthly = computed(() => Math.round((realCost.value / 12) * 100) / 100)
 
-// Langue du widget HelloAsso : fr pour français, en pour tout le reste
-const widgetLang = computed(() => locale.value === 'fr' ? 'fr' : 'en')
-const widgetSrc = computed(() =>
-  `https://www.helloasso.com/associations/akuu/formulaires/1/widget?view=form&lang=${widgetLang.value}`
-)
+// HelloAsso : voir getHelloAssoWidgetLang() dans src/config/locales.js
+const widgetSrc = computed(() => {
+  const lang = getHelloAssoWidgetLang(locale.value)
+  return `https://www.helloasso.com/associations/akuu/formulaires/1/widget?view=form&lang=${lang}`
+})
 
 const stats = [
   { id: 'years', value: '10 ans', labelKey: 'soutien.stat_terrain' },

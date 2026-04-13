@@ -1,0 +1,161 @@
+{
+  "hydrama": {
+    "hero_title": "HYDR'AMA",
+    "hero_subtitle": "A energia do rio a serviço das comunidades amazônicas",
+    "suspended_notice": "Em pausa desde a COVID (financiamento). A linha do tempo resume as datas principais; as seções abaixo aprofundam a história e o sentido do projeto.",
+    "timeline_kicker": "Cronologia",
+    "timeline_title": "Hydr'Ama ao longo dos anos",
+    "timeline_steps": {
+      "utc_2017": {
+        "label": "2017 · UTC Compiègne",
+        "items": [
+          "Projeto sob medida, turbina adaptada às restrições do rio: correnteza fraca, variação sazonal, isolamento logístico."
+        ]
+      },
+      "trujillo": {
+        "label": "Fev. a jun. 2018 · Oficinas WindAid, Trujillo",
+        "items": [
+          "Fabricação em oficina junto aos técnicos WindAid. Peças, rotor, testes em tanque. Materiais disponíveis localmente, montagem totalmente manual."
+        ]
+      },
+      "turbine_ready": {
+        "label": "Jun. 2018 · Protótipo entregue",
+        "items": ["Primeira turbina hidrocinética AKUU e WindAid concluída."]
+      },
+      "vista_install": {
+        "label": "Jul. 2018 · Vista Alegre",
+        "items": [
+          "Transporte até a Amazônia. Plataforma flutuante coconstruída com moradores de Puerto Miguel e Vista Alegre. Formação em manutenção. Sinalização luminosa integrada."
+        ]
+      },
+      "loreto": {
+        "label": "Fim de 2018 · Região Loreto",
+        "items": ["Autorização oficial para instalação nas águas do rio Amazonas."]
+      },
+      "field_2019": {
+        "label": "2019 · Missão de acompanhamento",
+        "items": [
+          "Testes em condições reais. Medições de desempenho, identificação de novas comunidades candidatas."
+        ]
+      },
+      "suspendu": {
+        "label": "Desde 2020 · Em pausa",
+        "items": [
+          "Interrompido pela COVID. Relançamento a estruturar: dados e documentação open source disponíveis."
+        ]
+      }
+    },
+    "caption_groupe": "Grupo gerador a diesel em Puerto Miguel",
+    "caption_rotor": "Rotor da turbina hidrocinética",
+    "caption_chaine": "Corrente de transmissão",
+    "caption_plateforme": "Turbina hidrocinética na plataforma",
+    "caption_windaid": "Realização com o WindAid Institute",
+    "caption_vista": "Turbina e comunidade em Vista Alegre",
+    "video_title": "HYDR'AMA em vídeo",
+    "video_windaid_facebook_line1": "WindAid Institute",
+    "video_windaid_facebook_line2": "Página no Facebook · abre numa nova aba",
+    "video_windaid_facebook_aria": "WindAid Institute, página no Facebook, nova aba",
+    "join_cta_volunteers": "Torne-se um voluntário",
+    "join_cta_contact": "Fale conosco"
+  },
+  "gestion_dechets": {
+    "hero_title": "Gestão de resíduos em Puerto Miguel",
+    "hero_subtitle": "Precious Plastic · missão 2019 com Grenoble INP ENSE3",
+    "photo_01_kicker": "Foto 1, faixa",
+    "photo_01_expected": "Paisagem ampla (16:9): contexto do vilarejo e do rio, ou cena que evoque o desafio dos resíduos na Amazônia (sem colocar pessoas em risco).",
+    "photo_02_kicker": "Foto 2, o problema",
+    "photo_02_alt": "Resíduos plásticos e meio ambiente em Puerto Miguel",
+    "photo_02_expected": "Mostrar a falta de alternativas: queimadas, margens do rio, plásticos, sempre respeitando pessoas e normas locais.",
+    "photo_03_kicker": "Foto 3, o projeto em campo",
+    "photo_03_alt": "Estudantes de engenharia e moradores no projeto de resíduos",
+    "photo_03_expected": "Seis estudantes ENSE3 com a comunidade: reuniões, oficinas, coconstrução da resposta.",
+    "photo_04_kicker": "Foto 4, as máquinas",
+    "photo_04_alt": "Triturador e máquina de injeção Precious Plastic",
+    "photo_04_expected": "Triturador, injeção, flocos ou peças moldadas, equipamento operacional fabricado em Iquitos.",
+    "photo_05_kicker": "Foto 5, o circuito até Nauta",
+    "photo_05_alt": "Coleta e triagem, ligação com Nauta",
+    "photo_05_expected": "Barco para Nauta, lixeiras de triagem, autoridades ou voluntários em rota de coleta, o que torna o sistema visível.",
+    "photo_06_kicker": "Foto 6, conscientização",
+    "photo_06_alt": "Exposição Planet'AKUU no vilarejo",
+    "photo_06_expected": "Planet'AKUU: barracas, crianças na escola, demonstração das máquinas para todo o vilarejo.",
+    "probleme_title": "O problema",
+    "probleme_p1": "Em Puerto Miguel, como na maioria dos vilarejos isolados da bacia amazônica, não havia até 2019 sistema estruturado de coleta de resíduos. O plástico era muitas vezes queimado ou jogado no rio por falta de alternativa — risco sanitário real para os moradores e poluição direta de um dos ecossistemas mais preciosos do mundo.",
+    "projet_title": "O projeto",
+    "projet_p1": "Em 2019, seis estudantes de engenharia do Grenoble INP ENSE3 passaram três meses em Puerto Miguel para trabalhar essa questão com os moradores. Objetivo: uma solução concreta, viável com os meios disponíveis e duradoura após a partida da equipe.",
+    "projet_p2": "O projeto articulou dois eixos: construir máquinas para triturar e reciclar o plástico localmente, e organizar um circuito de coleta ligando o vilarejo a um centro de triagem regional.",
+    "machines_title": "As máquinas",
+    "machines_p1": "A equipe usou os desenhos open source do movimento Precious Plastic — máquinas de reciclagem de baixo custo construíveis no local. Duas máquinas foram fabricadas em Iquitos com os materiais disponíveis.",
+    "machines_p2": "O triturador corta garrafas e resíduos plásticos em flocos. A máquina de injeção funde os flocos e os molda em objetos reutilizáveis. Três moldes foram criados. As duas máquinas ficaram operacionais ao fim da missão e permaneceram no vilarejo.",
+    "cycle_title": "O circuito dos resíduos",
+    "cycle_p1": "Em paralelo, a equipe contatou Joël INGA, responsável ambiental da municipalidade de Nauta, a cidade mais próxima, a cerca de duas horas de barco. Uma reunião reuniu autoridades de Nauta e de Puerto Miguel. Acordo: o plástico do vilarejo seria enviado semanalmente ao centro de triagem de Nauta.",
+    "cycle_p2": "Puerto Miguel se comprometeu a construir lixeiras de triagem e organizar as rotas de coleta. Foi a primeira vez que um sistema estruturado de gestão de resíduos foi implantado ali.",
+    "sensi_title": "Conscientização",
+    "sensi_p1": "Para ancorar o projeto na comunidade, uma exposição de dois dias, Planet'AKUU, foi organizada no vilarejo: oficinas educativas e lúdicas sobre o ciclo de vida dos resíduos e a reciclagem do plástico, demonstrações das máquinas com os moradores. Alunos pela manhã, todo o vilarejo à tarde.",
+    "sensi_p2": "Um evento semelhante também ocorreu em Iquitos para apresentar o projeto a um público mais amplo e reforçar a visibilidade regional.",
+    "reste_title": "O que permanece",
+    "reste_p1": "Ao fim da missão, as duas máquinas estavam instaladas, o circuito de coleta para Nauta funcionando e as lixeiras de triagem colocadas. O projeto contou com o apoio da Fundação INP e uma campanha de financiamento coletivo bem-sucedida.",
+    "reste_p2": "Este projeto está entre os mais concretos realizados pela AKUU em Puerto Miguel: resposta a uma necessidade real, coconstruída com os moradores durante a missão de 2019."
+  },
+  "akuuvision": {
+    "intro_kicker": "Realidade aumentada",
+    "video_kicker": "Vídeo",
+    "hero_title": "AKUUVision",
+    "hero_subtitle": "Descobrir a Amazônia de outro jeito com um app de realidade aumentada",
+    "what_title": "O que é a AKUUVision?",
+    "what_para1": "A AKUUVision é um aplicativo de realidade aumentada desenvolvido pela AKUU para fazer descobrir a Amazônia de outra forma. Partindo do fato de que a floresta continua abstrata para a maioria das pessoas, a associação quis criar uma ferramenta concreta, acessível a todos.",
+    "what_para2": "O projeto toma a forma de um app que combina fotos de campo, depoimentos de moradores e imersão nas paisagens da floresta e do rio. Ao escanear materiais físicos em eventos, os visitantes acessam conteúdos trazidos diretamente de Puerto Miguel: rostos, vozes, vegetação, água. Uma forma de tornar tangível o que acontece a milhares de quilômetros.",
+    "what_para3": "A AKUUVision foi apresentada em vários eventos de conscientização, incluindo o festival Climax em Bordeaux e o Imaginarium Festival da UTC Compiègne. O projeto também foi exposto no campus de Grenoble no âmbito do IDEX Université Grenoble Alpes. Em 2019, venceu o concurso nacional PIEED em Paris.",
+    "video_title": "AKUUVision em vídeo",
+    "diffusion_title": "Difusão e reconhecimento",
+    "diffusion_1_title": "Festivais e grande público",
+    "diffusion_1_text": "Climax em Bordeaux, Imaginarium Festival da UTC Compiègne e outros eventos de conscientização.",
+    "diffusion_2_title": "Campus e IDEX",
+    "diffusion_2_text": "Exposição no campus universitário de Grenoble no âmbito do IDEX Université Grenoble Alpes.",
+    "diffusion_3_title": "Concurso PIEED",
+    "diffusion_3_text": "Em 2019, o projeto vence o concurso nacional PIEED em Paris."
+  },
+  "casa_akuu": {
+    "hero_title": "A Casa AKUU",
+    "hero_subtitle": "Uma âncora permanente em Puerto Miguel",
+    "photo_01_kicker": "Foto 1, faixa",
+    "photo_01_expected": "Grande imagem paisagem (ideal 16:9, ≥ 1920 px): visão geral da Casa AKUU e/ou de Puerto Miguel, fachada, caminho, rio ou floresta ao fundo. Luz suave (manhã ou fim de tarde), poucas pessoas ou silhuetas para escala.",
+    "photo_02_kicker": "Foto 2, introdução",
+    "photo_02_alt": "Vida compartilhada em torno da Casa AKUU em Puerto Miguel",
+    "photo_02_expected": "Cena de vida: moradores e voluntários perto da Casa (varanda, sala comum ou exterior), trocas, convívio. Formato 4:3 ou 16:9, olhar humano em vez de prédio vazio.",
+    "photo_03_kicker": "Foto 3, construção e equipamentos",
+    "photo_03_alt": "Construção, inauguração ou equipamentos da Casa AKUU",
+    "photo_03_expected": "Escolher entre: obra ou estrutura em andamento (2017–2018), momento da inauguração (março de 2018), detalhe dos painéis solares, cisternas ou sistema de captação de água da chuva, ou espaço de oficina / sala comum em uso.",
+    "photo_04_kicker": "Foto 4, renovação",
+    "photo_04_alt": "Obras de renovação ou Casa AKUU recuperada",
+    "photo_04_expected": "Ilustrar a retomada pós-COVID: sanitários, energia solar, telhado, arranjos interiores, quartos ou cozinha, foto de obra ou resultado final (idealmente 2024–2025).",
+    "photo_05_kicker": "Foto 5, o que a Casa torna possível",
+    "photo_05_alt": "Projetos e encontros na Casa AKUU",
+    "photo_05_expected": "Ação concreta: máquinas de reciclagem, oficina ligada ao museu Shapishiko, voluntários em serviço cívico, ou momento de transmissão entre voluntários internacionais e moradores. Mostrar o vínculo humano.",
+    "intro": "A Casa AKUU é a casa comunitária do vilarejo de Puerto Miguel. É um lugar de vida compartilhada entre voluntários e moradores, onde todos convivem, trocam ideias e levantam as questões do dia a dia. Dessas trocas nasceram todos os projetos da AKUU: aulas de inglês, gestão de resíduos, energia solar, museu.",
+    "construction_title": "Construção e inauguração",
+    "construction_p1": "A construção da Casa AKUU começa em 2017, nas primeiras missões de campo. Em março de 2018, a casa é inaugurada na presença dos moradores de Puerto Miguel e dos voluntários no local. Logo após, começam as aulas de inglês, os primeiros projetos decolam e o vilarejo torna-se de fato a base operacional da associação.",
+    "construction_p2": "Pensada desde o início como espaço compartilhado, a Casa AKUU é ao mesmo tempo moradia dos voluntários, oficina para projetos técnicos e sala comum aberta aos moradores. Rapidamente recebe painéis solares para a eletricidade — inclusive para as aulas noturnas — e um sistema de captação e filtragem da água da chuva.",
+    "renovation_title": "Uma renovação progressiva",
+    "renovation_p1": "Inaugurada em 2017, a Casa AKUU ficou desocupada durante os anos da COVID. Na retomada das missões, foram necessárias obras para colocá-la de volta em condições: sanitários, eletricidade solar, telhado, arranjos interiores.",
+    "renovation_p2": "Em 2025, a casa retoma plenamente seu papel de base de vida e de trabalho dos voluntários em Puerto Miguel.",
+    "possible_title": "O que a Casa AKUU torna possível",
+    "possible_p1": "A casa comunitária é muito mais que hospedagem. É o ponto de partida de cada projeto da AKUU em Puerto Miguel: ali foram montadas as máquinas de reciclagem, os voluntários em serviço cívico vivem e trabalham, os artistas locais vêm para oficinas ligadas ao Museu Shapishiko.",
+    "possible_p2": "É também um espaço de encontro entre voluntários internacionais e moradores do vilarejo — onde se transmitem saberes, se constroem vínculos e cada missão deixa algo concreto.",
+    "video_title": "A Casa AKUU em vídeo"
+  },
+  "cours_anglais": {
+    "hero_title": "Aulas de inglês em Puerto Miguel",
+    "hero_subtitle": "Dar aos moradores as chaves do inglês para participar do ecoturismo em seu território",
+    "suspended_notice": "Este projeto está suspenso desde a COVID por falta de recursos financeiros. O relançamento está em preparação.",
+    "caption_contexte": "Puerto Miguel e a vida do vilarejo à beira do rio",
+    "caption_programme": "Lançamento do programa com voluntários AKUU em campo",
+    "caption_groupes": "Aulas e atividades com os grupos de aprendizes",
+    "caption_continuite": "Trocas e pedagogia no dia a dia na Casa AKUU",
+    "caption_resultats": "Aprendizagem coletiva e vínculo com a comunidade",
+    "impact_kicker": "Números-chave",
+    "impact_title": "Em resumo",
+    "impact_1": "Aprendizes alcançados pelo programa",
+    "impact_2": "Voluntários professores envolvidos",
+    "impact_3": "Período ativo antes da pausa"
+  }
+}

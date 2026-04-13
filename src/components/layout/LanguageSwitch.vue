@@ -36,9 +36,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { onClickOutside } from '@vueuse/core'
+import { UI_LANGUAGES } from '@/config/locales.js'
 
 defineProps({
   transparent: { type: Boolean, default: false }
@@ -50,18 +51,15 @@ const dropdownRef = ref(null)
 
 onClickOutside(dropdownRef, () => { open.value = false })
 
-const languages = [
-  { code: 'fr', flag: '🇫🇷', label: 'Français' },
-  { code: 'en', flag: '🇬🇧', label: 'English' },
-  { code: 'es', flag: '🇪🇸', label: 'Español' }
-]
+const languages = UI_LANGUAGES
 
-const currentFlag = ref(languages.find(l => l.code === locale.value)?.flag || '🇫🇷')
+const currentFlag = computed(() =>
+  languages.find((l) => l.code === locale.value)?.flag ?? '🇫🇷'
+)
 
 function switchLang(code) {
   locale.value = code
   localStorage.setItem('akuu-locale', code)
-  currentFlag.value = languages.find(l => l.code === code).flag
   open.value = false
 }
 </script>

@@ -1,11 +1,6 @@
 import { getSiteOrigin, DEFAULT_OG_IMAGE_PATH } from '@/config/site.js'
 import { HREFLANG_ALTERNATES_ENABLED } from '@/config/seoLocalePolicy.js'
-
-const OG_LOCALES = {
-  fr: 'fr_FR',
-  en: 'en_US',
-  es: 'es_ES'
-}
+import { OG_LOCALE_TAGS, DEFAULT_LOCALE, I18N_LOCALES } from '@/config/locales.js'
 
 function ensureMeta (attr, key, content) {
   let el = document.head.querySelector(`meta[${attr}="${key}"]`)
@@ -80,7 +75,7 @@ export function injectOrganizationJsonLd () {
         url: origin,
         name: 'AKUU',
         publisher: { '@id': `${origin}/#organization` },
-        inLanguage: ['fr', 'en', 'es']
+        inLanguage: [...I18N_LOCALES]
       }
     ]
   }
@@ -93,7 +88,7 @@ export function injectOrganizationJsonLd () {
 export function applyRouteDocumentSeo ({ title, description, path, locale }) {
   const origin = getSiteOrigin()
   const pageUrl = absoluteUrl(origin, path)
-  const ogLocale = OG_LOCALES[locale] || OG_LOCALES.fr
+  const ogLocale = OG_LOCALE_TAGS[locale] || OG_LOCALE_TAGS[DEFAULT_LOCALE]
   const imageUrl = new URL(DEFAULT_OG_IMAGE_PATH, `${origin}/`).href
 
   document.title = title
@@ -110,7 +105,9 @@ export function applyRouteDocumentSeo ({ title, description, path, locale }) {
   ensureMeta('property', 'og:site_name', 'AKUU')
 
   removeOgLocaleAlternates()
-  const alternates = Object.values(OG_LOCALES).filter((l) => l !== ogLocale)
+  const alternates = I18N_LOCALES.map((code) => OG_LOCALE_TAGS[code]).filter(
+    (l) => l && l !== ogLocale
+  )
   alternates.forEach((loc) => {
     const el = document.createElement('meta')
     el.setAttribute('property', 'og:locale:alternate')
@@ -126,11 +123,7 @@ export function applyRouteDocumentSeo ({ title, description, path, locale }) {
   document.head.querySelectorAll('link[data-akuu-hreflang="1"]').forEach((n) => n.remove())
   if (HREFLANG_ALTERNATES_ENABLED) {
     const originBase = origin
-    const langs = [
-      { code: 'fr', path: '/fr' },
-      { code: 'en', path: '/en' },
-      { code: 'es', path: '/es' }
-    ]
+    const langs = I18N_LOCALES.map((code) => ({ code, path: `/${code}` }))
     for (const { code, path: prefix } of langs) {
       const href = new URL(`${prefix}${path === '/' ? '' : path}`, `${originBase}/`).href
       const link = document.createElement('link')

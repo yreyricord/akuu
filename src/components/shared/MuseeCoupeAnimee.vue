@@ -22,12 +22,13 @@
       :style="stageStyle"
       :aria-label="$t('musee.coupe.title')"
     >
-      <div class="coupe-sticky sticky top-0 h-[100dvh] flex flex-col">
-        <div class="w-full max-w-7xl mx-auto flex flex-col flex-1 min-h-0">
+      <div class="coupe-sticky sticky top-0 h-[100dvh] flex flex-col justify-center py-4 md:py-6">
+        <div class="w-full max-w-7xl mx-auto flex flex-col min-h-0 max-h-full">
 
-          <!-- Plan : remplit tout l'espace disponible au-dessus de la card -->
+          <!-- Plan : aspect-ratio contraint pour coller à l'image -->
           <div
-            class="coupe-plan-wrapper relative w-full flex-1 min-h-0 bg-black/[0.02] overflow-hidden"
+            class="coupe-plan-wrapper relative w-full min-h-0 shrink bg-black/[0.02] overflow-hidden"
+            :style="{ aspectRatio: `${IMG_W} / ${IMG_H}` }"
           >
             <!-- Wrapper zoomable (img + SVG se transforment ensemble) -->
             <div class="coupe-zoomable absolute inset-0 flex items-center justify-center" :style="zoomStyle">
@@ -43,7 +44,7 @@
                 v-if="imageReady"
                 class="absolute inset-0 w-full h-full pointer-events-auto"
                 :viewBox="`0 0 ${IMG_W} ${IMG_H}`"
-                preserveAspectRatio="none"
+                preserveAspectRatio="xMidYMid meet"
                 xmlns="http://www.w3.org/2000/svg"
                 style="overflow: visible;"
               >
@@ -189,7 +190,7 @@
           </div>
 
           <!-- Card unique pleine largeur, collée sous la coupe -->
-          <div class="w-full shrink-0 pb-2">
+          <div class="w-full shrink-0 pt-2">
             <transition name="card-swap" mode="out-in">
               <article
                 v-if="imageReady && activeZone"

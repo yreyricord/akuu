@@ -1,24 +1,23 @@
 <template>
-  <section id="don-section" class="relative overflow-hidden bg-night">
+  <section id="don-section" ref="sectionRef" class="relative">
 
-    <!-- Fond : image forêt très sombre + overlay -->
-    <div class="absolute inset-0">
+    <!-- Fond avec effet d'expansion au scroll -->
+    <div class="absolute inset-0 overflow-hidden bg-night" :style="expandStyle">
       <img src="/images/hero-amazon.jpg" alt="" class="w-full h-full object-cover opacity-15" />
       <div class="absolute inset-0 bg-gradient-to-br from-forest/80 via-night/90 to-night" />
+      <div class="absolute inset-0 pointer-events-none">
+        <svg class="absolute right-0 top-0 w-[600px] h-[600px] text-leaf/5" viewBox="0 0 600 600" fill="currentColor">
+          <circle cx="500" cy="100" r="300" />
+        </svg>
+        <svg class="absolute left-0 bottom-0 w-80 h-80 text-forest/30" viewBox="0 0 320 320" fill="currentColor">
+          <circle cx="0" cy="320" r="300" />
+        </svg>
+        <div class="absolute inset-0 opacity-[0.03]"
+          style="background-image: radial-gradient(circle, #A6C639 1px, transparent 1px); background-size: 32px 32px;" />
+      </div>
     </div>
 
-    <!-- Formes décoratives -->
-    <div class="absolute inset-0 pointer-events-none overflow-hidden">
-      <svg class="absolute right-0 top-0 w-[600px] h-[600px] text-leaf/5" viewBox="0 0 600 600" fill="currentColor">
-        <circle cx="500" cy="100" r="300" />
-      </svg>
-      <svg class="absolute left-0 bottom-0 w-80 h-80 text-forest/30" viewBox="0 0 320 320" fill="currentColor">
-        <circle cx="0" cy="320" r="300" />
-      </svg>
-      <div class="absolute inset-0 opacity-[0.03]"
-        style="background-image: radial-gradient(circle, #A6C639 1px, transparent 1px); background-size: 32px 32px;" />
-    </div>
-
+    <!-- Contenu (non affecté par l'expansion) -->
     <div class="relative max-w-5xl mx-auto px-6 py-24 md:py-32">
       <div class="flex flex-col lg:flex-row lg:items-center gap-16">
 
@@ -26,7 +25,7 @@
         <div class="flex-1 don-reveal" style="--delay:0ms">
           <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-leaf/15 border border-leaf/25 mb-8">
             <span class="w-1.5 h-1.5 rounded-full bg-leaf animate-pulse" />
-            <span class="text-leaf text-xs font-bold uppercase tracking-[0.25em]">Chaque don compte</span>
+            <span class="text-leaf text-xs font-bold uppercase tracking-[0.25em]">{{ $t('donation.badge') }}</span>
           </div>
 
           <h2 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white leading-tight mb-6">
@@ -113,8 +112,17 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useScrollExpand } from '@/composables/useScrollExpand'
+
+const props = defineProps({
+  noExpand: { type: Boolean, default: false }
+})
 
 useI18n()
+
+const sectionRef = ref(null)
+const { expandStyle: _expandStyle } = useScrollExpand(sectionRef)
+const expandStyle = computed(() => props.noExpand ? {} : _expandStyle.value)
 
 const donAmount = ref(20)
 const annualAmount    = computed(() => donAmount.value * 12)

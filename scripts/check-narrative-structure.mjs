@@ -1,15 +1,16 @@
 /**
- * Compares fr / en / es structure for cours-anglais-narrative.json and hydrama-narrative.json
- * (section counts, paragraph counts per section, required root keys).
+ * Compares multi-locale structure for cours-anglais-narrative.json and hydrama-narrative.json
+ * (section counts, paragraph counts per section, required root keys). Locales from src/config/locales.js.
  * Run: node scripts/check-narrative-structure.mjs
  */
 import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { I18N_LOCALES } from '../src/config/locales.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const root = join(__dirname, '..')
-const locales = ['fr', 'en', 'es']
+const locales = I18N_LOCALES
 
 function fail (msg) {
   console.error(msg)
@@ -91,4 +92,4 @@ for (const [rel, checker] of [
   checker(data, rel)
 }
 
-console.log('Narrative structure OK: cours-anglais-narrative + hydrama-narrative (fr/en/es aligned).')
+console.log(`Narrative structure OK: cours-anglais-narrative + hydrama-narrative (${I18N_LOCALES.join('/')}).`)

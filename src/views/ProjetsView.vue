@@ -37,7 +37,7 @@
         </TransitionGroup>
 
         <p v-if="filteredProjets.length === 0" class="text-center text-night/40 py-12">
-          Aucun projet dans cette catégorie.
+          {{ $t('projets.empty_state') }}
         </p>
       </div>
     </section>

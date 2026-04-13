@@ -1,0 +1,231 @@
+{
+  "actors": {
+    "akuu": {
+      "photo_alt": "Associação AKUU",
+      "text": "Associação francesa (lei 1901) que acompanha o projeto desde o estudo de impacto, mobiliza voluntários e financiamento, e vai gradualmente cedendo espaço à governança comunitária.",
+      "title": "AKUU"
+    },
+    "chullachaqui": {
+      "photo_alt": "Ecomuseu Chullachaqui, Puerto Nariño (Colômbia)",
+      "text": "Em Puerto Nariño, na Colômbia, este ecomuseu atua há mais de vinte anos junto às comunidades locais para valorizar as culturas amazônicas. Foi construída uma parceria em torno da troca de saberes: jovens de Puerto Miguel foram enviados para se capacitar em boas práticas, mediação cultural e governança participativa de museu.",
+      "title": "Ecomuseu Chullachaqui (Colômbia)"
+    },
+    "ecole_art": {
+      "photo_alt": "Escola de arte de Puerto Miguel, Casilda Pinches Sanchez",
+      "text": "Diretora: Casilda Pinches Sanchez. Com ampla experiência no ensino de arte para as crianças do vilarejo, ela transforma o ateliê em um lugar de transmissão e criação. O vínculo com o projeto do museu e com os artistas locais permanece no centro de seu compromisso.",
+      "title": "Escola de arte de Puerto Miguel"
+    },
+    "mariposas": {
+      "photo_alt": "Las Mariposas, artesãs do vilarejo",
+      "text": "Associação de artesãs do vilarejo que deu origem ao projeto: valorização do chambira e certificação. Elas participam da criação das obras do museu junto aos artistas locais.",
+      "title": "Las Mariposas"
+    },
+    "nelvis": {
+      "photo_alt": "Nelvis Paredes Pacaya, pintor",
+      "text": "Artista plástico do vilarejo; ensina pintura aos jovens locais, que participam da criação das obras do museu. Também se dedica voluntariamente a transmitir as culturas Shipibo e Kukama para preservar os saberes.",
+      "title": "Nelvis Paredes Pacaya"
+    },
+    "ucamara": {
+      "photo_alt": "Rádio Ucamara",
+      "text": "Defesa do território e do rio, promoção da cultura kukama, pesquisa e educação; parceira essencial para visibilidade e conteúdos.",
+      "title": "Rádio Ucamara"
+    }
+  },
+  "actors_kicker": "Parceiros",
+  "actors_title": "Quem faz o projeto",
+  "context_kicker": "Por que este museu",
+  "context_p1": "As mudanças climáticas e o desmatamento ameaçam a Amazônia; proteger e valorizar os territórios dos povos amazônicos ajuda a enfrentar isso. Nossa abordagem articula cultura, meio ambiente e economia local.",
+  "context_p2": "Puerto Miguel tem cerca de 400 moradores, em sua maioria descendentes dos povos Kukama-Kukamiria. A língua e os saberes ancestrais são frágeis; ainda assim, iniciativas locais — Las Mariposas, a Rádio Ucamara, os artistas do vilarejo — mostram forte resiliência e criatividade.",
+  "context_p3": "O vilarejo está numa área turística (pousadas no Ucayali) da qual os benefícios raramente chegam à comunidade. O museu quer ser um ponto de atração dentro de Puerto Miguel para que valor e atenção retornem aos moradores.",
+  "context_title": "Contexto",
+  "coupe": {
+    "alt": "Corte arquitetônico do Museu Shapishiko",
+    "intro": "O corte arquitetônico permanece fixo na tela enquanto você rola a página: cada nível aparece em sequência. Você também pode clicar em uma zona do planta ou nos números.",
+    "levels_nav": "Acesso rápido aos níveis",
+    "scroll_hint": "Continue rolando para percorrer os cinco espaços",
+    "scroll_track_aria": "Progresso no percurso do corte",
+    "scroll_track_intro": "Role a página: {count} espaços para descobrir a seguir",
+    "scroll_track_outro": "Fim do percurso do corte; a página continua abaixo",
+    "scroll_track_zone": "Espaço {current} de {total}, continue para o seguinte",
+    "section_kicker": "Arquitetura",
+    "spaces_legend": "Espaços e níveis",
+    "title": "Os espaços do museu",
+    "zones": {
+      "ikuachiru": {
+        "description": "Em kukama, ikuachiru é o lugar onde há conhecimento. Última etapa do percurso, ao mesmo tempo galeria e ateliê: suas paredes contam histórias, suas mesas acolhem a criação. A arte e o artesanato kukama se vivem e se transmitem. Uma loja oferece peças dos artesãos locais.",
+        "etage": "Térreo, espaço cultural",
+        "nom": "La Ikuachiru",
+        "nomKukama": "O saber compartilhado",
+        "tags": ["Galeria", "Ateliê", "Artesanato kukama"]
+      },
+      "iwrati": {
+        "description": "O Iw Rati Tuwa é um espírito travesso que ronda as profundezas da floresta, atraindo viajantes para desviá-los do caminho. Siga seu rastro e mergulhe na pele da onça, da anta e dos outros habitantes da floresta densa.",
+        "etage": "Nível 2, guardião da floresta densa",
+        "nom": "Sala Iw Rati Tuwa",
+        "nomKukama": "O mundo da floresta profunda",
+        "tags": ["Fauna amazônica", "Floresta densa", "Mitologia"]
+      },
+      "kuruara": {
+        "description": "No coração da cosmologia kukama, o Kuruara, espírito das águas, reina sobre o segundo mundo submerso. Ele surge das profundezas na forma de um boto-cor-de-rosa. Nesta sala, você é envolvido por luzes e sons aquáticos; aqui o teto o envolve num efeito subaquático, no coração da floresta inundável.",
+        "etage": "Nível 1, guardião do segundo mundo",
+        "nom": "Sala Kuruara",
+        "nomKukama": "As profundezas do rio",
+        "tags": ["Rio & água", "Boto-cor-de-rosa", "Cosmologia kukama"]
+      },
+      "tsakarita": {
+        "description": "Em kukama, tsakarita designa um atalho, uma ligação direta entre dois pontos. Esta passarela traça uma linha direta no tempo, mergulhando a cultura kukama em suas raízes pré-colombianas, antes de chegar à sala de exposição.",
+        "etage": "Passagem, a passarela",
+        "nom": "La Tsakarita",
+        "nomKukama": "A conexão direta",
+        "tags": ["Passagem", "Conexão no tempo", "Cultura viva"]
+      },
+      "tsumi": {
+        "description": "O Tsumi é o mais poderoso dos curandeiros kukama, viajante espiritual capaz de mergulhar nas águas, erguer-se nos ares e assumir a forma de qualquer animal. Do topo do museu, contemple o dossel da floresta e siga as jornadas desses sábios cuja arte se perde hoje.",
+        "etage": "Nível 3, entre céu e terra",
+        "nom": "Sala Tsumi",
+        "nomKukama": "O topo da floresta",
+        "tags": ["Espiritualidade kukama", "Dossel", "Patrimônio imaterial"]
+      }
+    }
+  },
+  "coupe_path_kicker": "Arquitetura",
+  "coupe_path_lead": "O percurso vai do centro de interpretação em três níveis (água, floresta densa, dossel) ao espaço cultural pela passarela Tsakarita (Ikuachiru), depois à loja e ao mapa dos artesãos do vilarejo. O corte interativo abaixo detalha cada espaço; role para explorar e descobrir os nomes em kukama.",
+  "coupe_path_title": "Rota de visita e espaços do museu",
+  "description_committee": "Um comitê de gestão comunitário, 17 pessoas, mulheres e homens de 21 a 82 anos, copilota o projeto com a AKUU. Os avanços são apresentados regularmente nas assembleias do vilarejo.",
+  "description_image_alt": "Museu Shapishiko em Puerto Miguel",
+  "description_intro": "O Museu Shapishiko nasce da iniciativa das artesãs Las Mariposas, com o apoio da AKUU, associação francesa (lei 1901), e da comunidade de Puerto Miguel. No coração do território kukama, às margens do Ucayali, este lugar vivo tem por missão fazer brilhar a cultura indígena acolhendo, num espírito de abertura e partilha, moradores e visitantes.",
+  "description_objectives": [
+    "Dar vida e visibilidade à cultura Kukama",
+    "Conscientizar para a preservação da floresta amazônica",
+    "Redirecionar parte do turismo existente ao vilarejo e fortalecer a renda local",
+    "Criar um lugar vivo de trocas e transmissão"
+  ],
+  "description_objectives_lead": "Quatro objetivos, definidos em diálogo com a comunidade:",
+  "description_title": "O projeto",
+  "gallery_image_alt": "Museu Shapishiko",
+  "gallery_kicker": "Em imagens",
+  "gallery_subtitle": "A obra do Museu Shapishiko, da concepção à realização em campo.",
+  "gallery_title": "Galeria de fotos",
+  "governance_body": "A loja do museu complementa a oferta local; parte da receita contribui para a manutenção do lugar. Las Mariposas participam da criação das obras em vez de administrar essa loja. A AKUU aspira a apoiar em vez de decidir no lugar dos moradores.\n\nO projeto busca também o reconhecimento do museu na rede de museus do Peru (trâmite em curso junto ao iPeru e às instituições competentes).",
+  "governance_kicker": "Governança",
+  "governance_title": "Governança liderada pela comunidade",
+  "hero_subtitle": "Projeto conduzido pela comunidade de Puerto Miguel e pela associação francesa AKUU: cultura kukama, cosmovisão e território, onde Ucayali e Marañón dão à luz a Amazônia.",
+  "hero_title": "Museu Shapishiko",
+  "milestone_photo_alt": "Museu Shapishiko, andamento do projeto, etapa {step}",
+  "milestone_ui": {
+    "status_done": "Realizado",
+    "status_in_progress": "Em andamento",
+    "status_pending": "Previsto",
+    "upcoming": "Em breve"
+  },
+  "milestones_steps": {
+    "financement": {
+      "items": [
+        "Construção do centro cultural de interpretação Casa Redonda (núcleo da obra visível na galeria de fotos)",
+        "Financiamento FONJEP/JSI obtido",
+        "Renovação dos edifícios"
+      ],
+      "label": "2024: obra Casa Redonda, financiamento e renovação"
+    },
+    "impact_terrain": {
+      "items": [
+        "Ideia conduzida por Las Mariposas; pesquisa junto aos moradores de Puerto Miguel",
+        "Interrupção e lições da COVID; fortalecimento das parcerias",
+        "Parcerias: Rádio Ucamara, Ecomuseu Chullachaqui (Colômbia)"
+      ],
+      "label": "Consulta e estudo de impacto (2019-2023)"
+    },
+    "ouverture": {
+      "items": [
+        "Abertura parcial prevista para setembro de 2026",
+        "Formação complementar do comitê (janeiro a maio de 2027)",
+        "Abertura completa e oficial prevista para junho de 2027",
+        "Programação cultural e período de avaliação (junho a dezembro de 2027)"
+      ],
+      "label": "Abertura e consolidação (2026-2027)"
+    },
+    "production": {
+      "items": [
+        "Ministério da Cultura (apoio ao conteúdo artístico)",
+        "FAVER (apoio ao projeto)",
+        "Compra e produção de obras (1ª leva, abril a junho de 2026)",
+        "Obras e acabamentos: 1º andar do centro de interpretação, espaço cultural, sanitários (abril a julho de 2026)",
+        "Formação inicial do comitê de gestão (maio a setembro de 2026)",
+        "Programação cultural e primeiras oficinas abertas (a partir de setembro de 2026)",
+        "Finalização dos outros níveis, passarela Tsakarita, exterior (outubro de 2026 a janeiro de 2027)",
+        "Compras e materiais, 2ª leva (novembro de 2026 a março de 2027)"
+      ],
+      "label": "2026: acabamento, obras e formação"
+    },
+    "subvention_casa": {
+      "items": [
+        "Continuação da obra Casa Redonda e do envelope do centro de interpretação",
+        "Constituição do comitê de gestão comunitário (17 membros, 21-82 anos)",
+        "Subsídio do Ministério da Cultura peruano",
+        "Casa AKUU melhorada",
+        "Concepção artística do centro de interpretação"
+      ],
+      "label": "2025: continuidade Casa Redonda, subsídio e Casa AKUU"
+    }
+  },
+  "plans_intro": "Croqui de implantação, perspectivas arquitetônicas e modelo interativo ArchiCAD. O corte dos espaços aparece mais acima na página. Os planos foram produzidos pelas arquitetas Maria Agustina Pistolesi, Maya Herin e Delphine Dubois, inspirando-se notadamente no Tree House Lodge de Puerto Miguel.",
+  "plans_kicker": "Arquitetura",
+  "plans_title": "Plantas do museu",
+  "planviewer": {
+    "click_debug": "Clique: x={x}, y={y}, z={z}",
+    "controls_pan": "Botão direito: deslocar",
+    "controls_rotate": "Botão esquerdo: rotação",
+    "controls_zoom": "Roda do mouse: zoom",
+    "error_missing_body": "Coloque plan_akuu.ifc na pasta /public/",
+    "error_missing_title": "Arquivo IFC não encontrado",
+    "error_parse_body": "O arquivo IFC foi encontrado mas não pôde ser analisado.",
+    "error_parse_title": "Erro ao carregar",
+    "interactive_subtitle": "Navegação livre no modelo ArchiCAD",
+    "interactive_title": "Modelo 3D interativo",
+    "load_model": "Carregar modelo",
+    "loading_hint": "Isso pode levar alguns segundos",
+    "loading_title": "Carregando modelo 3D…",
+    "perspectives_caption": "Perspectivas arquitetônicas",
+    "rendu_1_alt": "Perspectiva do museu",
+    "rendu_2_alt": "Vista geral do museu",
+    "rendu_ext_alt": "Vista externa do Museu Shapishiko",
+    "reset_camera": "Recentralizar",
+    "sketch_alt": "Croqui de implantação do Museu Shapishiko no entorno",
+    "sketch_caption": "Croqui de implantação do museu no entorno",
+    "tab_3d": "Modelo 3D",
+    "tab_perspectives": "Perspectivas",
+    "tab_sketch": "Croquis",
+    "view_solid": "Vista sólida",
+    "view_wireframe": "Vista em arame",
+    "webgl_body": "A renderização 3D exige WebGL. Experimente Chrome ou Firefox atualizado.",
+    "webgl_title": "Navegador não compatível"
+  },
+  "progress_kicker": "Desde 2019",
+  "progress_title": "Andamento do projeto",
+  "pursue_intro": "Da França, você pode apoiar este projeto e as demais ações da AKUU junto às comunidades amazônicas.",
+  "pursue_kicker": "Agir conosco",
+  "pursue_link_association": "Apresentação da associação AKUU",
+  "pursue_link_contact": "Falar com a equipe AKUU",
+  "pursue_link_soutenir": "Fazer uma doação ou associar-se",
+  "pursue_title": "A associação AKUU na França",
+  "side_visuals": {
+    "context": { "alt": "Floresta amazônica e território ao redor de Puerto Miguel" },
+    "governance": { "alt": "Vida coletiva e decisões no vilarejo" },
+    "progress": { "alt": "Evolução da obra do museu" },
+    "teams": { "alt": "Canteiro e equipes em campo" }
+  },
+  "support_text": "Contribua para a construção do Museu Shapishiko e ajude-nos a preservar a cultura Kukama para as gerações futuras.",
+  "support_title": "Apoiar este projeto",
+  "teams_body": "Equipes voluntárias da AKUU se sucedem no canteiro; a obra civil e a coordenação local são articuladas com o vilarejo, em particular por Abraham Fababa, encarregado experiente de Puerto Miguel, com uma equipe de cerca de onze trabalhadores qualificados.",
+  "teams_kicker": "Em campo",
+  "teams_title": "Equipes de obra e voluntariado",
+  "video_kicker": "Vídeo",
+  "video_title": "O museu em vídeo",
+  "visit_disclaimer": "Informações não vinculantes; confirme com o museu antes de viajar.",
+  "visit_duration": "Cerca de trinta minutos por grande sala de interpretação estão previstos; o percurso completo (interpretação, espaço cultural, loja) pode levar cerca de duas horas conforme o ritmo do grupo.",
+  "visit_intro": "As modalidades definitivas serão definidas com o comitê e as autoridades locais.",
+  "visit_kicker": "Visita",
+  "visit_photo_alt": "Puerto Miguel, vilarejo no rio Ucayali",
+  "visit_rates": "Tarifas indicativas inspiradas em modelos regionais: cerca de 40 soles (equivalente a cerca de dez euros) para visitantes estrangeiros, gratuidade ou tarifa preferencial para moradores locais, sujeito a confirmação no local.",
+  "visit_title": "Duração e tarifas (indicativas)"
+}
