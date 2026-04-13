@@ -7,4 +7,4 @@ export function getSiteOrigin () {
   return String(raw).replace(/\/$/, '')
 }
 
-export const DEFAULT_OG_IMAGE_PATH = '/images/collibri-akuu.png'
+export const DEFAULT_OG_IMAGE_PATH = '/images/og-default.jpg'

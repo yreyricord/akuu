@@ -1,6 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
-
-const routes = [
+export const routes = [
   {
     path: '/',
     name: 'home',
@@ -60,15 +58,19 @@ const routes = [
     name: 'cours-anglais',
     meta: { seoRoute: 'coursAnglais' },
     component: () => import('@/views/CoursAnglaisView.vue')
+  },
+  {
+    path: '/casa-akuu',
+    name: 'casa-akuu',
+    meta: { seoRoute: 'casaAkuu' },
+    component: () => import('@/views/CasaAkuuView.vue')
+  },
+  {
+    path: '/gestion-dechets',
+    name: 'gestion-dechets',
+    meta: { seoRoute: 'gestionDechets' },
+    component: () => import('@/views/GestionDechetsView.vue')
   }
 ]
 
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
-  scrollBehavior() {
-    return { top: 0 }
-  }
-})
-
-export default router
+export default routes

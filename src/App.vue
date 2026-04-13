@@ -35,53 +35,75 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { useHead } from '@unhead/vue'
 import NavBar from '@/components/layout/NavBar.vue'
 import ScrollProgressBar from '@/components/layout/ScrollProgressBar.vue'
 import Footer from '@/components/layout/Footer.vue'
-import { applyRouteDocumentSeo, injectOrganizationJsonLd } from '@/utils/documentSeo.js'
+import {
+  buildRouteSeoHead,
+  buildOrganizationJsonLdHead,
+  buildBreadcrumbJsonLdHead
+} from '@/utils/documentSeo.js'
+import { getSiteOrigin } from '@/config/site.js'
 import { HTML_LANG, DEFAULT_LOCALE } from '@/config/locales.js'
 
 const route = useRoute()
 const { locale, t, te } = useI18n()
 
-function syncHtmlLang () {
-  const loc = locale.value
-  document.documentElement.lang = HTML_LANG[loc] ?? HTML_LANG[DEFAULT_LOCALE] ?? DEFAULT_LOCALE
-}
+const htmlLang = computed(
+  () => HTML_LANG[locale.value] ?? HTML_LANG[DEFAULT_LOCALE] ?? DEFAULT_LOCALE
+)
 
-function syncRouteSeo () {
-  syncHtmlLang()
+const routeSeo = computed(() => {
   const seoKey = route.meta.seoRoute || 'home'
   const titleKey = `seo.routes.${seoKey}.title`
   const descKey = `seo.routes.${seoKey}.description`
   const title = te(titleKey) ? t(titleKey) : t('seo.title')
   const description = te(descKey) ? t(descKey) : t('seo.description')
-  applyRouteDocumentSeo({
+  return buildRouteSeoHead({
     title,
     description,
     path: route.path,
     locale: locale.value
   })
-}
+})
+
+const orgJsonLd = computed(() => buildOrganizationJsonLdHead())
+
+const breadcrumbJsonLd = computed(() => {
+  const origin = getSiteOrigin()
+  const seoKey = route.meta.seoRoute || 'home'
+  const titleKey = `seo.routes.${seoKey}.title`
+  const pageTitle = te(titleKey) ? t(titleKey) : t('seo.title')
+
+  if (seoKey === 'home') return {}
+  const crumbs = [
+    { name: t('seo.routes.home.title'), url: `${origin}/` },
+    { name: pageTitle, url: `${origin}${route.path}` }
+  ]
+  return buildBreadcrumbJsonLdHead(crumbs)
+})
+
+useHead(computed(() => ({
+  htmlAttrs: { lang: htmlLang.value },
+  ...routeSeo.value,
+  script: [
+    ...(orgJsonLd.value.script || []),
+    ...(breadcrumbJsonLd.value.script || [])
+  ]
+})))
 
 const showScrollTop = ref(false)
 function handleScroll() { showScrollTop.value = window.scrollY > 500 }
 function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }) }
 
 onMounted(() => {
-  injectOrganizationJsonLd()
   window.addEventListener('scroll', handleScroll, { passive: true })
 })
 onUnmounted(() => window.removeEventListener('scroll', handleScroll))
-
-watch(
-  () => [route.path, route.meta.seoRoute, locale.value],
-  () => syncRouteSeo(),
-  { immediate: true }
-)
 </script>
 
 <style>

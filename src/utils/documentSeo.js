@@ -1,41 +1,7 @@
 import { getSiteOrigin, DEFAULT_OG_IMAGE_PATH } from '@/config/site.js'
-import { HREFLANG_ALTERNATES_ENABLED } from '@/config/seoLocalePolicy.js'
 import { OG_LOCALE_TAGS, DEFAULT_LOCALE, I18N_LOCALES } from '@/config/locales.js'
 
-function ensureMeta (attr, key, content) {
-  let el = document.head.querySelector(`meta[${attr}="${key}"]`)
-  if (!el) {
-    el = document.createElement('meta')
-    el.setAttribute(attr, key)
-    document.head.appendChild(el)
-  }
-  el.setAttribute('content', content)
-}
-
-function removeOgLocaleAlternates () {
-  document.head.querySelectorAll('meta[property="og:locale:alternate"]').forEach((n) => n.remove())
-}
-
-function setCanonical (href) {
-  let link = document.head.querySelector('link[rel="canonical"]')
-  if (!link) {
-    link = document.createElement('link')
-    link.setAttribute('rel', 'canonical')
-    document.head.appendChild(link)
-  }
-  link.setAttribute('href', href)
-}
-
-function setJsonLd (id, data) {
-  let el = document.getElementById(id)
-  if (!el) {
-    el = document.createElement('script')
-    el.type = 'application/ld+json'
-    el.id = id
-    document.head.appendChild(el)
-  }
-  el.textContent = JSON.stringify(data)
-}
+const isBrowser = typeof document !== 'undefined'
 
 function absoluteUrl (origin, path) {
   const p = path === '/' ? '/' : path.startsWith('/') ? path : `/${path}`
@@ -43,9 +9,49 @@ function absoluteUrl (origin, path) {
 }
 
 /**
- * Call once after app mount. Uses live site origin for @id URLs.
+ * Returns a reactive-ready head descriptor for @unhead/vue useHead().
+ * Works during SSG (injected into static HTML) and on the client.
  */
-export function injectOrganizationJsonLd () {
+export function buildRouteSeoHead ({ title, description, path, locale }) {
+  const origin = getSiteOrigin()
+  const pageUrl = absoluteUrl(origin, path)
+  const ogLocale = OG_LOCALE_TAGS[locale] || OG_LOCALE_TAGS[DEFAULT_LOCALE]
+  const imageUrl = new URL(DEFAULT_OG_IMAGE_PATH, `${origin}/`).href
+
+  const alternateLocales = I18N_LOCALES
+    .map((code) => OG_LOCALE_TAGS[code])
+    .filter((l) => l && l !== ogLocale)
+
+  return {
+    title,
+    meta: [
+      { name: 'description', content: description },
+      { property: 'og:title', content: title },
+      { property: 'og:description', content: description },
+      { property: 'og:url', content: pageUrl },
+      { property: 'og:type', content: 'website' },
+      { property: 'og:image', content: imageUrl },
+      { property: 'og:locale', content: ogLocale },
+      { property: 'og:site_name', content: 'AKUU' },
+      ...alternateLocales.map((loc) => ({
+        property: 'og:locale:alternate',
+        content: loc
+      })),
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:title', content: title },
+      { name: 'twitter:description', content: description },
+      { name: 'twitter:image', content: imageUrl }
+    ],
+    link: [
+      { rel: 'canonical', href: pageUrl }
+    ]
+  }
+}
+
+/**
+ * Returns a JSON-LD graph descriptor for @unhead/vue useHead().
+ */
+export function buildOrganizationJsonLdHead () {
   const origin = getSiteOrigin()
   const logo = new URL('/images/LOGOAKUU.png', `${origin}/`).href
   const sameAs = [
@@ -59,7 +65,7 @@ export function injectOrganizationJsonLd () {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'Organization',
+        '@type': 'NonprofitOrganization',
         '@id': `${origin}/#organization`,
         name: 'AKUU',
         description:
@@ -79,65 +85,40 @@ export function injectOrganizationJsonLd () {
       }
     ]
   }
-  setJsonLd('akuu-jsonld-graph', graph)
+  return {
+    script: [
+      {
+        type: 'application/ld+json',
+        id: 'akuu-jsonld-graph',
+        innerHTML: JSON.stringify(graph)
+      }
+    ]
+  }
 }
 
 /**
- * Updates title, description, canonical, Open Graph and Twitter tags for the current route.
+ * Returns a BreadcrumbList JSON-LD head descriptor for @unhead/vue useHead().
+ * @param {Array<{name: string, url: string}>} crumbs
  */
-export function applyRouteDocumentSeo ({ title, description, path, locale }) {
-  const origin = getSiteOrigin()
-  const pageUrl = absoluteUrl(origin, path)
-  const ogLocale = OG_LOCALE_TAGS[locale] || OG_LOCALE_TAGS[DEFAULT_LOCALE]
-  const imageUrl = new URL(DEFAULT_OG_IMAGE_PATH, `${origin}/`).href
-
-  document.title = title
-
-  ensureMeta('name', 'description', description)
-  setCanonical(pageUrl)
-
-  ensureMeta('property', 'og:title', title)
-  ensureMeta('property', 'og:description', description)
-  ensureMeta('property', 'og:url', pageUrl)
-  ensureMeta('property', 'og:type', 'website')
-  ensureMeta('property', 'og:image', imageUrl)
-  ensureMeta('property', 'og:locale', ogLocale)
-  ensureMeta('property', 'og:site_name', 'AKUU')
-
-  removeOgLocaleAlternates()
-  const alternates = I18N_LOCALES.map((code) => OG_LOCALE_TAGS[code]).filter(
-    (l) => l && l !== ogLocale
-  )
-  alternates.forEach((loc) => {
-    const el = document.createElement('meta')
-    el.setAttribute('property', 'og:locale:alternate')
-    el.setAttribute('content', loc)
-    document.head.appendChild(el)
-  })
-
-  ensureMeta('name', 'twitter:card', 'summary_large_image')
-  ensureMeta('name', 'twitter:title', title)
-  ensureMeta('name', 'twitter:description', description)
-  ensureMeta('name', 'twitter:image', imageUrl)
-
-  document.head.querySelectorAll('link[data-akuu-hreflang="1"]').forEach((n) => n.remove())
-  if (HREFLANG_ALTERNATES_ENABLED) {
-    const originBase = origin
-    const langs = I18N_LOCALES.map((code) => ({ code, path: `/${code}` }))
-    for (const { code, path: prefix } of langs) {
-      const href = new URL(`${prefix}${path === '/' ? '' : path}`, `${originBase}/`).href
-      const link = document.createElement('link')
-      link.setAttribute('rel', 'alternate')
-      link.setAttribute('hreflang', code)
-      link.setAttribute('href', href)
-      link.setAttribute('data-akuu-hreflang', '1')
-      document.head.appendChild(link)
-    }
-    const xd = document.createElement('link')
-    xd.setAttribute('rel', 'alternate')
-    xd.setAttribute('hreflang', 'x-default')
-    xd.setAttribute('href', new URL(path, `${originBase}/`).href)
-    xd.setAttribute('data-akuu-hreflang', '1')
-    document.head.appendChild(xd)
+export function buildBreadcrumbJsonLdHead (crumbs) {
+  if (!crumbs || crumbs.length === 0) return {}
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: crumbs.map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.name,
+      item: c.url
+    }))
+  }
+  return {
+    script: [
+      {
+        type: 'application/ld+json',
+        id: 'akuu-jsonld-breadcrumb',
+        innerHTML: JSON.stringify(data)
+      }
+    ]
   }
 }
