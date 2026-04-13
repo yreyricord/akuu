@@ -1,10 +1,9 @@
 <template>
   <!--
-    Barre horizontale sous la rangée du menu (top-16 / md:top-20 = h du flex nav).
-    z-40 : sous la nav (z-50), donc sous le logo qui dépasse du bandeau blanc.
+    Sous le bloc logo + bandeau (h-24 / md:7.5rem), aligné avec NavBar.vue.
   -->
   <div
-    class="pointer-events-none fixed left-0 right-0 top-16 md:top-20 z-40 h-1.5 sm:h-[9px] motion-reduce:h-[3px] overflow-hidden bg-night/10 shadow-[0_1px_0_rgba(255,255,255,0.06)_inset]"
+    class="pointer-events-none fixed left-0 right-0 top-24 md:top-[7.5rem] z-40 h-1.5 sm:h-[9px] motion-reduce:h-[3px] overflow-hidden bg-night/10 shadow-[0_1px_0_rgba(255,255,255,0.06)_inset]"
     :class="showBar ? 'opacity-100' : 'opacity-0'"
     role="progressbar"
     :aria-valuenow="ariaNow"

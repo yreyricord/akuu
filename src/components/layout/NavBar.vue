@@ -1,14 +1,14 @@
 <template>
   <!--
-    Bandeau blanc pleine largeur au scroll ; le logo (plus haut que la rangée) reste au-dessus
-    de la barre de progression horizontale (ScrollProgressBar z-40).
+    Bandeau blanc au scroll : même hauteur que le logo (h-24 / md:7.5rem) pour que le bas du
+    logo ne flotte pas au-dessus du contenu. La rangée menu reste h-16 / md:h-20.
   -->
   <nav
     class="fixed top-0 w-full z-50 pointer-events-none transition-all duration-500 bg-transparent"
   >
     <div
       v-show="scrolled || menuOpen"
-      class="pointer-events-none absolute inset-x-0 top-0 h-16 md:h-20 z-[1] w-full bg-white/95 backdrop-blur-md shadow-[0_4px_6px_-1px_rgba(0,0,0,0.07),0_2px_4px_-2px_rgba(0,0,0,0.05)] transition-opacity duration-500"
+      class="pointer-events-none absolute inset-x-0 top-0 h-24 md:h-[7.5rem] z-[1] w-full bg-white/95 backdrop-blur-md shadow-[0_4px_6px_-1px_rgba(0,0,0,0.07),0_2px_4px_-2px_rgba(0,0,0,0.05)] transition-opacity duration-500"
       aria-hidden="true"
     />
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-visible pointer-events-auto relative z-[2]">
