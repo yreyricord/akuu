@@ -8,20 +8,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <title>AKUU, solidarité internationale en Amazonie péruvienne</title>
-    <meta name="description" content="Chez AKUU, nos actions visent à préserver l'Amazonie en soutenant les communautés locales, les mieux placées pour protéger leurs écosystèmes et leur patrimoine culturel." />
+    <meta name="description" content="AKUU agit pour un développement durable, solidaire et respectueux des populations amazoniennes au village de Puerto Miguel, Pérou." />
     <!-- title + description mis à jour par l’app selon la locale (voir App.vue) -->
   </head>
   <body class="bg-cream text-night font-sans antialiased selection:bg-leaf/30 selection:text-forest">
-    <!-- Requis par Netlify Forms (SPA) : mêmes noms/champs que les vues Vue ; l’envoi est fait en fetch depuis Vue. -->
+    <!-- Requis par Netlify Forms (SPA) : mêmes champs que ContactView ; l’envoi est fait en fetch depuis Vue. -->
     <form name="contact" netlify netlify-honeypot="bot-field" data-netlify="true" hidden>
       <input type="text" name="name" />
       <input type="email" name="email" />
       <input type="text" name="subject" />
       <textarea name="message"></textarea>
-      <input name="bot-field" />
-    </form>
-    <form name="newsletter" netlify netlify-honeypot="bot-field" data-netlify="true" hidden>
-      <input type="email" name="email" />
       <input name="bot-field" />
     </form>
     <div id="app"></div>

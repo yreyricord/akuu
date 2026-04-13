@@ -1,13 +1,13 @@
 <template>
-  <section class="section-padding bg-cream">
-    <div class="container-narrow">
-      <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-        <div class="fade-in-up">
+  <section class="section-padding bg-cream overflow-x-hidden">
+    <div class="container-narrow min-w-0">
+      <div class="grid min-w-0 md:grid-cols-2 gap-12 md:gap-16 items-center">
+        <div class="fade-in-up min-w-0">
           <span class="text-forest text-sm font-semibold uppercase tracking-widest mb-3 block">AKUU</span>
-          <h2 class="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-night mb-6 leading-tight">
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-night mb-6 leading-tight text-balance">
             {{ $t('mission.title') }}
           </h2>
-          <p class="text-night/60 text-lg leading-relaxed mb-8">
+          <p class="text-night/60 text-lg leading-relaxed mb-8 text-pretty break-words">
             {{ $t('mission.text') }}
           </p>
           <router-link to="/association" class="btn-primary inline-flex">
@@ -19,7 +19,7 @@
         </div>
         <router-link
           to="/association"
-          class="group block w-full cursor-pointer rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-forest focus-visible:ring-offset-4 focus-visible:ring-offset-cream"
+          class="group block w-full min-w-0 max-w-full cursor-pointer rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-forest focus-visible:ring-offset-4 focus-visible:ring-offset-cream"
           :aria-label="$t('mission.cta')"
         >
           <ForestScrollVisual

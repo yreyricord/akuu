@@ -22,43 +22,31 @@
       :style="stageStyle"
       :aria-label="$t('musee.coupe.title')"
     >
-      <!-- pb généreux en dvh : garde un vide lisible sous la carte légende même quand le plan remplit l’écran -->
-      <div
-        class="coupe-sticky sticky top-24 md:top-[7.5rem] min-h-[calc(100dvh-6rem)] md:min-h-[calc(100dvh-7.5rem)] flex flex-col justify-start items-stretch pt-3 md:pt-4 pb-[max(3.5rem,12dvh)] md:pb-[max(4.5rem,14dvh)]"
-      >
-        <div class="w-full max-w-7xl mx-auto shrink-0 min-h-0 flex flex-col">
-          <!-- Bloc unique : plan + progression + légende (carte) toujours liés visuellement et empilés depuis le haut -->
-          <div
-            class="coupe-visual-group flex flex-col rounded-2xl shadow-xl bg-white border border-night/[0.06] ring-1 ring-black/[0.04] overflow-hidden"
-          >
-            <div class="coupe-plan-wrapper relative w-full bg-night/[0.04] shrink-0 min-h-0 overflow-hidden">
-              <!-- Cadre à ratio fixe + plafond de hauteur : garde de la place pour la légende dans la fenêtre -->
-              <div
-                class="relative w-full max-h-[min(46dvh,calc(100dvh-18.5rem))] md:max-h-[min(52dvh,calc(100dvh-21.5rem))] mx-auto overflow-hidden isolate"
-                :style="{ aspectRatio: `${IMG_W} / ${IMG_H}` }"
-              >
-                <!--
-                  Clip sur un parent sans transform : scale() sur le même nœud que overflow:hidden
-                  laisse souvent déborder l’image (Safari / Chrome) au-dessus de la légende.
-                -->
-                <div class="absolute inset-0 overflow-hidden">
-                  <div class="coupe-zoom-inner absolute inset-0" :style="zoomStyle">
-                  <img
-                    src="/images/musee/coupe_final.png"
-                    :alt="$t('musee.coupe.alt')"
-                    class="absolute inset-0 w-full h-full object-contain block coupe-image"
-                    :class="{ revealed: imageRevealed }"
-                    @load="onImageLoad"
-                  />
+      <div class="coupe-sticky sticky top-0 h-[100dvh] flex flex-col">
+        <div class="w-full max-w-7xl mx-auto flex flex-col flex-1 min-h-0">
 
-                  <svg
-                    v-if="imageReady"
-                    class="absolute inset-0 w-full h-full pointer-events-auto"
-                    :viewBox="`0 0 ${IMG_W} ${IMG_H}`"
-                    preserveAspectRatio="xMidYMid meet"
-                    xmlns="http://www.w3.org/2000/svg"
-                    style="overflow: visible;"
-                  >
+          <!-- Plan : remplit tout l'espace disponible au-dessus de la card -->
+          <div
+            class="coupe-plan-wrapper relative w-full flex-1 min-h-0 bg-black/[0.02] overflow-hidden"
+          >
+            <!-- Wrapper zoomable (img + SVG se transforment ensemble) -->
+            <div class="coupe-zoomable absolute inset-0 flex items-center justify-center" :style="zoomStyle">
+              <img
+                src="/images/musee/coupe_final.png"
+                :alt="$t('musee.coupe.alt')"
+                class="w-full h-full object-contain block coupe-image"
+                :class="{ revealed: imageRevealed }"
+                @load="onImageLoad"
+              />
+
+              <svg
+                v-if="imageReady"
+                class="absolute inset-0 w-full h-full pointer-events-auto"
+                :viewBox="`0 0 ${IMG_W} ${IMG_H}`"
+                preserveAspectRatio="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style="overflow: visible;"
+              >
                 <defs>
                   <!-- Flou doux pour le bord du spotlight -->
                   <filter id="coupe-spotlight-blur" x="-50%" y="-50%" width="200%" height="200%">
@@ -183,107 +171,73 @@
                   </text>
                 </g>
               </svg>
-                  </div>
-                </div>
-
-                <!-- Barre de progression (zones visitées sur le plan) -->
-                <div
-                  v-if="imageReady"
-                  class="absolute bottom-0 left-0 right-0 h-0.5 bg-night/[0.08] overflow-hidden pointer-events-none z-10"
-                >
-                  <div
-                    class="h-full coupe-zone-bar-fill"
-                    :style="{
-                      width: `${zonePlanBarPct}%`,
-                      background: `linear-gradient(90deg, ${COLORS.bleu}, ${COLORS.forest}, ${COLORS.leaf})`
-                    }"
-                  />
-                </div>
-              </div>
             </div>
 
-            <!-- Progression globale du scroll (intro → espaces → outro) -->
+            <!-- Barre de progression -->
             <div
               v-if="imageReady"
-              class="w-full px-3 py-2.5 md:px-4 md:py-3 space-y-1.5 border-t border-night/[0.06] bg-white/90 shrink-0"
+              class="absolute bottom-0 left-0 right-0 h-0.5 bg-night/[0.08] overflow-hidden pointer-events-none z-10"
             >
               <div
-                class="h-2 rounded-full bg-night/[0.1] overflow-hidden ring-1 ring-night/[0.04]"
-                role="progressbar"
-                :aria-valuenow="stageScrollAria"
-                aria-valuemin="0"
-                aria-valuemax="100"
-                :aria-label="$t('musee.coupe.scroll_track_aria')"
+                class="h-full transition-all duration-500 ease-out"
+                :style="{
+                  width: `${((activeStep + 1) / zoneCount) * 100}%`,
+                  background: `linear-gradient(90deg, ${COLORS.bleu}, ${COLORS.forest}, ${COLORS.leaf})`
+                }"
+              />
+            </div>
+          </div>
+
+          <!-- Card unique pleine largeur, collée sous la coupe -->
+          <div class="w-full shrink-0 pb-2">
+            <transition name="card-swap" mode="out-in">
+              <article
+                v-if="imageReady && activeZone"
+                :key="activeZone.id"
+                class="w-full rounded-2xl border border-forest/12 bg-white shadow-[0_4px_24px_-4px_rgba(4,72,143,0.12),0_12px_40px_-12px_rgba(45,105,21,0.08)] overflow-hidden"
+                role="region"
+                :aria-label="activeZone.nom"
               >
                 <div
-                  class="h-full rounded-full coupe-stage-bar-fill"
-                  :style="{
-                    width: `${stageScrollPct}%`,
-                    background: `linear-gradient(90deg, ${COLORS.bleu}, ${COLORS.forest})`
-                  }"
+                  class="h-1 w-full shrink-0 bg-gradient-to-r from-bleu via-forest to-leaf"
+                  aria-hidden="true"
                 />
-              </div>
-              <p class="text-center text-[11px] md:text-xs text-night/50 font-medium leading-snug flex items-center justify-center gap-1.5">
-                <span class="inline-block animate-bounce motion-reduce:animate-none" aria-hidden="true">↓</span>
-                {{ scrollTrackCaption }}
-              </p>
-            </div>
-
-            <!-- Légende : carte détail de l’espace actif (même carte que le plan) -->
-            <div
-              v-if="imageReady"
-              class="w-full shrink-0 border-t border-night/[0.08] bg-white"
-              role="region"
-              :aria-label="$t('musee.coupe.spaces_legend')"
-            >
-              <transition name="card-swap" mode="out-in">
-                <article
-                  v-if="activeZone"
-                  :key="activeZone.id"
-                  class="w-full overflow-hidden border-0 shadow-none rounded-none"
-                  :aria-label="activeZone.nom"
-                >
-                  <div
-                    class="h-1 w-full shrink-0 bg-gradient-to-r from-bleu via-forest to-leaf"
-                    aria-hidden="true"
-                  />
-                  <div class="px-5 py-3.5 sm:px-6 sm:py-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
-                    <div class="flex items-center gap-4 sm:min-w-0 sm:shrink-0">
-                      <span
-                        class="flex items-center justify-center w-10 h-10 rounded-full text-white text-sm font-bold font-serif shrink-0"
-                        :style="{ backgroundColor: COLORS.bleu }"
-                      >
-                        {{ activeZone.badge }}
-                      </span>
-                      <div class="min-w-0">
-                        <p class="text-[10px] font-semibold uppercase tracking-[0.12em] text-bleu mb-0.5">
-                          {{ activeZone.etage }}
-                        </p>
-                        <h3 class="text-lg font-serif font-bold text-night leading-tight truncate">
-                          {{ activeZone.nom }}
-                        </h3>
-                        <p class="text-xs text-forest/70 italic mt-0.5">{{ activeZone.nomKukama }}</p>
-                      </div>
-                    </div>
-                    <div class="hidden sm:block w-px self-stretch bg-night/8" />
-                    <p class="text-[13px] text-night/70 leading-relaxed flex-1 min-w-0">
-                      {{ activeZone.description }}
-                    </p>
-                    <div class="hidden sm:flex flex-col items-center gap-1.5 shrink-0 pl-2">
-                      <span
-                        v-for="(_, si) in zonesSorted"
-                        :key="si"
-                        class="w-1.5 rounded-full transition-all duration-300"
-                        :class="si === activeStep ? 'h-6' : 'h-1.5 opacity-30'"
-                        :style="si === activeStep
-                          ? { backgroundColor: COLORS.bleu }
-                          : { backgroundColor: COLORS.forest }"
-                      />
+                <div class="px-5 py-3.5 sm:px-6 sm:py-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
+                  <div class="flex items-center gap-4 sm:min-w-0 sm:shrink-0">
+                    <span
+                      class="flex items-center justify-center w-10 h-10 rounded-full text-white text-sm font-bold font-serif shrink-0"
+                      :style="{ backgroundColor: COLORS.bleu }"
+                    >
+                      {{ activeZone.badge }}
+                    </span>
+                    <div class="min-w-0">
+                      <p class="text-[10px] font-semibold uppercase tracking-[0.12em] text-bleu mb-0.5">
+                        {{ activeZone.etage }}
+                      </p>
+                      <h3 class="text-lg font-serif font-bold text-night leading-tight truncate">
+                        {{ activeZone.nom }}
+                      </h3>
+                      <p class="text-xs text-forest/70 italic mt-0.5">{{ activeZone.nomKukama }}</p>
                     </div>
                   </div>
-                </article>
-              </transition>
-            </div>
+                  <div class="hidden sm:block w-px self-stretch bg-night/8" />
+                  <p class="text-[13px] text-night/70 leading-relaxed flex-1 min-w-0">
+                    {{ activeZone.description }}
+                  </p>
+                  <div class="hidden sm:flex flex-col items-center gap-1.5 shrink-0 pl-2">
+                    <span
+                      v-for="(_, si) in zonesSorted"
+                      :key="si"
+                      class="w-1.5 rounded-full transition-all duration-300"
+                      :class="si === activeStep ? 'h-6' : 'h-1.5 opacity-30'"
+                      :style="si === activeStep
+                        ? { backgroundColor: COLORS.bleu }
+                        : { backgroundColor: COLORS.forest }"
+                    />
+                  </div>
+                </div>
+              </article>
+            </transition>
           </div>
         </div>
       </div>
@@ -317,7 +271,7 @@ const IMG_H = 1653
 const SPOT_PAD = 50
 
 /** Facteur de zoom quand une zone est active */
-const ZOOM = 1.38
+const ZOOM = 1.55
 
 const zoneLayouts = [
   { id: 'tsumi', badge: '3', x: 1629, y: 713, w: 598, h: 298 },
@@ -345,13 +299,7 @@ const imageReady = ref(false)
 const imageRevealed = ref(false)
 const zonesVisible = ref(false)
 const hovered = ref(null)
-/** -1 intro, 0…N-1 zones, N outro, aligné sur le premier calcul scroll */
-const activeStep = ref(-1)
-/** 0 → 1 sur toute la hauteur de scroll du bloc coupe (affichage barre globale) */
-const stageScrollProgress = ref(0)
-
-/** Hauteur de scroll par « tranche » (intro / zone / outro). Moins de vh = parcours plus court et plus rapide. */
-const SLICE_VH = 58
+const activeStep = ref(0)
 
 const zoneCount = computed(() => zonesSorted.value.length)
 /** Total de « tranches » de scroll : intro + N zones + outro */
@@ -368,33 +316,9 @@ const activeZone = computed(() => {
   return zonesSorted.value[activeStep.value] ?? null
 })
 
-const coupeStageMinHeightUnit =
-  typeof CSS !== 'undefined' && CSS.supports?.('min-height', '10dvh') ? 'dvh' : 'vh'
-
-/** dvh ≈ fenêtre visible sur mobile ; aligné avec viewportHeightForCoupeScroll (visualViewport). */
 const stageStyle = computed(() => ({
-  minHeight: `${totalSlices.value * SLICE_VH}${coupeStageMinHeightUnit}`
+  minHeight: `${totalSlices.value * 100}vh`
 }))
-
-/** Barre sous l’image : progression par zone uniquement (0 % intro, 100 % dernière zone ou outro) */
-const zonePlanBarPct = computed(() => {
-  const s = activeStep.value
-  const n = zoneCount.value
-  if (s < 0) return 0
-  if (s >= n) return 100
-  return ((s + 1) / n) * 100
-})
-
-const stageScrollPct = computed(() => Math.min(100, Math.max(0, stageScrollProgress.value * 100)))
-const stageScrollAria = computed(() => Math.round(stageScrollPct.value))
-
-const scrollTrackCaption = computed(() => {
-  const n = zoneCount.value
-  const s = activeStep.value
-  if (s < 0) return t('musee.coupe.scroll_track_intro', { count: n })
-  if (s >= n) return t('musee.coupe.scroll_track_outro')
-  return t('musee.coupe.scroll_track_zone', { current: s + 1, total: n })
-})
 
 /**
  * Zoom + pan fluide : centre le viewport sur la zone active.
@@ -444,30 +368,15 @@ function onImageLoad() {
 }
 
 let scrollRaf = null
-
-/**
- * Hauteur « viewport » cohérente avec la hauteur réelle du stage (min-height en dvh).
- * innerHeight seul sur mobile varie quand la barre d’adresse se cache → scrollable change
- * au milieu du geste : les salles semblent avoir des plages de scroll inégales ou reculent.
- */
-function viewportHeightForCoupeScroll () {
-  const vv = window.visualViewport
-  if (vv && vv.height > 0) return vv.height
-  const ch = document.documentElement?.clientHeight
-  if (ch && ch > 0) return ch
-  return window.innerHeight
-}
-
-function updateActiveStepFromScroll () {
+function updateActiveStepFromScroll() {
   const stage = stageRef.value
   if (!stage || !totalSlices.value) return
-  const vh = viewportHeightForCoupeScroll()
+  const vh = window.innerHeight
   const scrollable = stage.offsetHeight - vh
   if (scrollable <= 0) return
   const rect = stage.getBoundingClientRect()
-  const raw = -rect.top / scrollable
-  stageScrollProgress.value = Math.max(0, Math.min(1, raw))
-  let progress = Math.max(0, Math.min(1 - Number.EPSILON, raw))
+  let progress = -rect.top / scrollable
+  progress = Math.max(0, Math.min(1 - Number.EPSILON, progress))
   const sliceIdx = Math.min(Math.floor(progress * totalSlices.value), totalSlices.value - 1)
   // sliceIdx 0 = intro (-1), 1..N = zones 0..N-1, N+1 = outro (N)
   activeStep.value = sliceIdx - 1
@@ -503,8 +412,6 @@ onMounted(() => {
 
   window.addEventListener('scroll', onScrollOrResize, { passive: true })
   window.addEventListener('resize', onScrollOrResize, { passive: true })
-  window.visualViewport?.addEventListener('resize', onScrollOrResize, { passive: true })
-  window.visualViewport?.addEventListener('scroll', onScrollOrResize, { passive: true })
   requestAnimationFrame(() => {
     requestAnimationFrame(() => updateActiveStepFromScroll())
   })
@@ -514,8 +421,6 @@ onUnmounted(() => {
   if (enterObserver) enterObserver.disconnect()
   window.removeEventListener('scroll', onScrollOrResize)
   window.removeEventListener('resize', onScrollOrResize)
-  window.visualViewport?.removeEventListener('resize', onScrollOrResize)
-  window.visualViewport?.removeEventListener('scroll', onScrollOrResize)
   if (scrollRaf != null) cancelAnimationFrame(scrollRaf)
 })
 </script>
@@ -531,16 +436,8 @@ onUnmounted(() => {
 
 .coupe-zoomable {
   transform-origin: 50% 50%;
-  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform;
-}
-
-.coupe-zone-bar-fill {
-  transition: width 0.28s ease-out;
-}
-
-.coupe-stage-bar-fill {
-  transition: width 0.12s ease-out;
 }
 
 .card-swap-enter-active {
@@ -563,11 +460,7 @@ onUnmounted(() => {
     transition: none;
     clip-path: inset(0% 0 0 0);
   }
-  .coupe-zoom-inner {
-    transition: none;
-  }
-  .coupe-zone-bar-fill,
-  .coupe-stage-bar-fill {
+  .coupe-zoomable {
     transition: none;
   }
   .card-swap-enter-active,

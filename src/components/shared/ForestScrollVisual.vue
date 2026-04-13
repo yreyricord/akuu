@@ -1,16 +1,16 @@
 <template>
   <div
-    class="forest-visual-root relative w-full"
+    class="forest-visual-root relative w-full min-w-0 max-w-full"
     :class="wrapperClass"
     :aria-hidden="ariaHidden ? true : undefined"
   >
     <template v-if="showDecor">
       <div
-        class="absolute -bottom-3 -left-3 md:-bottom-4 md:-left-4 w-20 h-20 md:w-24 md:h-24 bg-leaf/20 rounded-2xl -z-10"
+        class="absolute -bottom-1 -left-1 sm:-bottom-2 sm:-left-2 md:-bottom-4 md:-left-4 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-leaf/20 rounded-2xl -z-10"
         aria-hidden="true"
       />
       <div
-        class="absolute -top-3 -right-3 md:-top-4 md:-right-4 w-28 h-28 md:w-32 md:h-32 bg-ochre/10 rounded-full -z-10"
+        class="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 md:-top-4 md:-right-4 w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 bg-ochre/10 rounded-full -z-10"
         aria-hidden="true"
       />
     </template>
@@ -327,6 +327,7 @@ onUnmounted(() => {
   aspect-ratio: var(--forest-aspect-ratio);
   min-height: var(--forest-scene-min-h);
   max-height: var(--forest-scene-max-h);
+  max-width: 100%;
   margin-inline: auto;
   background: var(--forest-scene-bg);
   isolation: isolate;
