@@ -21,3 +21,8 @@ scripts/.locale-pt-br-cache.json
 scripts/.locale-pt-cache.json
 COMPTES/
 test-helloasso.mjs
+
+# Build artifacts
+.netlify/
+deno.lock
+__pycache__/
