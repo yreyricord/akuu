@@ -4,9 +4,9 @@
     <!-- ═══════════════════════════════════════════════
          HERO — SLIDER + PANEL FISCAL
     ═══════════════════════════════════════════════ -->
-    <section class="relative overflow-hidden">
+    <section class="relative" style="overflow-x: clip;">
       <!-- Fond -->
-      <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 z-0 overflow-hidden">
         <img src="/images/hero-soutien.jpg" alt="" class="w-full h-full object-cover" />
         <div class="absolute inset-0 bg-gradient-to-br from-forest/95 via-forest/85 to-night/90" />
         <!-- Particules lumineuses décoratives -->
@@ -23,7 +23,7 @@
         class="hero-colibri pointer-events-none absolute z-[2] h-20 sm:h-28 md:h-36 xl:h-48 w-auto opacity-[0.07] sm:opacity-10 right-[4%] sm:right-[3%] bottom-[12%] sm:bottom-[18%]"
       />
 
-      <div class="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-10 xl:px-6 pt-28 pb-12 md:pt-32 md:pb-14">
+      <div class="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-10 xl:px-6 pt-28 pb-12 md:pt-32 md:pb-14">
 
         <div class="grid lg:grid-cols-2 gap-8 xl:gap-14 items-stretch">
 
@@ -31,36 +31,36 @@
           <div class="text-white flex flex-col">
 
             <!-- Choix de destination -->
-            <div class="mb-5 flex gap-2.5">
+            <div class="mb-5 grid grid-cols-2 gap-2">
               <button
                 type="button"
                 @click="donDestination = 'musee'"
                 :class="[
-                  'dest-btn group relative flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-all duration-300',
+                  'dest-btn group relative flex items-center gap-2 rounded-xl px-2.5 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-[13px] font-semibold transition-all duration-300 text-left',
                   donDestination === 'musee'
                     ? 'bg-leaf/15 text-leaf ring-1 ring-leaf/40 shadow-md shadow-leaf/10'
                     : 'bg-white/[0.05] text-white/45 ring-1 ring-white/10 hover:bg-white/[0.08] hover:text-white/70 hover:ring-white/20'
                 ]"
               >
-                <span :class="['flex items-center justify-center w-7 h-7 rounded-lg transition-all duration-300', donDestination === 'musee' ? 'bg-leaf/20' : 'bg-white/[0.06] group-hover:bg-white/10']">
-                  <PhGlobeHemisphereWest :size="15" weight="duotone" />
+                <span :class="['flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-lg shrink-0 transition-all duration-300', donDestination === 'musee' ? 'bg-leaf/20' : 'bg-white/[0.06] group-hover:bg-white/10']">
+                  <PhGlobeHemisphereWest :size="14" weight="duotone" />
                 </span>
-                {{ $t('soutien.dest_projets_title') }}
+                <span class="leading-tight">{{ $t('soutien.dest_projets_title') }}</span>
               </button>
               <button
                 type="button"
                 @click="donDestination = 'fonctionnement'"
                 :class="[
-                  'dest-btn group relative flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-all duration-300',
+                  'dest-btn group relative flex items-center gap-2 rounded-xl px-2.5 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-[13px] font-semibold transition-all duration-300 text-left',
                   donDestination === 'fonctionnement'
                     ? 'bg-leaf/15 text-leaf ring-1 ring-leaf/40 shadow-md shadow-leaf/10'
                     : 'bg-white/[0.05] text-white/45 ring-1 ring-white/10 hover:bg-white/[0.08] hover:text-white/70 hover:ring-white/20'
                 ]"
               >
-                <span :class="['flex items-center justify-center w-7 h-7 rounded-lg transition-all duration-300', donDestination === 'fonctionnement' ? 'bg-leaf/20' : 'bg-white/[0.06] group-hover:bg-white/10']">
-                  <PhHouseSimple :size="15" weight="duotone" />
+                <span :class="['flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-lg shrink-0 transition-all duration-300', donDestination === 'fonctionnement' ? 'bg-leaf/20' : 'bg-white/[0.06] group-hover:bg-white/10']">
+                  <PhHouseSimple :size="14" weight="duotone" />
                 </span>
-                {{ $t('soutien.dest_fonc_title') }}
+                <span class="leading-tight">{{ $t('soutien.dest_fonc_title') }}</span>
               </button>
             </div>
 
@@ -160,12 +160,13 @@
           <!-- ── Colonne droite : Widget de don ── -->
           <div class="flex flex-col">
             <!-- Parallax forêt (mobile, au-dessus du widget) -->
-            <div class="lg:hidden mb-5 w-3/4 sm:w-2/3 mx-auto">
+            <div class="lg:hidden mb-5 w-full">
               <ForestScrollVisual
                 :external-progress="forestProgress"
                 :show-decor="false"
                 :on-dark="true"
                 :aria-hidden="true"
+                :min-height-override="0"
               />
             </div>
             <div class="don-widget relative w-full h-full bg-white/[0.06] backdrop-blur-xl border border-white/15 rounded-3xl overflow-hidden flex flex-col">
@@ -200,7 +201,7 @@
               </div>
 
               <!-- Corps : montant + slider + CTA -->
-              <div class="px-5 sm:px-6 pt-3 pb-4">
+              <div class="px-3.5 sm:px-5 md:px-6 pt-3 pb-4">
                 <!-- Montant -->
                 <div class="flex items-baseline gap-1.5 mb-2">
                   <span class="text-5xl sm:text-6xl font-serif font-black text-leaf tabular-nums leading-none">{{ donAmount }}</span>

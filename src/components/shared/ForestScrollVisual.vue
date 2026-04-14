@@ -87,7 +87,9 @@ const props = defineProps({
    * 0–1 progress driven externally (e.g. slider).
    * When non-null, overrides scroll-based animation.
    */
-  externalProgress: { type: Number, default: null }
+  externalProgress: { type: Number, default: null },
+  /** Override min-height in px (null = use tuning default). */
+  minHeightOverride: { type: Number, default: null }
 })
 
 const T = forestSceneTuning
@@ -104,9 +106,10 @@ const prefersReducedMotion =
   window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 const sceneCssVars = computed(() => {
+  const minH = props.minHeightOverride !== null ? props.minHeightOverride : T.scene.minHeightPx
   const o = {
     '--forest-aspect-ratio': T.scene.aspectRatio,
-    '--forest-scene-min-h': `${T.scene.minHeightPx}px`,
+    '--forest-scene-min-h': `${minH}px`,
     '--forest-scene-max-h': `${T.scene.maxHeightPx}px`,
     '--forest-scene-bg': T.scene.background,
     '--forest-sky-ambient-duration': `${T.sky.ambient.durationSec}s`,
