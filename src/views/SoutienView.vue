@@ -4,7 +4,7 @@
     <!-- ═══════════════════════════════════════════════
          HERO — SLIDER + PANEL FISCAL
     ═══════════════════════════════════════════════ -->
-    <section class="relative overflow-hidden min-h-screen">
+    <section class="relative overflow-hidden">
       <!-- Fond -->
       <div class="absolute inset-0 z-0">
         <img src="/images/hero-soutien.jpg" alt="" class="w-full h-full object-cover" />
@@ -20,10 +20,10 @@
       <!-- Colibri flottant -->
       <img
         src="/images/collibri-akuu.png" alt="" aria-hidden="true"
-        class="hero-colibri pointer-events-none absolute z-[2] hidden xl:block h-48 w-auto opacity-10 right-[3%] bottom-[18%]"
+        class="hero-colibri pointer-events-none absolute z-[2] h-20 sm:h-28 md:h-36 xl:h-48 w-auto opacity-[0.07] sm:opacity-10 right-[4%] sm:right-[3%] bottom-[12%] sm:bottom-[18%]"
       />
 
-      <div class="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-10 xl:px-6 pt-28 pb-8 md:pt-32">
+      <div class="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-10 xl:px-6 pt-28 pb-12 md:pt-32 md:pb-14">
 
         <div class="grid lg:grid-cols-2 gap-8 xl:gap-14 items-stretch">
 
@@ -146,8 +146,8 @@
 
             <div class="flex-1"></div>
 
-            <!-- Parallax forêt piloté par le slider -->
-            <div class="mt-6 lg:mt-8">
+            <!-- Parallax forêt piloté par le slider (desktop uniquement) -->
+            <div class="hidden lg:block mt-8">
               <ForestScrollVisual
                 :external-progress="forestProgress"
                 :show-decor="false"
@@ -317,6 +317,16 @@
             </div>
           </div>
 
+        </div>
+
+        <!-- Parallax forêt (mobile uniquement, sous le widget) -->
+        <div class="lg:hidden mt-8">
+          <ForestScrollVisual
+            :external-progress="forestProgress"
+            :show-decor="false"
+            :on-dark="true"
+            :aria-hidden="true"
+          />
         </div>
 
         <!-- Dernières contributions : toujours visible (chargement / vide / erreur / liste) -->
@@ -734,16 +744,20 @@ const marqueeContributions = computed(() => {
   return arr.length < 4 ? [...arr, ...arr, ...arr] : [...arr, ...arr]
 })
 
-// ── Marquee interaction (drag / swipe / wheel) ──────────────────────────
+// ── Marquee interaction (drag / swipe / wheel + inertia) ─────────────────
 const marqueeTrackRef = ref(null)
 const marqueeOffset = ref(0)
 const marqueeDragging = ref(false)
-const marqueeAutoSpeed = 0.5 // px par frame (~30px/s)
+const BASE_AUTO_SPEED = 0.5
+const FRICTION = 0.94
+const MIN_VELOCITY = 0.3
 let marqueeRafId = null
 let marqueeDragStartX = 0
 let marqueeDragStartOffset = 0
-let marqueeResumeTimer = null
 let marqueeContentWidth = 0
+let marqueeVelocity = 0
+let lastPointerX = 0
+let lastPointerTime = 0
 
 function getMarqueeHalfWidth() {
   const el = marqueeTrackRef.value?.querySelector('.marquee-content')
@@ -751,52 +765,67 @@ function getMarqueeHalfWidth() {
   return el.scrollWidth / 2 || 1
 }
 
+function wrapOffset() {
+  marqueeContentWidth = getMarqueeHalfWidth()
+  if (marqueeOffset.value > 0) marqueeOffset.value -= marqueeContentWidth
+  if (Math.abs(marqueeOffset.value) >= marqueeContentWidth) marqueeOffset.value += marqueeContentWidth
+}
+
 function marqueeLoop() {
   if (!marqueeDragging.value) {
-    marqueeOffset.value -= marqueeAutoSpeed
-    marqueeContentWidth = getMarqueeHalfWidth()
-    if (Math.abs(marqueeOffset.value) >= marqueeContentWidth) {
-      marqueeOffset.value += marqueeContentWidth
+    if (Math.abs(marqueeVelocity) > MIN_VELOCITY) {
+      marqueeOffset.value += marqueeVelocity
+      marqueeVelocity *= FRICTION
+    } else {
+      marqueeVelocity = 0
+      marqueeOffset.value -= BASE_AUTO_SPEED
     }
+    wrapOffset()
   }
   marqueeRafId = requestAnimationFrame(marqueeLoop)
 }
 
 const marqueeStyle = computed(() => ({
   transform: `translateX(${marqueeOffset.value}px)`,
-  transition: marqueeDragging.value ? 'none' : 'transform 0.05s linear',
+  transition: 'none',
   cursor: marqueeDragging.value ? 'grabbing' : 'grab',
 }))
 
 function onMarqueePointerDown(e) {
   marqueeDragging.value = true
+  marqueeVelocity = 0
   marqueeDragStartX = e.clientX
   marqueeDragStartOffset = marqueeOffset.value
+  lastPointerX = e.clientX
+  lastPointerTime = performance.now()
   e.currentTarget.setPointerCapture(e.pointerId)
-  if (marqueeResumeTimer) clearTimeout(marqueeResumeTimer)
 }
 
 function onMarqueePointerMove(e) {
   if (!marqueeDragging.value) return
+  const now = performance.now()
   const dx = e.clientX - marqueeDragStartX
   marqueeOffset.value = marqueeDragStartOffset + dx
-  marqueeContentWidth = getMarqueeHalfWidth()
-  if (marqueeOffset.value > 0) marqueeOffset.value -= marqueeContentWidth
-  if (Math.abs(marqueeOffset.value) >= marqueeContentWidth) marqueeOffset.value += marqueeContentWidth
+
+  const dt = now - lastPointerTime
+  if (dt > 0) {
+    marqueeVelocity = (e.clientX - lastPointerX) / Math.max(dt, 8) * 16
+  }
+  lastPointerX = e.clientX
+  lastPointerTime = now
+
+  wrapOffset()
 }
 
 function onMarqueePointerUp() {
   if (!marqueeDragging.value) return
   marqueeDragging.value = false
-  marqueeResumeTimer = setTimeout(() => { /* auto-scroll reprend seul */ }, 100)
 }
 
 function onMarqueeWheel(e) {
   const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY
-  marqueeOffset.value -= delta * 1.5
-  marqueeContentWidth = getMarqueeHalfWidth()
-  if (Math.abs(marqueeOffset.value) >= marqueeContentWidth) marqueeOffset.value += marqueeContentWidth
-  if (marqueeOffset.value > 0) marqueeOffset.value -= marqueeContentWidth
+  marqueeVelocity = -delta * 2.5
+  wrapOffset()
 }
 
 onMounted(() => {
