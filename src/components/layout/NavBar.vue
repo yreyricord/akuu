@@ -95,7 +95,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, provide } from 'vue'
 import LanguageSwitch from './LanguageSwitch.vue'
 import DonButton from '@/components/shared/DonButton.vue'
 import { PhList, PhX } from '@phosphor-icons/vue'
@@ -103,6 +103,7 @@ import { PhList, PhX } from '@phosphor-icons/vue'
 const scrolled = ref(false)
 const menuOpen = ref(false)
 const navHidden = ref(false)
+provide('navHidden', navHidden)
 let lastScrollY = 0
 const HIDE_THRESHOLD = 60
 

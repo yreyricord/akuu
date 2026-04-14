@@ -3,8 +3,8 @@
     Sous le bandeau nav (h-16 / md:h-20), passe sous le logo qui déborde.
   -->
   <div
-    class="pointer-events-none fixed left-0 right-0 top-16 md:top-20 z-40 h-1.5 sm:h-[9px] motion-reduce:h-[3px] overflow-hidden bg-night/10 shadow-[0_1px_0_rgba(255,255,255,0.06)_inset]"
-    :class="showBar ? 'opacity-100' : 'opacity-0'"
+    class="pointer-events-none fixed left-0 right-0 z-40 h-1.5 sm:h-[9px] motion-reduce:h-[3px] overflow-hidden bg-night/10 shadow-[0_1px_0_rgba(255,255,255,0.06)_inset] transition-[top] duration-300"
+    :class="[showBar ? 'opacity-100' : 'opacity-0', navHidden ? 'top-0' : 'top-16 md:top-20']"
     role="progressbar"
     :aria-valuenow="ariaNow"
     aria-valuemin="0"
@@ -20,8 +20,10 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch, nextTick, inject } from 'vue'
 import { useRoute } from 'vue-router'
+
+const navHidden = inject('navHidden', ref(false))
 
 /** Pixels scrollables minimum pour afficher la barre (évite un flash sur pages courtes) */
 const MIN_SCROLLABLE_PX = 280
