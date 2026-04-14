@@ -160,7 +160,7 @@
           <!-- ── Colonne droite : Widget de don ── -->
           <div class="flex flex-col">
             <!-- Parallax forêt (mobile, au-dessus du widget) -->
-            <div class="lg:hidden mb-6">
+            <div class="lg:hidden mb-5 w-3/4 sm:w-2/3 mx-auto">
               <ForestScrollVisual
                 :external-progress="forestProgress"
                 :show-decor="false"
