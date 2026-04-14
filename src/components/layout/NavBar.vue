@@ -21,7 +21,7 @@
           <img
             src="/images/LOGOAKUU.png"
             alt="AKUU"
-            class="h-16 w-auto md:h-20 drop-shadow-lg group-hover:opacity-95 transition-opacity"
+            class="h-[4.8rem] w-auto md:h-24 drop-shadow-lg group-hover:opacity-95 transition-opacity"
           />
         </router-link>
 

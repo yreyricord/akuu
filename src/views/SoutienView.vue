@@ -90,15 +90,15 @@
 
             <!-- Barre objectif (crossfade entre musée et fonctionnement) -->
             <transition name="progress-fade" mode="out-in">
-              <div v-if="donDestination === 'musee'" key="bar-musee" class="bg-white/[0.06] border border-white/[0.10] rounded-2xl px-4 py-2.5 mt-3">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-white/40 text-[10px] uppercase tracking-widest font-semibold">{{ $t('soutien.musee_progress_label') }}</span>
-                  <span class="text-white/60 text-xs font-bold tabular-nums">
+              <div v-if="donDestination === 'musee'" key="bar-musee" class="bg-white/[0.06] border border-white/[0.10] rounded-2xl px-5 py-3.5 mt-3">
+                <div class="flex items-center justify-between mb-2.5">
+                  <span class="text-white/40 text-xs uppercase tracking-widest font-semibold">{{ $t('soutien.musee_progress_label') }}</span>
+                  <span class="text-white/60 text-sm font-bold tabular-nums">
                     {{ Math.round(museeTotalCollected).toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €
                     <span class="text-white/30 font-normal">/ {{ MUSEE_GOAL_EUROS.toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
                   </span>
                 </div>
-                <div class="relative h-3 rounded-full bg-white/[0.08] overflow-hidden">
+                <div class="relative h-3.5 rounded-full bg-white/[0.08] overflow-hidden">
                   <div
                     class="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-bleu-ciel to-bleu transition-all duration-300 ease-out"
                     :style="{ width: museeWithDonPct + '%' }"
@@ -108,23 +108,23 @@
                     :style="{ width: museeCollectedPct + '%' }"
                   />
                 </div>
-                <div class="flex items-center justify-between mt-1.5">
-                  <span v-if="donAmount > 0" class="text-bleu-ciel-200 text-[10px] font-semibold">
+                <div class="flex items-center justify-between mt-2">
+                  <span v-if="donAmount > 0" class="text-bleu-ciel-200 text-xs font-semibold">
                     +{{ totalDonAmount.toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €
                     <span class="text-white/30">{{ $t('soutien.musee_progress_your_don') }}</span>
                   </span>
-                  <span class="text-white/30 text-[10px] tabular-nums ml-auto">{{ Math.round(museeWithDonPct) }}%</span>
+                  <span class="text-white/30 text-xs tabular-nums ml-auto">{{ Math.round(museeWithDonPct) }}%</span>
                 </div>
               </div>
-              <div v-else key="bar-fonc" class="bg-white/[0.06] border border-white/[0.10] rounded-2xl px-4 py-2.5 mt-3">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-white/40 text-[10px] uppercase tracking-widest font-semibold">{{ $t('soutien.fonc_progress_label') }}</span>
-                  <span class="text-white/60 text-xs font-bold tabular-nums">
+              <div v-else key="bar-fonc" class="bg-white/[0.06] border border-white/[0.10] rounded-2xl px-5 py-3.5 mt-3">
+                <div class="flex items-center justify-between mb-2.5">
+                  <span class="text-white/40 text-xs uppercase tracking-widest font-semibold">{{ $t('soutien.fonc_progress_label') }}</span>
+                  <span class="text-white/60 text-sm font-bold tabular-nums">
                     {{ Math.round(monthlyAmountEuros ?? 0).toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €
                     <span class="text-white/30 font-normal">/ {{ FONC_GOAL_MONTHLY }} € / {{ $t('soutien.simulator_month') }}</span>
                   </span>
                 </div>
-                <div class="relative h-3 rounded-full bg-white/[0.08] overflow-hidden">
+                <div class="relative h-3.5 rounded-full bg-white/[0.08] overflow-hidden">
                   <div
                     class="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-bleu-ciel to-bleu transition-all duration-300 ease-out"
                     :style="{ width: foncWithDonPct + '%' }"
@@ -134,12 +134,12 @@
                     :style="{ width: foncCollectedPct + '%' }"
                   />
                 </div>
-                <div class="flex items-center justify-between mt-1.5">
-                  <span v-if="donAmount > 0" class="text-bleu-ciel-200 text-[10px] font-semibold">
+                <div class="flex items-center justify-between mt-2">
+                  <span v-if="donAmount > 0" class="text-bleu-ciel-200 text-xs font-semibold">
                     +{{ donAmount.toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €
                     <span class="text-white/30">{{ $t('soutien.musee_progress_your_don') }}</span>
                   </span>
-                  <span class="text-white/30 text-[10px] tabular-nums ml-auto">{{ Math.round(foncWithDonPct) }}%</span>
+                  <span class="text-white/30 text-xs tabular-nums ml-auto">{{ Math.round(foncWithDonPct) }}%</span>
                 </div>
               </div>
             </transition>
@@ -178,20 +178,20 @@
                   type="button"
                   @click="donFrequency = 'monthly'"
                   :class="[
-                    'relative py-2.5 text-sm font-bold tracking-wide transition-all duration-200',
+                    'relative py-3.5 text-sm font-bold tracking-wide transition-all duration-200',
                     donFrequency === 'monthly'
                       ? 'bg-leaf/15 text-leaf border-b-2 border-leaf'
                       : 'text-white/40 hover:text-white/70 hover:bg-white/[0.03]'
                   ]"
                 >
                   {{ $t('soutien.form_freq_monthly') }}
-                  <span class="absolute -top-0.5 right-2 sm:right-4 bg-leaf text-white text-[8px] font-black px-1.5 py-0.5 rounded-full leading-none">{{ $t('soutien.recommended') }}</span>
+                  <span class="absolute top-1 right-2 sm:right-4 bg-leaf text-white text-[8px] font-black px-1.5 py-0.5 rounded-full leading-none">{{ $t('soutien.recommended') }}</span>
                 </button>
                 <button
                   type="button"
                   @click="donFrequency = 'once'"
                   :class="[
-                    'py-2.5 text-sm font-bold tracking-wide transition-all duration-200',
+                    'py-3.5 text-sm font-bold tracking-wide transition-all duration-200',
                     donFrequency === 'once'
                       ? 'bg-white/[0.06] text-white border-b-2 border-white/50'
                       : 'text-white/40 hover:text-white/70 hover:bg-white/[0.03]'
@@ -202,17 +202,17 @@
               </div>
 
               <!-- Corps : montant + slider + CTA -->
-              <div class="px-3.5 sm:px-5 md:px-6 pt-2 pb-3">
+              <div class="px-3.5 sm:px-5 md:px-6 pt-3 pb-4">
                 <!-- Montant -->
-                <div class="flex items-baseline gap-1.5 mb-1.5">
-                  <span class="text-4xl sm:text-5xl font-serif font-black text-leaf tabular-nums leading-none">{{ donAmount }}</span>
-                  <span class="text-xl font-serif text-white/50">€</span>
+                <div class="flex items-baseline gap-1.5 mb-2">
+                  <span class="text-5xl sm:text-6xl font-serif font-black text-leaf tabular-nums leading-none">{{ donAmount }}</span>
+                  <span class="text-2xl font-serif text-white/50">€</span>
                   <span v-if="donFrequency === 'monthly'" class="text-white/35 text-sm ml-1">/{{ $t('soutien.simulator_month') }}</span>
                 </div>
 
                 <!-- Slider colibri -->
                 <div
-                  class="mb-1 py-1 colibri-slider-wrap"
+                  class="mb-1 pt-4 pb-1 colibri-slider-wrap"
                   :class="{ 'colibri-slider-wrap--burst': colibriBurstActive }"
                 >
                   <input
@@ -232,11 +232,11 @@
                 </div>
 
                 <!-- Montant libre -->
-                <div class="mb-2">
+                <div class="mb-3">
                   <button
                     v-if="!useCustomOverMax"
                     type="button"
-                    class="text-[11px] text-leaf/70 hover:text-leaf font-semibold underline underline-offset-2 decoration-leaf/25 hover:decoration-leaf transition-colors"
+                    class="text-sm text-leaf/70 hover:text-leaf font-semibold underline underline-offset-2 decoration-leaf/25 hover:decoration-leaf transition-colors"
                     @click="openCustomAmount"
                   >
                     {{ $t('soutien.slider_more_link') }}
@@ -260,23 +260,23 @@
                 </div>
 
                 <!-- Simulateur fiscal intégré -->
-                <div class="bg-white/[0.04] border border-white/[0.08] rounded-xl px-3 py-2 mb-2 space-y-1.5">
-                  <div class="flex items-center gap-1.5 mb-0.5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-leaf animate-pulse shrink-0"></span>
-                    <span class="text-white/40 text-[10px] uppercase tracking-widest font-semibold">{{ $t('soutien.simulator_title') }}</span>
+                <div class="bg-white/[0.04] border border-white/[0.08] rounded-2xl px-5 py-4 mb-3 space-y-2.5">
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="w-2 h-2 rounded-full bg-leaf animate-pulse shrink-0"></span>
+                    <span class="text-white/40 text-xs uppercase tracking-widest font-semibold">{{ $t('soutien.simulator_title') }}</span>
                   </div>
                   <div class="flex items-center justify-between">
                     <div>
-                      <span class="text-white/40 text-[10px] uppercase tracking-widest font-medium">{{ $t('soutien.simulator_reduction') }}</span>
-                      <span class="text-leaf/60 text-[10px] ml-1">66%</span>
+                      <span class="text-white/40 text-xs uppercase tracking-widest font-medium">{{ $t('soutien.simulator_reduction') }}</span>
+                      <span class="text-leaf/60 text-xs ml-1">66%</span>
                     </div>
-                    <span class="text-lg font-serif font-black text-leaf tabular-nums">-{{ displayTax }} <span class="text-leaf/50 text-[11px] font-sans">€</span><span v-if="isMonthly" class="text-leaf/50 text-[11px] font-sans"> / {{ $t('soutien.simulator_month') }}</span></span>
+                    <span class="text-2xl font-serif font-black text-leaf tabular-nums">-{{ displayTax }} <span class="text-leaf/50 text-sm font-sans">€</span><span v-if="isMonthly" class="text-leaf/50 text-sm font-sans"> / {{ $t('soutien.simulator_month') }}</span></span>
                   </div>
-                  <div class="border-t border-white/[0.08] pt-1.5 flex items-center justify-between">
-                    <span class="text-white/40 text-[10px] uppercase tracking-widest font-medium">{{ $t('soutien.simulator_real') }}</span>
-                    <span class="text-xl font-serif font-black text-white tabular-nums">{{ displayReal }} <span class="text-white/40 text-[11px] font-sans">€</span><span v-if="isMonthly" class="text-white/40 text-[11px] font-sans"> / {{ $t('soutien.simulator_month') }}</span></span>
+                  <div class="border-t border-white/[0.08] pt-2.5 flex items-center justify-between">
+                    <span class="text-white/40 text-xs uppercase tracking-widest font-medium">{{ $t('soutien.simulator_real') }}</span>
+                    <span class="text-3xl font-serif font-black text-white tabular-nums">{{ displayReal }} <span class="text-white/40 text-sm font-sans">€</span><span v-if="isMonthly" class="text-white/40 text-sm font-sans"> / {{ $t('soutien.simulator_month') }}</span></span>
                   </div>
-                  <p class="text-white/25 text-[9px] leading-relaxed pt-1 border-t border-white/[0.05]">
+                  <p class="text-white/25 text-[11px] leading-relaxed pt-2 border-t border-white/[0.05]">
                     {{ $t('soutien.simulator_note') }}
                   </p>
                 </div>
@@ -285,7 +285,7 @@
                 <button
                   @click="submitDonation"
                   :disabled="donLoading || donAmount < 1 || (useCustomOverMax && donAmount < CUSTOM_MIN)"
-                  class="cta-donate group relative w-full flex items-center justify-center gap-2.5 bg-leaf hover:bg-leaf/90 text-white font-bold text-base py-3 rounded-xl shadow-xl shadow-leaf/30 transition-all duration-200 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+                  class="cta-donate group relative w-full flex items-center justify-center gap-3 bg-leaf hover:bg-leaf/90 text-white font-bold text-xl py-4 rounded-2xl shadow-xl shadow-leaf/30 transition-all duration-200 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
                 >
                   <span class="cta-shimmer absolute inset-0 pointer-events-none" aria-hidden="true"></span>
                   <span v-if="donLoading" class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
@@ -294,15 +294,15 @@
                 </button>
 
                 <!-- Sélecteur de durée / info don unique (sous le CTA) -->
-                <div v-if="donFrequency === 'monthly'" class="flex flex-wrap items-center justify-center gap-1.5 mt-2">
-                  <span class="text-white/35 text-[10px] uppercase tracking-widest font-semibold mr-1 shrink-0">{{ $t('soutien.duration_label') }}</span>
+                <div v-if="donFrequency === 'monthly'" class="flex flex-wrap items-center justify-center gap-1.5 mt-3">
+                  <span class="text-white/35 text-xs uppercase tracking-widest font-semibold mr-1 shrink-0">{{ $t('soutien.duration_label') }}</span>
                   <button
                     v-for="d in DURATION_OPTIONS"
                     :key="d"
                     type="button"
                     @click="donDurationMonths = d"
                     :class="[
-                      'px-2.5 py-1 rounded-lg text-xs font-bold transition-all duration-200',
+                      'px-3 py-1.5 rounded-lg text-sm font-bold transition-all duration-200',
                       donDurationMonths === d
                         ? 'bg-leaf/20 text-leaf border border-leaf/30'
                         : 'text-white/40 hover:text-white/70 border border-transparent hover:border-white/15'
@@ -311,17 +311,17 @@
                     {{ d }} {{ $t('soutien.duration_months') }}
                   </button>
                 </div>
-                <div v-else class="flex items-center justify-center gap-2 mt-2">
-                  <PhLock :size="13" class="text-white/25 shrink-0" />
-                  <span class="text-white/40 text-[11px] font-semibold tracking-wide">{{ $t('soutien.once_hint') }}</span>
+                <div v-else class="flex items-center justify-center gap-2 mt-3">
+                  <PhLock :size="16" class="text-white/25 shrink-0" />
+                  <span class="text-white/40 text-sm font-semibold tracking-wide">{{ $t('soutien.once_hint') }}</span>
                 </div>
 
                 <!-- Erreurs + sécurité -->
-                <p v-if="donFallbackWarning" class="text-amber-200 bg-amber-900/20 border border-amber-400/20 rounded-lg text-[11px] mt-2 px-3 py-1.5">
+                <p v-if="donFallbackWarning" class="text-amber-200 bg-amber-900/20 border border-amber-400/20 rounded-lg text-xs mt-3 px-3 py-2">
                   {{ $t('soutien.form_fallback_warning') }}
                 </p>
-                <p class="text-white/25 text-[10px] mt-2 flex items-center justify-center gap-1">
-                  <svg class="w-3 h-3 text-white/20 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
+                <p class="text-white/25 text-xs mt-3 flex items-center justify-center gap-1.5">
+                  <svg class="w-3.5 h-3.5 text-white/20 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
                   {{ $t('soutien.widget_secure') }}
                 </p>
               </div>
@@ -639,7 +639,7 @@ function runColibriMilestones(from, to) {
 const donDestination = ref('musee')
 const donFrequency = ref('monthly')
 const donDurationMonths = ref(12)
-const DURATION_OPTIONS = [3,5,6,9,12]
+const DURATION_OPTIONS = [3,6,9,12]
 const donLoading = ref(false)
 
 const donFallbackWarning = ref(false)
