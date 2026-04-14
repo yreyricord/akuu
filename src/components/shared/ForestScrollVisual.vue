@@ -64,13 +64,13 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import {
   forestSceneTuning,
   forestScrollEasings
 } from './forestScrollScene.tuning.js'
 
-defineProps({
+const props = defineProps({
   /** Anneau / contraste sur fond sombre (ex. bandeau). */
   onDark: { type: Boolean, default: false },
   /** Carré leaf + pastille ochre derrière la carte. */
@@ -82,7 +82,12 @@ defineProps({
   /**
    * Si le visuel est dans un lien : masque l’arbre ARIA (le lien porte le libellé).
    */
-  ariaHidden: { type: Boolean, default: false }
+  ariaHidden: { type: Boolean, default: false },
+  /**
+   * 0–1 progress driven externally (e.g. slider).
+   * When non-null, overrides scroll-based animation.
+   */
+  externalProgress: { type: Number, default: null }
 })
 
 const T = forestSceneTuning
@@ -267,7 +272,10 @@ const treesLayerStyle = computed(() => {
 let rafId = null
 let resizeRafId = null
 
+const useExternal = computed(() => typeof props.externalProgress === 'number')
+
 function compute() {
+  if (useExternal.value) return
   const el = containerEl.value
   if (!el) return
 
@@ -278,6 +286,12 @@ function compute() {
   const clamped = Math.max(0, Math.min(1, raw))
   scrollProgress.value = easeFn(clamped)
 }
+
+watch(() => props.externalProgress, (v) => {
+  if (typeof v === 'number') {
+    scrollProgress.value = Math.max(0, Math.min(1, v))
+  }
+}, { immediate: true })
 
 function onWindowResize() {
   if (resizeRafId) return
@@ -308,8 +322,10 @@ onMounted(async () => {
   if (containerEl.value) resizeObserver.observe(containerEl.value)
   if (skyImgRef.value) resizeObserver.observe(skyImgRef.value)
 
-  window.addEventListener('scroll', onScroll, { passive: true })
-  window.addEventListener('resize', onWindowResize, { passive: true })
+  if (!useExternal.value) {
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onWindowResize, { passive: true })
+  }
 })
 
 onUnmounted(() => {

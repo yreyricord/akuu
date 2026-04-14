@@ -23,74 +23,131 @@
         class="hero-colibri pointer-events-none absolute z-[2] hidden xl:block h-48 w-auto opacity-10 right-[3%] bottom-[18%]"
       />
 
-      <div class="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-10 xl:px-6 pt-24 pb-8 md:pt-28">
+      <div class="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-10 xl:px-6 pt-28 pb-8 md:pt-32">
 
-        <!-- ── Choix de destination (compact toggle) ─────────────── -->
-        <div class="mb-6 md:mb-8">
-          <div class="inline-flex w-full rounded-2xl border border-white/15 bg-white/[0.04] backdrop-blur-md p-1">
-            <button
-              type="button"
-              @click="donDestination = 'musee'"
-              :class="[
-                'dest-toggle flex-1 flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition-all duration-300',
-                donDestination === 'musee'
-                  ? 'bg-leaf/20 text-leaf shadow-lg shadow-leaf/10 border border-leaf/30'
-                  : 'text-white/50 hover:text-white/80 border border-transparent'
-              ]"
-            >
-              <PhGlobeHemisphereWest :size="18" weight="duotone" />
-              {{ $t('soutien.dest_projets_title') }}
-            </button>
-            <button
-              type="button"
-              @click="donDestination = 'fonctionnement'"
-              :class="[
-                'dest-toggle flex-1 flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition-all duration-300',
-                donDestination === 'fonctionnement'
-                  ? 'bg-leaf/20 text-leaf shadow-lg shadow-leaf/10 border border-leaf/30'
-                  : 'text-white/50 hover:text-white/80 border border-transparent'
-              ]"
-            >
-              <PhHouseSimple :size="18" weight="duotone" />
-              {{ $t('soutien.dest_fonc_title') }}
-            </button>
-          </div>
-        </div>
-
-        <div class="grid lg:grid-cols-2 gap-8 xl:gap-14 items-center mt-6">
+        <div class="grid lg:grid-cols-2 gap-8 xl:gap-14 items-stretch">
 
           <!-- ── Colonne gauche : Hero texte ── -->
-          <div class="text-white">
-            <template v-if="donDestination === 'musee'">
-              <span class="inline-flex items-center gap-2 text-leaf font-semibold text-xs uppercase tracking-[0.2em] mb-3">
-                <span class="w-6 h-px bg-leaf"></span>
-                {{ $t('soutien.hero_projet_kicker') }}
-                <span class="w-6 h-px bg-leaf"></span>
-              </span>
-              <h1 class="text-3xl sm:text-4xl xl:text-5xl font-serif font-bold leading-tight mb-4">
-                {{ $t('soutien.hero_projet_line1') }}<span class="text-leaf">{{ $t('soutien.hero_projet_line2') }}</span>{{ $t('soutien.hero_projet_line3') }}
-              </h1>
-              <p class="text-white/60 text-base xl:text-lg leading-relaxed">
-                {{ $t('soutien.hero_projet_body') }}
-              </p>
-            </template>
-            <template v-else>
-              <span class="inline-flex items-center gap-2 text-leaf font-semibold text-xs uppercase tracking-[0.2em] mb-3">
-                <span class="w-6 h-px bg-leaf"></span>
-                {{ $t('soutien.hero_fonc_kicker') }}
-                <span class="w-6 h-px bg-leaf"></span>
-              </span>
-              <h1 class="text-3xl sm:text-4xl xl:text-5xl font-serif font-bold leading-tight mb-4">
-                {{ $t('soutien.hero_fonc_title1') }}
-                <span class="text-leaf">{{ $t('soutien.hero_fonc_title2') }}</span>
-              </h1>
-              <p class="text-white/60 text-base xl:text-lg leading-relaxed">
-                {{ $t('soutien.hero_fonc_body') }}
-              </p>
-            </template>
+          <div class="text-white flex flex-col">
+
+            <!-- Choix de destination -->
+            <div class="mb-5 flex gap-2.5">
+              <button
+                type="button"
+                @click="donDestination = 'musee'"
+                :class="[
+                  'dest-btn group relative flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-all duration-300',
+                  donDestination === 'musee'
+                    ? 'bg-leaf/15 text-leaf ring-1 ring-leaf/40 shadow-md shadow-leaf/10'
+                    : 'bg-white/[0.05] text-white/45 ring-1 ring-white/10 hover:bg-white/[0.08] hover:text-white/70 hover:ring-white/20'
+                ]"
+              >
+                <span :class="['flex items-center justify-center w-7 h-7 rounded-lg transition-all duration-300', donDestination === 'musee' ? 'bg-leaf/20' : 'bg-white/[0.06] group-hover:bg-white/10']">
+                  <PhGlobeHemisphereWest :size="15" weight="duotone" />
+                </span>
+                {{ $t('soutien.dest_projets_title') }}
+              </button>
+              <button
+                type="button"
+                @click="donDestination = 'fonctionnement'"
+                :class="[
+                  'dest-btn group relative flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-all duration-300',
+                  donDestination === 'fonctionnement'
+                    ? 'bg-leaf/15 text-leaf ring-1 ring-leaf/40 shadow-md shadow-leaf/10'
+                    : 'bg-white/[0.05] text-white/45 ring-1 ring-white/10 hover:bg-white/[0.08] hover:text-white/70 hover:ring-white/20'
+                ]"
+              >
+                <span :class="['flex items-center justify-center w-7 h-7 rounded-lg transition-all duration-300', donDestination === 'fonctionnement' ? 'bg-leaf/20' : 'bg-white/[0.06] group-hover:bg-white/10']">
+                  <PhHouseSimple :size="15" weight="duotone" />
+                </span>
+                {{ $t('soutien.dest_fonc_title') }}
+              </button>
+            </div>
+
+            <transition name="progress-fade" mode="out-in">
+              <div v-if="donDestination === 'musee'" key="hero-musee">
+                <span class="inline-flex items-center gap-2 text-leaf font-semibold text-xs uppercase tracking-[0.2em] mb-3">
+                  <span class="w-6 h-px bg-leaf"></span>
+                  {{ $t('soutien.hero_projet_kicker') }}
+                  <span class="w-6 h-px bg-leaf"></span>
+                </span>
+                <h1 class="text-2xl sm:text-3xl xl:text-4xl font-serif font-bold leading-tight mb-3">
+                  {{ $t('soutien.hero_projet_line1') }}<span class="text-leaf">{{ $t('soutien.hero_projet_line2') }}</span>{{ $t('soutien.hero_projet_line3') }}
+                </h1>
+              </div>
+              <div v-else key="hero-fonc">
+                <span class="inline-flex items-center gap-2 text-leaf font-semibold text-xs uppercase tracking-[0.2em] mb-3">
+                  <span class="w-6 h-px bg-leaf"></span>
+                  {{ $t('soutien.hero_fonc_kicker') }}
+                  <span class="w-6 h-px bg-leaf"></span>
+                </span>
+                <h1 class="text-2xl sm:text-3xl xl:text-4xl font-serif font-bold leading-tight mb-3">
+                  {{ $t('soutien.hero_fonc_title1') }}
+                  <span class="text-leaf">{{ $t('soutien.hero_fonc_title2') }}</span>
+                </h1>
+              </div>
+            </transition>
+
+            <!-- Barre objectif (crossfade entre musée et fonctionnement) -->
+            <transition name="progress-fade" mode="out-in">
+              <div v-if="donDestination === 'musee'" key="bar-musee" class="bg-white/[0.06] border border-white/[0.10] rounded-2xl px-4 py-3 mt-5">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-white/40 text-[10px] uppercase tracking-widest font-semibold">{{ $t('soutien.musee_progress_label') }}</span>
+                  <span class="text-white/60 text-xs font-bold tabular-nums">
+                    {{ Math.round(museeTotalCollected).toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €
+                    <span class="text-white/30 font-normal">/ {{ MUSEE_GOAL_EUROS.toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
+                  </span>
+                </div>
+                <div class="relative h-3 rounded-full bg-white/[0.08] overflow-hidden">
+                  <div
+                    class="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-bleu-ciel to-bleu transition-all duration-300 ease-out"
+                    :style="{ width: museeWithDonPct + '%' }"
+                  />
+                  <div
+                    class="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-leaf/80 to-leaf transition-all duration-500 ease-out"
+                    :style="{ width: museeCollectedPct + '%' }"
+                  />
+                </div>
+                <div class="flex items-center justify-between mt-1.5">
+                  <span v-if="donAmount > 0" class="text-bleu-ciel-200 text-[10px] font-semibold">
+                    +{{ totalDonAmount.toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €
+                    <span class="text-white/30">{{ $t('soutien.musee_progress_your_don') }}</span>
+                  </span>
+                  <span class="text-white/30 text-[10px] tabular-nums ml-auto">{{ Math.round(museeWithDonPct) }}%</span>
+                </div>
+              </div>
+              <div v-else key="bar-fonc" class="bg-white/[0.06] border border-white/[0.10] rounded-2xl px-4 py-3 mt-5">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-white/40 text-[10px] uppercase tracking-widest font-semibold">{{ $t('soutien.fonc_progress_label') }}</span>
+                  <span class="text-white/60 text-xs font-bold tabular-nums">
+                    {{ Math.round(monthlyAmountEuros ?? 0).toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €
+                    <span class="text-white/30 font-normal">/ {{ FONC_GOAL_MONTHLY }} € / {{ $t('soutien.simulator_month') }}</span>
+                  </span>
+                </div>
+                <div class="relative h-3 rounded-full bg-white/[0.08] overflow-hidden">
+                  <div
+                    class="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-bleu-ciel to-bleu transition-all duration-300 ease-out"
+                    :style="{ width: foncWithDonPct + '%' }"
+                  />
+                  <div
+                    class="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-leaf/80 to-leaf transition-all duration-500 ease-out"
+                    :style="{ width: foncCollectedPct + '%' }"
+                  />
+                </div>
+                <div class="flex items-center justify-between mt-1.5">
+                  <span v-if="donAmount > 0" class="text-bleu-ciel-200 text-[10px] font-semibold">
+                    +{{ donAmount.toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €
+                    <span class="text-white/30">{{ $t('soutien.musee_progress_your_don') }}</span>
+                  </span>
+                  <span class="text-white/30 text-[10px] tabular-nums ml-auto">{{ Math.round(foncWithDonPct) }}%</span>
+                </div>
+              </div>
+            </transition>
+
+            <div class="flex-1"></div>
 
             <!-- Parallax forêt piloté par le slider -->
-            <div class="mt-8 hidden lg:block">
+            <div class="mt-6 lg:mt-8">
               <ForestScrollVisual
                 :external-progress="forestProgress"
                 :show-decor="false"
@@ -101,8 +158,8 @@
           </div>
 
           <!-- ── Colonne droite : Widget de don ── -->
-          <div>
-            <div class="don-widget relative w-full bg-white/[0.06] backdrop-blur-xl border border-white/15 rounded-3xl overflow-hidden">
+          <div class="flex flex-col">
+            <div class="don-widget relative w-full h-full bg-white/[0.06] backdrop-blur-xl border border-white/15 rounded-3xl overflow-hidden flex flex-col">
 
               <!-- Onglets fréquence (haut de la carte) -->
               <div class="grid grid-cols-2 border-b border-white/10">
@@ -133,31 +190,10 @@
                 </button>
               </div>
 
-              <!-- Sélecteur de durée (mensuel uniquement) -->
-              <transition name="progress-slide">
-                <div v-if="donFrequency === 'monthly'" class="flex items-center gap-1 px-5 sm:px-6 pt-3 pb-1">
-                  <span class="text-white/35 text-[10px] uppercase tracking-widest font-semibold mr-2 shrink-0">{{ $t('soutien.duration_label') }}</span>
-                  <button
-                    v-for="d in DURATION_OPTIONS"
-                    :key="d"
-                    type="button"
-                    @click="donDurationMonths = d"
-                    :class="[
-                      'px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200',
-                      donDurationMonths === d
-                        ? 'bg-leaf/20 text-leaf border border-leaf/30'
-                        : 'text-white/40 hover:text-white/70 border border-transparent hover:border-white/15'
-                    ]"
-                  >
-                    {{ d }} {{ $t('soutien.duration_months') }}
-                  </button>
-                </div>
-              </transition>
-
               <!-- Corps : montant + slider + CTA -->
-              <div class="px-5 sm:px-6 py-5">
+              <div class="px-5 sm:px-6 pt-3 pb-4">
                 <!-- Montant -->
-                <div class="flex items-baseline gap-1.5 mb-3">
+                <div class="flex items-baseline gap-1.5 mb-2">
                   <span class="text-5xl sm:text-6xl font-serif font-black text-leaf tabular-nums leading-none">{{ donAmount }}</span>
                   <span class="text-2xl font-serif text-white/50">€</span>
                   <span v-if="donFrequency === 'monthly'" class="text-white/35 text-sm ml-1">/{{ $t('soutien.simulator_month') }}</span>
@@ -165,7 +201,7 @@
 
                 <!-- Slider colibri -->
                 <div
-                  class="mb-2 py-3 colibri-slider-wrap"
+                  class="mb-1 py-2 colibri-slider-wrap"
                   :class="{ 'colibri-slider-wrap--burst': colibriBurstActive }"
                 >
                   <input
@@ -185,7 +221,7 @@
                 </div>
 
                 <!-- Montant libre -->
-                <div class="mb-4">
+                <div class="mb-3">
                   <button
                     v-if="!useCustomOverMax"
                     type="button"
@@ -212,68 +248,8 @@
                   </div>
                 </div>
 
-                <!-- Barre de progression projet musée -->
-                <transition name="progress-slide">
-                  <div v-if="donDestination === 'musee'" class="bg-white/[0.04] border border-white/[0.08] rounded-2xl px-4 py-3 mb-4">
-                    <div class="flex items-center justify-between mb-2">
-                      <span class="text-white/40 text-[10px] uppercase tracking-widest font-semibold">{{ $t('soutien.musee_progress_label') }}</span>
-                      <span class="text-white/60 text-xs font-bold tabular-nums">
-                        {{ Math.round(museeAmountEuros).toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €
-                        <span class="text-white/30 font-normal">/ {{ MUSEE_GOAL_EUROS.toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
-                      </span>
-                    </div>
-                    <div class="relative h-3 rounded-full bg-white/[0.08] overflow-hidden">
-                      <div
-                        class="absolute inset-y-0 left-0 rounded-full bg-white/15 transition-all duration-500 ease-out"
-                        :style="{ width: museeCollectedPct + '%' }"
-                      />
-                      <div
-                        class="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-leaf/80 to-leaf transition-all duration-300 ease-out"
-                        :style="{ width: museeWithDonPct + '%' }"
-                      />
-                    </div>
-                    <div class="flex items-center justify-between mt-1.5">
-                      <span v-if="donAmount > 0" class="text-leaf text-[10px] font-semibold">
-                        +{{ totalDonAmount.toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €
-                        <span class="text-white/30">{{ $t('soutien.musee_progress_your_don') }}</span>
-                      </span>
-                      <span class="text-white/30 text-[10px] tabular-nums ml-auto">{{ Math.round(museeWithDonPct) }}%</span>
-                    </div>
-                  </div>
-                </transition>
-
-                <!-- Barre de progression fonctionnement mensuel -->
-                <transition name="progress-slide">
-                  <div v-if="donDestination === 'fonctionnement' && isMonthly" class="bg-white/[0.04] border border-white/[0.08] rounded-2xl px-4 py-3 mb-4">
-                    <div class="flex items-center justify-between mb-2">
-                      <span class="text-white/40 text-[10px] uppercase tracking-widest font-semibold">{{ $t('soutien.fonc_progress_label') }}</span>
-                      <span class="text-white/60 text-xs font-bold tabular-nums">
-                        {{ Math.round(monthlyAmountEuros ?? 0).toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €
-                        <span class="text-white/30 font-normal">/ {{ FONC_GOAL_MONTHLY }} € / {{ $t('soutien.simulator_month') }}</span>
-                      </span>
-                    </div>
-                    <div class="relative h-3 rounded-full bg-white/[0.08] overflow-hidden">
-                      <div
-                        class="absolute inset-y-0 left-0 rounded-full bg-white/15 transition-all duration-500 ease-out"
-                        :style="{ width: foncCollectedPct + '%' }"
-                      />
-                      <div
-                        class="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-leaf/80 to-leaf transition-all duration-300 ease-out"
-                        :style="{ width: foncWithDonPct + '%' }"
-                      />
-                    </div>
-                    <div class="flex items-center justify-between mt-1.5">
-                      <span v-if="donAmount > 0" class="text-leaf text-[10px] font-semibold">
-                        +{{ donAmount.toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} € / {{ $t('soutien.simulator_month') }}
-                        <span class="text-white/30">{{ $t('soutien.musee_progress_your_don') }}</span>
-                      </span>
-                      <span class="text-white/30 text-[10px] tabular-nums ml-auto">{{ Math.round(foncWithDonPct) }}%</span>
-                    </div>
-                  </div>
-                </transition>
-
                 <!-- Simulateur fiscal intégré -->
-                <div class="bg-white/[0.04] border border-white/[0.08] rounded-2xl px-4 py-3 mb-4 space-y-2.5">
+                <div class="bg-white/[0.04] border border-white/[0.08] rounded-2xl px-3 py-2.5 mb-3 space-y-2">
                   <div class="flex items-center gap-1.5 mb-1">
                     <span class="w-1.5 h-1.5 rounded-full bg-leaf animate-pulse shrink-0"></span>
                     <span class="text-white/40 text-[10px] uppercase tracking-widest font-semibold">{{ $t('soutien.simulator_title') }}</span>
@@ -306,6 +282,29 @@
                   <span class="relative">{{ $t('soutien.form_cta', { amount: donAmount }) }}<template v-if="isMonthly"> / {{ $t('soutien.simulator_month') }}</template></span>
                 </button>
 
+                <!-- Sélecteur de durée / info don unique (sous le CTA) -->
+                <div v-if="donFrequency === 'monthly'" class="flex flex-wrap items-center justify-center gap-1.5 mt-3">
+                  <span class="text-white/35 text-[10px] uppercase tracking-widest font-semibold mr-1 shrink-0">{{ $t('soutien.duration_label') }}</span>
+                  <button
+                    v-for="d in DURATION_OPTIONS"
+                    :key="d"
+                    type="button"
+                    @click="donDurationMonths = d"
+                    :class="[
+                      'px-2.5 py-1 rounded-lg text-xs font-bold transition-all duration-200',
+                      donDurationMonths === d
+                        ? 'bg-leaf/20 text-leaf border border-leaf/30'
+                        : 'text-white/40 hover:text-white/70 border border-transparent hover:border-white/15'
+                    ]"
+                  >
+                    {{ d }} {{ $t('soutien.duration_months') }}
+                  </button>
+                </div>
+                <div v-else class="flex items-center justify-center gap-2 mt-3">
+                  <PhLock :size="13" class="text-white/25 shrink-0" />
+                  <span class="text-white/40 text-[11px] font-semibold tracking-wide">{{ $t('soutien.once_hint') }}</span>
+                </div>
+
                 <!-- Erreurs + sécurité -->
                 <p v-if="donFallbackWarning" class="text-amber-200 bg-amber-900/20 border border-amber-400/20 rounded-lg text-[11px] mt-3 px-3 py-1.5">
                   {{ $t('soutien.form_fallback_warning') }}
@@ -320,9 +319,8 @@
 
         </div>
 
-        <!-- Dernières contributions : marquee dans le 1er bandeau, contour animé au scroll -->
+        <!-- Dernières contributions : toujours visible (chargement / vide / erreur / liste) -->
         <div
-          v-if="recentContributions.length > 0 || statsLoading"
           ref="heroFeedStripRef"
           class="mt-10 md:mt-12 w-full shrink-0"
         >
@@ -352,8 +350,23 @@
                   </div>
                 </div>
               </div>
-              <div v-else class="marquee-track marquee-track--hero">
-                <div class="marquee-content">
+              <p v-else-if="statsLoadFailed" class="px-4 md:px-5 text-white/45 text-sm text-center py-2">
+                {{ $t('soutien.feed_error') }}
+              </p>
+              <p v-else-if="recentContributions.length === 0" class="px-4 md:px-5 text-white/40 text-sm text-center py-2">
+                {{ $t('soutien.feed_empty') }}
+              </p>
+              <div
+                v-else
+                ref="marqueeTrackRef"
+                class="marquee-track marquee-track--hero"
+                @pointerdown="onMarqueePointerDown"
+                @pointermove="onMarqueePointerMove"
+                @pointerup="onMarqueePointerUp"
+                @pointercancel="onMarqueePointerUp"
+                @wheel.prevent="onMarqueeWheel"
+              >
+                <div class="marquee-content" :style="marqueeStyle">
                   <div
                     v-for="(c, i) in marqueeContributions"
                     :key="'h' + i"
@@ -517,7 +530,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onBeforeMount, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import { useDataStore } from '@/store'
@@ -533,10 +546,10 @@ const { t, locale } = useI18n()
 const numberLocaleByCode = { fr: 'fr-FR', en: 'en-GB', es: 'es-ES', pt: 'pt-BR', de: 'de-DE' }
 
 // ── Slider principal (1–500 €) + montant libre > 500 ─────────────────────
-const SLIDER_MAX = 200
-const CUSTOM_MIN = 201
+const SLIDER_MAX = 250
+const CUSTOM_MIN = 251
 const CUSTOM_MAX = 100_000
-const MILESTONE_EUROS = [20, 50, 100, 200, 500, 1000]
+const MILESTONE_EUROS = [20, 50, 100, 200, 250, 1000]
 
 const donAmount = ref(20)
 const useCustomOverMax = ref(false)
@@ -615,8 +628,9 @@ function runColibriMilestones(from, to) {
 const donDestination = ref('musee')
 const donFrequency = ref('monthly')
 const donDurationMonths = ref(12)
-const DURATION_OPTIONS = [3, 6, 9, 12]
+const DURATION_OPTIONS = [3,5,6,9,12]
 const donLoading = ref(false)
+
 const donFallbackWarning = ref(false)
 const donErrorFromHA = ref(false)
 
@@ -684,17 +698,25 @@ const heroFeedShellStyle = computed(() => ({
 const STATIC_TOTAL_EUROS = 66362
 
 const statsLoading = ref(true)
+const statsLoadFailed = ref(false)
+/** True si des stats ont été rechargées depuis sessionStorage (visite précédente OK) */
+const hadLiveStatsSnapshot = ref(false)
 const newDonationsEuros = ref(0)
 const monthlyAmountEuros = ref(null)
 const museeAmountEuros = ref(0)
+const chapiAmountEuros = ref(0)
 const recentContributions = ref([])
 
 const MUSEE_GOAL_EUROS = 25_000
 const FONC_GOAL_MONTHLY = 350
-const museeCollectedPct = computed(() => Math.min(100, (museeAmountEuros.value / MUSEE_GOAL_EUROS) * 100))
+// Fonds hors HelloAsso deja alloues au musee (dons directs 2050 + subventions 8550 + autres 1000)
+const MUSEE_STATIC_BASE = 11_600
+const museeHelloAssoTotal = computed(() => museeAmountEuros.value + chapiAmountEuros.value)
+const museeTotalCollected = computed(() => MUSEE_STATIC_BASE + museeHelloAssoTotal.value)
+const museeCollectedPct = computed(() => Math.min(100, (museeTotalCollected.value / MUSEE_GOAL_EUROS) * 100))
 const museeWithDonPct = computed(() => {
   const donated = donDestination.value === 'musee' ? totalDonAmount.value : 0
-  return Math.min(100, ((museeAmountEuros.value + donated) / MUSEE_GOAL_EUROS) * 100)
+  return Math.min(100, ((museeTotalCollected.value + donated) / MUSEE_GOAL_EUROS) * 100)
 })
 const foncCollectedPct = computed(() => {
   const current = monthlyAmountEuros.value ?? 0
@@ -702,14 +724,87 @@ const foncCollectedPct = computed(() => {
 })
 const foncWithDonPct = computed(() => {
   const current = monthlyAmountEuros.value ?? 0
-  const donated = donDestination.value === 'fonctionnement' && isMonthly.value ? donAmount.value : 0
+  const donated = donDestination.value === 'fonctionnement' ? donAmount.value : 0
   return Math.min(100, ((current + donated) / FONC_GOAL_MONTHLY) * 100)
 })
 
 const marqueeContributions = computed(() => {
-  const arr = recentContributions.value
+  const arr = recentContributions.value.filter(c => c.formLabel !== 'adhesion')
   if (arr.length === 0) return []
   return arr.length < 4 ? [...arr, ...arr, ...arr] : [...arr, ...arr]
+})
+
+// ── Marquee interaction (drag / swipe / wheel) ──────────────────────────
+const marqueeTrackRef = ref(null)
+const marqueeOffset = ref(0)
+const marqueeDragging = ref(false)
+const marqueeAutoSpeed = 0.5 // px par frame (~30px/s)
+let marqueeRafId = null
+let marqueeDragStartX = 0
+let marqueeDragStartOffset = 0
+let marqueeResumeTimer = null
+let marqueeContentWidth = 0
+
+function getMarqueeHalfWidth() {
+  const el = marqueeTrackRef.value?.querySelector('.marquee-content')
+  if (!el) return 1
+  return el.scrollWidth / 2 || 1
+}
+
+function marqueeLoop() {
+  if (!marqueeDragging.value) {
+    marqueeOffset.value -= marqueeAutoSpeed
+    marqueeContentWidth = getMarqueeHalfWidth()
+    if (Math.abs(marqueeOffset.value) >= marqueeContentWidth) {
+      marqueeOffset.value += marqueeContentWidth
+    }
+  }
+  marqueeRafId = requestAnimationFrame(marqueeLoop)
+}
+
+const marqueeStyle = computed(() => ({
+  transform: `translateX(${marqueeOffset.value}px)`,
+  transition: marqueeDragging.value ? 'none' : 'transform 0.05s linear',
+  cursor: marqueeDragging.value ? 'grabbing' : 'grab',
+}))
+
+function onMarqueePointerDown(e) {
+  marqueeDragging.value = true
+  marqueeDragStartX = e.clientX
+  marqueeDragStartOffset = marqueeOffset.value
+  e.currentTarget.setPointerCapture(e.pointerId)
+  if (marqueeResumeTimer) clearTimeout(marqueeResumeTimer)
+}
+
+function onMarqueePointerMove(e) {
+  if (!marqueeDragging.value) return
+  const dx = e.clientX - marqueeDragStartX
+  marqueeOffset.value = marqueeDragStartOffset + dx
+  marqueeContentWidth = getMarqueeHalfWidth()
+  if (marqueeOffset.value > 0) marqueeOffset.value -= marqueeContentWidth
+  if (Math.abs(marqueeOffset.value) >= marqueeContentWidth) marqueeOffset.value += marqueeContentWidth
+}
+
+function onMarqueePointerUp() {
+  if (!marqueeDragging.value) return
+  marqueeDragging.value = false
+  marqueeResumeTimer = setTimeout(() => { /* auto-scroll reprend seul */ }, 100)
+}
+
+function onMarqueeWheel(e) {
+  const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY
+  marqueeOffset.value -= delta * 1.5
+  marqueeContentWidth = getMarqueeHalfWidth()
+  if (Math.abs(marqueeOffset.value) >= marqueeContentWidth) marqueeOffset.value += marqueeContentWidth
+  if (marqueeOffset.value > 0) marqueeOffset.value -= marqueeContentWidth
+}
+
+onMounted(() => {
+  marqueeRafId = requestAnimationFrame(marqueeLoop)
+})
+onUnmounted(() => {
+  if (marqueeRafId) cancelAnimationFrame(marqueeRafId)
+  if (marqueeResumeTimer) clearTimeout(marqueeResumeTimer)
 })
 
 // ── Stats banner counters ─────────────────────────────────────────────────
@@ -770,7 +865,10 @@ function formatMonthlyEuro(n) {
 }
 
 function formatContribLabel(formLabel) {
-  return formLabel === 'musee' ? t('soutien.feed_label_musee') : t('soutien.feed_label_op')
+  if (formLabel === 'musee') return t('soutien.feed_label_musee')
+  if (formLabel === 'chapi') return t('soutien.feed_label_musee')
+  if (formLabel === 'adhesion') return t('soutien.feed_label_adhesion')
+  return t('soutien.feed_label_op')
 }
 
 function timeAgo(isoDate) {
@@ -786,6 +884,18 @@ function timeAgo(isoDate) {
   return `${Math.floor(days / 30)} mois`
 }
 
+/**
+ * En prod : chemins relatifs (même origine Netlify).
+ * En dev avec `npm run dev` seul : définir VITE_NETLIFY_FUNCTIONS_ORIGIN (ex. https://www.akuu.org)
+ * dans `.env.local`, sinon les appels `/.netlify/functions/*` échouent (pas de liste de dons / checkout).
+ * Avec `netlify dev`, laisser vide : le proxy sert les fonctions sur la même origine.
+ */
+function helloAssoFunctionUrl(path) {
+  if (import.meta.env.PROD) return path
+  const origin = (import.meta.env.VITE_NETLIFY_FUNCTIONS_ORIGIN || '').replace(/\/$/, '')
+  return origin ? `${origin}${path}` : path
+}
+
 // ── HelloAsso checkout ────────────────────────────────────────────────────
 async function submitDonation() {
   if (donAmount.value < 1) return
@@ -794,7 +904,7 @@ async function submitDonation() {
   donFallbackWarning.value = false
   try {
     console.log('[submitDonation] calling function…')
-    const res = await fetch('/.netlify/functions/helloasso-checkout', {
+    const res = await fetch(helloAssoFunctionUrl('/.netlify/functions/helloasso-checkout'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -829,25 +939,107 @@ async function submitDonation() {
 }
 
 // ── Stats API ─────────────────────────────────────────────────────────────
-async function loadLiveStats() {
+const STATS_FETCH_ATTEMPTS = 4
+const STATS_RETRY_BASE_MS = 500
+
+function applyLiveStatsPayload(data) {
+  if (data.newDonationsEuros != null) newDonationsEuros.value = data.newDonationsEuros
+  if (data.monthlyAmountEuros != null) monthlyAmountEuros.value = data.monthlyAmountEuros
+  if (data.museeAmountEuros != null) museeAmountEuros.value = data.museeAmountEuros
+  if (data.chapiAmountEuros != null) chapiAmountEuros.value = data.chapiAmountEuros
+  if (Array.isArray(data.recentContributions)) recentContributions.value = data.recentContributions
+}
+
+const LIVE_STATS_SESSION_KEY = 'akuu-soutien-live-stats-v1'
+const LIVE_STATS_SESSION_MAX_AGE_MS = 48 * 60 * 60 * 1000
+
+function persistLiveStatsToSession(data) {
+  if (typeof sessionStorage === 'undefined' || !data) return
   try {
-    const res = await fetch('/.netlify/functions/helloasso-stats')
-    if (!res.ok) return
-    const data = await res.json()
-    if (!data.live) return
-    if (data.newDonationsEuros != null) newDonationsEuros.value = data.newDonationsEuros
-    if (data.monthlyAmountEuros != null) monthlyAmountEuros.value = data.monthlyAmountEuros
-    if (data.museeAmountEuros != null) museeAmountEuros.value = data.museeAmountEuros
-    if (Array.isArray(data.recentContributions)) recentContributions.value = data.recentContributions
+    const payload = {
+      newDonationsEuros:    data.newDonationsEuros,
+      monthlyAmountEuros:   data.monthlyAmountEuros,
+      museeAmountEuros:     data.museeAmountEuros,
+      chapiAmountEuros:     data.chapiAmountEuros,
+      recentContributions:  Array.isArray(data.recentContributions)
+        ? data.recentContributions.slice(0, 40)
+        : []
+    }
+    sessionStorage.setItem(LIVE_STATS_SESSION_KEY, JSON.stringify({ savedAt: Date.now(), payload }))
   } catch {
-    // Silencieux
+    /* quota / private mode */
+  }
+}
+
+function loadLiveStatsFromSession() {
+  if (typeof sessionStorage === 'undefined') return null
+  try {
+    const raw = sessionStorage.getItem(LIVE_STATS_SESSION_KEY)
+    if (!raw) return null
+    const { savedAt, payload } = JSON.parse(raw)
+    if (!savedAt || !payload || Date.now() - savedAt > LIVE_STATS_SESSION_MAX_AGE_MS) return null
+    return payload
+  } catch {
+    return null
+  }
+}
+
+async function loadLiveStats(bustCache = false) {
+  const path = bustCache
+    ? '/.netlify/functions/helloasso-stats?nocache=1'
+    : '/.netlify/functions/helloasso-stats'
+  const url = helloAssoFunctionUrl(path)
+  let ok = false
+  try {
+    for (let attempt = 0; attempt < STATS_FETCH_ATTEMPTS; attempt++) {
+      if (attempt > 0) {
+        await new Promise(r => setTimeout(r, STATS_RETRY_BASE_MS * attempt))
+      }
+      try {
+        const res = await fetch(url)
+        if (!res.ok) continue
+        const data = await res.json()
+        if (!data?.live) continue
+        statsLoadFailed.value = false
+        applyLiveStatsPayload(data)
+        persistLiveStatsToSession(data)
+        ok = true
+        break
+      } catch {
+        /* retry */
+      }
+    }
+    if (!ok) statsLoadFailed.value = !hadLiveStatsSnapshot.value
   } finally {
     statsLoading.value = false
   }
 }
 
+function applyOptimisticDonation() {
+  const amt = parseInt(route.query.amount, 10)
+  const dest = route.query.dest
+  const freq = route.query.freq
+  if (!amt || amt < 1) return
+  if (dest === 'musee') {
+    museeAmountEuros.value += amt
+  } else if (freq === 'monthly') {
+    monthlyAmountEuros.value = (monthlyAmountEuros.value ?? 0) + amt
+  }
+  newDonationsEuros.value += amt
+}
+
 // ── Lifecycle ─────────────────────────────────────────────────────────────
 let observer = null
+
+onBeforeMount(() => {
+  const snap = loadLiveStatsFromSession()
+  if (snap) {
+    hadLiveStatsSnapshot.value = true
+    applyLiveStatsPayload(snap)
+    statsLoading.value = false
+  }
+})
+
 onMounted(() => {
   loadLiveStats()
 
@@ -856,7 +1048,9 @@ onMounted(() => {
   }
 
   if (route.query.from === 'merci' || (typeof document !== 'undefined' && document.referrer?.includes('helloasso.com'))) {
-    setTimeout(() => loadLiveStats(), 1000)
+    applyOptimisticDonation()
+    const delays = [3_000, 10_000, 30_000]
+    delays.forEach(d => setTimeout(() => loadLiveStats(true), d))
   }
 
   window.addEventListener('scroll', handleScroll, { passive: true })
@@ -1130,19 +1324,12 @@ onUnmounted(() => {
 }
 
 /* ── Marquee ───────────────────────────────────────────── */
-.marquee-track { overflow: hidden; }
+.marquee-track { overflow: hidden; touch-action: pan-y; user-select: none; }
 .marquee-content {
   display: flex;
   gap: 0.75rem;
   width: max-content;
-  animation: marqueeScroll 25s linear infinite;
-}
-@media (prefers-reduced-motion: reduce) {
-  .marquee-content { animation: none; overflow-x: auto; }
-}
-@keyframes marqueeScroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  will-change: transform;
 }
 
 /* ── Colibri orbitant ──────────────────────────────────── */
@@ -1159,23 +1346,18 @@ onUnmounted(() => {
   .dest-toggle:active { transform: scale(0.97); }
 }
 
-/* ── Progress bar slide transition ───────────────────── */
-.progress-slide-enter-active,
-.progress-slide-leave-active {
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
+/* ── Crossfade transition (no height collapse) ────────── */
+.progress-fade-enter-active,
+.progress-fade-leave-active {
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
-.progress-slide-enter-from,
-.progress-slide-leave-to {
+.progress-fade-enter-from {
   opacity: 0;
-  max-height: 0;
-  margin-bottom: 0;
-  padding-top: 0;
-  padding-bottom: 0;
+  transform: translateY(6px);
 }
-.progress-slide-enter-to,
-.progress-slide-leave-from {
-  opacity: 1;
-  max-height: 120px;
+.progress-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-6px);
 }
+
 </style>

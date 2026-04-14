@@ -9,9 +9,7 @@
     <section class="section-padding bg-white border-b border-night/[0.07]">
       <div class="container-narrow max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-start gap-3.5 px-5 py-4 md:py-5 rounded-2xl bg-amber-50/90 border border-amber-200/80 shadow-sm">
-          <svg class="w-5 h-5 text-amber-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
-          </svg>
+          <PhInfo :size="20" weight="fill" class="text-amber-600 shrink-0 mt-0.5" />
           <p class="text-sm md:text-base text-amber-950/90 leading-[1.65]">
             {{ $t('cours_anglais.suspended_notice') }}
           </p>
@@ -208,6 +206,7 @@ import PageHero from '@/components/shared/PageHero.vue'
 import DonSection from '@/components/home/DonSection.vue'
 import coursAnglaisNarrative from '@/data/cours-anglais-narrative.json'
 import { useScrollAnimation } from '@/composables/useScrollAnimation.js'
+import { PhInfo } from '@phosphor-icons/vue'
 
 const { locale } = useI18n()
 

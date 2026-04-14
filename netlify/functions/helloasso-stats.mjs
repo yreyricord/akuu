@@ -11,10 +11,11 @@
  *   - museeAmountEuros   : total collecté sur projet-musee  (objectif 25 000 €)
  *   - monthlyAmountEuros : dons reçus ce mois sur formulaires-1 (objectif 350 €/mois)
  *
- * Cache : 10 min en mémoire (warm Lambda) + Cache-Control 600 s HTTP.
+ * Cache : 5 min en mémoire (warm Lambda) + Cache-Control HTTP.
  */
 
-const HELLOASSO_OAUTH = 'https://api.helloasso.com/oauth2/token'
+import { getHelloAssoAccessToken } from '../helloasso-oauth.mjs'
+
 const HELLOASSO_API   = 'https://api.helloasso.com/v5'
 const ORG_SLUG        = 'akuu'
 
@@ -31,7 +32,7 @@ const MUSEE_FORM = { type: MUSEE_TYPE, slug: MUSEE_SLUG }
 // Cache en mémoire — survit aux invocations warm sur la même instance Lambda
 let memCache = null
 let memCacheExpiry = 0
-const CACHE_TTL_MS = 10 * 60 * 1000 // 10 minutes
+const CACHE_TTL_MS = 5 * 60 * 1000 // 5 minutes
 
 function corsHeaders() {
   return {
@@ -39,26 +40,6 @@ function corsHeaders() {
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type'
   }
-}
-
-/** Obtient un access_token via client_credentials */
-async function getAccessToken(clientId, clientSecret) {
-  const body = new URLSearchParams({
-    grant_type:    'client_credentials',
-    client_id:     clientId,
-    client_secret: clientSecret
-  })
-  const res = await fetch(HELLOASSO_OAUTH, {
-    method:  'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body:    body.toString()
-  })
-  if (!res.ok) {
-    const text = await res.text().catch(() => '')
-    throw new Error(`HelloAsso auth ${res.status}: ${text}`)
-  }
-  const data = await res.json()
-  return data.access_token
 }
 
 /**
@@ -116,8 +97,16 @@ async function getRecentOrders(headers, formType, formSlug, formLabel, limit = 5
     const rawAmount = (typeof order.amount === 'number' && order.amount > 0)
       ? order.amount
       : (sumArr(order.payments) || sumArr(order.items) || null)
+    const pay0 = (order.payments ?? [])[0]
+    const date =
+      order.date
+      || order.meta?.createdAt
+      || order.createdAt
+      || pay0?.date
+      || pay0?.meta?.createdAt
+      || null
     return {
-      date:        order.date ?? null,
+      date,
       amountEuros: rawAmount ? Math.round(rawAmount / 100) : null,
       firstName:   order.payer?.firstName?.trim() || null,
       city:        order.payer?.city?.trim()      || null,
@@ -130,11 +119,14 @@ async function fetchHelloAssoStats(token) {
   const headers = { Authorization: `Bearer ${token}` }
 
   // 1. Découverte du formulaire de fonctionnement (formulaires-1) via la liste
-  const formsRes = await fetch(
-    `${HELLOASSO_API}/organizations/${ORG_SLUG}/forms?pageSize=50`,
-    { headers }
-  )
-  if (!formsRes.ok) throw new Error(`Forms list ${formsRes.status}`)
+  const formsUrl = `${HELLOASSO_API}/organizations/${ORG_SLUG}/forms?pageSize=50`
+  console.log('[helloasso-stats] GET', formsUrl)
+  const formsRes = await fetch(formsUrl, { headers })
+  if (!formsRes.ok) {
+    const body = await formsRes.text()
+    console.error(`[helloasso-stats] Forms list ${formsRes.status}:`, body.slice(0, 500))
+    throw new Error(`Forms list ${formsRes.status}`)
+  }
   const forms = (await formsRes.json()).data ?? []
 
   // Le champ slug dans l'API HelloAsso s'appelle "formSlug"
@@ -142,24 +134,18 @@ async function fetchHelloAssoStats(token) {
 
   console.log('[helloasso-stats] forms:', forms.map(f => `${getSlug(f)} (${f.formType})`).join(', '))
 
-  // Formulaire de fonctionnement : on exclut explicitement le formulaire musée
-  const isMuseeForm  = f => getSlug(f) === MUSEE_SLUG
-  const opForm       = forms.find(f => !isMuseeForm(f) && getSlug(f) === 'formulaires-1')
-                    ?? forms.find(f => !isMuseeForm(f) && f.formType === 'Donation')
-                    ?? forms.find(f => !isMuseeForm(f) && f.formType === 'PaymentForm')
-                    ?? forms.find(f => !isMuseeForm(f) && f.formType !== 'CrowdFunding' && f.formType !== 'Membership')
+  const isMuseeForm  = f => [MUSEE_SLUG, 'projet-chapichika', 'ak-ube-un-projet-akuu'].includes(getSlug(f))
   const memberForm   = forms.find(f => f.formType === 'Membership')
+  const memberSlug   = memberForm ? getSlug(memberForm) : null
 
-  // Résolution des slugs réels depuis les objets formulaire
-  const opSlug     = opForm     ? getSlug(opForm)     : null
-  const memberSlug = memberForm ? getSlug(memberForm) : null
+  // Tous les formulaires d'exploitation (hors musee, hors adhesion)
+  const opForms = forms.filter(f => !isMuseeForm(f) && f.formType !== 'Membership')
+  console.log('[helloasso-stats] opForms:', opForms.map(f => `${getSlug(f)} (${f.formType})`).join(', '))
 
-  // 2. Toutes les requêtes en parallèle
-  const [newDonationsEuros, memberCount, museeAmountEuros, monthlyAmountEuros, recentOp, recentMusee] = await Promise.all([
-    // Dons reçus APRÈS la date de gel du fichier comptable Excel (évite le double-comptage)
-    opSlug     ? sumPayments(headers, opForm.formType, opSlug, EXCEL_CUTOFF)     : Promise.resolve(0),
-    // Nombre d'adhérents = nombre de commandes sur le formulaire adhésion
-    // HelloAsso retourne -1 pour totalCount sur certains endpoints → on compte manuellement
+  const sleep = ms => new Promise(r => setTimeout(r, ms))
+
+  // 2a. Agrégats (sommes / mois / comptage adhérents) en parallèle — pas d’appels orders « récents » ici (évite le 429 HelloAsso)
+  const [memberCount, museeAmountEuros, chapiAmountEuros, ...opPairResults] = await Promise.all([
     memberSlug ? (async () => {
       let count = 0, pageIndex = 1
       while (true) {
@@ -167,39 +153,68 @@ async function fetchHelloAssoStats(token) {
         if (!res.ok) return null
         const d = await res.json()
         const items = d.data ?? []
-        // Essayer totalCount en premier (disponible sur certaines configs)
         const total = d.pagination?.totalCount
         if (typeof total === 'number' && total > 0) return total
         count += items.length
         if (items.length < 100) break
         pageIndex++
-        if (pageIndex > 20) break // sécurité : max 2000 membres
+        if (pageIndex > 20) break
       }
       return count || null
-    })()                                                                          : Promise.resolve(null),
-    // Total collecté sur le projet musée (tous les paiements)
+    })() : Promise.resolve(null),
     sumPayments(headers, MUSEE_FORM.type, MUSEE_FORM.slug),
-    // Paiements du mois en cours sur le formulaire de fonctionnement
-    opSlug     ? getMonthlyAmount(headers, opForm.formType, opSlug)              : Promise.resolve(null),
-    opSlug     ? getRecentOrders(headers, opForm.formType, opSlug, 'op', 5)      : Promise.resolve([]),
-    getRecentOrders(headers, MUSEE_FORM.type, MUSEE_FORM.slug, 'musee', 5)
+    sumPayments(headers, 'CrowdFunding', 'projet-chapichika'),
+    ...opForms.flatMap(f => {
+      const slug = getSlug(f)
+      return [
+        sumPayments(headers, f.formType, slug, EXCEL_CUTOFF),
+        getMonthlyAmount(headers, f.formType, slug)
+      ]
+    })
   ])
 
-  // Fusionner et trier les contributions récentes des 2 formulaires (5 max)
-  const recentContributions = [...recentOp, ...recentMusee]
+  let newDonationsEuros = 0
+  let monthlyAmountEuros = 0
+  for (let i = 0; i < opForms.length; i++) {
+    newDonationsEuros += opPairResults[i * 2] ?? 0
+    monthlyAmountEuros += opPairResults[i * 2 + 1] ?? 0
+  }
+
+  // 2b. Dernières commandes : séquentiel avec petit délai (limite de débit HelloAsso)
+  let recentOp = []
+  for (let i = 0; i < opForms.length; i++) {
+    if (i > 0) await sleep(90)
+    const f = opForms[i]
+    recentOp = recentOp.concat(await getRecentOrders(headers, f.formType, getSlug(f), 'op', 5))
+  }
+
+  let recentMember = []
+  if (memberSlug) {
+    await sleep(90)
+    recentMember = await getRecentOrders(headers, memberForm.formType, memberSlug, 'adhesion', 5)
+  }
+
+  await sleep(90)
+  const recentChapi = await getRecentOrders(headers, 'CrowdFunding', 'projet-chapichika', 'chapi', 5)
+
+  await sleep(90)
+  const recentMusee = await getRecentOrders(headers, MUSEE_FORM.type, MUSEE_FORM.slug, 'musee', 5)
+
+  // Fusionner et trier toutes les contributions récentes (tous formulaires)
+  const recentContributions = [...recentOp, ...recentMusee, ...recentMember, ...recentChapi]
     .filter(c => c.date)
     .sort((a, b) => new Date(b.date) - new Date(a.date))
-    .slice(0, 5)
 
   return {
     live:                 true,
-    newDonationsEuros,    // dons après EXCEL_CUTOFF sur formulaires-1 (s'ajoute à la base Excel)
-    memberCount,          // nombre d'adhérents
-    museeAmountEuros,     // total collecté sur projet-musee (/ 25 000 €)
-    monthlyAmountEuros,   // dons ce mois sur formulaires-1 (/ 350 €/mois)
-    recentContributions,  // 5 dernières contributions (anonymisées)
+    newDonationsEuros,
+    memberCount,
+    museeAmountEuros,
+    chapiAmountEuros,
+    monthlyAmountEuros,
+    recentContributions,  // toutes les contributions récentes (anonymisées)
     _forms: {
-      op:     opForm     ? { type: opForm.formType,     slug: opSlug     } : null,
+      op:     opForms.map(f => ({ type: f.formType, slug: getSlug(f) })),
       member: memberForm ? { type: memberForm.formType, slug: memberSlug } : null,
       musee:  MUSEE_FORM
     }
@@ -229,8 +244,11 @@ export async function handler(event) {
     }
   }
 
-  // Servir depuis le cache mémoire si encore valide
-  if (memCache && Date.now() < memCacheExpiry) {
+  // ?nocache=1 force un refresh (utilise apres un don)
+  const params = new URLSearchParams(event.rawQuery || '')
+  const forceRefresh = params.has('nocache')
+
+  if (!forceRefresh && memCache && Date.now() < memCacheExpiry) {
     return {
       statusCode: 200,
       headers: { ...corsHeaders(), 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=600', 'X-Cache': 'HIT' },
@@ -239,7 +257,7 @@ export async function handler(event) {
   }
 
   try {
-    const token = await getAccessToken(clientId, clientSecret)
+    const token = await getHelloAssoAccessToken(clientId, clientSecret)
     const stats = await fetchHelloAssoStats(token)
 
     memCache       = stats

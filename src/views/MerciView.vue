@@ -11,7 +11,7 @@
       <p class="text-night/60 max-w-md text-lg leading-relaxed mb-8">{{ $t('merci.text') }}</p>
     </template>
     <router-link
-      to="/soutenir?from=merci"
+      :to="returnLink"
       class="inline-flex items-center gap-2 bg-forest text-white font-semibold px-6 py-3 rounded-2xl hover:bg-forest/90 transition-colors"
     >
       <PhArrowLeft :size="16" /> {{ $t('merci.back') }}
@@ -28,5 +28,12 @@ const route = useRoute()
 const isError = computed(() => {
   const code = route.query.code
   return code && code !== 'succeeded'
+})
+const returnLink = computed(() => {
+  const params = new URLSearchParams({ from: 'merci' })
+  if (route.query.amount) params.set('amount', route.query.amount)
+  if (route.query.dest) params.set('dest', route.query.dest)
+  if (route.query.freq) params.set('freq', route.query.freq)
+  return `/soutenir?${params.toString()}`
 })
 </script>

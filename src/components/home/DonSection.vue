@@ -40,16 +40,14 @@
             to="/soutenir"
             class="inline-flex items-center gap-3 px-9 py-4 bg-leaf hover:bg-[#b8d440] text-night font-bold text-base rounded-full shadow-2xl shadow-leaf/20 hover:-translate-y-0.5 transition-all duration-300"
           >
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
+            <PhHeart :size="20" weight="fill" />
             {{ $t('donation.cta') }}
           </router-link>
         </div>
 
         <!-- Droite : simulateur de déduction fiscale -->
         <div class="lg:w-96 don-reveal" style="--delay:150ms">
-          <div class="bg-white/8 backdrop-blur-sm border border-white/10 rounded-3xl p-7">
+          <div class="bg-white/[0.08] backdrop-blur-sm border border-white/10 rounded-3xl p-7">
             <p class="text-white/50 text-xs uppercase tracking-widest font-semibold mb-6">
               {{ $t('soutien.simulator_title') }}
             </p>
@@ -76,7 +74,7 @@
 
             <!-- Résultats -->
             <div class="grid grid-cols-3 gap-3 text-center mb-4">
-              <div class="bg-white/8 rounded-2xl p-3">
+              <div class="bg-white/[0.08] rounded-2xl p-3">
                 <div class="text-xl font-bold text-white">{{ annualAmount }}€</div>
                 <div class="text-white/40 text-xs mt-1">{{ $t('soutien.simulator_annual') }}</div>
               </div>
@@ -84,7 +82,7 @@
                 <div class="text-xl font-bold text-leaf">-{{ taxReduction }}€</div>
                 <div class="text-white/40 text-xs mt-1">{{ $t('soutien.simulator_reduction') }}</div>
               </div>
-              <div class="bg-white/8 rounded-2xl p-3">
+              <div class="bg-white/[0.08] rounded-2xl p-3">
                 <div class="text-xl font-bold text-white">{{ realCost }}€</div>
                 <div class="text-white/40 text-xs mt-1">{{ $t('soutien.simulator_real') }}</div>
               </div>
@@ -111,6 +109,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { PhHeart } from '@phosphor-icons/vue'
 import { useI18n } from 'vue-i18n'
 import { useScrollExpand } from '@/composables/useScrollExpand'
 

@@ -36,10 +36,8 @@
           </p>
 
           <!-- Badge déduction fiscale (uniquement pour les CTAs de don) -->
-          <div v-if="showTaxInfo" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/8 border border-white/15 text-white/70 text-sm mb-8">
-            <svg class="w-4 h-4 text-leaf flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+          <div v-if="showTaxInfo" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.08] border border-white/15 text-white/70 text-sm mb-8">
+            <PhCheckCircle :size="16" weight="fill" class="text-leaf flex-shrink-0" />
             {{ $t('cta_banner.tax_deduction') }}
           </div>
 
@@ -51,9 +49,7 @@
               :to="ctaUrl"
               class="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-leaf hover:bg-[#b8d440] text-night font-bold rounded-full shadow-lg shadow-leaf/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 text-sm"
             >
-              <svg v-if="showIcon" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
+              <PhHeart v-if="showIcon" :size="16" weight="fill" />
               {{ ctaLabel }}
             </router-link>
             <!-- Lien externe -->
@@ -64,16 +60,14 @@
               rel="noopener noreferrer"
               class="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-leaf hover:bg-[#b8d440] text-night font-bold rounded-full shadow-lg shadow-leaf/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 text-sm"
             >
-              <svg v-if="showIcon" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
+              <PhHeart v-if="showIcon" :size="16" weight="fill" />
               {{ ctaLabel }}
             </a>
 
             <router-link
               v-if="secondaryUrl"
               :to="secondaryUrl"
-              class="inline-flex items-center justify-center px-7 py-3.5 border border-white/25 text-white/80 hover:text-white hover:border-white/50 hover:bg-white/8 font-semibold rounded-full transition-all duration-300 text-sm"
+              class="inline-flex items-center justify-center px-7 py-3.5 border border-white/25 text-white/80 hover:text-white hover:border-white/50 hover:bg-white/[0.08] font-semibold rounded-full transition-all duration-300 text-sm"
             >
               {{ secondaryLabel }}
             </router-link>
@@ -115,6 +109,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { PhCheckCircle, PhHeart } from '@phosphor-icons/vue'
 import { useScrollExpand } from '@/composables/useScrollExpand'
 
 const props = defineProps({

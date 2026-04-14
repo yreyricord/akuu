@@ -18,10 +18,7 @@
           >
             <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-110"
               :style="{ backgroundColor: item.color + '15' }">
-              <svg class="w-6 h-6 transition-colors duration-300" :style="{ color: item.color }"
-                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" :d="item.icon" />
-              </svg>
+              <component :is="item.icon" :size="24" weight="duotone" class="transition-colors duration-300" :style="{ color: item.color }" />
             </div>
             <h3 class="text-base font-serif font-bold text-night mb-2 group-hover:text-forest transition-colors">
               {{ $t(`volontaires.why_items.${item.key}.title`) }}
@@ -58,9 +55,7 @@
             class="fade-in-up group p-7 rounded-2xl bg-white/8 border border-white/10 hover:bg-white/14 hover:border-white/25 transition-all duration-300"
           >
             <div class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center mb-5 group-hover:bg-white/20 transition-colors duration-300">
-              <svg class="w-5 h-5 text-leaf" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" :d="mission.icon" />
-              </svg>
+              <component :is="mission.icon" :size="20" weight="duotone" class="text-leaf" />
             </div>
             <h3 class="text-lg font-serif font-bold mb-2">
               {{ $t(`volontaires.missions.${mission.key}.title`) }}
@@ -81,9 +76,7 @@
         </h2>
         <div class="mx-auto mb-10 flex max-w-md items-center justify-center gap-2 md:mb-12">
           <span class="block h-0.5 w-10 rounded-full bg-forest md:w-12" />
-          <svg class="h-4 w-4 text-forest" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z" />
-          </svg>
+          <PhLeaf :size="16" weight="fill" class="text-forest" aria-hidden="true" />
           <span class="block h-0.5 w-10 rounded-full bg-forest md:w-12" />
         </div>
 
@@ -145,14 +138,7 @@
             class="inline-flex items-center gap-2 rounded-full bg-forest px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-forest/90 hover:gap-3"
           >
             {{ $t('volontaires.cta_button') }}
-            <svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              />
-            </svg>
+            <PhArrowRight :size="16" class="shrink-0" />
           </router-link>
         </div>
       </div>
@@ -195,6 +181,17 @@ import CTABanner from '@/components/shared/CTABanner.vue'
 import TheProcessSteps from '@/components/shared/TheProcessSteps.vue'
 import VideoEmbed from '@/components/shared/VideoEmbed.vue'
 import ImagePreviewLightbox from '@/components/shared/ImagePreviewLightbox.vue'
+import {
+  PhGlobe,
+  PhLightning,
+  PhGraduationCap,
+  PhUsersThree,
+  PhStar,
+  PhHandHeart,
+  PhBriefcase,
+  PhArrowRight,
+  PhLeaf
+} from '@phosphor-icons/vue'
 
 const store = useDataStore()
 const { t } = useI18n()
@@ -212,26 +209,10 @@ function openTestimonialLightbox (id, src) {
 const temoignagesList = computed(() => store.volontairesInfo.temoignages)
 
 const whyItems = [
-  {
-    key: 'immersion',
-    color: '#2D6915',
-    icon: 'M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253M3 12c0 .778.099 1.533.284 2.253'
-  },
-  {
-    key: 'impact',
-    color: '#04488F',
-    icon: 'M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z'
-  },
-  {
-    key: 'skills',
-    color: '#A6C639',
-    icon: 'M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 3.741-7.342m0 0a3.722 3.722 0 0 0-3.741 0'
-  },
-  {
-    key: 'community',
-    color: '#4071A6',
-    icon: 'M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z'
-  }
+  { key: 'immersion', color: '#2D6915', icon: PhGlobe },
+  { key: 'impact', color: '#04488F', icon: PhLightning },
+  { key: 'skills', color: '#A6C639', icon: PhGraduationCap },
+  { key: 'community', color: '#4071A6', icon: PhUsersThree }
 ]
 
 const processSteps = computed(() => [
@@ -242,18 +223,9 @@ const processSteps = computed(() => [
 ])
 
 const missions = [
-  {
-    key: 'civique',
-    icon: 'M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z'
-  },
-  {
-    key: 'benevole',
-    icon: 'M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758M16.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z'
-  },
-  {
-    key: 'stage',
-    icon: 'M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z'
-  }
+  { key: 'civique', icon: PhStar },
+  { key: 'benevole', icon: PhHandHeart },
+  { key: 'stage', icon: PhBriefcase }
 ]
 
 let observer = null

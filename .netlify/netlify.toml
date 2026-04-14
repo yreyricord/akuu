@@ -1,0 +1,45 @@
+functionsDirectory = "/Users/yreyricord/Documents/AKUU/akuu/.claude/worktrees/charming-mestorf/netlify/functions"
+functionsDirectoryOrigin = "config"
+redirectsOrigin = "config"
+plugins = []
+headers = []
+
+[build]
+publish = "/Users/yreyricord/Documents/AKUU/akuu/.claude/worktrees/charming-mestorf/dist"
+publishOrigin = "config"
+commandOrigin = "config"
+base = "/Users/yreyricord/Documents/AKUU/akuu/.claude/worktrees/charming-mestorf"
+command = "npm run build"
+functions = "/Users/yreyricord/Documents/AKUU/akuu/.claude/worktrees/charming-mestorf/netlify/functions"
+
+[build.environment]
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]
+
+[functions]
+
+[functions."*"]
+included_files = ["netlify/helloasso-oauth.mjs"]
+node_bundler = "esbuild"
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]

@@ -5,6 +5,9 @@
 
 [functions]
   directory = "netlify/functions"
+  node_bundler = "esbuild"
+  # Import relatif ../helloasso-oauth.mjs depuis les fonctions
+  included_files = ["netlify/helloasso-oauth.mjs"]
 
 [[redirects]]
   from = "/*"

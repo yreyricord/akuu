@@ -65,18 +65,14 @@
           to="/soutenir"
           class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-leaf hover:bg-forest text-white rounded-full font-semibold text-base transition-all duration-300 shadow-lg shadow-leaf/40 hover:shadow-xl hover:shadow-leaf/50 hover:-translate-y-0.5 hero-cta-primary"
         >
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-          </svg>
+          <PhHeart :size="16" weight="fill" aria-hidden="true" />
           {{ $t('hero.cta_don') }}
         </router-link>
         <router-link
           to="/projets"
           class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/25 hover:border-white/55 text-white rounded-full font-semibold text-base transition-all duration-300 hover:-translate-y-0.5"
         >
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-          </svg>
+          <PhArrowRight :size="16" aria-hidden="true" />
           {{ $t('hero.cta_projets') }}
         </router-link>
       </div>
@@ -85,12 +81,14 @@
 
     <!-- Flèche scroll -->
     <div class="pointer-events-none absolute bottom-[max(1rem,env(safe-area-inset-bottom,0px)+0.25rem)] left-1/2 z-[1] -translate-x-1/2 text-white/40 animate-bounce">
-      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-      </svg>
+      <PhArrowDown :size="20" aria-hidden="true" />
     </div>
   </section>
 </template>
+
+<script setup>
+import { PhHeart, PhArrowRight, PhArrowDown } from '@phosphor-icons/vue'
+</script>
 
 <style scoped>
 /* Au moins une hauteur d'écran ; le bloc peut s'allonger si le contenu dépasse (évite de couper les CTA). */

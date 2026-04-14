@@ -21,9 +21,7 @@
           loading="lazy"
         />
         <div class="absolute inset-0 bg-night/0 group-hover:bg-night/30 transition-colors duration-300 flex items-center justify-center">
-          <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-          </svg>
+          <PhMagnifyingGlassPlus :size="32" class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
       </button>
     </div>
@@ -46,14 +44,10 @@
           @click.self="closeLightbox"
         >
           <button ref="closeBtn" @click="closeLightbox" class="absolute top-4 right-4 text-white/80 hover:text-white p-2" :aria-label="t('lightbox.close')">
-            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <PhX :size="32" weight="bold" />
           </button>
           <button v-if="photos.length > 1" @click="prev" class="absolute left-4 text-white/80 hover:text-white p-2" :aria-label="t('lightbox.previous')">
-            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-            </svg>
+            <PhCaretLeft :size="32" weight="bold" />
           </button>
           <img
             :src="photos[currentIndex]?.src"
@@ -61,9 +55,7 @@
             class="max-w-full max-h-[85vh] object-contain rounded-lg"
           />
           <button v-if="photos.length > 1" @click="next" class="absolute right-4 text-white/80 hover:text-white p-2" :aria-label="t('lightbox.next')">
-            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
+            <PhCaretRight :size="32" weight="bold" />
           </button>
 
           <!-- Compteur + barre de progression -->
@@ -91,6 +83,7 @@
 <script setup>
 import { ref, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { PhMagnifyingGlassPlus, PhX, PhCaretLeft, PhCaretRight } from '@phosphor-icons/vue'
 
 const { t } = useI18n()
 

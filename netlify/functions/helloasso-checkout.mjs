@@ -12,7 +12,8 @@
  *   { amountEuros: number, destination: 'fonctionnement'|'musee', frequency: 'once'|'monthly' }
  */
 
-const HELLOASSO_OAUTH = 'https://api.helloasso.com/oauth2/token'
+import { getHelloAssoAccessToken } from '../helloasso-oauth.mjs'
+
 const HELLOASSO_API   = 'https://api.helloasso.com/v5'
 const ORG_SLUG        = 'akuu'
 
@@ -39,26 +40,6 @@ function jsonResponse(statusCode, payload) {
 
 function buildFallbackUrl(destination) {
   return FORM_URLS[destination] || FORM_URLS.fonctionnement
-}
-
-/** Obtient un access_token via client_credentials */
-async function getAccessToken(clientId, clientSecret) {
-  const body = new URLSearchParams({
-    grant_type:    'client_credentials',
-    client_id:     clientId,
-    client_secret: clientSecret
-  })
-  const res = await fetch(HELLOASSO_OAUTH, {
-    method:  'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body:    body.toString()
-  })
-  if (!res.ok) {
-    const text = await res.text().catch(() => '')
-    throw new Error(`HelloAsso auth ${res.status}: ${text}`)
-  }
-  const data = await res.json()
-  return data.access_token
 }
 
 /**
@@ -121,8 +102,10 @@ export async function handler(event) {
     })
   }
 
-  const rawUrl = process.env.URL || 'https://akuu-asso.netlify.app'
-  const siteUrl = rawUrl.startsWith('http://') ? 'https://akuu-asso.netlify.app' : rawUrl
+  const PROD_URL = 'https://akuu-asso.netlify.app'
+  const rawUrl = process.env.URL || PROD_URL
+  const isLocalUrl = rawUrl.startsWith('http://') || rawUrl.includes('localhost') || rawUrl.includes('127.0.0.1')
+  const siteUrl = isLocalUrl ? PROD_URL : rawUrl
   console.log('[helloasso-checkout] rawUrl:', rawUrl, '→ siteUrl:', siteUrl)
 
   const isMonthly  = frequency === 'monthly'
@@ -139,7 +122,7 @@ export async function handler(event) {
     itemName,
     backUrl:          `${siteUrl}/soutenir`,
     errorUrl:         `${siteUrl}/soutenir?status=error`,
-    returnUrl:        `${siteUrl}/merci`,
+    returnUrl:        `${siteUrl}/merci?amount=${amountEuros}&dest=${destination}&freq=${frequency}`,
     containsDonation: true,
     metadata:         { destination, frequency, durationMonths: String(durationMonths), amountEuros: String(amountEuros) }
   }
@@ -152,7 +135,7 @@ export async function handler(event) {
 
   try {
     console.log('[helloasso-checkout] requesting OAuth token…')
-    const token = await getAccessToken(clientId, clientSecret)
+    const token = await getHelloAssoAccessToken(clientId, clientSecret)
     console.log('[helloasso-checkout] ✓ got token (length:', token.length, ')')
 
     const apiUrl = `${HELLOASSO_API}/organizations/${ORG_SLUG}/checkout-intents`

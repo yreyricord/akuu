@@ -20,9 +20,7 @@
           :aria-label="$t('common.team_lightbox_close')"
           @click="close"
         >
-          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
+          <PhX :size="20" weight="bold" />
         </button>
         <div
           class="relative z-10 flex min-h-full items-center justify-center px-5 py-16 md:px-10 md:py-20"
@@ -52,6 +50,7 @@
 import { ref, watch, nextTick, computed, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { onKeyStroke } from '@vueuse/core'
+import { PhX } from '@phosphor-icons/vue'
 
 const props = defineProps({
   modelValue: { type: Boolean, default: false },

@@ -20,11 +20,11 @@
   <body class="bg-cream text-night font-sans antialiased selection:bg-leaf/30 selection:text-forest">
     <!-- Requis par Netlify Forms (SPA) : mêmes champs que ContactView ; l’envoi est fait en fetch depuis Vue. -->
     <form name="contact" netlify netlify-honeypot="bot-field" data-netlify="true" hidden>
-      <input type="text" name="name" />
-      <input type="email" name="email" />
-      <input type="text" name="subject" />
-      <textarea name="message"></textarea>
-      <input name="bot-field" />
+      <input type="text" name="name" autocomplete="name" />
+      <input type="email" name="email" autocomplete="email" />
+      <input type="text" name="subject" autocomplete="off" />
+      <textarea name="message" autocomplete="off"></textarea>
+      <input name="bot-field" autocomplete="off" />
     </form>
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>

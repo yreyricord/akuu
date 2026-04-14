@@ -32,9 +32,7 @@
                   />
                 </div>
                 <blockquote class="min-w-0 flex-1">
-                  <svg class="w-7 h-7 text-leaf/50 mb-3" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                  </svg>
+                  <PhQuotes :size="28" weight="fill" class="text-leaf/50 mb-3" aria-hidden="true" />
                   <p class="text-night/80 italic text-xl md:text-2xl font-serif leading-relaxed mb-4">
                     "{{ $t('association.quote') }}"
                   </p>
@@ -70,7 +68,7 @@
             class="fade-in-up p-6 rounded-2xl border border-forest/10 hover:border-forest/30 hover:shadow-lg transition-all duration-300 group"
           >
             <div class="w-14 h-14 rounded-xl bg-forest/10 flex items-center justify-center mb-4 group-hover:bg-forest transition-colors duration-300">
-              <svg class="w-7 h-7 text-forest group-hover:text-white transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" :d="value.icon" /></svg>
+              <component :is="value.icon" :size="28" weight="duotone" class="text-forest group-hover:text-white transition-colors duration-300" />
             </div>
             <h3 class="text-lg font-serif font-bold text-night mb-2">
               {{ $t(`association.values.${key}.title`) }}
@@ -283,6 +281,15 @@ import InstagramPostEmbed from '@/components/shared/InstagramPostEmbed.vue'
 import InstagramFeedGrid from '@/components/shared/InstagramFeedGrid.vue'
 import TikTokEmbed from '@/components/shared/TikTokEmbed.vue'
 import TikTokFeedGrid from '@/components/shared/TikTokFeedGrid.vue'
+import {
+  PhQuotes,
+  PhSun,
+  PhUsersThree,
+  PhBank,
+  PhGlobeHemisphereWest,
+  PhPuzzlePiece,
+  PhArrowsLeftRight
+} from '@phosphor-icons/vue'
 import reseauxAssociation from '@/data/reseaux-association.json'
 import associationMedia from '@/data/association-media.json'
 
@@ -351,24 +358,12 @@ const sortedTimeline = store.sortedTimeline
 const equipe = store.equipe
 
 const values = {
-  durable: {
-    icon: 'M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z'
-  },
-  solidarite: {
-    icon: 'M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z'
-  },
-  culture: {
-    icon: 'M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z'
-  },
-  savoirs: {
-    icon: 'M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 3.741-7.342m0 0a3.722 3.722 0 0 0-3.741 0'
-  },
-  environnement: {
-    icon: 'M20.893 13.393l-1.135-1.135a2.252 2.252 0 0 1-.421-.585l-1.08-2.16a.414.414 0 0 0-.663-.107.827.827 0 0 1-.812.21l-1.273-.363a.89.89 0 0 0-.738 1.595l.587.39c.59.395.674 1.23.172 1.732l-.2.2c-.212.212-.33.498-.33.796v.41c0 .409-.11.809-.32 1.158l-1.315 2.191a2.11 2.11 0 0 1-1.81 1.025 1.055 1.055 0 0 1-1.055-1.055v-1.172c0-.92-.56-1.747-1.414-2.089l-.655-.261a2.25 2.25 0 0 1-1.383-2.46l.007-.042a2.25 2.25 0 0 1 .29-.787l.09-.15a2.25 2.25 0 0 1 2.37-1.048l1.178.236a1.125 1.125 0 0 0 1.302-.795l.208-.73a1.125 1.125 0 0 0-.578-1.315l-.665-.332-.091.091a2.25 2.25 0 0 1-1.591.659h-.18c-.249 0-.487.1-.662.274a.931.931 0 0 1-1.458-1.137l1.411-2.353a2.25 2.25 0 0 0 .286-.76m11.928 9.869A9 9 0 0 0 8.965 3.525m11.928 9.868A9 9 0 1 1 8.965 3.525'
-  },
-  echanges: {
-    icon: 'M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5'
-  }
+  durable: { icon: PhSun },
+  solidarite: { icon: PhUsersThree },
+  culture: { icon: PhBank },
+  savoirs: { icon: PhGlobeHemisphereWest },
+  environnement: { icon: PhPuzzlePiece },
+  echanges: { icon: PhArrowsLeftRight }
 }
 
 let observer = null

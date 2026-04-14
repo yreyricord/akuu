@@ -33,21 +33,12 @@
               {{ $t('common.team_learn_more') }}
             </span>
             <span class="h-px w-11 bg-gradient-to-r from-transparent via-white/65 to-transparent" />
-            <svg
-              class="mt-0.5 h-3.5 w-3.5 text-white/45"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="1.25"
-              aria-hidden="true"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
+            <PhCaretDown :size="14" class="mt-0.5 text-white/45" aria-hidden="true" />
           </span>
         </span>
       </button>
       <div v-else class="w-full h-full bg-forest/10 flex items-center justify-center">
-        <svg class="w-20 h-20 text-forest/30" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        <PhUser :size="80" weight="duotone" class="text-forest/30" />
       </div>
     </div>
     <div class="p-4 text-center flex flex-col flex-1 min-h-0">
@@ -76,9 +67,7 @@
             :aria-label="$t('common.team_lightbox_close')"
             @click="closeLightbox"
           >
-            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <PhX :size="20" weight="bold" />
           </button>
           <div
             class="relative z-10 flex min-h-0 flex-1 flex-col items-center justify-center overflow-y-auto px-4 pb-10 pt-4 md:px-8 md:pb-12"
@@ -120,6 +109,7 @@
 <script setup>
 import { ref, watch, nextTick, onUnmounted } from 'vue'
 import { onKeyStroke } from '@vueuse/core'
+import { PhCaretDown, PhUser, PhX } from '@phosphor-icons/vue'
 
 const props = defineProps({
   prenom: { type: String, required: true },

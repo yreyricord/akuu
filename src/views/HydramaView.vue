@@ -10,9 +10,7 @@
     <section class="section-padding bg-cream border-b border-night/[0.06]">
       <div class="container-narrow max-w-4xl mx-auto">
         <div class="flex items-start gap-3 px-5 py-4 rounded-xl bg-amber-50 border border-amber-200">
-          <svg class="w-5 h-5 text-amber-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
-          </svg>
+          <PhInfo :size="20" weight="fill" class="text-amber-500 shrink-0 mt-0.5" />
           <p class="text-sm md:text-base text-amber-900 font-medium leading-relaxed">
             {{ $t('hydrama.suspended_notice') }}
           </p>
@@ -125,9 +123,7 @@
               class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#1877F2]/10 text-[#1877F2] transition-colors group-hover:bg-[#1877F2]/15"
               aria-hidden="true"
             >
-              <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-              </svg>
+              <PhFacebookLogo :size="16" weight="fill" aria-hidden="true" />
             </span>
             <span class="text-left leading-snug">
               {{ $t('hydrama.video_windaid_facebook_line1') }}
@@ -135,16 +131,7 @@
                 {{ $t('hydrama.video_windaid_facebook_line2') }}
               </span>
             </span>
-            <svg
-              class="h-4 w-4 shrink-0 text-night/35 transition-colors group-hover:text-forest/60"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-              aria-hidden="true"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-            </svg>
+            <PhArrowSquareOut :size="16" class="shrink-0 text-night/35 transition-colors group-hover:text-forest/60" aria-hidden="true" />
           </a>
         </div>
       </div>
@@ -183,6 +170,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { PhInfo, PhFacebookLogo, PhArrowSquareOut } from '@phosphor-icons/vue'
 import PageHero from '@/components/shared/PageHero.vue'
 import VideoEmbed from '@/components/shared/VideoEmbed.vue'
 import DonSection from '@/components/home/DonSection.vue'

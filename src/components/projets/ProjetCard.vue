@@ -28,9 +28,7 @@
       <p class="text-night/60 text-sm leading-relaxed">{{ $t(`projets.catalog.${projet.id}.description`) }}</p>
       <div v-if="projet.lien" class="mt-4 flex items-center gap-1 text-forest text-sm font-medium">
         <span>{{ $t('projets.discover') }}</span>
-        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
+        <PhCaretRight :size="16" class="transition-transform group-hover:translate-x-1" />
       </div>
     </div>
   </component>
@@ -38,6 +36,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import { PhCaretRight } from '@phosphor-icons/vue'
 
 const props = defineProps({
   projet: { type: Object, required: true }

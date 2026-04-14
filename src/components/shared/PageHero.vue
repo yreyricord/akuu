@@ -12,9 +12,7 @@
           </router-link>
         </li>
         <li v-for="(crumb, i) in breadcrumbs" :key="crumb.path" class="flex items-center gap-1.5">
-          <svg class="w-2.5 h-2.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-          </svg>
+          <PhCaretRight :size="10" class="shrink-0" aria-hidden="true" />
           <router-link
             v-if="i < breadcrumbs.length - 1"
             :to="crumb.path"
@@ -58,6 +56,7 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { PhCaretRight } from '@phosphor-icons/vue'
 
 defineProps({
   title: { type: String, required: true },

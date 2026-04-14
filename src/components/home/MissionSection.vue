@@ -12,9 +12,7 @@
           </p>
           <router-link to="/association" class="btn-primary inline-flex">
             {{ $t('mission.cta') }}
-            <svg class="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
+            <PhCaretRight :size="16" class="ml-2" />
           </router-link>
         </div>
         <router-link
@@ -33,5 +31,6 @@
 </template>
 
 <script setup>
+import { PhCaretRight } from '@phosphor-icons/vue'
 import ForestScrollVisual from '@/components/shared/ForestScrollVisual.vue'
 </script>

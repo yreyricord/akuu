@@ -7,9 +7,7 @@
     >
       <span>{{ currentFlag }}</span>
       <span class="uppercase">{{ locale }}</span>
-      <svg class="w-3.5 h-3.5 transition-transform" :class="{ 'rotate-180': open }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-      </svg>
+      <PhCaretDown :size="14" class="transition-transform" :class="{ 'rotate-180': open }" />
     </button>
     <Transition
       enter-active-class="transition ease-out duration-200"
@@ -40,6 +38,7 @@ import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { onClickOutside } from '@vueuse/core'
 import { UI_LANGUAGES } from '@/config/locales.js'
+import { PhCaretDown } from '@phosphor-icons/vue'
 
 defineProps({
   transparent: { type: Boolean, default: false }
