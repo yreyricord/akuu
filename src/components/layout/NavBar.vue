@@ -4,8 +4,7 @@
     La barre de progression passe sous le logo (z-40 < z-50).
   -->
   <nav
-    class="fixed top-0 w-full z-50 pointer-events-none bg-transparent transition-transform duration-300"
-    :class="{ '-translate-y-full': navHidden && !menuOpen }"
+    class="fixed top-0 w-full z-50 pointer-events-none bg-transparent"
   >
     <div
       v-show="scrolled || menuOpen"
@@ -95,32 +94,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, provide } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import LanguageSwitch from './LanguageSwitch.vue'
 import DonButton from '@/components/shared/DonButton.vue'
 import { PhList, PhX } from '@phosphor-icons/vue'
 
 const scrolled = ref(false)
 const menuOpen = ref(false)
-const navHidden = ref(false)
-provide('navHidden', navHidden)
-let lastScrollY = 0
-const HIDE_THRESHOLD = 60
 
 function handleScroll() {
-  const y = window.scrollY
-  scrolled.value = y > 50
-
-  if (window.innerWidth < 1024) {
-    if (y > lastScrollY + 10 && y > HIDE_THRESHOLD) {
-      navHidden.value = true
-    } else if (y < lastScrollY - 5) {
-      navHidden.value = false
-    }
-  } else {
-    navHidden.value = false
-  }
-  lastScrollY = y
+  scrolled.value = window.scrollY > 50
 }
 
 onMounted(() => window.addEventListener('scroll', handleScroll, { passive: true }))
