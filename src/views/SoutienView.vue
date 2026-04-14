@@ -23,9 +23,9 @@
         class="hero-colibri pointer-events-none absolute z-[2] h-20 sm:h-28 md:h-36 xl:h-48 w-auto opacity-[0.07] sm:opacity-10 right-[4%] sm:right-[3%] bottom-[12%] sm:bottom-[18%]"
       />
 
-      <div class="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-10 xl:px-6 pt-28 pb-12 md:pt-32 md:pb-14">
+      <div class="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-10 xl:px-6 pt-28 pb-12 md:pt-24 md:pb-6">
 
-        <div class="grid lg:grid-cols-2 gap-8 xl:gap-14 items-stretch">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-6 xl:gap-10 items-stretch">
 
           <!-- ── Colonne gauche : Hero texte ── -->
           <div class="text-white flex flex-col">
@@ -66,22 +66,22 @@
 
             <transition name="progress-fade" mode="out-in">
               <div v-if="donDestination === 'musee'" key="hero-musee">
-                <span class="inline-flex items-center gap-2 text-leaf font-semibold text-xs uppercase tracking-[0.2em] mb-3">
+                <span class="inline-flex items-center gap-2 text-leaf font-semibold text-xs uppercase tracking-[0.2em] mb-2">
                   <span class="w-6 h-px bg-leaf"></span>
                   {{ $t('soutien.hero_projet_kicker') }}
                   <span class="w-6 h-px bg-leaf"></span>
                 </span>
-                <h1 class="text-2xl sm:text-3xl xl:text-4xl font-serif font-bold leading-tight mb-3">
+                <h1 class="text-2xl sm:text-3xl lg:text-2xl xl:text-3xl font-serif font-bold leading-tight mb-2">
                   {{ $t('soutien.hero_projet_line1') }}<span class="text-leaf">{{ $t('soutien.hero_projet_line2') }}</span>{{ $t('soutien.hero_projet_line3') }}
                 </h1>
               </div>
               <div v-else key="hero-fonc">
-                <span class="inline-flex items-center gap-2 text-leaf font-semibold text-xs uppercase tracking-[0.2em] mb-3">
+                <span class="inline-flex items-center gap-2 text-leaf font-semibold text-xs uppercase tracking-[0.2em] mb-2">
                   <span class="w-6 h-px bg-leaf"></span>
                   {{ $t('soutien.hero_fonc_kicker') }}
                   <span class="w-6 h-px bg-leaf"></span>
                 </span>
-                <h1 class="text-2xl sm:text-3xl xl:text-4xl font-serif font-bold leading-tight mb-3">
+                <h1 class="text-2xl sm:text-3xl lg:text-2xl xl:text-3xl font-serif font-bold leading-tight mb-2">
                   {{ $t('soutien.hero_fonc_title1') }}
                   <span class="text-leaf">{{ $t('soutien.hero_fonc_title2') }}</span>
                 </h1>
@@ -90,7 +90,7 @@
 
             <!-- Barre objectif (crossfade entre musée et fonctionnement) -->
             <transition name="progress-fade" mode="out-in">
-              <div v-if="donDestination === 'musee'" key="bar-musee" class="bg-white/[0.06] border border-white/[0.10] rounded-2xl px-4 py-3 mt-5">
+              <div v-if="donDestination === 'musee'" key="bar-musee" class="bg-white/[0.06] border border-white/[0.10] rounded-2xl px-4 py-2.5 mt-3">
                 <div class="flex items-center justify-between mb-2">
                   <span class="text-white/40 text-[10px] uppercase tracking-widest font-semibold">{{ $t('soutien.musee_progress_label') }}</span>
                   <span class="text-white/60 text-xs font-bold tabular-nums">
@@ -116,7 +116,7 @@
                   <span class="text-white/30 text-[10px] tabular-nums ml-auto">{{ Math.round(museeWithDonPct) }}%</span>
                 </div>
               </div>
-              <div v-else key="bar-fonc" class="bg-white/[0.06] border border-white/[0.10] rounded-2xl px-4 py-3 mt-5">
+              <div v-else key="bar-fonc" class="bg-white/[0.06] border border-white/[0.10] rounded-2xl px-4 py-2.5 mt-3">
                 <div class="flex items-center justify-between mb-2">
                   <span class="text-white/40 text-[10px] uppercase tracking-widest font-semibold">{{ $t('soutien.fonc_progress_label') }}</span>
                   <span class="text-white/60 text-xs font-bold tabular-nums">
@@ -147,12 +147,13 @@
             <div class="flex-1"></div>
 
             <!-- Parallax forêt piloté par le slider (desktop uniquement) -->
-            <div class="hidden lg:block mt-8">
+            <div class="hidden lg:block mt-4">
               <ForestScrollVisual
                 :external-progress="forestProgress"
                 :show-decor="false"
                 :on-dark="true"
                 :aria-hidden="true"
+                :min-height-override="120"
               />
             </div>
           </div>
@@ -177,7 +178,7 @@
                   type="button"
                   @click="donFrequency = 'monthly'"
                   :class="[
-                    'relative py-3 text-sm font-bold tracking-wide transition-all duration-200',
+                    'relative py-2.5 text-sm font-bold tracking-wide transition-all duration-200',
                     donFrequency === 'monthly'
                       ? 'bg-leaf/15 text-leaf border-b-2 border-leaf'
                       : 'text-white/40 hover:text-white/70 hover:bg-white/[0.03]'
@@ -190,7 +191,7 @@
                   type="button"
                   @click="donFrequency = 'once'"
                   :class="[
-                    'py-3 text-sm font-bold tracking-wide transition-all duration-200',
+                    'py-2.5 text-sm font-bold tracking-wide transition-all duration-200',
                     donFrequency === 'once'
                       ? 'bg-white/[0.06] text-white border-b-2 border-white/50'
                       : 'text-white/40 hover:text-white/70 hover:bg-white/[0.03]'
@@ -201,17 +202,17 @@
               </div>
 
               <!-- Corps : montant + slider + CTA -->
-              <div class="px-3.5 sm:px-5 md:px-6 pt-3 pb-4">
+              <div class="px-3.5 sm:px-5 md:px-6 pt-2 pb-3">
                 <!-- Montant -->
-                <div class="flex items-baseline gap-1.5 mb-2">
-                  <span class="text-5xl sm:text-6xl font-serif font-black text-leaf tabular-nums leading-none">{{ donAmount }}</span>
-                  <span class="text-2xl font-serif text-white/50">€</span>
+                <div class="flex items-baseline gap-1.5 mb-1.5">
+                  <span class="text-4xl sm:text-5xl font-serif font-black text-leaf tabular-nums leading-none">{{ donAmount }}</span>
+                  <span class="text-xl font-serif text-white/50">€</span>
                   <span v-if="donFrequency === 'monthly'" class="text-white/35 text-sm ml-1">/{{ $t('soutien.simulator_month') }}</span>
                 </div>
 
                 <!-- Slider colibri -->
                 <div
-                  class="mb-1 py-2 colibri-slider-wrap"
+                  class="mb-1 py-1 colibri-slider-wrap"
                   :class="{ 'colibri-slider-wrap--burst': colibriBurstActive }"
                 >
                   <input
@@ -231,7 +232,7 @@
                 </div>
 
                 <!-- Montant libre -->
-                <div class="mb-3">
+                <div class="mb-2">
                   <button
                     v-if="!useCustomOverMax"
                     type="button"
@@ -259,8 +260,8 @@
                 </div>
 
                 <!-- Simulateur fiscal intégré -->
-                <div class="bg-white/[0.04] border border-white/[0.08] rounded-2xl px-3 py-2.5 mb-3 space-y-2">
-                  <div class="flex items-center gap-1.5 mb-1">
+                <div class="bg-white/[0.04] border border-white/[0.08] rounded-xl px-3 py-2 mb-2 space-y-1.5">
+                  <div class="flex items-center gap-1.5 mb-0.5">
                     <span class="w-1.5 h-1.5 rounded-full bg-leaf animate-pulse shrink-0"></span>
                     <span class="text-white/40 text-[10px] uppercase tracking-widest font-semibold">{{ $t('soutien.simulator_title') }}</span>
                   </div>
@@ -269,11 +270,11 @@
                       <span class="text-white/40 text-[10px] uppercase tracking-widest font-medium">{{ $t('soutien.simulator_reduction') }}</span>
                       <span class="text-leaf/60 text-[10px] ml-1">66%</span>
                     </div>
-                    <span class="text-xl font-serif font-black text-leaf tabular-nums">-{{ displayTax }} <span class="text-leaf/50 text-xs font-sans">€</span><span v-if="isMonthly" class="text-leaf/50 text-xs font-sans"> / {{ $t('soutien.simulator_month') }}</span></span>
+                    <span class="text-lg font-serif font-black text-leaf tabular-nums">-{{ displayTax }} <span class="text-leaf/50 text-[11px] font-sans">€</span><span v-if="isMonthly" class="text-leaf/50 text-[11px] font-sans"> / {{ $t('soutien.simulator_month') }}</span></span>
                   </div>
-                  <div class="border-t border-white/[0.08] pt-2 flex items-center justify-between">
+                  <div class="border-t border-white/[0.08] pt-1.5 flex items-center justify-between">
                     <span class="text-white/40 text-[10px] uppercase tracking-widest font-medium">{{ $t('soutien.simulator_real') }}</span>
-                    <span class="text-2xl font-serif font-black text-white tabular-nums">{{ displayReal }} <span class="text-white/40 text-xs font-sans">€</span><span v-if="isMonthly" class="text-white/40 text-xs font-sans"> / {{ $t('soutien.simulator_month') }}</span></span>
+                    <span class="text-xl font-serif font-black text-white tabular-nums">{{ displayReal }} <span class="text-white/40 text-[11px] font-sans">€</span><span v-if="isMonthly" class="text-white/40 text-[11px] font-sans"> / {{ $t('soutien.simulator_month') }}</span></span>
                   </div>
                   <p class="text-white/25 text-[9px] leading-relaxed pt-1 border-t border-white/[0.05]">
                     {{ $t('soutien.simulator_note') }}
@@ -284,7 +285,7 @@
                 <button
                   @click="submitDonation"
                   :disabled="donLoading || donAmount < 1 || (useCustomOverMax && donAmount < CUSTOM_MIN)"
-                  class="cta-donate group relative w-full flex items-center justify-center gap-3 bg-leaf hover:bg-leaf/90 text-white font-bold text-lg py-4 rounded-2xl shadow-xl shadow-leaf/30 transition-all duration-200 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+                  class="cta-donate group relative w-full flex items-center justify-center gap-2.5 bg-leaf hover:bg-leaf/90 text-white font-bold text-base py-3 rounded-xl shadow-xl shadow-leaf/30 transition-all duration-200 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
                 >
                   <span class="cta-shimmer absolute inset-0 pointer-events-none" aria-hidden="true"></span>
                   <span v-if="donLoading" class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
@@ -293,7 +294,7 @@
                 </button>
 
                 <!-- Sélecteur de durée / info don unique (sous le CTA) -->
-                <div v-if="donFrequency === 'monthly'" class="flex flex-wrap items-center justify-center gap-1.5 mt-3">
+                <div v-if="donFrequency === 'monthly'" class="flex flex-wrap items-center justify-center gap-1.5 mt-2">
                   <span class="text-white/35 text-[10px] uppercase tracking-widest font-semibold mr-1 shrink-0">{{ $t('soutien.duration_label') }}</span>
                   <button
                     v-for="d in DURATION_OPTIONS"
@@ -310,16 +311,16 @@
                     {{ d }} {{ $t('soutien.duration_months') }}
                   </button>
                 </div>
-                <div v-else class="flex items-center justify-center gap-2 mt-3">
+                <div v-else class="flex items-center justify-center gap-2 mt-2">
                   <PhLock :size="13" class="text-white/25 shrink-0" />
                   <span class="text-white/40 text-[11px] font-semibold tracking-wide">{{ $t('soutien.once_hint') }}</span>
                 </div>
 
                 <!-- Erreurs + sécurité -->
-                <p v-if="donFallbackWarning" class="text-amber-200 bg-amber-900/20 border border-amber-400/20 rounded-lg text-[11px] mt-3 px-3 py-1.5">
+                <p v-if="donFallbackWarning" class="text-amber-200 bg-amber-900/20 border border-amber-400/20 rounded-lg text-[11px] mt-2 px-3 py-1.5">
                   {{ $t('soutien.form_fallback_warning') }}
                 </p>
-                <p class="text-white/25 text-[10px] mt-3 flex items-center justify-center gap-1">
+                <p class="text-white/25 text-[10px] mt-2 flex items-center justify-center gap-1">
                   <svg class="w-3 h-3 text-white/20 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
                   {{ $t('soutien.widget_secure') }}
                 </p>
@@ -329,10 +330,10 @@
 
         </div>
 
-        <!-- Dernières contributions : toujours visible (chargement / vide / erreur / liste) -->
+        <!-- Dernières contributions -->
         <div
           ref="heroFeedStripRef"
-          class="mt-10 md:mt-12 w-full shrink-0"
+          class="mt-4 md:mt-3 w-full shrink-0"
         >
           <div
             class="hero-feed-shell relative overflow-hidden bg-night/45 backdrop-blur-md border border-white/15"
@@ -543,10 +544,10 @@
 import { ref, computed, watch, onBeforeMount, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
+import { useScrollExpand } from '@/composables/useScrollExpand'
 import { useDataStore } from '@/store'
 import PartnerCard from '@/components/shared/PartnerCard.vue'
 import ForestScrollVisual from '@/components/shared/ForestScrollVisual.vue'
-import { useScrollExpand } from '@/composables/useScrollExpand'
 import { PhHouseSimple, PhArrowRight, PhLock, PhHandshake, PhGlobeHemisphereWest, PhBank, PhCaretRight } from '@phosphor-icons/vue'
 
 const store = useDataStore()
