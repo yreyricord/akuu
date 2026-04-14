@@ -159,6 +159,15 @@
 
           <!-- ── Colonne droite : Widget de don ── -->
           <div class="flex flex-col">
+            <!-- Parallax forêt (mobile, au-dessus du widget) -->
+            <div class="lg:hidden mb-6">
+              <ForestScrollVisual
+                :external-progress="forestProgress"
+                :show-decor="false"
+                :on-dark="true"
+                :aria-hidden="true"
+              />
+            </div>
             <div class="don-widget relative w-full h-full bg-white/[0.06] backdrop-blur-xl border border-white/15 rounded-3xl overflow-hidden flex flex-col">
 
               <!-- Onglets fréquence (haut de la carte) -->
@@ -317,16 +326,6 @@
             </div>
           </div>
 
-        </div>
-
-        <!-- Parallax forêt (mobile uniquement, sous le widget) -->
-        <div class="lg:hidden mt-8">
-          <ForestScrollVisual
-            :external-progress="forestProgress"
-            :show-decor="false"
-            :on-dark="true"
-            :aria-hidden="true"
-          />
         </div>
 
         <!-- Dernières contributions : toujours visible (chargement / vide / erreur / liste) -->
@@ -1175,7 +1174,10 @@ onUnmounted(() => {
   width: 96px;
   height: 96px;
   border: none;
+  border-radius: 50%;
   background: url('/images/collibri-akuu.png') center/contain no-repeat;
+  background-color: transparent;
+  box-shadow: none;
   cursor: grab;
   filter: drop-shadow(0 2px 10px rgba(0,0,0,0.4));
   transition: transform 0.15s ease;
