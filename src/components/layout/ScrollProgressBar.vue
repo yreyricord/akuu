@@ -1,9 +1,9 @@
 <template>
   <!--
-    Sous le bloc logo + bandeau (h-24 / md:7.5rem), aligné avec NavBar.vue.
+    Sous le bandeau nav (h-16 / md:h-20), passe sous le logo qui déborde.
   -->
   <div
-    class="pointer-events-none fixed left-0 right-0 top-24 md:top-[7.5rem] z-40 h-1.5 sm:h-[9px] motion-reduce:h-[3px] overflow-hidden bg-night/10 shadow-[0_1px_0_rgba(255,255,255,0.06)_inset]"
+    class="pointer-events-none fixed left-0 right-0 top-16 md:top-20 z-40 h-1.5 sm:h-[9px] motion-reduce:h-[3px] overflow-hidden bg-night/10 shadow-[0_1px_0_rgba(255,255,255,0.06)_inset]"
     :class="showBar ? 'opacity-100' : 'opacity-0'"
     role="progressbar"
     :aria-valuenow="ariaNow"

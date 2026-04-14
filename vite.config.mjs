@@ -55,6 +55,7 @@ export default defineConfig({
     }
   },
   optimizeDeps: {
+    include: ['@phosphor-icons/vue'],
     exclude: ['web-ifc-three', 'web-ifc']
   },
   assetsInclude: ['**/*.wasm'],

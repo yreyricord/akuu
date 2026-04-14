@@ -70,7 +70,12 @@ export const routes = [
     name: 'gestion-dechets',
     meta: { seoRoute: 'gestionDechets' },
     component: () => import('@/views/GestionDechetsView.vue')
-  }
+  },
+  {
+    path: '/merci',
+    name: 'merci',
+    component: () => import('@/views/MerciView.vue')
+  },
 ]
 
 export default routes

@@ -1,14 +1,14 @@
 <template>
   <!--
-    Bandeau blanc au scroll : même hauteur que le logo (h-24 / md:7.5rem) pour que le bas du
-    logo ne flotte pas au-dessus du contenu. La rangée menu reste h-16 / md:h-20.
+    Bandeau blanc au scroll : plus petit que le logo pour que celui-ci déborde.
+    La barre de progression passe sous le logo (z-40 < z-50).
   -->
   <nav
     class="fixed top-0 w-full z-50 pointer-events-none transition-all duration-500 bg-transparent"
   >
     <div
       v-show="scrolled || menuOpen"
-      class="pointer-events-none absolute inset-x-0 top-0 h-24 md:h-[7.5rem] z-[1] w-full bg-white/95 backdrop-blur-md shadow-[0_4px_6px_-1px_rgba(0,0,0,0.07),0_2px_4px_-2px_rgba(0,0,0,0.05)] transition-opacity duration-500"
+      class="pointer-events-none absolute inset-x-0 top-0 h-16 md:h-20 z-[1] w-full bg-white/95 backdrop-blur-md shadow-[0_4px_6px_-1px_rgba(0,0,0,0.07),0_2px_4px_-2px_rgba(0,0,0,0.05)] transition-opacity duration-500"
       aria-hidden="true"
     />
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-visible pointer-events-auto relative z-[2]">
@@ -57,12 +57,8 @@
           aria-controls="mobile-menu"
           :aria-label="$t('a11y.menu')"
         >
-          <svg v-if="!menuOpen" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-          <svg v-else class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
+          <PhList v-if="!menuOpen" :size="24" weight="bold" />
+          <PhX v-else :size="24" weight="bold" />
         </button>
       </div>
     </div>
@@ -101,6 +97,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import LanguageSwitch from './LanguageSwitch.vue'
 import DonButton from '@/components/shared/DonButton.vue'
+import { PhList, PhX } from '@phosphor-icons/vue'
 
 const scrolled = ref(false)
 const menuOpen = ref(false)

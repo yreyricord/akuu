@@ -6,7 +6,7 @@
   >
     <div
       ref="containerRef"
-      class="sticky top-24 md:top-[7.5rem] py-2 md:py-4 relative"
+      class="sticky top-16 md:top-20 py-2 md:py-4 relative"
     >
     <!-- Titre de section (sticky avec les étapes : reste visible au scroll) -->
     <div

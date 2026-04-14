@@ -21,6 +21,7 @@
     "test": "node --test scripts/__tests__/build-scripts.test.mjs"
   },
   "dependencies": {
+    "@phosphor-icons/vue": "^2.2.1",
     "@vueuse/core": "^10.9.0",
     "pinia": "^2.1.0",
     "three": "0.152.2",
