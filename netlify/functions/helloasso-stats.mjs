@@ -10,6 +10,7 @@
  *   - memberCount        : nombre d'adhérents actifs
  *   - museeAmountEuros   : total collecté musée (cagnotte + dons Checkout « Projets » mal rattachés à l’API)
  *   - monthlyAmountEuros : dons ce mois pour le fonctionnement (hors Checkout musée)
+ *   - recentContributions : par formulaire, les 4 plus gros dons + les 2 plus récents (union), fusion globale triée par date
  *
  * Cache : 5 min en mémoire (warm Lambda) + Cache-Control HTTP.
  */
@@ -28,6 +29,13 @@ const EXCEL_CUTOFF = '2026-04-14T00:00:00.000Z'
 const MUSEE_SLUG = 'projet-musee'
 const MUSEE_TYPE = 'CrowdFunding'
 const MUSEE_FORM = { type: MUSEE_TYPE, slug: MUSEE_SLUG }
+
+/** Bandeau dons : par formulaire, N plus gros montants + M derniers (dédupliqués par commande) */
+const FEED_TOP_BY_AMOUNT = 4
+const FEED_TOP_BY_DATE = 2
+const ORDERS_PAGE_SIZE = 100
+/** Pages max chargées par formulaire pour calculer les « plus gros » (tri API = date desc) */
+const ORDERS_MAX_PAGES_PER_FORM = 12
 
 // Cache en mémoire — survit aux invocations warm sur la même instance Lambda
 let memCache = null
@@ -55,13 +63,46 @@ function classifyCheckoutPayload(obj) {
   if (raw.includes('"destination":"fonctionnement"')) return 'op'
   if (lower.includes('projets akuu')) return 'musee'
   if (lower.includes('fonctionnement akuu')) return 'op'
+  // Libellés Checkout (sans JSON metadata) — ex. itemName dans items[]
+  if (lower.includes('don — projets') || lower.includes('don - projets')) return 'musee'
+  if (lower.includes('don — fonctionnement') || lower.includes('don - fonctionnement')) return 'op'
   return null
 }
 
-function labelForContribution(obj, fallbackFormLabel) {
-  const c = classifyCheckoutPayload(obj)
-  if (c === 'musee') return 'musee'
-  if (c === 'op') return 'op'
+/**
+ * Bandeau « Chaque don compte » : les Orders HelloAsso n’exposent pas toujours
+ * metadata au même niveau que les Payments — on agrège commande + paiements + lignes + meta.
+ */
+function classifyOrderForFeed(order, fallbackFormLabel) {
+  const objects = [
+    order,
+    ...(order.payments ?? []),
+    ...(order.items ?? [])
+  ]
+  if (order.meta && typeof order.meta === 'object') objects.push(order.meta)
+
+  let hasMusee = false
+  let hasOp = false
+  for (const obj of objects) {
+    const c = classifyCheckoutPayload(obj)
+    if (c === 'musee') hasMusee = true
+    if (c === 'op') hasOp = true
+  }
+  if (hasMusee) return 'musee'
+  if (hasOp) return 'op'
+
+  const textBlob = [
+    ...(order.items ?? []).map(i =>
+      [i.name, i.label, i.designation, i.title].filter(Boolean).join(' ')
+    ),
+    [order.formName, order.name, order.label, order.designation].filter(Boolean).join(' ')
+  ]
+    .join(' ')
+    .toLowerCase()
+
+  if (textBlob.includes('projets akuu')) return 'musee'
+  if (textBlob.includes('fonctionnement akuu')) return 'op'
+
   return fallbackFormLabel
 }
 
@@ -156,43 +197,96 @@ async function sumPayments(headers, formType, formSlug, fromDate = null) {
   return Math.round(total / 100) // centimes → euros
 }
 
-/**
- * Récupère les N dernières commandes d'un formulaire et les anonymise.
- * Chaque contribution retournée : { date, amountEuros, firstName, city, formLabel }
- */
-async function getRecentOrders(headers, formType, formSlug, formLabel, limit = 5) {
-  const params = new URLSearchParams({
-    pageSize:    String(limit),
-    sortOrder:   'Desc',
-    withDetails: 'true'
-  })
-  const url = `${HELLOASSO_API}/organizations/${ORG_SLUG}/forms/${formType}/${formSlug}/orders?${params}`
-  const res = await fetch(url, { headers })
-  if (!res.ok) return []
-  const data = await res.json()
+function orderAmountCents(order) {
+  const sumArr = arr => (arr ?? []).reduce((s, x) => s + (x.amount ?? 0), 0)
+  if (typeof order.amount === 'number' && order.amount > 0) return order.amount
+  return sumArr(order.payments) || sumArr(order.items) || 0
+}
 
-  return (data.data ?? []).map(order => {
-    // Cherche le montant dans order.amount, puis payments, puis items
-    const sumArr = arr => (arr ?? []).reduce((s, x) => s + (x.amount ?? 0), 0)
-    const rawAmount = (typeof order.amount === 'number' && order.amount > 0)
-      ? order.amount
-      : (sumArr(order.payments) || sumArr(order.items) || null)
-    const pay0 = (order.payments ?? [])[0]
-    const date =
-      order.date
-      || order.meta?.createdAt
-      || order.createdAt
-      || pay0?.date
-      || pay0?.meta?.createdAt
-      || null
-    return {
-      date,
-      amountEuros: rawAmount ? Math.round(rawAmount / 100) : null,
-      firstName:   order.payer?.firstName?.trim() || null,
-      city:        order.payer?.city?.trim()      || null,
-      formLabel:   labelForContribution(order, formLabel)
+function orderDateIso(order) {
+  const pay0 = (order.payments ?? [])[0]
+  return order.date
+    || order.meta?.createdAt
+    || order.createdAt
+    || pay0?.date
+    || pay0?.meta?.createdAt
+    || null
+}
+
+function orderStableId(order) {
+  return order.id ?? order.orderId ?? `${orderDateIso(order) ?? ''}-${orderAmountCents(order)}-${order.payer?.firstName ?? ''}`
+}
+
+/**
+ * Contribution anonymisée pour le bandeau.
+ */
+function orderToContribution(order, formLabel) {
+  const rawAmount = orderAmountCents(order)
+  const date = orderDateIso(order)
+  return {
+    date,
+    amountEuros: rawAmount ? Math.round(rawAmount / 100) : null,
+    firstName:   order.payer?.firstName?.trim() || null,
+    city:        order.payer?.city?.trim()      || null,
+    formLabel:   classifyOrderForFeed(order, formLabel)
+  }
+}
+
+/**
+ * Paginate les commandes (tri API date desc). Sert à couvrir l’historique pour estimer les plus gros montants.
+ */
+async function fetchOrdersPages(headers, formType, formSlug, sleepBetweenPages = 0) {
+  const all = []
+  let pageIndex = 1
+  while (pageIndex <= ORDERS_MAX_PAGES_PER_FORM) {
+    const params = new URLSearchParams({
+      pageSize:    String(ORDERS_PAGE_SIZE),
+      pageIndex:   String(pageIndex),
+      sortOrder:   'Desc',
+      withDetails: 'true'
+    })
+    const url = `${HELLOASSO_API}/organizations/${ORG_SLUG}/forms/${formType}/${formSlug}/orders?${params}`
+    const res = await fetch(url, { headers })
+    if (!res.ok) break
+    const data = await res.json()
+    const chunk = data.data ?? []
+    all.push(...chunk)
+    if (chunk.length < ORDERS_PAGE_SIZE) break
+    pageIndex++
+    if (sleepBetweenPages > 0 && pageIndex <= ORDERS_MAX_PAGES_PER_FORM) {
+      await new Promise(r => setTimeout(r, sleepBetweenPages))
     }
-  })
+  }
+  return all
+}
+
+/**
+ * Les FEED_TOP_BY_AMOUNT plus gros montants + les FEED_TOP_BY_DATE plus récents (dédupliqués).
+ */
+function selectFeaturedContributions(orders, formLabel) {
+  const valid = orders.filter(o => orderAmountCents(o) > 0)
+  if (valid.length === 0) return []
+
+  const byAmount = [...valid].sort((a, b) => orderAmountCents(b) - orderAmountCents(a))
+  const topAmount = byAmount.slice(0, FEED_TOP_BY_AMOUNT)
+
+  const withDate = valid.filter(o => orderDateIso(o))
+  const byDate = [...withDate].sort(
+    (a, b) => new Date(orderDateIso(b)) - new Date(orderDateIso(a))
+  )
+  const topDate = byDate.slice(0, FEED_TOP_BY_DATE)
+
+  const merged = new Map()
+  for (const o of [...topAmount, ...topDate]) {
+    merged.set(orderStableId(o), o)
+  }
+
+  return [...merged.values()].map(o => orderToContribution(o, formLabel))
+}
+
+async function getFeaturedOrdersForForm(headers, formType, formSlug, formLabel, sleepBetweenPages = 35) {
+  const orders = await fetchOrdersPages(headers, formType, formSlug, sleepBetweenPages)
+  return selectFeaturedContributions(orders, formLabel).filter(c => c.date)
 }
 
 async function fetchHelloAssoStats(token) {
@@ -258,27 +352,27 @@ async function fetchHelloAssoStats(token) {
 
   const museeAmountEuros = museeAmountEurosBase + museeFromCheckoutOnOpForms
 
-  // 2b. Dernières commandes : séquentiel avec petit délai (limite de débit HelloAsso)
+  // 2b. Bandeau : par formulaire, 4 plus gros montants + 2 derniers (dédupliqués) — séquentiel (débit HelloAsso)
   let recentOp = []
   for (let i = 0; i < opForms.length; i++) {
     if (i > 0) await sleep(90)
     const f = opForms[i]
-    recentOp = recentOp.concat(await getRecentOrders(headers, f.formType, getSlug(f), 'op', 5))
+    recentOp = recentOp.concat(await getFeaturedOrdersForForm(headers, f.formType, getSlug(f), 'op'))
   }
 
   let recentMember = []
   if (memberSlug) {
     await sleep(90)
-    recentMember = await getRecentOrders(headers, memberForm.formType, memberSlug, 'adhesion', 5)
+    recentMember = await getFeaturedOrdersForForm(headers, memberForm.formType, memberSlug, 'adhesion')
   }
 
   await sleep(90)
-  const recentChapi = await getRecentOrders(headers, 'CrowdFunding', 'projet-chapichika', 'chapi', 5)
+  const recentChapi = await getFeaturedOrdersForForm(headers, 'CrowdFunding', 'projet-chapichika', 'chapi')
 
   await sleep(90)
-  const recentMusee = await getRecentOrders(headers, MUSEE_FORM.type, MUSEE_FORM.slug, 'musee', 5)
+  const recentMusee = await getFeaturedOrdersForForm(headers, MUSEE_FORM.type, MUSEE_FORM.slug, 'musee')
 
-  // Fusionner et trier toutes les contributions récentes (tous formulaires)
+  // Fusionner et trier toutes les contributions (tous formulaires)
   const recentContributions = [...recentOp, ...recentMusee, ...recentMember, ...recentChapi]
     .filter(c => c.date)
     .sort((a, b) => new Date(b.date) - new Date(a.date))
@@ -290,7 +384,7 @@ async function fetchHelloAssoStats(token) {
     museeAmountEuros,
     chapiAmountEuros,
     monthlyAmountEuros,
-    recentContributions,  // toutes les contributions récentes (anonymisées)
+    recentContributions,  // bandeau : 4 plus gros + 2 derniers par formulaire (anonymisé)
     _forms: {
       op:     opForms.map(f => ({ type: f.formType, slug: getSlug(f) })),
       member: memberForm ? { type: memberForm.formType, slug: memberSlug } : null,
