@@ -852,6 +852,8 @@
     "stat_impots": "deducible de impuestos",
     "musee_progress_label": "Objetivo 2027",
     "musee_progress_your_don": "tu contribución",
+    "progress_contrib_so": "tu contribución, es decir",
+    "progress_after_tax": "tras la deducción fiscal",
     "fonc_progress_label": "Objetivo mensual",
     "duration_label": "Duración",
     "duration_months": "meses",

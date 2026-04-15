@@ -852,6 +852,8 @@
     "stat_impots": "steuerlich absetzbar",
     "musee_progress_label": "Ziel 2027",
     "musee_progress_your_don": "Ihr Beitrag",
+    "progress_contrib_so": "Ihr Beitrag, d. h.",
+    "progress_after_tax": "nach Steuerabzug",
     "fonc_progress_label": "Monatliches Ziel",
     "duration_label": "Dauer",
     "duration_months": "Monate",

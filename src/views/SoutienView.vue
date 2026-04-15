@@ -93,14 +93,24 @@
               <div v-if="donDestination === 'musee'" key="bar-musee" class="bg-white/[0.06] border border-white/[0.10] rounded-2xl px-5 py-3.5 mt-3">
                 <div class="flex items-center justify-between mb-2.5">
                   <span class="text-white/40 text-xs uppercase tracking-widest font-semibold">{{ $t('soutien.musee_progress_label') }}</span>
-                  <span class="text-white/60 text-sm font-bold tabular-nums">
-                    {{ Math.round(museeTotalCollected).toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €
-                    <span class="text-white/30 font-normal">/ {{ MUSEE_GOAL_EUROS.toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
+                  <span
+                    class="text-sm font-bold tabular-nums flex flex-wrap items-center justify-end gap-x-1.5 gap-y-0.5 text-right max-w-[min(100%,22rem)]"
+                  >
+                    <template v-if="donAmount > 0">
+                      <span class="text-rose-300">{{ Math.round(museeTotalCollected).toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
+                      <span class="text-white/35 font-normal" aria-hidden="true">→</span>
+                      <span class="text-bleu font-extrabold drop-shadow-[0_0_10px_rgba(4,72,143,0.45)]">{{ Math.round(museeTotalCollected + totalDonAmount).toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
+                      <span class="text-white/30 font-normal">/ {{ MUSEE_GOAL_EUROS.toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
+                    </template>
+                    <template v-else>
+                      <span class="text-white/60">{{ Math.round(museeTotalCollected).toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
+                      <span class="text-white/30 font-normal">/ {{ MUSEE_GOAL_EUROS.toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
+                    </template>
                   </span>
                 </div>
                 <div class="relative h-3.5 rounded-full bg-white/[0.08] overflow-hidden">
                   <div
-                    class="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-bleu-ciel to-bleu transition-all duration-300 ease-out"
+                    class="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-bleu-200 via-bleu-400 to-bleu shadow-[0_0_16px_rgba(55,119,191,0.55)] ring-1 ring-bleu-200/40 transition-all duration-300 ease-out"
                     :style="{ width: museeWithDonPct + '%' }"
                   />
                   <div
@@ -108,25 +118,38 @@
                     :style="{ width: museeCollectedPct + '%' }"
                   />
                 </div>
-                <div class="flex items-center justify-between mt-2">
-                  <span v-if="donAmount > 0" class="text-bleu-ciel-200 text-xs font-semibold">
-                    +{{ totalDonAmount.toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €
-                    <span class="text-white/30">{{ $t('soutien.musee_progress_your_don') }}</span>
-                  </span>
-                  <span class="text-white/30 text-xs tabular-nums ml-auto">{{ Math.round(museeWithDonPct) }}%</span>
+                <div class="flex items-start justify-between gap-2 mt-2">
+                  <p v-if="donAmount > 0" class="min-w-0 flex-1 text-xs leading-snug flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5">
+                    <span class="text-rose-300 font-semibold tabular-nums">+{{ totalDonAmount.toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
+                    <span class="text-white/40">{{ $t('soutien.progress_contrib_so') }}</span>
+                    <span class="text-bleu font-semibold tabular-nums">{{ heroMuseeNetAfterTax.toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
+                    <span class="text-white/35">{{ $t('soutien.progress_after_tax') }}</span>
+                  </p>
+                  <span v-else class="min-w-0" aria-hidden="true"></span>
+                  <span class="text-white/30 text-xs tabular-nums ml-auto shrink-0 pt-0.5">{{ Math.round(museeWithDonPct) }}%</span>
                 </div>
               </div>
               <div v-else key="bar-fonc" class="bg-white/[0.06] border border-white/[0.10] rounded-2xl px-5 py-3.5 mt-3">
                 <div class="flex items-center justify-between mb-2.5">
                   <span class="text-white/40 text-xs uppercase tracking-widest font-semibold">{{ $t('soutien.fonc_progress_label') }}</span>
-                  <span class="text-white/60 text-sm font-bold tabular-nums">
-                    {{ Math.round(monthlyAmountEuros ?? 0).toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €
-                    <span class="text-white/30 font-normal">/ {{ FONC_GOAL_MONTHLY }} € / {{ $t('soutien.simulator_month') }}</span>
+                  <span
+                    class="text-sm font-bold tabular-nums flex flex-wrap items-center justify-end gap-x-1.5 gap-y-0.5 text-right max-w-[min(100%,22rem)]"
+                  >
+                    <template v-if="donAmount > 0">
+                      <span class="text-rose-300">{{ Math.round(monthlyAmountEuros ?? 0).toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
+                      <span class="text-white/35 font-normal" aria-hidden="true">→</span>
+                      <span class="text-bleu font-extrabold drop-shadow-[0_0_10px_rgba(4,72,143,0.45)]">{{ Math.round((monthlyAmountEuros ?? 0) + donAmount).toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
+                      <span class="text-white/30 font-normal">/ {{ FONC_GOAL_MONTHLY }} € / {{ $t('soutien.simulator_month') }}</span>
+                    </template>
+                    <template v-else>
+                      <span class="text-white/60">{{ Math.round(monthlyAmountEuros ?? 0).toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
+                      <span class="text-white/30 font-normal">/ {{ FONC_GOAL_MONTHLY }} € / {{ $t('soutien.simulator_month') }}</span>
+                    </template>
                   </span>
                 </div>
                 <div class="relative h-3.5 rounded-full bg-white/[0.08] overflow-hidden">
                   <div
-                    class="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-bleu-ciel to-bleu transition-all duration-300 ease-out"
+                    class="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-bleu-200 via-bleu-400 to-bleu shadow-[0_0_16px_rgba(55,119,191,0.55)] ring-1 ring-bleu-200/40 transition-all duration-300 ease-out"
                     :style="{ width: foncWithDonPct + '%' }"
                   />
                   <div
@@ -134,12 +157,15 @@
                     :style="{ width: foncCollectedPct + '%' }"
                   />
                 </div>
-                <div class="flex items-center justify-between mt-2">
-                  <span v-if="donAmount > 0" class="text-bleu-ciel-200 text-xs font-semibold">
-                    +{{ donAmount.toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €
-                    <span class="text-white/30">{{ $t('soutien.musee_progress_your_don') }}</span>
-                  </span>
-                  <span class="text-white/30 text-xs tabular-nums ml-auto">{{ Math.round(foncWithDonPct) }}%</span>
+                <div class="flex items-start justify-between gap-2 mt-2">
+                  <p v-if="donAmount > 0" class="min-w-0 flex-1 text-xs leading-snug flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5">
+                    <span class="text-rose-300 font-semibold tabular-nums">+{{ donAmount.toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
+                    <span class="text-white/40">{{ $t('soutien.progress_contrib_so') }}</span>
+                    <span class="text-bleu font-semibold tabular-nums">{{ heroFoncNetAfterTax.toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
+                    <span class="text-white/35">{{ $t('soutien.progress_after_tax') }}</span>
+                  </p>
+                  <span v-else class="min-w-0" aria-hidden="true"></span>
+                  <span class="text-white/30 text-xs tabular-nums ml-auto shrink-0 pt-0.5">{{ Math.round(foncWithDonPct) }}%</span>
                 </div>
               </div>
             </transition>
@@ -653,6 +679,13 @@ const realCostMonthly = computed(() => isMonthly.value
   ? Math.round((realCost.value / 12) * 100) / 100
   : realCost.value
 )
+
+/** Net après déduction fiscale (66 %) — ligne sous la barre objectif */
+const heroMuseeNetAfterTax = computed(() => {
+  if (!isMonthly.value) return Math.round(realCost.value)
+  return Math.round(realCost.value * donDurationMonths.value * 100) / 100
+})
+const heroFoncNetAfterTax = computed(() => Math.round(realCost.value))
 
 // ── Chiffres animés du panneau fiscal ────────────────────────────────────
 const displayAnnual = ref(totalDonAmount.value)

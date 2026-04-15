@@ -852,6 +852,8 @@
     "stat_impots": "tax-deductible",
     "musee_progress_label": "Goal 2027",
     "musee_progress_your_don": "your contribution",
+    "progress_contrib_so": "your contribution, i.e.",
+    "progress_after_tax": "after tax relief",
     "fonc_progress_label": "Monthly goal",
     "duration_label": "Duration",
     "duration_months": "months",
