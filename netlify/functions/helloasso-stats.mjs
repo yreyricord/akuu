@@ -8,8 +8,8 @@
  * Données retournées :
  *   - newDonationsEuros  : dons reçus après la date de gel du fichier comptable (EXCEL_CUTOFF)
  *   - memberCount        : nombre d'adhérents actifs
- *   - museeAmountEuros   : total collecté sur projet-musee  (objectif 25 000 €)
- *   - monthlyAmountEuros : dons reçus ce mois sur formulaires-1 (objectif 350 €/mois)
+ *   - museeAmountEuros   : total collecté musée (cagnotte + dons Checkout « Projets » mal rattachés à l’API)
+ *   - monthlyAmountEuros : dons ce mois pour le fonctionnement (hors Checkout musée)
  *
  * Cache : 5 min en mémoire (warm Lambda) + Cache-Control HTTP.
  */
@@ -43,6 +43,93 @@ function corsHeaders() {
 }
 
 /**
+ * HelloAsso Checkout : les paiements peuvent être listés sous le formulaire d’exploitation
+ * alors que `metadata.destination` / le libellé article visent le musée. On répartit musée vs fonctionnement.
+ * @returns {'musee'|'op'|null} null = se fier au formulaire API (comportement historique)
+ */
+function classifyCheckoutPayload(obj) {
+  if (!obj || typeof obj !== 'object') return null
+  const raw = JSON.stringify(obj)
+  const lower = raw.toLowerCase()
+  if (raw.includes('"destination":"musee"')) return 'musee'
+  if (raw.includes('"destination":"fonctionnement"')) return 'op'
+  if (lower.includes('projets akuu')) return 'musee'
+  if (lower.includes('fonctionnement akuu')) return 'op'
+  return null
+}
+
+function labelForContribution(obj, fallbackFormLabel) {
+  const c = classifyCheckoutPayload(obj)
+  if (c === 'musee') return 'musee'
+  if (c === 'op') return 'op'
+  return fallbackFormLabel
+}
+
+function paymentDateIso(p) {
+  return p.date || p.paymentDate || p.meta?.createdAt || p.order?.date || null
+}
+
+function isInCurrentMonth(iso, now = new Date()) {
+  if (!iso) return false
+  const d = new Date(iso)
+  return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth()
+}
+
+function isOnOrAfterExcelCutoff(iso) {
+  if (!iso) return false
+  return new Date(iso) >= new Date(EXCEL_CUTOFF)
+}
+
+/**
+ * Agrège les paiements d’un formulaire d’exploitation en séparant les Checkout « Projets AKUU »
+ * (comptés musée) du fonctionnement.
+ */
+async function sumOpFormPaymentsWithCheckoutSplit(headers, formType, formSlug) {
+  const now = new Date()
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1)
+  const cutoffDate = new Date(EXCEL_CUTOFF)
+  const fromFetch = new Date(Math.min(monthStart.getTime(), cutoffDate.getTime())).toISOString()
+
+  let monthlyOp = 0
+  let newOp = 0
+  let museeMisfiled = 0
+  let pageIndex = 1
+  const pageSize = 100
+
+  while (true) {
+    const params = new URLSearchParams({ pageSize: String(pageSize), pageIndex: String(pageIndex), from: fromFetch })
+    const url = `${HELLOASSO_API}/organizations/${ORG_SLUG}/forms/${formType}/${formSlug}/payments?${params}`
+    const res = await fetch(url, { headers })
+    if (!res.ok) break
+    const data = await res.json()
+    const payments = data.data ?? []
+
+    for (const p of payments) {
+      const cents = p.amount ?? 0
+      const euros = Math.round(cents / 100)
+      const cls = classifyCheckoutPayload(p)
+      const iso = paymentDateIso(p)
+
+      if (cls === 'musee') {
+        museeMisfiled += euros
+        continue
+      }
+
+      if (iso) {
+        if (isInCurrentMonth(iso, now)) monthlyOp += euros
+        if (isOnOrAfterExcelCutoff(iso)) newOp += euros
+      }
+    }
+
+    if (payments.length < pageSize) break
+    pageIndex++
+    if (pageIndex > 10) break
+  }
+
+  return { monthlyOp, newOp, museeMisfiled }
+}
+
+/**
  * Somme tous les paiements autorisés d'un formulaire (avec pagination).
  * Utilisé à la fois pour le total global (musée) et le mensuel (fonctionnement).
  */
@@ -67,13 +154,6 @@ async function sumPayments(headers, formType, formSlug, fromDate = null) {
     if (pageIndex > 10) break
   }
   return Math.round(total / 100) // centimes → euros
-}
-
-/** Somme des paiements du mois en cours sur un formulaire */
-async function getMonthlyAmount(headers, formType, formSlug) {
-  const now  = new Date()
-  const from = new Date(now.getFullYear(), now.getMonth(), 1).toISOString()
-  return sumPayments(headers, formType, formSlug, from)
 }
 
 /**
@@ -110,7 +190,7 @@ async function getRecentOrders(headers, formType, formSlug, formLabel, limit = 5
       amountEuros: rawAmount ? Math.round(rawAmount / 100) : null,
       firstName:   order.payer?.firstName?.trim() || null,
       city:        order.payer?.city?.trim()      || null,
-      formLabel
+      formLabel:   labelForContribution(order, formLabel)
     }
   })
 }
@@ -145,7 +225,7 @@ async function fetchHelloAssoStats(token) {
   const sleep = ms => new Promise(r => setTimeout(r, ms))
 
   // 2a. Agrégats (sommes / mois / comptage adhérents) en parallèle — pas d’appels orders « récents » ici (évite le 429 HelloAsso)
-  const [memberCount, museeAmountEuros, chapiAmountEuros, ...opPairResults] = await Promise.all([
+  const [memberCount, museeAmountEurosBase, chapiAmountEuros, ...opSplits] = await Promise.all([
     memberSlug ? (async () => {
       let count = 0, pageIndex = 1
       while (true) {
@@ -164,21 +244,19 @@ async function fetchHelloAssoStats(token) {
     })() : Promise.resolve(null),
     sumPayments(headers, MUSEE_FORM.type, MUSEE_FORM.slug),
     sumPayments(headers, 'CrowdFunding', 'projet-chapichika'),
-    ...opForms.flatMap(f => {
-      const slug = getSlug(f)
-      return [
-        sumPayments(headers, f.formType, slug, EXCEL_CUTOFF),
-        getMonthlyAmount(headers, f.formType, slug)
-      ]
-    })
+    ...opForms.map(f => sumOpFormPaymentsWithCheckoutSplit(headers, f.formType, getSlug(f)))
   ])
 
   let newDonationsEuros = 0
   let monthlyAmountEuros = 0
-  for (let i = 0; i < opForms.length; i++) {
-    newDonationsEuros += opPairResults[i * 2] ?? 0
-    monthlyAmountEuros += opPairResults[i * 2 + 1] ?? 0
+  let museeFromCheckoutOnOpForms = 0
+  for (const s of opSplits) {
+    newDonationsEuros += s.newOp
+    monthlyAmountEuros += s.monthlyOp
+    museeFromCheckoutOnOpForms += s.museeMisfiled
   }
+
+  const museeAmountEuros = museeAmountEurosBase + museeFromCheckoutOnOpForms
 
   // 2b. Dernières commandes : séquentiel avec petit délai (limite de débit HelloAsso)
   let recentOp = []

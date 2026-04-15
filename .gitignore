@@ -19,10 +19,6 @@ Info_musee_brouillon.md
 # Cache traduction locale pt-BR (scripts translate-fr-to-pt / build-pt-json)
 scripts/.locale-pt-br-cache.json
 scripts/.locale-pt-cache.json
-COMPTES/
-test-helloasso.mjs
 
-# Build artifacts
-.netlify/
-deno.lock
-__pycache__/
+# Local Netlify folder
+.netlify
