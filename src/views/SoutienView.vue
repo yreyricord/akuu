@@ -8,7 +8,7 @@
       <!-- Fond -->
       <div class="absolute inset-0 z-0 overflow-hidden">
         <img src="/images/hero-soutien.jpg" alt="" class="w-full h-full object-cover" />
-        <div class="absolute inset-0 bg-gradient-to-br from-forest/95 via-forest/85 to-night/90" />
+        <div class="absolute inset-0 bg-gradient-to-br from-forest/75 via-forest/55 to-night/70" />
         <!-- Particules lumineuses décoratives -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
           <div class="particle particle-1" />
@@ -20,7 +20,7 @@
       <!-- Colibri flottant -->
       <img
         src="/images/collibri-akuu.png" alt="" aria-hidden="true"
-        class="hero-colibri pointer-events-none absolute z-[2] h-20 sm:h-28 md:h-36 xl:h-48 w-auto opacity-[0.07] sm:opacity-10 right-[4%] sm:right-[3%] bottom-[12%] sm:bottom-[18%]"
+        class="hero-colibri pointer-events-none absolute z-[2] h-24 sm:h-32 md:h-40 xl:h-52 w-auto opacity-[0.14] sm:opacity-[0.20] md:opacity-[0.22] right-[4%] sm:right-[3%] bottom-[12%] sm:bottom-[18%]"
       />
 
       <div class="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-10 xl:px-6 pt-28 pb-12 md:pt-24 md:pb-6">
@@ -97,7 +97,7 @@
                     class="text-sm font-bold tabular-nums flex flex-wrap items-center justify-end gap-x-1.5 gap-y-0.5 text-right max-w-[min(100%,22rem)]"
                   >
                     <template v-if="donAmount > 0">
-                      <span class="text-rose-300">{{ Math.round(museeTotalCollected).toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
+                      <span class="text-rose-300 line-through">{{ Math.round(museeTotalCollected).toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
                       <span class="text-white/35 font-normal" aria-hidden="true">→</span>
                       <span class="text-bleu font-extrabold drop-shadow-[0_0_10px_rgba(4,72,143,0.45)]">{{ Math.round(museeTotalCollected + totalDonAmount).toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
                       <span class="text-white/30 font-normal">/ {{ MUSEE_GOAL_EUROS.toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
@@ -136,7 +136,7 @@
                     class="text-sm font-bold tabular-nums flex flex-wrap items-center justify-end gap-x-1.5 gap-y-0.5 text-right max-w-[min(100%,22rem)]"
                   >
                     <template v-if="donAmount > 0">
-                      <span class="text-rose-300">{{ Math.round(monthlyAmountEuros ?? 0).toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
+                      <span class="text-rose-300 line-through">{{ Math.round(monthlyAmountEuros ?? 0).toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
                       <span class="text-white/35 font-normal" aria-hidden="true">→</span>
                       <span class="text-bleu font-extrabold drop-shadow-[0_0_10px_rgba(4,72,143,0.45)]">{{ Math.round((monthlyAmountEuros ?? 0) + donAmount).toLocaleString(numberLocaleByCode[locale] || 'fr-FR') }} €</span>
                       <span class="text-white/30 font-normal">/ {{ FONC_GOAL_MONTHLY }} € / {{ $t('soutien.simulator_month') }}</span>
@@ -196,10 +196,10 @@
                 :min-height-override="0"
               />
             </div>
-            <div class="don-widget relative w-full h-full bg-white/[0.06] backdrop-blur-xl border border-white/15 rounded-3xl overflow-hidden flex flex-col">
+            <div class="don-widget relative w-full h-full bg-white/[0.035] backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden flex flex-col">
 
               <!-- Onglets fréquence (haut de la carte) -->
-              <div class="grid grid-cols-2 border-b border-white/10">
+              <div class="grid grid-cols-2 border-b border-white/[0.08]">
                 <button
                   type="button"
                   @click="donFrequency = 'monthly'"
@@ -219,7 +219,7 @@
                   :class="[
                     'py-3.5 text-sm font-bold tracking-wide transition-all duration-200',
                     donFrequency === 'once'
-                      ? 'bg-white/[0.06] text-white border-b-2 border-white/50'
+                      ? 'bg-white/[0.04] text-white border-b-2 border-white/45'
                       : 'text-white/40 hover:text-white/70 hover:bg-white/[0.03]'
                   ]"
                 >
@@ -286,7 +286,7 @@
                 </div>
 
                 <!-- Simulateur fiscal intégré -->
-                <div class="bg-white/[0.04] border border-white/[0.08] rounded-2xl px-5 py-4 mb-3 space-y-2.5">
+                <div class="bg-white/[0.025] border border-white/[0.06] rounded-2xl px-5 py-4 mb-3 space-y-2.5">
                   <div class="flex items-center gap-2 mb-1">
                     <span class="w-2 h-2 rounded-full bg-leaf animate-pulse shrink-0"></span>
                     <span class="text-white/40 text-xs uppercase tracking-widest font-semibold">{{ $t('soutien.simulator_title') }}</span>
