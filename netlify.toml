@@ -9,6 +9,78 @@
   # Import relatif ../helloasso-oauth.mjs depuis les fonctions
   included_files = ["netlify/helloasso-oauth.mjs"]
 
+# Anciennes URLs « about » (EN / ancien CMS) → page Association actuelle
+[[redirects]]
+  from = "/about_us"
+  to = "/association"
+  status = 301
+
+[[redirects]]
+  from = "/about-us"
+  to = "/association"
+  status = 301
+
+# Ancien site (WP / boutique / slugs EN) — évite SPA « vide » + consolidation vers les pages actuelles
+[[redirects]]
+  from = "/projects"
+  to = "/projets"
+  status = 301
+
+[[redirects]]
+  from = "/get-involved"
+  to = "/volontaires"
+  status = 301
+
+[[redirects]]
+  from = "/museum-project"
+  to = "/musee-shapishiko"
+  status = 301
+
+[[redirects]]
+  from = "/hydr-ama"
+  to = "/hydrama"
+  status = 301
+
+[[redirects]]
+  from = "/puerto-miguel"
+  to = "/projets"
+  status = 301
+
+[[redirects]]
+  from = "/puerto-miguel/"
+  to = "/projets"
+  status = 301
+
+[[redirects]]
+  from = "/single-project"
+  to = "/projets"
+  status = 301
+
+[[redirects]]
+  from = "/les-membres"
+  to = "/association"
+  status = 301
+
+[[redirects]]
+  from = "/shop"
+  to = "/soutenir"
+  status = 301
+
+[[redirects]]
+  from = "/donate"
+  to = "/soutenir"
+  status = 301
+
+[[redirects]]
+  from = "/product-page/*"
+  to = "/soutenir"
+  status = 301
+
+[[redirects]]
+  from = "/akuuvision-1"
+  to = "/akuuvision"
+  status = 301
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

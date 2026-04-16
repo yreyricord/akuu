@@ -48,6 +48,9 @@ ${urls}
 const robots = `User-agent: *
 Allow: /
 
+# Anciennes URLs d’API (ex. ancien CMS) — pas de contenu sur ce site statique
+Disallow: /_api/
+
 Sitemap: ${base}/sitemap.xml
 `
 
