@@ -313,8 +313,8 @@ const milestoneVisualSrcs = [
   '/images/projets/shapishiko/1.jpg',
   '/images/projets/shapishiko/2.jpeg',
   '/images/projets/shapishiko/3.jpg',
-  '/images/projets/shapishiko/4.jpeg',
-  '/images/projets/shapishiko/5.jpeg'
+  '/images/musee/acteurs/karen.jpg',
+  '/images/musee/acteurs/gouvernance.jpg'
 ]
 
 const milestoneVisualAlts = computed(() =>

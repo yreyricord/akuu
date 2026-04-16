@@ -146,7 +146,7 @@
               </div>
 
               <div class="mt-6 pt-6 border-t border-forest/10">
-                <div class="flex gap-3">
+                <div class="flex flex-wrap gap-3">
                   <a
                     href="https://www.facebook.com/AKUUAssociation/"
                     target="_blank"
@@ -164,6 +164,24 @@
                     aria-label="Instagram"
                   >
                     <PhInstagramLogo :size="20" weight="fill" />
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/company/akuu-association/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-10 h-10 rounded-xl bg-forest/10 flex items-center justify-center text-forest hover:bg-forest hover:text-white transition-colors"
+                    aria-label="LinkedIn"
+                  >
+                    <PhLinkedinLogo :size="20" weight="fill" />
+                  </a>
+                  <a
+                    href="https://www.tiktok.com/@akuu_asso"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-10 h-10 rounded-xl bg-forest/10 flex items-center justify-center text-forest hover:bg-forest hover:text-white transition-colors"
+                    aria-label="TikTok"
+                  >
+                    <PhTiktokLogo :size="20" weight="fill" />
                   </a>
                 </div>
               </div>
@@ -196,7 +214,7 @@
 
 <script setup>
 import { reactive, ref } from 'vue'
-import { PhEnvelopeSimple, PhMapPin, PhFacebookLogo, PhInstagramLogo } from '@phosphor-icons/vue'
+import { PhEnvelopeSimple, PhMapPin, PhFacebookLogo, PhInstagramLogo, PhLinkedinLogo, PhTiktokLogo } from '@phosphor-icons/vue'
 import PageHero from '@/components/shared/PageHero.vue'
 
 const form = reactive({
