@@ -81,6 +81,22 @@
   to = "/akuuvision"
   status = 301
 
+# Strip ?lang= query param — prevents duplicate indexation by search engines
+# The canonical URL (no param) is already set in <head>; this 301 reinforces it.
+[[redirects]]
+  from = "/:path"
+  query = {lang = ":langval"}
+  to = "/:path"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/"
+  query = {lang = ":langval"}
+  to = "/"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

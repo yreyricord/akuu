@@ -97,6 +97,35 @@ export function buildOrganizationJsonLdHead () {
 }
 
 /**
+ * Returns a FAQPage JSON-LD head descriptor for @unhead/vue useHead().
+ * @param {Array<{question: string, answer: string}>} items
+ */
+export function buildFaqJsonLdHead (items) {
+  if (!items || items.length === 0) return {}
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer
+      }
+    }))
+  }
+  return {
+    script: [
+      {
+        type: 'application/ld+json',
+        id: 'akuu-jsonld-faq',
+        innerHTML: JSON.stringify(data)
+      }
+    ]
+  }
+}
+
+/**
  * Returns a BreadcrumbList JSON-LD head descriptor for @unhead/vue useHead().
  * @param {Array<{name: string, url: string}>} crumbs
  */

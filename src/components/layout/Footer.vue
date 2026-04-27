@@ -219,6 +219,7 @@ const navLinks = [
   { to: '/projets',          key: 'nav.projets' },
   { to: '/musee-shapishiko', key: 'nav.musee' },
   { to: '/volontaires',      key: 'nav.volontaires' },
+  { to: '/partenaires',      key: 'nav.partenaires' },
   { to: '/soutenir',         key: 'nav.soutenir' },
   { to: '/contact',          key: 'nav.contact' },
 ]

@@ -72,6 +72,12 @@ export const routes = [
     component: () => import('@/views/GestionDechetsView.vue')
   },
   {
+    path: '/partenaires',
+    name: 'partenaires',
+    meta: { seoRoute: 'partenaires' },
+    component: () => import('@/views/PartenairesView.vue')
+  },
+  {
     path: '/merci',
     name: 'merci',
     component: () => import('@/views/MerciView.vue')

@@ -18,56 +18,60 @@
     "team_learn_more": "Learn more"
   },
   "seo": {
-    "title": "AKUU | French nonprofit, Amazon solidarity & France",
-    "description": "French nonprofit fostering solidarity with Peruvian Amazon communities in Puerto Miguel. Projects include the Shapishiko museum, volunteering and outreach.",
+    "title": "International solidarity, Peruvian Amazon — AKUU",
+    "description": "French NGO fostering solidarity with Peruvian Amazon communities at Puerto Miguel. Shapishiko museum, volunteering, VSI missions and outreach.",
     "routes": {
       "home": {
-        "title": "AKUU | French nonprofit, Amazon solidarity & France",
-        "description": "French nonprofit fostering solidarity with Peruvian Amazon communities in Puerto Miguel. Projects include the Shapishiko museum, volunteering and outreach."
+        "title": "International solidarity, Peruvian Amazon — AKUU",
+        "description": "French NGO fostering solidarity with Peruvian Amazon communities at Puerto Miguel. Shapishiko museum, volunteering, VSI missions and outreach."
       },
       "association": {
-        "title": "AKUU nonprofit · Peruvian Amazon & France | Solidarity",
-        "description": "French law 1901 association: field work in the Amazon at Puerto Miguel, awareness in France. History, team and projects including the Shapishiko museum."
+        "title": "AKUU — French NGO for Amazon solidarity",
+        "description": "French law 1901 NGO active in the Peruvian Amazon: VSI missions and volunteering in Puerto Miguel, awareness in France. History, team, Shapishiko museum."
       },
       "projets": {
-        "title": "Our projects | Shapishiko museum, education | AKUU",
-        "description": "Projects led by AKUU in Puerto Miguel: Shapishiko museum, Casa AKUU, micro-hydro, climate awareness and Amazonian communities."
+        "title": "Our projects in the Peruvian Amazon — AKUU",
+        "description": "AKUU NGO projects in Puerto Miguel: Shapishiko museum, Casa AKUU, HYDR'AMA micro-hydro, English classes, waste management and Amazon communities."
       },
       "museeShapishiko": {
-        "title": "Shapishiko Museum | Puerto Miguel | AKUU, French nonprofit",
-        "description": "Kukama cultural project in Puerto Miguel, co-led with French nonprofit AKUU and the village. Visits, local governance, support from France."
+        "title": "Shapishiko Museum — Kukama Culture · Puerto Miguel — AKUU",
+        "description": "Community museum of the Kukama people in Puerto Miguel. Co-led with French NGO AKUU: exhibitions, local governance, Franco-Peruvian solidarity."
       },
       "volontaires": {
-        "title": "Volunteer with AKUU | Peruvian Amazon",
-        "description": "Join AKUU as a volunteer: field missions in Puerto Miguel and support for projects from France."
+        "title": "Volunteering & VSI in the Peruvian Amazon — AKUU",
+        "description": "VSI missions, long-term volunteering and internships (2–12 months) in Puerto Miguel, Peruvian Amazon. Join the AKUU NGO for international solidarity."
       },
       "soutenir": {
-        "title": "Support AKUU | Donations and membership",
-        "description": "Support AKUU through a donation or membership: fund solidarity projects in the Peruvian Amazon."
+        "title": "Support AKUU NGO — Tax-deductible donations & membership",
+        "description": "Donate or join AKUU NGO to fund solidarity projects in the Peruvian Amazon. Donations are tax-deductible at 66% in France."
       },
       "contact": {
-        "title": "Contact | AKUU nonprofit",
-        "description": "Contact the AKUU team: questions about projects, partnerships, volunteering and press."
+        "title": "Contact — AKUU Amazon solidarity NGO",
+        "description": "Contact the AKUU NGO team: projects, partnerships, volunteering and VSI missions, press. Based in France, active in Puerto Miguel."
       },
       "hydrama": {
-        "title": "HYDR’AMA | AKUU micro-hydro & WindAid | Amazon",
-        "description": "Floating micro-hydro project with communities in the Peruvian Amazon: timeline, WindAid partnership and documentation."
+        "title": "Floating micro-hydro Amazon — HYDR'AMA project — AKUU",
+        "description": "Floating micro-hydro turbine on the Peruvian Amazon with rural communities and WindAid: renewable energy in Puerto Miguel. Timeline and documentation."
       },
       "akuuvision": {
-        "title": "AKUUVision | Amazon augmented reality | AKUU",
-        "description": "Augmented reality app to discover the Amazon: content from Puerto Miguel, festivals and outreach."
+        "title": "AKUUVision — Augmented reality, Peruvian Amazon",
+        "description": "Augmented reality app to explore the Peruvian Amazon and Puerto Miguel culture. Festivals, exhibitions and outreach."
       },
       "coursAnglais": {
-        "title": "English courses in Puerto Miguel | AKUU",
-        "description": "English program for residents linked to local ecotourism: goals, impact and outlook."
+        "title": "English classes & ecotourism — Puerto Miguel — AKUU",
+        "description": "English programme for Puerto Miguel residents linked to local ecotourism in the Peruvian Amazon: goals, impact and development."
       },
       "casaAkuu": {
-        "title": "Casa AKUU | Community house in Puerto Miguel | AKUU",
-        "description": "Casa AKUU: a shared living space for volunteers and residents in Puerto Miguel, the hub for AKUU's projects: English classes, waste management, solar power, and the museum."
+        "title": "Casa AKUU — Community house in Puerto Miguel",
+        "description": "Casa AKUU: shared living space for volunteers and residents in Puerto Miguel. Hub for AKUU projects in the Peruvian Amazon: English, waste, museum."
       },
       "gestionDechets": {
-        "title": "Waste management | Puerto Miguel | AKUU",
-        "description": "Precious Plastic recycling, collection to Nauta, Planet'AKUU awareness: 2019 mission in Puerto Miguel with Grenoble INP ENSE3."
+        "title": "Plastic waste management — Puerto Miguel — AKUU",
+        "description": "Precious Plastic recycling, collection to Nauta and Planet'AKUU awareness in Puerto Miguel, Peruvian Amazon. Partnership with Grenoble INP ENSE3."
+      },
+      "partenaires": {
+        "title": "AKUU Partners — France Volontaires, AIME ONG, WindAid",
+        "description": "AKUU NGO partners: France Volontaires, AIME ONG, WindAid, Grenoble INP and FONJEP. Together for solidarity in the Peruvian Amazon."
       }
     }
   },
@@ -78,7 +82,8 @@
     "musee": "Shapishiko Museum",
     "volontaires": "Volunteer",
     "soutenir": "Support us",
-    "contact": "Contact"
+    "contact": "Contact",
+    "partenaires": "Partners"
   },
   "hero": {
     "tagline": "AKUU TOGETHER. Protect what's alive",
@@ -810,7 +815,25 @@
     "video_title": "Life in Puerto Miguel",
     "cta_title": "Ready to go?",
     "cta_text": "Contact us to learn more about available missions.",
-    "cta_button": "Contact us"
+    "cta_button": "Contact us",
+    "faq": {
+      "q1": {
+        "question": "What types of volunteer missions does AKUU offer in the Amazon?",
+        "answer": "AKUU offers civic service missions (6–12 months via AIME ONG), long-term volunteering (3–6 months) and internships (2–6 months) in Puerto Miguel, Peruvian Amazon."
+      },
+      "q2": {
+        "question": "How do I apply to volunteer with AKUU?",
+        "answer": "Send your application via the contact form. The AKUU team will then arrange a motivation interview and organise pre-departure training before your mission in Puerto Miguel."
+      },
+      "q3": {
+        "question": "What is a VSI — International Solidarity Volunteer mission?",
+        "answer": "A VSI is a 6–24 month international solidarity commitment with an accredited NGO. AKUU offers VSI missions through AIME ONG in Puerto Miguel, Peruvian Amazon."
+      },
+      "q4": {
+        "question": "Do I need to speak Spanish to volunteer with AKUU?",
+        "answer": "A basic level of Spanish is recommended. Pre-departure training is organised to help you prepare for your mission in the Peruvian Amazon."
+      }
+    }
   },
   "soutien": {
     "label": "Take action",
@@ -1194,5 +1217,13 @@
     "akuuvision": "AKUUVision",
     "gestion_dechets": "Waste management",
     "cours_anglais": "English classes"
+  },
+  "partenaires_page": {
+    "hero_title": "Our partners",
+    "hero_subtitle": "AKUU NGO carries out its projects in the Peruvian Amazon thanks to a network of committed institutional, academic and civil-society partners.",
+    "intro": "Since 2016, AKUU has developed its international solidarity projects in Puerto Miguel with the support of French and Peruvian organisations.",
+    "partnership_title": "Become a partner",
+    "partnership_text": "Would you like to support our projects or co-build a mission in the Amazon? Contact us to explore a collaboration.",
+    "cta_button": "Contact us"
   }
 }

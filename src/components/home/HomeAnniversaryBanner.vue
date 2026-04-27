@@ -104,13 +104,14 @@ const sectionRef = ref(null)
 const hasAnimated = ref(false)
 const contentRevealed = ref(false)
 
-const yearsDisplay = ref('0')
-const villagesDisplay = ref('0')
-const volunteersDisplay = ref('0')
-const projectsDisplay = ref('0')
-const beneficiariesDisplay = ref('0')
+const yearsDisplay = ref('10')
+const villagesDisplay = ref('3')
+const volunteersDisplay = ref('150')
+const projectsDisplay = ref('10')
+const beneficiariesDisplay = ref('500')
 
 function animateCount (target, setDisplay, duration = STATS_COUNT_DURATION_MS) {
+  setDisplay('0')
   const stepTime = 16
   const totalSteps = Math.max(1, duration / stepTime)
   const increment = target / totalSteps

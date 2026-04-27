@@ -845,7 +845,8 @@
     "musee": "Museu Shapishiko",
     "projets": "Nossos projetos",
     "soutenir": "Apoie-nos",
-    "volontaires": "Torne-se um voluntário"
+    "volontaires": "Torne-se um voluntário",
+    "partenaires": "Parceiros"
   },
   "partners": {
     "subtitle": "Confiam em nós e apoiam-nos nos nossos projetos",
@@ -897,58 +898,62 @@
     "empty_state": "Nenhum projeto nesta categoria."
   },
   "seo": {
-    "description": "Associação Francesa: solidariedade internacional na Amazônia peruana em Puerto Miguel. Projetos que incluem o Museu Shapishiko, voluntariado e sensibilização.",
+    "title": "Solidariedade internacional, Amazônia peruana — AKUU",
+    "description": "ONG francesa de solidariedade internacional com as comunidades da Amazônia peruana em Puerto Miguel. Museu Shapishiko, voluntariado, VSI e sensibilização.",
     "routes": {
-      "akuuvision": {
-        "description": "Aplicativo de realidade aumentada para descobrir a Amazônia: conteúdo, festivais e radiodifusão de Puerto Miguel.",
-        "title": "AKUUVision | Realidade Aumentada da Amazon | AKUU"
+      "home": {
+        "title": "Solidariedade internacional, Amazônia peruana — AKUU",
+        "description": "ONG francesa de solidariedade internacional com as comunidades da Amazônia peruana em Puerto Miguel. Museu Shapishiko, voluntariado, VSI e sensibilização."
       },
       "association": {
-        "description": "Lei das ONGs francesas de 1901: missões na Amazônia em Puerto Miguel, conscientização na França. História, equipe e projetos, incluindo o Museu Shapishiko.",
-        "title": "Associação AKUU · Amazônia peruana e França | Solidariedade"
-      },
-      "casaAkuu": {
-        "description": "Casa AKUU: um espaço partilhado entre voluntários e residentes em Puerto Miguel, uma âncora para os projetos da associação (aulas de inglês, resíduos, energia solar, museu).",
-        "title": "Casa AKUU | Casa Comunitária em Puerto Miguel | AKUU"
-      },
-      "contact": {
-        "description": "Fale com a equipe da AKUU: perguntas sobre projetos, parcerias, voluntariado e imprensa.",
-        "title": "Contato | Associação AKUU"
-      },
-      "coursAnglais": {
-        "description": "Currículo do curso de inglês relacionado ao ecoturismo local para moradores locais: Objetivos, Impacto e Perspectivas.",
-        "title": "Cursos de inglês em Puerto Miguel | AKUU"
-      },
-      "gestionDechets": {
-        "description": "Reciclagem de plástico precioso, coleta para Nauta, sensibilização Planet 'Akuu: missão 2019 para Puerto Miguel com Grenoble INP ENSE3.",
-        "title": "Gestão de Resíduos | Puerto Miguel | AKUU"
-      },
-      "home": {
-        "description": "Associação Francesa: solidariedade internacional na Amazônia peruana em Puerto Miguel. Projetos que incluem o Museu Shapishiko, voluntariado e sensibilização.",
-        "title": "AKUU | Associação de Solidariedade Amazônia e França"
-      },
-      "hydrama": {
-        "description": "Floating Tidal Turbine Project with Peruvian Amazon Communities: Timeline, WindAid Partnership and Documentation.",
-        "title": "Hydr'ama | AKUU e WindAid Tidal | Amazon"
-      },
-      "museeShapishiko": {
-        "description": "Projeto cultural Kukama em Puerto Miguel, co-presidido pela associação francesa AKUU e pela comunidade. Visitas, governança da aldeia, apoio da França.",
-        "title": "Museu Shapishiko | Puerto Miguel | AKUU, associação francesa"
+        "title": "AKUU — ONG francesa solidariedade internacional Amazônia",
+        "description": "ONG francesa lei 1901 ativa na Amazônia peruana: missões VSI e voluntariado em Puerto Miguel, sensibilização em França. História, equipe, museu Shapishiko."
       },
       "projets": {
-        "description": "Projetos realizados pela associação AKUU em Puerto Miguel: Museu Shapishiko, Casa AKUU, turbina de maré, sensibilização para o clima e comunidades amazónicas.",
-        "title": "Os nossos projetos | Museu Shapishiko, Educação | AKUU"
+        "title": "Nossos projetos na Amazônia peruana — AKUU",
+        "description": "Projetos da ONG AKUU em Puerto Miguel: museu Shapishiko, Casa AKUU, microhidro HYDR'AMA, inglês, gestão de resíduos e comunidades amazônicas."
       },
-      "soutenir": {
-        "description": "Apoie a AKUU com uma doação ou adesão: financie projetos de solidariedade na Amazônia peruana.",
-        "title": "Apoie-nos | Doações e Adesão à AKUU"
+      "museeShapishiko": {
+        "title": "Museu Shapishiko — Cultura Kukama · Puerto Miguel — AKUU",
+        "description": "Museu comunitário do povo Kukama em Puerto Miguel. Co-gerido com a ONG francesa AKUU: exposições, governança local, solidariedade franco-peruana."
       },
       "volontaires": {
-        "description": "Junte-se à AKUU como voluntário: missões de campo em Puerto Miguel e apoio a projetos da França.",
-        "title": "Torne-se voluntário | AKUU Peruvian Amazon"
+        "title": "Voluntariado & VSI na Amazônia peruana — AKUU",
+        "description": "Missões VSI, voluntariado e estágios de 2 a 12 meses em Puerto Miguel, Amazônia peruana. Junte-se à ONG AKUU pela solidariedade internacional."
+      },
+      "soutenir": {
+        "title": "Apoiar a ONG AKUU — Doações dedutíveis & adesão",
+        "description": "Doe ou adira à ONG AKUU para financiar projetos de solidariedade na Amazônia peruana. Doações dedutíveis fiscalmente em França."
+      },
+      "contact": {
+        "title": "Contato — AKUU ONG solidariedade Amazônia",
+        "description": "Entre em contato com a equipe da ONG AKUU: projetos, parcerias, missões VSI e voluntariado, imprensa. Sediada em França, ativa em Puerto Miguel."
+      },
+      "hydrama": {
+        "title": "Microhidro flutuante Amazônia — Projeto HYDR'AMA — AKUU",
+        "description": "Turbina microhidro flutuante na Amazônia peruana com comunidades rurais e WindAid: energia renovável em Puerto Miguel. Cronologia e documentação."
+      },
+      "akuuvision": {
+        "title": "AKUUVision — Realidade aumentada, Amazônia peruana",
+        "description": "Aplicativo de realidade aumentada para explorar a Amazônia peruana e a cultura de Puerto Miguel. Festivais, exposições e sensibilização."
+      },
+      "coursAnglais": {
+        "title": "Cursos de inglês & ecoturismo — Puerto Miguel — AKUU",
+        "description": "Programa de inglês para os moradores de Puerto Miguel, Amazônia peruana, ligado ao ecoturismo local: objetivos, impacto e desenvolvimento."
+      },
+      "casaAkuu": {
+        "title": "Casa AKUU — Casa comunitária Puerto Miguel",
+        "description": "Casa AKUU: espaço de vida compartilhada entre voluntários e moradores de Puerto Miguel. Hub dos projetos AKUU na Amazônia peruana: inglês, resíduos, museu."
+      },
+      "gestionDechets": {
+        "title": "Gestão de resíduos plásticos — Puerto Miguel — AKUU",
+        "description": "Reciclagem Precious Plastic, coleta para Nauta e sensibilização Planet'AKUU em Puerto Miguel, Amazônia peruana. Parceria Grenoble INP ENSE3."
+      },
+      "partenaires": {
+        "title": "Parceiros AKUU — France Volontaires, AIME ONG, WindAid",
+        "description": "Parceiros da ONG AKUU: France Volontaires, AIME ONG, WindAid, Grenoble INP e FONJEP. Juntos pela solidariedade na Amazônia peruana."
       }
-    },
-    "title": "AKUU | Associação de Solidariedade Amazônia e França"
+    }
   },
   "social": {
     "subtitle": "Encontre as nossas aventuras e projetos em tempo real nas redes sociais",
@@ -1168,7 +1173,25 @@
     "video_title": "A vida em Puerto Miguel",
     "cta_title": "Pronto para partir?",
     "cta_text": "Fale conosco para saber mais sobre as missões disponíveis.",
-    "cta_button": "Falar conosco"
+    "cta_button": "Falar conosco",
+    "faq": {
+      "q1": {
+        "question": "Que tipos de missões a AKUU oferece na Amazônia?",
+        "answer": "A AKUU oferece missões de serviço cívico (6 a 12 meses via AIME ONG), voluntariado de longa duração (3 a 6 meses) e estágios (2 a 6 meses) em Puerto Miguel, Amazônia peruana."
+      },
+      "q2": {
+        "question": "Como me candidatar para ser voluntário com a AKUU?",
+        "answer": "Envie sua candidatura através do formulário de contato. A equipe da AKUU organizará uma entrevista de motivação e depois uma preparação pré-partida antes da sua missão em Puerto Miguel."
+      },
+      "q3": {
+        "question": "O que é um VSI — Voluntariado de Solidariedade Internacional?",
+        "answer": "O VSI é um compromisso de solidariedade internacional de 6 a 24 meses com uma ONG credenciada. A AKUU oferece missões VSI pela AIME ONG em Puerto Miguel, Amazônia peruana."
+      },
+      "q4": {
+        "question": "É necessário falar espanhol para ser voluntário com a AKUU?",
+        "answer": "Um nível básico de espanhol é recomendado. Uma formação pré-partida é organizada para preparar você da melhor forma para sua missão na Amazônia peruana."
+      }
+    }
   },
   "cta_banner": {
     "badge": "Agir agora",
@@ -1194,5 +1217,13 @@
     "akuuvision": "AKUUVision",
     "gestion_dechets": "Gestão de resíduos",
     "cours_anglais": "Aulas de inglês"
+  },
+  "partenaires_page": {
+    "hero_title": "Nossos parceiros",
+    "hero_subtitle": "A ONG AKUU realiza seus projetos na Amazônia peruana graças a uma rede de parceiros institucionais, acadêmicos e associativos comprometidos.",
+    "intro": "Desde 2016, a associação AKUU desenvolve seus projetos de solidariedade internacional em Puerto Miguel com o apoio de organizações francesas e peruanas.",
+    "partnership_title": "Torne-se parceiro",
+    "partnership_text": "Deseja apoiar nossos projetos ou co-construir uma missão na Amazônia? Entre em contato conosco para explorar uma colaboração.",
+    "cta_button": "Fale conosco"
   }
 }

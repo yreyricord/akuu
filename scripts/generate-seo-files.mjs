@@ -23,7 +23,8 @@ const paths = [
   '/akuuvision',
   '/cours-anglais',
   '/casa-akuu',
-  '/gestion-dechets'
+  '/gestion-dechets',
+  '/partenaires'
 ]
 
 const lastmod = new Date().toISOString().slice(0, 10)

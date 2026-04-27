@@ -174,6 +174,8 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useHead } from '@unhead/vue'
+import { buildFaqJsonLdHead } from '@/utils/documentSeo.js'
 import { useDataStore } from '@/store'
 import PageHero from '@/components/shared/PageHero.vue'
 import SectionTitle from '@/components/shared/SectionTitle.vue'
@@ -195,6 +197,16 @@ import {
 
 const store = useDataStore()
 const { t } = useI18n()
+
+const faqJsonLd = computed(() =>
+  buildFaqJsonLdHead([
+    { question: t('volontaires.faq.q1.question'), answer: t('volontaires.faq.q1.answer') },
+    { question: t('volontaires.faq.q2.question'), answer: t('volontaires.faq.q2.answer') },
+    { question: t('volontaires.faq.q3.question'), answer: t('volontaires.faq.q3.answer') },
+    { question: t('volontaires.faq.q4.question'), answer: t('volontaires.faq.q4.answer') }
+  ])
+)
+useHead(computed(() => ({ script: faqJsonLd.value.script || [] })))
 
 const testimonialLightboxOpen = ref(false)
 const testimonialLightboxSrc = ref('')

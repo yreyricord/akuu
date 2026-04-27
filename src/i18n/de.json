@@ -18,56 +18,60 @@
     "team_learn_more": "Mehr erfahren"
   },
   "seo": {
-    "title": "AKUU | Französischer Verein, Solidarität mit Amazonien & Frankreich",
-    "description": "Französischer Verein für Solidarität mit den Gemeinschaften des peruanischen Amazonasgebiets in Puerto Miguel. Projekte: Shapishiko-Museum, Freiwilligenarbeit und Sensibilisierung.",
+    "title": "Internationale Solidarität, Peruanisches Amazonasgebiet — AKUU",
+    "description": "Französische NGO für Solidarität mit den Gemeinschaften des peruanischen Amazonasgebiets in Puerto Miguel. Shapishiko-Museum, Freiwillige, VSI und Sensibilisierung.",
     "routes": {
       "home": {
-        "title": "AKUU | Französischer Verein, Solidarität mit Amazonien & Frankreich",
-        "description": "Französischer Verein für Solidarität mit den Gemeinschaften des peruanischen Amazonasgebiets in Puerto Miguel. Projekte: Shapishiko-Museum, Freiwilligenarbeit und Sensibilisierung."
+        "title": "Internationale Solidarität, Peruanisches Amazonasgebiet — AKUU",
+        "description": "Französische NGO für Solidarität mit den Gemeinschaften des peruanischen Amazonasgebiets in Puerto Miguel. Shapishiko-Museum, Freiwillige, VSI und Sensibilisierung."
       },
       "association": {
-        "title": "AKUU Verein · Peruanisches Amazonasgebiet & Frankreich | Solidarität",
-        "description": "Verein nach französischem Recht (loi 1901): Feldarbeit im Amazonasgebiet bei Puerto Miguel, Sensibilisierung in Frankreich. Geschichte, Team und Projekte einschließlich des Shapishiko-Museums."
+        "title": "AKUU — Französische NGO, internationale Solidarität Amazonas",
+        "description": "Französischer Verein (loi 1901) im peruanischen Amazonasgebiet: VSI-Missionen und Freiwilligeneinsätze in Puerto Miguel, Sensibilisierung in Frankreich."
       },
       "projets": {
-        "title": "Unsere Projekte | Shapishiko-Museum, Bildung | AKUU",
-        "description": "Projekte von AKUU in Puerto Miguel: Shapishiko-Museum, Casa AKUU, Kleinwasserkraft, Klimasensibilisierung und Gemeinschaften Amazoniens."
+        "title": "Unsere Projekte im peruanischen Amazonasgebiet — AKUU",
+        "description": "AKUU-NGO-Projekte in Puerto Miguel: Shapishiko-Museum, Casa AKUU, HYDR'AMA-Kleinwasserkraft, Englischkurse, Abfallwirtschaft und Amazonas-Gemeinschaften."
       },
       "museeShapishiko": {
-        "title": "Shapishiko-Museum | Puerto Miguel | AKUU, französischer Verein",
-        "description": "Kukama-Kulturprojekt in Puerto Miguel, gemeinsam getragen vom französischen Verein AKUU und dem Dorf. Besuche, lokale Verwaltung, Unterstützung aus Frankreich."
+        "title": "Shapishiko-Museum — Kukama-Kultur · Puerto Miguel — AKUU",
+        "description": "Gemeinschaftsmuseum des Kukama-Volkes in Puerto Miguel. Gemeinsam getragen von der französischen NGO AKUU: Ausstellungen, lokale Governance, Solidarität."
       },
       "volontaires": {
-        "title": "Freiwillige bei AKUU | Peruanisches Amazonasgebiet",
-        "description": "Werden Sie Freiwillige bei AKUU: Feldeinsätze in Puerto Miguel und Projektunterstützung aus Frankreich."
+        "title": "Freiwilligendienst & VSI im peruanischen Amazonasgebiet — AKUU",
+        "description": "VSI-Missionen, Freiwilligeneinsätze und Praktika (2–12 Monate) in Puerto Miguel, peruanisches Amazonasgebiet. Engagieren Sie sich mit der NGO AKUU."
       },
       "soutenir": {
-        "title": "AKUU unterstützen | Spenden und Mitgliedschaft",
-        "description": "Unterstützen Sie AKUU mit einer Spende oder Mitgliedschaft: Finanzierung von Solidaritätsprojekten im peruanischen Amazonasgebiet."
+        "title": "AKUU NGO unterstützen — Steuerabzugsfähige Spenden & Mitgliedschaft",
+        "description": "Spenden Sie oder werden Sie Mitglied bei der AKUU-NGO, um Solidaritätsprojekte im peruanischen Amazonasgebiet zu finanzieren."
       },
       "contact": {
-        "title": "Kontakt | AKUU Verein",
-        "description": "Kontaktieren Sie das AKUU-Team: Fragen zu Projekten, Partnerschaften, Freiwilligenarbeit und Presse."
+        "title": "Kontakt — AKUU NGO Solidarität Amazonas",
+        "description": "Kontaktieren Sie das AKUU-NGO-Team: Projekte, Partnerschaften, VSI-Missionen und Freiwilligendienst, Presse. Sitz in Frankreich, tätig in Puerto Miguel."
       },
       "hydrama": {
-        "title": "HYDR'AMA | AKUU Kleinwasserkraft & WindAid | Amazonien",
-        "description": "Schwimmende Kleinwasserkraftanlage mit Gemeinschaften im peruanischen Amazonasgebiet: Zeitstrahl, Partnerschaft mit WindAid und Dokumentation."
+        "title": "Kleinwasserkraft Amazonas — HYDR'AMA — AKUU",
+        "description": "Schwimmende Kleinwasserkraftanlage im peruanischen Amazonasgebiet mit ländlichen Gemeinschaften und WindAid: erneuerbare Energie in Puerto Miguel."
       },
       "akuuvision": {
-        "title": "AKUUVision | Amazonien in Augmented Reality | AKUU",
-        "description": "Augmented-Reality-App zur Entdeckung Amazoniens: Inhalte aus Puerto Miguel, Festivals und Sensibilisierung."
+        "title": "AKUUVision — Augmented Reality, Peruanisches Amazonasgebiet",
+        "description": "Augmented-Reality-App zur Erkundung des peruanischen Amazonasgebiets und der Kultur von Puerto Miguel. Festivals, Ausstellungen und Sensibilisierung."
       },
       "coursAnglais": {
-        "title": "Englischkurse in Puerto Miguel | AKUU",
-        "description": "Englischprogramm für Bewohner im Zusammenhang mit lokalem Ökotourismus: Ziele, Wirkung und Ausblick."
+        "title": "Englischkurse & Ökotourismus — Puerto Miguel — AKUU",
+        "description": "Englischprogramm für die Bewohner von Puerto Miguel im peruanischen Amazonasgebiet im Zusammenhang mit dem lokalen Ökotourismus: Ziele, Wirkung und Entwicklung."
       },
       "casaAkuu": {
-        "title": "Casa AKUU | Gemeinschaftshaus in Puerto Miguel | AKUU",
-        "description": "Casa AKUU: ein gemeinsamer Lebensraum für Freiwillige und Bewohner in Puerto Miguel, Drehscheibe der AKUU-Projekte: Englischkurse, Abfallwirtschaft, Solarenergie und Museum."
+        "title": "Casa AKUU — Gemeinschaftshaus Puerto Miguel",
+        "description": "Casa AKUU: gemeinsamer Lebensraum für Freiwillige und Bewohner von Puerto Miguel. Drehscheibe für AKUU-Projekte im peruanischen Amazonasgebiet: Englisch, Abfall, Museum."
       },
       "gestionDechets": {
-        "title": "Abfallwirtschaft | Puerto Miguel | AKUU",
-        "description": "Precious-Plastic-Recycling, Abfuhr nach Nauta, Planet'AKUU-Sensibilisierung: Mission 2019 in Puerto Miguel mit Grenoble INP ENSE3."
+        "title": "Kunststoffabfallwirtschaft — Puerto Miguel — AKUU",
+        "description": "Precious-Plastic-Recycling, Abfuhr nach Nauta und Planet'AKUU-Sensibilisierung in Puerto Miguel, peruanisches Amazonasgebiet. Partnerschaft Grenoble INP ENSE3."
+      },
+      "partenaires": {
+        "title": "AKUU-Partner — France Volontaires, AIME ONG, WindAid",
+        "description": "Partner der AKUU-NGO: France Volontaires, AIME ONG, WindAid, Grenoble INP und FONJEP. Gemeinsam für Solidarität im peruanischen Amazonasgebiet."
       }
     }
   },
@@ -78,7 +82,8 @@
     "musee": "Shapishiko-Museum",
     "volontaires": "Freiwillige",
     "soutenir": "Unterstützen",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "partenaires": "Partner"
   },
   "hero": {
     "tagline": "AKUU GEMEINSAM. Schützen, was lebt",
@@ -144,7 +149,7 @@
     "quote_portrait_alt": "Porträt von Marlon Diaz, Mitgründer von AKUU",
     "who_image_alt": "AKUU-Freiwillige im Einsatz",
     "itv_section_title": "AKUU im Video",
-    "itv_placeholder": "Reportage-Video in Vorbereitung. Schauen Sie sich in der Zwischenzeit die Interviews \u201EStimmen aus Amazonien\u201C weiter unten an.",
+    "itv_placeholder": "Reportage-Video in Vorbereitung. Schauen Sie sich in der Zwischenzeit die Interviews „Stimmen aus Amazonien“ weiter unten an.",
     "values_title": "Unsere Werte",
     "values": {
       "durable": {
@@ -810,7 +815,25 @@
     "video_title": "Leben in Puerto Miguel",
     "cta_title": "Bereit loszulegen?",
     "cta_text": "Kontaktieren Sie uns, um mehr über verfügbare Einsätze zu erfahren.",
-    "cta_button": "Kontakt aufnehmen"
+    "cta_button": "Kontakt aufnehmen",
+    "faq": {
+      "q1": {
+        "question": "Welche Arten von Freiwilligeneinsätzen bietet AKUU im Amazonasgebiet an?",
+        "answer": "AKUU bietet Zivildienstmissionen (6–12 Monate über AIME ONG), Langzeit-Freiwilligeneinsätze (3–6 Monate) und Praktika (2–6 Monate) in Puerto Miguel, peruanisches Amazonasgebiet."
+      },
+      "q2": {
+        "question": "Wie bewerbe ich mich als Freiwilliger bei AKUU?",
+        "answer": "Senden Sie Ihre Bewerbung über das Kontaktformular. Das AKUU-Team organisiert dann ein Motivationsgespräch und eine Abreisevorbereitung vor Ihrem Einsatz in Puerto Miguel."
+      },
+      "q3": {
+        "question": "Was ist ein VSI — Internationaler Solidaritäts-Freiwilligendienst?",
+        "answer": "Ein VSI ist ein 6- bis 24-monatiger internationaler Solidaritätseinsatz mit einer akkreditierten NGO. AKUU bietet VSI-Missionen über AIME ONG in Puerto Miguel, peruanisches Amazonasgebiet."
+      },
+      "q4": {
+        "question": "Muss ich Spanisch sprechen, um bei AKUU freiwillig tätig zu sein?",
+        "answer": "Grundkenntnisse in Spanisch werden empfohlen. Eine Abreisevorbereitung wird organisiert, um Sie optimal auf Ihren Einsatz im peruanischen Amazonasgebiet vorzubereiten."
+      }
+    }
   },
   "soutien": {
     "label": "Jetzt handeln",
@@ -1194,5 +1217,13 @@
     "akuuvision": "AKUUVision",
     "gestion_dechets": "Abfallwirtschaft",
     "cours_anglais": "Englischkurse"
+  },
+  "partenaires_page": {
+    "hero_title": "Unsere Partner",
+    "hero_subtitle": "Die AKUU-NGO führt ihre Projekte im peruanischen Amazonasgebiet dank eines Netzwerks engagierter institutioneller, akademischer und zivilgesellschaftlicher Partner durch.",
+    "intro": "Seit 2016 entwickelt der AKUU-Verein seine Projekte der internationalen Solidarität in Puerto Miguel mit Unterstützung französischer und peruanischer Organisationen.",
+    "partnership_title": "Partner werden",
+    "partnership_text": "Möchten Sie unsere Projekte unterstützen oder eine Mission im Amazonasgebiet mitgestalten? Kontaktieren Sie uns, um eine Zusammenarbeit zu erkunden.",
+    "cta_button": "Kontaktieren Sie uns"
   }
 }
