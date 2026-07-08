@@ -78,6 +78,18 @@ export const routes = [
     component: () => import('@/views/PartenairesView.vue')
   },
   {
+    path: '/formation',
+    name: 'formation',
+    meta: { seoRoute: 'formation', noIndex: true, solidNav: true },
+    component: () => import('@/views/formation/FormationView.vue')
+  },
+  {
+    path: '/formation/module-:id',
+    name: 'formation-module',
+    meta: { seoRoute: 'formation', noIndex: true, solidNav: true },
+    component: () => import('@/views/formation/FormationModuleView.vue')
+  },
+  {
     path: '/merci',
     name: 'merci',
     component: () => import('@/views/MerciView.vue')

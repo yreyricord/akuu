@@ -7,7 +7,7 @@
     class="fixed top-0 w-full z-50 pointer-events-none bg-transparent"
   >
     <div
-      v-show="scrolled || menuOpen"
+      v-show="navSolid || menuOpen"
       class="pointer-events-none absolute inset-x-0 top-0 h-16 md:h-20 z-[1] w-full bg-white/95 backdrop-blur-md shadow-[0_4px_6px_-1px_rgba(0,0,0,0.07),0_2px_4px_-2px_rgba(0,0,0,0.05)] transition-opacity duration-500"
       aria-hidden="true"
     />
@@ -32,11 +32,11 @@
             :to="item.path"
             class="px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200"
             :class="[
-              scrolled
+              navSolid
                 ? 'text-night/70 hover:text-forest hover:bg-forest-50'
                 : 'text-white/80 hover:text-white hover:bg-white/10',
               $route.path === item.path
-                ? (scrolled ? '!text-forest !bg-forest-50' : '!text-white !bg-white/15')
+                ? (navSolid ? '!text-forest !bg-forest-50' : '!text-white !bg-white/15')
                 : ''
             ]"
           >
@@ -45,14 +45,14 @@
         </div>
 
         <div class="hidden lg:flex items-center gap-3 self-center">
-          <LanguageSwitch :transparent="!scrolled" />
+          <LanguageSwitch :transparent="!navSolid" />
           <DonButton :label="$t('footer.don_cta')" />
         </div>
 
         <button
           @click="menuOpen = !menuOpen"
           class="lg:hidden p-2 rounded-lg transition-colors self-center focus:outline-none focus-visible:ring-2 focus-visible:ring-forest focus-visible:ring-offset-2"
-          :class="scrolled || menuOpen ? 'text-night hover:bg-gray-100' : 'text-white hover:bg-white/10'"
+          :class="navSolid || menuOpen ? 'text-night hover:bg-gray-100' : 'text-white hover:bg-white/10'"
           :aria-expanded="menuOpen"
           aria-controls="mobile-menu"
           :aria-label="$t('a11y.menu')"
@@ -94,13 +94,21 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import LanguageSwitch from './LanguageSwitch.vue'
 import DonButton from '@/components/shared/DonButton.vue'
 import { PhList, PhX } from '@phosphor-icons/vue'
 
+const props = defineProps({
+  // Force the solid/dark-text nav style from the start, for pages with no
+  // dark hero image at the top (the default style is white-on-transparent
+  // until scrolled, which is invisible on a light page background).
+  solid: { type: Boolean, default: false }
+})
+
 const scrolled = ref(false)
 const menuOpen = ref(false)
+const navSolid = computed(() => props.solid || scrolled.value)
 
 function handleScroll() {
   scrolled.value = window.scrollY > 50

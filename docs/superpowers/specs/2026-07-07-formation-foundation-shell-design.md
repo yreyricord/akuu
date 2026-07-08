@@ -1,4 +1,4 @@
-# Formation (volunteer training) — foundation shell
+# Formation (volunteer training): foundation shell
 
 Date: 2026-07-07
 Status: Approved
@@ -12,7 +12,7 @@ tracking, quizzes, feedback, admin dashboard) being built as a sequence of
 sub-projects on top of the existing static Vue 3 + Vite SSG site (no prior
 backend, database, or accounts of any kind).
 
-This spec covers only the **first sub-project**: the foundation shell — the
+This spec covers only the **first sub-project**: the foundation shell, the
 routing and page scaffolding that later sub-projects (module content viewer,
 quizzes, feedback, admin dashboard) will build on. It intentionally does not
 include accounts/login, the actual module content, quizzes, or admin features.
@@ -20,7 +20,7 @@ include accounts/login, the actual module content, quizzes, or admin features.
 ## Decisions
 
 - **Access model**: unlisted URL only, no login for this phase ("secret
-  link"). No per-volunteer accounts yet — that may come later if the
+  link"). No per-volunteer accounts yet; that may come later if the
   audience grows beyond what a shared unlisted link can reasonably support.
 - **URL**: `/formation` (landing) and `/formation/module-1` (reserved now,
   placeholder content, so the URL doesn't change when the real module 1
@@ -37,27 +37,27 @@ include accounts/login, the actual module content, quizzes, or admin features.
     those routes. This is defense in depth beyond robots.txt: robots.txt
     only stops crawling, not indexing of a URL discovered elsewhere.
 - **Page chrome**: reuse the public site's `NavBar` and `Footer` (both are
-  global in `App.vue`, so this requires no extra work — the new routes get
+  global in `App.vue`, so this requires no extra work: the new routes get
   them automatically like any other route).
 - **i18n**: full i18n, matching the rest of the site. New top-level
   `formation` key plus `seo.routes.formation`, added with real translations
   to all 5 locale files (`fr`, `en`, `es`, `pt`, `de`) so
   `npm run i18n:check` passes. This applies to the shell's own UI strings
-  only — actual training content (the decks) stays French-only and is out
+  only. Actual training content (the decks) stays French-only and is out
   of scope for this sub-project.
 - **No admin stub**: the landing page shows only the module list. An admin
   entry point will be added when the admin dashboard sub-project is
-  designed — it needs its own access protection, which doesn't exist yet.
+  designed; it needs its own access protection, which doesn't exist yet.
 
 ## Architecture
 
 - `src/router/index.js`: two new route entries, `/formation` and
   `/formation/module-1`, each with `meta: { seoRoute: 'formation', noIndex: true }`.
-- `src/views/formation/FormationView.vue`: landing page — AKUU-branded
+- `src/views/formation/FormationView.vue`: landing page, AKUU-branded
   header, short intro, a card linking to Module 1 (styled as available).
   Future modules get added as additional entries here.
 - `src/views/formation/FormationModuleView.vue`: placeholder for
-  `/formation/module-1` — a "contenu à venir" card. Replaced by the real
+  `/formation/module-1`: a "contenu à venir" card. Replaced by the real
   deck viewer in the next sub-project.
 - `src/utils/documentSeo.js`: `buildRouteSeoHead()` gains a `noIndex`
   parameter that adds the robots meta tag when true.
@@ -69,12 +69,12 @@ include accounts/login, the actual module content, quizzes, or admin features.
 
 ## Data flow
 
-None — this sub-project is static routing and placeholder content only. No
+None. This sub-project is static routing and placeholder content only. No
 API calls, no storage, no state beyond normal Vue Router navigation.
 
 ## Error handling
 
-None needed beyond what the app already does — these are ordinary static
+None needed beyond what the app already does: these are ordinary static
 routes with no external calls or user input.
 
 ## Testing / verification

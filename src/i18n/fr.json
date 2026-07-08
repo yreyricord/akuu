@@ -41,6 +41,10 @@
         "title": "Volontariat & VSI en Amazonie péruvienne — AKUU",
         "description": "Missions VSI, bénévolat et stages de 2 à 12 mois à Puerto Miguel, Amazonie péruvienne. Engagez-vous pour la solidarité internationale avec l'ONG AKUU."
       },
+      "formation": {
+        "title": "Espace Formation : Bénévoles AKUU",
+        "description": "Espace de formation interne pour les bénévoles AKUU en préparation de mission."
+      },
       "soutenir": {
         "title": "Soutenir l'ONG AKUU — Dons déductibles & adhésion",
         "description": "Faire un don à l'ONG AKUU ou adhérer : financer les projets de solidarité en Amazonie péruvienne. Don déductible des impôts à 66 %."
@@ -833,6 +837,49 @@
         "question": "Faut-il parler espagnol pour partir en mission avec AKUU ?",
         "answer": "Une base d'espagnol est recommandée. Une formation pré-départ est organisée pour vous préparer au mieux à votre mission en Amazonie péruvienne."
       }
+    }
+  },
+  "formation": {
+    "page_title": "Espace Formation",
+    "intro": "Ressources et modules de formation pour les bénévoles AKUU en préparation de mission au Pérou.",
+    "groups": {
+      "group_1": {
+        "title": "L'Amazonie",
+        "description": "Contexte géographique, historique et géopolitique du territoire."
+      },
+      "group_2": {
+        "title": "La solidarité internationale",
+        "description": "Éthique, posture et préparation du bénévole."
+      },
+      "group_3": {
+        "title": "Découvrir AKUU et la mission à Puerto Miguel",
+        "description": "L'association, ses projets et le quotidien sur le terrain."
+      },
+      "group_4": {
+        "title": "Évaluation finale",
+        "description": "Un bilan pour valider les acquis avant le départ."
+      }
+    },
+    "modules": {
+      "module_1": { "title": "L'Amazonie : réalités, imaginaires et héritages" },
+      "module_2": { "title": "Histoire et archéologie de l'Amazonie" },
+      "module_3": { "title": "Géopolitique de l'Amérique latine" },
+      "module_4": { "title": "L'Amazonie en données : territoire, populations, biodiversité et environnement" },
+      "module_5": { "title": "Solidarité internationale : histoire, éthique, rapports de pouvoir et néocolonialisme" },
+      "module_6": { "title": "Être un bénévole responsable : image, posture et impact sur les communautés" },
+      "module_7": { "title": "Se préparer au terrain : mises en situation et dilemmes éthiques" },
+      "module_8": { "title": "AKUU : histoire, mission et valeurs" },
+      "module_9": { "title": "AKUU : le projet du musée et son impact sur le développement de Puerto Miguel" },
+      "module_10": { "title": "Vivre sa mission à Puerto Miguel : organisation, vie quotidienne et immersion avec AKUU" },
+      "module_11": { "title": "Présentation finale et évaluation des acquis" }
+    },
+    "deck": {
+      "fullscreen": "Passer en plein écran"
+    },
+    "coming_soon": {
+      "title": "Contenu du module à venir",
+      "text": "Cette page accueillera bientôt le contenu interactif du module.",
+      "back": "Retour à l'espace formation"
     }
   },
   "soutien": {

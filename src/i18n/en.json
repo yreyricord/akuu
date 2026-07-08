@@ -41,6 +41,10 @@
         "title": "Volunteering & VSI in the Peruvian Amazon — AKUU",
         "description": "VSI missions, long-term volunteering and internships (2–12 months) in Puerto Miguel, Peruvian Amazon. Join the AKUU NGO for international solidarity."
       },
+      "formation": {
+        "title": "Training Space: AKUU Volunteers",
+        "description": "Internal training space for AKUU volunteers preparing for their mission."
+      },
       "soutenir": {
         "title": "Support AKUU NGO — Tax-deductible donations & membership",
         "description": "Donate or join AKUU NGO to fund solidarity projects in the Peruvian Amazon. Donations are tax-deductible at 66% in France."
@@ -833,6 +837,49 @@
         "question": "Do I need to speak Spanish to volunteer with AKUU?",
         "answer": "A basic level of Spanish is recommended. Pre-departure training is organised to help you prepare for your mission in the Peruvian Amazon."
       }
+    }
+  },
+  "formation": {
+    "page_title": "Training Space",
+    "intro": "Resources and training modules for AKUU volunteers preparing for their mission in Peru.",
+    "groups": {
+      "group_1": {
+        "title": "The Amazon",
+        "description": "Geographic, historical and geopolitical context of the region."
+      },
+      "group_2": {
+        "title": "International solidarity",
+        "description": "Ethics, posture and preparation for volunteers."
+      },
+      "group_3": {
+        "title": "Discovering AKUU and the Puerto Miguel mission",
+        "description": "The association, its projects and daily life on the ground."
+      },
+      "group_4": {
+        "title": "Final evaluation",
+        "description": "A wrap-up to validate learning before departure."
+      }
+    },
+    "modules": {
+      "module_1": { "title": "The Amazon: realities, imaginaries and legacies" },
+      "module_2": { "title": "History and archaeology of the Amazon" },
+      "module_3": { "title": "Geopolitics of Latin America" },
+      "module_4": { "title": "The Amazon in data: territory, populations, biodiversity and environment" },
+      "module_5": { "title": "International solidarity: history, ethics, power relations and neocolonialism" },
+      "module_6": { "title": "Being a responsible volunteer: image, posture and impact on communities" },
+      "module_7": { "title": "Preparing for the field: role-play scenarios and ethical dilemmas" },
+      "module_8": { "title": "AKUU: history, mission and values" },
+      "module_9": { "title": "AKUU: the museum project and its impact on Puerto Miguel's development" },
+      "module_10": { "title": "Living your mission in Puerto Miguel: organization, daily life and immersion with AKUU" },
+      "module_11": { "title": "Final presentation and assessment of learning" }
+    },
+    "deck": {
+      "fullscreen": "Enter fullscreen"
+    },
+    "coming_soon": {
+      "title": "Module content coming soon",
+      "text": "This page will soon host the module's interactive content.",
+      "back": "Back to the training space"
     }
   },
   "soutien": {

@@ -41,6 +41,10 @@
         "title": "Freiwilligendienst & VSI im peruanischen Amazonasgebiet — AKUU",
         "description": "VSI-Missionen, Freiwilligeneinsätze und Praktika (2–12 Monate) in Puerto Miguel, peruanisches Amazonasgebiet. Engagieren Sie sich mit der NGO AKUU."
       },
+      "formation": {
+        "title": "Schulungsbereich: AKUU-Freiwillige",
+        "description": "Interner Schulungsbereich für AKUU-Freiwillige zur Vorbereitung ihres Einsatzes."
+      },
       "soutenir": {
         "title": "AKUU NGO unterstützen — Steuerabzugsfähige Spenden & Mitgliedschaft",
         "description": "Spenden Sie oder werden Sie Mitglied bei der AKUU-NGO, um Solidaritätsprojekte im peruanischen Amazonasgebiet zu finanzieren."
@@ -833,6 +837,49 @@
         "question": "Muss ich Spanisch sprechen, um bei AKUU freiwillig tätig zu sein?",
         "answer": "Grundkenntnisse in Spanisch werden empfohlen. Eine Abreisevorbereitung wird organisiert, um Sie optimal auf Ihren Einsatz im peruanischen Amazonasgebiet vorzubereiten."
       }
+    }
+  },
+  "formation": {
+    "page_title": "Schulungsbereich",
+    "intro": "Ressourcen und Schulungsmodule für AKUU-Freiwillige zur Vorbereitung ihres Einsatzes in Peru.",
+    "groups": {
+      "group_1": {
+        "title": "Amazonien",
+        "description": "Geografischer, historischer und geopolitischer Kontext der Region."
+      },
+      "group_2": {
+        "title": "Internationale Solidarität",
+        "description": "Ethik, Haltung und Vorbereitung für Freiwillige."
+      },
+      "group_3": {
+        "title": "AKUU und den Einsatz in Puerto Miguel entdecken",
+        "description": "Der Verein, seine Projekte und der Alltag vor Ort."
+      },
+      "group_4": {
+        "title": "Abschlussbewertung",
+        "description": "Eine Zusammenfassung zur Lernkontrolle vor der Abreise."
+      }
+    },
+    "modules": {
+      "module_1": { "title": "Amazonien: Realitäten, Vorstellungen und Erbe" },
+      "module_2": { "title": "Geschichte und Archäologie Amazoniens" },
+      "module_3": { "title": "Geopolitik Lateinamerikas" },
+      "module_4": { "title": "Amazonien in Zahlen: Gebiet, Bevölkerung, Biodiversität und Umwelt" },
+      "module_5": { "title": "Internationale Solidarität: Geschichte, Ethik, Machtverhältnisse und Neokolonialismus" },
+      "module_6": { "title": "Verantwortungsvoll freiwillig engagieren: Außenwirkung, Haltung und Auswirkungen auf die Gemeinschaften" },
+      "module_7": { "title": "Vorbereitung auf den Einsatz vor Ort: Rollenspiele und ethische Dilemmata" },
+      "module_8": { "title": "AKUU: Geschichte, Mission und Werte" },
+      "module_9": { "title": "AKUU: das Museumsprojekt und seine Auswirkungen auf die Entwicklung von Puerto Miguel" },
+      "module_10": { "title": "Den Einsatz in Puerto Miguel erleben: Organisation, Alltag und Eintauchen mit AKUU" },
+      "module_11": { "title": "Abschlusspräsentation und Lernerfolgskontrolle" }
+    },
+    "deck": {
+      "fullscreen": "Vollbildmodus"
+    },
+    "coming_soon": {
+      "title": "Modulinhalt folgt in Kürze",
+      "text": "Diese Seite wird bald den interaktiven Inhalt des Moduls enthalten.",
+      "back": "Zurück zum Schulungsbereich"
     }
   },
   "soutien": {

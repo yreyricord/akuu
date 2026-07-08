@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen min-h-dvh flex flex-col">
-    <NavBar />
+    <NavBar :solid="route.meta.solidNav === true" />
     <ScrollProgressBar />
     <main class="flex-1">
       <router-view v-slot="{ Component }">
@@ -66,7 +66,8 @@ const routeSeo = computed(() => {
     title,
     description,
     path: route.path,
-    locale: locale.value
+    locale: locale.value,
+    noIndex: route.meta.noIndex === true
   })
 })
 

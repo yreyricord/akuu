@@ -52,6 +52,9 @@ Allow: /
 # Anciennes URLs d’API (ex. ancien CMS) — pas de contenu sur ce site statique
 Disallow: /_api/
 
+# Espace formation bénévoles : accès par lien direct uniquement, pas d'indexation
+Disallow: /formation
+
 Sitemap: ${base}/sitemap.xml
 `
 

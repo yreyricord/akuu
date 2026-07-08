@@ -12,7 +12,7 @@ function absoluteUrl (origin, path) {
  * Returns a reactive-ready head descriptor for @unhead/vue useHead().
  * Works during SSG (injected into static HTML) and on the client.
  */
-export function buildRouteSeoHead ({ title, description, path, locale }) {
+export function buildRouteSeoHead ({ title, description, path, locale, noIndex = false }) {
   const origin = getSiteOrigin()
   const pageUrl = absoluteUrl(origin, path)
   const ogLocale = OG_LOCALE_TAGS[locale] || OG_LOCALE_TAGS[DEFAULT_LOCALE]
@@ -26,6 +26,7 @@ export function buildRouteSeoHead ({ title, description, path, locale }) {
     title,
     meta: [
       { name: 'description', content: description },
+      ...(noIndex ? [{ name: 'robots', content: 'noindex, nofollow' }] : []),
       { property: 'og:title', content: title },
       { property: 'og:description', content: description },
       { property: 'og:url', content: pageUrl },

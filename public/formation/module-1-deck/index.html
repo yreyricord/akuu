@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400;1,700&amp;family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green-forest: #2D6915;
+      --green-leaf: #A6C639;
+      --green-pale: #DFE6C4;
+      --blue-akuu: #04488F;
+      --blue-sky: #4071A6;
+      --blue-pale: #C9E1E9;
+      --night: #1E2422;
+      --night-2: #2B322F;
+      --cream: #FEFDFC;
+      --terracotta: #E76F51;
+      --ochre: #F4A261;
+      --ochre-light: #FDE9D1;
+      --sand: #F4EFE6;
+
+      --pad-top: 92px;
+      --pad-bottom: 80px;
+      --pad-x: 120px;
+
+      --fs-hero: 130px;
+      --fs-title: 104px;
+      --fs-subtitle: 82px;
+      --fs-h: 62px;
+      --fs-lead: 33px;
+      --fs-body: 26px;
+      --fs-small: 22px;
+      --fs-src: 19px;
+      --fs-kicker: 29px;
+      --fs-tag: 25px;
+      --fs-num: 88px;
+    }
+    * { box-sizing: border-box; }
+    .logo { position: absolute; top: 42px; left: var(--pad-x); height: 56px; object-fit: contain; z-index: 6; }
+    .tag { position: absolute; top: 50px; right: var(--pad-x); font-family: 'Inter', sans-serif; font-size: var(--fs-tag); font-weight: 600; letter-spacing: 3px; text-transform: uppercase; z-index: 6; }
+    .bar { position: absolute; bottom: 0; left: 0; right: 0; height: 6px; }
+    .topbar { position: absolute; top: 0; left: 0; right: 0; height: 6px; }
+    .kicker { font-family: 'Inter', sans-serif; font-size: var(--fs-kicker); font-weight: 600; letter-spacing: 5px; text-transform: uppercase; }
+    .h { font-family: 'Playfair Display', serif; font-weight: 700; font-size: var(--fs-h); line-height: 1.04; margin: 0; }
+    .lead { font-family: 'Inter', sans-serif; font-size: var(--fs-lead); line-height: 1.35; font-weight: 300; }
+    .body { font-family: 'Inter', sans-serif; font-size: var(--fs-body); line-height: 1.42; font-weight: 300; }
+    .small { font-family: 'Inter', sans-serif; font-size: var(--fs-small); line-height: 1.4; font-weight: 300; }
+    .num { font-family: 'Playfair Display', serif; font-weight: 800; font-size: var(--fs-num); line-height: 0.95; }
+    .src { position: absolute; bottom: 24px; left: var(--pad-x); right: var(--pad-x); font-family: 'Inter', sans-serif; font-size: var(--fs-src); font-style: italic; opacity: 0.72; z-index: 6; }
+    .card { border-radius: 20px; padding: 30px 34px; }
+    .imground { border-radius: 18px; object-fit: cover; box-shadow: 0 18px 50px rgba(0,0,0,0.28); }
+    .cap { font-family: 'Inter', sans-serif; font-size: 18px; font-style: italic; opacity: 0.7; margin-top: 10px; }
+    /* Sommaire — style futuriste Apple (partagé) */
+    .toc-logo { opacity: 0.95; }
+    .toc-list { display: flex; flex-direction: column; }
+    .toc-row { display: grid; grid-template-columns: 128px 1fr 60px; align-items: center; gap: 30px; padding: 26px 30px; border-top: 1px solid rgba(255,255,255,0.10); border-radius: 16px; }
+    .toc-row:last-child { border-bottom: 1px solid rgba(255,255,255,0.10); }
+    .toc-num { font-family: 'Inter', sans-serif; font-size: 62px; font-weight: 200; letter-spacing: -3px; line-height: 1; background: linear-gradient(180deg, var(--blue-pale), var(--blue-sky)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .toc-title { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 700; color: var(--cream); margin-bottom: 6px; }
+    .toc-desc { font-family: 'Inter', sans-serif; font-size: 22px; font-weight: 300; line-height: 1.4; color: rgba(255,255,255,0.62); }
+    .toc-arrow { font-family: 'Inter', sans-serif; font-size: 34px; color: var(--green-leaf); opacity: 0.55; text-align: right; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="deck-stage" from="./deck-stage.js" width="1920" height="1080" hint-size="100%,100%" data-uneditable="">
+
+  <!-- ============ SLIDE 1 · COUVERTURE (BLEU — présentation module) ============ -->
+  <section data-label="01 · Couverture" style="background: radial-gradient(135% 130% at 82% 12%, #0a63b4 0%, var(--blue-akuu) 42%, #022a54 72%, #011d3c 100%); display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; padding: 0 var(--pad-x) 130px; overflow: hidden;">
+    <div style="position:absolute; inset:0; background: radial-gradient(60% 60% at 85% 20%, rgba(166,198,57,0.16) 0%, rgba(166,198,57,0) 60%);"></div>
+    <img src="images/collibri-akuu.png" style="position: absolute; right: 60px; top: 120px; height: 720px; object-fit: contain; filter: drop-shadow(0 24px 60px rgba(0,0,0,0.4));" alt="Colibri AKUU">
+    <img src="images/LOGOAKUU.png" style="position: absolute; top: 46px; left: var(--pad-x); height: 118px; object-fit: contain;" alt="AKUU">
+    <div class="bar" style="background: linear-gradient(90deg, var(--green-leaf), var(--blue-sky));"></div>
+    <div class="kicker" style="color: var(--green-leaf); margin-bottom: 30px; position: relative;">Module 1 · Formation AKUU</div>
+    <h1 style="font-family: 'Playfair Display', serif; font-size: var(--fs-hero); font-weight: 800; color: var(--cream); margin: 0; line-height: 0.98; max-width: 1350px; position: relative;">L'Amazonie</h1>
+    <p style="font-family: 'Playfair Display', serif; font-size: 62px; font-style: italic; font-weight: 400; color: var(--blue-pale); margin: 18px 0 0; line-height: 1.1; position: relative;">réalités, imaginaires et héritages</p>
+  </section>
+
+  <!-- ============ SLIDE 2 · SOMMAIRE (style futuriste Apple, uniforme) ============ -->
+  <section data-label="02 · Sommaire" class="toc" style="background: radial-gradient(120% 120% at 50% -10%, #0b1b33 0%, #060d18 58%, #03070f 100%); display: flex; flex-direction: column; justify-content: center; padding: var(--pad-top) var(--pad-x);">
+    <img src="images/LOGOAKUU.png" class="logo toc-logo" alt="AKUU">
+    <div class="topbar" style="background: linear-gradient(90deg, var(--blue-sky), var(--green-leaf));"></div>
+    <div class="kicker" style="color: var(--blue-pale); opacity: 0.75; margin-bottom: 14px;">Plan du module</div>
+    <h1 style="font-family: 'Playfair Display', serif; font-size: 88px; font-weight: 800; color: var(--cream); margin: 0 0 46px; line-height: 1;">Sommaire</h1>
+    <div class="toc-list">
+      <div class="toc-row"><span class="toc-num">01</span><div class="toc-txt"><div class="toc-title">Situer l'Amazonie</div><div class="toc-desc">Délimitations géographiques, politiques et écologiques — ce que couvre vraiment ce mot</div></div><span class="toc-arrow">→</span></div>
+      <div class="toc-row"><span class="toc-num">02</span><div class="toc-txt"><div class="toc-title">Déconstruire les mythes</div><div class="toc-desc">Pourquoi « l'Amazonie n'existe pas » au sens strict — et ce que ça change pour votre mission</div></div><span class="toc-arrow">→</span></div>
+      <div class="toc-row"><span class="toc-num">03</span><div class="toc-txt"><div class="toc-title">Comprendre la révolution scientifique</div><div class="toc-desc">Les découvertes récentes qui bouleversent notre vision d'une forêt « vierge »</div></div><span class="toc-arrow">→</span></div>
+      <div class="toc-row"><span class="toc-num">04</span><div class="toc-txt"><div class="toc-title">Saisir les 4 éléments de Rostain</div><div class="toc-desc">Eau · Terre · Feu · Air — le cadre d'analyse de Stephen Rostain pour lire le territoire</div></div><span class="toc-arrow">→</span></div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 3 · TITRE PARTIE 01 ============ -->
+  <section data-label="03 · Partie 01 — Situer" style="background: linear-gradient(135deg, #204d10 0%, var(--green-forest) 60%, #17380b 100%); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: var(--pad-top) var(--pad-x);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="bar" style="background: var(--green-leaf);"></div>
+    <div style="font-family: 'Playfair Display', serif; font-size: 260px; font-weight: 800; color: rgba(166,198,57,0.16); position: absolute; top: 40px; right: 90px; line-height: 1;">01</div>
+    <div class="kicker" style="color: var(--green-leaf); margin-bottom: 24px;">Partie 01 · Situer l'Amazonie</div>
+    <h1 style="font-family: 'Playfair Display', serif; font-size: var(--fs-title); font-weight: 700; color: var(--cream); margin: 0; line-height: 1.02; max-width: 1400px;">L'Amazonie, c'est quoi ?</h1>
+    <div style="width: 120px; height: 6px; background: var(--green-leaf); margin: 40px 0 30px;"></div>
+    <p class="lead" style="color: var(--green-pale);">Délimitations · Mythes · Réalités scientifiques</p>
+  </section>
+
+  <!-- ============ SLIDE 4 · DÉLIMITATION GÉOGRAPHIQUE ============ -->
+  <section data-label="04 · Délimitation géographique" style="background: var(--green-pale); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--green-forest);">01 · Situer l'Amazonie</div>
+    <div class="topbar" style="background: var(--green-leaf);"></div>
+    <h1 class="h" style="color: var(--green-forest); margin: 24px 0 34px;">Délimitation géographique</h1>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 26px; margin-bottom: 30px;">
+      <div class="card" style="background: var(--cream); border-left: 8px solid var(--green-forest);"><div style="font-family:'Playfair Display',serif; font-size:32px; font-weight:700; color:var(--green-forest); margin-bottom:12px;">Bassin versant amazonien</div><div class="body" style="color:var(--night-2);">L'ensemble des terres dont les eaux se déversent dans le fleuve Amazone — env. 7,7 millions de km²</div></div>
+      <div class="card" style="background: var(--cream); border-left: 8px solid var(--green-leaf);"><div style="font-family:'Playfair Display',serif; font-size:32px; font-weight:700; color:var(--green-forest); margin-bottom:12px;">Forêt tropicale amazonienne</div><div class="body" style="color:var(--night-2);">La couverture forestière stricto sensu, qui déborde du bassin et s'étend sur 9 pays — env. 5,5 millions de km²</div></div>
+      <div class="card" style="background: var(--cream); border-left: 8px solid var(--blue-sky);"><div style="font-family:'Playfair Display',serif; font-size:32px; font-weight:700; color:var(--green-forest); margin-bottom:12px;">Définitions officielles</div><div class="body" style="color:var(--night-2);">9 pays la revendiquent, chacun avec ses propres frontières administratives — aucune définition ne fait consensus</div></div>
+    </div>
+    <div style="display: flex; gap: 34px; align-items: stretch;">
+      <div class="card" style="background: rgba(45,105,21,0.10); flex: 1.4; display:flex; flex-direction:column; justify-content:center;"><p style="font-family:'Playfair Display',serif; font-size:28px; font-style:italic; color:var(--green-forest); margin:0; line-height:1.3;">« Even getting basic numbers is not as easy as you might think — numbers conflict in confusing ways because of slight differences in the way people define ecosystems. »</p><div class="small" style="color:var(--green-forest); margin-top:14px; font-weight:600;">— NASA Earth Observatory / V. Zalles, Univ. of Maryland, 2019</div></div>
+      <div style="flex: 2; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+        <div style="text-align:center;"><div class="num" style="color:var(--green-forest);">9</div><div class="body" style="color:var(--night-2); font-weight:600; margin-top:8px;">pays</div><div class="small" style="color:var(--night-2);">partagent l'Amazonie</div></div>
+        <div style="text-align:center;"><div class="num" style="color:var(--green-forest);">7,7 M</div><div class="body" style="color:var(--night-2); font-weight:600; margin-top:8px;">km²</div><div class="small" style="color:var(--night-2);">de bassin versant</div></div>
+        <div style="text-align:center;"><div class="num" style="color:var(--green-forest);">~60 %</div><div class="body" style="color:var(--night-2); font-weight:600; margin-top:8px;">de la forêt</div><div class="small" style="color:var(--night-2);">tropicale mondiale</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 5 · SE REPRÉSENTER L'ÉCHELLE ============ -->
+  <section data-label="05 · Se représenter l'échelle" style="background: var(--green-pale); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--green-forest);">01 · Situer l'Amazonie</div>
+    <div class="topbar" style="background: var(--green-leaf);"></div>
+    <h1 class="h" style="color: var(--green-forest); margin: 24px 0 30px;">Se représenter l'échelle</h1>
+    <div style="display: flex; gap: 46px; flex: 1; align-items: center;">
+      <img src="images/image5.jpg" class="imground" style="width: 720px; height: 520px;" alt="Carte satellite du bassin amazonien">
+      <div style="flex: 1; display: flex; flex-direction: column; gap: 26px;">
+        <div style="display:flex; align-items:center; gap:24px;"><span style="font-family:'Playfair Display',serif; font-size:76px; font-weight:800; color:var(--terracotta);">× 2</span><span class="lead" style="color:var(--night-2);">l'Europe (hors Russie)</span></div>
+        <div style="display:flex; align-items:center; gap:24px;"><span style="font-family:'Playfair Display',serif; font-size:76px; font-weight:800; color:var(--blue-sky);">≈</span><span class="lead" style="color:var(--night-2);">l'Australie</span></div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-top: 10px;">
+          <div class="card" style="background:var(--cream); text-align:center; padding:22px 14px;"><div class="num" style="font-size:64px; color:var(--green-forest);">7</div><div class="small" style="color:var(--night-2); font-weight:600;">Bassin hydrographique</div><div class="small" style="color:var(--night-2);">Millions de km²</div></div>
+          <div class="card" style="background:var(--cream); text-align:center; padding:22px 14px;"><div class="num" style="font-size:64px; color:var(--green-forest);">7,7</div><div class="small" style="color:var(--night-2); font-weight:600;">Biome étendu</div><div class="small" style="color:var(--night-2);">Millions de km²</div></div>
+          <div class="card" style="background:var(--cream); text-align:center; padding:22px 14px;"><div class="num" style="font-size:64px; color:var(--green-forest);">5</div><div class="small" style="color:var(--night-2); font-weight:600;">Limite administrative</div><div class="small" style="color:var(--night-2);">Millions de km²</div></div>
+        </div>
+        <div class="body" style="color:var(--green-forest); font-weight:600;">→ Explorez sur <span style="text-decoration:underline;">The True Size of…</span> — glissez l'Amazonie sur la carte du monde</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 6 · LE FLEUVE AMAZONE ============ -->
+  <section data-label="06 · Le fleuve Amazone" style="background: var(--green-pale); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--green-forest);">01 · Situer l'Amazonie</div>
+    <div class="topbar" style="background: var(--green-leaf);"></div>
+    <h1 class="h" style="color: var(--green-forest); margin: 24px 0 30px;">Le fleuve Amazone</h1>
+    <div style="display: flex; gap: 46px; flex: 1; align-items: center;">
+      <div style="flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 22px;">
+        <div class="card" style="background:var(--cream);"><div class="num" style="color:var(--blue-akuu);">6 400</div><div class="body" style="color:var(--night-2); font-weight:600;">km</div><div class="small" style="color:var(--night-2);">de longueur, 2ᵉ au monde</div></div>
+        <div class="card" style="background:var(--cream);"><div class="num" style="color:var(--blue-akuu);">20 %</div><div class="small" style="color:var(--night-2);">des eaux douces planétaires</div></div>
+        <div class="card" style="background:var(--cream);"><div class="num" style="color:var(--blue-akuu);">1 000+</div><div class="small" style="color:var(--night-2);">affluents</div></div>
+        <div class="card" style="background:var(--cream);"><div class="num" style="color:var(--blue-akuu);">325 km</div><div class="small" style="color:var(--night-2);">de large à l'embouchure</div></div>
+      </div>
+      <img src="images/image6.jpeg" class="imground" style="width: 780px; height: 560px;" alt="Carte du fleuve Amazone et des pays du bassin">
+    </div>
+    <div class="body" style="color:var(--green-forest); font-weight:600; margin-top:16px;">Aucun pont ni barrage ne traverse le fleuve · Découverte de la source en 2014</div>
+  </section>
+
+  <!-- ============ SLIDE 7 · BIODIVERSITÉ ============ -->
+  <section data-label="07 · Biodiversité en chiffres" style="background: var(--green-pale); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--green-forest);">01 · Situer l'Amazonie</div>
+    <div class="topbar" style="background: var(--green-leaf);"></div>
+    <h1 class="h" style="color: var(--green-forest); margin: 24px 0 34px;">Biodiversité : quelques chiffres</h1>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1;">
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column; justify-content:center;"><div class="num" style="color:var(--green-forest);">1/5</div><div class="body" style="color:var(--night-2);">des espèces terrestres de la planète</div></div>
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column; justify-content:center;"><div class="num" style="color:var(--green-forest);">40 000+</div><div class="body" style="color:var(--night-2);">espèces de plantes recensées</div></div>
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column; justify-content:center;"><div class="num" style="color:var(--green-forest);">1 300+</div><div class="body" style="color:var(--night-2);">espèces d'oiseaux</div></div>
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column; justify-content:center;"><div class="num" style="color:var(--green-forest);">3 000+</div><div class="body" style="color:var(--night-2);">espèces de poissons d'eau douce</div></div>
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column; justify-content:center;"><div class="num" style="color:var(--green-forest);">430+</div><div class="body" style="color:var(--night-2);">espèces de mammifères</div></div>
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column; justify-content:center;"><div class="num" style="color:var(--green-forest);">2,5 M</div><div class="body" style="color:var(--night-2);">espèces d'insectes estimées</div></div>
+    </div>
+    <div class="card" style="background: var(--green-forest); margin-top: 24px; padding: 22px 34px;"><span style="font-family:'Playfair Display',serif; font-size:38px; font-weight:800; color:var(--green-leaf);">30+ millions</span> <span class="body" style="color:var(--cream);">d'habitants — dont des centaines de peuples autochtones et plusieurs dizaines de tribus isolées sans contact</span></div>
+    <div class="src" style="color:var(--green-forest);">Source : NASA Earth Observatory, 2019</div>
+  </section>
+
+  <!-- ============ SLIDE 8 · 9 PAYS UNE SEULE FORÊT ============ -->
+  <section data-label="08 · 9 pays, une seule forêt" style="background: var(--green-pale); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) 70px;">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--green-forest);">01 · Situer l'Amazonie</div>
+    <div class="topbar" style="background: var(--green-leaf);"></div>
+    <h1 class="h" style="color: var(--green-forest); margin: 22px 0 26px;">9 pays, une seule forêt</h1>
+    <div style="display: flex; gap: 40px; flex: 1;">
+      <div style="flex: 1.05;">
+        <div class="small" style="color:var(--green-forest); font-weight:700; letter-spacing:2px; margin-bottom:16px;">PART DE LA FORÊT AMAZONIENNE TOTALE</div>
+        <div style="display:flex; flex-direction:column; gap:12px; font-family:'Inter',sans-serif;">
+          <div style="display:flex; align-items:center; gap:14px;"><span style="width:170px; color:var(--night-2); font-size:24px;">Brésil</span><div style="height:26px; width:59%; background:var(--green-forest); border-radius:4px;"></div><span style="font-weight:700; color:var(--green-forest);">59 %</span></div>
+          <div style="display:flex; align-items:center; gap:14px;"><span style="width:170px; color:var(--terracotta); font-size:24px; font-weight:700;">Pérou ★</span><div style="height:26px; width:13%; background:var(--terracotta); border-radius:4px;"></div><span style="font-weight:700; color:var(--terracotta);">13 %</span></div>
+          <div style="display:flex; align-items:center; gap:14px;"><span style="width:170px; color:var(--night-2); font-size:24px;">Bolivie</span><div style="height:26px; width:8%; background:var(--green-leaf); border-radius:4px;"></div><span style="font-weight:700; color:var(--green-forest);">8 %</span></div>
+          <div style="display:flex; align-items:center; gap:14px;"><span style="width:170px; color:var(--night-2); font-size:24px;">Colombie</span><div style="height:26px; width:7%; background:var(--green-leaf); border-radius:4px;"></div><span style="font-weight:700; color:var(--green-forest);">7 %</span></div>
+          <div style="display:flex; align-items:center; gap:14px;"><span style="width:170px; color:var(--night-2); font-size:24px;">Venezuela</span><div style="height:26px; width:6%; background:var(--green-leaf); border-radius:4px;"></div><span style="font-weight:700; color:var(--green-forest);">6 %</span></div>
+        </div>
+        <div class="small" style="color:var(--green-forest); font-weight:700; letter-spacing:2px; margin:22px 0 14px;">% DU TERRITOIRE NATIONAL COUVERT</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px 30px; font-family:'Inter',sans-serif; font-size:22px; color:var(--night-2);">
+          <div style="display:flex; justify-content:space-between;"><span>Guyane fr.</span><b style="color:var(--green-forest);">97 %</b></div>
+          <div style="display:flex; justify-content:space-between;"><span>Bolivie</span><b style="color:var(--green-forest);">66 %</b></div>
+          <div style="display:flex; justify-content:space-between;"><span>Suriname</span><b style="color:var(--green-forest);">94 %</b></div>
+          <div style="display:flex; justify-content:space-between;"><span style="color:var(--terracotta); font-weight:700;">Pérou ★</span><b style="color:var(--terracotta);">60 %</b></div>
+          <div style="display:flex; justify-content:space-between;"><span>Guyana</span><b style="color:var(--green-forest);">87 %</b></div>
+          <div style="display:flex; justify-content:space-between;"><span>Brésil</span><b style="color:var(--green-forest);">49 %</b></div>
+          <div style="display:flex; justify-content:space-between;"><span>Équateur</span><b style="color:var(--green-forest);">48 %</b></div>
+        </div>
+      </div>
+      <img src="images/image7.jpeg" class="imground" style="width: 620px; height: 480px; align-self:center;" alt="Carte satellite de la couverture forestière">
+    </div>
+    <div class="src" style="color:var(--green-forest);">★ destination de votre mission · Sources : RAISG — Amazonia Under Pressure (2020) · WWF Living Amazon Report · FAO Global Forest Resources Assessment</div>
+  </section>
+
+  <!-- ============ SLIDE 9 · CLIMAT HÉTÉROGÈNE ============ -->
+  <section data-label="09 · Un climat hétérogène" style="background: var(--green-pale); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--green-forest);">01 · Situer l'Amazonie</div>
+    <div class="topbar" style="background: var(--green-leaf);"></div>
+    <h1 class="h" style="color: var(--green-forest); margin: 24px 0 34px;">Un climat hétérogène</h1>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; flex: 1;">
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column;"><div class="small" style="color:var(--green-forest); font-weight:700; letter-spacing:2px; margin-bottom:16px;">RÉPARTITION DES TEMPÉRATURES</div><img src="images/image8.png" style="width:100%; flex:1; object-fit:contain; border-radius:10px;" alt="Cartes de répartition des températures"></div>
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column;"><div class="small" style="color:var(--green-forest); font-weight:700; letter-spacing:2px; margin-bottom:16px;">MOYENNE &amp; RÉPARTITION DES PRÉCIPITATIONS</div><img src="images/image9.png" style="width:100%; flex:1; object-fit:contain; border-radius:10px;" alt="Carte des précipitations"></div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 10 · RÉGULATEUR CLIMATIQUE ============ -->
+  <section data-label="10 · Régulateur climatique mondial" style="background: var(--green-pale); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--green-forest);">01 · Situer l'Amazonie</div>
+    <div class="topbar" style="background: var(--green-leaf);"></div>
+    <h1 class="h" style="color: var(--green-forest); margin: 24px 0 34px;">L'Amazonie, régulateur climatique mondial</h1>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; flex: 1;">
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column;"><div style="font-family:'Playfair Display',serif; font-size:34px; font-weight:700; color:var(--blue-akuu);">Les rivières volantes</div><div class="small" style="color:var(--blue-sky); font-weight:600; margin:6px 0 16px;">Fleuves atmosphériques</div><div class="body" style="color:var(--night-2); flex:1;">La transpiration des arbres pompe d'énormes quantités d'eau dans l'atmosphère. Ces « rivières volantes » transportent l'humidité jusqu'au centre du Brésil et au Rio de la Plata, alimentant la moitié des pluies de la région.</div><div style="margin-top:14px;"><span class="num" style="font-size:56px; color:var(--blue-akuu);">50 %</span><div class="small" style="color:var(--night-2);">des pluies amazoniennes viennent des arbres eux-mêmes</div></div></div>
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column;"><div style="font-family:'Playfair Display',serif; font-size:34px; font-weight:700; color:var(--green-forest);">Un puits de carbone géant</div><div class="small" style="color:var(--green-leaf); font-weight:600; margin:6px 0 16px;">Carbon sink</div><div class="body" style="color:var(--night-2); flex:1;">La forêt absorbe le CO₂ et le stocke dans sa biomasse, régulant le climat planétaire. La déforestation ne détruit pas seulement des arbres — elle libère ce carbone accumulé sur des siècles.</div><div style="margin-top:14px;"><span class="num" style="font-size:56px; color:var(--green-forest);">~150 Gt</span><div class="small" style="color:var(--night-2);">de carbone stocké dans la biomasse forestière</div></div></div>
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column;"><div style="font-family:'Playfair Display',serif; font-size:34px; font-weight:700; color:var(--terracotta);">Le fleuve souterrain</div><div class="small" style="color:var(--terracotta); font-weight:600; margin:6px 0 16px;">Rio Hamza — découvert en 2011</div><div class="body" style="color:var(--night-2); flex:1;">À ~4 km de profondeur coule un fleuve invisible : le Rio Hamza. Découvert par le géophysicien Valiya Hamza (INPE, Brésil), il s'écoule sous l'Amazone, presque aussi long mais bien plus lent.</div><div style="margin-top:14px;"><span class="num" style="font-size:56px; color:var(--terracotta);">~4 km</span><div class="small" style="color:var(--night-2);">de profondeur sous le fleuve Amazone</div></div></div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 11 · RÉSERVE PACAYA ============ -->
+  <section data-label="11 · Réserve Nationale de Pacaya" style="background: var(--green-pale); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--green-forest);">01 · Situer l'Amazonie</div>
+    <div class="topbar" style="background: var(--green-leaf);"></div>
+    <h1 class="h" style="color: var(--green-forest); margin: 24px 0 30px;">Réserve Nationale de Pacaya — Loreto</h1>
+    <div style="display: flex; gap: 44px; flex: 1; align-items: center;">
+      <img src="images/image10.gif" class="imground" style="width: 820px; height: 560px;" alt="Carte de la Réserve Nationale Pacaya-Samiria">
+      <div style="flex: 1; display: flex; flex-direction: column; gap: 22px;">
+        <div class="card" style="background:var(--cream);"><div class="num" style="color:var(--green-forest);">20 800 km²</div><div class="body" style="color:var(--night-2);">La plus grande réserve nationale du Pérou — 2ᵉ en Amazonie</div></div>
+        <div class="card" style="background:var(--cream);"><div style="font-family:'Playfair Display',serif; font-size:34px; font-weight:700; color:var(--green-forest);">Confluent</div><div class="body" style="color:var(--night-2);">Entre les fleuves Ucayali et Marañón, qui forment ensemble l'Amazone</div></div>
+        <div class="card" style="background:var(--cream);"><div style="font-family:'Playfair Display',serif; font-size:34px; font-weight:700; color:var(--green-forest);">Forêt inondable</div><div class="body" style="color:var(--night-2);">La várzea — écosystème unique qui se noie 6 à 8 mois par an</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 12 · TITRE PARTIE 02 ============ -->
+  <section data-label="12 · Partie 02 — Mythes" style="background: linear-gradient(135deg, #8a3520 0%, var(--terracotta) 55%, #b5502f 100%); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: var(--pad-top) var(--pad-x);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="bar" style="background: var(--ochre);"></div>
+    <div style="font-family:'Playfair Display',serif; font-size:260px; font-weight:800; color:rgba(255,255,255,0.14); position:absolute; top:40px; right:90px; line-height:1;">02</div>
+    <div class="kicker" style="color: var(--ochre-light); margin-bottom: 24px;">Partie 02 · Déconstruire les mythes</div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:var(--fs-title); font-weight:700; color:var(--cream); margin:0; line-height:1.02; max-width:1500px;">Déconstruire les mythes</h1>
+    <div style="width:120px; height:6px; background:var(--ochre-light); margin:40px 0 34px;"></div>
+    <p style="font-family:'Playfair Display',serif; font-size:44px; font-style:italic; color:var(--cream); margin:0; max-width:1400px; line-height:1.25;">« La forêt vierge d'Amazonie n'existe pas »</p>
+    <div class="lead" style="color:var(--ochre-light); margin-top:16px;">— Stéphen Rostain, CNRS 2021</div>
+  </section>
+
+  <!-- ============ SLIDE 13 · TROIS MYTHES ============ -->
+  <section data-label="13 · Trois mythes à déconstruire" style="background: var(--ochre-light); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--terracotta);">02 · Déconstruire les mythes</div>
+    <div class="topbar" style="background: var(--ochre);"></div>
+    <h1 class="h" style="color: var(--terracotta); margin: 24px 0 32px;">Trois mythes à déconstruire</h1>
+    <div style="display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; flex: 1;">
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column; border-top:8px solid var(--terracotta);"><div style="display:flex; align-items:baseline; gap:12px;"><span style="font-family:'Playfair Display',serif; font-size:56px; font-weight:800; color:var(--terracotta);">01</span><span class="small" style="color:var(--terracotta); font-weight:700; letter-spacing:2px;">MYTHE COLONIAL</span></div><div style="font-family:'Playfair Display',serif; font-size:36px; font-weight:700; color:var(--night); margin:8px 0 4px;">La forêt vierge</div><div class="small" style="font-style:italic; color:var(--terracotta); margin-bottom:14px;">« Intact depuis toujours »</div><div class="body" style="color:var(--night-2);">L'Amazonie serait une forêt intacte, jamais touchée par l'homme. Ce mythe, né de l'arrogance coloniale, nie 12 000 ans d'occupation et de gestion humaine active du territoire.</div></div>
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column; border-top:8px solid var(--blue-sky);"><div style="display:flex; align-items:baseline; gap:12px;"><span style="font-family:'Playfair Display',serif; font-size:56px; font-weight:800; color:var(--blue-sky);">02</span><span class="small" style="color:var(--blue-sky); font-weight:700; letter-spacing:2px;">MYTHE SCIENTIFIQUE</span></div><div style="font-family:'Playfair Display',serif; font-size:36px; font-weight:700; color:var(--night); margin:8px 0 4px;">Le paradis contrefait</div><div class="small" style="font-style:italic; color:var(--blue-sky); margin-bottom:14px;">« Sols trop pauvres »</div><div class="body" style="color:var(--night-2);">Betty Meggers (1954) : les sols ferrallitiques amazoniens seraient une limite absolue au développement de civilisations. Toute société complexe était impossible.</div></div>
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column; border-top:8px solid var(--ochre);"><div style="display:flex; align-items:baseline; gap:12px;"><span style="font-family:'Playfair Display',serif; font-size:56px; font-weight:800; color:#C9822E;">03</span><span class="small" style="color:#C9822E; font-weight:700; letter-spacing:2px;">MYTHE COLONIAL</span></div><div style="font-family:'Playfair Display',serif; font-size:36px; font-weight:700; color:var(--night); margin:8px 0 4px;">L'Eldorado</div><div class="small" style="font-style:italic; color:#C9822E; margin-bottom:14px;">« La cité d'or »</div><div class="body" style="color:var(--night-2);">Les conquistadors cherchaient El Dorado, une cité d'or fantastique. Ce fantasme a justifié l'exploration violente de l'Amazonie et la réduction en esclavage de ses habitants.</div></div>
+    </div>
+    <div class="src" style="color:var(--terracotta);">Source : Stéphen Rostain, La forêt vierge d'Amazonie n'existe pas, Humensis 2021</div>
+  </section>
+
+  <!-- ============ SLIDE 14 · MYTHE #1 DÉTAILLÉ ============ -->
+  <section data-label="14 · Mythe #1 — La forêt vierge" style="background: var(--ochre-light); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--terracotta);">02 · Déconstruire les mythes</div>
+    <div class="topbar" style="background: var(--ochre);"></div>
+    <h1 class="h" style="color: var(--terracotta); margin: 22px 0 26px; font-size: 54px;">Mythe #1 — La forêt vierge intacte</h1>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 34px; flex: 1;">
+      <div class="card" style="background:#3A2A24; display:flex; flex-direction:column;"><div class="small" style="color:var(--ochre); font-weight:700; letter-spacing:3px; margin-bottom:6px;">LE MYTHE</div><div style="font-family:'Playfair Display',serif; font-size:30px; font-style:italic; color:var(--cream); margin-bottom:20px; line-height:1.2;">« L'Amazonie est une forêt vierge, non touchée par l'homme »</div><ul style="margin:0; padding-left:24px; color:#EAD9CE; font-family:'Inter',sans-serif; font-size:23px; line-height:1.35; display:flex; flex-direction:column; gap:12px;"><li>Les Européens qui « découvrent » l'Amazonie au XVIᵉ s. la décrivent comme une nature sauvage, sans civilisation notable</li><li>La doctrine de la <i>terra nullius</i> (« terre de personne ») en découle : l'Amazonie serait vide, donc appropriable</li><li>Ce mythe justifie encore aujourd'hui l'agro-industrie et l'extraction minière dans des « espaces vides »</li><li>Il a légitimé l'esclavage, les déplacements forcés et la destruction des cultures indigènes</li></ul></div>
+      <div class="card" style="background:var(--green-forest); display:flex; flex-direction:column;"><div class="small" style="color:var(--green-leaf); font-weight:700; letter-spacing:3px; margin-bottom:6px;">LA RÉALITÉ</div><div style="font-family:'Playfair Display',serif; font-size:34px; font-weight:700; color:var(--cream); margin-bottom:20px; line-height:1.1;">12 000 ans d'occupation et de gestion humaine active</div><div style="display:flex; flex-direction:column; gap:14px; color:var(--green-pale); font-family:'Inter',sans-serif; font-size:23px; line-height:1.32;"><div><b style="color:var(--cream);">Terra preta :</b> sols artificiellement enrichis sur des milliers de sites — preuve d'une agriculture intensive et intentionnelle</div><div><b style="color:var(--cream);">Géoglyphes (Acre) :</b> formes géométriques de 100-300 m creusées dans la roche — organisation sociale colossale</div><div><b style="color:var(--cream);">Champs surélevés :</b> agriculture hydraulique dans les plaines inondables, nourrissant des millions d'habitants</div><div><b style="color:var(--cream);">Cités-jardins :</b> réseaux urbains reliés par des routes, révélés par le LiDAR sous la canopée</div></div></div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 15 · POURQUOI LA FORÊT SEMBLAIT VIERGE ============ -->
+  <section data-label="15 · Pourquoi la forêt semblait vierge" style="background: var(--ochre-light); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--terracotta);">02 · Déconstruire les mythes</div>
+    <div class="topbar" style="background: var(--ochre);"></div>
+    <h1 class="h" style="color: var(--terracotta); margin: 22px 0 22px; font-size: 54px;">Pourquoi la forêt semblait « vierge »</h1>
+    <div style="display:flex; gap:32px; align-items:center; margin-bottom:22px;">
+      <div class="card" style="background:var(--terracotta); text-align:center; padding:20px 30px;"><div class="num" style="color:var(--cream); font-size:78px;">90 %</div><div class="small" style="color:var(--ochre-light);">des populations indigènes mouraient des maladies européennes</div></div>
+      <div style="display:flex; gap:16px; flex:1;">
+        <div class="card" style="background:var(--cream); flex:1; border-top:6px solid var(--terracotta);"><div style="font-family:'Playfair Display',serif; font-size:26px; font-weight:800; color:var(--terracotta);">1 · XVIᵉ siècle</div><div class="small" style="color:var(--night-2); margin-top:8px;">Les premiers Européens décrivent une Amazonie densément peuplée, avec cités et champs cultivés sur des centaines de km le long des fleuves.</div></div>
+        <div class="card" style="background:var(--cream); flex:1; border-top:6px solid var(--terracotta);"><div style="font-family:'Playfair Display',serif; font-size:26px; font-weight:800; color:var(--terracotta);">2 · Effondrement</div><div class="small" style="color:var(--night-2); margin-top:8px;">Grippe, rougeole, variole : 90 % des populations meurent en quelques décennies. Des millions d'hectares de champs et de villages sont abandonnés.</div></div>
+        <div class="card" style="background:var(--cream); flex:1; border-top:6px solid var(--terracotta);"><div style="font-family:'Playfair Display',serif; font-size:26px; font-weight:800; color:var(--terracotta);">3 · XVIIᵉ–XVIIIᵉ s.</div><div class="small" style="color:var(--night-2); margin-top:8px;">La forêt repousse sur les terres abandonnées. Les Européens qui arrivent ensuite « découvrent » une forêt en recolonisation naturelle. Ils l'appellent « vierge ».</div></div>
+      </div>
+    </div>
+    <div style="display:flex; gap:24px; flex:1;">
+      <img src="images/image12.jpeg" class="imground" style="width:50%; height:100%;" alt="Vue aérienne d'un géoglyphe en forêt">
+      <img src="images/image13.jpeg" class="imground" style="width:50%; height:100%;" alt="Relief LiDAR révélant des structures anciennes">
+    </div>
+    <div class="src" style="color:var(--terracotta);">Source : Rostain (2021) — Science Panel for the Amazon 2021, Chap. 9</div>
+  </section>
+
+  <!-- ============ SLIDE 16 · MYTHE #2 ============ -->
+  <section data-label="16 · Mythe #2 — Le paradis contrefait" style="background: var(--ochre-light); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--terracotta);">02 · Déconstruire les mythes</div>
+    <div class="topbar" style="background: var(--ochre);"></div>
+    <h1 class="h" style="color: var(--terracotta); margin: 22px 0 24px; font-size: 54px;">Mythe #2 — Le paradis contrefait</h1>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 34px; flex: 1;">
+      <div class="card" style="background:#2B322F; display:flex; gap:22px;"><img src="images/image14.png" style="width:150px; height:180px; object-fit:cover; border-radius:12px; align-self:flex-start;" alt="Betty Meggers"><div><div class="small" style="color:var(--ochre); font-weight:700; letter-spacing:2px;">BETTY MEGGERS — 1954</div><div style="font-family:'Playfair Display',serif; font-size:30px; font-style:italic; color:var(--cream); margin:4px 0 14px;">« Le paradis contrefait »</div><div style="display:flex; flex-direction:column; gap:10px; color:#D9DED9; font-size:21px; line-height:1.3;"><div>— Cette pauvreté des sols constituait une « limite écologique absolue » au développement de civilisations complexes</div><div>— Les sociétés restaient nécessairement petites, mobiles et simples — le déterminisme environnemental</div><div>— Les Andes, aux sols volcaniques riches, seraient le seul lieu possible pour de grandes civilisations</div><div>— Meggers a dominé le débat scientifique pendant 30 ans</div></div></div></div>
+      <div class="card" style="background:var(--green-forest); display:flex; gap:22px;"><img src="images/image15.png" style="width:150px; height:180px; object-fit:cover; border-radius:12px; align-self:flex-start;" alt="Anna Roosevelt"><div><div class="small" style="color:var(--green-leaf); font-weight:700; letter-spacing:2px;">ANNA ROOSEVELT &amp; AL.</div><div style="font-family:'Playfair Display',serif; font-size:30px; font-style:italic; color:var(--cream); margin:4px 0 14px;">« Le cœur rayonnant »</div><div style="display:flex; flex-direction:column; gap:10px; color:var(--green-pale); font-size:21px; line-height:1.3;"><div>✓ Roosevelt (1980s) : poteries datées à 8 500 av. J.-C. — les plus anciennes des Amériques</div><div>✓ Maïs retrouvé dans des sols jugés « impossibles » par Meggers — la réalité contredit la théorie</div><div>✓ Populations denses sur les rives des grands fleuves — confirmées par l'archéologie</div><div>✓ La terra preta prouve que les sols ont été intentionnellement enrichis par les populations</div></div></div></div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 17 · LA TERRA PRETA ============ -->
+  <section data-label="17 · La terra preta" style="background: var(--ochre-light); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--terracotta);">02 · Déconstruire les mythes</div>
+    <div class="topbar" style="background: var(--ochre);"></div>
+    <h1 class="h" style="color: var(--terracotta); margin: 22px 0 22px; font-size: 54px;">La terra preta — la preuve par les sols</h1>
+    <div style="display:flex; gap:36px; flex:1;">
+      <img src="images/image16.png" class="imground" style="width:360px; height:100%; object-fit:contain; background:var(--cream); padding:14px;" alt="Coupe de sol terra preta">
+      <div style="flex:1; display:flex; flex-direction:column; gap:18px;">
+        <div class="lead" style="color:var(--night-2);">La terra preta (« terre noire » en portugais) est un sol artificiel créé par les peuples amazoniens depuis des millénaires. Sa découverte a définitivement réfuté l'idée que l'Amazonie ne pouvait abriter de grandes civilisations.</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div class="card" style="background:var(--cream); padding:20px 24px;"><b style="color:var(--terracotta); font-size:24px;">Composition</b><div class="small" style="color:var(--night-2); margin-top:6px;">Charbon de bois (biochar), os broyés, fragments de poterie et déchets organiques — intégrés intentionnellement sur des générations</div></div>
+          <div class="card" style="background:var(--cream); padding:20px 24px;"><b style="color:var(--terracotta); font-size:24px;">Fertilité durable</b><div class="small" style="color:var(--night-2); margin-top:6px;">Contrairement aux sols tropicaux qui s'épuisent vite, la terra preta reste fertile des siècles — voire des millénaires</div></div>
+          <div class="card" style="background:var(--cream); padding:20px 24px;"><b style="color:var(--terracotta); font-size:24px;">Étendue</b><div class="small" style="color:var(--night-2); margin-top:6px;">Des milliers de sites sur tout le bassin. Certaines couches atteignent 2 m de profondeur — occupation prolongée et intense</div></div>
+          <div class="card" style="background:var(--cream); padding:20px 24px;"><b style="color:var(--terracotta); font-size:24px;">Héritage vivant</b><div class="small" style="color:var(--night-2); margin-top:6px;">Ces sols sont encore exploités aujourd'hui. Le biochar s'en inspire directement : une innovation amérindienne millénaire</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="src" style="color:var(--terracotta);">Source : Rostain (2021) — Science Panel for the Amazon 2021, Chap. 8 — Bruno Glaser &amp; al. (Bayreuth University)</div>
+  </section>
+
+  <!-- ============ SLIDE 18 · RÉSUMÉ CHIFFRÉ ============ -->
+  <section data-label="18 · Un jardin géant" style="background: var(--green-forest); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--green-leaf);">02 · Déconstruire les mythes</div>
+    <div class="topbar" style="background: var(--green-leaf);"></div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:52px; font-weight:700; font-style:italic; color:var(--cream); margin:26px 0 36px; max-width:1500px; line-height:1.15;">« L'Amazonie est un jardin géant façonné par 12 000 ans de travail humain »</h1>
+    <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:22px; flex:1;">
+      <div class="card" style="background:rgba(255,255,255,0.08); display:flex; flex-direction:column;"><div class="small" style="color:var(--green-leaf); font-weight:700;">Terra preta</div><div class="num" style="color:var(--cream); font-size:60px; margin:8px 0;">+3 500</div><div class="small" style="color:var(--green-pale);">sites identifiés — sols anthropiques enrichis sur des siècles, répartis sur tout le bassin</div></div>
+      <div class="card" style="background:rgba(255,255,255,0.08); display:flex; flex-direction:column;"><div class="small" style="color:var(--green-leaf); font-weight:700;">Géoglyphes</div><div class="num" style="color:var(--cream); font-size:60px; margin:8px 0;">+500</div><div class="small" style="color:var(--green-pale);">structures géométriques — formes parfaites jusqu'à 300 m, creusées à la main, visibles par satellite</div></div>
+      <div class="card" style="background:rgba(255,255,255,0.08); display:flex; flex-direction:column;"><div class="small" style="color:var(--green-leaf); font-weight:700;">Champs surélevés</div><div class="num" style="color:var(--cream); font-size:60px; margin:8px 0;">&gt; 100k</div><div class="small" style="color:var(--green-pale);">hectares aménagés — agriculture hydraulique intensive dans les plaines inondables</div></div>
+      <div class="card" style="background:rgba(255,255,255,0.08); display:flex; flex-direction:column;"><div class="small" style="color:var(--green-leaf); font-weight:700;">Domestication</div><div class="num" style="color:var(--cream); font-size:60px; margin:8px 0;">85 %</div><div class="small" style="color:var(--green-pale);">des plantes utiles — manioc, maïs, cacao, hévéa, sélectionnés sur des millénaires</div></div>
+      <div class="card" style="background:rgba(255,255,255,0.08); display:flex; flex-direction:column;"><div class="small" style="color:var(--green-leaf); font-weight:700;">Population</div><div class="num" style="color:var(--cream); font-size:60px; margin:8px 0;">8–10 M</div><div class="small" style="color:var(--green-pale);">habitants précolombiens — 10× les estimations de 1950, dont des cités de 10 000 à 100 000 hab.</div></div>
+    </div>
+    <div class="src" style="color:var(--green-leaf);">Source : Rostain (2021) — Science Panel for the Amazon 2021 — Schaan, Heckenberger &amp; al.</div>
+  </section>
+
+  <!-- ============ SLIDE 19 · TITRE PARTIE 03 ============ -->
+  <section data-label="19 · Partie 03 — Révolution scientifique" style="background: linear-gradient(135deg, #032f5e 0%, var(--blue-akuu) 55%, #05365f 100%); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: var(--pad-top) var(--pad-x);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="bar" style="background: var(--green-leaf);"></div>
+    <div style="font-family:'Playfair Display',serif; font-size:260px; font-weight:800; color:rgba(255,255,255,0.12); position:absolute; top:40px; right:90px; line-height:1;">03</div>
+    <div class="kicker" style="color: var(--blue-pale); margin-bottom: 24px;">Partie 03 · La révolution scientifique</div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:var(--fs-title); font-weight:700; color:var(--cream); margin:0; line-height:1.02; max-width:1500px;">La révolution scientifique</h1>
+    <div style="width:120px; height:6px; background:var(--green-leaf); margin:40px 0 30px;"></div>
+    <p class="lead" style="color:var(--blue-pale);">La fin de la vision d'une forêt « vierge »</p>
+    <p class="small" style="color:var(--blue-pale); margin-top:12px; letter-spacing:2px;">LIDAR · ARCHÉOLOGIE · ÉCOLOGIE HISTORIQUE · INTERDISCIPLINARITÉ</p>
+  </section>
+
+  <!-- ============ SLIDE 20 · CINQ DÉCOUVERTES ============ -->
+  <section data-label="20 · Cinq découvertes décisives" style="background: var(--blue-pale); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--blue-akuu);">03 · La révolution scientifique</div>
+    <div class="topbar" style="background: var(--blue-akuu);"></div>
+    <h1 class="h" style="color: var(--blue-akuu); margin: 22px 0 26px; font-size: 54px;">Archéologie amazonienne : cinq découvertes décisives</h1>
+    <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:18px; flex:1;">
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column; padding:22px 20px;"><div style="font-family:'Playfair Display',serif; font-size:30px; font-weight:800; color:var(--blue-akuu);">1970s</div><img src="images/image18.png" style="width:100%; height:150px; object-fit:cover; border-radius:10px; margin:12px 0;" alt="Donald Lathrap"><div style="font-weight:700; color:var(--night); font-size:22px;">Le cœur rayonnant</div><div class="small" style="color:var(--blue-sky); font-weight:600;">D. Lathrap</div><div class="small" style="color:var(--night-2); margin-top:8px;">L'Amazonie postulée comme centre de diffusion des cultures, non leur périphérie.</div></div>
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column; padding:22px 20px;"><div style="font-family:'Playfair Display',serif; font-size:30px; font-weight:800; color:var(--blue-akuu);">1990s</div><img src="images/image17.png" style="width:100%; height:150px; object-fit:cover; border-radius:10px; margin:12px 0;" alt="Anna Roosevelt"><div style="font-weight:700; color:var(--night); font-size:22px;">Poteries à 8 500 av. J.-C.</div><div class="small" style="color:var(--blue-sky); font-weight:600;">A. Roosevelt</div><div class="small" style="color:var(--night-2); margin-top:8px;">Les plus anciennes des Amériques, dans des sols « impossibles » selon Meggers.</div></div>
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column; padding:22px 20px;"><div style="font-family:'Playfair Display',serif; font-size:30px; font-weight:800; color:var(--blue-akuu);">2003</div><img src="images/image19.png" style="width:100%; height:150px; object-fit:cover; border-radius:10px; margin:12px 0;" alt="Michael Heckenberger"><div style="font-weight:700; color:var(--night); font-size:22px;">Kuhikugu — réseau de cités</div><div class="small" style="color:var(--blue-sky); font-weight:600;">M. Heckenberger</div><div class="small" style="color:var(--night-2); margin-top:8px;">20 villages connectés, 50 000 hab., routes, digues, palissades.</div></div>
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column; padding:22px 20px;"><div style="font-family:'Playfair Display',serif; font-size:30px; font-weight:800; color:var(--blue-akuu);">2010s</div><img src="images/image20.png" style="width:100%; height:150px; object-fit:cover; border-radius:10px; margin:12px 0;" alt="J. Iriarte, S. Rostain, W. Balée"><div style="font-weight:700; color:var(--night); font-size:22px;">+500 géoglyphes</div><div class="small" style="color:var(--blue-sky); font-weight:600;">Iriarte · Rostain · Balée</div><div class="small" style="color:var(--night-2); margin-top:8px;">Révélés par la déforestation, cartographiés par satellite. Formes de 100-300 m.</div></div>
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column; padding:22px 20px;"><div style="font-family:'Playfair Display',serif; font-size:30px; font-weight:800; color:var(--blue-akuu);">2018</div><img src="images/image21.png" style="width:100%; height:150px; object-fit:cover; border-radius:10px; margin:12px 0; background:#111;" alt="Scan LiDAR PACUNAM"><div style="font-weight:700; color:var(--night); font-size:22px;">Structures cachées</div><div class="small" style="color:var(--blue-sky); font-weight:600;">PACUNAM LiDAR</div><div class="small" style="color:var(--night-2); margin-top:8px;">Le LiDAR révèle cités, routes et champs sous la canopée. Des millions de personnes.</div></div>
+    </div>
+    <div class="src" style="color:var(--blue-akuu);">Sources : Lathrap (1970) — Roosevelt (1991) — Heckenberger (2003) — Iriarte &amp; al. (2018) — PACUNAM LiDAR Initiative (2018)</div>
+  </section>
+
+  <!-- ============ SLIDE 21 · KUHIKUGU ============ -->
+  <section data-label="21 · Kuhikugu" style="background: var(--blue-pale); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--blue-akuu);">03 · La révolution scientifique</div>
+    <div class="topbar" style="background: var(--blue-akuu);"></div>
+    <h1 class="h" style="color: var(--blue-akuu); margin: 22px 0 22px; font-size: 52px;">Kuhikugu : une cité amazonienne de 50 000 habitants</h1>
+    <div style="display:flex; gap:32px; flex:1;">
+      <div style="flex:1.1; display:flex; flex-direction:column; gap:18px;">
+        <div class="body" style="color:var(--night-2);">En <b>2003</b>, l'archéologue <b>Michael Heckenberger</b> (Université de Floride) révèle dans la revue <i>Science</i> un réseau de 20 villages interconnectés dans le bassin du Xingu (Brésil) — une planification urbaine comparable aux villes médiévales européennes.</div>
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px;">
+          <div class="card" style="background:var(--cream); text-align:center; padding:18px;"><div class="num" style="color:var(--blue-akuu); font-size:58px;">20</div><div class="small" style="color:var(--night-2);">villages interconnectés</div></div>
+          <div class="card" style="background:var(--cream); text-align:center; padding:18px;"><div class="num" style="color:var(--blue-akuu); font-size:58px;">50 000</div><div class="small" style="color:var(--night-2);">habitants au pic de la civilisation</div></div>
+          <div class="card" style="background:var(--cream); text-align:center; padding:18px;"><div class="num" style="color:var(--blue-akuu); font-size:58px;">1 000 km²</div><div class="small" style="color:var(--night-2);">de territoire urbanisé et géré</div></div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <div class="card" style="background:rgba(4,72,143,0.10); padding:16px 22px;"><b style="color:var(--blue-akuu); font-size:22px;">Infrastructure</b> <span class="small" style="color:var(--night-2);">— larges routes, places centrales, digues, palissades défensives.</span></div>
+          <div class="card" style="background:rgba(4,72,143,0.10); padding:16px 22px;"><b style="color:var(--blue-akuu); font-size:22px;">Organisation sociale</b> <span class="small" style="color:var(--night-2);">— réseau d'échanges, cérémonies collectives, transmission du savoir.</span></div>
+          <div class="card" style="background:rgba(4,72,143,0.10); padding:16px 22px;"><b style="color:var(--blue-akuu); font-size:22px;">Continuité vivante</b> <span class="small" style="color:var(--night-2);">— les Kuikuro vivent toujours dans le Xingu et collaborent avec les archéologues.</span></div>
+        </div>
+      </div>
+      <div style="flex:0.9; display:flex; flex-direction:column; gap:16px;">
+        <img src="images/image22.png" class="imground" style="width:100%; height:230px; object-fit:cover;" alt="Michael Heckenberger">
+        <img src="images/image23.jpg" class="imground" style="width:100%; flex:1; object-fit:cover;" alt="Vue aérienne du site de Kuhikugu">
+      </div>
+    </div>
+    <div class="src" style="color:var(--blue-akuu);">Source : Heckenberger &amp; al., Science 2003 &amp; 2008 — Rostain (2021) — Science Panel for the Amazon 2021</div>
+  </section>
+
+  <!-- ============ SLIDE 22 · ÉCOLOGIE HISTORIQUE ============ -->
+  <section data-label="22 · L'écologie historique" style="background: var(--blue-pale); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--blue-akuu);">03 · La révolution scientifique</div>
+    <div class="topbar" style="background: var(--blue-akuu);"></div>
+    <h1 class="h" style="color: var(--blue-akuu); margin: 22px 0 20px; font-size: 54px;">L'écologie historique : lire la forêt comme un texte</h1>
+    <div class="lead" style="color:var(--night-2); margin-bottom:24px; max-width:1600px;">L'écologie historique étudie les interactions à long terme entre les humains et leur environnement. Elle a révélé que la forêt actuelle est une construction humaine autant que naturelle.</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:22px; flex:1;">
+      <div class="card" style="background:var(--cream); display:flex; gap:18px; align-items:flex-start;"><span style="font-family:'Playfair Display',serif; font-size:52px; font-weight:800; color:var(--blue-akuu);">01</span><div><b style="color:var(--night); font-size:26px;">Forêts culturelles</b><div class="small" style="color:var(--night-2); margin-top:6px;">William Balée (1989) : certaines zones sont plus riches en espèces utiles près d'anciens sites habités. La forêt porte l'empreinte de ses jardiniers.</div></div></div>
+      <div class="card" style="background:var(--cream); display:flex; gap:18px; align-items:flex-start;"><span style="font-family:'Playfair Display',serif; font-size:52px; font-weight:800; color:var(--blue-akuu);">02</span><div><b style="color:var(--night); font-size:26px;">Paysages cumulatifs</b><div class="small" style="color:var(--night-2); margin-top:6px;">Chaque génération hérite d'un paysage façonné par les précédentes et y ajoute sa couche. L'Amazonie actuelle résulte de 12 000 ans de stratification humaine.</div></div></div>
+      <div class="card" style="background:var(--cream); display:flex; gap:18px; align-items:flex-start;"><span style="font-family:'Playfair Display',serif; font-size:52px; font-weight:800; color:var(--blue-akuu);">03</span><div><b style="color:var(--night); font-size:26px;">La distinction nature/culture est dépassée</b><div class="small" style="color:var(--night-2); margin-top:6px;">En Amazonie, séparer « nature » et « culture » n'a pas de sens : la forêt, les sols, les espèces, les chemins — tout est co-produit par l'humain et l'écosystème.</div></div></div>
+      <div class="card" style="background:var(--cream); display:flex; gap:18px; align-items:flex-start;"><span style="font-family:'Playfair Display',serif; font-size:52px; font-weight:800; color:var(--blue-akuu);">04</span><div><b style="color:var(--night); font-size:26px;">Les savoirs indigènes comme source primaire</b><div class="small" style="color:var(--night-2); margin-top:6px;">Les connaissances traditionnelles des peuples amazoniens ne sont pas de simples croyances — ce sont des données empiriques accumulées sur des millénaires.</div></div></div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 23 · GÉOGLYPHES DE L'ACRE ============ -->
+  <section data-label="23 · Les géoglyphes de l'Acre" style="background: var(--blue-pale); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--blue-akuu);">03 · La révolution scientifique</div>
+    <div class="topbar" style="background: var(--blue-akuu);"></div>
+    <h1 class="h" style="color: var(--blue-akuu); margin: 22px 0 22px; font-size: 54px;">Les géoglyphes de l'Acre : ingénierie précolombienne</h1>
+    <div style="display:flex; gap:32px; flex:1;">
+      <img src="images/image24.jpeg" class="imground" style="width:46%; height:100%;" alt="Vue aérienne des géoglyphes de l'Acre">
+      <div style="flex:1; display:flex; flex-direction:column; gap:18px;">
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:14px;">
+          <div class="card" style="background:var(--cream); text-align:center; padding:16px 10px;"><div class="num" style="color:var(--blue-akuu); font-size:48px;">+500</div><div class="small" style="color:var(--night-2);">géoglyphes découverts</div></div>
+          <div class="card" style="background:var(--cream); text-align:center; padding:16px 10px;"><div class="num" style="color:var(--blue-akuu); font-size:48px;">300 m</div><div class="small" style="color:var(--night-2);">diamètre max.</div></div>
+          <div class="card" style="background:var(--cream); text-align:center; padding:16px 10px;"><div class="num" style="color:var(--blue-akuu); font-size:48px;">11 m</div><div class="small" style="color:var(--night-2);">largeur des fossés</div></div>
+          <div class="card" style="background:var(--cream); text-align:center; padding:16px 10px;"><div class="num" style="color:var(--blue-akuu); font-size:48px;">2 000</div><div class="small" style="color:var(--night-2);">ans d'âge estimé</div></div>
+        </div>
+        <div class="card" style="background:rgba(4,72,143,0.10);"><b style="color:var(--blue-akuu); font-size:24px;">Révélés par la déforestation</b><div class="small" style="color:var(--night-2); margin-top:6px;">Les géoglyphes de l'état d'Acre (Brésil) sont restés invisibles des siècles sous la canopée. C'est paradoxalement la déforestation qui les a révélés — et les images satellites qui les ont cartographiés.</div></div>
+        <div class="card" style="background:rgba(4,72,143,0.10);"><b style="color:var(--blue-akuu); font-size:24px;">Que sont-ils ?</b><div class="small" style="color:var(--night-2); margin-top:6px;">Formes géométriques creusées dans le sol, réalisées uniquement à la force humaine. Usage cérémoniel, astronomique ou de rassemblement — témoins d'une planification collective à grande échelle.</div></div>
+      </div>
+    </div>
+    <div class="src" style="color:var(--blue-akuu);">Source : Rostain (2021) — Denise Schaan, UFPA — Science Panel for the Amazon 2021</div>
+  </section>
+
+  <!-- ============ SLIDE 24 · ANCIEN VS NOUVEAU PARADIGME ============ -->
+  <section data-label="24 · Ancien vs nouveau paradigme" style="background: var(--blue-pale); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--blue-akuu);">03 · La révolution scientifique</div>
+    <div class="topbar" style="background: var(--blue-akuu);"></div>
+    <h1 class="h" style="color: var(--blue-akuu); margin: 22px 0 26px; font-size: 54px;">Ce que la révolution scientifique a changé</h1>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:34px; flex:1;">
+      <div class="card" style="background:#2B322F; display:flex; flex-direction:column;"><div class="small" style="color:var(--terracotta); font-weight:700; letter-spacing:2px;">ANCIEN PARADIGME</div><div class="small" style="color:#9AA0A0; margin-bottom:16px;">XIXᵉ – milieu XXᵉ siècle</div><div style="display:flex; flex-direction:column; gap:12px; color:#D9DED9; font-size:24px; line-height:1.25;"><div>✗ Forêt vierge — jamais touchée par l'homme</div><div>✗ Sols trop pauvres pour des civilisations</div><div>✗ Peuples « primitifs » et nomades</div><div>✗ Population précolombienne : &lt; 1 million</div><div>✗ Aucune ville, aucune architecture</div><div>✗ Amazonie = périphérie culturelle</div></div></div>
+      <div class="card" style="background:var(--green-forest); display:flex; flex-direction:column;"><div class="small" style="color:var(--green-leaf); font-weight:700; letter-spacing:2px;">NOUVEAU PARADIGME</div><div class="small" style="color:var(--green-pale); margin-bottom:16px;">Depuis 1990 — en cours</div><div style="display:flex; flex-direction:column; gap:12px; color:var(--cream); font-size:24px; line-height:1.25;"><div>✓ Forêt anthropisée depuis 12 000 ans</div><div>✓ Terra preta : sols enrichis intentionnellement</div><div>✓ Civilisations complexes et durables</div><div>✓ Population précolombienne : 8-10 millions</div><div>✓ Villes, routes, champs, ingénierie hydraulique</div><div>✓ Amazonie = berceau de civilisations majeures</div></div></div>
+    </div>
+    <div class="src" style="color:var(--blue-akuu);">Source : Rostain (2021) — Science Panel Amazon 2021 — Roosevelt, Heckenberger, Iriarte, Balée</div>
+  </section>
+
+  <!-- ============ SLIDE 25 · CE QUE L'AMAZONIE A DONNÉ ============ -->
+  <section data-label="25 · Ce que l'Amazonie a donné au monde" style="background: var(--blue-pale); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--blue-akuu);">03 · La révolution scientifique</div>
+    <div class="topbar" style="background: var(--blue-akuu);"></div>
+    <h1 class="h" style="color: var(--blue-akuu); margin: 22px 0 18px; font-size: 54px;">Ce que l'Amazonie a donné au monde</h1>
+    <div class="lead" style="color:var(--night-2); margin-bottom:22px; max-width:1650px;">Les peuples amazoniens ont domestiqué et diffusé des plantes et techniques qui nourrissent et soignent des milliards d'êtres humains aujourd'hui — une dette immense, jamais reconnue ni compensée.</div>
+    <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:18px; flex:1;">
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column; padding:22px 20px;"><b style="color:var(--green-forest); font-size:26px;">Manioc</b><div class="small" style="color:var(--blue-sky); font-weight:600;">il y a 10 000 ans</div><div class="small" style="color:var(--night-2); margin-top:8px;">Domestiqué en Amazonie. Aujourd'hui aliment de base de 800 millions de personnes en Afrique, Asie et Amérique latine.</div></div>
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column; padding:22px 20px;"><b style="color:var(--green-forest); font-size:26px;">Cacao</b><div class="small" style="color:var(--blue-sky); font-weight:600;">il y a 5 000 ans</div><div class="small" style="color:var(--night-2); margin-top:8px;">Boisson rituelle amérindienne devenue l'industrie mondiale du chocolat (400 Md$/an). Ses origines sont amazoniennes.</div></div>
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column; padding:22px 20px;"><b style="color:var(--green-forest); font-size:26px;">Hévéa</b><div class="small" style="color:var(--blue-sky); font-weight:600;">depuis des siècles</div><div class="small" style="color:var(--night-2); margin-top:8px;">Le caoutchouc naturel a rendu possible la Révolution Industrielle — pneus, joints, équipements médicaux.</div></div>
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column; padding:22px 20px;"><b style="color:var(--green-forest); font-size:26px;">Pharmacopée</b><div class="small" style="color:var(--blue-sky); font-weight:600;">25 % des médicaments</div><div class="small" style="color:var(--night-2); margin-top:8px;">Curare (anesthésiants), quinine (antipaludéen), copaïba, cat's claw — issus de plantes connues des guérisseurs indigènes.</div></div>
+      <div class="card" style="background:var(--cream); display:flex; flex-direction:column; padding:22px 20px;"><b style="color:var(--green-forest); font-size:26px;">Biochar</b><div class="small" style="color:var(--blue-sky); font-weight:600;">héritage terra preta</div><div class="small" style="color:var(--night-2); margin-top:8px;">Au cœur de la recherche climatique mondiale : le biochar séquestre le CO₂ et régénère les sols épuisés.</div></div>
+    </div>
+    <div class="src" style="color:var(--blue-akuu);">Source : Rostain (2021) — Science Panel Amazon 2021, Chap. 15 — Clement &amp; al. (2015)</div>
+  </section>
+
+  <!-- ============ SLIDE 26 · TITRE PARTIE 04 ============ -->
+  <section data-label="26 · Partie 04 — Les 4 éléments" style="background: linear-gradient(135deg, #14201c 0%, var(--night) 55%, #0d1512 100%); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: var(--pad-top) var(--pad-x);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="bar" style="background: var(--green-leaf);"></div>
+    <div style="font-family:'Playfair Display',serif; font-size:260px; font-weight:800; color:rgba(166,198,57,0.12); position:absolute; top:40px; right:90px; line-height:1;">04</div>
+    <div class="kicker" style="color: var(--green-leaf); margin-bottom: 24px;">Partie 04 · Le cadre de Stephen Rostain</div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:var(--fs-title); font-weight:700; color:var(--cream); margin:0; line-height:1.02;">Les 4 éléments de Rostain</h1>
+    <div style="width:120px; height:6px; background:var(--green-leaf); margin:40px 0 30px;"></div>
+    <div style="display:flex; gap:26px; font-family:'Playfair Display',serif; font-size:46px; font-weight:700;">
+      <span style="color:var(--blue-sky);">EAU</span><span style="color:#5A6360;">·</span><span style="color:var(--terracotta);">TERRE</span><span style="color:#5A6360;">·</span><span style="color:var(--ochre);">FEU</span><span style="color:#5A6360;">·</span><span style="color:var(--blue-pale);">AIR</span>
+    </div>
+    <p class="lead" style="color:#B7BEBB; margin-top:22px;">Deux visions du même territoire</p>
+  </section>
+
+  <!-- ============ SLIDE 27 · TABLEAU 4 ÉLÉMENTS ============ -->
+  <section data-label="27 · Deux visions opposées" style="background: var(--sand); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--night);">04 · Les 4 éléments de Rostain</div>
+    <div class="topbar" style="background: var(--green-leaf);"></div>
+    <h1 class="h" style="color: var(--night); margin: 22px 0 22px; font-size: 50px;">Les 4 éléments — deux visions opposées du même territoire</h1>
+    <div style="display:grid; grid-template-columns:130px 1fr 1fr; gap:12px; flex:1;">
+      <div></div>
+      <div style="background:var(--green-forest); border-radius:12px 12px 0 0; padding:14px; text-align:center; color:var(--cream); font-weight:700; font-family:'Inter',sans-serif; font-size:24px;">Gestion amérindienne <span style="font-weight:300; opacity:.8;">(12 000 ans)</span></div>
+      <div style="background:#7A3020; border-radius:12px 12px 0 0; padding:14px; text-align:center; color:var(--cream); font-weight:700; font-family:'Inter',sans-serif; font-size:24px;">Exploitation occidentale <span style="font-weight:300; opacity:.8;">(&lt; 500 ans)</span></div>
+
+      <div style="background:var(--blue-sky); border-radius:12px; display:flex; align-items:center; justify-content:center; color:var(--cream); font-family:'Playfair Display',serif; font-weight:700; font-size:28px;">L'EAU</div>
+      <div class="card" style="background:rgba(45,105,21,0.12); padding:16px 20px; font-size:21px; color:var(--night-2); line-height:1.3;">✓ <b>Apprivoisée</b> — canaux, champs surélevés, réservoirs, gestion des crues pour l'agriculture hydraulique</div>
+      <div class="card" style="background:rgba(231,111,81,0.12); padding:16px 20px; font-size:21px; color:var(--night-2); line-height:1.3;">✗ <b>Contrainte</b> — barrages qui fragmentent les rivières, pollution au mercure, surexploitation pour l'irrigation</div>
+
+      <div style="background:var(--terracotta); border-radius:12px; display:flex; align-items:center; justify-content:center; color:var(--cream); font-family:'Playfair Display',serif; font-weight:700; font-size:26px;">LA TERRE</div>
+      <div class="card" style="background:rgba(45,105,21,0.12); padding:16px 20px; font-size:21px; color:var(--night-2); line-height:1.3;">✓ <b>Enrichie</b> — terra preta, biochar, polyculture, jachères tournantes maintenant la fertilité sur des siècles</div>
+      <div class="card" style="background:rgba(231,111,81,0.12); padding:16px 20px; font-size:21px; color:var(--night-2); line-height:1.3;">✗ <b>Dégradée</b> — érosion massive par monocultures de soja, compaction par l'élevage, contamination par les mines</div>
+
+      <div style="background:var(--ochre); border-radius:12px; display:flex; align-items:center; justify-content:center; color:var(--cream); font-family:'Playfair Display',serif; font-weight:700; font-size:28px;">LE FEU</div>
+      <div class="card" style="background:rgba(45,105,21,0.12); padding:16px 20px; font-size:21px; color:var(--night-2); line-height:1.3;">✓ <b>Source de vie</b> — brûlis contrôlés pour fertiliser les sols, chasser, régénérer la végétation utile</div>
+      <div class="card" style="background:rgba(231,111,81,0.12); padding:16px 20px; font-size:21px; color:var(--night-2); line-height:1.3;">✗ <b>Destructeur</b> — incendies massifs pour défricher, 90 % d'origine humaine intentionnelle en 2020</div>
+
+      <div style="background:var(--blue-akuu); border-radius:12px; display:flex; align-items:center; justify-content:center; color:var(--cream); font-family:'Playfair Display',serif; font-weight:700; font-size:28px;">L'AIR</div>
+      <div class="card" style="background:rgba(45,105,21,0.12); padding:16px 20px; font-size:21px; color:var(--night-2); line-height:1.3;">✓ <b>Géré</b> — évapotranspiration entretenue par la couverture forestière, rivières volantes, puits de carbone</div>
+      <div class="card" style="background:rgba(231,111,81,0.12); padding:16px 20px; font-size:21px; color:var(--night-2); line-height:1.3;">✗ <b>Menacé</b> — émissions de CO₂ par la déforestation, point de bascule vers la savane, dérèglement climatique</div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 28 · L'EAU — STATS ============ -->
+  <section data-label="28 · Élément 1 — L'EAU" style="background: linear-gradient(160deg, #0d3a5c 0%, #0a2c47 100%); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--blue-pale);">04 · Les 4 éléments de Rostain</div>
+    <div class="topbar" style="background: var(--blue-sky);"></div>
+    <div class="kicker" style="color:var(--blue-pale); margin:24px 0 6px;">Élément 1 · L'EAU</div>
+    <h1 class="h" style="color: var(--cream); margin: 0 0 30px;">Apprivoisée pendant 12 000 ans</h1>
+    <div style="display:flex; gap:36px; flex:1;">
+      <div style="flex:1; display:grid; grid-template-columns:1fr 1fr; gap:22px;">
+        <div class="card" style="background:rgba(255,255,255,0.08);"><div class="num" style="color:var(--cream);">20 %</div><div class="small" style="color:var(--blue-pale);">de l'eau douce liquide mondiale</div></div>
+        <div class="card" style="background:rgba(255,255,255,0.08);"><div class="num" style="color:var(--cream);">219 000</div><div class="small" style="color:var(--blue-pale);">m³/s — débit moyen du fleuve Amazone</div></div>
+        <div class="card" style="background:rgba(255,255,255,0.08);"><div class="num" style="color:var(--cream);">× 7</div><div class="small" style="color:var(--blue-pale);">le débit du fleuve Congo</div></div>
+        <div class="card" style="background:rgba(255,255,255,0.08);"><div class="num" style="color:var(--cream);">75 %</div><div class="small" style="color:var(--blue-pale);">de l'humidité recyclée par la forêt elle-même</div></div>
+      </div>
+      <div style="width:640px; display:flex; flex-direction:column; gap:16px;">
+        <img src="images/image25.jpeg" class="imground" style="width:100%; flex:1; object-fit:cover;" alt="Méandres d'un fleuve amazonien">
+        <img src="images/image26.jpeg" class="imground" style="width:100%; flex:1; object-fit:cover;" alt="Réseau hydrographique vu du ciel">
+      </div>
+    </div>
+    <div class="src" style="color:var(--blue-pale);">Sources : WWF Living Amazon 2022 — Valeria Peres Muñoz / INPA — Clark Erickson, Univ. Pennsylvania — Rostain (2021)</div>
+  </section>
+
+  <!-- ============ SLIDE 29 · INGÉNIERIE HYDRAULIQUE ============ -->
+  <section data-label="29 · Ingénierie hydraulique" style="background: var(--blue-pale); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--blue-akuu);">04 · L'EAU — apprivoisée</div>
+    <div class="topbar" style="background: var(--blue-sky);"></div>
+    <h1 class="h" style="color: var(--blue-akuu); margin: 22px 0 26px; font-size: 54px;">Ingénierie hydraulique précolombienne</h1>
+    <div style="display:flex; gap:34px; flex:1; align-items:center;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:22px;">
+        <div class="lead" style="color:var(--night-2);">Champs surélevés dans les plaines inondables (<i>camellones</i>), canaux de drainage, réservoirs d'eau.</div>
+        <div class="card" style="background:var(--cream);"><div class="body" style="color:var(--night-2);">En Bolivie (Llanos de Mojos), des <b>centaines de milliers d'hectares</b> ont été aménagés.</div></div>
+        <div class="card" style="background:var(--cream);"><div class="body" style="color:var(--night-2);">Cette gestion de l'eau a permis d'alimenter des <b>millions de personnes</b> dans un écosystème capricieux, alternant crues et sécheresses.</div></div>
+      </div>
+      <div style="flex:1.1; display:flex; flex-direction:column; gap:16px;">
+        <img src="images/image27.png" class="imground" style="width:100%; height:300px; object-fit:cover;" alt="Champs aménagés vus du ciel">
+        <div><img src="images/image28.png" class="imground" style="width:100%; height:230px; object-fit:cover;" alt="Champs surélevés des Llanos de Mojos, Bolivie"><div class="cap" style="color:var(--night-2);">Champs surélevés des Llanos de Mojos, Bolivie — Photo Google Earth</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 30 · RIVIÈRES VOLANTES ============ -->
+  <section data-label="30 · Les rivières volantes" style="background: var(--blue-pale); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--blue-akuu);">04 · L'EAU — apprivoisée</div>
+    <div class="topbar" style="background: var(--blue-sky);"></div>
+    <h1 class="h" style="color: var(--blue-akuu); margin: 22px 0 26px; font-size: 54px;">Les rivières volantes — régulation continentale</h1>
+    <div style="display:flex; gap:38px; flex:1; align-items:center;">
+      <img src="images/image29.jpeg" class="imground" style="width:52%; height:100%;" alt="Rivières volantes au-dessus de la forêt">
+      <div style="flex:1; display:flex; flex-direction:column; gap:24px;">
+        <div class="lead" style="color:var(--night-2);">La forêt transpire chaque jour plus d'eau que le fleuve n'en déverse dans l'Atlantique.</div>
+        <div class="card" style="background:var(--cream);"><div class="body" style="color:var(--night-2);">Ces « rivières volantes » (fleuves atmosphériques) transportent l'humidité jusqu'à <b>3 000 km</b> de distance et alimentent les pluies du Brésil central, de l'Argentine et du Paraguay.</div></div>
+        <div class="card" style="background:var(--terracotta);"><div class="body" style="color:var(--cream);">Sans forêt amazonienne : sécheresses catastrophiques pour tout le continent.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 31 · MENACES SUR L'EAU ============ -->
+  <section data-label="31 · Menaces sur l'eau" style="background: var(--blue-pale); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--blue-akuu);">04 · L'EAU — menacée</div>
+    <div class="topbar" style="background: var(--blue-sky);"></div>
+    <h1 class="h" style="color: var(--terracotta); margin: 22px 0 26px; font-size: 54px;">Menaces actuelles sur l'eau</h1>
+    <div style="display:flex; gap:38px; flex:1; align-items:center;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:20px;">
+        <div class="lead" style="color:var(--night-2);">La déforestation réduit l'évapotranspiration → les rivières volantes s'affaiblissent → sécheresses en cascade.</div>
+        <div class="card" style="background:var(--cream); border-left:8px solid var(--terracotta);"><b style="color:var(--terracotta); font-size:26px;">L'orpaillage illégal</b><div class="small" style="color:var(--night-2); margin-top:6px;">déverse du mercure : 4-18× les seuils sanitaires dans les rivières.</div></div>
+        <div class="card" style="background:var(--cream); border-left:8px solid var(--terracotta);"><b style="color:var(--terracotta); font-size:26px;">412 barrages</b><div class="small" style="color:var(--night-2); margin-top:6px;">projetés fragmentent les fleuves, bloquant les migrations de poissons essentielles aux communautés.</div></div>
+        <div class="body" style="color:var(--terracotta); font-weight:700;">L'eau amazonienne est plus menacée que jamais.</div>
+      </div>
+      <img src="images/image30.png" class="imground" style="width:50%; height:100%;" alt="Pollution des rivières par l'orpaillage">
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 32 · LA TERRE — HÉRITAGE ============ -->
+  <section data-label="32 · Élément 2 — LA TERRE" style="background: linear-gradient(160deg, #5c3320 0%, #45261680 100%), var(--sand); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--ochre-light);">04 · Les 4 éléments de Rostain</div>
+    <div class="topbar" style="background: var(--terracotta);"></div>
+    <div class="kicker" style="color:var(--ochre-light); margin:24px 0 6px;">Élément 2 · LA TERRE</div>
+    <h1 class="h" style="color: var(--cream); margin: 0 0 24px;">Enrichie pendant des millénaires</h1>
+    <div style="display:flex; gap:36px; flex:1;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:16px;">
+        <div class="body" style="color:var(--ochre-light);">Les sols tropicaux amazoniens sont <b>naturellement pauvres</b> (ferrallitiques, acides). Pourtant, les peuples précolombiens ont transformé des milliers de sites en terres fertiles. Ce que Meggers croyait impossible est documenté par des milliers de prélèvements.</div>
+        <div class="small" style="color:var(--ochre); font-weight:700; letter-spacing:2px;">HÉRITAGE — LA TERRA PRETA</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+          <div class="card" style="background:rgba(255,255,255,0.08); padding:18px 22px;"><b style="color:var(--cream); font-size:23px;">+3 500 sites</b><div class="small" style="color:var(--ochre-light); margin-top:4px;">de petits jardins familiaux aux plateformes de plusieurs km²</div></div>
+          <div class="card" style="background:rgba(255,255,255,0.08); padding:18px 22px;"><b style="color:var(--cream); font-size:23px;">2 m de profondeur</b><div class="small" style="color:var(--ochre-light); margin-top:4px;">des millénaires d'occupation et d'enrichissement continu</div></div>
+          <div class="card" style="background:rgba(255,255,255,0.08); padding:18px 22px;"><b style="color:var(--cream); font-size:23px;">Fertilité persistante</b><div class="small" style="color:var(--ochre-light); margin-top:4px;">fertiles des centaines d'années après l'abandon — utilisés encore aujourd'hui</div></div>
+          <div class="card" style="background:rgba(255,255,255,0.08); padding:18px 22px;"><b style="color:var(--cream); font-size:23px;">Composition intentionnelle</b><div class="small" style="color:var(--ochre-light); margin-top:4px;">biochar, os broyés, poteries, matière organique</div></div>
+        </div>
+      </div>
+      <img src="images/image32.jpeg" class="imground" style="width:520px; align-self:center; height:520px;" alt="Comparaison terra preta / sol normal">
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 33 · LA TERRE — MENACES ============ -->
+  <section data-label="33 · LA TERRE — menaces" style="background: var(--ochre-light); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--terracotta);">04 · LA TERRE — menacée</div>
+    <div class="topbar" style="background: var(--terracotta);"></div>
+    <h1 class="h" style="color: var(--terracotta); margin: 22px 0 24px; font-size: 52px;">La destruction des sols</h1>
+    <div style="display:flex; gap:36px; flex:1; align-items:center;">
+      <img src="images/image33.jpeg" class="imground" style="width:48%; height:100%;" alt="Sols amazoniens dégradés par l'agriculture">
+      <div style="flex:1; display:flex; flex-direction:column; gap:16px;">
+        <div class="card" style="background:var(--cream); border-left:8px solid var(--terracotta);"><b style="color:var(--terracotta); font-size:26px;">17 % détruits (+ 17 % dégradés)</b><div class="small" style="color:var(--night-2); margin-top:6px;">Seuil critique estimé à 20-25 % : au-delà, basculement irréversible vers la savane (WWF 2022).</div></div>
+        <div class="card" style="background:var(--cream); border-left:8px solid var(--terracotta);"><b style="color:var(--terracotta); font-size:26px;">Élevage — 70 % de la déforestation</b><div class="small" style="color:var(--night-2); margin-top:6px;">Soja et élevage bovin pour l'alimentation mondiale : le steak européen déforeste l'Amazonie.</div></div>
+        <div class="card" style="background:var(--cream); border-left:8px solid var(--terracotta);"><b style="color:var(--terracotta); font-size:26px;">Mining — contamination permanente</b><div class="small" style="color:var(--night-2); margin-top:6px;">Mercure dans les rivières, destruction physique des sols sur des dizaines de milliers d'hectares.</div></div>
+      </div>
+    </div>
+    <div class="src" style="color:var(--terracotta);">Sources : Rostain (2021) — WWF Living Amazon 2022 — Bruno Glaser &amp; al. (Bayreuth Univ.) — Science Panel Amazon 2021</div>
+  </section>
+
+  <!-- ============ SLIDE 34 · LE FEU — HÉRITAGE ============ -->
+  <section data-label="34 · Élément 3 — LE FEU" style="background: linear-gradient(160deg, #6a3a12 0%, #3a2109 100%); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--ochre-light);">04 · Les 4 éléments de Rostain</div>
+    <div class="topbar" style="background: var(--ochre);"></div>
+    <div class="kicker" style="color:var(--ochre); margin:24px 0 6px;">Élément 3 · LE FEU</div>
+    <h1 class="h" style="color: var(--cream); margin: 0 0 22px; font-size: 58px;">Source de vie ou instrument de destruction</h1>
+    <div style="display:flex; gap:36px; flex:1;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:16px;">
+        <div class="body" style="color:var(--ochre-light);">Le feu est au cœur de la relation entre les peuples amazoniens et leur territoire depuis des millénaires — outil de fertilisation, de chasse, de régénération. Aujourd'hui, il est devenu l'arme principale de la déforestation.</div>
+        <div class="small" style="color:var(--ochre); font-weight:700; letter-spacing:2px;">HÉRITAGE — LE BRÛLIS CONTRÔLÉ</div>
+        <div class="card" style="background:rgba(255,255,255,0.08);"><b style="color:var(--cream); font-size:24px;">Agriculture sur brûlis (swidden)</b><div class="small" style="color:var(--ochre-light); margin-top:6px;">Technique millénaire : on brûle une parcelle de forêt secondaire pour libérer les nutriments. Après 2-3 ans, la parcelle est abandonnée et la forêt reprend.</div></div>
+        <div class="card" style="background:rgba(255,255,255,0.08);"><b style="color:var(--cream); font-size:24px;">Régénération intentionnelle</b><div class="small" style="color:var(--ochre-light); margin-top:6px;">Les brûlis stimulent certaines espèces utiles (bambous, palmiers) et renouvellent les pâturages pour le gibier. Un outil de gestion écologique.</div></div>
+        <div class="card" style="background:rgba(255,255,255,0.08);"><b style="color:var(--cream); font-size:24px;">Brûlis et terra preta</b><div class="small" style="color:var(--ochre-light); margin-top:6px;">Le charbon produit par les brûlis est l'ingrédient central de la terra preta — incorporé au sol, il augmente la fertilité sur le long terme.</div></div>
+      </div>
+      <img src="images/image34.jpeg" class="imground" style="width:520px; align-self:center; height:540px;" alt="Brûlis en forêt amazonienne">
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 35 · LE FEU — MENACES ============ -->
+  <section data-label="35 · LE FEU — menaces" style="background: var(--ochre-light); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: #C9822E;">04 · LE FEU — menacé</div>
+    <div class="topbar" style="background: var(--ochre);"></div>
+    <h1 class="h" style="color: var(--terracotta); margin: 22px 0 22px; font-size: 52px;">Les incendies industriels</h1>
+    <div style="display:flex; gap:36px; flex:1; align-items:center;">
+      <div style="flex:1; display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <div class="card" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:24px;">90 % d'origine humaine</b><div class="small" style="color:var(--night-2); margin-top:6px;">Les incendies amazoniens ne sont pas naturels : ils sont allumés pour défricher au profit de l'élevage et de l'agriculture industrielle.</div></div>
+        <div class="card" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:24px;">+2 500 grands incendies (2020)</b><div class="small" style="color:var(--night-2); margin-top:6px;">Dont 88 % au Brésil. 2019 : +84 % de foyers d'incendie par rapport à la moyenne décennale.</div></div>
+        <div class="card" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:24px;">436 000 ha en 2021</b><div class="small" style="color:var(--night-2); margin-top:6px;">de forêt primaire perdus aux seuls incendies. Contrairement à la secondaire, elle ne se régénère pas à l'identique.</div></div>
+        <div class="card" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:24px;">Cercle vicieux : feu + sécheresse</b><div class="small" style="color:var(--night-2); margin-top:6px;">La déforestation assèche le climat, ce qui rend la forêt plus inflammable, ce qui accroît les incendies.</div></div>
+      </div>
+      <img src="images/image35.jpeg" class="imground" style="width:48%; height:100%;" alt="Déforestation par le feu vue du ciel">
+    </div>
+    <div class="src" style="color:var(--terracotta);">Sources : WWF Living Amazon 2022 — INPE Brésil 2021 — Rostain (2021)</div>
+  </section>
+
+  <!-- ============ SLIDE 36 · L'AIR ============ -->
+  <section data-label="36 · Élément 4 — L'AIR" style="background: linear-gradient(160deg, #0d3a5c 0%, #0a2338 100%); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--blue-pale);">04 · Les 4 éléments de Rostain</div>
+    <div class="topbar" style="background: var(--blue-pale);"></div>
+    <div class="kicker" style="color:var(--blue-pale); margin:24px 0 6px;">Élément 4 · L'AIR</div>
+    <h1 class="h" style="color: var(--cream); margin: 0 0 24px;">Régulateur du climat planétaire</h1>
+    <div style="display:flex; gap:36px; flex:1;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:18px;">
+        <div style="display:flex; gap:20px;">
+          <div class="card" style="background:rgba(255,255,255,0.08); flex:1;"><div class="num" style="color:var(--cream);">200 Gt</div><div class="small" style="color:var(--blue-pale);">de carbone stocké dans la biomasse</div></div>
+          <div class="card" style="background:rgba(255,255,255,0.08); flex:1;"><div class="num" style="color:var(--cream);">+0,3 °C</div><div class="small" style="color:var(--blue-pale);">sur la température mondiale si tout était libéré</div></div>
+        </div>
+        <div class="card" style="background:rgba(255,255,255,0.08);"><b style="color:var(--green-leaf); font-size:24px;">Puits de carbone mondial</b><div class="small" style="color:var(--blue-pale); margin-top:6px;">La forêt absorbe et stocke 150 à 200 milliards de tonnes de carbone. Entièrement brûlée, ses émissions équivaudraient à plus de 10× les émissions mondiales annuelles.</div></div>
+        <div class="card" style="background:rgba(231,111,81,0.22);"><b style="color:var(--ochre); font-size:24px;">L'air menacé — point de bascule</b><div class="small" style="color:var(--ochre-light); margin-top:6px;">Des zones de l'est de l'Amazonie brésilienne émettent déjà plus de CO₂ qu'elles n'en absorbent. Trois sécheresses record (2005, 2010, 2015-2016) et des températures +1,2 °C : le signal d'alarme est mondial.</div></div>
+      </div>
+      <img src="images/image36.jpeg" class="imground" style="width:560px; align-self:center; height:560px;" alt="Vue aérienne de l'Amazonie">
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 37 · FIN ============ -->
+  <section data-label="37 · Clôture" style="background: radial-gradient(120% 120% at 50% 20%, #1c3a15 0%, var(--night) 60%, #0a0f0d 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" style="height: 150px; object-fit: contain; margin-bottom: 34px;" alt="AKUU">
+    <div class="bar" style="background: var(--green-leaf);"></div>
+    <div class="kicker" style="color: var(--green-leaf); margin-bottom: 20px;">Module 1 · Terminé</div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:96px; font-weight:800; color:var(--cream); margin:0; text-align:center; line-height:1;">L'Amazonie</h1>
+    <p style="font-family:'Playfair Display',serif; font-size:44px; font-style:italic; color:var(--green-pale); margin:14px 0 0; text-align:center;">réalités, imaginaires et héritages</p>
+    <div style="width:120px; height:6px; background:var(--green-leaf); margin:44px 0;"></div>
+    <div class="card" style="background:rgba(255,255,255,0.08); text-align:center; padding:26px 54px;"><div class="small" style="color:var(--green-leaf); font-weight:700; letter-spacing:3px;">PROCHAIN MODULE</div><div style="font-family:'Playfair Display',serif; font-size:40px; font-weight:700; color:var(--cream); margin-top:8px;">Module 2 — Histoire &amp; Archéologie de l'Amazonie</div></div>
+  </section>
+
+</x-import>
+</x-dc>
+</body>
+</html>

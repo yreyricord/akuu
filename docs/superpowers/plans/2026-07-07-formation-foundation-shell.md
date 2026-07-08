@@ -85,7 +85,7 @@ const routeSeo = computed(() => {
 - [ ] **Step 3: Verify no other call sites broke**
 
 Run: `grep -rn "buildRouteSeoHead" src/`
-Expected: only the definition in `documentSeo.js` and the one call site in `App.vue` — both updated, no other callers to fix.
+Expected: only the definition in `documentSeo.js` and the one call site in `App.vue`, both updated, no other callers to fix.
 
 - [ ] **Step 4: Commit**
 
@@ -116,7 +116,7 @@ Add to the top-level object:
   "page_title": "Espace Formation",
   "intro": "Ressources et modules de formation pour les bénévoles AKUU en préparation de mission au Pérou.",
   "module_1": {
-    "title": "Module 1 — Comprendre pour mieux agir",
+    "title": "Module 1 : Comprendre pour mieux agir",
     "description": "Colonialisme, aide internationale, sauveur blanc, volontourisme.",
     "cta": "Commencer"
   },
@@ -131,7 +131,7 @@ Add to the top-level object:
 Add inside `seo.routes`:
 ```json
 "formation": {
-  "title": "Espace Formation — Bénévoles AKUU",
+  "title": "Espace Formation : Bénévoles AKUU",
   "description": "Espace de formation interne pour les bénévoles AKUU en préparation de mission."
 },
 ```
@@ -144,7 +144,7 @@ Top-level:
   "page_title": "Training Space",
   "intro": "Resources and training modules for AKUU volunteers preparing for their mission in Peru.",
   "module_1": {
-    "title": "Module 1 — Understanding to Act Better",
+    "title": "Module 1: Understanding to Act Better",
     "description": "Colonialism, international aid, the white savior figure, voluntourism.",
     "cta": "Start"
   },
@@ -159,7 +159,7 @@ Top-level:
 `seo.routes`:
 ```json
 "formation": {
-  "title": "Training Space — AKUU Volunteers",
+  "title": "Training Space: AKUU Volunteers",
   "description": "Internal training space for AKUU volunteers preparing for their mission."
 },
 ```
@@ -172,7 +172,7 @@ Top-level:
   "page_title": "Espacio de Formación",
   "intro": "Recursos y módulos de formación para los voluntarios de AKUU que se preparan para su misión en Perú.",
   "module_1": {
-    "title": "Módulo 1 — Comprender para actuar mejor",
+    "title": "Módulo 1: Comprender para actuar mejor",
     "description": "Colonialismo, ayuda internacional, el salvador blanco, voluntariado turístico.",
     "cta": "Empezar"
   },
@@ -187,7 +187,7 @@ Top-level:
 `seo.routes`:
 ```json
 "formation": {
-  "title": "Espacio de Formación — Voluntarios AKUU",
+  "title": "Espacio de Formación: Voluntarios AKUU",
   "description": "Espacio de formación interno para los voluntarios de AKUU en preparación de su misión."
 },
 ```
@@ -200,7 +200,7 @@ Top-level:
   "page_title": "Espaço de Formação",
   "intro": "Recursos e módulos de formação para os voluntários da AKUU que se preparam para a missão no Peru.",
   "module_1": {
-    "title": "Módulo 1 — Compreender para agir melhor",
+    "title": "Módulo 1: Compreender para agir melhor",
     "description": "Colonialismo, ajuda internacional, o salvador branco, voluntourismo.",
     "cta": "Começar"
   },
@@ -215,7 +215,7 @@ Top-level:
 `seo.routes`:
 ```json
 "formation": {
-  "title": "Espaço de Formação — Voluntários AKUU",
+  "title": "Espaço de Formação: Voluntários AKUU",
   "description": "Espaço de formação interno para os voluntários da AKUU em preparação para a missão."
 },
 ```
@@ -228,7 +228,7 @@ Top-level:
   "page_title": "Schulungsbereich",
   "intro": "Ressourcen und Schulungsmodule für AKUU-Freiwillige zur Vorbereitung ihres Einsatzes in Peru.",
   "module_1": {
-    "title": "Modul 1 — Verstehen, um besser zu handeln",
+    "title": "Modul 1: Verstehen, um besser zu handeln",
     "description": "Kolonialismus, internationale Hilfe, der „weiße Retter“, Voluntourismus.",
     "cta": "Beginnen"
   },
@@ -243,7 +243,7 @@ Top-level:
 `seo.routes`:
 ```json
 "formation": {
-  "title": "Schulungsbereich — AKUU-Freiwillige",
+  "title": "Schulungsbereich: AKUU-Freiwillige",
   "description": "Interner Schulungsbereich für AKUU-Freiwillige zur Vorbereitung ihres Einsatzes."
 },
 ```
@@ -369,7 +369,7 @@ Allow: /
 # Anciennes URLs d’API (ex. ancien CMS) — pas de contenu sur ce site statique
 Disallow: /_api/
 
-# Espace formation bénévoles — accès par lien direct uniquement, pas d'indexation
+# Espace formation bénévoles : accès par lien direct uniquement, pas d'indexation
 Disallow: /formation
 
 Sitemap: ${base}/sitemap.xml
@@ -416,7 +416,7 @@ Expected: `<meta name="robots" content="noindex, nofollow">`.
 Run: `grep -c "formation" dist/sitemap.xml; grep "Disallow: /formation" dist/robots.txt`
 Expected: first command prints `0`; second prints the `Disallow: /formation` line.
 
-No commit for this task — it's verification only, no file changes.
+No commit for this task: it's verification only, no file changes.
 
 ---
 
@@ -438,6 +438,6 @@ Confirm: page renders with `NavBar`/`Footer`, shows the "coming soon" placeholde
 
 - [ ] **Step 4: Confirm no nav link exists**
 
-Inspect the rendered `NavBar` (desktop and mobile menu) — confirm no link to `/formation` appears anywhere.
+Inspect the rendered `NavBar` (desktop and mobile menu); confirm no link to `/formation` appears anywhere.
 
-No commit for this task — it's manual verification only.
+No commit for this task: manual verification only.
