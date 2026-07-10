@@ -195,6 +195,18 @@ section[data-deck-active] [data-src]:not(.deck-vs__bubble) {
 @media (prefers-reduced-motion: reduce) {
   .src-tip::after { transition: none; }
 }
+/* Note de précision terminologique (vocabulaire emprunté, anachronisme, etc.) */
+.deck-vocab-note {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-left: 4px solid var(--ochre);
+  background: rgba(231, 111, 81, 0.1);
+  font-family: 'Inter', sans-serif;
+  font-size: calc(var(--fs-1) - 2px);
+  line-height: 1.35;
+  color: var(--night-2);
+}
+.deck-vocab-note b { color: var(--terracotta); font-weight: 600; }
 /* Carte stat : espace entre chiffre et légende */
 .stat-card .num + .body,
 .stat-card .num + .small { margin-top: 14px; }

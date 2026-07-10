@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!--
+  GABARIT DE DÉPART — deck de formation AKUU
+  ------------------------------------------------------------------
+  Copiez ce dossier vers «AKUU — Module 1/moduleX» (ou public/formation/
+  module-X-deck), remplacez le contenu des <section>, puis synchronisez
+  avec «npm run decks:sync». Les 4 archétypes de slide sont pré-câblés :
+    1) Couverture (bleu)   2) Sommaire (nuit Apple)
+    3) Chapitre (dégradé + chiffre)   4) Contenu (fond clair)
+  La palette et les composants partagés viennent de deck-theme.css.
+-->
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400;1,700&amp;family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../deck-theme.css">
+  <style>
+    /* Gabarit — marges propres au module (le reste hérite de ../deck-theme.css) */
+    :root {
+      --pad-top: 92px; --pad-bottom: 80px; --pad-x: 120px;
+    }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="deck-stage" from="./deck-stage.js" width="1920" height="1080" hint-size="100%,100%" data-uneditable="">
+
+  <!-- 1) COUVERTURE (bleu — présentation module) -->
+  <section data-label="01 · Couverture" style="background: var(--role-cover-bg); display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; padding: 0 var(--pad-x) 130px; overflow: hidden;">
+    <div style="position:absolute; inset:0; background: radial-gradient(60% 60% at 85% 20%, rgba(166,198,57,0.16) 0%, rgba(166,198,57,0) 60%);"></div>
+    <img src="images/collibri-akuu.png" style="position: absolute; right: 60px; top: 120px; height: 460px; object-fit: contain; filter: drop-shadow(0 24px 60px rgba(0,0,0,0.4));" alt="Colibri AKUU">
+    <img src="images/LOGOAKUU.png" style="position: absolute; top: 46px; left: var(--pad-x); height: 118px; object-fit: contain;" alt="AKUU">
+    <div class="bar" style="background: linear-gradient(90deg, var(--green-leaf), var(--blue-sky));"></div>
+    <div class="kicker anim" style="color: var(--green-leaf); margin-bottom: 30px; position: relative;">Module X · Formation AKUU</div>
+    <h1 class="anim anim-d1" style="font-family: 'Playfair Display', serif; font-size: var(--fs-5); font-weight: 800; color: var(--cream); margin: 0; line-height: 0.98; position: relative;">Titre du module</h1>
+    <p class="anim anim-d2" style="font-family: 'Playfair Display', serif; font-size:var(--fs-4); font-style: italic; font-weight: 400; color: var(--blue-pale); margin: 18px 0 0; line-height: 1.1; position: relative;">Sous-titre / accroche</p>
+  </section>
+
+  <!-- 2) SOMMAIRE (nuit futuriste Apple) -->
+  <section data-label="02 · Sommaire" class="toc" style="background: var(--role-toc-bg); display: flex; flex-direction: column; justify-content: center; padding: var(--pad-top) var(--pad-x);">
+    <img src="images/LOGOAKUU.png" class="logo toc-logo" alt="AKUU">
+    <div class="topbar" style="background: linear-gradient(90deg, var(--blue-sky), var(--green-leaf));"></div>
+    <h1 style="font-family: 'Playfair Display', serif; font-size:var(--fs-4); font-weight: 800; color: var(--cream); margin: 0 0 46px; line-height: 1;">Sommaire</h1>
+    <div class="toc-list">
+      <div class="toc-row"><span class="toc-num">01</span><div class="toc-txt"><div class="toc-title">Titre de la partie</div><div class="toc-desc">Description courte de la partie</div></div><span class="toc-arrow">→</span></div>
+      <div class="toc-row"><span class="toc-num">02</span><div class="toc-txt"><div class="toc-title">Titre de la partie</div><div class="toc-desc">Description courte de la partie</div></div><span class="toc-arrow">→</span></div>
+      <div class="toc-row"><span class="toc-num">03</span><div class="toc-txt"><div class="toc-title">Titre de la partie</div><div class="toc-desc">Description courte de la partie</div></div><span class="toc-arrow">→</span></div>
+    </div>
+  </section>
+
+  <!-- 3) CHAPITRE / intercalaire (dégradé + chiffre filigrane) -->
+  <section data-label="03 · Partie 01" style="background: var(--role-chapter-bg); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: var(--pad-top) var(--pad-x);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="bar" style="background: var(--green-leaf);"></div>
+    <div class="chapter-num">01</div>
+    <div class="kicker" style="color: var(--green-leaf); margin-bottom: 24px;">Partie 01 · Nom de la partie</div>
+    <h1 style="font-family: 'Playfair Display', serif; font-size: var(--fs-5); font-weight: 700; color: var(--cream); margin: 0; line-height: 1.02;">Titre de la partie</h1>
+    <div style="width: 120px; height: 6px; background: var(--green-leaf); margin: 40px 0 30px;"></div>
+    <p class="lead" style="color: var(--green-pale);">Sous-titre · repères · mots-clés</p>
+  </section>
+
+  <!-- 4) CONTENU (fond clair thématique) -->
+  <section data-label="04 · Contenu" style="background: var(--green-pale); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--green-forest);">01 · Nom de la partie</div>
+    <div class="topbar" style="background: var(--green-leaf);"></div>
+    <h1 class="h" style="color: var(--green-forest); margin: 24px 0 34px;">Titre de la slide</h1>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px;">
+      <div class="card" style="background: var(--cream); border-left: 8px solid var(--green-forest);"><div class="num" style="color: var(--green-forest);">00</div><div class="body" style="color: var(--night-2);">Libellé de la statistique ou du point clé</div></div>
+      <div class="card" style="background: var(--cream); border-left: 8px solid var(--blue-sky);"><div class="num" style="color: var(--blue-akuu);">00</div><div class="body" style="color: var(--night-2);">Libellé de la statistique ou du point clé</div></div>
+      <div class="card" style="background: var(--cream); border-left: 8px solid var(--terracotta);"><div class="num" style="color: var(--terracotta);">00</div><div class="body" style="color: var(--night-2);">Libellé de la statistique ou du point clé</div></div>
+    </div>
+    <button type="button" class="src-tip src-tip--slide" style="color: var(--green-forest);" data-src="à compléter">Source</button>
+  </section>
+
+</x-import>
+</x-dc>
+</body>
+</html>

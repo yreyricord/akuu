@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400;1,700&amp;family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../deck-theme.css">
+  <style>
+    /* Deck module 3 — marges propres au module (le reste hérite de ../deck-theme.css) */
+    :root {
+      --pad-top: 88px; --pad-bottom: 74px; --pad-x: 110px;
+    }
+    /* Cartes chiffres-clés */
+    .stat { display: flex; flex-direction: column; }
+    .stat-n { font-family: 'Playfair Display', serif; font-weight: 800; font-size: var(--fs-3); line-height: 1; }
+    .stat-l { font-family: 'Inter', sans-serif; font-size: var(--fs-1); font-weight: 300; margin-top: 6px; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="deck-stage" from="./deck-stage.js" width="1920" height="1080" hint-size="100%,100%" data-uneditable="">
+
+  <!-- ===== S1 COUVERTURE (BLEU — présentation module) ===== -->
+  <section data-label="01 · Couverture" style="background: radial-gradient(135% 130% at 82% 12%, #0a63b4 0%, var(--blue-akuu) 42%, #022a54 72%, #011d3c 100%); display:flex; flex-direction:column; justify-content:flex-end; padding: 0 var(--pad-x) 120px; overflow:hidden;">
+    <div style="position:absolute; inset:0; background: radial-gradient(60% 60% at 85% 20%, rgba(166,198,57,0.16) 0%, rgba(166,198,57,0) 60%);"></div>
+    <img src="images/collibri-akuu.png" style="position:absolute; right:60px; top:120px; height:460px; object-fit:contain; filter: drop-shadow(0 24px 60px rgba(0,0,0,0.4));" alt="Colibri AKUU">
+    <img src="images/LOGOAKUU.png" style="position:absolute; top:44px; left:var(--pad-x); height:112px; object-fit:contain;" alt="AKUU">
+    <div class="bar" style="background: linear-gradient(90deg, var(--green-leaf), var(--blue-sky));"></div>
+    <div class="kicker anim" style="color:var(--green-leaf); margin-bottom:28px; position:relative;">Module 3 · Formation AKUU</div>
+    <h1 class="anim anim-d1" style="font-family:'Playfair Display',serif; font-size:var(--fs-5); font-weight:800; color:var(--cream); margin:0; line-height:0.98; position:relative;">Géopolitique de<br>l'Amérique latine</h1>
+    <p class="anim anim-d2" style="font-family:'Playfair Display',serif; font-size:var(--fs-4); font-style:italic; color:var(--blue-pale); margin:14px 0 0; position:relative;">Contexte régional, crises &amp; focus Pérou</p>
+    <div class="src" style="position:static; opacity:0.7; margin-top:34px; color:var(--blue-pale);">Formation 2 h · Contexte régional &amp; enjeux pour les acteurs humanitaires</div>
+  </section>
+
+  <!-- ===== S2 SOMMAIRE (style futuriste Apple, uniforme) ===== -->
+  <section data-label="02 · Sommaire" class="toc" style="background: var(--role-toc-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
+    <img src="images/LOGOAKUU.png" class="logo toc-logo" alt="AKUU">
+    <div class="topbar" style="background: linear-gradient(90deg, var(--blue-sky), var(--green-leaf));"></div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:var(--fs-4); font-weight:800; color:var(--cream); margin:0 0 40px; line-height:1;">Sommaire</h1>
+    <div class="toc-list">
+      <div class="toc-row"><span class="toc-num">01</span><div class="toc-txt"><div class="toc-title">Contexte géopolitique de l'Amérique latine</div><div class="toc-desc">Puissances régionales, rivalité Chine–États-Unis, intégration, inégalités et climat</div></div><span class="toc-arrow">→</span></div>
+      <div class="toc-row"><span class="toc-num">02</span><div class="toc-txt"><div class="toc-title">Crises démocratiques &amp; instabilité</div><div class="toc-desc">Fragilité institutionnelle, corruption, polarisation, criminalité et impacts humanitaires</div></div><span class="toc-arrow">→</span></div>
+      <div class="toc-row"><span class="toc-num">03</span><div class="toc-txt"><div class="toc-title">Le Pérou — géopolitique et crises</div><div class="toc-desc">Histoire politique, instabilité chronique, économie minière, sécurité et zones rouges</div></div><span class="toc-arrow">→</span></div>
+      <div class="toc-row"><span class="toc-num">04</span><div class="toc-txt"><div class="toc-title">Sécurité &amp; opérations sur le terrain</div><div class="toc-desc">Évaluation des risques, acteurs locaux, sensibilités culturelles, santé et gestion du stress</div></div><span class="toc-arrow">→</span></div>
+    </div>
+  </section>
+
+  <!-- ===== S3 TITRE PARTIE 01 ===== -->
+  <section data-label="03 · Partie 01 — Contexte" style="background: var(--role-chapter-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="bar" style="background:var(--green-leaf);"></div>
+    <div style="font-family:'Playfair Display',serif; font-size:var(--fs-6); font-weight:800; color:rgba(166,198,57,0.15); position:absolute; top:40px; right:90px;">01</div>
+    <div class="kicker" style="color:var(--green-leaf); margin-bottom:22px;">Partie 01</div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:var(--fs-5); font-weight:700; color:var(--cream); margin:0; line-height:1.02;">Contexte géopolitique<br>de l'Amérique latine</h1>
+    <div style="width:120px; height:6px; background:var(--green-leaf); margin:36px 0 26px;"></div>
+    <p class="lead" style="color:var(--green-pale);">Acteurs majeurs · Influences externes · Enjeux pour l'humanitaire</p>
+  </section>
+
+  <!-- ===== S4 CHIFFRES CLÉS ===== -->
+  <section data-label="04 · Chiffres clés" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--green-forest);">01 · Contexte géopolitique</div>
+    <div class="topbar" style="background:var(--green-leaf);"></div>
+    <h1 class="h" style="color:var(--green-forest);">L'Amérique latine en chiffres clés</h1>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; flex:1;">
+      <div class="card stat card-in d1" style="background:var(--cream); justify-content:center;"><div class="stat-n" style="color:var(--green-leaf);">650 M</div><div class="stat-l" style="color:var(--night-2);">habitants sur 33 pays souverains</div></div>
+      <div class="card stat card-in d1" style="background:var(--cream); justify-content:center;"><div class="stat-n" style="color:var(--green-leaf);">5,5 T USD</div><div class="stat-l" style="color:var(--night-2);">PIB combiné — 3ᵉ économie mondiale</div></div>
+      <div class="card stat card-in d2" style="background:var(--cream); justify-content:center;"><div class="stat-n" style="color:var(--green-leaf);">20 M km²</div><div class="stat-l" style="color:var(--night-2);">de superficie — diversité géographique extrême</div></div>
+      <div class="card stat card-in d2" style="background:var(--cream); justify-content:center;"><div class="stat-n" style="color:var(--green-leaf);">33</div><div class="stat-l" style="color:var(--night-2);">pays souverains + territoires</div></div>
+      <div class="card card-in d3" style="background:var(--green-forest); justify-content:center;"><b style="color:var(--cream); font-size:var(--fs-1);">Enjeu majeur : les inégalités structurelles</b><div class="small" style="color:var(--green-leaf); margin-top:8px;">L'indice de Gini de la région figure parmi les plus élevés au monde — une fracture qui structure toutes les tensions sociales et politiques.</div></div>
+      <div class="card stat card-in d3" style="background:var(--cream); justify-content:center;"><div class="stat-n" style="color:var(--green-leaf);">Gini ≈ 48</div><div class="stat-l" style="color:var(--night-2);">parmi les régions les plus inégalitaires</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S5 PUISSANCES RÉGIONALES ===== -->
+  <section data-label="05 · Puissances régionales" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--green-forest);">01 · Contexte géopolitique</div>
+    <div class="topbar" style="background:var(--green-leaf);"></div>
+    <h1 class="h" style="color:var(--green-forest);">Les puissances régionales</h1>
+    <div style="display:flex; gap:28px; flex:1; align-items:stretch;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:20px; justify-content:center;">
+        <div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Brésil — le géant incontournable</b><div class="small" style="color:var(--night-2); margin-top:6px;">215 M hab. · PIB 2 T USD. Diplomatie multipolaire (BRICS, ONU, accord climatique). La puissance régionale de référence.</div></div>
+        <div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Colombie — géostratégie andine</b><div class="small" style="color:var(--night-2); margin-top:6px;">Leader régional. Enjeux : frontière avec le Venezuela et forte production agricole.</div></div>
+        <div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Mexique — arrimé aux États-Unis</b><div class="small" style="color:var(--night-2); margin-top:6px;">Accord USMCA, migration, et narcotrafic transnational majeur structurant la relation nord-américaine.</div></div>
+      </div>
+      <div style="flex:1.15; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;">
+        <div class="ph photo-in d1" data-ph="M3-01" style="width:100%; height:640px;"><span class="ph-num">M3-01</span><span class="ph-kind">IMAGE</span><span class="ph-desc">Carte des puissances régionales d'Amérique latine (Brésil, Colombie, Mexique)</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== S6 AUTRES ACTEURS ===== -->
+  <section data-label="06 · Autres acteurs" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--green-forest);">01 · Contexte géopolitique</div>
+    <div class="topbar" style="background:var(--green-leaf);"></div>
+    <h1 class="h" style="color:var(--green-forest);">Les autres acteurs régionaux</h1>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">ARGENTINE</div><b style="color:var(--green-forest); font-size:var(--fs-1); margin:4px 0;">2ᵉ économie sud-américaine</b><div class="small" style="color:var(--night-2);">Crise économique récurrente. Alignement politique volatil depuis l'arrivée de Milei en 2023.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">VENEZUELA</div><b style="color:var(--green-forest); font-size:var(--fs-1); margin:4px 0;">Effondrement institutionnel</b><div class="small" style="color:var(--night-2);">Crise humanitaire majeure, 6 M de réfugiés. Allié de la Chine et de la Russie.</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">PÉROU · ÉQUATEUR · CHILI</div><b style="color:var(--green-forest); font-size:var(--fs-1); margin:4px 0;">Instabilité croissante</b><div class="small" style="color:var(--night-2);">Demandes de réformes constitutionnelles et instabilité politique en hausse.</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S7 INFLUENCE AMÉRICAINE ===== -->
+  <section data-label="07 · Influence américaine" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--green-forest);">01 · Contexte géopolitique</div>
+    <div class="topbar" style="background:var(--green-leaf);"></div>
+    <h1 class="h" style="color:var(--green-forest);">Influence américaine historique</h1>
+    <div style="display:flex; gap:28px; flex:1; align-items:stretch;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:20px; justify-content:center;">
+        <div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Doctrine Monroe (1823)</b><div class="small" style="color:var(--night-2); margin-top:6px;">« L'Amérique aux Américains » — exclusion des puissances européennes du continent.</div></div>
+        <div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">XXᵉ siècle : interventions directes</b><div class="small" style="color:var(--night-2); margin-top:6px;">Chili (1973), Guatemala (1954)… Soutien à des régimes autoritaires au nom de la lutte anticommuniste.</div></div>
+        <div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Aujourd'hui : soft power</b><div class="small" style="color:var(--night-2); margin-top:6px;">Moins de domination directe, mais bases militaires, commerce et influence. Enjeux : immigration, narcotrafic, blocs régionaux.</div></div>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;">
+        <div class="ph photo-in d1" data-ph="M3-02" style="width:100%; height:400px;"><span class="ph-num">M3-02</span><span class="ph-kind">IMAGE</span><span class="ph-desc">Illustration doctrine Monroe / interventions US en Amérique latine</span></div>
+        <div class="card" style="background:var(--green-forest);"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« De la domination directe au soft power : l'influence des États-Unis persiste, mais change de forme. »</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== S8 MONTÉE DE LA CHINE ===== -->
+  <section data-label="08 · Montée de la Chine" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--green-forest);">01 · Contexte géopolitique</div>
+    <div class="topbar" style="background:var(--green-leaf);"></div>
+    <h1 class="h" style="color:var(--green-forest);">La montée en puissance de la Chine</h1>
+    <div style="display:flex; gap:24px; margin-bottom:20px;">
+      <div class="card stat card-in d1" style="background:var(--cream); flex:1; justify-content:center;"><div class="stat-n" style="color:var(--green-leaf);">2010</div><div class="stat-l" style="color:var(--night-2);">la Chine devient 1er partenaire commercial</div></div>
+      <div class="card stat card-in d1" style="background:var(--cream); flex:1; justify-content:center;"><div class="stat-n" style="color:var(--green-leaf);">150+ Mds $</div><div class="stat-l" style="color:var(--night-2);">de prêts d'infrastructure depuis 2000</div></div>
+      <div class="card stat card-in d2" style="background:var(--cream); flex:1; justify-content:center;"><div class="stat-n" style="color:var(--green-leaf);">7 · 3 · 1</div><div class="stat-l" style="color:var(--night-2);">ports au Mexique · au Panama · à Buenos Aires</div></div>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:20px; flex:1;">
+      <div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Investissements massifs</b><div class="small" style="color:var(--night-2); margin-top:6px;">Infrastructures, énergie, extraction. Accès prioritaire aux ressources naturelles : lithium, cuivre, pétrole.</div></div>
+      <div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Une stratégie discrète</b><div class="small" style="color:var(--night-2); margin-top:6px;">Influence politique sans imposition de régime. Présence militaire limitée (le Venezuela fait exception).</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S9 CHINE VS ÉTATS-UNIS ===== -->
+  <section data-label="09 · Chine vs États-Unis" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--green-forest);">01 · Contexte géopolitique</div>
+    <div class="topbar" style="background:var(--green-leaf);"></div>
+    <h1 class="h" style="color:var(--green-forest);">Chine vs États-Unis : la rivalité</h1>
+    <div style="display:flex; gap:24px; flex:1; align-items:stretch;">
+      <div class="card card-in d1" style="background:var(--cream); flex:1; display:flex; flex-direction:column; justify-content:center;"><div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">COMPÉTITION ÉCONOMIQUE</div><div class="small" style="color:var(--night-2); margin-top:8px;">La Chine, partenaire commercial · les États-Unis, investisseur et pourvoyeur de technologie. La Chine progresse, l'influence américaine décline.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); flex:1; display:flex; flex-direction:column; justify-content:center;"><div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">COMPÉTITION GÉOPOLITIQUE</div><div class="small" style="color:var(--night-2); margin-top:8px;">RCEP vs USMCA (intégration régionale). Taiwan, sanctions russo-européennes, alignements diplomatiques.</div></div>
+      <div class="card card-in d3" style="background:var(--green-forest); flex:1; display:flex; flex-direction:column; justify-content:center;"><b style="color:var(--cream); font-size:var(--fs-1);">Un choix difficile pour l'AL</b><div class="small" style="color:var(--green-leaf); margin-top:8px;">Dépendance commerciale à la Chine vs valeurs démocratiques occidentales. Cas Argentine : Milei promit d'ignorer la Chine… avant de collaborer.</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S10 LA RUSSIE ===== -->
+  <section data-label="10 · La Russie" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--green-forest);">01 · Contexte géopolitique</div>
+    <div class="topbar" style="background:var(--green-leaf);"></div>
+    <h1 class="h" style="color:var(--green-forest);">La Russie : un rôle limité mais croissant</h1>
+    <div style="display:flex; gap:28px; flex:1; align-items:stretch;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:20px; justify-content:center;">
+        <div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Présence militaire ciblée</b><div class="small" style="color:var(--night-2); margin-top:6px;">Surtout au Venezuela et au Nicaragua : armements et entraînement militaire.</div></div>
+        <div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Influence diplomatique</b><div class="small" style="color:var(--night-2); margin-top:6px;">Via la diplomatie multipolaire (BRICS, ONU). Impact économique bien moindre que la Chine ou les États-Unis.</div></div>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;">
+        <div class="ph photo-in d1" data-ph="M3-03" style="width:100%; height:360px;"><span class="ph-num">M3-03</span><span class="ph-kind">IMAGE</span><span class="ph-desc">Coopération militaire Russie–Venezuela / Nicaragua</span></div>
+        <div class="card" style="background:var(--green-forest); width:100%;"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« Tendance : une voix alternative aux puissances occidentales. »</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== S11 INTÉGRATION RÉGIONALE ===== -->
+  <section data-label="11 · Intégration régionale" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--green-forest);">01 · Contexte géopolitique</div>
+    <div class="topbar" style="background:var(--green-leaf);"></div>
+    <h1 class="h" style="color:var(--green-forest);">Une intégration régionale fragmentée</h1>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">MERCOSUR</div><b style="color:var(--green-forest); font-size:var(--fs-1); margin:4px 0;">Marché commun du Sud</b><div class="small" style="color:var(--night-2);">Argentine, Brésil, Paraguay, Uruguay. Objectif de libre-échange, mais bloqué par tensions politiques et protectionnisme.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">UNASUR / PROSUR</div><b style="color:var(--green-forest); font-size:var(--fs-1); margin:4px 0;">Intégration politique</b><div class="small" style="color:var(--night-2);">Tentatives très fragilisées par les désaccords idéologiques entre gouvernements.</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">ALBA</div><b style="color:var(--green-forest); font-size:var(--fs-1); margin:4px 0;">Alternative bolivarienne</b><div class="small" style="color:var(--night-2);">Alliance pro-Venezuela / Cuba, à l'influence déclinante.</div></div>
+    </div>
+    <div class="card" style="background:var(--green-forest); margin-top:20px;"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« La région ne parle pas d'une seule voix — c'est une faiblesse collective. »</p></div>
+  </section>
+
+  <!-- ===== S12 TRAJECTOIRES POLITIQUES ===== -->
+  <section data-label="12 · Trajectoires politiques" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--green-forest);">01 · Contexte géopolitique</div>
+    <div class="topbar" style="background:var(--green-leaf);"></div>
+    <h1 class="h" style="color:var(--green-forest);">Trajectoires politiques : la polarisation</h1>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column; border-top:6px solid var(--green-forest);"><div class="xs" style="color:var(--green-forest); font-weight:700;">2000–2015</div><b style="color:var(--night); font-size:var(--fs-1); margin:6px 0;">Gauche progressiste</b><div class="xs" style="color:var(--night-2);">Morales, Lula, Chávez. Redistribution, nationalisme, anti-impérialisme. Revers : corruption, autoritarisme.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column; border-top:6px solid var(--terracotta);"><div class="xs" style="color:var(--terracotta); font-weight:700;">2015–2020</div><b style="color:var(--night); font-size:var(--fs-1); margin:6px 0;">Virage à droite</b><div class="xs" style="color:var(--night-2);">Macri, Bolsonaro, Piñera. Libéralisation, ordre public. Critiques : inégalités amplifiées, répression.</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column; border-top:6px solid var(--green-forest);"><div class="xs" style="color:var(--green-forest); font-weight:700;">2020–2025</div><b style="color:var(--night); font-size:var(--fs-1); margin:6px 0;">Retour de la gauche</b><div class="xs" style="color:var(--night-2);">Lula, Petro, Castillo. Mais populisme, fragmentation et polarisation extrême.</div></div>
+      <div class="card card-in d4" style="background:var(--green-forest); display:flex; flex-direction:column; border-top:6px solid var(--green-leaf);"><div class="xs" style="color:var(--green-leaf); font-weight:700;">2025–2026</div><b style="color:var(--cream); font-size:var(--fs-1); margin:6px 0;">Nouveau cycle électoral</b><div class="xs" style="color:var(--green-leaf);">De nouvelles élections, encore plus polarisées.</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S13 INÉGALITÉS ===== -->
+  <section data-label="13 · Inégalités" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--green-forest);">01 · Contexte géopolitique</div>
+    <div class="topbar" style="background:var(--green-leaf);"></div>
+    <h1 class="h" style="color:var(--green-forest);">Inégalités : une structure fondamentale</h1>
+    <div style="display:flex; gap:28px; flex:1; align-items:stretch;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:18px; justify-content:center;">
+        <div class="card stat card-in d1" style="background:var(--cream);"><div class="stat-n" style="color:var(--green-leaf);">40 %</div><div class="stat-l" style="color:var(--night-2);">des revenus captés par les 10 % les plus riches</div></div>
+        <div class="card stat card-in d2" style="background:var(--cream);"><div class="stat-n" style="color:var(--green-leaf);">30 % / 10 %</div><div class="stat-l" style="color:var(--night-2);">de la population en pauvreté / en extrême pauvreté</div></div>
+      </div>
+      <div style="flex:1.2; display:flex; flex-direction:column; gap:14px; justify-content:center;">
+        <b style="color:var(--green-forest); font-size:var(--fs-2);">Des conséquences en chaîne</b>
+        <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:14px;">
+          <div class="card card-in d3" style="background:var(--cream);"><div class="small" style="color:var(--night-2);">Protestation sociale récurrente</div></div>
+          <div class="card card-in d3" style="background:var(--cream);"><div class="small" style="color:var(--night-2);">Criminalité et violence</div></div>
+          <div class="card card-in d4" style="background:var(--cream);"><div class="small" style="color:var(--night-2);">Migrations forcées</div></div>
+          <div class="card card-in d4" style="background:var(--cream);"><div class="small" style="color:var(--night-2);">Vulnérabilité aux populismes</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== S14 IDENTITÉS ET TENSIONS ===== -->
+  <section data-label="14 · Identités &amp; tensions" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--green-forest);">01 · Contexte géopolitique</div>
+    <div class="topbar" style="background:var(--green-leaf);"></div>
+    <h1 class="h" style="color:var(--green-forest);">Identités et tensions</h1>
+    <div style="display:flex; gap:28px; flex:1; align-items:stretch;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:20px; justify-content:center;">
+        <div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Héritage colonial</b><div class="small" style="color:var(--night-2); margin-top:6px;">Clivages raciaux et ethniques (Indiens, Métis, Afro-descendants, Blancs) et discrimination systémique.</div></div>
+        <div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Tensions actuelles</b><div class="small" style="color:var(--night-2); margin-top:6px;">Mouvements indigènes (Pérou, Bolivie, Équateur), question agraire (terres, eau, minéraux), droits LGBTQ+ et backlash.</div></div>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;">
+        <div class="ph photo-in d1" data-ph="M3-04" style="width:100%; height:400px;"><span class="ph-num">M3-04</span><span class="ph-kind">IMAGE</span><span class="ph-desc">Mouvement indigène / manifestation identitaire en Amérique latine</span></div>
+        <div class="card" style="background:var(--green-forest); width:100%;"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« Des conflits locaux complexes — pas simplement gauche contre droite. »</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== S15 CHANGEMENT CLIMATIQUE ===== -->
+  <section data-label="15 · Changement climatique" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--green-forest);">01 · Contexte géopolitique</div>
+    <div class="topbar" style="background:var(--green-leaf);"></div>
+    <h1 class="h" style="color:var(--green-forest);">Changement climatique : amplificateur de crises</h1>
+    <div style="display:flex; gap:28px; flex:1; align-items:stretch;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:20px; justify-content:center;">
+        <div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Une région très vulnérable</b><div class="small" style="color:var(--night-2); margin-top:6px;">Amazonie, Andes, Caraïbes. Sécheresses, inondations, déplacements de population et compétition pour l'eau et la terre.</div></div>
+        <div class="card card-in d2" style="background:var(--green-forest);"><b style="color:var(--cream); font-size:var(--fs-1);">Cas Pérou</b><div class="small" style="color:var(--green-leaf); margin-top:6px;">Glaciers andins : −50 % de volume depuis 1970. Stress hydrique pour l'agriculture et les villes. Enjeu : l'énergie hydroélectrique.</div></div>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;">
+        <div class="ph photo-in d1" data-ph="M3-05" style="width:100%; height:480px;"><span class="ph-num">M3-05</span><span class="ph-kind">IMAGE</span><span class="ph-desc">Recul des glaciers andins (Pérou) — comparaison avant/après</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== S16 SÉCURITÉ RÉGIONALE ===== -->
+  <section data-label="16 · Sécurité régionale" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--green-forest);">01 · Contexte géopolitique</div>
+    <div class="topbar" style="background:var(--green-leaf);"></div>
+    <h1 class="h" style="color:var(--green-forest);">Enjeux de sécurité régionaux</h1>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">NARCOTRAFIC</div><b style="color:var(--green-forest); font-size:var(--fs-1); margin:4px 0;">90 % de la cocaïne mondiale</b><div class="small" style="color:var(--night-2);">Source et transit. Organisations criminelles rivales, ultra-violentes. Corruption massive des institutions.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">MIGRATION</div><b style="color:var(--green-forest); font-size:var(--fs-1); margin:4px 0;">300 k+ / mois en 2024</b><div class="small" style="color:var(--night-2);">Flux massifs vers l'UE et les USA. Routes contrôlées par les trafiquants. Familles déchirées.</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">CRIME ORGANISÉ</div><b style="color:var(--green-forest); font-size:var(--fs-1); margin:4px 0;">Extorsion &amp; trafics</b><div class="small" style="color:var(--night-2);">Enlèvement, trafic d'armes. Des États fragiles à la faible capacité de réaction.</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S17 SYNTHÈSE CHAPITRE 1 ===== -->
+  <section data-label="17 · Synthèse Partie 01" style="background: var(--role-chapter-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="topbar" style="background:var(--green-leaf);"></div>
+    <div class="kicker" style="color:var(--green-leaf); margin-bottom:18px;">Synthèse · Partie 01</div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:var(--fs-4); font-weight:700; color:var(--cream); margin:0 0 30px;">Une géopolitique en transition</h1>
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:18px;">
+      <div class="card card-in d1" style="background:rgba(255,255,255,0.08);"><div class="small" style="color:var(--cream);">Puissances régionales (Brésil, Colombie) face à des États fragmentés</div></div>
+      <div class="card card-in d1" style="background:rgba(255,255,255,0.08);"><div class="small" style="color:var(--cream);">Rivalité États-Unis – Chine qui s'intensifie</div></div>
+      <div class="card card-in d2" style="background:rgba(255,255,255,0.08);"><div class="small" style="color:var(--cream);">Polarisation politique extrême et inégalités structurelles non résolues</div></div>
+      <div class="card card-in d2" style="background:rgba(255,255,255,0.08);"><div class="small" style="color:var(--cream);">Crises sécuritaires chroniques (narcotrafic, migration, crime organisé)</div></div>
+    </div>
+    <div class="card" style="background:var(--green-leaf); margin-top:26px;"><b style="color:var(--night); font-size:var(--fs-1);">Enjeu opérationnel :</b> <span class="small" style="color:var(--night-2);">la maîtrise de ces dynamiques régionales conditionne l'anticipation des tensions locales.</span></div>
+  </section>
+
+  <!-- ===== S18 TITRE PARTIE 02 ===== -->
+  <section data-label="18 · Partie 02 — Crises" style="background: var(--role-chapter-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="bar" style="background:var(--green-leaf);"></div>
+    <div style="font-family:'Playfair Display',serif; font-size:var(--fs-6); font-weight:800; color:rgba(166,198,57,0.15); position:absolute; top:40px; right:90px;">02</div>
+    <div class="kicker" style="color:var(--green-leaf); margin-bottom:22px;">Partie 02</div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:var(--fs-5); font-weight:700; color:var(--cream); margin:0; line-height:1.02;">Crises démocratiques<br>&amp; instabilité régionale</h1>
+    <div style="width:120px; height:6px; background:var(--green-leaf); margin:36px 0 26px;"></div>
+    <p class="lead" style="color:var(--green-pale);">Fragilité institutionnelle · Polarisation · Criminalité · Impacts humanitaires</p>
+  </section>
+
+  <!-- ===== S19 CRISE DE GOUVERNANCE ===== -->
+  <section data-label="19 · Crise de gouvernance" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--steel-dark);">02 · Crises démocratiques</div>
+    <div class="topbar" style="background:var(--steel-dark);"></div>
+    <h1 class="h" style="color:var(--steel-dark);">La crise de gouvernance</h1>
+    <div style="display:flex; gap:28px; flex:1; align-items:stretch;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:20px; justify-content:center;">
+        <div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Fragilité des institutions</b><div class="small" style="color:var(--night-2); margin-top:6px;">Constitutions réécrites en boucle, pouvoirs présidentiels face à des parlements fragmentés, justice souvent instrumentalisée.</div></div>
+        <div class="card card-in d2" style="background:var(--steel-dark);"><b style="color:var(--cream); font-size:var(--fs-1);">Conséquence</b><div class="small" style="color:#B9CEDD; margin-top:6px;">Des gouvernements sans légitimité, incapables d'agir durablement.</div></div>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column; gap:16px; justify-content:center;">
+        <div class="card stat card-in d1" style="background:var(--cream);"><div class="stat-n" style="color:var(--steel-dark);">6 présidents</div><div class="stat-l" style="color:var(--night-2);">au Pérou en 5 ans (2016–2021)</div></div>
+        <div class="card stat card-in d2" style="background:var(--cream);"><div class="stat-n" style="color:var(--steel-dark);">Bolivie</div><div class="stat-l" style="color:var(--night-2);">coup d'État en 2019, renversement en 2025</div></div>
+        <div class="card stat card-in d3" style="background:var(--cream);"><div class="stat-n" style="color:var(--steel-dark);">Chili</div><div class="stat-l" style="color:var(--night-2);">réforme constitutionnelle échouée — 2 tentatives</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== S20 CORRUPTION SYSTÉMIQUE ===== -->
+  <section data-label="20 · Corruption systémique" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--steel-dark);">02 · Crises démocratiques</div>
+    <div class="topbar" style="background:var(--steel-dark);"></div>
+    <h1 class="h" style="color:var(--steel-dark);">Corruption systémique — l'affaire Odebrecht</h1>
+    <div style="display:flex; gap:28px; flex:1; align-items:stretch;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:20px; justify-content:center;">
+        <div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">L'affaire Odebrecht (Brésil, 2013–)</b><div class="small" style="color:var(--night-2); margin-top:6px;">Le géant du BTP verse 28 M$ à 4 présidents péruviens. Toledo, García, Humala, Kuczynski impliqués. García : suicide en 2019 · Humala : prison en 2025.</div></div>
+        <div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Impact</b><div class="small" style="color:var(--night-2); margin-top:6px;">Méfiance massive envers la classe politique, vote protestataire / extrémiste, cycles de vengeance (chaque président poursuit le précédent).</div></div>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;">
+        <div class="ph photo-in d1" data-ph="M3-06" style="width:100%; height:360px;"><span class="ph-num">M3-06</span><span class="ph-kind">IMAGE</span><span class="ph-desc">Manifestation anti-corruption / procès Odebrecht</span></div>
+        <div class="card" style="background:var(--steel-dark); width:100%;"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">Indice de transparence 2024 : <b>37/100</b> — corruption très élevée.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== S21 MOUVEMENTS SOCIAUX ===== -->
+  <section data-label="21 · Mouvements sociaux" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--steel-dark);">02 · Crises démocratiques</div>
+    <div class="topbar" style="background:var(--steel-dark);"></div>
+    <h1 class="h" style="color:var(--steel-dark);">Mouvements sociaux : une amplification</h1>
+    <div style="display:flex; gap:28px; flex:1; align-items:stretch;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:20px; justify-content:center;">
+        <div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">2019–2024 : hausse exponentielle</b><div class="small" style="color:var(--night-2); margin-top:6px;">Grèves générales (Chili 2019, Équateur 2022, Pérou 2022–2023), manifestations massives contre les inégalités, répression policière fréquente.</div></div>
+        <div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Les moteurs</b><div class="small" style="color:var(--night-2); margin-top:6px;">Inflation et chômage post-COVID, réductions des allocations sociales, demandes de réforme agraire et minière, anti-autoritarisme.</div></div>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column; gap:16px; justify-content:center;">
+        <div class="ph photo-in d1" data-ph="M3-07" style="width:100%; height:320px;"><span class="ph-num">M3-07</span><span class="ph-kind">IMAGE</span><span class="ph-desc">Grève générale / manifestation en Amérique latine (2019–2024)</span></div>
+        <div style="display:flex; gap:16px;">
+          <div class="card stat card-in d3" style="background:var(--steel-dark); flex:1;"><div class="stat-n" style="color:#fff;">+14 %</div><div class="stat-l" style="color:#B9CEDD;">de grèves au Brésil en 2025</div></div>
+          <div class="card stat card-in d3" style="background:var(--steel-dark); flex:1;"><div class="stat-n" style="color:#fff;">50+</div><div class="stat-l" style="color:#B9CEDD;">universités occupées</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== S22 POLARISATION ===== -->
+  <section data-label="22 · Polarisation" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--steel-dark);">02 · Crises démocratiques</div>
+    <div class="topbar" style="background:var(--steel-dark);"></div>
+    <h1 class="h" style="color:var(--steel-dark);">Polarisation politique : la radicalisation</h1>
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:20px; margin-bottom:20px;">
+      <div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Un spectre qui s'élargit</b><div class="small" style="color:var(--night-2); margin-top:6px;">Une gauche plus radicale et anti-capitaliste, une droite plus autoritaire. Le centre politique a presque disparu. Rhétorique : « peuple contre oligarchie » vs « ordre contre chaos ».</div></div>
+      <div class="card card-in d2" style="background:var(--steel-dark);"><b style="color:var(--cream); font-size:var(--fs-1);">Risque</b><div class="small" style="color:#B9CEDD; margin-top:6px;">Coups d'État, autogolpes, violence politique.</div></div>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; flex:1;">
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--steel-dark); font-weight:800; letter-spacing:2px;">PÉROU</div><div class="small" style="color:var(--night-2); margin-top:6px;">Castillo (ethno-socialiste) vs Fujimori (autoritaire)</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--steel-dark); font-weight:800; letter-spacing:2px;">ARGENTINE</div><div class="small" style="color:var(--night-2); margin-top:6px;">Milei (libertarien ultra) vs kirchneristes (péronistes)</div></div>
+      <div class="card card-in d4" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--steel-dark); font-weight:800; letter-spacing:2px;">COLOMBIE</div><div class="small" style="color:var(--night-2); margin-top:6px;">Petro (gauche radicale) vs opposition conservatrice</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S23 EXTRÊME DROITE ===== -->
+  <section data-label="23 · Extrême droite" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--steel-dark);">02 · Crises démocratiques</div>
+    <div class="topbar" style="background:var(--steel-dark);"></div>
+    <h1 class="h" style="color:var(--steel-dark);">L'extrême droite en montée — désormais au pouvoir</h1>
+    <div style="display:flex; gap:28px; flex:1; align-items:stretch;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:14px; justify-content:center;">
+        <div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Une vague confirmée dans les urnes (2026)</b><div class="small" style="color:var(--night-2); margin-top:6px;">Après Milei (Argentine, 2023) et Bukele (Salvador), 2026 scelle la bascule : le Pérou, la Colombie et le Chili (José Antonio Kast) élisent la droite dure — souvent adoubée par Washington.</div></div>
+        <div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">L'appel électoral</b><div class="small" style="color:var(--night-2); margin-top:6px;">« Restaurer l'ordre » face au chaos sécuritaire. Anti-establishment, nationaliste, main de fer et anti-immigration.</div></div>
+        <div class="card card-in d3" style="background:var(--terracotta);"><b style="color:#fff; font-size:var(--fs-1);">Danger :</b> <span class="small" style="color:#fff;">démantèlement des contre-pouvoirs démocratiques et fragilisation des processus de paix.</span></div>
+      </div>
+      <div style="flex:1.05; display:flex; flex-direction:column; gap:16px; justify-content:center;">
+        <div class="card card-in d1" style="background:var(--steel-dark);"><div class="xs" style="color:var(--ochre); font-weight:800; letter-spacing:2px;">PÉROU · 7 JUIN 2026</div><b style="color:#fff; font-size:var(--fs-1); margin:4px 0; display:block;">Keiko Fujimori — Fuerza Popular</b><div class="small" style="color:#B9CEDD;">Droite autoritaire. Élue au 2ᵈ tour avec 50,1 % face au candidat de gauche Roberto Sánchez (écart &lt; 50 000 voix). Investiture le 28 juillet 2026 — 9ᵉ présidence en 10 ans. Programme « poigne de fer » anticriminalité (militarisation des prisons et des frontières).</div></div>
+        <div class="card card-in d2" style="background:var(--steel-dark);"><div class="xs" style="color:var(--ochre); font-weight:800; letter-spacing:2px;">COLOMBIE · 21 JUIN 2026</div><b style="color:#fff; font-size:var(--fs-1); margin:4px 0; display:block;">Abelardo de la Espriella — « le Tigre »</b><div class="small" style="color:#B9CEDD;">Outsider d'extrême droite soutenu par Donald Trump. Élu avec 49,7 % face à Iván Cepeda (gauche) — candidat le plus voté de l'histoire colombienne. Investiture le 7 août 2026. Fin de la « paz total » et offensive contre les groupes armés.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== S24 CRIMINALITÉ ORGANISÉE ===== -->
+  <section data-label="24 · Criminalité organisée" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--steel-dark);">02 · Crises démocratiques</div>
+    <div class="topbar" style="background:var(--steel-dark);"></div>
+    <h1 class="h" style="color:var(--steel-dark);">Criminalité organisée : l'ampleur</h1>
+    <div style="display:flex; gap:24px; margin-bottom:20px;">
+      <div class="card stat card-in d1" style="background:var(--cream); flex:1; justify-content:center;"><div class="stat-n" style="color:var(--steel-dark);">25 / 100k</div><div class="stat-l" style="color:var(--night-2);">taux moyen d'homicides (vs 6 aux USA/UE)</div></div>
+      <div class="card stat card-in d1" style="background:var(--cream); flex:1; justify-content:center;"><div class="stat-n" style="color:var(--steel-dark);">+36 %</div><div class="stat-l" style="color:var(--night-2);">d'homicides au Pérou (2023–2024)</div></div>
+      <div class="card stat card-in d2" style="background:var(--cream); flex:1; justify-content:center;"><div class="stat-n" style="color:var(--steel-dark);">40 / 100k</div><div class="stat-l" style="color:var(--night-2);">en Équateur — parmi les pires au monde</div></div>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:20px; flex:1;">
+      <div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Organisations</b><div class="small" style="color:var(--night-2); margin-top:6px;">Cartels mexicains (CJNG, Sinaloa) en expansion, bandes locales (MS-13…), triades chinoises (trafic de fentanyl).</div></div>
+      <div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Modus operandi</b><div class="small" style="color:var(--night-2); margin-top:6px;">Extorsion (transports, commerce), trafic de drogue vers l'UE et le Canada, vol d'identité et fraude bancaire.</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S25 NARCOTRAFIC — CHAÎNE DE VALEUR ===== -->
+  <section data-label="25 · Narcotrafic — chaîne" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--steel-dark);">02 · Crises démocratiques</div>
+    <div class="topbar" style="background:var(--steel-dark);"></div>
+    <h1 class="h" style="color:var(--steel-dark);">Narcotrafic : la chaîne de valeur</h1>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column; border-top:6px solid var(--steel-dark);"><div class="xs" style="color:var(--steel-dark); font-weight:800;">1 · PRODUCTION</div><b style="color:var(--night); font-size:var(--fs-1); margin:6px 0;">Colombie / Pérou</b><div class="xs" style="color:var(--night-2);">410 k hectares de coca (Pérou nº1). Des bandes rivales se battent pour le contrôle du territoire.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column; border-top:6px solid var(--steel-dark);"><div class="xs" style="color:var(--steel-dark); font-weight:800;">2 · TRANSFORMATION</div><b style="color:var(--night); font-size:var(--fs-1); margin:6px 0;">Laboratoires clandestins</b><div class="xs" style="color:var(--night-2);">Cocaïne base → chlorhydrate. Ajout de fentanyl (potency et profit accrus).</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column; border-top:6px solid var(--steel-dark);"><div class="xs" style="color:var(--steel-dark); font-weight:800;">3 · TRANSPORT</div><b style="color:var(--night); font-size:var(--fs-1); margin:6px 0;">Routes de trafic</b><div class="xs" style="color:var(--night-2);">Venezuela (ports/aéroports non contrôlés), Brésil (porte de l'UE), Amazonie impossible à surveiller.</div></div>
+      <div class="card card-in d4" style="background:var(--steel-dark); display:flex; flex-direction:column; border-top:6px solid var(--terracotta);"><div class="xs" style="color:var(--terracotta); font-weight:800;">4 · MARCHÉ</div><b style="color:#fff; font-size:var(--fs-1); margin:6px 0;">150–200 $ / g</b><div class="xs" style="color:#B9CEDD;">Prix final en Europe — un marché énorme.</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S26 ÉTAT DE DROIT EFFONDRÉ ===== -->
+  <section data-label="26 · État de droit" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--steel-dark);">02 · Crises démocratiques</div>
+    <div class="topbar" style="background:var(--steel-dark);"></div>
+    <h1 class="h" style="color:var(--steel-dark);">Un état de droit effondré</h1>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--steel-dark); font-weight:800; letter-spacing:2px;">VENEZUELA</div><b style="color:var(--steel-dark); font-size:var(--fs-1); margin:4px 0;">Prisons à 5× la capacité</b><div class="small" style="color:var(--night-2);">Torture systématique signalée (ONU). Tribunaux devenus instruments du régime.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--steel-dark); font-weight:800; letter-spacing:2px;">PÉROU</div><b style="color:var(--steel-dark); font-size:var(--fs-1); margin:4px 0;">143 % d'occupation</b><div class="small" style="color:var(--night-2);">Des gangs contrôlent certaines prisons. Impunité massive : 95 % des crimes non punis.</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--steel-dark); font-weight:800; letter-spacing:2px;">ÉQUATEUR · COLOMBIE</div><b style="color:var(--steel-dark); font-size:var(--fs-1); margin:4px 0;">Massacres en prison</b><div class="small" style="color:var(--night-2);">Trafiquants contre rivaux. Justice lente et inefficace.</div></div>
+    </div>
+    <div class="card" style="background:var(--steel-dark); margin-top:20px;"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« Les populations vivent dans la peur et ont peu confiance dans les autorités. »</p></div>
+  </section>
+
+  <!-- ===== S27 VIOLENCES PARTICULIÈRES ===== -->
+  <section data-label="27 · Violences particulières" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--steel-dark);">02 · Crises démocratiques</div>
+    <div class="topbar" style="background:var(--steel-dark);"></div>
+    <h1 class="h" style="color:var(--steel-dark);">Des violences particulières</h1>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--terracotta); font-weight:800; letter-spacing:2px;">GENRE</div><b style="color:var(--steel-dark); font-size:var(--fs-1); margin:4px 0;">2 500+ féminicides / an</b><div class="small" style="color:var(--night-2);">L'AL figure parmi les régions aux plus hauts taux de féminicide. Impunité quasi-totale.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--terracotta); font-weight:800; letter-spacing:2px;">LGBTQ+</div><b style="color:var(--steel-dark); font-size:var(--fs-1); margin:4px 0;">Violences &amp; backlash</b><div class="small" style="color:var(--night-2);">Attaques lors des prides, législations restrictives dans certains pays, backlash religieux croissant.</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--terracotta); font-weight:800; letter-spacing:2px;">ENFANTS</div><b style="color:var(--steel-dark); font-size:var(--fs-1); margin:4px 0;">Enrôlement forcé</b><div class="small" style="color:var(--night-2);">Enrôlement par les gangs, exploitation sexuelle commerciale, enfants-soldats (Colombie).</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S28 MIGRATIONS FORCÉES ===== -->
+  <section data-label="28 · Migrations forcées" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--steel-dark);">02 · Crises démocratiques</div>
+    <div class="topbar" style="background:var(--steel-dark);"></div>
+    <h1 class="h" style="color:var(--steel-dark);">Migrations forcées</h1>
+    <div style="display:flex; gap:28px; flex:1; align-items:stretch;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:16px; justify-content:center;">
+        <div class="card stat card-in d1" style="background:var(--cream);"><div class="stat-n" style="color:var(--steel-dark);">7 M+</div><div class="stat-l" style="color:var(--night-2);">réfugiés / déplacés en AL (2025)</div></div>
+        <div class="card stat card-in d2" style="background:var(--cream);"><div class="stat-n" style="color:var(--steel-dark);">300 k+ / mois</div><div class="stat-l" style="color:var(--night-2);">migrants tentant d'atteindre l'UE / les USA</div></div>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column; gap:20px; justify-content:center;">
+        <div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Origines</b><div class="small" style="color:var(--night-2); margin-top:6px;">Pérou, Colombie, Équateur (insécurité + pauvreté), Venezuela (effondrement), Honduras, El Salvador (gangs).</div></div>
+        <div class="card card-in d2" style="background:var(--steel-dark);"><b style="color:var(--cream); font-size:var(--fs-1);">Risques sur la route</b><div class="small" style="color:#B9CEDD; margin-top:6px;">Viol, extorsion, enlèvement, mort dans les déserts et les océans, traite humaine.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== S29 PROTESTATION SOCIALE ===== -->
+  <section data-label="29 · Protestation sociale" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--steel-dark);">02 · Crises démocratiques</div>
+    <div class="topbar" style="background:var(--steel-dark);"></div>
+    <h1 class="h" style="color:var(--steel-dark);">Protestation sociale : exemples récents</h1>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--steel-dark); font-weight:800; letter-spacing:2px;">PÉROU 2022–2023</div><b style="color:var(--terracotta); font-size:var(--fs-1); margin:4px 0;">60+ morts</b><div class="small" style="color:var(--night-2);">Castillo destitué (autogolpe échoué). Manifestations massives, blocages de routes, tensions ethniques.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--steel-dark); font-weight:800; letter-spacing:2px;">ÉQUATEUR 2022</div><b style="color:var(--terracotta); font-size:var(--fs-1); margin:4px 0;">300+ morts</b><div class="small" style="color:var(--night-2);">Suppression des subventions au diesel, prisons en révolte.</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--steel-dark); font-weight:800; letter-spacing:2px;">CHILI 2019–2020</div><b style="color:var(--terracotta); font-size:var(--fs-1); margin:4px 0;">Révolte des inégalités</b><div class="small" style="color:var(--night-2);">Réforme constitutionnelle lancée puis échouée.</div></div>
+    </div>
+    <div class="card" style="background:var(--steel-dark); margin-top:20px;"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">Pattern récurrent : <b>protestation → répression → radicalisation.</b></p></div>
+  </section>
+
+  <!-- ===== S30 IMPACTS HUMANITAIRES ===== -->
+  <section data-label="30 · Impacts humanitaires" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--steel-dark);">02 · Crises démocratiques</div>
+    <div class="topbar" style="background:var(--steel-dark);"></div>
+    <h1 class="h" style="color:var(--steel-dark);">Impacts humanitaires</h1>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--steel-dark); font-weight:800; letter-spacing:2px;">DÉPLACEMENT</div><b style="color:var(--steel-dark); font-size:var(--fs-1); margin:4px 0;">6 M+ déplacés internes</b><div class="small" style="color:var(--night-2);">Camps de réfugiés surpeuplés (Colombie, Équateur).</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--steel-dark); font-weight:800; letter-spacing:2px;">SANTÉ</div><b style="color:var(--steel-dark); font-size:var(--fs-1); margin:4px 0;">Systèmes fragiles</b><div class="small" style="color:var(--night-2);">Surcharge du public, malnutrition (Venezuela, Haïti), crises psychologiques (PTSD, dépression).</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--steel-dark); font-weight:800; letter-spacing:2px;">ÉCONOMIE</div><b style="color:var(--steel-dark); font-size:var(--fs-1); margin:4px 0;">Informalité 50 %+</b><div class="small" style="color:var(--night-2);">Chômage de 8–12 %, pas de protection sociale, pouvoir d'achat effondré (Venezuela −90 %).</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S31 SYNTHÈSE CHAPITRE 2 ===== -->
+  <section data-label="31 · Synthèse Partie 02" style="background: var(--role-chapter-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="topbar" style="background:var(--green-leaf);"></div>
+    <div class="kicker" style="color:var(--green-leaf); margin-bottom:18px;">Synthèse · Partie 02</div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:var(--fs-4); font-weight:700; color:var(--cream); margin:0 0 30px;">Une crise multidimensionnelle</h1>
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:18px;">
+      <div class="card card-in d1" style="background:rgba(255,255,255,0.08);"><div class="small" style="color:var(--cream);">Institutions démocratiques fragilisées</div></div>
+      <div class="card card-in d1" style="background:rgba(255,255,255,0.08);"><div class="small" style="color:var(--cream);">Mouvements sociaux massifs &amp; répression</div></div>
+      <div class="card card-in d2" style="background:rgba(255,255,255,0.08);"><div class="small" style="color:var(--cream);">Polarisation extrême — le centre politique a disparu</div></div>
+      <div class="card card-in d2" style="background:rgba(255,255,255,0.08);"><div class="small" style="color:var(--cream);">Criminalité organisée qui infiltre l'État · migrations massives</div></div>
+    </div>
+    <div class="card" style="background:var(--green-leaf); margin-top:26px;"><b style="color:var(--night); font-size:var(--fs-1);">Implication opérationnelle :</b> <span class="small" style="color:var(--night-2);">des contextes hautement instables et des populations en situation de traumatisme.</span></div>
+  </section>
+
+  <!-- ===== S32 TITRE PARTIE 03 ===== -->
+  <section data-label="32 · Partie 03 — Le Pérou" style="background: var(--role-chapter-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="bar" style="background:var(--green-leaf);"></div>
+    <div style="font-family:'Playfair Display',serif; font-size:var(--fs-6); font-weight:800; color:rgba(166,198,57,0.15); position:absolute; top:40px; right:90px;">03</div>
+    <div class="kicker" style="color:var(--green-leaf); margin-bottom:22px;">Partie 03</div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:var(--fs-5); font-weight:700; color:var(--cream); margin:0; line-height:1.02;">Le Pérou —<br>géopolitique &amp; crises</h1>
+    <div style="width:120px; height:6px; background:var(--green-leaf); margin:36px 0 26px;"></div>
+    <p class="lead" style="color:var(--green-pale);">Pays-clé pour vos opérations · Histoire chaotique · Enjeux humanitaires majeurs</p>
+  </section>
+
+  <!-- ===== S33 FICHE IDENTITÉ ===== -->
+  <section data-label="33 · Fiche identité" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:#8A5A24;">03 · Le Pérou</div>
+    <div class="topbar" style="background:var(--ochre);"></div>
+    <h1 class="h" style="color:#8A5A24;">Pérou : fiche d'identité</h1>
+    <div style="display:flex; gap:28px; flex:1; align-items:stretch;">
+      <div style="flex:1.4; display:grid; grid-template-columns:repeat(3,1fr); gap:16px; align-content:center;">
+        <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--ochre); font-weight:800; letter-spacing:2px;">GÉOGRAPHIE</div><b style="color:#8A5A24; font-size:var(--fs-1); margin:4px 0;">1,3 M km²</b><div class="xs" style="color:var(--night-2);">3ᵉ d'Amérique du Sud. 3 régions : côte (Lima), Andes, Amazonie. Frontières avec 5 pays.</div></div>
+        <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--ochre); font-weight:800; letter-spacing:2px;">ÉCONOMIE</div><b style="color:#8A5A24; font-size:var(--fs-1); margin:4px 0;">500 Mds USD</b><div class="xs" style="color:var(--night-2);">PIB 2024 (7ᵉ AL), croissance +2,9 %. Exports : cuivre (35 %), poisson (15 %), or (7 %).</div></div>
+        <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--ochre); font-weight:800; letter-spacing:2px;">DÉMOGRAPHIE</div><b style="color:#8A5A24; font-size:var(--fs-1); margin:4px 0;">34 M hab.</b><div class="xs" style="color:var(--night-2);">Lima : 10 M (metro). 78 % urbains. 43 % Quechua/Aymara · 37 % métis · 15 % blancs.</div></div>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;">
+        <div class="ph photo-in d1" data-ph="M3-08" style="width:100%; height:560px;"><span class="ph-num">M3-08</span><span class="ph-kind">IMAGE</span><span class="ph-desc">Carte du Pérou : côte, Andes, Amazonie et pays frontaliers</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== S34 HISTOIRE INCA À RÉPUBLIQUE ===== -->
+  <section data-label="34 · Inca à République" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:#8A5A24;">03 · Le Pérou</div>
+    <div class="topbar" style="background:var(--ochre);"></div>
+    <h1 class="h" style="color:#8A5A24;">Histoire : de l'Inca à la République</h1>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column; border-top:6px solid #8A5A24;"><div class="xs" style="color:#8A5A24; font-weight:700;">1200–1533</div><b style="color:var(--night); font-size:var(--fs-1); margin:6px 0;">Empire Inca</b><div class="small" style="color:var(--night-2);">L'une des grandes civilisations précolombiennes. Contrôle du Pérou, de la Bolivie, de l'Équateur et du Chili.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column; border-top:6px solid #8A5A24;"><div class="xs" style="color:#8A5A24; font-weight:700;">1533–1821</div><b style="color:var(--night); font-size:var(--fs-1); margin:6px 0;">Conquête espagnole</b><div class="small" style="color:var(--night-2);">Pizarro écrase les Incas. 3 siècles de colonisation, exploitation minière (argent de Potosí), hiérarchie raciale née du mestizaje.</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column; border-top:6px solid #8A5A24;"><div class="xs" style="color:#8A5A24; font-weight:700;">1821 →</div><b style="color:var(--night); font-size:var(--fs-1); margin:6px 0;">La République</b><div class="small" style="color:var(--night-2);">Oligarchie foncière au pouvoir. Boom du guano (XIXᵉ), puis pétrole et minéraux. Pauvreté rurale chronique.</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S35 20e SIÈCLE ===== -->
+  <section data-label="35 · XXᵉ siècle" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:#8A5A24;">03 · Le Pérou</div>
+    <div class="topbar" style="background:var(--ochre);"></div>
+    <h1 class="h" style="color:#8A5A24;">XXᵉ siècle : autoritarisme et guerre interne</h1>
+    <div style="display:flex; gap:28px; flex:1; align-items:stretch;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:20px; justify-content:center;">
+        <div class="card card-in d1" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">Dictatures militaires</b><div class="small" style="color:var(--night-2); margin-top:6px;">1968–1975 : Velasco Alvarado (gauche militaire) — réforme agraire, nationalisation des ressources. 1975–1980 : retour instable à la démocratie.</div></div>
+        <div class="card card-in d2" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">Fujimori (1990–2000)</b><div class="small" style="color:var(--night-2); margin-top:6px;">Élu, puis autogolpe en 1992 : dissolution du Congrès. Aide militaire US. Répression sévère.</div></div>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;">
+        <div class="ph photo-in d1" data-ph="M3-09" style="width:100%; height:360px;"><span class="ph-num">M3-09</span><span class="ph-kind">IMAGE</span><span class="ph-desc">Guerre interne Pérou / Sendero Luminoso (années 1980–90)</span></div>
+        <div class="card" style="background:#6e481f; width:100%;"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">75 000 morts dans le conflit Sendero Luminoso vs armée. Fujimori fuit en 2000, réfugié au Japon.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== S36 TRANSITION 2001-2016 ===== -->
+  <section data-label="36 · Transition 2001–2016" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:#8A5A24;">03 · Le Pérou</div>
+    <div class="topbar" style="background:var(--ochre);"></div>
+    <h1 class="h" style="color:#8A5A24;">Une transition difficile (2001–2016)</h1>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:#8A5A24; font-weight:800; letter-spacing:2px;">2001–2006</div><b style="color:#8A5A24; font-size:var(--fs-1); margin:4px 0;">Alejandro Toledo</b><div class="small" style="color:var(--night-2);">Retour démocratique, mais corruption (Odebrecht). En fuite en 2023, extradé en 2024.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:#8A5A24; font-weight:800; letter-spacing:2px;">2006–2011</div><b style="color:#8A5A24; font-size:var(--fs-1); margin:4px 0;">Alan García</b><div class="small" style="color:var(--night-2);">Président à deux reprises (1985, 2006). Impliqué dans Odebrecht, suicide en prison en 2019.</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:#8A5A24; font-weight:800; letter-spacing:2px;">2011–2016</div><b style="color:#8A5A24; font-size:var(--fs-1); margin:4px 0;">Ollanta Humala</b><div class="small" style="color:var(--night-2);">Nationaliste, proche de Chávez. Corruption (Odebrecht), emprisonné en 2025.</div></div>
+    </div>
+    <div class="card" style="background:#6e481f; margin-top:20px;"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">Un pattern : chaque président corrompu, puis poursuivi par le suivant.</p></div>
+  </section>
+
+  <!-- ===== S37 CRISE POLITIQUE 2016-2021 ===== -->
+  <section data-label="37 · Crise 2016–2021" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:#8A5A24;">03 · Le Pérou</div>
+    <div class="topbar" style="background:var(--ochre);"></div>
+    <h1 class="h" style="color:#8A5A24;">Une crise politique chronique (2016–2021)</h1>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:#8A5A24; font-weight:700;">2016–2018</div><b style="color:var(--night); font-size:var(--fs-1); margin:6px 0;">P. P. Kuczynski</b><div class="xs" style="color:var(--night-2);">Néolibéral, corruption Odebrecht — forcé à démissionner.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:#8A5A24; font-weight:700;">2018–2020</div><b style="color:var(--night); font-size:var(--fs-1); margin:6px 0;">Martín Vizcarra</b><div class="xs" style="color:var(--night-2);">Confinement COVID très dur. Destitué (autogolpe manqué, puis corruption).</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--terracotta); font-weight:700;">nov. 2020</div><b style="color:var(--night); font-size:var(--fs-1); margin:6px 0;">Manuel Merino</b><div class="xs" style="color:var(--night-2);">Coup d'État avorté. 60+ morts. 1 semaine au pouvoir.</div></div>
+      <div class="card card-in d4" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:#8A5A24; font-weight:700;">2020–2021</div><b style="color:var(--night); font-size:var(--fs-1); margin:6px 0;">Francisco Sagasti</b><div class="xs" style="color:var(--night-2);">Président « transitoire », technocrate. Organise les élections 2021.</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S38 PEDRO CASTILLO ===== -->
+  <section data-label="38 · Pedro Castillo" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:#8A5A24;">03 · Le Pérou</div>
+    <div class="topbar" style="background:var(--ochre);"></div>
+    <h1 class="h" style="color:#8A5A24;">Pedro Castillo (2021–2022)</h1>
+    <div style="display:flex; gap:28px; flex:1; align-items:stretch;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:18px; justify-content:center;">
+        <div class="card card-in d1" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">Élection 2021</b><div class="small" style="color:var(--night-2); margin-top:6px;">Syndicaliste, professeur rural, gauche radicale. Face à Keiko Fujimori (droite). Victoire de justesse, contestée par la droite.</div></div>
+        <div class="card card-in d2" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">Un gouvernement instable</b><div class="small" style="color:var(--night-2); margin-top:6px;">5 premiers ministres en 18 mois, Congrès hostile, scandales de corruption (famille, ministres).</div></div>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;">
+        <div class="ph photo-in d1" data-ph="M3-10" style="width:100%; height:340px;"><span class="ph-num">M3-10</span><span class="ph-kind">IMAGE</span><span class="ph-desc">Pedro Castillo — 7 décembre 2022, tentative d'autogolpe</span></div>
+        <div class="card" style="background:var(--terracotta); width:100%;"><b style="color:#fff; font-size:var(--fs-1);">7 décembre 2022 — autogolpe manqué</b><div class="small" style="color:#fff; margin-top:6px;">Castillo tente de dissoudre le Congrès et appelle à la « nouvelle constitution ». L'armée refuse : arrêté immédiatement, emprisonné pour sédition.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== S39 DINA BOLUARTE ===== -->
+  <section data-label="39 · Dina Boluarte" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:#8A5A24;">03 · Le Pérou</div>
+    <div class="topbar" style="background:var(--ochre);"></div>
+    <h1 class="h" style="color:#8A5A24;">Dina Boluarte (2022–2025)</h1>
+    <div style="display:flex; gap:28px; flex:1; align-items:stretch;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:18px; justify-content:center;">
+        <div class="card card-in d1" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">La vice-présidente devient présidente</b><div class="small" style="color:var(--night-2); margin-top:6px;">Médecin, peu d'expérience politique. Rejetée à la fois par les castillistes et par la droite.</div></div>
+        <div class="card card-in d2" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">Un gouvernement chaotique</b><div class="small" style="color:var(--night-2); margin-top:6px;">3 années d'instabilité et de protestation chronique (« Boluarte, dimite »). Scandales de corruption. La sécurité, priorité nº1.</div></div>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column; gap:18px; justify-content:center;">
+        <div class="card card-in d3" style="background:#6e481f;"><b style="color:var(--cream); font-size:var(--fs-1);">Fin : octobre 2025</b><div class="small" style="color:var(--ochre-light); margin-top:6px;">Le Congrès vote sa destitution pour « incapacité morale permanente » — corruption et mauvaise gestion de la sécurité.</div></div>
+        <div class="card card-in d4" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">Succession</b><div class="small" style="color:var(--night-2); margin-top:6px;">Élections d'avril–juin 2026 : Keiko Fujimori élue, investiture le 28 juillet 2026.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== S40 ÉLECTIONS 2026 ===== -->
+  <section data-label="40 · Élections 2026" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:#8A5A24;">03 · Le Pérou</div>
+    <div class="topbar" style="background:var(--ochre);"></div>
+    <h1 class="h" style="color:#8A5A24;">Élections 2026 : Keiko Fujimori élue</h1>
+    <div style="display:flex; gap:28px; flex:1; align-items:stretch;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:18px; justify-content:center;">
+        <div class="card card-in d1" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">Le scrutin</b><div class="small" style="color:var(--night-2); margin-top:6px;">1ᵉʳ tour les 12–13 avril (35 candidats), 2ᵈ tour le 7 juin 2026. Retour à un Congrès bicaméral (Sénat + Chambre des députés).</div></div>
+        <div class="card card-in d2" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">Un résultat très serré</b><div class="small" style="color:var(--night-2); margin-top:6px;">Keiko Fujimori (Fuerza Popular, droite dure) l'emporte avec 50,1 % face à Roberto Sánchez (gauche, 49,9 %) — moins de 50 000 voix d'écart. 4ᵉ candidature, investiture le 28 juillet 2026.</div></div>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column; gap:18px; justify-content:center;">
+        <div class="card card-in d3" style="background:#6e481f;"><b style="color:var(--cream); font-size:var(--fs-1);">Enjeu géopolitique</b><div class="small" style="color:var(--ochre-light); margin-top:6px;">Une présidente de droite dure réaligne le Pérou sur Washington (posture anti-Chine) et durcit la ligne sécuritaire — dans le sillage de la vague conservatrice régionale.</div></div>
+        <div class="card stat card-in d4" style="background:var(--cream);"><div class="stat-n" style="color:#8A5A24;">50,1 %</div><div class="stat-l" style="color:var(--night-2);">des voix au 2ᵈ tour — 9ᵉ présidence en 10 ans.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== S41 ÉCONOMIE MINIÈRE ===== -->
+  <section data-label="41 · Économie minière" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:#8A5A24;">03 · Le Pérou</div>
+    <div class="topbar" style="background:var(--ochre);"></div>
+    <h1 class="h" style="color:#8A5A24;">Économie : la dépendance minière</h1>
+    <div style="display:flex; gap:24px; margin-bottom:20px;">
+      <div class="card stat card-in d1" style="background:#6e481f; flex:1; justify-content:center;"><div class="stat-n" style="color:#fff;">10 % PIB</div><div class="stat-l" style="color:var(--ochre-light);">et 60 %+ des exportations = secteur minier</div></div>
+      <div class="card stat card-in d1" style="background:var(--cream); flex:1; justify-content:center;"><div class="stat-n" style="color:#8A5A24;">2ᵉ mondial</div><div class="stat-l" style="color:var(--night-2);">producteur de cuivre (12 % de l'output global)</div></div>
+      <div class="card stat card-in d2" style="background:var(--cream); flex:1; justify-content:center;"><div class="stat-n" style="color:#8A5A24;">4,7 M t</div><div class="stat-l" style="color:var(--night-2);">de lithium (plateau Macusani) — très convoité</div></div>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; flex:1;">
+      <div class="card card-in d3" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">Cuivre</b><div class="small" style="color:var(--night-2); margin-top:6px;">Prix volatil = économie vulnérable. Grandes mines : Toquepala, Antamina, Cerro Verde.</div></div>
+      <div class="card card-in d4" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">Lithium (nouveau)</b><div class="small" style="color:var(--night-2); margin-top:6px;">Batteries EV, renouvelables. Rivalité géopolitique Chine / USA qui s'intensifie.</div></div>
+      <div class="card card-in d4" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">Or &amp; argent</b><div class="small" style="color:var(--night-2); margin-top:6px;">2ᵉ producteur mondial d'argent. Or : exploitation à petite échelle (légale &amp; illégale).</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S42 AGRICULTURE & PÊCHE ===== -->
+  <section data-label="42 · Agriculture &amp; pêche" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:#8A5A24;">03 · Le Pérou</div>
+    <div class="topbar" style="background:var(--ochre);"></div>
+    <h1 class="h" style="color:#8A5A24;">Économie : agriculture et pêche</h1>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--ochre); font-weight:800; letter-spacing:2px;">AGRICULTURE</div><b style="color:#8A5A24; font-size:var(--fs-1); margin:4px 0;">~25 % des emplois</b><div class="small" style="color:var(--night-2);">Café, cacao, fruits exotiques (avocats, myrtilles). Petits producteurs andins très pauvres. Irrigation dépendante des glaciers.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--ochre); font-weight:800; letter-spacing:2px;">PÊCHE</div><b style="color:#8A5A24; font-size:var(--fs-1); margin:4px 0;">2ᵉ mondial</b><div class="small" style="color:var(--night-2);">Après la Chine. Farine de poisson exportée. Effondrement des stocks (surpêche, El Niño, climat).</div></div>
+      <div class="card card-in d3" style="background:#6e481f; display:flex; flex-direction:column;"><div class="xs" style="color:var(--ochre-light); font-weight:800; letter-spacing:2px;">TENSION</div><b style="color:var(--cream); font-size:var(--fs-1); margin:4px 0;">Mine vs paysan</b><div class="small" style="color:var(--ochre-light);">La mine génère des revenus mais peu d'emplois ; l'agriculture, beaucoup d'emplois mais de bas salaires. Compétition pour l'eau.</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S43 CRISE SÉCURITÉ — CHIFFRES ===== -->
+  <section data-label="43 · Crise sécurité" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:#8A5A24;">03 · Le Pérou</div>
+    <div class="topbar" style="background:var(--ochre);"></div>
+    <h1 class="h" style="color:#8A5A24;">Crise sécuritaire : les chiffres</h1>
+    <div style="display:flex; gap:24px; margin-bottom:20px;">
+      <div class="card stat card-in d1" style="background:var(--cream); flex:1; justify-content:center;"><div class="stat-n" style="color:var(--terracotta);">15 000</div><div class="stat-l" style="color:var(--night-2);">homicides en 2023 (44 / 100k hab.)</div></div>
+      <div class="card stat card-in d1" style="background:var(--cream); flex:1; justify-content:center;"><div class="stat-n" style="color:var(--terracotta);">+36 %</div><div class="stat-l" style="color:var(--night-2);">d'homicides entre 2023 et 2024</div></div>
+      <div class="card stat card-in d2" style="background:var(--cream); flex:1; justify-content:center;"><div class="stat-n" style="color:var(--terracotta);">20 000+</div><div class="stat-l" style="color:var(--night-2);">extorsions signalées (jan.–sept. 2025, +29 %)</div></div>
+    </div>
+    <div style="display:grid; grid-template-columns:2fr 1fr; gap:20px; flex:1;">
+      <div class="card card-in d3" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">L'extorsion, fléau nº1</b><div class="small" style="color:var(--night-2); margin-top:6px;">Surtout le secteur des transports et le petit commerce. Enlèvements moins fréquents mais ciblés (petits entrepreneurs, transporteurs).</div></div>
+      <div class="card card-in d4" style="background:#6e481f; display:flex; flex-direction:column; justify-content:center;"><div class="stat-n" style="color:#fff; font-size:var(--fs-3);">66 %</div><div class="small" style="color:var(--ochre-light); margin-top:6px;">des Péruviens citent la criminalité comme problème nº1 (Ipsos 2025).</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S44 ZONES ROUGES ===== -->
+  <section data-label="44 · Zones rouges" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:#8A5A24;">03 · Le Pérou</div>
+    <div class="topbar" style="background:var(--ochre);"></div>
+    <h1 class="h" style="color:#8A5A24;">Zones rouges : où ne pas aller</h1>
+    <div style="display:flex; gap:28px; flex:1; align-items:stretch;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:16px; justify-content:center;">
+        <div class="card card-in d1" style="background:var(--cream); border-left:6px solid var(--terracotta);"><b style="color:var(--terracotta); font-size:var(--fs-1);">VRAEM</b><div class="small" style="color:var(--night-2); margin-top:6px;">Vallée des rios Apurímac, Ene et Mantaro (Junín, Ayacucho, Huancavelica, Cusco). État d'urgence, production de coca, restes du Sendero. Accès interdit.</div></div>
+        <div class="card card-in d2" style="background:var(--cream); border-left:6px solid var(--terracotta);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Amazonie frontalière</b><div class="small" style="color:var(--night-2); margin-top:6px;">Putumayo, Marañón, Ucayali. Frontière Colombie/Brésil sans contrôle. Narcotrafic, orpaillage illégal, clans armés. Très risqué.</div></div>
+        <div class="card card-in d3" style="background:var(--cream); border-left:6px solid var(--ochre);"><b style="color:#8A5A24; font-size:var(--fs-1);">Périphérie de Lima</b><div class="small" style="color:var(--night-2); margin-top:6px;">Cono Norte, Cono Sur : trafic, gangs, extorsion. « Zonas coloradas » à éviter la nuit.</div></div>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;">
+        <div class="ph photo-in d1" data-ph="M3-11" style="width:100%; height:600px;"><span class="ph-num">M3-11</span><span class="ph-kind">IMAGE</span><span class="ph-desc">Carte des zones rouges du Pérou (VRAEM, Amazonie frontalière, Lima)</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== S45 NARCOTRAFIC — ACTEURS ===== -->
+  <section data-label="45 · Narcotrafic — acteurs" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:#8A5A24;">03 · Le Pérou</div>
+    <div class="topbar" style="background:var(--ochre);"></div>
+    <h1 class="h" style="color:#8A5A24;">Narcotrafic : acteurs et dynamiques</h1>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column; border-top:6px solid #8A5A24;"><b style="color:#8A5A24; font-size:var(--fs-1);">Producteurs</b><div class="xs" style="color:var(--night-2); margin-top:6px;">Paysans pauvres. 150–200 k hectares de coca (Pérou nº1 mondial). Concurrence avec la Colombie.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column; border-top:6px solid #8A5A24;"><b style="color:#8A5A24; font-size:var(--fs-1);">Transformateurs</b><div class="xs" style="color:var(--night-2); margin-top:6px;">Laboratoires clandestins dans la jungle. Mélange avec le fentanyl mexicain (plus fort, plus cher).</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column; border-top:6px solid #8A5A24;"><b style="color:#8A5A24; font-size:var(--fs-1);">Trafiquants</b><div class="xs" style="color:var(--night-2); margin-top:6px;">Chacos péruviens vs Colombiens, Mexicains, Brésiliens. Rivalités sanglantes. Corruption police/armée/juges.</div></div>
+      <div class="card card-in d4" style="background:#6e481f; display:flex; flex-direction:column; border-top:6px solid var(--ochre);"><b style="color:var(--cream); font-size:var(--fs-1);">Routes export</b><div class="xs" style="color:var(--ochre-light); margin-top:6px;">→ Venezuela → Caraïbes → USA/UE · → Brésil → Afrique → UE · → Chili → Pacifique → Asie.</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S46 ORGANISATIONS CRIMINELLES ===== -->
+  <section data-label="46 · Organisations criminelles" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:#8A5A24;">03 · Le Pérou</div>
+    <div class="topbar" style="background:var(--ochre);"></div>
+    <h1 class="h" style="color:#8A5A24;">Les organisations criminelles majeures</h1>
+    <div style="display:grid; grid-template-columns:repeat(2,2fr) 1fr; gap:20px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--ochre); font-weight:800; letter-spacing:2px;">BANDES PÉROU</div><b style="color:#8A5A24; font-size:var(--fs-1); margin:4px 0;">Los Chavelos, La Jauría…</b><div class="small" style="color:var(--night-2);">Bloques del Centro. Drogues, extorsion, jeu illégal. Réseaux de prison (Sendero) vs indépendants.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--ochre); font-weight:800; letter-spacing:2px;">CARTELS ÉTRANGERS</div><b style="color:#8A5A24; font-size:var(--fs-1); margin:4px 0;">Sinaloa &amp; Brésiliens</b><div class="small" style="color:var(--night-2);">Cartel de Sinaloa (approvisionnement fentanyl), présence dominante brésilienne (recrutement, distribution).</div></div>
+      <div class="card card-in d3" style="background:#6e481f; display:flex; flex-direction:column;"><div class="xs" style="color:var(--ochre-light); font-weight:800; letter-spacing:2px;">GUÉRILLAS</div><b style="color:var(--cream); font-size:var(--fs-1); margin:4px 0;">Colombiens</b><div class="small" style="color:var(--ochre-light);">ELN vs dissidents des FARC.</div></div>
+    </div>
+    <div class="card" style="background:var(--terracotta); margin-top:20px;"><span class="small" style="color:#fff;"><b>Impact :</b> des violences croisées pour le contrôle des territoires et des routes.</span></div>
+  </section>
+
+  <!-- ===== S47 RESSOURCES & CONFLITS ===== -->
+  <section data-label="47 · Ressources &amp; conflits" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:#8A5A24;">03 · Le Pérou</div>
+    <div class="topbar" style="background:var(--ochre);"></div>
+    <h1 class="h" style="color:#8A5A24;">Ressources naturelles &amp; conflits</h1>
+    <div style="display:flex; gap:28px; flex:1; align-items:stretch;">
+      <div style="flex:1; display:flex; flex-direction:column; gap:16px; justify-content:center;">
+        <div class="card card-in d1" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">Mines vs communautés</b><div class="small" style="color:var(--night-2); margin-top:6px;">Antamina : protestations autochtones. Toquepala : litiges eau/pollution. Orpaillage illégal en Amazonie : le mercure pollue les rivières.</div></div>
+        <div class="card card-in d2" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">Lithium : nouvelle ruée</b><div class="small" style="color:var(--night-2); margin-top:6px;">Multinationales sur Macusani. Craintes : eau, pollution, profit peu localisé. Enjeu Chine (Tesla/batteries) vs USA.</div></div>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;">
+        <div class="ph photo-in d1" data-ph="M3-12" style="width:100%; height:340px;"><span class="ph-num">M3-12</span><span class="ph-kind">IMAGE</span><span class="ph-desc">Conflit extractiviste : mine vs communauté / recul des glaciers</span></div>
+        <div class="card" style="background:#6e481f; width:100%;"><b style="color:var(--cream); font-size:var(--fs-1);">L'eau, enjeu majeur</b><div class="small" style="color:var(--ochre-light); margin-top:6px;">Glaciers andins −50 % (1970–2025). Les mines consomment énormément d'eau ; les paysans en manquent → émeutes. Lima : 10 M hab. en tension hydrique.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== S48 ENJEUX HUMANITAIRES PÉROU ===== -->
+  <section data-label="48 · Enjeux humanitaires" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:#8A5A24;">03 · Le Pérou</div>
+    <div class="topbar" style="background:var(--ochre);"></div>
+    <h1 class="h" style="color:#8A5A24;">Enjeux humanitaires spécifiques au Pérou</h1>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--terracotta); font-weight:800; letter-spacing:2px;">GENRE</div><b style="color:#8A5A24; font-size:var(--fs-1); margin:4px 0;">300+ féminicides/an</b><div class="xs" style="color:var(--night-2);">Cultures patriarcales fortes (rural), accès à la justice difficile.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--terracotta); font-weight:800; letter-spacing:2px;">ENFANTS</div><b style="color:#8A5A24; font-size:var(--fs-1); margin:4px 0;">Malnutrition rurale</b><div class="xs" style="color:var(--night-2);">Trafic de mineurs par les bandes, enrôlement (restes du Sendero).</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--terracotta); font-weight:800; letter-spacing:2px;">INDIGÈNES</div><b style="color:#8A5A24; font-size:var(--fs-1); margin:4px 0;">Discrimination</b><div class="xs" style="color:var(--night-2);">Peu d'accès aux services (santé, éducation). Terres spoliées, conflits avec l'État et les mineurs.</div></div>
+      <div class="card card-in d4" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--terracotta); font-weight:800; letter-spacing:2px;">MIGRATIONS</div><b style="color:#8A5A24; font-size:var(--fs-1); margin:4px 0;">Départs &amp; transit</b><div class="xs" style="color:var(--night-2);">Péruviens fuyant vers Chili, Argentine, USA. Migrants d'Équateur/Colombie transitant par le Pérou.</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S49 SYNTHÈSE CHAPITRE 3 ===== -->
+  <section data-label="49 · Synthèse Partie 03" style="background: var(--role-chapter-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="topbar" style="background:var(--green-leaf);"></div>
+    <div class="kicker" style="color:var(--green-leaf); margin-bottom:18px;">Synthèse · Partie 03</div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:var(--fs-4); font-weight:700; color:var(--cream); margin:0 0 30px;">Le Pérou, cas d'école de la fragilité latino-américaine</h1>
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:16px;">
+      <div class="card card-in d1" style="background:rgba(255,255,255,0.08);"><div class="small" style="color:var(--cream);">Instabilité politique chronique : 6 présidents en 5 ans</div></div>
+      <div class="card card-in d1" style="background:rgba(255,255,255,0.08);"><div class="small" style="color:var(--cream);">Corruption endémique : chaque leader poursuivi</div></div>
+      <div class="card card-in d2" style="background:rgba(255,255,255,0.08);"><div class="small" style="color:var(--cream);">Crise sécuritaire extrême : +36 % d'homicides en un an</div></div>
+      <div class="card card-in d2" style="background:rgba(255,255,255,0.08);"><div class="small" style="color:var(--cream);">Économie minérale vulnérable aux chocs de prix</div></div>
+      <div class="card card-in d3" style="background:rgba(255,255,255,0.08);"><div class="small" style="color:var(--cream);">Enjeux humanitaires aigus · zones rouges (VRAEM, Amazonie)</div></div>
+      <div class="card card-in d3" style="background:rgba(255,255,255,0.08);"><div class="small" style="color:var(--cream);">Élections 2026 : Keiko Fujimori (droite dure) élue présidente</div></div>
+    </div>
+    <div class="card" style="background:var(--green-leaf); margin-top:24px;"><b style="color:var(--night); font-size:var(--fs-1);">Implication opérationnelle :</b> <span class="small" style="color:var(--night-2);">contexte à haut risque exigeant une préparation et un dispositif de sécurité rigoureux.</span></div>
+  </section>
+
+  <!-- ===== S50 TITRE PARTIE 04 ===== -->
+  <section data-label="50 · Partie 04 — Terrain" style="background: var(--role-chapter-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="bar" style="background:var(--green-leaf);"></div>
+    <div style="font-family:'Playfair Display',serif; font-size:var(--fs-6); font-weight:800; color:rgba(166,198,57,0.15); position:absolute; top:40px; right:90px;">04</div>
+    <div class="kicker" style="color:var(--green-leaf); margin-bottom:22px;">Partie 04</div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:var(--fs-5); font-weight:700; color:var(--cream); margin:0; line-height:1.02;">Sécurité &amp; opérations<br>sur le terrain</h1>
+    <div style="width:120px; height:6px; background:var(--green-leaf); margin:36px 0 26px;"></div>
+    <p class="lead" style="color:var(--green-pale);">Sécurité &amp; opérations · Acteurs locaux · Sensibilités · Bonnes pratiques</p>
+  </section>
+
+  <!-- ===== S51 MATRICE DES RISQUES ===== -->
+  <section data-label="51 · Matrice des risques" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--blue-akuu);">04 · Sur le terrain</div>
+    <div class="topbar" style="background:var(--blue-sky);"></div>
+    <h1 class="h" style="color:var(--blue-akuu);">Zones à risque au Pérou — classement officiel</h1>
+    <div style="display:flex; gap:28px; flex:1; align-items:stretch;">
+      <div style="flex:1.2; display:flex; flex-direction:column; gap:16px; justify-content:center;">
+        <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column; border-left:8px solid #C0392B;"><div class="xs" style="color:#C0392B; font-weight:800; letter-spacing:2px;">ROUGE · FORMELLEMENT DÉCONSEILLÉ</div><div class="small" style="color:var(--night-2); margin-top:8px;">Groupes armés liés au narcotrafic. <b style="color:var(--blue-akuu);">VRAEM</b> — centre du pays (rios Apurímac, Ene y Mantaro), sous contrôle militaire · <b style="color:var(--blue-akuu);">Amazonie frontalière</b> avec la Colombie, le long du Putumayo.</div></div>
+        <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column; border-left:8px solid var(--ochre);"><div class="xs" style="color:#B07A1E; font-weight:800; letter-spacing:2px;">ORANGE · SAUF RAISON IMPÉRATIVE</div><div class="small" style="color:var(--night-2); margin-top:8px;"><b style="color:var(--blue-akuu);">Abancay</b> — proche du VRAEM, transit criminel · <b style="color:var(--blue-akuu);">Huánuco (« Cordillère Azul »)</b> — délinquance et narcoterrorisme ; pacifiée mais situation toujours tendue.</div></div>
+        <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column; border-left:8px solid #E7C948;"><div class="xs" style="color:#B07A1E; font-weight:800; letter-spacing:2px;">JAUNE · VIGILANCE RENFORCÉE</div><div class="small" style="color:var(--night-2); margin-top:8px;"><b style="color:var(--blue-akuu);">Lima</b> — centre historique la nuit, plages le soir · <b style="color:var(--blue-akuu);">Aéroport / Callao</b> — agressions, pas de déplacement à pied · <b style="color:var(--blue-akuu);">Quartiers périphériques populaires</b> — éviter d'y marcher seul(e).</div></div>
+      </div>
+      <div style="flex:0.85; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+        <img src="images/carte-perou-zones.png" class="imground photo-in d1" style="width:100%; height:100%; max-height:760px; object-fit:contain; background:var(--cream); padding:10px;" alt="Carte des zones à risque du Pérou — Ministère de l'Europe et des Affaires étrangères">
+      </div>
+    </div>
+    <button type="button" class="src-tip src-tip--slide" style="color:var(--blue-akuu);" data-src="Ministère de l'Europe et des Affaires étrangères — Centre de crise et de soutien (France Diplomatie)">Source</button>
+  </section>
+
+  <!-- ===== S52 10 RÈGLES DE SÉCURITÉ ===== -->
+  <section data-label="52 · 10 règles de sécurité" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--blue-akuu);">04 · Sur le terrain</div>
+    <div class="topbar" style="background:var(--blue-sky);"></div>
+    <h1 class="h" style="color:var(--blue-akuu);">Sécurité personnelle : 10 règles essentielles</h1>
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); grid-auto-rows:1fr; gap:12px 24px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; align-items:center; gap:16px; padding:12px 22px;"><span class="num" style="color:var(--blue-sky); font-size:var(--fs-3);">1</span><div class="small" style="color:var(--night-2);"><b style="color:var(--blue-akuu);">Jamais seul(e)</b> — éviter de marcher seul(e), surtout la nuit (même à Miraflores, San Isidro, Barranco).</div></div>
+      <div class="card card-in d1" style="background:var(--cream); display:flex; align-items:center; gap:16px; padding:12px 22px;"><span class="num" style="color:var(--blue-sky); font-size:var(--fs-3);">2</span><div class="small" style="color:var(--night-2);"><b style="color:var(--blue-akuu);">Taxis officiels uniquement</b> — compagnies agréées ou VTC. Ne jamais héler dans la rue ; vérifier plaque et accréditation du chauffeur.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; align-items:center; gap:16px; padding:12px 22px;"><span class="num" style="color:var(--blue-sky); font-size:var(--fs-3);">3</span><div class="small" style="color:var(--night-2);"><b style="color:var(--blue-akuu);">Documents</b> — photocopies/scans envoyés par mail ; en bus et terminaux, garder argent, cartes et papiers sur soi.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; align-items:center; gap:16px; padding:12px 22px;"><span class="num" style="color:var(--blue-sky); font-size:var(--fs-3);">4</span><div class="small" style="color:var(--night-2);"><b style="color:var(--blue-akuu);">Verre sous surveillance</b> — risque de scopolamine en bar/discothèque ; ne rien accepter d'inconnus.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; align-items:center; gap:16px; padding:12px 22px;"><span class="num" style="color:var(--blue-sky); font-size:var(--fs-3);">5</span><div class="small" style="color:var(--night-2);"><b style="color:var(--blue-akuu);">Vigilance femmes</b> — éviter de voyager seule, les dortoirs mixtes et les mototaxis ; se renseigner avant toute prestation « bien-être ».</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; align-items:center; gap:16px; padding:12px 22px;"><span class="num" style="color:var(--blue-sky); font-size:var(--fs-3);">6</span><div class="small" style="color:var(--night-2);"><b style="color:var(--blue-akuu);">Aéroport / Callao</b> — ne pas circuler à pied ; taxi réservé depuis l'intérieur ; ignorer les « faux badges ».</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; align-items:center; gap:16px; padding:12px 22px;"><span class="num" style="color:var(--blue-sky); font-size:var(--fs-3);">7</span><div class="small" style="color:var(--night-2);"><b style="color:var(--blue-akuu);">La nuit</b> — éviter le centre historique et les plages de Lima après la tombée du jour.</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; align-items:center; gap:16px; padding:12px 22px;"><span class="num" style="color:var(--blue-sky); font-size:var(--fs-3);">8</span><div class="small" style="color:var(--night-2);"><b style="color:var(--blue-akuu);">Transport sûr</b> — proscrire taxis collectifs et minibus surchargés ; éviter de rouler la nuit en zone rurale ou de montagne.</div></div>
+      <div class="card card-in d4" style="background:var(--cream); display:flex; align-items:center; gap:16px; padding:12px 22px;"><span class="num" style="color:var(--blue-sky); font-size:var(--fs-3);">9</span><div class="small" style="color:var(--night-2);"><b style="color:var(--blue-akuu);">Zones rouges</b> — ne jamais pénétrer le VRAEM ni la frontière amazonienne (Putumayo).</div></div>
+      <div class="card card-in d4" style="background:var(--blue-akuu); display:flex; align-items:center; gap:16px; padding:12px 22px;"><span class="num" style="color:var(--blue-pale); font-size:var(--fs-3);">10</span><div class="small" style="color:var(--cream);"><b style="color:#fff;">S'informer</b> — préavis de grève, INDECI (zones à risque), assistance IPerú (WhatsApp +51 944 492 314).</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S53 MOUVEMENTS SOCIAUX ===== -->
+  <section data-label="53 · Mouvements sociaux" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--blue-akuu);">04 · Sur le terrain</div>
+    <div class="topbar" style="background:var(--blue-sky);"></div>
+    <h1 class="h" style="color:var(--blue-akuu);">Mouvements sociaux &amp; manifestations</h1>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">EN AMONT</div><b style="color:var(--blue-akuu); font-size:var(--fs-1); margin:4px 0;">Anticiper</b><div class="small" style="color:var(--night-2);">Se renseigner sur les préavis de grève annoncés. Signaux : appels sur les réseaux, présence policière accrue, fermetures de routes.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">PENDANT</div><b style="color:var(--blue-akuu); font-size:var(--fs-1); margin:4px 0;">Débordements fréquents</b><div class="small" style="color:var(--night-2);">Blocage des circuits touristiques, gaz lacrymogène, risque de pillage. Rester à l'écart et respecter les consignes des autorités.</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">EN CONTINU</div><b style="color:var(--blue-akuu); font-size:var(--fs-1); margin:4px 0;">Rester informé</b><div class="small" style="color:var(--night-2);">Éviter les zones de rassemblement, suivre l'évolution de la situation, communiquer avec les contacts locaux.</div></div>
+    </div>
+    <div class="card" style="background:var(--blue-akuu); margin-top:20px;"><b style="color:#fff; font-size:var(--fs-1);">Bon réflexe :</b> <span class="small" style="color:var(--blue-pale);">poser ses questions au service d'information touristique IPerú (réponse sous 24 h — WhatsApp +51 944 492 314).</span></div>
+  </section>
+
+  <!-- ===== S54 DÉLINQUANCE & CRIMINALITÉ ===== -->
+  <section data-label="54 · Délinquance &amp; criminalité" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--blue-akuu);">04 · Sur le terrain</div>
+    <div class="topbar" style="background:var(--blue-sky);"></div>
+    <h1 class="h" style="color:var(--blue-akuu);">Délinquance &amp; criminalité : rester vigilant</h1>
+    <div class="card card-in d1" style="background:var(--blue-akuu); margin-bottom:18px;"><span class="small" style="color:var(--blue-pale);">Le Pérou est globalement moins exposé au risque criminel que d'autres pays d'Amérique latine — mais les agressions signalées imposent quelques règles strictes.</span></div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">VOLS</div><b style="color:var(--blue-akuu); font-size:var(--fs-1); margin:4px 0;">Bus &amp; terminaux</b><div class="small" style="color:var(--night-2);">Garder en permanence argent, cartes de paiement et documents d'identité sur soi ; rester attentif à ses affaires.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--terracotta); font-weight:800; letter-spacing:2px;">AGRESSIONS SEXUELLES</div><b style="color:var(--blue-akuu); font-size:var(--fs-1); margin:4px 0;">Femmes visées</b><div class="small" style="color:var(--night-2);">Cas en auberges de jeunesse et retraites spirituelles. Éviter de voyager seule et les hébergements collectifs mixtes ; se renseigner avant toute prestation « bien-être ».</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--terracotta); font-weight:800; letter-spacing:2px;">AGRESSIONS &amp; FAUX TAXIS</div><b style="color:var(--blue-akuu); font-size:var(--fs-1); margin:4px 0;">Y compris à Miraflores</b><div class="small" style="color:var(--night-2);">Vols à l'arraché même à San Isidro et Barranco. Agressions nocturnes en faux taxis ; verre sous surveillance (scopolamine).</div></div>
+      <div class="card card-in d4" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">ESCROQUERIE AÉROPORT</div><b style="color:var(--blue-akuu); font-size:var(--fs-1); margin:4px 0;">Faux badges</b><div class="small" style="color:var(--night-2);">De « faux agents » proposent de gérer une correspondance. Ne pas suivre d'inconnus : s'adresser directement au guichet de la compagnie.</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S55 RISQUES NATURELS, ROUTIERS ET DE MONTAGNE ===== -->
+  <section data-label="55 · Risques naturels &amp; montagne" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--blue-akuu);">04 · Sur le terrain</div>
+    <div class="topbar" style="background:var(--blue-sky);"></div>
+    <h1 class="h" style="color:var(--blue-akuu);">Risques naturels, routiers et de montagne</h1>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--terracotta); font-weight:800; letter-spacing:2px;">SÉISME</div><b style="color:var(--blue-akuu); font-size:var(--fs-1); margin:4px 0;">Forte activité sismique</b><div class="small" style="color:var(--night-2);">Connaître la conduite à tenir en cas de séisme. Après une secousse : prévenir ses proches ou, à défaut, la section consulaire à Lima.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">CLIMAT</div><b style="color:var(--blue-akuu); font-size:var(--fs-1); margin:4px 0;">Pluies &amp; incendies</b><div class="small" style="color:var(--night-2);">Saison des pluies (jan.–mai) : inondations et glissements en montagne — s'éloigner des cours d'eau. Incendies forestiers (Apurímac, Amazonas, Lima, Cajamarca, Tumbes) : pas de feu.</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">ROUTES</div><b style="color:var(--blue-akuu); font-size:var(--fs-1); margin:4px 0;">Accidents fréquents</b><div class="small" style="color:var(--night-2);">État des routes et code peu respecté. Éviter de circuler la nuit en zone rurale ou montagneuse ; uniquement bus et taxis officiellement enregistrés.</div></div>
+      <div class="card card-in d4" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">MONTAGNE / TREKKING</div><b style="color:var(--blue-akuu); font-size:var(--fs-1); margin:4px 0;">Au-delà de 2 500 m</b><div class="small" style="color:var(--night-2);">Mal des montagnes, risque de chute ou d'égarement. Préparer la sortie (itinéraire signalé, eau, vêtements chauds), guide expérimenté, consulter l'INDECI.</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S56 ACTEURS LOCAUX ===== -->
+  <section data-label="56 · Acteurs locaux" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--blue-akuu);">04 · Sur le terrain</div>
+    <div class="topbar" style="background:var(--blue-sky);"></div>
+    <h1 class="h" style="color:var(--blue-akuu);">Acteurs locaux clés : qui contacter</h1>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">GOUVERNEMENT</div><div class="small" style="color:var(--night-2); margin-top:6px;">Alcalde (maire), gouverneur régional, police locale (PNP) — efficacité très variable.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">ONG LOCALES</div><div class="small" style="color:var(--night-2); margin-top:6px;">Rondas campesinas, organisations féministes, Defensoría del Pueblo, ONG santé/éducation/développement.</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">ÉGLISE</div><div class="small" style="color:var(--night-2); margin-top:6px;">Prêtres et pasteurs influents, souvent les seules figures respectées. Réseau d'assistance sociale.</div></div>
+      <div class="card card-in d4" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">COMMUNAUTÉ</div><div class="small" style="color:var(--night-2); margin-top:6px;">Junta de vecinos, groupes de mères de famille, comités de santé.</div></div>
+    </div>
+    <div class="card" style="background:var(--blue-akuu); margin-top:20px;"><b style="color:#fff; font-size:var(--fs-1);">Conseils :</b> <span class="small" style="color:var(--blue-pale);">rencontrer les autorités AVANT, expliquer la mission, respecter les protocoles — ne jamais contourner les autorités (le « bottom-up » crée des tensions).</span></div>
+  </section>
+
+  <!-- ===== S57 SENSIBILITÉS CULTURELLES ===== -->
+  <section data-label="57 · Sensibilités culturelles" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--blue-akuu);">04 · Sur le terrain</div>
+    <div class="topbar" style="background:var(--blue-sky);"></div>
+    <h1 class="h" style="color:var(--blue-akuu);">Sensibilités culturelles : ce qu'il faut savoir</h1>
+    <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:14px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">LANGUE</div><div class="small" style="color:var(--night-2); margin-top:6px;">Quechua vivant (Andes), espagnol régional. Quelques phrases en quechua = très appréciées.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">RELIGION</div><div class="small" style="color:var(--night-2); margin-top:6px;">Catholicisme (70 %), protestants (20 %), syncrétisme inca/chrétien. Respecter les traditions.</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">AUTORITÉ</div><div class="small" style="color:var(--night-2); margin-top:6px;">Hiérarchie respectée (aîné, chef, prêtre). Titres importants. Contredire en public = offense.</div></div>
+      <div class="card card-in d4" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">GENRE</div><div class="small" style="color:var(--night-2); margin-top:6px;">Machismo (côte/villes), rôles plus égaux dans les Andes. Femmes humanitaires : parfois un atout.</div></div>
+      <div class="card card-in d4" style="background:var(--blue-akuu); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-pale); font-weight:800; letter-spacing:2px;">INDIGÈNES</div><div class="small" style="color:var(--cream); margin-top:6px;">Discrimination historique, fierté inca. Droits = sujet politique chaud. Respecter les cultures ancestrales.</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S58 SANTÉ ===== -->
+  <section data-label="58 · Santé" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--blue-akuu);">04 · Sur le terrain</div>
+    <div class="topbar" style="background:var(--blue-sky);"></div>
+    <h1 class="h" style="color:var(--blue-akuu);">Santé et conditions sanitaires</h1>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">MALADIES</div><div class="small" style="color:var(--night-2); margin-top:6px;">Typhoïde, hépatite A (eau), dengue (Lima), tuberculose (zones pauvres), soroche (mal de l'altitude &gt; 3 000 m).</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">VACCINS</div><div class="small" style="color:var(--night-2); margin-top:6px;">Fièvre jaune (Amazonie), typhoïde, hépatite A, ROR (rougeole), tétanos.</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">CLIMAT</div><div class="small" style="color:var(--night-2); margin-top:6px;">Côte : aride, frais. Andes : froid la nuit, soleil intense. Amazonie : humide, chaud, moustiques.</div></div>
+      <div class="card card-in d4" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">HÔPITAUX</div><div class="small" style="color:var(--night-2); margin-top:6px;">Privés à Lima : bons. Publics : limités. Rural : quasi inexistant. Assurance internationale recommandée.</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S59 COMMUNICATION ===== -->
+  <section data-label="59 · Communication" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--blue-akuu);">04 · Sur le terrain</div>
+    <div class="topbar" style="background:var(--blue-sky);"></div>
+    <h1 class="h" style="color:var(--blue-akuu);">Communication et technologies</h1>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">TÉLÉPHONE</div><div class="small" style="color:var(--night-2); margin-top:6px;">Couverture bonne en ville, variable en rural, nulle en Amazonie. Opérateurs : Claro, Movistar, Entel. WhatsApp = standard (pas de SMS).</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">INTERNET</div><div class="small" style="color:var(--night-2); margin-top:6px;">WiFi urbain ok, rural problématique. 4G en ville. Amazonie : satellite (Starlink). Prévoir des cartes hors-ligne.</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">RÉSEAUX SOCIAUX</div><div class="small" style="color:var(--night-2); margin-top:6px;">Facebook omniprésent, WhatsApp = outil organisationnel crucial, TikTok chez les jeunes. L'info locale passe par Facebook avant les journaux.</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S60 ÉTHIQUE ===== -->
+  <section data-label="60 · Éthique" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--blue-akuu);">04 · Sur le terrain</div>
+    <div class="topbar" style="background:var(--blue-sky);"></div>
+    <h1 class="h" style="color:var(--blue-akuu);">Éthique et relations humanitaires</h1>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">HUMILITÉ</div><b style="color:var(--blue-akuu); font-size:var(--fs-1); margin:4px 0;">Pas de « white savior »</b><div class="small" style="color:var(--night-2);">Les locaux sont experts de leurs problèmes. Interroger plutôt qu'imposer des solutions.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">CONSENTEMENT</div><b style="color:var(--blue-akuu); font-size:var(--fs-1); margin:4px 0;">Photo &amp; confidentialité</b><div class="small" style="color:var(--night-2);">Permission avant toute photo/vidéo (même enfants). Anonymiser les témoignages. Respecter la dignité.</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">DO NO HARM</div><b style="color:var(--blue-akuu); font-size:var(--fs-1); margin:4px 0;">Ne pas nuire</b><div class="small" style="color:var(--night-2);">L'aide peut créer dépendances/tensions. Consulter les locaux sur le timing et les modalités.</div></div>
+      <div class="card card-in d4" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">RELATIONS</div><b style="color:var(--blue-akuu); font-size:var(--fs-1); margin:4px 0;">Transparence</b><div class="small" style="color:var(--night-2);">Expliquer son agenda, attention aux rapports de pouvoir (genre, classe, race). Pas de quick fixes.</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S61 SELF-CARE ===== -->
+  <section data-label="61 · Self-care" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--blue-akuu);">04 · Sur le terrain</div>
+    <div class="topbar" style="background:var(--blue-sky);"></div>
+    <h1 class="h" style="color:var(--blue-akuu);">Santé mentale et gestion du stress</h1>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">RISQUE</div><b style="color:var(--blue-akuu); font-size:var(--fs-1); margin:4px 0;">Stress post-traumatique</b><div class="small" style="color:var(--night-2);">Exposition à des récits de souffrance extrême : dépression, insomnie, irritabilité, culpabilité du survivant.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">SIGNES D'ALERTE</div><b style="color:var(--blue-akuu); font-size:var(--fs-1); margin:4px 0;">À surveiller</b><div class="small" style="color:var(--night-2);">Difficultés à dormir/manger, dissociation, recherche excessive de « solutions », rage ou dépression.</div></div>
+      <div class="card card-in d3" style="background:var(--blue-akuu); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-pale); font-weight:800; letter-spacing:2px;">GESTION</div><b style="color:#fff; font-size:var(--fs-1); margin:4px 0;">Dispositifs de gestion</b><div class="small" style="color:var(--blue-pale);">Débriefs d'équipe réguliers, tenue d'un journal, hygiène de vie (sommeil, alimentation, activité physique), suivi thérapeutique au retour, soutien entre pairs.</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S62 RESSOURCES & CONTACTS ===== -->
+  <section data-label="62 · Ressources &amp; contacts" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--blue-akuu);">04 · Sur le terrain</div>
+    <div class="topbar" style="background:var(--blue-sky);"></div>
+    <h1 class="h" style="color:var(--blue-akuu);">Ressources et contacts essentiels</h1>
+    <div class="card card-in d1" style="background:var(--blue-akuu); margin-bottom:18px; display:flex; align-items:center; gap:24px;"><div class="xs" style="color:var(--blue-pale); font-weight:800; letter-spacing:2px; white-space:nowrap;">ASSISTANCE TOURISTES · IPerú</div><div class="small" style="color:var(--cream);">WhatsApp <b>+51 944 492 314</b> · mail <b>iperulimaapto@promperu.gob.pe</b> — réponse sous 24 h. Bureau à l'aéroport (réception des bagages) : compagnies de taxi sûres et coût des trajets.</div></div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; flex:1;">
+      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">AVANT DÉPART</div><div class="small" style="color:var(--night-2); margin-top:6px;">Inscription au consulat français, assurance rapatriement, vaccins/médicaments, photocopies/scans des documents, contacts de l'organisation sur place.</div></div>
+      <div class="card card-in d2" style="background:var(--blue-akuu); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-pale); font-weight:800; letter-spacing:2px;">URGENCES</div><div class="small" style="color:var(--cream); margin-top:6px;">Police / ambulance : <b>105</b> · Pompiers : <b>116</b> · Consulat de France à Lima : <b>+51 1 215 0000</b> · Organisation 24/7.</div></div>
+      <div class="card card-in d3" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">INFO EN TEMPS RÉEL</div><div class="small" style="color:var(--night-2); margin-top:6px;">INDECI (défense civile — zones à risque), France Diplomatie, Crisis24 (GardaWorld), presse locale (Peru21, La República).</div></div>
+      <div class="card card-in d4" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">SUPPORT ÉMOTIONNEL</div><div class="small" style="color:var(--night-2); margin-top:6px;">Ligne d'écoute de l'organisation, thérapeute spécialisé trauma, communautés de vétérans humanitaires.</div></div>
+    </div>
+  </section>
+
+  <!-- ===== S63 SYNTHÈSE + CONCLUSION ===== -->
+  <section data-label="63 · Conclusion" style="background: radial-gradient(135% 130% at 82% 12%, #0a63b4 0%, var(--blue-akuu) 42%, #022a54 72%, #011d3c 100%); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x); overflow:hidden;">
+    <div style="position:absolute; inset:0; background: radial-gradient(60% 60% at 85% 20%, rgba(166,198,57,0.14) 0%, rgba(166,198,57,0) 60%);"></div>
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="topbar" style="background: linear-gradient(90deg, var(--blue-sky), var(--green-leaf));"></div>
+    <div class="kicker" style="color:var(--green-leaf); margin-bottom:18px; position:relative;">Synthèse · Partie 04</div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:var(--fs-4); font-weight:700; color:var(--cream); margin:0 0 26px; position:relative;">Principes opérationnels sur le terrain</h1>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; position:relative;">
+      <div class="card card-in d1" style="background:rgba(255,255,255,0.08);"><div class="small" style="color:var(--cream);">Des risques réels et multiples, à évaluer systématiquement</div></div>
+      <div class="card card-in d1" style="background:rgba(255,255,255,0.08);"><div class="small" style="color:var(--cream);">Ne jamais opérer seul ; communication systématique des déplacements</div></div>
+      <div class="card card-in d2" style="background:rgba(255,255,255,0.08);"><div class="small" style="color:var(--cream);">Respect des cultures et des autorités locales</div></div>
+      <div class="card card-in d2" style="background:rgba(255,255,255,0.08);"><div class="small" style="color:var(--cream);">Santé et sécurité : priorité absolue</div></div>
+      <div class="card card-in d3" style="background:rgba(255,255,255,0.08);"><div class="small" style="color:var(--cream);">Santé mentale : un impératif, non une option</div></div>
+      <div class="card card-in d3" style="background:var(--green-leaf);"><div class="small" style="color:var(--night);">Posture attendue : humilité, curiosité, respect</div></div>
+    </div>
+    <p class="quote" style="font-size:var(--fs-3); color:var(--green-leaf); margin:34px 0 0; position:relative;">Une préparation rigoureuse conditionne l'efficacité et la sécurité de toute mission de terrain.</p>
+  </section>
+
+</x-import>
+</x-dc>
+</body>
+</html>

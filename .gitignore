@@ -22,3 +22,9 @@ scripts/.locale-pt-cache.json
 
 # Local Netlify folder
 .netlify
+
+# Local Claude Code tooling config (preview server launch config, per-dev)
+.claude/
+
+# Generated QA screenshots (scripts/deck-screenshots.mjs output)
+docs/deck-shots/
