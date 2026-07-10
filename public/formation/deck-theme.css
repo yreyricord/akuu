@@ -78,6 +78,33 @@ section[data-label] * { min-height: 0; min-width: 0; }
 /* ---------- Classes utilitaires structurelles (partagées) ---------- */
 .logo    { position: absolute; top: 40px; left: var(--pad-x); height: 54px; object-fit: contain; z-index: 6; }
 .tag     { position: absolute; top: 48px; right: var(--pad-x); font-family: 'Inter', sans-serif; font-size: var(--fs-1); font-weight: 600; letter-spacing: 3px; text-transform: uppercase; z-index: 6; }
+.deck-badge {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: calc(var(--fs-1) - 2px);
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--green-forest);
+  background: rgba(166,198,57,0.28);
+  border: 1px solid rgba(45,105,21,0.18);
+  border-radius: 6px;
+  padding: 6px 12px;
+  margin-bottom: 10px;
+}
+.deck-badge--pivot { background: rgba(4,72,143,0.1); color: var(--blue-akuu); border-color: rgba(4,72,143,0.2); }
+.deck-badge--cas   { background: rgba(231,111,81,0.12); color: var(--terracotta); border-color: rgba(231,111,81,0.25); }
+.deck-badge--fast  { background: rgba(166,198,57,0.18); color: var(--green-forest); }
+.deck-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--fs-1);
+  font-weight: 500;
+  font-style: italic;
+  color: var(--night-2);
+  margin: -14px 0 20px;
+  line-height: 1.4;
+  max-width: 92%;
+}
 .bar     { position: absolute; bottom: 0; left: 0; right: 0; height: 6px; }
 .topbar  { position: absolute; top: 0; left: 0; right: 0; height: 6px; }
 .kicker  { font-family: 'Inter', sans-serif; font-size: var(--fs-2); font-weight: 600; letter-spacing: 5px; text-transform: uppercase; }
@@ -101,6 +128,8 @@ section[data-deck-active] [data-src]:not(.deck-vs__bubble) {
 }
 .card .src-data,
 .stat-card .src-data { display: block; }
+.card .src-data:where(b, strong, span, i, em),
+.stat-card .src-data:where(b, strong, span, i, em) { display: inline; }
 .src-data:focus-visible { outline: 2px solid var(--green-leaf); outline-offset: 3px; border-radius: 4px; }
 .deck-src-tooltip {
   position: fixed;
@@ -122,6 +151,39 @@ section[data-deck-active] [data-src]:not(.deck-vs__bubble) {
   word-wrap: break-word;
 }
 .deck-src-tooltip.is-visible { display: block; }
+/* Carte de référence enrichie (citation + titre + résumé + lien cliquable) —
+   utilisée quand l'élément porte data-src-id et que public/formation/sources.json
+   a chargé ; sinon le tooltip reste la simple ligne de texte ci-dessus. */
+.deck-src-tooltip.deck-src-tooltip--rich {
+  max-width: min(340px, 86vw);
+  padding: 14px 16px;
+  pointer-events: auto;
+  background: var(--night, #1E2422);
+}
+.deck-src-tooltip__citation {
+  font-family: 'Inter', sans-serif; font-weight: 700; font-size: 11px;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--ochre, #F4A261); margin-bottom: 4px;
+}
+.deck-src-tooltip__title {
+  font-family: 'Playfair Display', serif; font-weight: 700; font-style: italic;
+  font-size: 15px; line-height: 1.3; color: var(--cream, #FEFDFC);
+}
+.deck-src-tooltip__summary {
+  margin: 8px 0 0; font-size: 13px; line-height: 1.42;
+  color: rgba(254,253,252,0.82);
+}
+.deck-src-tooltip__link {
+  display: inline-block; margin-top: 10px;
+  font-family: 'Inter', sans-serif; font-weight: 700; font-size: 12px;
+  letter-spacing: 0.3px; color: var(--blue-sky, #4071A6);
+  text-decoration: none; border-bottom: 1px solid rgba(64,113,166,0.5);
+  padding-bottom: 1px;
+}
+.deck-src-tooltip__link:hover,
+.deck-src-tooltip__link:focus-visible {
+  color: var(--ochre, #F4A261); border-bottom-color: var(--ochre, #F4A261);
+}
 /* Lien « Source » compact : citation complète au survol / focus (legacy) */
 .src-tip {
   position: relative;
@@ -353,6 +415,31 @@ section[data-deck-active] [data-src]:not(.deck-vs__bubble) {
   background: var(--cream) !important;
   opacity: 1 !important;
   position: relative;
+}
+/* Portrait ethnie : une card, titre + photo incrustée + texte */
+.deck-ethno-card {
+  padding: 0 !important;
+  overflow: hidden;
+  border-radius: 16px;
+}
+.deck-ethno-card__head {
+  padding: 28px 32px 14px;
+}
+.deck-ethno-card__img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  display: block;
+  border-top: 1px solid rgba(43, 50, 47, 0.08);
+  border-bottom: 1px solid rgba(43, 50, 47, 0.08);
+}
+.deck-ethno-card__body {
+  padding: 22px 32px 30px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0;
 }
 .deck-carousel__card-num {
   position: absolute;

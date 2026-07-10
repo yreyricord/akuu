@@ -1,0 +1,134 @@
+{
+  "mcmichael2025": {
+    "citation": "McMichael et al. · PNAS · 2025",
+    "title": "Centuries of compounding human influence on Amazonian forests",
+    "summary": "Modèles croisant 7 300+ sites archéologiques précolombiens et coloniaux avec la composition de 1 521 parcelles forestières : plus de la moitié des espèces portent encore une empreinte humaine.",
+    "url": "https://doi.org/10.1073/pnas.2514040122"
+  },
+  "moura2016reef": {
+    "citation": "Moura et al. · Science Advances · 2016",
+    "title": "An extensive reef system at the mouth of the Amazon River",
+    "summary": "Découverte d'un système récifal de près de 9 500 km² à l'embouchure de l'Amazone, dans une eau trouble où aucun corail ne devrait survivre.",
+    "url": "https://doi.org/10.1126/sciadv.1501252"
+  },
+  "gatti2021source": {
+    "citation": "Gatti et al. · Nature · 2021",
+    "title": "Amazonia as a carbon source linked to deforestation and climate change",
+    "summary": "L'est et le sud-est de l'Amazonie, dégradés par la déforestation et les incendies, sont devenus des sources nettes de carbone plutôt que des puits.",
+    "url": "https://doi.org/10.1038/s41586-021-03629-6"
+  },
+  "pan2011sink": {
+    "citation": "Pan et al. · Science · 2011",
+    "title": "A Large and Persistent Carbon Sink in the World's Forests",
+    "summary": "Estimation du stock et du flux de carbone dans les forêts mondiales, base de référence pour les chiffres de biomasse amazonienne.",
+    "url": "https://doi.org/10.1126/science.1201609"
+  },
+  "chen2015hurricane": {
+    "citation": "Chen, Randerson et al. · Geophysical Research Letters · 2015",
+    "title": "Tropical North Atlantic ocean-atmosphere interactions synchronize forest carbon losses from hurricanes and Amazon fires",
+    "summary": "Lien statistique entre les feux amazoniens et l'intensité des ouragans atlantiques via leur effet sur la circulation océan-atmosphère.",
+    "url": "https://doi.org/10.1002/2015GL064505"
+  },
+  "werth2002teleconnect": {
+    "citation": "Werth & Avissar · Journal of Geophysical Research · 2002",
+    "title": "The local and global effects of Amazon deforestation",
+    "summary": "Simulations de circulation générale montrant des effets de la déforestation amazonienne sur les précipitations jusqu'en Amérique du Nord et en Asie.",
+    "url": "https://doi.org/10.1029/2001JD000717"
+  },
+  "usgs-amazon-discharge": {
+    "citation": "USGS · The Amazon: Measuring a Mighty River",
+    "title": "The Amazon, measuring a mighty river",
+    "summary": "Débit moyen de l'Amazone ≈ 219 000–224 000 m³/s, soit environ 5 fois celui du fleuve Congo (≈ 41 400 m³/s).",
+    "url": "https://www.usgs.gov/publications/amazon-measuring-a-mighty-river"
+  },
+  "heckenberger2003": {
+    "citation": "Heckenberger et al. · Science · 2003",
+    "title": "Amazonia 1492: Pristine Forest or Cultural Parkland?",
+    "summary": "Cartographie et fouilles dans le Haut Xingu révélant un réseau de villages planifiés et une transformation humaine intense du paysage (env. 1200–1600 apr. J.-C.).",
+    "url": "https://doi.org/10.1126/science.1086112"
+  },
+  "heckenberger2008": {
+    "citation": "Heckenberger et al. · Science · 2008",
+    "title": "Pre-Columbian Urbanism, Anthropogenic Landscapes, and the Future of the Amazon",
+    "summary": "Décrit le complexe Kuhikugu (20 villages, ≈ 50 000 habitants) comme une forme d'urbanisme précolombien en réseau ; l'étendue totale cartographiée dépasse 20 000 km², au-delà du seul cœur urbanisé.",
+    "url": "https://doi.org/10.1126/science.1159769"
+  },
+  "rostain2021spa": {
+    "citation": "Rostain (dir.) · Science Panel for the Amazon · Amazon Assessment Report 2021",
+    "title": "Amazon Assessment Report 2021",
+    "summary": "Synthèse de référence (300+ scientifiques) sur l'état, les menaces et les solutions pour le bassin amazonien — chapitres archéologie, sols, hydrologie et incendies.",
+    "url": "https://www.theamazonwewant.org/amazon-assessment-report-2021/"
+  },
+  "wwf2022living": {
+    "citation": "Living Amazon Report · WWF · 2022",
+    "title": "Living Amazon Report 2022",
+    "summary": "Bilan WWF sur la déforestation, la dégradation des sols et le seuil de bascule écologique (20–25 %) au-delà duquel la forêt risque de basculer vers la savane.",
+    "url": "https://www.wwf.org.uk/what-we-do/where-we-work/amazon"
+  },
+  "mapbiomas2025": {
+    "citation": "MapBiomas · 2025",
+    "title": "MapBiomas Amazônia — données satellitaires de couverture et de feu",
+    "summary": "Suivi satellitaire annuel de la déforestation et des incendies en Amazonie brésilienne, utilisé pour les séries longues (perte de végétation native, surfaces brûlées).",
+    "url": "https://amazonia.mapbiomas.org/"
+  },
+  "inpe-fires-human": {
+    "citation": "INPE / MAAP · suivi des foyers d'incendie amazoniens",
+    "title": "Origine humaine des incendies amazoniens",
+    "summary": "La quasi-totalité des feux amazoniens sont d'origine humaine (défrichement agricole/pastoral) : les études de terrain convergent autour de 90 à 93 %.",
+    "url": "https://www.maapprogram.org/fire/fires/"
+  },
+  "mercury-contamination": {
+    "citation": "Mercury Dynamics and Bioaccumulation Risk Assessment · 2024",
+    "title": "Mercury Dynamics and Bioaccumulation Risk Assessment in Three Gold Mining-Impacted Amazon River Basins",
+    "summary": "Contamination au mercure des bassins amazoniens touchés par l'orpaillage illégal, avec des concentrations dépassant plusieurs fois les seuils sanitaires de l'OMS.",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11359172/"
+  },
+  "sernanp-pacaya": {
+    "citation": "SERNANP · Reserva Nacional Pacaya-Samiria",
+    "title": "Pacaya-Samiria National Reserve",
+    "summary": "Fiche officielle du service péruvien des aires naturelles protégées : 20 800 km², plus grande réserve nationale du Pérou.",
+    "url": "https://visitaareasnaturales.sernanp.gob.pe/en/anps/pacaya-samiria-national-reserve/"
+  },
+  "roosevelt1991marajo": {
+    "citation": "Roosevelt · Moundbuilders of the Amazon · 1991",
+    "title": "Moundbuilders of the Amazon: Geophysical Archaeology on Marajó Island, Brazil",
+    "summary": "Étude archéologique de référence sur les tertres (mounds) et la céramique Marajóara, qui a établi le développement autonome de cette société amazonienne.",
+    "url": "https://www.jstor.org/stable/j.ctt13x1kxv"
+  },
+  "canuto2018pacunam": {
+    "citation": "Canuto et al. · Science · 2018",
+    "title": "Ancient lowland Maya complexity as revealed by airborne laser scanning of northern Guatemala",
+    "summary": "L'initiative PACUNAM LiDAR cartographie 2 144 km² de forêt guatémaltèque et révèle plus de 60 000 structures mayas jusque-là invisibles sous la canopée.",
+    "url": "https://doi.org/10.1126/science.aau0137"
+  },
+  "prumers2022casarabe": {
+    "citation": "Prümers et al. · Nature · 2022",
+    "title": "Lidar reveals pre-Hispanic low-density urbanism in the Bolivian Amazon",
+    "summary": "Le LiDAR révèle la culture Casarabe (Llanos de Mojos, Bolivie, env. 500–1400) : un urbanisme de basse densité avec plateformes, chaussées et réservoirs d'eau.",
+    "url": "https://doi.org/10.1038/s41586-022-04780-4"
+  },
+  "unesco-rioabiseo": {
+    "citation": "UNESCO World Heritage Centre · Río Abiseo National Park",
+    "title": "Río Abiseo National Park",
+    "summary": "Site mixte culturel et naturel inscrit au patrimoine mondial, abritant Gran Pajatén et la culture Chachapoyas (env. 800–1470), documentant huit millénaires d'occupation humaine.",
+    "url": "https://whc.unesco.org/en/list/548/"
+  },
+  "arraut2012flying": {
+    "citation": "Arraut, Nobre, Barbosa et al. · Journal of Climate · 2012",
+    "title": "Aerial Rivers and Lakes: Looking at Large-Scale Moisture Transport and Its Relation to Amazonia and to Subtropical Rainfall in South America",
+    "summary": "Décrit les « rivières aériennes » : l'humidité recyclée par la forêt est transportée par les vents sur plusieurs milliers de km jusqu'au sud-est du continent.",
+    "url": "https://journals.ametsoc.org/view/journals/clim/25/2/2011jcli4189.1.xml"
+  },
+  "britannica-ursua": {
+    "citation": "Encyclopaedia Britannica · Pedro de Ursúa",
+    "title": "Pedro de Ursúa, Spanish explorer",
+    "summary": "Récit de l'expédition d'Ursúa à la recherche d'El Dorado : levée de troupes dès 1559, départ du Haut Huallaga en septembre 1560, mutinerie de Lope de Aguirre et assassinat d'Ursúa en 1561.",
+    "url": "https://www.britannica.com/biography/Pedro-de-Ursua"
+  },
+  "winemiller2016dams": {
+    "citation": "Winemiller et al. · Science · 2016",
+    "title": "Balancing hydropower and biodiversity in the Amazon, Congo, and Mekong",
+    "summary": "Recensement de 412 barrages hydroélectriques existants, en construction ou planifiés dans le bassin amazonien, menaçant la connectivité des cours d'eau et les migrations de poissons.",
+    "url": "https://doi.org/10.1126/science.aac7082"
+  }
+}

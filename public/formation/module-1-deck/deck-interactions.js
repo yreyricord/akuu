@@ -6,7 +6,15 @@
 
   let tipEl = null;
   let tipTarget = null;
-  const SRC_SEL = '[data-src]:not(.deck-vs__bubble)';
+  let tipHideTimer = null;
+  const SRC_SEL = '[data-src]:not(.deck-vs__bubble), [data-src-id]:not(.deck-vs__bubble)';
+
+  /* ---------- Registre de sources (public/formation/sources.json) ---------- */
+  let sourcesData = null; // Map<id, {citation,title,summary,url}> une fois chargé ; null tant que le fetch n'a pas résolu.
+  fetch('../sources.json')
+    .then((res) => (res.ok ? res.json() : {}))
+    .then((json) => { sourcesData = new Map(Object.entries(json)); })
+    .catch(() => { sourcesData = new Map(); }); // hors-ligne / fichier absent : repli sur le texte simple, jamais bloquant.
 
   function getTipEl() {
     if (!tipEl) {
@@ -14,15 +22,23 @@
       tipEl.className = 'deck-src-tooltip';
       tipEl.setAttribute('role', 'tooltip');
       tipEl.id = 'deck-src-tooltip';
+      tipEl.addEventListener('pointerenter', () => { clearTimeout(tipHideTimer); });
+      tipEl.addEventListener('pointerleave', scheduleHideTip);
     }
     if (tipEl.parentNode !== document.body) document.body.appendChild(tipEl);
     return tipEl;
   }
 
   function hideTip() {
+    clearTimeout(tipHideTimer);
     tipTarget = null;
     if (!tipEl) return;
-    tipEl.classList.remove('is-visible');
+    tipEl.classList.remove('is-visible', 'deck-src-tooltip--rich');
+  }
+
+  function scheduleHideTip() {
+    clearTimeout(tipHideTimer);
+    tipHideTimer = setTimeout(hideTip, 180);
   }
 
   function positionTip(el) {
@@ -39,25 +55,69 @@
     tip.style.top = `${top}px`;
   }
 
+  function renderTip(tip, el) {
+    const srcId = el.getAttribute('data-src-id');
+    const entry = srcId && sourcesData ? sourcesData.get(srcId) : null;
+    if (entry) {
+      tip.classList.add('deck-src-tooltip--rich');
+      while (tip.firstChild) tip.removeChild(tip.firstChild);
+      const citation = document.createElement('div');
+      citation.className = 'deck-src-tooltip__citation';
+      citation.textContent = entry.citation;
+      const title = document.createElement('div');
+      title.className = 'deck-src-tooltip__title';
+      title.textContent = entry.title;
+      tip.appendChild(citation);
+      tip.appendChild(title);
+      if (entry.summary) {
+        const summary = document.createElement('p');
+        summary.className = 'deck-src-tooltip__summary';
+        summary.textContent = entry.summary;
+        tip.appendChild(summary);
+      }
+      if (entry.url) {
+        const link = document.createElement('a');
+        link.className = 'deck-src-tooltip__link';
+        link.href = entry.url;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.textContent = 'Lire l’étude →';
+        tip.appendChild(link);
+      }
+      return;
+    }
+    tip.classList.remove('deck-src-tooltip--rich');
+    tip.textContent = el.getAttribute('data-src') || '';
+  }
+
   function showTip(el) {
     if (!el?.matches?.(SRC_SEL)) return;
     const active = document.querySelector('section[data-deck-active]');
     if (!active?.contains(el)) return;
-    const text = el.getAttribute('data-src');
-    if (!text) return;
+    if (!el.getAttribute('data-src') && !el.getAttribute('data-src-id')) return;
+    clearTimeout(tipHideTimer);
     tipTarget = el;
     const tip = getTipEl();
-    tip.textContent = text;
+    renderTip(tip, el);
     tip.classList.add('is-visible');
     positionTip(el);
     requestAnimationFrame(() => positionTip(el));
+  }
+
+  /** Ouvre le lien de la source associée à `el`, si le registre l'a résolue. */
+  function openSourceLink(el) {
+    const srcId = el?.getAttribute('data-src-id');
+    const entry = srcId && sourcesData ? sourcesData.get(srcId) : null;
+    if (entry?.url) window.open(entry.url, '_blank', 'noopener,noreferrer');
   }
 
   function findSrcUnderPointer(x, y) {
     const active = document.querySelector('section[data-deck-active]');
     if (!active) return null;
     const hit = document.elementFromPoint(x, y);
-    if (!hit || !active.contains(hit)) return null;
+    if (!hit) return null;
+    if (tipEl && tipEl.contains(hit)) return 'tip';
+    if (!active.contains(hit)) return null;
     const el = hit.closest(SRC_SEL);
     return el && active.contains(el) ? el : null;
   }
@@ -65,11 +125,13 @@
   function onSourcePointerMove(e) {
     if (e.pointerType === 'touch') return;
     const el = findSrcUnderPointer(e.clientX, e.clientY);
-    if (el) {
+    if (el === 'tip') {
+      clearTimeout(tipHideTimer);
+    } else if (el) {
       if (tipTarget !== el) showTip(el);
       else positionTip(el);
     } else if (tipTarget) {
-      hideTip();
+      scheduleHideTip();
     }
   }
 
@@ -96,11 +158,17 @@
     document.addEventListener('pointermove', onSourcePointerMove, { passive: true });
     document.addEventListener('pointerdown', (e) => {
       const el = findSrcUnderPointer(e.clientX, e.clientY);
+      if (el === 'tip') return; // laisser le lien/la carte gérer son propre clic
       if (el) showTip(el);
       else hideTip();
     }, { passive: true });
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') hideTip();
+      if (e.key === 'Escape') { hideTip(); return; }
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const el = document.activeElement?.closest?.(SRC_SEL);
+      if (!el || !el.getAttribute('data-src-id')) return;
+      e.preventDefault();
+      openSourceLink(el);
     });
     document.addEventListener('focusin', (e) => {
       const el = e.target?.closest?.(SRC_SEL);
