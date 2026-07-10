@@ -130,5 +130,53 @@
     "title": "Balancing hydropower and biodiversity in the Amazon, Congo, and Mekong",
     "summary": "Recensement de 412 barrages hydroélectriques existants, en construction ou planifiés dans le bassin amazonien, menaçant la connectivité des cours d'eau et les migrations de poissons.",
     "url": "https://doi.org/10.1126/science.aac7082"
+  },
+  "nasa-mapping-amazon": {
+    "citation": "NASA Earth Observatory / V. Zalles, Univ. of Maryland · 2019",
+    "title": "Mapping the Amazon",
+    "summary": "Même les chiffres de base (surface du bassin, de la forêt) varient selon les organismes, faute de définition unique des écosystèmes amazoniens.",
+    "url": "https://earthobservatory.nasa.gov/images/145649/mapping-the-amazon"
+  },
+  "raisg2020": {
+    "citation": "RAISG · Amazonia Under Pressure · 2020",
+    "title": "Amazonia Under Pressure",
+    "summary": "Atlas régional (23 cartes) sur les pressions pesant sur l'Amazonie : 9 pays, aires protégées, territoires indigènes, déforestation et infrastructures.",
+    "url": "https://www.raisg.org/en/publication/amazonia-under-pressure-2020/"
+  },
+  "brazil-codigo-florestal": {
+    "citation": "Lei nº 12.651/2012 (Código Florestal), Art. 3 · Présidence de la République du Brésil",
+    "title": "Código Florestal Brasileiro",
+    "summary": "Définit légalement l'« Amazônia Legal » par des frontières administratives (États et parallèles/méridiens), plus étroite que le bassin ou la forêt réels.",
+    "url": "https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/lei/l12651.htm"
+  },
+  "natgeo2014-amazonsource": {
+    "citation": "National Geographic · 2014",
+    "title": "Where Does the Amazon River Begin?",
+    "summary": "Contos & Tripcevich identifient en 2014 la source la plus éloignée de l'Amazone dans les Andes péruviennes (Rio Mantaro), relançant le débat sur la longueur exacte du fleuve.",
+    "url": "https://www.nationalgeographic.com/adventure/article/140213-amazon-river-length-source-maps-science"
+  },
+  "staal2018cascades": {
+    "citation": "Staal et al. · Nature Climate Change · 2018",
+    "title": "Forest-rainfall cascades buffer against drought across the Amazon",
+    "summary": "La vapeur d'eau recyclée par la forêt est retranspirée jusqu'à six fois avant de retomber en pluie : ce recyclage en cascade explique près de la moitié des précipitations générées par la forêt elle-même.",
+    "url": "https://www.nature.com/articles/s41558-018-0177-y"
+  },
+  "nobre2014futureclimate": {
+    "citation": "A. D. Nobre · CCST-INPE / INPA / ARA · 2014",
+    "title": "The Future Climate of Amazonia — Scientific Assessment Report",
+    "summary": "Synthèse scientifique décrivant la forêt comme une « pompe biotique » qui rejette environ 20 milliards de tonnes d'eau par jour dans l'atmosphère, un volume comparable au débit du fleuve Amazone.",
+    "url": "https://d2ouvy59p0dg6k.cloudfront.net/downloads/the_future_climate_of_amazonia_report.pdf"
+  },
+  "lovejoy-nobre2018": {
+    "citation": "Lovejoy & Nobre · Science Advances · 2018",
+    "title": "Amazon Tipping Point",
+    "summary": "Sous l'effet conjugué des feux et du changement climatique, les auteurs révisent le seuil de bascule écologique de l'Amazonie à 20-25 % de déforestation cumulée (contre ~40 % estimé auparavant).",
+    "url": "https://www.science.org/doi/10.1126/sciadv.aat2340"
+  },
+  "hamza2011riohamza": {
+    "citation": "Pimentel & Hamza · Observatório Nacional (Brésil) · SBGf · 2011",
+    "title": "Rio Hamza : un écoulement souterrain sous l'Amazone",
+    "summary": "À partir de données thermiques de 241 puits pétroliers, les géophysiciens brésiliens identifient un lent écoulement d'eau souterraine à ~4 000 m de profondeur, suivant approximativement le tracé de l'Amazone.",
+    "url": "https://www.iflscience.com/the-amazon-isn-t-the-only-giant-waterway-in-brazil-another-hides-underground-67474"
   }
 }
