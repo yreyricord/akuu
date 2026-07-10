@@ -122,7 +122,7 @@
   const FINE_POINTER_MQ = matchMedia('(hover: hover) and (pointer: fine)');
   const NARROW_MQ = matchMedia('(max-width: 640px)');
   // Slide-authored controls that should keep a tap instead of it navigating.
-  const INTERACTIVE_SEL = 'a[href], button, input, select, textarea, summary, label, video[controls], audio[controls], [role="button"], [onclick], [tabindex]:not([tabindex^="-"]), [contenteditable]:not([contenteditable="false" i])';
+  const INTERACTIVE_SEL = 'a[href], button, input, select, textarea, summary, label, video[controls], audio[controls], [role="button"], [onclick], [tabindex]:not([tabindex^="-"]), [contenteditable]:not([contenteditable="false" i]), .toc-row';
 
   const pad2 = (n) => String(n).padStart(2, '0');
 
@@ -1167,7 +1167,65 @@
       if (this._totalEl) this._totalEl.textContent = String(this._slides.length || 1);
       if (this._index >= this._slides.length) this._index = Math.max(0, this._slides.length - 1);
       this._markLastVisible();
+      this._wireTocRows();
       this._renderRail();
+    }
+
+    /** Resolve a chapter number (from a sommaire .toc-num) to a slide index. */
+    _findChapterSlideIndex(chapterNum) {
+      const n = chapterNum;
+      const pad = pad2(n);
+      for (let i = 0; i < this._slides.length; i++) {
+        const label = this._slides[i].getAttribute('data-label') || '';
+        if (/Synthèse/i.test(label)) continue;
+        if (new RegExp(`\\bPartie\\s*${pad}\\b`, 'i').test(label)) return i;
+        if (new RegExp(`\\bPartie\\s*${n}\\b`, 'i').test(label)) return i;
+        if (new RegExp(`Titre Partie\\s*${n}\\b`, 'i').test(label)) return i;
+      }
+      // Module 5 part 1 has no intercalaire — jump to first content slide after the sommaire.
+      if (n === 1) {
+        const tocIdx = this._slides.findIndex((s) => s.classList.contains('toc'));
+        if (tocIdx < 0) return -1;
+        for (let i = tocIdx + 1; i < this._slides.length; i++) {
+          const label = this._slides[i].getAttribute('data-label') || '';
+          if (/Titre Partie\s*2|\bPartie\s*0?2\b/i.test(label)) break;
+          if (/Brise-glace|Sommaire|Couverture|Titre du module/i.test(label)) continue;
+          return i;
+        }
+      }
+      return -1;
+    }
+
+    _navigateFromTocRow(row) {
+      const numEl = row.querySelector('.toc-num');
+      if (!numEl) return;
+      const chapterNum = parseInt((numEl.textContent || '').trim(), 10);
+      if (!chapterNum) return;
+      const idx = this._findChapterSlideIndex(chapterNum);
+      if (idx >= 0) this._go(idx, 'click');
+    }
+
+    /** Wire sommaire rows so clicking a chapter jumps to its intercalaire slide. */
+    _wireTocRows() {
+      this._slides.forEach((slide) => {
+        slide.querySelectorAll('.toc-row').forEach((row) => {
+          if (row.dataset.tocWired) return;
+          row.dataset.tocWired = '1';
+          row.setAttribute('role', 'button');
+          if (!row.hasAttribute('tabindex')) row.setAttribute('tabindex', '0');
+          row.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this._navigateFromTocRow(row);
+          });
+          row.addEventListener('keydown', (e) => {
+            if (e.key !== 'Enter' && e.key !== ' ') return;
+            e.preventDefault();
+            e.stopPropagation();
+            this._navigateFromTocRow(row);
+          });
+        });
+      });
     }
 
     /** Tag the last non-skipped slide so print CSS can drop its

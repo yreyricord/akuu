@@ -28,6 +28,7 @@
             :src="deckUrl"
             :title="moduleTitle"
             class="w-full h-full"
+            tabindex="-1"
             allow="fullscreen"
             allowfullscreen
           />
@@ -104,11 +105,56 @@ const frameRef = ref(null)
 const iframeRef = ref(null)
 const isFullscreen = ref(false)
 
+function deckStage () {
+  try {
+    return iframeRef.value?.contentDocument?.querySelector('deck-stage') ?? null
+  } catch {
+    return null
+  }
+}
+
+function focusDeck () {
+  iframeRef.value?.focus({ preventScroll: true })
+}
+
+/** Arrow keys hit the parent document while the deck iframe is fullscreen. */
+function handlePresentationKeydown (e) {
+  if (!isFullscreen.value) return
+  const t = e.target
+  if (t?.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t?.tagName ?? '')) return
+  if (e.metaKey || e.ctrlKey || e.altKey) return
+
+  const deck = deckStage()
+  if (!deck) return
+
+  let handled = false
+  const key = e.key
+  if (key === 'ArrowRight' || key === 'PageDown' || key === ' ' || key === 'Spacebar') {
+    deck.next()
+    handled = true
+  } else if (key === 'ArrowLeft' || key === 'PageUp') {
+    deck.prev()
+    handled = true
+  } else if (key === 'Home' || key === 'r' || key === 'R') {
+    deck.reset()
+    handled = true
+  } else if (key === 'End') {
+    deck.goTo(deck.length - 1)
+    handled = true
+  } else if (/^[0-9]$/.test(key)) {
+    const n = key === '0' ? 9 : parseInt(key, 10) - 1
+    if (n < deck.length) deck.goTo(n)
+    handled = true
+  }
+
+  if (handled) e.preventDefault()
+}
+
 function toggleFullscreen () {
   if (document.fullscreenElement) {
     document.exitFullscreen()
   } else if (frameRef.value) {
-    frameRef.value.requestFullscreen()
+    frameRef.value.requestFullscreen()?.then?.(() => focusDeck())
   }
 }
 
@@ -118,18 +164,25 @@ function handleFullscreenChange () {
   // `no-rail` attribute meant exactly for this - toggle it instead of
   // reaching into the deck's shadow DOM to hide internals directly.
   try {
-    const deckStage = iframeRef.value?.contentDocument?.querySelector('deck-stage')
-    if (deckStage) {
-      if (isFullscreen.value) deckStage.setAttribute('no-rail', '')
-      else deckStage.removeAttribute('no-rail')
+    const deck = deckStage()
+    if (deck) {
+      if (isFullscreen.value) deck.setAttribute('no-rail', '')
+      else deck.removeAttribute('no-rail')
     }
   } catch {
     // cross-origin or not-yet-loaded iframe - nothing to do
   }
+  if (isFullscreen.value) focusDeck()
 }
 
-onMounted(() => document.addEventListener('fullscreenchange', handleFullscreenChange))
-onUnmounted(() => document.removeEventListener('fullscreenchange', handleFullscreenChange))
+onMounted(() => {
+  document.addEventListener('fullscreenchange', handleFullscreenChange)
+  document.addEventListener('keydown', handlePresentationKeydown)
+})
+onUnmounted(() => {
+  document.removeEventListener('fullscreenchange', handleFullscreenChange)
+  document.removeEventListener('keydown', handlePresentationKeydown)
+})
 </script>
 
 <style scoped>

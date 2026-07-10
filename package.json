@@ -12,6 +12,8 @@
     "seo:files": "node scripts/generate-seo-files.mjs",
     "prebuild": "npm run musee:gallery && npm run seo:files && npm run i18n:check && npm run i18n:check-narratives",
     "musee:gallery": "node scripts/sync-musee-gallery.mjs",
+    "decks:sync": "node scripts/sync-decks.mjs",
+    "decks:shots": "node scripts/deck-screenshots.mjs",
     "build": "node scripts/clean-dist.mjs && vite-ssg build --config vite.config.mjs",
     "preview": "vite preview --config vite.config.mjs",
     "postinstall": "node scripts/copy-wasm.js",
