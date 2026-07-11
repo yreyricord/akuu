@@ -416,6 +416,214 @@
     if (h > 40) viewport.style.minHeight = `${Math.max(240, h)}px`;
   }
 
+  /* ---------- Frise ↔ carrousel ---------- */
+  function getSyncedTimeline(carousel) {
+    if (!carousel?.hasAttribute('data-deck-sync-timeline')) return null;
+    const section = carousel.closest('section');
+    return section?.querySelector('[data-deck-timeline]') || null;
+  }
+
+  function getTimelineTheme(section) {
+    const tag = section?.querySelector('.tag');
+    const color = tag?.style?.color || '';
+    if (color.includes('blue-akuu')) return { cardBg: 'var(--blue-akuu)', kicker: 'var(--ochre)' };
+    if (color.includes('terracotta')) return { cardBg: 'var(--terracotta)', kicker: 'var(--ochre)' };
+    return { cardBg: 'var(--green-forest)', kicker: 'var(--ochre)' };
+  }
+
+  function extractTimelineStep(slide, index, dots) {
+    const dotLabel = dots[index]?.getAttribute('aria-label') || '';
+    const card = slide.querySelector('.card');
+    if (!card) return { year: dotLabel || String(index + 1), desc: '' };
+
+    const tag = card.querySelector(':scope > .xs, .deck-ethno-card__head .xs')?.textContent
+      ?.replace(/\s*\d+\s*·\s*/i, '')
+      .trim() || '';
+    const titles = [...card.querySelectorAll('[style*="Playfair Display"]')];
+    const title = titles.find((el) => !el.style.fontSize?.includes('fs-4') && !el.style.fontSize?.includes('fs-6'))
+      ?.textContent?.trim()
+      || titles[0]?.textContent?.trim()
+      || dotLabel;
+
+    const roman = card.querySelector('[style*="fs-4"]');
+    const period = card.querySelector(':scope > .small, :scope > div > .small');
+    if (roman && period) {
+      return {
+        year: period.textContent.trim().split(/\s/)[0] || roman.textContent.trim(),
+        desc: titles.find((el) => el.style.fontSize?.includes('fs-2'))?.textContent?.trim() || title,
+      };
+    }
+
+    const statNum = card.querySelector('.deck-geoglyph-stat .num');
+    if (statNum) {
+      const statTitle = card.querySelector('.deck-geoglyph-stat [style*="Playfair"]')?.textContent?.trim();
+      return {
+        year: statNum.textContent.trim(),
+        desc: statTitle || card.querySelector('.deck-geoglyph-stat .body')?.textContent?.trim().slice(0, 36) || title,
+      };
+    }
+
+    const ethnoName = card.querySelector('.deck-ethno-card__head [style*="Playfair"]')?.textContent?.trim();
+    if (ethnoName) {
+      const place = card.querySelector('.deck-ethno-card__head .small')?.textContent?.trim() || '';
+      return { year: ethnoName, desc: place };
+    }
+
+    return { year: dotLabel || tag || String(index + 1), desc: title };
+  }
+
+  function findTimelineInsertPoint(carousel, section) {
+    const flexRow = [...section.children].find(
+      (el) => getComputedStyle(el).display === 'flex' && el.contains(carousel),
+    );
+    if (flexRow) return { parent: section, before: flexRow };
+    return { parent: carousel.parentElement, before: carousel };
+  }
+
+  function buildTimelineElement(steps, theme) {
+    const n = steps.length;
+    const wrap = document.createElement('div');
+    wrap.className = 'card deck-timeline-wrap';
+    wrap.style.background = theme.cardBg;
+    wrap.style.marginBottom = '18px';
+    wrap.style.flexShrink = '0';
+    wrap.style.padding = '22px 28px 26px';
+
+    const timeline = document.createElement('div');
+    timeline.className = 'deck-timeline';
+    timeline.dataset.deckTimeline = '';
+    timeline.dataset.deckTimelineAuto = '';
+    timeline.style.setProperty('--deck-timeline-cols', String(n));
+
+    const years = document.createElement('div');
+    years.className = 'deck-timeline__years';
+    const rail = document.createElement('div');
+    rail.className = 'deck-timeline__rail';
+    const line = document.createElement('div');
+    line.className = 'deck-timeline__line';
+    const dotsRow = document.createElement('div');
+    dotsRow.className = 'deck-timeline__dots';
+    const descs = document.createElement('div');
+    descs.className = 'deck-timeline__descs';
+
+    steps.forEach((step) => {
+      const y = document.createElement('div');
+      y.textContent = step.year;
+      years.appendChild(y);
+      const dot = document.createElement('span');
+      dot.className = 'deck-timeline__dot';
+      dotsRow.appendChild(dot);
+      const d = document.createElement('div');
+      d.className = 'xs';
+      d.style.color = 'var(--cream)';
+      d.innerHTML = step.desc ? `<b>${step.desc}</b>` : '';
+      descs.appendChild(d);
+    });
+
+    rail.append(line, dotsRow);
+    timeline.append(years, rail, descs);
+    wrap.append(timeline);
+    return wrap;
+  }
+
+  function initAutoTimelines(root) {
+    root.querySelectorAll('[data-deck-auto-timeline]').forEach((carousel) => {
+      const section = carousel.closest('section');
+      if (!section || section.querySelector('[data-deck-timeline]')) return;
+      if (carousel.dataset.deckTimelineBuilt) return;
+
+      const slides = [...carousel.querySelectorAll('.deck-carousel__slide')];
+      const dots = [...carousel.querySelectorAll('.deck-carousel__dot')];
+      if (!slides.length) return;
+
+      const steps = slides.map((slide, i) => extractTimelineStep(slide, i, dots));
+      const theme = getTimelineTheme(section);
+      const wrap = buildTimelineElement(steps, theme);
+      const { parent, before } = findTimelineInsertPoint(carousel, section);
+      parent.insertBefore(wrap, before);
+
+      carousel.setAttribute('data-deck-sync-timeline', '');
+      carousel.dataset.deckTimelineBuilt = '1';
+    });
+  }
+
+  function getTimelineStepCount(timeline) {
+    return timeline?.querySelectorAll('.deck-timeline__dots .deck-timeline__dot').length || 0;
+  }
+
+  function getTimelineIndexForCarousel(carousel, slideIndex) {
+    const slides = [...carousel.querySelectorAll('.deck-carousel__slide')];
+    const slide = slides[slideIndex];
+    if (slide?.hasAttribute('data-timeline-step')) {
+      const step = parseInt(slide.dataset.timelineStep, 10);
+      if (!Number.isNaN(step)) return step;
+    }
+    const timeline = getSyncedTimeline(carousel);
+    const steps = timeline ? getTimelineStepCount(timeline) : slides.length;
+    if (!steps || !slides.length) return 0;
+    if (steps === slides.length) return slideIndex;
+    if (slides.length === 1) return 0;
+    return Math.round((slideIndex * (steps - 1)) / (slides.length - 1));
+  }
+
+  function getCarouselIndexForTimelineStep(carousel, stepIndex) {
+    const slides = [...carousel.querySelectorAll('.deck-carousel__slide')];
+    const explicit = slides.findIndex(
+      (s) => parseInt(s.dataset.timelineStep, 10) === stepIndex,
+    );
+    if (explicit >= 0) return explicit;
+    const timeline = getSyncedTimeline(carousel);
+    const steps = timeline ? getTimelineStepCount(timeline) : slides.length;
+    if (!slides.length) return 0;
+    if (slides.length === 1) return 0;
+    if (steps <= 1) return 0;
+    return Math.round((stepIndex * (slides.length - 1)) / (steps - 1));
+  }
+
+  function updateTimelineFill(timeline, activeIdx, dots) {
+    const line = timeline.querySelector('.deck-timeline__line');
+    const activeDot = dots[activeIdx];
+    if (!line || !activeDot || !dots.length) {
+      timeline.style.setProperty('--deck-timeline-fill', '0%');
+      return;
+    }
+    const lineRect = line.getBoundingClientRect();
+    const dotRect = activeDot.getBoundingClientRect();
+    if (!lineRect.width) {
+      timeline.style.setProperty('--deck-timeline-fill', '0%');
+      return;
+    }
+    const dotCenter = dotRect.left + dotRect.width / 2;
+    const pct = Math.max(0, Math.min(100, ((dotCenter - lineRect.left) / lineRect.width) * 100));
+    timeline.style.setProperty('--deck-timeline-fill', `${pct}%`);
+  }
+
+  function syncTimeline(carousel, slideIndex) {
+    const timeline = getSyncedTimeline(carousel);
+    if (!timeline) return;
+    const years = [...timeline.querySelectorAll('.deck-timeline__years > div')];
+    const dots = [...timeline.querySelectorAll('.deck-timeline__dots .deck-timeline__dot')];
+    const descs = [...timeline.querySelectorAll('.deck-timeline__descs > div')];
+    const cols = Math.max(years.length, dots.length, descs.length, 1);
+    const activeIdx = Math.min(getTimelineIndexForCarousel(carousel, slideIndex), cols - 1);
+
+    function paint(els, activeClass) {
+      els.forEach((el, j) => {
+        el.classList.remove(activeClass, 'deck-timeline__step--past');
+        if (j < activeIdx) el.classList.add('deck-timeline__step--past');
+        else if (j === activeIdx) el.classList.add(activeClass);
+      });
+    }
+    paint(years, 'deck-timeline__step--active');
+    paint(dots, 'deck-timeline__dot--sync-active');
+    paint(descs, 'deck-timeline__step--active');
+
+    /* Mesure après application des classes : la ligne (inset + flèche) et
+     * la grille de points n'ont pas la même largeur ; un % théorique décale
+     * la barre par rapport aux centres des jalons. */
+    requestAnimationFrame(() => updateTimelineFill(timeline, activeIdx, dots));
+  }
+
   function carouselGo(carousel, n) {
     const slides = [...carousel.querySelectorAll('.deck-carousel__slide')];
     const dots = [...carousel.querySelectorAll('.deck-carousel__dot')];
@@ -440,6 +648,7 @@
     });
     initCarouselNumbers(carousel);
     updateCarouselCount(carousel, i);
+    syncTimeline(carousel, i);
   }
 
   function resetCarousel(carousel) {
@@ -962,6 +1171,28 @@
       return;
     }
 
+    const timelineCol = e.target.closest(
+      '.deck-timeline__years > div, .deck-timeline__dots .deck-timeline__dot, .deck-timeline__descs > div',
+    );
+    if (timelineCol?.closest('[data-deck-timeline]')) {
+      stopDeckNav(e);
+      const timeline = timelineCol.closest('[data-deck-timeline]');
+      const section = timeline?.closest('section');
+      const carousel = section?.querySelector('[data-deck-sync-timeline]');
+      if (!carousel || !timeline) return;
+      const lists = [
+        [...timeline.querySelectorAll('.deck-timeline__years > div')],
+        [...timeline.querySelectorAll('.deck-timeline__dots .deck-timeline__dot')],
+        [...timeline.querySelectorAll('.deck-timeline__descs > div')],
+      ];
+      const stepIndex = lists.reduce((idx, list) => {
+        const i = list.indexOf(timelineCol);
+        return i >= 0 ? i : idx;
+      }, -1);
+      if (stepIndex >= 0) carouselGo(carousel, getCarouselIndexForTimelineStep(carousel, stepIndex));
+      return;
+    }
+
     const viewport = e.target.closest('.deck-carousel__viewport');
     if (viewport) {
       const carousel = viewport.closest('[data-deck-carousel]');
@@ -1056,6 +1287,7 @@
     initSourcePointer();
     initSourcePanelGlobalHandlers();
     initSources(document);
+    initAutoTimelines(document);
     initCarouselsIn(document);
     initSwapIn(document);
     document.querySelectorAll('[data-deck-swap]').forEach(resetSwap);
@@ -1095,6 +1327,7 @@
       mutationRescanScheduled = false;
       hookStage();
       initSources(document);
+      initAutoTimelines(document);
       initCarouselsIn(document);
       initSwapIn(document);
     });
@@ -1103,6 +1336,10 @@
   window.addEventListener('resize', () => {
     if (tipTarget) positionTip(tipTarget);
     else hideTip();
+    const active = document.querySelector('section[data-deck-active]');
+    active?.querySelectorAll('[data-deck-sync-timeline]').forEach((carousel) => {
+      syncTimeline(carousel, carouselIdx.get(carousel) || 0);
+    });
   });
   document.addEventListener('scroll', () => {
     if (tipTarget) positionTip(tipTarget);

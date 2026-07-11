@@ -602,6 +602,134 @@ a.deck-src-panel__row:focus-visible {
   color: var(--night-2, #6a6a63);
   margin-top: 4px;
 }
+/* Frise temporelle : flèche horizontale + jalons datés (colonnes alignées
+   année / point / description). Le rail est une bande fine dont la ligne est
+   centrée verticalement, pour rester stable en plein écran comme en intégré. */
+.deck-timeline {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  gap: 14px;
+}
+.deck-timeline__years,
+.deck-timeline__dots,
+.deck-timeline__descs {
+  display: grid;
+  grid-template-columns: repeat(var(--deck-timeline-cols, 4), 1fr);
+  gap: 18px;
+}
+.deck-timeline__years > div {
+  font-family: 'Playfair Display', serif;
+  font-weight: 800;
+  font-size: var(--fs-2);
+  color: var(--ochre, #F4A261);
+  text-align: center;
+}
+.deck-timeline__rail {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 24px;
+}
+.deck-timeline__line {
+  position: absolute;
+  left: 4px;
+  right: 26px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(244, 162, 97, 0.28);
+  overflow: hidden;
+}
+.deck-timeline__line::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: var(--deck-timeline-fill, 0%);
+  background: var(--ochre, #F4A261);
+  border-radius: 2px;
+  transition: width 0.35s ease;
+}
+.deck-timeline__line::after {
+  content: '';
+  position: absolute;
+  right: -22px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  border-left: 18px solid var(--ochre, #F4A261);
+}
+.deck-timeline__dots {
+  position: relative;
+  width: 100%;
+  align-items: center;
+}
+.deck-timeline__dot {
+  justify-self: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(244, 162, 97, 0.45);
+  border: 3px solid var(--blue-akuu, #04488F);
+  box-shadow: 0 0 0 3px rgba(244, 162, 97, 0.15);
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+.deck-timeline__years > div,
+.deck-timeline__descs > div {
+  transition: opacity 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+.deck-timeline[data-deck-timeline] .deck-timeline__years > div,
+.deck-timeline[data-deck-timeline] .deck-timeline__dot,
+.deck-timeline[data-deck-timeline] .deck-timeline__descs > div {
+  cursor: pointer;
+}
+.deck-timeline__years > div:not(.deck-timeline__step--active):not(.deck-timeline__step--past),
+.deck-timeline__descs > div:not(.deck-timeline__step--active):not(.deck-timeline__step--past) {
+  opacity: 0.42;
+}
+.deck-timeline__years > div.deck-timeline__step--past {
+  color: rgba(244, 234, 214, 0.82);
+  opacity: 0.78;
+}
+.deck-timeline__years > div.deck-timeline__step--active {
+  color: var(--ochre, #F4A261);
+  opacity: 1;
+  transform: scale(1.06);
+}
+.deck-timeline__dot.deck-timeline__step--past {
+  background: rgba(244, 234, 214, 0.9);
+  box-shadow: 0 0 0 2px rgba(244, 162, 97, 0.25);
+}
+.deck-timeline__dot.deck-timeline__dot--sync-active {
+  background: var(--ochre, #F4A261);
+  width: 18px;
+  height: 18px;
+  box-shadow: 0 0 0 4px rgba(244, 162, 97, 0.45);
+  transform: scale(1.08);
+}
+.deck-timeline__descs > div.deck-timeline__step--past {
+  opacity: 0.72;
+}
+.deck-timeline__descs > div.deck-timeline__step--active {
+  opacity: 1;
+}
+.deck-timeline__descs > div {
+  text-align: center;
+}
+/* Frises denses (7+ jalons) : libellés plus compacts */
+.deck-timeline:has(.deck-timeline__dots > :nth-child(7)) .deck-timeline__years > div {
+  font-size: calc(var(--fs-2) - 3px);
+  line-height: 1.15;
+}
+.deck-timeline:has(.deck-timeline__dots > :nth-child(7)) .deck-timeline__descs > div {
+  font-size: calc(var(--fs-0, 11px) + 1px);
+  line-height: 1.25;
+}
 /* Lien « Source » compact : citation complète au survol / focus (legacy) */
 .src-tip {
   position: relative;
@@ -833,6 +961,13 @@ a.deck-src-panel__row:focus-visible {
   background: var(--cream) !important;
   opacity: 1 !important;
   position: relative;
+}
+.deck-carousel__slide .card.deck-carousel__card--dark {
+  background: var(--night) !important;
+  border-top: 8px solid var(--ochre);
+}
+.deck-carousel__slide .card.deck-carousel__card--dark .body {
+  color: var(--cream);
 }
 /* Portrait ethnie : card horizontale, photo à gauche */
 .deck-ethno-card {
@@ -1607,6 +1742,16 @@ section:not([data-deck-active]) .deck-carousel__slide {
 .deck-hist-eco__text .deck-carousel__slide--after {
   transform: translateX(calc(-50% + 38%)) scale(0.88);
 }
+/* Carrousel pleine largeur : cartes ~96 % du viewport */
+.deck-carousel--wide .deck-carousel__slide {
+  width: 96%;
+}
+.deck-carousel--wide .deck-carousel__slide--before {
+  transform: translateX(calc(-50% - 42%)) scale(0.88);
+}
+.deck-carousel--wide .deck-carousel__slide--after {
+  transform: translateX(calc(-50% + 42%)) scale(0.88);
+}
 
 /* Lightbox figure : plein écran + zoom */
 .deck-fig-lightbox {
@@ -1920,6 +2065,46 @@ section[data-deck-active] .photo-in {
   height: 100%;
   border: none;
   display: block;
+}
+
+/* Lien « prochain module » sur les slides de clôture */
+.deck-next-module {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.08);
+  text-align: center;
+  padding: 26px 54px;
+  border-radius: 16px;
+  transition: transform 0.2s ease, background 0.2s ease;
+  cursor: pointer;
+}
+.deck-next-module:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.15);
+}
+.deck-next-module:focus-visible {
+  outline: 2px solid var(--green-leaf);
+  outline-offset: 4px;
+}
+.deck-next-module__label {
+  color: var(--green-leaf);
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+.deck-next-module__title {
+  font-family: 'Playfair Display', serif;
+  font-size: var(--fs-3);
+  font-weight: 700;
+  color: var(--cream);
+  margin-top: 8px;
+}
+.deck-module-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 920px;
 }
 .ph-num {
   font-family: 'Playfair Display', serif; font-weight: 800;
