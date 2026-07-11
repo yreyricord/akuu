@@ -178,5 +178,113 @@
     "title": "Rio Hamza : un écoulement souterrain sous l'Amazone",
     "summary": "À partir de données thermiques de 241 puits pétroliers, les géophysiciens brésiliens identifient un lent écoulement d'eau souterraine à ~4 000 m de profondeur, suivant approximativement le tracé de l'Amazone.",
     "url": "https://www.iflscience.com/the-amazon-isn-t-the-only-giant-waterway-in-brazil-another-hides-underground-67474"
+  },
+  "m2-sanroman1994": {
+    "citation": "J.V. San Román · Perfiles Históricos de la Amazonía Peruana · CETA-CAAAP-IIAP · 1994",
+    "title": "Perfiles Históricos de la Amazonía Peruana",
+    "summary": "Synthèse historique de référence sur l'Amazonie péruvienne : peuples natifs, pénétration missionnaire, cycles économiques (caoutchouc) et intégration nationale.",
+    "url": "https://www.caaap.org.pe/Libros/Perfiles-historicos-de-la-amazonia-peruana.pdf"
+  },
+  "m2-authority": {
+    "citation": "Rivière · Individual and Community in Native Amazonia · 1984 · Fausto · Donos demais · Mana · 2008 · San Román · 1994",
+    "title": "Perfiles Históricos de la Amazonía Peruana",
+    "summary": "L'autorité du curaca amazonien repose sur le prestige (générosité, éloquence) plutôt que sur la coercition ou un rang héréditaire : un pouvoir consenti et révocable.",
+    "url": "https://www.caaap.org.pe/Libros/Perfiles-historicos-de-la-amazonia-peruana.pdf"
+  },
+  "m2-economy": {
+    "citation": "Lizot · Tales of the Hunt · 1985 · Viveiros de Castro · Annual Review of Anthropology · 1996 · Erickson · 2007",
+    "title": "Images of Nature and Society in Amazonian Ethnology",
+    "summary": "L'économie des sociétés amazoniennes de subsistance (pêche, chasse, chacra) repose sur des normes de réciprocité et de redistribution plutôt que sur l'accumulation individuelle.",
+    "url": "https://doi.org/10.1146/annurev.anthro.25.1.179"
+  },
+  "m2-warfare": {
+    "citation": "Fausto · Of Enemies and Pets: Warfare and Shamanism in Amazonia · American Ethnologist · 1999 · Ferguson · Blood of the Leviathan · 1990",
+    "title": "Of Enemies and Pets: Warfare and Shamanism in Amazonia",
+    "summary": "La guerre amazonienne obéit à une logique de prédation et de « familiarisation » de l'ennemi capturé, distincte de la guerre d'État moderne.",
+    "url": "http://onlinelibrary.wiley.com/doi/10.1525/ae.1999.26.4.933/abstract"
+  },
+  "m2-kukama-bdpi": {
+    "citation": "BDPI, Pueblo Kukama Kukamiria · Ministerio de Cultura del Perú · Rivas-Ruiz · 2024 · Chirif & Mora · Atlas de Comunidades Nativas · 1977",
+    "title": "Kukama Kukamiria",
+    "summary": "Fiche officielle du Ministère de la Culture péruvien : organisation en sangres (groupes patrilinéaires), démographie, langue et territoire du peuple Kukama Kukamiria.",
+    "url": "https://bdpi.cultura.gob.pe/pueblos/kukama-kukamiria"
+  },
+  "m2-secoya-bdpi": {
+    "citation": "BDPI, Pueblo Secoya (« Encabellados ») · Ministerio de Cultura del Perú · San Román · 1994 · Casanova · Los Encabellados · 1998",
+    "title": "Secoya",
+    "summary": "Fiche officielle sur le peuple Secoya (Aido Pai), nommé « Encabellados » par les missionnaires jésuites dès 1599 en raison de leur longue chevelure.",
+    "url": "https://bdpi.cultura.gob.pe/pueblos/secoya"
+  },
+  "m2-izaguirre-missions": {
+    "citation": "Izaguirre · Historia de las misiones franciscanas · 1922 · Persée, BEFEO · 1996",
+    "title": "Historia de las misiones franciscanas y narración de los progresos de la geografía en el oriente del Perú",
+    "summary": "Chronique franciscaine de référence sur l'évangélisation missionnaire de l'Amazonie péruvienne (1619-1921), des contacts initiaux aux résistances indigènes.",
+    "url": "https://archive.org/details/historiadelasmis13izag"
+  },
+  "m2-omagua-carvajal": {
+    "citation": "Gaspar de Carvajal · Relación · 1542 · BDPI, Pueblo Omagua",
+    "title": "Relación del nuevo descubrimiento del famoso río Grande",
+    "summary": "Chronique de l'expédition d'Orellana (1541-1542), premier récit européen décrivant les cités omaguas denses le long de l'Amazone.",
+    "url": "https://bdpi.cultura.gob.pe/pueblos/omagua"
+  },
+  "m2-omagua-destruction": {
+    "citation": "Ribeiro & Wise · Los grupos étnicos de la Amazonía peruana · 1978 · Regan · Hacia la tierra sin mal · 1993",
+    "title": "Proto-Omagua-Kokama: Grammatical Sketch and Prehistory",
+    "summary": "Le père Cujía dénombre 15 000 Omaguas en 1645 ; quarante ans plus tard, l'esclavage colonial portugais a drastiquement réduit cette population.",
+    "url": "https://escholarship.org/uc/item/1vx978rq"
+  },
+  "m2-ikitu-bdpi": {
+    "citation": "BDPI, Pueblo Ikitu · Ministerio de Cultura del Perú · Mayor & Aparicio · 2009 · Beier · 2016",
+    "title": "Ikitu",
+    "summary": "Fiche officielle sur le peuple Ikitu (bassin du Nanay/Chambira, Loreto) : langue, démographie et situation actuelle.",
+    "url": "https://bdpi.cultura.gob.pe/pueblos/ikitu"
+  },
+  "m2-maranon-legalpersonhood": {
+    "citation": "Rivas-Ruiz · Anthropia · 2014 · Earth Law Center · 2024 · Equator Initiative, HKK · 2024",
+    "title": "Peru's Marañón River Wins Rights Recognition and Indigenous Guardianship in Court",
+    "summary": "En mars 2024, la justice péruvienne reconnaît au fleuve Marañón des droits propres et désigne les femmes kukama de Santa Rita de Castilla comme ses gardiennes légales.",
+    "url": "https://www.earthlawcenter.org/blog-entries/2024/3/perus-maran-river-wins-rights-recognition-and-indigenous-guardianship-in-court"
+  },
+  "m2-awajun-wampis-bdpi": {
+    "citation": "BDPI, Pueblo Awajún · Ministerio de Cultura del Perú · Instituto del Bien Común, Pueblo Wampis · 2015 · Brown · Aguaruna · 1984",
+    "title": "Awajún",
+    "summary": "Fiche officielle sur le peuple Awajún (bassin du Marañón) : plus de 55 000 personnes, langue jivaro, organisation sociale et territoire.",
+    "url": "https://bdpi.cultura.gob.pe/pueblos/awajun"
+  },
+  "m2-ucayali-bdpi": {
+    "citation": "BDPI, Pueblo Amahuaca · Ministerio de Cultura del Perú · Gebissa-Fultz, Shipibo-Konibo · 2015 · CVR, Informe Final · 2003",
+    "title": "Shipibo-Konibo",
+    "summary": "Fiche officielle sur les peuples du bassin de l'Ucayali (Amahuaca, Shipibo-Konibo) : démographie, langue pano et art graphique kené.",
+    "url": "https://bdpi.cultura.gob.pe/pueblos/shipibo-konibo"
+  },
+  "m2-maijuna-es2019": {
+    "citation": "BDPI · Nimuendajú, The Tukuna · 1952 · Bellier, Les Yagua · SELAF · 1994 · Environment & Society, The Maijuna · 2019",
+    "title": "The Maijuna: Fighting for Survival in the Peruvian Amazon",
+    "summary": "En 2015, après des décennies d'exploitation illégale, les Maijuna obtiennent la création d'une aire de conservation régionale de 391 039 hectares sur leur territoire ancestral.",
+    "url": "https://www.environmentandsociety.org/arcadia/maijuna-fighting-survival-peruvian-amazon"
+  },
+  "m2-matses-bdpi": {
+    "citation": "Descola · La nature et la société · 1986 · BDPI · Romanoff, Matses · 1984 · Iglesias, La memoria negada del caucho · 2011",
+    "title": "Matsés",
+    "summary": "Fiche officielle sur le peuple Matsés (frontière Pérou-Brésil) : contact tardif, mémoire du boom du caoutchouc et organisation sociale.",
+    "url": "https://bdpi.cultura.gob.pe/pueblos/matses"
+  },
+  "m2-urarina-bdpi": {
+    "citation": "BDPI, Pueblo Urarina · Ministerio de Cultura del Perú · Ochoa, Los urarina de la selva peruana · 1993 · Olschewski, The Urarina · 2008",
+    "title": "Urarina",
+    "summary": "Fiche officielle sur le peuple Urarina (bassin du Chambira, Loreto), isolat linguistique connu pour son organisation sociale et sa cosmologie distinctives.",
+    "url": "https://bdpi.cultura.gob.pe/pueblos/urarina"
+  },
+  "erickson2000fishery": {
+    "citation": "Clark Erickson (Univ. of Pennsylvania) · Nature · 2000",
+    "title": "An artificial landscape-scale fishery in the Bolivian Amazon",
+    "summary": "Réseau hydraulique artificiel de 525 km² dans la région de Baures (Bolivie) : les structures en zigzag identifiées comme des barrages à poissons précolombiens, une pisciculture à l'échelle du paysage.",
+    "url": "https://doi.org/10.1038/35041555"
+  },
+  "m2-putumayo-hardenburg": {
+    "citation": "W. E. Hardenburg · The Putumayo, the Devil's Paradise · 1912-1913 · rapport Roger Casement",
+    "title": "The Putumayo, the Devil's Paradise",
+    "summary": "L'exposé de Hardenburg (1912), confirmé par l'enquête de Roger Casement, documente les atrocités commises par la Peruvian Amazon Company de Julio César Arana contre les peuples du Putumayo, dont les Witoto.",
+    "url": "https://archive.org/stream/putumayodevilspa00hardrich/putumayodevilspa00hardrich_djvu.txt"
   }
 }

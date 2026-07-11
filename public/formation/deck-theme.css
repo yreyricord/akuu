@@ -116,7 +116,7 @@ section[data-label] * { min-height: 0; min-width: 0; }
 .num     { font-family: 'Playfair Display', serif; font-weight: 800; font-size: var(--fs-4); line-height: 0.95; }
 .src     { position: absolute; bottom: 24px; left: var(--pad-x); right: var(--pad-x); font-family: 'Inter', sans-serif; font-size: var(--fs-1); font-style: italic; opacity: 0.72; z-index: 6; }
 /* Chiffre, citation ou titre lié à une source : tooltip au survol */
-section[data-deck-active] [data-src]:not(.deck-vs__bubble) {
+section[data-deck-active] [data-src]:not(.deck-vs__bubble):not(.src-tip) {
   cursor: help;
   position: relative;
   z-index: 2;
