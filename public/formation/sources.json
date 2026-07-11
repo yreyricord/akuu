@@ -292,5 +292,299 @@
     "title": "The Putumayo, the Devil's Paradise",
     "summary": "L'exposé de Hardenburg (1912), confirmé par l'enquête de Roger Casement, documente les atrocités commises par la Peruvian Amazon Company de Julio César Arana contre les peuples du Putumayo, dont les Witoto.",
     "url": "https://archive.org/stream/putumayodevilspa00hardrich/putumayodevilspa00hardrich_djvu.txt"
+  },
+  "m2-orellana-sanroman": {
+    "citation": "J.V. San Román · Perfiles Históricos de la Amazonía Peruana · 1994 · José A. del Busto · Francisco de Orellana · Gaspar de Carvajal · Relación · 1542",
+    "title": "Perfiles Históricos de la Amazonía Peruana",
+    "summary": "Synthèse historique sur la première traversée de l'Amazone (1539-1542) : expédition d'Orellana, témoignage de Carvajal et contexte des grandes cités omaguas.",
+    "url": "https://www.caaap.org.pe/Libros/Perfiles-historicos-de-la-amazonia-peruana.pdf"
+  },
+  "m2-carvajal-relacion": {
+    "citation": "Gaspar de Carvajal · Relación del nuevo descubrimiento del famoso río Grande · 1542 · J.V. San Román · 1994",
+    "title": "Relación del nuevo descubrimiento del famoso río Grande de las Amazonas",
+    "summary": "Chronique de l'expédition d'Orellana (1541-1542) : premier récit européen direct des cités, peuples et paysages de la rive amazonienne.",
+    "url": "https://archive.org/details/raha_103310"
+  },
+  "m2-ursua-sanroman": {
+    "citation": "J.V. San Román · Perfiles Históricos de la Amazonía Peruana · 1994 · Francisco Vázquez · crónica de la expedición · José A. del Busto · Lope de Aguirre",
+    "title": "Perfiles Históricos de la Amazonía Peruana",
+    "summary": "Récit de l'expédition d'El Dorado de Pedro de Ursúa (1559-1561), des grands villages rencontrés — dont Machaparo — et de la mutinerie d'Aguirre.",
+    "url": "https://www.caaap.org.pe/Libros/Perfiles-historicos-de-la-amazonia-peruana.pdf"
+  },
+  "m2-machaparo-vazquez": {
+    "citation": "Francisco Vázquez · crónica citée par J.A. del Busto, Lope de Aguirre, p. 113 · J.V. San Román · 1994",
+    "title": "Perfiles Históricos de la Amazonía Peruana",
+    "summary": "Description de Machaparo, le plus grand village rencontré par l'expédition d'Ursúa : maisons rondes, bassins de tortues et pisciculture indigène.",
+    "url": "https://www.caaap.org.pe/Libros/Perfiles-historicos-de-la-amazonia-peruana.pdf"
+  },
+  "m2-aguirre-busto": {
+    "citation": "José A. del Busto · Lope de Aguirre · J.V. San Román · 1994 · Lettre à Felipe II · 1561",
+    "title": "Lope de Aguirre",
+    "summary": "Biographie et chronique de la mutinerie d'Aguirre (1561) : assassinat d'Ursúa, descente de l'Amazone et lettre au roi d'Espagne.",
+    "url": "https://www.britannica.com/biography/Lope-de-Aguirre"
+  },
+  "m2-palacios-sanroman": {
+    "citation": "J.V. San Román · Perfiles Históricos de la Amazonía Peruana · 1994 · Juan de Velasco · Historia del Reino de Quito, t. III · P. Manuel Rodríguez · El Marañón y Amazonas",
+    "title": "Perfiles Históricos de la Amazonía Peruana",
+    "summary": "L'expédition du capitán Palacios à Anta (1636-1637) : tentative de fondation coloniale sur le Marañón et affrontement avec les Encabellados.",
+    "url": "https://www.caaap.org.pe/Libros/Perfiles-historicos-de-la-amazonia-peruana.pdf"
+  },
+  "m2-teixeira-acuna": {
+    "citation": "J.V. San Román · 1994 · P. Cristóbal de Acuña · Nuevo Descubrimiento del Gran Río Amazonas · Madrid · 1641 · P. Manuel Rodríguez · El Marañón y Amazonas",
+    "title": "Nuevo descubrimiento del gran rio de las Amazonas",
+    "summary": "Récit jésuite de l'expédition de Pedro Teixeira (1637-1638) du Pará à Quito, première remontée documentée du fleuve par les Portugais.",
+    "url": "https://archive.org/details/bub_gb_R28BAAAAQAAJ"
+  },
+  "m2-teixeira-encabellados": {
+    "citation": "P. Cristóbal de Acuña · Nuevo Descubrimiento · 1641 · cité par J.V. San Román · 1994",
+    "title": "Nuevo descubrimiento del gran rio de las Amazonas",
+    "summary": "Acuña relate la révolte des Encabellados contre la présence portugaise de Teixeira : accueil initial, puis violence et capture de ~700 personnes.",
+    "url": "https://archive.org/details/bub_gb_R28BAAAAQAAJ"
+  },
+  "m2-missions-penetracion": {
+    "citation": "J.V. San Román · Perfiles Históricos de la Amazonía Peruana · 1994 · P. Pedro de Mercado · Historia de la Provincia del Nuevo Reino y Quito, t. III · Bernardino Izaguirre · Historia de las misiones franciscanas · 1922",
+    "title": "Perfiles Históricos de la Amazonía Peruana",
+    "summary": "Pénétration missionnaire jésuite et franciscaine en Amazonie (1604-1732) : fondations, martyres et tensions avec les garnisons espagnoles.",
+    "url": "https://www.caaap.org.pe/Libros/Perfiles-historicos-de-la-amazonia-peruana.pdf"
+  },
+  "m2-ferrer-mercado": {
+    "citation": "P. Pedro de Mercado · Historia de la Provincia del Nuevo Reino y Quito, t. III, p. 33-34 · J.V. San Román · 1994",
+    "title": "Historia de la Provincia del Nuevo Reino y Quito de la Compañía de Jesús",
+    "summary": "Chronique jésuite du P. Rafael Ferrer chez les Cofanes (1604-1611) : fondation de trois pueblos, accueil initial puis piège et mort du missionnaire.",
+    "url": "https://www.cervantesvirtual.com/obra/historia-de-la-provincia-del-nuevo-reino-y-quito-de-la-compania-de-jesus-tomo-i--0/"
+  },
+  "m2-missions-amazonas": {
+    "citation": "J.V. San Román · 1994 · Juan de Velasco · Historia del Reino de Quito · P. Gaspar Cujía · 1645",
+    "title": "Perfiles Históricos de la Amazonía Peruana",
+    "summary": "Missions jésuites sur l'Amazone : évangélisation des Omaguas, rivalité hispano-portugaise et dénombrement de 15 000 Omaguas par Cujía en 1645.",
+    "url": "https://www.caaap.org.pe/Libros/Perfiles-historicos-de-la-amazonia-peruana.pdf"
+  },
+  "m2-1710-velasco": {
+    "citation": "Juan de Velasco · Historia del Reino de Quito · cité par J.V. San Román · 1994",
+    "title": "Historia del reino de Quito en la América meridional",
+    "summary": "Velasco décrit l'invasion portugaise de 1710 : 1 500 soldats et 4 000 indiens du Pará s'emparent des 40 pueblos de Fritz sans résistance.",
+    "url": "https://bibliotecadigital.uce.edu.ec/s/L-D/item/771"
+  },
+  "m2-fritz-sanroman": {
+    "citation": "J.V. San Román · 1994 · P. Samuel Fritz · El Gran Río Marañón o Amazonas · gravée à Quito · 1707",
+    "title": "El gran rio Marañon o Amazonas con la Mission de la Compañia de Iesus",
+    "summary": "Carte de 1707 du P. Samuel Fritz : première représentation relativement exacte du bassin amazonien et des missions jésuites du Haut Marañón.",
+    "url": "https://www.loc.gov/item/2021668377/"
+  },
+  "m2-reduccion-uriarte": {
+    "citation": "P. Manuel Uriarte · Descripción de la Misión Baja del Marañón, t. I · J.V. San Román · 1994 · G. Furlong · Misiones y sus Pueblos Guaraníes",
+    "title": "Diario de un misionero de Maynas",
+    "summary": "Mémoires du jésuite Uriarte sur la vie d'une réduction amazonienne : organisation de San Joaquín de Omaguas, architecture et administration missionnaire.",
+    "url": "https://cendoc.caaap.org.pe/cgi-bin/koha/opac-detail.pl?biblionumber=1032"
+  },
+  "m2-franciscains-sanroman": {
+    "citation": "J.V. San Román · 1994 · Bernardino Izaguirre · Historia de las misiones franciscanas · 1922 · P. Francisco Quevedo, o.f.m.",
+    "title": "Historia de las misiones franciscanas y narración de los progresos de la geografía en el oriente del Perú",
+    "summary": "Chronique franciscaine de l'Amazonie péruvienne (1580-1768) : arrivée des franciscains, complément aux missions jésuites et fin de l'ère jésuite en 1768.",
+    "url": "https://archive.org/details/historiadelasmis13izag"
+  },
+  "m3-cepal-region": {
+    "citation": "CEPAL · Panorama Social de América Latina · 2024 · Banque mondiale · Données régionales",
+    "title": "Panorama Social de América Latina y el Caribe",
+    "summary": "Synthèse CEPAL sur la démographie, le PIB et les inégalités de l'Amérique latine : ~650 M habitants, PIB combiné ~5,5 T USD, indice de Gini parmi les plus élevés au monde.",
+    "url": "https://www.cepal.org/es/publicaciones/49113-panorama-social-america-latina-caribe-2024"
+  },
+  "m3-china-latam": {
+    "citation": "China-Latin America Relations · CID · Reuters · 2024",
+    "title": "China and Latin America Economic Bulletin, 2024",
+    "summary": "La Chine est devenue le premier partenaire commercial de plusieurs pays d'Amérique latine dès 2010, avec plus de 150 milliards de dollars de prêts d'infrastructure depuis 2000.",
+    "url": "https://www.thedialogue.org/wp-content/uploads/2024/02/China-Latin-America-Economic-Bulletin-2024.pdf"
+  },
+  "m3-cepal-inequality": {
+    "citation": "CEPAL · Panorama Social de América Latina · 2024",
+    "title": "Panorama Social de América Latina y el Caribe",
+    "summary": "Les 10 % les plus riches captent environ 40 % des revenus régionaux ; près de 30 % de la population vit sous le seuil de pauvreté et 10 % en extrême pauvreté.",
+    "url": "https://www.cepal.org/es/publicaciones/49113-panorama-social-america-latina-caribe-2024"
+  },
+  "m3-ingemmet-glaciers": {
+    "citation": "INGEMMET · Estudio de glaciares andinos · 2023",
+    "title": "Estudio de glaciares andinos del Perú",
+    "summary": "Les glaciers andins péruviens ont perdu environ 50 % de leur volume depuis 1970, avec des conséquences sur l'irrigation, l'hydropower et l'approvisionnement en eau des villes.",
+    "url": "https://www.ingemmet.gob.pe/"
+  },
+  "m3-unodc-security": {
+    "citation": "UNODC · World Drug Report · 2024 · OIM · Données migratoires · 2024",
+    "title": "World Drug Report 2024",
+    "summary": "L'Amérique latine produit et transite la quasi-totalité de la cocaïne mondiale ; les flux migratoires forcés atteignent des centaines de milliers de personnes par mois.",
+    "url": "https://www.unodc.org/unodc/en/data-and-analysis/world-drug-report-2024.html"
+  },
+  "m3-governance-crisis": {
+    "citation": "Congreso de la República del Perú · Freedom House · 2024",
+    "title": "Crise de gouvernance en Amérique latine",
+    "summary": "Fragilité institutionnelle chronique : six présidents au Pérou entre 2016 et 2021, coups d'État en Bolivie, réformes constitutionnelles échouées au Chili.",
+    "url": "https://freedomhouse.org/country/peru/freedom-world/2024"
+  },
+  "m3-odebrecht-cpi": {
+    "citation": "Transparency International · CPI 2024 · Lava Jato · Odebrecht",
+    "title": "Corruption Perceptions Index 2024",
+    "summary": "L'affaire Odebrecht a impliqué quatre présidents péruviens ; le Pérou obtient 37/100 à l'indice de perception de la corruption (corruption très élevée).",
+    "url": "https://www.transparency.org/en/cpi/2024"
+  },
+  "m3-polarization": {
+    "citation": "Latinobarómetro · 2024 · IDEA International",
+    "title": "Polarisation politique en Amérique latine",
+    "summary": "Le centre politique s'est effondré au profit de blocs radicaux : Castillo vs Fujimori au Pérou, Milei vs kirchneristes en Argentine, Petro vs opposition en Colombie.",
+    "url": "https://www.latinobarometro.org/lat.html"
+  },
+  "m3-elections-wave-2026": {
+    "citation": "ONPE · 2026 · CNE Colombia · Servel Chile · 2025–2026",
+    "title": "Vague électorale conservatrice en Amérique latine (2025–2026)",
+    "summary": "Kast élu au Chili (58,2 %, déc. 2025), de la Espriella en Colombie (49,66 %, juin 2026), Fujimori au Pérou (50,135 %, juin 2026) : bascule régionale vers la droite dure.",
+    "url": "https://andina.pe/ingles/noticia-peru-2026-elections-jne-proclaims-keiko-fujimori-presidentelect-1082139.aspx"
+  },
+  "m3-organized-crime": {
+    "citation": "UNODC · Homicidios intencionales · INEI · 2024",
+    "title": "Criminalité organisée en Amérique latine",
+    "summary": "Taux moyen d'homicides ~25 pour 100 000 habitants en AL (vs ~6 aux USA/UE) ; hausse de +36 % au Pérou entre 2023 et 2024, pic en Équateur (~40/100k).",
+    "url": "https://dataunodc.un.org/crime"
+  },
+  "m3-unodc-narcotics": {
+    "citation": "UNODC · World Drug Report · 2024 · DEVIDA",
+    "title": "World Drug Report 2024 — chaîne de valeur de la cocaïne",
+    "summary": "Production (Colombie/Pérou), transformation en laboratoires clandestins, transport via Venezuela et Amazonie, marché final en Europe à 150–200 $/g.",
+    "url": "https://www.unodc.org/unodc/en/data-and-analysis/world-drug-report-2024.html"
+  },
+  "m3-rule-of-law": {
+    "citation": "OHCHR · Venezuela · INEI · El País · 2025",
+    "title": "Effondrement de l'état de droit en Amérique latine",
+    "summary": "Prisons surpeuplées au Venezuela, gangs contrôlant des pénitencieries au Pérou (143 % d'occupation), massacres carcéraux en Équateur et Colombie.",
+    "url": "https://www.ohchr.org/en/countries/venezuela"
+  },
+  "m3-gender-violence": {
+    "citation": "ECLAC · Gender Equality Observatory · 2024",
+    "title": "Gender Equality Observatory for Latin America and the Caribbean",
+    "summary": "L'AL figure parmi les régions aux plus hauts taux de féminicide (>2 500/an) ; violences LGBTQ+ et enrôlement d'enfants par les gangs.",
+    "url": "https://oig.cepal.org/en/gender-equality-observatory"
+  },
+  "m3-unhcr-migration": {
+    "citation": "UNHCR · R4V Platform · 2024",
+    "title": "Refugiados y Migrantes de Venezuela",
+    "summary": "Plus de 6 millions de réfugiés et migrants vénézuéliens ; flux massifs vers l'UE et les USA, routes contrôlées par les trafiquants.",
+    "url": "https://www.r4v.info/en/refugeeandmigrants"
+  },
+  "m3-social-protests": {
+    "citation": "ACLED · Protestation sociale · 2019–2024",
+    "title": "Armed Conflict Location & Event Data",
+    "summary": "Grèves générales et manifestations massives au Chili (2019), en Équateur (2022) et au Pérou (2022–2023) contre les inégalités et la répression policière.",
+    "url": "https://acleddata.com/"
+  },
+  "m3-humanitarian-impacts": {
+    "citation": "OCHA · Humanitarian Response Plans · 2024",
+    "title": "Global Humanitarian Overview",
+    "summary": "Déplacements forcés, effondrement des services de santé, vulnérabilité économique des populations pauvres face aux crises politiques et sécuritaires.",
+    "url": "https://www.unocha.org/global-humanitarian-overview-2024"
+  },
+  "m3-inei-peru": {
+    "citation": "INEI · Perú: Compendio Estadístico 2024 · BCRP",
+    "title": "Compendio Estadístico del Perú",
+    "summary": "Fiche d'identité : 1,3 M km², PIB ~500 Mds USD, 34 M habitants dont 10 M dans la métropole de Lima.",
+    "url": "https://www.inei.gob.pe/estadisticas/indicadores/"
+  },
+  "m3-peru-history": {
+    "citation": "CVR · Informe Final · 2003 · José A. del Busto · Historia del Perú",
+    "title": "Informe Final de la Comisión de la Verdad y Reconciliación",
+    "summary": "De l'Empire inca à la République : conquête espagnole, oligarchie foncière, dictatures militaires, Fujimori et guerre interne (75 000 morts avec le Sendero Luminoso).",
+    "url": "https://www.cverdad.org.pe/ifinal/index.php"
+  },
+  "m3-peru-presidents-2001": {
+    "citation": "Lava Jato · Odebrecht · Fiscalía de la Nación · Transparency International",
+    "title": "Affaire Odebrecht / Lava Jato au Pérou",
+    "summary": "Toledo, García et Humala : trois présidents impliqués dans les pots-de-vin Odebrecht entre 2001 et 2016, cycle de corruption et de vengeance judiciaire.",
+    "url": "https://www.transparency.org/en/cpi/2024"
+  },
+  "m3-peru-crisis-2016": {
+    "citation": "ONPE · Congreso de la República · IDL-Reporteros",
+    "title": "Crise politique péruvienne 2016–2022",
+    "summary": "Quatre présidents en cinq ans (Kuczynski, Vizcarra, Merino, Sagasti), puis Castillo élu en 2021 et destitué après son autogolpe du 7 décembre 2022.",
+    "url": "https://www.onpe.gob.pe/"
+  },
+  "m3-boluarte-destitution": {
+    "citation": "Congreso de la República · El Peruano · 10 octobre 2025 · RFI",
+    "title": "Destitution de Dina Boluarte",
+    "summary": "Le Congrès destitue Dina Boluarte le 10 octobre 2025 par 123 voix pour incapacité morale permanente ; José Jerí assume la présidence par intérim jusqu'aux élections d'avril 2026.",
+    "url": "https://www.rfi.fr/fr/am%C3%A9riques/20251010-p%C3%A9rou-la-pr%C3%A9sidente-dina-boluarte-destitu%C3%A9e-par-le-parlement"
+  },
+  "m3-onpe-2026": {
+    "citation": "ONPE · Resultados electorales 2026 · JNE · Resolución 3 juillet 2026",
+    "title": "Élections présidentielles péruviennes 2026",
+    "summary": "Keiko Fujimori élue avec 50,135 % des voix (écart de 49 641 voix face à Roberto Sánchez) ; proclamation JNE le 3 juillet, investiture le 28 juillet — première femme présidente du Pérou.",
+    "url": "https://andina.pe/ingles/noticia-perus-onpe-at-100-keiko-fujimori-50135-roberto-sanchez-49865-1081564.aspx"
+  },
+  "m3-bcrp-mining": {
+    "citation": "BCRP · Memoria 2024 · MINEM · INGEMMET",
+    "title": "Memoria Anual del Banco Central de Reserva del Perú",
+    "summary": "Le secteur minier représente ~10 % du PIB et plus de 60 % des exportations ; 2ᵉ producteur mondial de cuivre, réserves de lithium sur le plateau Macusani.",
+    "url": "https://www.bcrp.gob.pe/docs/Transparencia/Memoria-Anual/2024/Memoria-Anual-2024.pdf"
+  },
+  "m3-peru-agriculture": {
+    "citation": "MINAGRI · PRODUCE · INEI · Empleo sector agropecuario",
+    "title": "Estadísticas agrícolas y pesqueras del Perú",
+    "summary": "L'agriculture emploie ~25 % de la population active ; le Pérou est le 2ᵉ exportateur mondial de farine de poisson, avec une tension croissante mine vs paysan pour l'eau.",
+    "url": "https://www.gob.pe/minagri"
+  },
+  "m3-inei-homicides": {
+    "citation": "INEI · Ministerio del Interior · Estadísticas de criminalidad 2023–2024",
+    "title": "Estadísticas de criminalidad del Perú",
+    "summary": "15 000 homicides en 2023 (44/100k), hausse de +36 % en 2024, plus de 20 000 extorsions signalées entre janvier et septembre 2025.",
+    "url": "https://www.inei.gob.pe/estadisticas/indicadores/"
+  },
+  "m3-ipsos-security": {
+    "citation": "Ipsos Perú · Percepción de inseguridad 2025",
+    "title": "Percepción de inseguridad en el Perú",
+    "summary": "66 % des Péruviens citent la criminalité comme problème numéro un selon Ipsos (2025), reflétant la crise sécuritaire nationale.",
+    "url": "https://www.ipsos.com/es-pe"
+  },
+  "m3-vraem-zones": {
+    "citation": "DEVIDA · VRAEM · France Diplomatie · Conseils aux voyageurs",
+    "title": "Zones à risque au Pérou",
+    "summary": "Le VRAEM (Vallée des Apurímac, Ene et Mantaro), l'Amazonie frontalière et la périphérie de Lima figurent parmi les zones les plus dangereuses pour les opérations humanitaires.",
+    "url": "https://www.diplomatie.gouv.fr/fr/conseils-aux-voyageurs/conseils-par-pays-destination/perou/"
+  },
+  "m3-devida-coca": {
+    "citation": "DEVIDA · Monitoreo de cultivos de coca · UNODC",
+    "title": "Monitoreo de cultivos de coca en el Perú",
+    "summary": "Le Pérou compte 150–200 000 hectares de coca ; chaîne complète producteurs → transformateurs → trafiquants → routes d'export vers Venezuela, Brésil et Pacifique.",
+    "url": "https://www.gob.pe/devida"
+  },
+  "m3-peru-crime-orgs": {
+    "citation": "Ministerio del Interior · DEA · Europol",
+    "title": "Organisations criminelles au Pérou",
+    "summary": "Bandes péruviennes (Los Chavelos, La Jauría), cartels mexicains (Sinaloa) et présence brésilienne ; guérillas colombiennes (ELN, dissidents FARC) sur la frontière.",
+    "url": "https://www.gob.pe/mininter"
+  },
+  "m3-peru-humanitarian": {
+    "citation": "OCHA · HRP Perú · MIMP · Defensoría del Pueblo",
+    "title": "Humanitarian Response Plan — Peru",
+    "summary": "Enjeux humanitaires : 300+ féminicides/an, malnutrition rurale, discrimination des peuples autochtones, départs massifs vers le Chili et les USA.",
+    "url": "https://www.unocha.org/peru"
+  },
+  "m3-france-diplomatie-peru": {
+    "citation": "Ministère de l'Europe et des Affaires étrangères · Conseils aux voyageurs · Pérou",
+    "title": "Conseils aux voyageurs — Pérou",
+    "summary": "Classement officiel des zones à risque (rouge, orange, jaune) et recommandations de sécurité pour les ressortissants français et les opérateurs humanitaires.",
+    "url": "https://www.diplomatie.gouv.fr/fr/conseils-aux-voyageurs/conseils-par-pays-destination/perou/"
+  },
+  "m3-indeci-risks": {
+    "citation": "INDECI · Instituto Nacional de Defensa Civil · France Diplomatie",
+    "title": "INDECI — Gestión de riesgos de desastres",
+    "summary": "Risques sismiques, inondations (saison des pluies jan.–mai), incendies forestiers et accidents routiers en zone andine et amazonienne.",
+    "url": "https://www.gob.pe/indeci"
+  },
+  "m3-pasteur-vaccines": {
+    "citation": "Institut Pasteur · Vaccinations voyage Pérou · France Diplomatie",
+    "title": "Vaccinations et conseils santé — Pérou",
+    "summary": "Vaccins recommandés : fièvre jaune (Amazonie), typhoïde, hépatite A, ROR, tétanos ; risques de dengue, tuberculose et mal des montagnes au-delà de 2 500 m.",
+    "url": "https://www.pasteur.fr/fr/centre-medical/preparer-son-voyage/perou"
+  },
+  "m3-iperu-assistance": {
+    "citation": "IPerú · PromPerú · Assistance touristes · WhatsApp +51 944 492 314",
+    "title": "IPerú — Información y Asistencia al Turista",
+    "summary": "Service d'assistance touristique officiel : WhatsApp +51 944 492 314, réponse sous 24 h, bureau à l'aéroport de Lima.",
+    "url": "https://www.gob.pe/iperu"
   }
 }
