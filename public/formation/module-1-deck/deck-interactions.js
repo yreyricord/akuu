@@ -7,13 +7,20 @@
   let tipEl = null;
   let tipTarget = null;
   let tipHideTimer = null;
-  const SRC_SEL = '[data-src]:not(.deck-vs__bubble), [data-src-id]:not(.deck-vs__bubble)';
+  /* SRC_SEL : uniquement les boutons "Source" explicites (survol/focus individuel, legacy). */
+  const SRC_SEL = '.src-tip:not(.deck-vs__bubble)';
+  /* PANEL_SEL : tout élément porteur d'une citation, agrégé dans le panneau de sources par diapo. */
+  const PANEL_SEL = '[data-src]:not(.deck-vs__bubble), [data-src-id]:not(.deck-vs__bubble)';
 
   /* ---------- Registre de sources (public/formation/sources.json) ---------- */
   let sourcesData = null; // Map<id, {citation,title,summary,url}> une fois chargé ; null tant que le fetch n'a pas résolu.
   fetch('../sources.json')
     .then((res) => (res.ok ? res.json() : {}))
-    .then((json) => { sourcesData = new Map(Object.entries(json)); })
+    .then((json) => {
+      sourcesData = new Map(Object.entries(json));
+      const active = document.querySelector('section[data-deck-active]');
+      if (active) renderSlideSourcePanel(active);
+    })
     .catch(() => { sourcesData = new Map(); }); // hors-ligne / fichier absent : repli sur le texte simple, jamais bloquant.
 
   function getTipEl() {
@@ -109,6 +116,135 @@
     const srcId = el?.getAttribute('data-src-id');
     const entry = srcId && sourcesData ? sourcesData.get(srcId) : null;
     if (entry?.url) window.open(entry.url, '_blank', 'noopener,noreferrer');
+  }
+
+  /* ---------- Panneau de sources par diapo (bouton bas-droite) ---------- */
+  let panelBtnEl = null;
+  let panelBoxEl = null;
+  let panelListEl = null;
+  let panelBadgeEl = null;
+  let panelIsOpen = false;
+
+  function getSourcePanelEls() {
+    if (panelBtnEl) return;
+    panelBtnEl = document.createElement('button');
+    panelBtnEl.type = 'button';
+    panelBtnEl.className = 'deck-src-panel__btn';
+    panelBtnEl.setAttribute('aria-haspopup', 'true');
+    panelBtnEl.setAttribute('aria-expanded', 'false');
+    panelBtnEl.setAttribute('aria-label', 'Afficher les sources de cette diapositive');
+
+    const icon = document.createElement('span');
+    icon.className = 'deck-src-panel__icon';
+    icon.setAttribute('aria-hidden', 'true');
+    icon.textContent = '”';
+    panelBadgeEl = document.createElement('span');
+    panelBadgeEl.className = 'deck-src-panel__badge';
+    panelBtnEl.appendChild(icon);
+    panelBtnEl.appendChild(panelBadgeEl);
+    panelBtnEl.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleSourcePanel();
+    });
+
+    panelBoxEl = document.createElement('div');
+    panelBoxEl.className = 'deck-src-panel';
+    panelBoxEl.setAttribute('role', 'dialog');
+    panelBoxEl.setAttribute('aria-label', 'Sources de cette diapositive');
+
+    const heading = document.createElement('div');
+    heading.className = 'deck-src-panel__heading';
+    heading.textContent = 'Sources';
+    panelListEl = document.createElement('div');
+    panelListEl.className = 'deck-src-panel__list';
+    panelBoxEl.appendChild(heading);
+    panelBoxEl.appendChild(panelListEl);
+  }
+
+  function closeSourcePanel() {
+    if (!panelIsOpen) return;
+    panelIsOpen = false;
+    panelBoxEl?.classList.remove('is-open');
+    panelBtnEl?.setAttribute('aria-expanded', 'false');
+  }
+
+  function toggleSourcePanel() {
+    getSourcePanelEls();
+    panelIsOpen = !panelIsOpen;
+    panelBoxEl.classList.toggle('is-open', panelIsOpen);
+    panelBtnEl.setAttribute('aria-expanded', String(panelIsOpen));
+  }
+
+  /** Liste dédupliquée (ordre d'apparition) des sources portées par les éléments `PANEL_SEL` d'une diapo. */
+  function collectSlideSources(slide) {
+    const seen = new Map();
+    slide.querySelectorAll(PANEL_SEL).forEach((el) => {
+      const id = el.getAttribute('data-src-id');
+      const key = id || el.getAttribute('data-src');
+      if (!key || seen.has(key)) return;
+      const entry = id && sourcesData ? sourcesData.get(id) : null;
+      seen.set(key, entry || { citation: el.getAttribute('data-src') || '' });
+    });
+    return [...seen.values()];
+  }
+
+  function renderSlideSourcePanel(slide) {
+    if (!slide) return;
+    getSourcePanelEls();
+    const list = collectSlideSources(slide);
+    if (!list.length) {
+      panelBtnEl.remove();
+      panelBoxEl.remove();
+      closeSourcePanel();
+      return;
+    }
+    while (panelListEl.firstChild) panelListEl.removeChild(panelListEl.firstChild);
+    list.forEach((entry) => {
+      const hasLink = !!entry.url;
+      const row = document.createElement(hasLink ? 'a' : 'div');
+      row.className = 'deck-src-panel__row';
+      if (hasLink) {
+        row.href = entry.url;
+        row.target = '_blank';
+        row.rel = 'noopener noreferrer';
+      }
+      if (entry.citation) {
+        const cite = document.createElement('div');
+        cite.className = 'deck-src-panel__citation';
+        cite.textContent = entry.citation;
+        row.appendChild(cite);
+      }
+      if (entry.title) {
+        const title = document.createElement('div');
+        title.className = 'deck-src-panel__title';
+        title.textContent = entry.title;
+        row.appendChild(title);
+      }
+      if (entry.summary) {
+        const summary = document.createElement('div');
+        summary.className = 'deck-src-panel__summary';
+        summary.textContent = entry.summary;
+        row.appendChild(summary);
+      }
+      panelListEl.appendChild(row);
+    });
+    panelBadgeEl.textContent = String(list.length);
+    if (panelBtnEl.parentNode !== slide) slide.appendChild(panelBtnEl);
+    if (panelBoxEl.parentNode !== slide) slide.appendChild(panelBoxEl);
+  }
+
+  function initSourcePanelGlobalHandlers() {
+    document.addEventListener('click', (e) => {
+      if (!panelIsOpen) return;
+      if (panelBoxEl?.contains(e.target) || e.target === panelBtnEl || panelBtnEl?.contains(e.target)) return;
+      closeSourcePanel();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && panelIsOpen) {
+        closeSourcePanel();
+        panelBtnEl?.focus();
+      }
+    });
   }
 
   function findSrcUnderPointer(x, y) {
@@ -736,6 +872,7 @@
   function onSlideActive(slide) {
     if (!slide) return;
     initSources(slide);
+    renderSlideSourcePanel(slide);
     resetToggle(slide);
     resetReveal(slide);
     slide.querySelectorAll('[data-deck-carousel]').forEach(resetCarousel);
@@ -748,6 +885,7 @@
 
   function onSlideChange(e) {
     hideTip();
+    closeSourcePanel();
     closeFigLightbox();
     onSlideActive(e.detail?.slide);
   }
@@ -916,6 +1054,7 @@
 
   function boot() {
     initSourcePointer();
+    initSourcePanelGlobalHandlers();
     initSources(document);
     initCarouselsIn(document);
     initSwapIn(document);
