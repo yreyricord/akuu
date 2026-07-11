@@ -129,16 +129,17 @@
     }
     /* Galerie présidents (M3-33) */
     .deck-president-strip {
-      display: flex; gap: 14px; overflow-x: auto; padding: 4px 2px; margin-top: 18px; flex-shrink: 0;
+      display: flex; gap: 14px; overflow-x: auto; padding: 4px 2px 8px; margin-top: 18px; flex-shrink: 0;
+      scroll-snap-type: x proximity;
     }
     .deck-president-strip__item {
-      flex: 0 0 140px; border-radius: 14px; overflow: hidden; background: var(--cream);
+      flex: 0 0 128px; border-radius: 14px; overflow: hidden; background: var(--cream);
       box-shadow: 0 8px 22px rgba(0,0,0,0.1);
+      scroll-snap-align: start;
     }
-    .deck-president-strip__item img { width: 100%; height: 120px; object-fit: cover; display: block; }
     .deck-president-strip__cap {
-      padding: 8px 10px; font-family: 'Inter', sans-serif; font-size: calc(var(--fs-1) - 10px);
-      font-weight: 600; color: var(--night-2); text-align: center;
+      padding: 8px 8px 10px; font-family: 'Inter', sans-serif; font-size: calc(var(--fs-1) - 10px);
+      font-weight: 600; color: var(--night-2); text-align: center; line-height: 1.2;
     }
   </style>
 </helmet>
@@ -211,7 +212,7 @@
         <div class="card stat card-in d3" style="background:var(--cream); justify-content:center;"><div class="stat-n" data-src-id="m3-cepal-region" data-src="CEPAL · Panorama Social de América Latina · 2024 · Banque mondiale · Données régionales" style="color:var(--green-leaf);">Gini ≈ 50</div><div class="stat-l" style="color:var(--night-2);">inégalités parmi les plus élevées au monde (≈ 35 en UE)</div></div>
       </div>
       <div style="flex:0.9; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-13-gdp-capita.jpg" class="imground photo-in d1" style="width:100%; height:560px; object-fit:contain; background:var(--cream); border-radius:16px;" alt="PIB par habitant en Amérique latine et Amérique du Sud">
+        <figure class="deck-media deck-media--chart photo-in d1" data-deck-fig-zoom style="--deck-media-h:560px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-13-gdp-capita.jpg" class="deck-media__img" data-deck-fig-src alt="PIB par habitant en Amérique latine et Amérique du Sud" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
@@ -229,7 +230,7 @@
         <div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Mexique, arrimé aux États-Unis</b><div class="small" style="color:var(--night-2); margin-top:6px;">Accord USMCA, migration, et narcotrafic transnational majeur structurant la relation nord-américaine.</div></div>
       </div>
       <div style="flex:1.15; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;">
-        <img src="images/m3-01-gdp.jpg" class="imground photo-in d1" style="width:100%; height:640px; object-fit:contain; background:var(--cream); border-radius:16px;" alt="Carte des puissances régionales d'Amérique latine">
+        <figure class="deck-media deck-media--chart photo-in d1" data-deck-fig-zoom style="--deck-media-h:640px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-01-gdp.jpg" class="deck-media__img" data-deck-fig-src alt="Carte des puissances régionales d'Amérique latine" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
@@ -306,7 +307,7 @@
         </div>
       </div>
       <div style="flex:1; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;">
-        <img src="images/m3-02-monroe.jpg" class="imground photo-in d1" style="width:100%; height:400px; object-fit:cover; border-radius:16px;" alt="Doctrine Monroe et interventions américaines en Amérique latine">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:400px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-02-monroe.jpg" class="deck-media__img" data-deck-fig-src alt="Doctrine Monroe et interventions américaines en Amérique latine" loading="lazy"></div></figure>
         <div class="card" style="background:var(--green-forest);"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« De la domination directe au soft power : l'influence des États-Unis persiste, mais change de forme. »</p></div>
       </div>
     </div>
@@ -359,7 +360,7 @@
         </div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-14-china-port.jpg" class="imground photo-in d1" style="width:100%; height:420px; object-fit:cover; border-radius:16px;" alt="Port chinois au Pérou, investissements et corridors d'infrastructure">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:420px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-14-china-port.jpg" class="deck-media__img" data-deck-fig-src alt="Port chinois au Pérou, investissements et corridors d'infrastructure" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
@@ -391,7 +392,7 @@
         <div class="card card-in d3" style="background:var(--green-forest); display:flex; flex-direction:column; justify-content:center;"><b style="color:var(--cream); font-size:var(--fs-1);">Un choix difficile pour l'AL</b><div class="small" style="color:var(--green-leaf); margin-top:8px;">Dépendance commerciale à la Chine vs valeurs démocratiques occidentales. Cas Argentine : Milei promit d'ignorer la Chine… avant de collaborer.</div></div>
       </div>
       <div style="flex:0.9; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-15-trading-partners.webp" class="imground photo-in d1" style="width:100%; height:520px; object-fit:contain; background:var(--cream); border-radius:16px;" alt="Partenaires commerciaux de l'Amérique latine : 2000 vs 2024">
+        <figure class="deck-media deck-media--chart photo-in d1" data-deck-fig-zoom style="--deck-media-h:520px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-15-trading-partners.webp" class="deck-media__img" data-deck-fig-src alt="Partenaires commerciaux de l'Amérique latine : 2000 vs 2024" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
@@ -422,7 +423,7 @@
         <div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Influence diplomatique</b><div class="small" style="color:var(--night-2); margin-top:6px;">Via la diplomatie multipolaire (BRICS, ONU). Impact économique bien moindre que la Chine ou les États-Unis.</div></div>
       </div>
       <div style="flex:1; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;">
-        <img src="images/m3-03.jpg" class="imground photo-in d1" style="width:100%; height:360px; object-fit:cover; border-radius:16px;" alt="Coopération militaire Russie–Venezuela et Nicaragua">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:360px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-03.jpg" class="deck-media__img" data-deck-fig-src alt="Coopération militaire Russie–Venezuela et Nicaragua" loading="lazy"></div></figure>
         <div class="card" style="background:var(--green-forest); width:100%;"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« Tendance : une voix alternative aux puissances occidentales. »</p></div>
       </div>
     </div>
@@ -474,7 +475,7 @@
         </div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-16.avif" class="imground photo-in d1" style="width:100%; height:480px; object-fit:contain; background:var(--cream); border-radius:16px;" alt="Blocs d'intégration régionale : MERCOSUR, ALBA, USMCA">
+        <figure class="deck-media deck-media--chart photo-in d1" data-deck-fig-zoom style="--deck-media-h:480px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-16.avif" class="deck-media__img" data-deck-fig-src alt="Blocs d'intégration régionale : MERCOSUR, ALBA, USMCA" loading="lazy"></div></figure>
       </div>
     </div>
     <div class="card" style="background:var(--green-forest); margin-top:20px; flex-shrink:0;"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« La région ne parle pas d'une seule voix : c'est une faiblesse collective. »</p></div>
@@ -540,17 +541,17 @@
       </div>
     </div>
     <div class="deck-president-strip card-in d1">
-      <div class="deck-president-strip__item"><img src="images/m3-33/lula.avif" alt="Lula"><div class="deck-president-strip__cap">Lula · Brésil</div></div>
-      <div class="deck-president-strip__item"><img src="images/m3-33/bolsonaro.jpg" alt="Bolsonaro"><div class="deck-president-strip__cap">Bolsonaro · Brésil</div></div>
-      <div class="deck-president-strip__item"><img src="images/m3-33/hugo_chavez_-_afp.jpg" alt="Hugo Chávez"><div class="deck-president-strip__cap">Chávez · Venezuela</div></div>
-      <div class="deck-president-strip__item"><img src="images/m3-33/evo-morales.jpg" alt="Evo Morales"><div class="deck-president-strip__cap">Morales · Bolivie</div></div>
-      <div class="deck-president-strip__item"><img src="images/m3-33/gustavo_petro_chantier.png" alt="Gustavo Petro"><div class="deck-president-strip__cap">Petro · Colombie</div></div>
-      <div class="deck-president-strip__item"><img src="images/m3-33/jose-mujica.jpg" alt="José Mujica"><div class="deck-president-strip__cap">Mujica · Uruguay</div></div>
-      <div class="deck-president-strip__item"><img src="images/m3-33/castillo.webp" alt="Pedro Castillo"><div class="deck-president-strip__cap">Castillo · Pérou</div></div>
-      <div class="deck-president-strip__item"><img src="images/m3-33/fujimori.jpg" alt="Keiko Fujimori"><div class="deck-president-strip__cap">Fujimori · Pérou</div></div>
-      <div class="deck-president-strip__item"><img src="images/m3-33/gabriel-boric.jpg" alt="Gabriel Boric"><div class="deck-president-strip__cap">Boric · Chili</div></div>
-      <div class="deck-president-strip__item"><img src="images/m3-33/mileil.jpg" alt="Javier Milei"><div class="deck-president-strip__cap">Milei · Argentine</div></div>
-      <div class="deck-president-strip__item"><img src="images/m3-33/abelardo-de-la-espriella.avif" alt="Abelardo de la Espriella"><div class="deck-president-strip__cap">De la Espriella · Colombie</div></div>
+      <div class="deck-president-strip__item"><figure class="deck-media deck-media--portrait deck-media--thumb" data-deck-fig-zoom><div class="deck-media__frame"><img src="images/m3-33/lula.avif" class="deck-media__img" data-deck-fig-src alt="Lula" loading="lazy"></div></figure><div class="deck-president-strip__cap">Lula · Brésil</div></div>
+      <div class="deck-president-strip__item"><figure class="deck-media deck-media--portrait deck-media--thumb" data-deck-fig-zoom><div class="deck-media__frame"><img src="images/m3-33/bolsonaro.jpg" class="deck-media__img" data-deck-fig-src alt="Bolsonaro" loading="lazy"></div></figure><div class="deck-president-strip__cap">Bolsonaro · Brésil</div></div>
+      <div class="deck-president-strip__item"><figure class="deck-media deck-media--portrait deck-media--thumb" data-deck-fig-zoom><div class="deck-media__frame"><img src="images/m3-33/hugo_chavez_-_afp.jpg" class="deck-media__img" data-deck-fig-src alt="Hugo Chávez" loading="lazy"></div></figure><div class="deck-president-strip__cap">Chávez · Venezuela</div></div>
+      <div class="deck-president-strip__item"><figure class="deck-media deck-media--portrait deck-media--thumb" data-deck-fig-zoom><div class="deck-media__frame"><img src="images/m3-33/evo-morales.jpg" class="deck-media__img" data-deck-fig-src alt="Evo Morales" loading="lazy"></div></figure><div class="deck-president-strip__cap">Morales · Bolivie</div></div>
+      <div class="deck-president-strip__item"><figure class="deck-media deck-media--portrait deck-media--thumb" data-deck-fig-zoom><div class="deck-media__frame"><img src="images/m3-33/gustavo_petro_chantier.png" class="deck-media__img" data-deck-fig-src alt="Gustavo Petro" loading="lazy"></div></figure><div class="deck-president-strip__cap">Petro · Colombie</div></div>
+      <div class="deck-president-strip__item"><figure class="deck-media deck-media--portrait deck-media--thumb" data-deck-fig-zoom><div class="deck-media__frame"><img src="images/m3-33/jose-mujica.jpg" class="deck-media__img" data-deck-fig-src alt="José Mujica" loading="lazy"></div></figure><div class="deck-president-strip__cap">Mujica · Uruguay</div></div>
+      <div class="deck-president-strip__item"><figure class="deck-media deck-media--portrait deck-media--thumb" data-deck-fig-zoom><div class="deck-media__frame"><img src="images/m3-33/castillo.webp" class="deck-media__img" data-deck-fig-src alt="Pedro Castillo" loading="lazy"></div></figure><div class="deck-president-strip__cap">Castillo · Pérou</div></div>
+      <div class="deck-president-strip__item"><figure class="deck-media deck-media--portrait deck-media--thumb" data-deck-fig-zoom><div class="deck-media__frame"><img src="images/m3-33/fujimori.jpg" class="deck-media__img" data-deck-fig-src alt="Keiko Fujimori" loading="lazy"></div></figure><div class="deck-president-strip__cap">Fujimori · Pérou</div></div>
+      <div class="deck-president-strip__item"><figure class="deck-media deck-media--portrait deck-media--thumb" data-deck-fig-zoom><div class="deck-media__frame"><img src="images/m3-33/gabriel-boric.jpg" class="deck-media__img" data-deck-fig-src alt="Gabriel Boric" loading="lazy"></div></figure><div class="deck-president-strip__cap">Boric · Chili</div></div>
+      <div class="deck-president-strip__item"><figure class="deck-media deck-media--portrait deck-media--thumb" data-deck-fig-zoom><div class="deck-media__frame"><img src="images/m3-33/mileil.jpg" class="deck-media__img" data-deck-fig-src alt="Javier Milei" loading="lazy"></div></figure><div class="deck-president-strip__cap">Milei · Argentine</div></div>
+      <div class="deck-president-strip__item"><figure class="deck-media deck-media--portrait deck-media--thumb" data-deck-fig-zoom><div class="deck-media__frame"><img src="images/m3-33/abelardo-de-la-espriella.avif" class="deck-media__img" data-deck-fig-src alt="Abelardo de la Espriella" loading="lazy"></div></figure><div class="deck-president-strip__cap">De la Espriella · Colombie</div></div>
     </div>
   </section>
 
@@ -612,7 +613,7 @@
         <div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Tensions actuelles</b><div class="small" style="color:var(--night-2); margin-top:6px;">Mouvements indigènes (Pérou, Bolivie, Équateur), question agraire (terres, eau, minéraux), droits LGBTQ+ et backlash.</div></div>
       </div>
       <div style="flex:1; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;">
-        <img src="images/m3-04.jpg" class="imground photo-in d1" style="width:100%; height:400px; object-fit:cover; border-radius:16px;" alt="Mouvement indigène et manifestation identitaire en Amérique latine">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:400px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-04.jpg" class="deck-media__img" data-deck-fig-src alt="Mouvement indigène et manifestation identitaire en Amérique latine" loading="lazy"></div></figure>
         <div class="card" style="background:var(--green-forest); width:100%;"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« Des conflits locaux complexes, pas simplement gauche contre droite. »</p></div>
       </div>
     </div>
@@ -630,7 +631,7 @@
         <div class="card card-in d2" style="background:var(--green-forest);" data-src-id="m3-inaigem-glaciers" data-src="INAIGEM · Inventario Nacional de Glaciares 2023"><b style="color:var(--cream); font-size:var(--fs-1);">Cas Pérou</b><div class="small" style="color:var(--green-leaf); margin-top:6px;">Glaciers andins : ≈ −56 % de superficie en six décennies. Stress hydrique pour l'agriculture et les villes. Enjeu : l'énergie hydroélectrique.</div></div>
       </div>
       <div style="flex:1; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;">
-        <img src="images/m3-05-glaciers.webp" class="imground photo-in d1" style="width:100%; height:480px; object-fit:cover; border-radius:16px;" alt="Recul du glacier Pastoruri, Pérou">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:480px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-05-glaciers.webp" class="deck-media__img" data-deck-fig-src alt="Recul du glacier Pastoruri, Pérou" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
@@ -681,7 +682,7 @@
         </div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-18-migration.jpg" class="imground photo-in d1" style="width:100%; height:520px; object-fit:contain; background:var(--cream); border-radius:16px;" alt="Flux migratoires en Amérique latine">
+        <figure class="deck-media deck-media--chart photo-in d1" data-deck-fig-zoom style="--deck-media-h:520px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-18-migration.jpg" class="deck-media__img" data-deck-fig-src alt="Flux migratoires en Amérique latine" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
@@ -709,7 +710,7 @@
         <div class="card card-in d2" style="background:var(--steel-dark);"><b style="color:var(--cream); font-size:var(--fs-1);">Conséquence</b><div class="small" style="color:#B9CEDD; margin-top:6px;">Des gouvernements sans légitimité, incapables d'agir durablement.</div></div>
       </div>
       <div style="flex:1; display:flex; flex-direction:column; gap:16px; justify-content:center;">
-        <img src="images/m3-19.avif" class="imground photo-in d1" style="width:100%; height:240px; object-fit:cover; border-radius:16px;" alt="Congrès péruvien et institutions démocratiques en crise">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:240px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-19.avif" class="deck-media__img" data-deck-fig-src alt="Congrès péruvien et institutions démocratiques en crise" loading="lazy"></div></figure>
         <div class="card stat card-in d2" data-src-id="m3-governance-crisis" style="background:var(--cream);"><div class="stat-n" style="color:var(--steel-dark);">6 présidents</div><div class="stat-l" style="color:var(--night-2);">au Pérou en 6 ans (2016–2022) instabilité chronique</div></div>
         <div class="card stat card-in d3" data-src-id="m3-governance-crisis" style="background:var(--cream);"><div class="stat-n" style="color:var(--steel-dark);">Bolivie</div><div class="stat-l" style="color:var(--night-2);">coup d'État 2019, renversement du président en 2025</div></div>
         <div class="card stat card-in d4" data-src-id="m3-governance-crisis" style="background:var(--cream);"><div class="stat-n" style="color:var(--steel-dark);">Chili</div><div class="stat-l" style="color:var(--night-2);">2 réformes constitutionnelles rejetées par référendum</div></div>
@@ -729,7 +730,7 @@
         <div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Impact</b><div class="small" style="color:var(--night-2); margin-top:6px;">Méfiance massive envers la classe politique, vote protestataire / extrémiste, cycles de vengeance (chaque président poursuit le précédent).</div></div>
       </div>
       <div style="flex:1; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;">
-        <img src="images/m3-06.jpg" class="imground photo-in d1" style="width:100%; height:360px; object-fit:cover; border-radius:16px;" alt="Manifestation anti-corruption liée au scandale Odebrecht">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:360px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-06.jpg" class="deck-media__img" data-deck-fig-src alt="Manifestation anti-corruption liée au scandale Odebrecht" loading="lazy"></div></figure>
         <div class="card" data-src-id="m3-odebrecht-cpi" style="background:var(--steel-dark); width:100%;"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">Indice de perception de la corruption 2024 (Pérou) : <b>31/100</b> en recul, corruption très élevée.</p></div>
       </div>
     </div>
@@ -747,7 +748,7 @@
         <div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Les moteurs</b><div class="small" style="color:var(--night-2); margin-top:6px;">Inflation et chômage post-COVID, réductions des allocations sociales, demandes de réforme agraire et minière, anti-autoritarisme.</div></div>
       </div>
       <div style="flex:1; display:flex; flex-direction:column; gap:16px; justify-content:center;">
-        <img src="images/m3-07.webp" class="imground photo-in d1" style="width:100%; height:320px; object-fit:cover; border-radius:16px;" alt="Grève générale et manifestation en Amérique latine">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:320px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-07.webp" class="deck-media__img" data-deck-fig-src alt="Grève générale et manifestation en Amérique latine" loading="lazy"></div></figure>
         <div style="display:flex; gap:16px;">
           <div class="card stat card-in d3" style="background:var(--steel-dark); flex:1;"><div class="stat-n" style="color:#fff;">+14 %</div><div class="stat-l" style="color:#B9CEDD;">de grèves au Brésil en 2025</div></div>
           <div class="card stat card-in d3" style="background:var(--steel-dark); flex:1;"><div class="stat-n" style="color:#fff;">50+</div><div class="stat-l" style="color:#B9CEDD;">universités occupées</div></div>
@@ -905,7 +906,7 @@
         <div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Modus operandi</b><div class="small" style="color:var(--night-2); margin-top:6px;">Extorsion (transports, commerce), trafic de drogue vers l'UE et le Canada, vol d'identité et fraude bancaire.</div></div>
       </div>
       <div style="flex:0.9; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-20-homicides.webp" class="imground photo-in d1" style="width:100%; height:360px; object-fit:contain; background:var(--cream); border-radius:16px;" alt="Taux d'homicides en Amérique latine et dans les Caraïbes, 2024">
+        <figure class="deck-media deck-media--chart photo-in d1" data-deck-fig-zoom style="--deck-media-h:360px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-20-homicides.webp" class="deck-media__img" data-deck-fig-src alt="Taux d'homicides en Amérique latine et dans les Caraïbes, 2024" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
@@ -1003,7 +1004,7 @@
       </div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-36.avif" class="imground photo-in d1" style="width:100%; height:420px; object-fit:cover; border-radius:16px;" alt="Prisons surpeuplées et effondrement judiciaire en Amérique latine">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:420px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-36.avif" class="deck-media__img" data-deck-fig-src alt="Prisons surpeuplées et effondrement judiciaire en Amérique latine" loading="lazy"></div></figure>
       </div>
     </div>
     <div class="card" style="background:var(--steel-dark); margin-top:20px;"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« Les populations vivent dans la peur et ont peu confiance dans les autorités. »</p></div>
@@ -1041,7 +1042,7 @@
       </div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-37.avif" class="imground photo-in d1" style="width:100%; height:480px; object-fit:cover; border-radius:16px;" alt="Violences de genre et féminicides en Amérique latine">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:480px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-37.avif" class="deck-media__img" data-deck-fig-src alt="Violences de genre et féminicides en Amérique latine" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
@@ -1082,7 +1083,7 @@
         </div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-21-migration.jpeg" class="imground photo-in d1" style="width:100%; height:520px; object-fit:cover; border-radius:16px;" alt="Caravane migrante et réfugiés vénézuéliens en Amérique latine">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:520px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-21-migration.jpeg" class="deck-media__img" data-deck-fig-src alt="Caravane migrante et réfugiés vénézuéliens en Amérique latine" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
@@ -1119,7 +1120,7 @@
       </div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-38.jpg" class="imground photo-in d1" style="width:100%; height:420px; object-fit:cover; border-radius:16px;" alt="Manifestations sociales en Amérique latine">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:420px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-38.jpg" class="deck-media__img" data-deck-fig-src alt="Manifestations sociales en Amérique latine" loading="lazy"></div></figure>
       </div>
     </div>
     <div class="card" style="background:var(--steel-dark); margin-top:20px;"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">Pattern récurrent : <b>protestation → répression → radicalisation.</b></p></div>
@@ -1157,7 +1158,7 @@
       </div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-39.webp" class="imground photo-in d1" style="width:100%; height:480px; object-fit:cover; border-radius:16px;" alt="Camps de réfugiés et aide humanitaire en Amérique latine">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:480px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-39.webp" class="deck-media__img" data-deck-fig-src alt="Camps de réfugiés et aide humanitaire en Amérique latine" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
@@ -1207,7 +1208,7 @@
         </div>
       </div>
       <div style="flex:1; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;">
-        <img src="images/m3-08-perou-map.webp" class="imground photo-in d1" style="width:100%; height:560px; object-fit:contain; background:var(--cream); border-radius:16px;" alt="Carte du Pérou : côte, Andes, Amazonie et pays frontaliers">
+        <figure class="deck-media deck-media--chart photo-in d1" data-deck-fig-zoom style="--deck-media-h:560px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-08-perou-map.webp" class="deck-media__img" data-deck-fig-src alt="Carte du Pérou : côte, Andes, Amazonie et pays frontaliers" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
@@ -1278,7 +1279,7 @@
         <div class="card card-in d2" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">Fujimori (1990–2000)</b><div class="small" style="color:var(--night-2); margin-top:6px;">Élu, puis autogolpe en 1992 : dissolution du Congrès. Aide militaire US. Répression sévère.</div></div>
       </div>
       <div style="flex:1; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;">
-        <img src="images/m3-09.jpg" class="imground photo-in d1" style="width:100%; height:360px; object-fit:cover; border-radius:16px;" alt="Guerre interne au Pérou, Sendero Luminoso">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:360px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-09.jpg" class="deck-media__img" data-deck-fig-src alt="Guerre interne au Pérou, Sendero Luminoso" loading="lazy"></div></figure>
         <div class="card" style="background:#6e481f; width:100%;"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">75 000 morts dans le conflit Sendero Luminoso vs armée. Fujimori fuit en 2000, réfugié au Japon.</p></div>
       </div>
     </div>
@@ -1316,7 +1317,7 @@
       </div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-40-presidents.avif" class="imground photo-in d1" style="width:100%; height:400px; object-fit:cover; border-radius:16px;" alt="Présidents péruviens 2001–2016 : Toledo, García, Humala">
+        <figure class="deck-media deck-media--portrait photo-in d1" data-deck-fig-zoom style="--deck-media-h:400px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-40-presidents.avif" class="deck-media__img" data-deck-fig-src alt="Présidents péruviens 2001–2016 : Toledo, García, Humala" loading="lazy"></div></figure>
       </div>
     </div>
     <div class="card" style="background:#6e481f; margin-top:20px;"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">Un pattern : chaque président corrompu, puis poursuivi par le suivant.</p></div>
@@ -1390,7 +1391,7 @@
         </div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;">
-        <img src="images/m3-10.webp" class="imground photo-in d1" style="width:100%; height:340px; object-fit:cover; border-radius:16px;" alt="Pedro Castillo, tentative d'autogolpe du 7 décembre 2022">
+        <figure class="deck-media deck-media--portrait photo-in d1" data-deck-fig-zoom style="--deck-media-h:340px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-10.webp" class="deck-media__img" data-deck-fig-src alt="Pedro Castillo, tentative d'autogolpe du 7 décembre 2022" loading="lazy"></div></figure>
         <div class="card" style="background:var(--terracotta); width:100%;"><b style="color:#fff; font-size:var(--fs-1);">7 décembre 2022 : autogolpe manqué</b><div class="small" style="color:#fff; margin-top:6px;">Castillo dissout le Congrès et appelle à une « nouvelle constitution ». L'armée et la police refusent de le suivre : arrêté en quelques heures, emprisonné pour sédition. Dina Boluarte lui succède.</div></div>
       </div>
     </div>
@@ -1408,7 +1409,7 @@
         <div class="card card-in d2" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">Un gouvernement chaotique</b><div class="small" style="color:var(--night-2); margin-top:6px;">3 années d'instabilité et de protestation chronique (« Boluarte, dimite »). Scandales de corruption. La sécurité, priorité nº1.</div></div>
       </div>
       <div style="flex:1; display:flex; flex-direction:column; gap:18px; justify-content:center;">
-        <img src="images/m3-23.jpg" class="imground photo-in d1" style="width:100%; height:280px; object-fit:cover; border-radius:16px;" alt="Manifestations Boluarte dimite au Pérou">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:280px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-23.jpg" class="deck-media__img" data-deck-fig-src alt="Manifestations Boluarte dimite au Pérou" loading="lazy"></div></figure>
         <div class="card card-in d3" style="background:#6e481f;" data-src-id="m3-boluarte-destitution" data-src="Congreso de la República · 123 voix · 10 octobre 2025"><b style="color:var(--cream); font-size:var(--fs-1);">Destitution : 10 octobre 2025</b><div class="small" style="color:var(--ochre-light); margin-top:6px;">Le Congrès vote sa destitution par <b>123 voix</b> pour « incapacité morale permanente » corruption et mauvaise gestion de la sécurité.</div></div>
         <div class="card card-in d4" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">Succession</b><div class="small" style="color:var(--night-2); margin-top:6px;"><b>José Jerí</b> devient président par intérim jusqu'aux élections d'avril 2026.</div></div>
       </div>
@@ -1427,7 +1428,7 @@
         <div class="card card-in d2" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">Résultat serré</b><div class="small" style="color:var(--night-2); margin-top:6px;">ONPE : Fujimori <b>50,135 %</b> vs Sánchez <b>49,865 %</b> 49 641 voix d'écart. JNE proclame le <b>3 juillet 2026</b>.</div></div>
       </div>
       <div style="flex:1; display:flex; flex-direction:column; gap:18px; justify-content:center;">
-        <img src="images/m3-24.jpg" class="imground photo-in d1" style="width:100%; height:280px; object-fit:cover; border-radius:16px;" alt="Keiko Fujimori, campagne et investiture présidentielle 2026">
+        <figure class="deck-media deck-media--portrait photo-in d1" data-deck-fig-zoom style="--deck-media-h:280px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-24.jpg" class="deck-media__img" data-deck-fig-src alt="Keiko Fujimori, campagne et investiture présidentielle 2026" loading="lazy"></div></figure>
         <div class="card card-in d3" style="background:#6e481f;"><b style="color:var(--cream); font-size:var(--fs-1);">1ʳᵉ femme élue présidente</b><div class="small" style="color:var(--ochre-light); margin-top:6px;">4ᵉ candidature. Investiture le <b>28 juillet 2026</b>. Droite dure : réalignement sur Washington et durcissement sécuritaire.</div></div>
         <div class="card stat card-in d4" style="background:var(--cream);"><div class="stat-n" data-src-id="m3-onpe-2026" data-src="ONPE · 50,135 % vs 49,865 %" style="color:#8A5A24;">50,135 %</div><div class="stat-l" style="color:var(--night-2);">des voix au 2ᵈ tour 9ᵉ présidence en 10 ans.</div></div>
       </div>
@@ -1471,7 +1472,7 @@
         </div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-25.jpg" class="imground photo-in d1" style="width:100%; height:400px; object-fit:cover; border-radius:16px;" alt="Mine de cuivre péruvienne">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:400px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-25.jpg" class="deck-media__img" data-deck-fig-src alt="Mine de cuivre péruvienne" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
@@ -1508,7 +1509,7 @@
       </div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-42.jpg" class="imground photo-in d1" style="width:100%; height:420px; object-fit:cover; border-radius:16px;" alt="Pêche péruvienne et agriculture andine">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:420px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-42.jpg" class="deck-media__img" data-deck-fig-src alt="Pêche péruvienne et agriculture andine" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
@@ -1530,7 +1531,7 @@
         <div class="card card-in d4" style="background:#6e481f; display:flex; flex-direction:column; justify-content:center;"><div class="stat-n" data-src-id="m3-ipsos-security" data-src="Ipsos Perú · Percepción de inseguridad 2025" style="color:#fff; font-size:var(--fs-3);">66 %</div><div class="small" style="color:var(--ochre-light); margin-top:6px;">des Péruviens citent la criminalité comme problème nº1 (Ipsos 2025).</div></div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-26.jpg" class="imground photo-in d1" style="width:100%; height:320px; object-fit:cover; border-radius:16px;" alt="Extorsion et criminalité à Lima">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:320px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-26.jpg" class="deck-media__img" data-deck-fig-src alt="Extorsion et criminalité à Lima" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
@@ -1569,7 +1570,7 @@
         </div>
       </div>
       <div style="flex:1; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;">
-        <img src="images/carte-perou-zones.png" class="imground photo-in d1" style="width:100%; height:600px; object-fit:contain; background:var(--cream); border-radius:16px;" alt="Carte des zones à risque du Pérou">
+        <figure class="deck-media deck-media--chart photo-in d1" data-deck-fig-zoom style="--deck-media-h:600px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/carte-perou-zones.png" class="deck-media__img" data-deck-fig-src alt="Carte des zones à risque du Pérou" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
@@ -1633,7 +1634,7 @@
         </div>
       </div>
     </div>
-    <img src="images/m3-43.jpeg" class="imground photo-in d1" style="width:100%; height:180px; object-fit:cover; border-radius:16px; margin-top:18px; flex-shrink:0;" alt="Coca VRAEM et narcotrafic péruvien, production et corridors">
+    <figure class="deck-media deck-media--compact photo-in d1" data-deck-fig-zoom style="--deck-media-h:220px; --deck-media-margin:18px 0 0; --deck-media-flex:0"><div class="deck-media__frame"><img src="images/m3-43.jpeg" class="deck-media__img" data-deck-fig-src alt="Coca VRAEM et narcotrafic péruvien, production et corridors" loading="lazy"></div></figure>
   </section>
 
   <!-- ===== S46 ORGANISATIONS CRIMINELLES ===== -->
@@ -1668,7 +1669,7 @@
       </div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-44.jpg" class="imground photo-in d1" style="width:100%; height:420px; object-fit:cover; border-radius:16px;" alt="Bandes péruviennes et cartels étrangers au Pérou">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:420px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-44.jpg" class="deck-media__img" data-deck-fig-src alt="Bandes péruviennes et cartels étrangers au Pérou" loading="lazy"></div></figure>
       </div>
     </div>
     <div class="card" style="background:var(--terracotta); margin-top:20px;"><span class="small" style="color:#fff;"><b>Impact :</b> des violences croisées pour le contrôle des territoires et des routes.</span></div>
@@ -1686,7 +1687,7 @@
         <div class="card card-in d2" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">Lithium : nouvelle ruée</b><div class="small" style="color:var(--night-2); margin-top:6px;">Multinationales sur Macusani. Craintes : eau, pollution, profit peu localisé. Enjeu Chine (Tesla/batteries) vs USA.</div></div>
       </div>
       <div style="flex:1; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;">
-        <img src="images/m3-14-cerrejon.jpg" class="imground photo-in d1" style="width:100%; height:340px; object-fit:cover; border-radius:16px;" alt="Mine de charbon Cerrejón, La Guajira, Colombie">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:340px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-14-cerrejon.jpg" class="deck-media__img" data-deck-fig-src alt="Mine de charbon Cerrejón, La Guajira, Colombie" loading="lazy"></div></figure>
         <div class="card" style="background:#6e481f; width:100%;"><b style="color:var(--cream); font-size:var(--fs-1);">L'eau, enjeu majeur</b><div class="small" style="color:var(--ochre-light); margin-top:6px;">Glaciers −50 % depuis 1970. Mines gourmandes en eau, paysans en manque → émeutes. Lima : 10 M hab. en tension hydrique.</div></div>
       </div>
     </div>
@@ -1742,7 +1743,7 @@
         </div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-31.jpg" class="imground photo-in d1" style="width:100%; height:520px; object-fit:cover; border-radius:16px;" alt="Enjeux humanitaires au Pérou, populations vulnérables">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:520px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-31.jpg" class="deck-media__img" data-deck-fig-src alt="Enjeux humanitaires au Pérou, populations vulnérables" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
@@ -1818,7 +1819,7 @@
       </div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-45.jpg" class="imground photo-in d1" style="width:100%; height:520px; object-fit:cover; border-radius:16px;" alt="Sécurité personnelle sur le terrain à Lima">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:520px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-45.jpg" class="deck-media__img" data-deck-fig-src alt="Sécurité personnelle sur le terrain à Lima" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
@@ -1855,7 +1856,7 @@
       </div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-46.jpeg" class="imground photo-in d1" style="width:100%; height:400px; object-fit:cover; border-radius:16px;" alt="Blocages routiers et manifestations au Pérou">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:400px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-46.jpeg" class="deck-media__img" data-deck-fig-src alt="Blocages routiers et manifestations au Pérou" loading="lazy"></div></figure>
       </div>
     </div>
     <div class="card" style="background:var(--blue-akuu); margin-top:20px;"><b style="color:#fff; font-size:var(--fs-1);">Bon réflexe :</b> <span class="small" style="color:var(--blue-pale);">poser ses questions au service d'information touristique IPerú (réponse sous 24 h WhatsApp +51 944 492 314).</span></div>
@@ -1898,7 +1899,7 @@
         </div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-27.jpg" class="imground photo-in d1" style="width:100%; height:480px; object-fit:cover; border-radius:16px;" alt="Vigilance nocturne à Lima">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:480px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-27.jpg" class="deck-media__img" data-deck-fig-src alt="Vigilance nocturne à Lima" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
@@ -1939,7 +1940,7 @@
         </div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-28.jpeg" class="imground photo-in d1" style="width:100%; height:520px; object-fit:cover; border-radius:16px;" alt="Cordillère des Andes, séisme et altitude">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:520px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-28.jpeg" class="deck-media__img" data-deck-fig-src alt="Cordillère des Andes, séisme et altitude" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
@@ -1980,7 +1981,7 @@
       </div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-47.jpeg" class="imground photo-in d1" style="width:100%; height:400px; object-fit:cover; border-radius:16px;" alt="Acteurs locaux au Pérou : autorités, ONG, église et communautés">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:400px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-47.jpeg" class="deck-media__img" data-deck-fig-src alt="Acteurs locaux au Pérou : autorités, ONG, église et communautés" loading="lazy"></div></figure>
       </div>
     </div>
     <div class="card" style="background:var(--blue-akuu); margin-top:20px;"><b style="color:#fff; font-size:var(--fs-1);">Conseils :</b> <span class="small" style="color:var(--blue-pale);">rencontrer les autorités avant la mission, expliquer le projet, respecter les protocoles ne jamais les contourner.</span></div>
@@ -2026,7 +2027,7 @@
         </div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-29.jpg" class="imground photo-in d1" style="width:100%; height:520px; object-fit:cover; border-radius:16px;" alt="Communauté quechua dans les Andes">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:520px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-29.jpg" class="deck-media__img" data-deck-fig-src alt="Communauté quechua dans les Andes" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
@@ -2067,7 +2068,7 @@
       </div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-48.webp" class="imground photo-in d1" style="width:100%; height:480px; object-fit:cover; border-radius:16px;" alt="Soroche et risques sanitaires au Pérou">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:480px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-48.webp" class="deck-media__img" data-deck-fig-src alt="Soroche et risques sanitaires au Pérou" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
@@ -2104,7 +2105,7 @@
       </div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-49.jpg" class="imground photo-in d1" style="width:100%; height:420px; object-fit:cover; border-radius:16px;" alt="WhatsApp et connectivité mobile au Pérou">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:420px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-49.jpg" class="deck-media__img" data-deck-fig-src alt="WhatsApp et connectivité mobile au Pérou" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
@@ -2124,7 +2125,7 @@
         <div class="card card-in d4" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">SUPPORT ÉMOTIONNEL</div><div class="small" style="color:var(--night-2); margin-top:6px;">Ligne d'écoute de l'organisation, thérapeute spécialisé trauma, communautés de vétérans humanitaires.</div></div>
       </div>
       <div style="flex:0.85; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <img src="images/m3-52.jpeg" class="imground photo-in d1" style="width:100%; height:480px; object-fit:cover; border-radius:16px;" alt="Contacts utiles IPerú, consulat et urgences">
+        <figure class="deck-media deck-media--scene photo-in d1" data-deck-fig-zoom style="--deck-media-h:480px"><button type="button" class="deck-media__zoom-btn" data-deck-fig-open aria-label="Ouvrir en grand">⤢ Voir en grand</button><div class="deck-media__frame"><img src="images/m3-52.jpeg" class="deck-media__img" data-deck-fig-src alt="Contacts utiles IPerú, consulat et urgences" loading="lazy"></div></figure>
       </div>
     </div>
   </section>
