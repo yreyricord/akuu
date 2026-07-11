@@ -15,14 +15,16 @@
     /* Deck module 2 · marges propres au module (le reste hérite de ../deck-theme.css) */
     :root {
       --pad-top: 88px; --pad-bottom: 74px; --pad-x: 110px;
+      --deck-logo-clear: 36px;
+      --deck-logo-block: 72px;
     }
   </style>
 </helmet>
 
 <x-import component-from-global-scope="deck-stage" from="./deck-stage.js" width="1920" height="1080" hint-size="100%,100%" data-uneditable="">
 
-  <!-- ===== S1 COUVERTURE (BLEU · présentation module) ===== -->
-  <section data-label="01 · Couverture" style="background: radial-gradient(135% 130% at 82% 12%, #0a63b4 0%, var(--blue-akuu) 42%, #022a54 72%, #011d3c 100%); display:flex; flex-direction:column; justify-content:flex-end; padding: 0 var(--pad-x) 120px; overflow:hidden;">
+  <!-- ===== S01 COUVERTURE (BLEU · présentation module) ===== -->
+  <section data-label="1 · Couverture" style="background: radial-gradient(135% 130% at 82% 12%, #0a63b4 0%, var(--blue-akuu) 42%, #022a54 72%, #011d3c 100%); display:flex; flex-direction:column; justify-content:flex-end; padding: 0 var(--pad-x) 120px; overflow:hidden;">
     <div style="position:absolute; inset:0; background: radial-gradient(60% 60% at 85% 20%, rgba(166,198,57,0.16) 0%, rgba(166,198,57,0) 60%);"></div>
     <img src="images/collibri-akuu.png" style="position:absolute; right:60px; top:120px; height:460px; object-fit:contain; filter: drop-shadow(0 24px 60px rgba(0,0,0,0.4));" alt="Colibri AKUU">
     <img src="images/LOGOAKUU.png" style="position:absolute; top:44px; left:var(--pad-x); height:112px; object-fit:contain;" alt="AKUU">
@@ -30,39 +32,38 @@
     <div class="kicker anim" style="color:var(--green-leaf); margin-bottom:28px; position:relative;">Module 2 · Formation AKUU</div>
     <h1 class="h anim anim-d1" style="color:var(--cream); margin:0; font-size:var(--fs-5); font-weight:800; line-height:0.98; position:relative;">Histoire de l'Amazonie</h1>
     <p class="lead anim anim-d2" style="font-style:italic; color:var(--blue-pale); margin:14px 0 0; position:relative; font-size:var(--fs-3);">de l'Amazonie</p>
-    <div class="src" style="position:static; opacity:0.6; margin-top:34px; color:var(--blue-pale);">Source : J.V. San Román, Perfiles Históricos de la Amazonía Peruana, CETA-CAAAP-IIAP, 1994</div>
   </section>
 
-  <!-- ===== S2 SOMMAIRE (style futuriste Apple, uniforme) ===== -->
-  <section data-label="02 · Sommaire" class="toc" style="background: var(--role-toc-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
+  <!-- ===== S02 SOMMAIRE (style futuriste Apple, uniforme) ===== -->
+  <section data-label="2 · Sommaire" class="toc" style="background: var(--role-toc-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
     <img src="images/LOGOAKUU.png" class="logo toc-logo" alt="AKUU">
     <div class="topbar" style="background: linear-gradient(90deg, var(--blue-sky), var(--green-leaf));"></div>
     <h1 class="h" style="color:var(--cream); margin:0 0 40px; font-size:var(--fs-4);">Sommaire</h1>
     <div class="toc-list">
-      <div class="toc-row"><span class="toc-num">01</span><div class="toc-txt"><div class="toc-title">Qui vivait en Amazonie ?</div><div class="toc-desc">Les peuples originaires, sociétés et cosmovisions avant 1542</div></div><span class="toc-arrow">→</span></div>
+      <div class="toc-row"><span class="toc-num">01</span><div class="toc-txt"><div class="toc-title">Qui vivait en Amazonie ?</div><div class="toc-desc">Repères coloniaux, peuple pivot Kukama, mosaïque du Loreto</div></div><span class="toc-arrow">→</span></div>
       <div class="toc-row"><span class="toc-num">02</span><div class="toc-txt"><div class="toc-title">Les Missions et Conquêtes</div><div class="toc-desc">Orellana, jésuites et franciscains : contact, réductions, résistances</div></div><span class="toc-arrow">→</span></div>
       <div class="toc-row"><span class="toc-num">03</span><div class="toc-txt"><div class="toc-title">L'Ère du Caoutchouc</div><div class="toc-desc">Boom du latex (1880–1914) : fortunes, esclavage et violence</div></div><span class="toc-arrow">→</span></div>
       <div class="toc-row"><span class="toc-num">04</span><div class="toc-txt"><div class="toc-title">L'Amazonie contemporaine</div><div class="toc-desc">Intégration nationale, pétrole, coca et mouvements indigènes</div></div><span class="toc-arrow">→</span></div>
     </div>
   </section>
 
-  <!-- ===== S3 TITRE PARTIE 01 ===== -->
-  <section data-label="03 · Partie 01 · Peuples" style="background: var(--role-chapter-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
+  <!-- ===== S03 TITRE PARTIE 01 ===== -->
+  <section data-label="3 · Partie 01 · Peuples" style="background: var(--role-chapter-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="bar" style="background:var(--green-leaf);"></div>
     <div style="font-family:'Playfair Display',serif; font-size:var(--fs-6); font-weight:800; color:rgba(166,198,57,0.15); position:absolute; top:40px; right:90px;">01</div>
     <div class="kicker" style="color:var(--green-leaf); margin-bottom:22px;">Partie 01</div>
     <h1 class="h" style="color:var(--cream); margin:0; font-size:var(--fs-5); line-height:1.02;">Qui vivait en Amazonie ?</h1>
     <div style="width:120px; height:6px; background:var(--green-leaf); margin:36px 0 26px;"></div>
-    <p class="lead" style="color:var(--green-pale);">Les peuples originaires · Napo &amp; Amazone · Avant 1542</p>
+    <p class="lead" style="color:var(--green-pale);">Repères coloniaux · peuple pivot Kukama · mosaïque du Loreto</p>
   </section>
 
-  <!-- ===== S4 CHRONOLOGIE ===== -->
-  <section data-label="04 · Chronologie" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S04 CHRONOLOGIE ===== -->
+  <section data-label="4 · Chronologie" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--green-forest);">01 · Qui vivait en Amazonie</div>
     <div class="topbar" style="background:var(--green-leaf);"></div>
-    <h1 class="h" style="color:var(--green-forest); font-size:var(--fs-3); margin: 22px 0 24px;">Chronologie : 7 grandes étapes</h1>
+    <h1 class="h" data-src-id="m2-sanroman1994" data-src="J.V. San Román, Perfiles Históricos de la Amazonía Peruana, 1994" style="color:var(--green-forest); font-size:var(--fs-3); margin: 22px 0 24px;">Chronologie : 7 grandes étapes</h1>
     <div class="deck-carousel" data-deck-carousel style="flex:1; min-height:0;">
       <div class="deck-carousel__stage">
         <button type="button" class="deck-carousel__arrow deck-carousel__prev" aria-label="Précédent"></button>
@@ -103,43 +104,46 @@
         </div>
       </div>
     </div>
-    <button type="button" class="src-tip src-tip--slide" style="color:var(--green-forest);" data-src="J.V. San Román, Perfiles Históricos de la Amazonía Peruana, 1994">Source</button>
   </section>
 
-  <!-- ===== S5 +400 NATIONS ===== -->
-  <section data-label="05 · +400 nations" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S05 +400 NATIONS ===== -->
+  <section data-label="5 · +400 nations" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--green-forest);">01 · Qui vivait en Amazonie</div>
     <div class="topbar" style="background:var(--green-leaf);"></div>
     <h1 class="h" style="color:var(--green-forest); font-size:var(--fs-3); margin: 22px 0 24px;">+400 nations : une mosaïque millénaire</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Langues multiples</b><div class="small" style="color:var(--night-2); margin-top:6px;">Groupes indépendants, souvent en guerre, parlant des langues distinctes : impossible à classifier en une seule entité.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Identité par le fleuve</b><div class="small" style="color:var(--night-2); margin-top:6px;">Chaque tribu portait le nom de son chef (curaca), de sa rivière ou de son animal totem : pas de notion d'ethnie générique.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image6.png" class="imground photo-in d1" style="width:100%; height:430px; object-fit:contain; background:var(--cream); padding:10px;" alt="Carte des nations indigènes d'Amazonie"><div class="card" style="background:var(--green-forest);"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« L'Amazonie est une mosaïque formée d'environ 400 groupes humains et leurs cultures correspondantes. »</p><div class="xs" style="color:var(--green-leaf); margin-top:10px;">Ier Encuentro de Pastoral de Misiones en el Alto Amazonas, Iquitos, 1971</div></div></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Vie dispersée</b><div class="small" style="color:var(--night-2); margin-top:6px;">Rancherías de 40 à 500 personnes, semi-nomades, réparties sur des territoires immenses, lien fort à la maloca.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Des liens malgré les conflits</b><div class="small" style="color:var(--night-2); margin-top:6px;">Alliances commerciales, mariages inter-tribus, fêtes communes, la guerre cohabitait avec la diplomatie.</div></div></div></div>
   </section>
 
-  <!-- ===== S6 SOCIÉTÉ ===== -->
-  <section data-label="06 · Société, autorité, économie" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S06 SOCIÉTÉ ===== -->
+  <section data-label="6 · Société, autorité, économie" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--green-forest);">01 · Qui vivait en Amazonie</div>
     <div class="topbar" style="background:var(--green-leaf);"></div>
     <h1 class="h" style="color:var(--green-forest); font-size:var(--fs-3); margin: 22px 0 24px;">Société, autorité et économie des tribus</h1>
-    <div style="display:flex; gap:22px; align-items:center; margin-bottom:20px;">
-      <img src="images/image7.jpeg" class="imground" style="width:300px; height:130px; background:var(--cream);" alt="Motifs de peinture faciale indigène">
-      <img src="images/image8.jpeg" class="imground" style="width:300px; height:130px; background:var(--cream);" alt="Dessins de visages / masques">
-      <div class="small" style="color:var(--green-forest); font-style:italic; flex:1;">Motifs de peinture faciale et masques : marqueurs d'identité et de statut au sein des rancherías.</div>
-    </div>
     <div class="deck-carousel" data-deck-carousel style="flex:1; min-height:0;">
       <div class="deck-carousel__stage">
         <button type="button" class="deck-carousel__arrow deck-carousel__prev" aria-label="Précédent"></button>
         <div class="deck-carousel__viewport">
         <div class="deck-carousel__slide deck-carousel__slide--active">
-          <div class="card" style="--card-accent:var(--green-leaf); background:var(--cream); height:100%; display:flex; flex-direction:column; padding:32px;"><div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">FAMILLE</div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--green-forest); margin:10px 0 14px;">La ranchería, cellule de base</div><div class="body" style="color:var(--night-2); flex:1;">40 à 500 personnes liées par la parenté. Vie dans la maloca. Semi-nomadisme dicté par la chasse, la pêche et les saisons.</div></div>
+          <div class="card" style="--card-accent:var(--green-leaf); background:var(--cream); height:100%; display:flex; flex-direction:column; padding:32px;"><div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">FAMILLE</div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--green-forest); margin:10px 0 14px;">La ranchería, cellule de base</div><div class="body" style="color:var(--night-2); flex:1; line-height:1.4;">40 à 500 personnes liées par la parenté : c'est la <b>ranchería</b>, le groupe social de base. Elles vivent sous un même toit dans la <b>maloca</b>, grande maison commune en bois et en feuilles de palmier où se partagent repas, rites et hammacs.</div><div class="small" style="color:var(--night-2); margin-top:14px; line-height:1.4;"><b style="color:var(--green-forest);">Ranchería ≠ maloca.</b> La ranchería, c'est le « qui » (la communauté) ; la maloca, c'est le « où » (l'habitat). Semi-nomadisme dicté par la chasse, la pêche et les saisons : le groupe peut déplacer sa maloca.</div></div>
         </div>
         <div class="deck-carousel__slide">
-          <div class="card" style="--card-accent:var(--green-leaf); background:var(--cream); height:100%; display:flex; flex-direction:column; padding:32px;"><div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">AUTORITÉ</div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--green-forest); margin:10px 0 14px;">Le curaca, le prestige</div><div class="body" style="color:var(--night-2); flex:1;">Chef charismatique dont l'autorité repose sur le prestige et l'expérience, non la coercition. Pouvoir fragile, contesté si jugé injuste.</div></div>
+          <div class="card" data-src-id="m2-authority" data-src="P. Rivière, Individual and Community in Native Amazonia, Cambridge, 1984 · C. Fausto, Donos demais, Mana, 2008 · J.V. San Román, Perfiles Históricos, 1994" style="--card-accent:var(--green-leaf); background:var(--cream); height:100%; display:flex; flex-direction:column; padding:32px;"><div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">AUTORITÉ</div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--green-forest); margin:10px 0 14px;">Le curaca, le prestige</div><div class="body" style="color:var(--night-2); flex:1; line-height:1.4;">Le <b>curaca</b> dirige la ranchería : il organise les expéditions, répartit les prises et arbitre les conflits. Son autorité ne repose ni sur la coercition ni sur un rang héréditaire fixe, mais sur le <b>prestige</b> : générosité, éloquence, maîtrise de la forêt et des rites.</div><div class="small" style="color:var(--night-2); margin-top:14px; line-height:1.4;"><b style="color:var(--green-forest);">Pouvoir consenti.</b> Si le chef est jugé avare ou injuste, les familles peuvent le quitter. L'anthropologie parle d'une « économie politique des personnes » : le leader magnifie son groupe en le nourrissant et en le protégeant.</div></div>
         </div>
         <div class="deck-carousel__slide">
-          <div class="card" style="--card-accent:var(--green-leaf); background:var(--cream); height:100%; display:flex; flex-direction:column; padding:32px;"><div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">ÉCONOMIE</div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--green-forest); margin:10px 0 14px;">Pêche, cueillette, chasse</div><div class="body" style="color:var(--night-2); flex:1;">Économie collectiviste. Chacra de yuca et maïs pour la chicha. Poison barbasco pour la pêche. Redistribution systématique.</div></div>
+          <div class="card" style="--card-accent:var(--green-leaf); background:var(--cream); height:100%; display:flex; flex-direction:column; padding:32px;" data-src-id="m2-economy" data-src="J. Lizot, Tales of the Hunt, Cambridge, 1985 · E. Viveiros de Castro, Images of Nature and Society in Amazonian Ethnology, Annual Review of Anthropology, 1996 · C. Erickson, Pre-Columbian Fishermen of the Bolivian Amazon, 2007"><div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">ÉCONOMIE</div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--green-forest); margin:10px 0 14px;">Pêche, cueillette, chasse</div><div class="body" style="color:var(--night-2); flex:1; line-height:1.4;">Économie de <b>subsistance</b> mêlant pêche, chasse, cueillette et <b>chacra</b>, jardin-forêt de yuca et maïs. La <b>chicha</b> (boisson fermentée) scelle les fêtes et les échanges. En saison sèche, la maloca se mobilise pour les pêches collectives au <b>barbasco</b>, poison végétal qui étourdit les poissons dans les bras morts.</div><div class="small" style="color:var(--night-2); margin-top:14px; line-height:1.4;"><b style="color:var(--green-forest);">Redistribution.</b> Les bonnes prises circulent selon des normes de réciprocité : pas d'accumulation individuelle, la nourriture unit la communauté. Pêche et chasse complètent l'agriculture selon les saisons et les ressources du territoire.</div></div>
         </div>
         <div class="deck-carousel__slide">
-          <div class="card" style="--card-accent:var(--green-leaf); background:var(--cream); height:100%; display:flex; flex-direction:column; padding:32px;"><div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">GUERRE</div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--green-forest); margin:10px 0 14px;">Guerre &amp; défense</div><div class="body" style="color:var(--night-2); flex:1;">Conflits inter-tribaux pour le territoire, les femmes, le prestige. Le guerrier est l'idéal masculin. Prise de captifs intégrés.</div></div>
+          <div class="card" style="--card-accent:var(--green-leaf); background:var(--cream); height:100%; display:flex; flex-direction:column; padding:32px;" data-src-id="m2-warfare" data-src="C. Fausto, Of Enemies and Pets: Warfare and Shamanism in Amazonia, American Ethnologist, 1999 · R. B. Ferguson, Blood of the Leviathan, American Ethnologist, 1990"><div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">GUERRE</div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--green-forest); margin:10px 0 14px;">Guerre &amp; défense</div><div class="body" style="color:var(--night-2); flex:1; line-height:1.4;">Conflits entre rancherías pour le <b>territoire</b>, les captives matrimoniales et le <b>prestige guerrier</b>. La violence n'est pas sans règle : elle obéit à un schéma de prédation et de <b>familiarisation</b> : l'ennemi capturé peut être intégré dans le groupe, adopté comme gendre ou enfant.</div><div class="small" style="color:var(--night-2); margin-top:14px; line-height:1.4;"><b style="color:var(--green-forest);">Idéal masculin.</b> Le guerrier accumule prestige par les raids réussis ; mais la guerre structure aussi l'échange de personnes entre groupes, loin de la guerre d'État moderne.</div></div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card" style="--card-accent:var(--green-leaf); background:var(--cream); height:100%; display:flex; flex-direction:column; padding:32px;" data-src-id="m2-kukama-bdpi" data-src="R. Rivas-Ruiz, Kukama-Kukamiria, Desde el Sur, 2024 · A. Chirif &amp; C. Mora, Atlas de Comunidades Nativas, 1977 · BDPI, Pueblos indígenas du Pérou"><div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">RITUELS &amp; ALLIANCES</div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--green-forest); margin:10px 0 14px;">Clans, mariages et rites de passage</div><div class="body" style="color:var(--night-2); flex:1; line-height:1.4;">Les <b>rituels</b> (initiation, fête, deuil, réconciliation) scellent le lien social au-delà de la ranchería. Les <b>mariages inter-groupes</b> tissent des alliances : service du gendre, échange de biens, intégration des captifs. Le système de <b>clans</b> ou phratries (totems, ancêtres fondateurs) définit qui peut épouser qui.</div><div class="small" style="color:var(--night-2); margin-top:14px; line-height:1.4;"><b style="color:var(--green-forest);">Focus Kukama.</b> Les Kukama-Kukamiria s'organisent en <i>sangres</i> (groupes patrilinéaires liés à un animal ou une plante-totem). Le mariage unit deux sangres différentes ; agriculture saisonnière, pêche et cosmologie fluviale (tunchis, bufeo) rythment chaque étape de la vie.</div></div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card" style="--card-accent:var(--green-leaf); background:var(--cream); height:100%; display:flex; flex-direction:column; padding:32px;"><div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">GUÉRISON</div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--green-forest); margin:10px 0 14px;">Les figures de guérison, piliers de la vie amazonienne</div><div class="body" style="color:var(--night-2); flex:1; line-height:1.4;">Chaque peuple compte des spécialistes du soin et du sacré : <i>yachaj</i> (kichwa), <i>payé</i> (Brésil), <i>onanya</i> (Shipibo), <i>curandero·a</i>… Ils soignent les maladies, protègent la communauté, accompagnent les rites d'initiation et médient entre mondes visible et invisible.</div><div class="small" style="color:var(--night-2); margin-top:14px; line-height:1.4;">Leur savoir des plantes (ayahuasca, tabac, chacruna…) et leur prestige social en font des figures centrales, au même titre que le curaca pour l'autorité politique.</div></div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card" style="--card-accent:var(--ochre); background:var(--cream); height:100%; display:flex; flex-direction:column; padding:32px;"><div class="xs" style="color:var(--ochre); font-weight:800; letter-spacing:2px;">VOCABULAIRE</div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--green-forest); margin:10px 0 14px;">« Chaman » : un mot à relativiser</div><div class="body" style="color:var(--night-2); flex:1; line-height:1.4;">« Chaman » vient du toungouse <i>šaman</i> (Sibérie), généralisé par l'anthropologie occidentale (Eliade). Ce mot recouvre mal la diversité amazonienne ; préférer les termes locaux ou « guérisseur·euse / curandero·a ».</div><div class="small" style="color:var(--night-2); margin-top:14px; line-height:1.4;"><b style="color:var(--green-forest);">À retenir.</b> Chaque peuple nomme ses propres figures (<i>yachaj</i>, <i>payé</i>, <i>onanya</i>…) : éviter « chaman » comme terme générique dans la suite du module.</div></div>
         </div>
         </div>
         <button type="button" class="deck-carousel__arrow deck-carousel__next" aria-label="Suivant"></button>
@@ -150,77 +154,600 @@
           <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Autorité"></button>
           <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Économie"></button>
           <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Guerre"></button>
+          <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Rituels"></button>
+          <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Guérison"></button>
+          <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Vocabulaire"></button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== S7 COSMOVISIÓN ===== -->
-  <section data-label="07 · Cosmovisión" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S07 COSMOVISIÓN ===== -->
+  <section data-label="7 · Cosmovisión" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--green-forest);">01 · Qui vivait en Amazonie</div>
     <div class="topbar" style="background:var(--green-leaf);"></div>
-    <h1 class="h" style="color:var(--green-forest); font-size:var(--fs-3); margin: 22px 0 24px;">Cosmovisión et vie quotidienne</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Animisme &amp; figures de guérison</b><div class="small" style="color:var(--night-2); margin-top:6px;">Chaque être porte une force vitale. Des spécialistes (<i>yachaj</i> en kichwa, <i>payé</i> au Brésil, <i>onanya</i> chez les Shipibo…) médient entre mondes visible et invisible : ils soignent, protègent, accompagnent les rites.</div><div class="deck-vocab-note"><b>Vocabulaire.</b> « Chaman » vient du toungouse <i>šaman</i> (Sibérie), généralisé par l'anthropologie occidentale (Eliade). Ce mot recouvre mal la diversité amazonienne ; préférer les termes locaux ou « guérisseur·euse / curandero·a ».</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">La fête comme lien social</b><div class="small" style="color:var(--night-2); margin-top:6px;">Fiestas (victoire, mariage, initiation) : tous participent. Le masato (yuca fermentée) est universel. La fête = réconciliation.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image9.jpeg" class="imground photo-in d1" style="width:100%; height:430px;" alt="Transformation de la yuca (masato)"><div class="card" style="background:var(--green-forest);"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« La selva vive su tiempo de cultura mítica, de rasgo lunar. Es una cosmovisión mágico-religiosa pannaturalista. »</p><div class="xs" style="color:var(--green-leaf); margin-top:10px;">J.V. San Román, Perfiles Históricos, 1994</div></div></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Éducation par la liberté</b><div class="small" style="color:var(--night-2); margin-top:6px;">L'enfant apprend en vivant la forêt. Il accompagne les adultes à la chasse. Les rites d'initiation marquent le passage à l'âge adulte.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Une forêt habitée, pas sauvage</b><div class="small" style="color:var(--night-2); margin-top:6px;">La selva n'est pas un obstacle mais un partenaire. Savoir fin des plantes, des animaux, des cycles, transmis oralement.</div></div></div></div>
+    <h1 class="h" style="color:var(--green-forest); font-size:var(--fs-3); margin: 22px 0 24px;">Cosmovisión et vie quotidienne</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Animisme &amp; figures de guérison</b><div class="small" style="color:var(--night-2); margin-top:6px;">Chaque être porte une force vitale. Des spécialistes (<i>yachaj</i> en kichwa, <i>payé</i> au Brésil, <i>onanya</i> chez les Shipibo…) médient entre mondes visible et invisible : ils soignent, protègent, accompagnent les rites.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">La fête comme lien social</b><div class="small" style="color:var(--night-2); margin-top:6px;">Fiestas (victoire, mariage, initiation) : tous participent. Le masato (yuca fermentée) est universel. La fête = réconciliation.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image9.jpeg" class="imground photo-in d1" style="width:100%; height:430px;" alt="Transformation de la yuca (masato)"><div class="card" style="background:var(--green-forest);"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« La selva vive su tiempo de cultura mítica, de rasgo lunar. Es una cosmovisión mágico-religiosa pannaturalista. »</p><div class="xs" style="color:var(--green-leaf); margin-top:10px;">J.V. San Román, Perfiles Históricos, 1994</div></div></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Éducation par la liberté</b><div class="small" style="color:var(--night-2); margin-top:6px;">L'enfant apprend en vivant la forêt. Il accompagne les adultes à la chasse. Les rites d'initiation marquent le passage à l'âge adulte.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Une forêt habitée, pas sauvage</b><div class="small" style="color:var(--night-2); margin-top:6px;">La selva n'est pas un obstacle mais un partenaire. Savoir fin des plantes, des animaux, des cycles, transmis oralement.</div></div></div></div>
   </section>
 
-  <!-- ===== S8 ENCABELLADOS ===== -->
-  <section data-label="08 · Les Encabellados" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S08 ENCABELLADOS · TERRITOIRE ===== -->
+  <section data-label="8 · Encabellados · territoire" class="deck-portrait deck-portrait--repere">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--green-forest);">01 · Qui vivait en Amazonie</div>
-    <div class="topbar" style="background:var(--green-leaf);"></div>
-    <h1 class="h" style="color:var(--green-forest); font-size:var(--fs-3); margin: 22px 0 24px;">La nation des Encabellados : maîtres du Napo</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Territoire</b><div class="small" style="color:var(--night-2); margin-top:6px;">De la cordillère de Quito à la boca del Putumayo, couvrant tout le bassin du Napo et ses affluents (Aguarico, Cuyabeno, Necoya…).</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Réputation guerrière</b><div class="small" style="color:var(--night-2); margin-top:6px;">Connus pour leur caractère « aguerri et indépendant » : premiers à résister avec ténacité à la présence espagnole dans la selva.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image11.jpeg" class="imground photo-in d1" style="width:100%; height:620px;" alt="Le bassin du Napo"></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Nom &amp; identité</b><div class="small" style="color:var(--night-2); margin-top:6px;">« Encabellados » = ceux qui portent les cheveux longs en tresses, aujourd'hui les Piojes / Secoyas (héritiers directs).</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Contact missionnaire</b><div class="small" style="color:var(--night-2); margin-top:6px;">P. Rafael Ferrer fonde 3 pueblos en 1604 chez les Cofanes voisins. Assassiné en 1611 : vu comme espion par les guérisseurs locaux.</div></div></div></div>
+    <div class="topbar"></div>
+    <div class="deck-portrait__head">
+      <p class="deck-eyebrow deck-eyebrow--repere"><span class="deck-eyebrow__kicker">Repère historique</span><span class="deck-eyebrow__sep" aria-hidden="true"></span><span class="deck-eyebrow__meta">avant 1542</span></p>
+      <h1 class="h deck-portrait__title" style="color:var(--green-forest);">Les Encabellados : maîtres du Napo</h1>
+      <p class="deck-portrait__hook">Une « nation » guerrière du bassin du Napo, parmi les premières à affronter les Espagnols.</p>
+    </div>
+    <div class="deck-portrait__body">
+      <div class="deck-portrait__media"><img src="images/ch01-s08-encabellados-territoire.jpg" class="imground photo-in d1" alt="Le bassin du Napo"></div>
+      <div class="deck-portrait__cards">
+        <div class="card card-in d1 deck-portrait__card">
+          <div class="deck-portrait__card-title">Où vivent-ils ?</div>
+          <ul class="deck-portrait__list">
+            <li>Des Andes de Quito jusqu'à la boca del Putumayo</li>
+            <li>Bassin du Napo, Aguarico, Cuyabeno</li>
+            <li>Centre : Pantoja (confluence Napo-Aguarico)</li>
+          </ul>
+        </div>
+        <div class="card card-in d2 deck-portrait__card" data-src-id="m2-secoya-bdpi" data-src="J.V. San Román, Perfiles Históricos, 1994 · L. Casanova, Los Encabellados, 1998">
+          <div class="deck-portrait__card-title">Qui sont-ils ?</div>
+          <ul class="deck-portrait__list">
+            <li>Ethnonyme colonial : « ceux aux longs cheveux »</li>
+            <li>Regroupe Cofanes, Ciecoya, Payaguas, Siona…</li>
+            <li>Héritiers directs : Secoya-Siona (Piojés)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- ===== S9 OMAGUAS ===== -->
-  <section data-label="09 · Les Omaguas" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S09 ENCABELLADOS · CONQUÊTE ===== -->
+  <section data-label="9 · Encabellados · conquête" class="deck-portrait deck-portrait--repere">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--green-forest);">01 · Qui vivait en Amazonie</div>
-    <div class="topbar" style="background:var(--green-leaf);"></div>
-    <h1 class="h" style="color:var(--green-forest); font-size:var(--fs-3); margin: 22px 0 24px;">Les Omaguas : « seigneurs des îles »</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Emplacement stratégique</b><div class="small" style="color:var(--night-2); margin-top:5px;">Les îles du bas Amazone entre la boca del Napo et l'Ampiyacu : position dominante sur le commerce fluvial.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Céramique &amp; artisanat</b><div class="small" style="color:var(--night-2); margin-top:5px;">Selon Carvajal (1542) : « loza de la mejor que se ha visto en el mundo » : renommée dans toute la région.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image13.png" class="imground photo-in d1" style="width:100%; height:540px; object-fit:contain; background:var(--cream); padding:8px;" alt="Céramique Omagua"><div style="width:100%;"><img src="images/image14.jpeg" class="imground" style="width:100%; height:210px; object-fit:contain; background:#1a1a1a;" alt="Figurine céramique"></div></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Tête aplatie</b><div class="small" style="color:var(--night-2); margin-top:5px;">Pratique culturelle distinctive : crânes allongés par compression à la naissance, signe de prestige social.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Destruction portugaise</b><div class="small" style="color:var(--night-2); margin-top:5px;">En 1710, une armada de 1500 soldats du Pará détruit les 40 pueblos du P. Fritz, fin de la nation Omagua organisée.</div></div></div></div>
+    <div class="topbar"></div>
+    <div class="deck-portrait__head">
+      <p class="deck-eyebrow deck-eyebrow--repere"><span class="deck-eyebrow__kicker">Repère historique</span><span class="deck-eyebrow__sep" aria-hidden="true"></span><span class="deck-eyebrow__meta">avant 1542</span></p>
+      <h1 class="h deck-portrait__title" style="color:var(--green-forest);">Les Encabellados face à la conquête</h1>
+      <p class="deck-portrait__hook">Premières expériences sanglantes de contact européen sur le Napo.</p>
+    </div>
+    <div class="deck-portrait__body">
+      <div class="deck-portrait__media"><img src="images/ch01-s09-encabellados-conquete.jpg" class="imground photo-in d1" alt="Forêt du Napo"></div>
+      <div class="deck-portrait__cards">
+        <div class="card card-in d1 deck-portrait__card">
+          <div class="deck-portrait__card-title">Orellana (1541-42)</div>
+          <ul class="deck-portrait__list">
+            <li>Traverse leur territoire en descendant le Napo</li>
+            <li>Réputation « aguerri et indépendant » dès le XVIᵉ s.</li>
+            <li>Peuple-clé du récit de la conquête (ch. 02)</li>
+          </ul>
+        </div>
+        <div class="card card-in d2 deck-portrait__card" data-src-id="m2-izaguirre-missions" data-src="J. Izaguirre, Historia de las misiones franciscanas, 1922 · Persée, BEFEO 1996">
+          <div class="deck-portrait__card-title">Missions &amp; révoltes</div>
+          <ul class="deck-portrait__list">
+            <li>P. Ferrer fonde 3 pueblos (1604), tué en 1611</li>
+            <li>Colonie d'Ante sur l'Aguarico détruite (1637)</li>
+            <li>Soulèvements 1635 et 1666 contre les missions</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- ===== S10 KUKAMA ===== -->
-  <section data-label="10 · Les Kukama-Kukamiria" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S10 OMAGUAS · CARVAJAL ===== -->
+  <section data-label="10 · Omaguas · Carvajal" class="deck-portrait deck-portrait--repere">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--green-forest);">01 · Qui vivait en Amazonie</div>
-    <div class="topbar" style="background:var(--green-leaf);"></div>
-    <h1 class="h" style="color:var(--green-forest); font-size:var(--fs-3); margin: 22px 0 24px;">Les Kukama-Kukamiria : identité, territoire et langue</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Un peuple des grands fleuves</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Rives du Marañón, Huallaga, Ucayali et de l'Amazone supérieur (Loreto). Peuple amphibie : vie sociale et spirituelle organisée autour du fleuve.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Une langue quasi éteinte, renaissante</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Unique branche tupienne hors Brésil. Moins de 1 500 locuteurs, mais un mouvement de revitalisation actif depuis les années 2010.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image15.jpeg" class="imground photo-in d1" style="width:100%; height:620px; object-fit:contain; background:var(--cream); padding:8px;" alt="Culture kukama, affiche Kariwara"></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Cosmologie fluviale</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Trois mondes superposés : terrestre, souterrain (tunchis, bufeo colorado) et aquatique. Le fleuve est un espace social habité.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Pêche, agriculture, cueillette</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Pêche de subsistance (paiche, gamitana, boquichico), agriculture sur brûlis (yuca, maïs). Des gens d'eau avant tout.</div></div></div></div>
+    <div class="topbar"></div>
+    <div class="deck-portrait__head">
+      <p class="deck-eyebrow deck-eyebrow--repere"><span class="deck-eyebrow__kicker">Repère historique</span><span class="deck-eyebrow__sep" aria-hidden="true"></span><span class="deck-eyebrow__meta">avant 1542</span></p>
+      <h1 class="h deck-portrait__title" style="color:var(--green-forest);">Les Omaguas : « seigneurs des îles »</h1>
+      <p class="deck-portrait__hook">Documentés par Carvajal en 1542 — une des sociétés les plus denses de l'Amazone.</p>
+    </div>
+    <div class="deck-portrait__body">
+      <div class="deck-portrait__media"><img src="images/ch01-s10-omaguas-carvajal.jpg" class="imground photo-in d1" alt="Territoire omagua, bassin du Napo"></div>
+      <div class="deck-portrait__cards">
+        <div class="card card-in d1 deck-portrait__card">
+          <div class="deck-portrait__card-title">Un empire fluvial</div>
+          <ul class="deck-portrait__list">
+            <li>Peuple tupi, migrations depuis l'Amazone central</li>
+            <li>Pueblos denses sur les llanuras inondables</li>
+            <li>Du Napo au bas Putumayo, îles du bas Amazone</li>
+          </ul>
+        </div>
+        <div class="card card-in d2 deck-portrait__card" data-src-id="m2-omagua-carvajal" data-src="Gaspar de Carvajal, Relación, 1542 · BDPI, Pueblo Omagua">
+          <div class="deck-portrait__card-title">Ce que dit Carvajal</div>
+          <ul class="deck-portrait__list">
+            <li>~80 légues de territoire, routes vers l'intérieur</li>
+            <li>Pueblos de plusieurs lieues de long</li>
+            <li>50 000 hommes armés ? Chiffre discutable, mais densité réelle</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- ===== S11 COLONISATION KUKAMA ===== -->
-  <section data-label="11 · Décimation kukama" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S11 OMAGUAS · DESTRUCTION ===== -->
+  <section data-label="11 · Omaguas · destruction" class="deck-portrait deck-portrait--repere">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--green-forest);">01 · Qui vivait en Amazonie</div>
-    <div class="topbar" style="background:var(--green-leaf);"></div>
-    <h1 class="h" style="color:var(--green-forest); font-size:var(--fs-3); margin: 22px 0 24px;">Colonisation, missions et caoutchouc : la décimation kukama</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Les réductions jésuites (XVIIᵉ–XVIIIᵉ)</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Regroupement forcé sur le Marañón et le Huallaga. Les épidémies (variole, grippe, rougeole) provoquent un effondrement de plus de 80 %.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Le boom du caoutchouc (1880–1920)</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Les Kukama réduits au peonaje (esclavage par dette). Fuites, désorganisation sociale profonde, savoirs partiellement perdus.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image16.jpg" class="imground photo-in d1" style="width:100%; height:430px; object-fit:contain; background:#111;" alt="The Mission, missions jésuites"><div class="card" style="background:var(--green-forest);"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« Nos parents ont honte de nous apprendre le kukama. Les missionnaires disaient que notre langue était la langue du démon. »</p><div class="xs" style="color:var(--green-leaf); margin-top:8px;">Témoignage d'une aînée kukama, ACODECOSPAT (2012)</div></div></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">L'acculturation forcée</b><div class="xs" style="color:var(--night-2); margin-top:5px;">L'école publique impose l'espagnol et stigmatise le kukama comme « langue de sauvages ». En 1980, la langue est proche de l'extinction.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Entre stigmate et re-appropriation</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Longtemps déclarés « mestizos » pour échapper à la discrimination. Depuis 1990, un puissant mouvement de re-appropriation identitaire.</div></div></div></div>
+    <div class="topbar"></div>
+    <div class="deck-portrait__head">
+      <p class="deck-eyebrow deck-eyebrow--repere"><span class="deck-eyebrow__kicker">Repère historique</span><span class="deck-eyebrow__sep" aria-hidden="true"></span><span class="deck-eyebrow__meta">avant 1542</span></p>
+      <h1 class="h deck-portrait__title" style="color:var(--green-forest);">Les Omaguas : culture et effondrement</h1>
+      <p class="deck-portrait__hook">De la céramique célèbre à la destruction par les Portugais (1710).</p>
+    </div>
+    <div class="deck-portrait__body">
+      <div class="deck-portrait__media"><img src="images/ch01-s11-omaguas-ceramique.png" class="imground photo-in d1 deck-portrait__img--contain" alt="Céramique Omagua"></div>
+      <div class="deck-portrait__cards">
+        <div class="card card-in d1 deck-portrait__card">
+          <div class="deck-portrait__card-title">Art &amp; corps</div>
+          <ul class="deck-portrait__list">
+            <li>Céramique « la meilleure du monde » (Carvajal)</li>
+            <li>Crânes allongés par compression (prestige)</li>
+            <li>Tissus colorés admirés par Acuña (1638)</li>
+          </ul>
+        </div>
+        <div class="card card-in d2 deck-portrait__card" data-src-id="m2-omagua-destruction" data-src="D. Ribeiro &amp; M. Wise, 1978 · J. Regan, 1993">
+          <div class="deck-portrait__card-title">Après le contact</div>
+          <ul class="deck-portrait__list">
+            <li>15 000 en 1645 → chute (épidémies, esclavage)</li>
+            <li>Révolte 1709, puis armada du Pará (1710)</li>
+            <li>40 pueblos du P. Fritz détruits · ~3 500 restants</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- ===== S12 PÉTROLE MARAÑÓN ===== -->
-  <section data-label="12 · Pétrole et Marañón" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S12 IKÍITU ===== -->
+  <section data-label="12 · Les Ikíitu" class="deck-portrait deck-portrait--repere">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--green-forest);">01 · Qui vivait en Amazonie</div>
-    <div class="topbar" style="background:var(--green-leaf);"></div>
-    <h1 class="h" style="color:var(--terracotta); font-size:var(--fs-3); margin: 22px 0 24px;">Le pétrole et le Marañón : 50 ans de pollution</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">L'oléoduc Norperuano (OCP)</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Construit en 1974 par Petroperú, il traverse le territoire kukama sur +1 000 km. +190 déversements : un tous les 2,5 mois en moyenne.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Lote 192 : le plus controversé</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Plus grand champ pétrolier actif du Pérou. Taux anormaux de plomb, cadmium et baryum chez les communautés kukama et achuar.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image19.jpeg" class="imground photo-in d1" style="width:100%; height:620px;" alt="Oléoduc Norperuano en territoire kukama"></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Impact sanitaire</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Étude Minsa 2016 : 98 % des enfants kukama testés dépassent les seuils OMS en métaux lourds. La pêche contaminée reste la seule option.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Lenteur et impunité</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Remédiations lentes ou inexistantes. L'État péruvien condamné en 2023 par la Cour Interaméricaine des Droits de l'Homme.</div></div></div></div>
+    <div class="topbar"></div>
+    <div class="deck-portrait__head">
+      <p class="deck-eyebrow deck-eyebrow--repere"><span class="deck-eyebrow__kicker">Repère historique</span><span class="deck-eyebrow__sep" aria-hidden="true"></span><span class="deck-eyebrow__meta">lien Iquitos</span></p>
+      <h1 class="h deck-portrait__title" style="color:var(--green-forest);">Les Ikíitu : les premiers habitants d'Iquitos</h1>
+      <p class="deck-portrait__hook">Ce peuple donne son nom à la capitale du Loreto.</p>
+    </div>
+    <div class="deck-portrait__body">
+      <div class="deck-portrait__media"><img src="images/ch01-s12-ikitu.webp" class="imground photo-in d1" alt="Communauté ikíitu du bassin du Nanay"></div>
+      <div class="deck-portrait__cards">
+        <div class="card card-in d1 deck-portrait__card">
+          <div class="deck-portrait__card-title">Territoire &amp; ville</div>
+          <ul class="deck-portrait__list">
+            <li>Bassin Nanay, Pintuyacu, Chambira (~5 000 avant contact)</li>
+            <li>8 missions jésuites (1740-1767)</li>
+            <li>« Caserío de los Iquito » (1789) → Iquitos</li>
+          </ul>
+        </div>
+        <div class="card card-in d2 deck-portrait__card" data-src-id="m2-ikitu-bdpi" data-src="BDPI, Pueblo Ikitu · Mayor &amp; Aparicio, 2009 · C. Beier, 2016">
+          <div class="deck-portrait__card-title">Aujourd'hui</div>
+          <ul class="deck-portrait__list">
+            <li>De 5 000 à ~150 en 1920 (épidémies, caoutchouc)</li>
+            <li>Ikíitu : ~15 locuteurs à San Antonio</li>
+            <li>Revitalisation en cours (Escuela Ikíitu)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- ===== S13 GUARDIANES DEL AGUA ===== -->
-  <section data-label="13 · Guardianes del agua" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S13 KUKAMA · IDENTITÉ ===== -->
+  <section data-label="13 · Kukama · identité" class="deck-portrait deck-portrait--pivot">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--green-forest);">01 · Qui vivait en Amazonie</div>
-    <div class="topbar" style="background:var(--green-leaf);"></div>
-    <h1 class="h" style="color:var(--green-forest); font-size:var(--fs-3); margin: 22px 0 24px;">Guardianes del agua : l'activisme kukama</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">ACODECOSPAT</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Principale organisation kukama. Documente les déversements, accompagne les recours juridiques et porte les demandes de consultation préalable (CLPE).</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Elena Valera Mori</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Voix internationale des peuples fluviaux. A porté le cas kukama devant l'ONU, la CIDH et les médias internationaux.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image20.jpeg" class="imground photo-in d1" style="width:100%; height:330px;" alt="Assemblée kukama"><div style="width:100%;"><img src="images/image21.jpeg" class="imground" style="width:100%; height:130px;" alt="Militant kukama documentant"></div><div class="card" style="background:var(--green-forest);"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« Le Marañón est notre mère. Maintenant c'est nous qui devons le défendre. Nous sommes ses gardiens. »</p><div class="xs" style="color:var(--green-leaf); margin-top:8px;">Elena Valera Mori, dirigeante kukama, ACODECOSPAT (2015)</div></div></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">« La Voz de la Selva »</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Radio communautaire et éducation interculturelle bilingue (EIB) transmettent le kukama et les savoirs ancestraux aux jeunes.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Alliances régionales</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Coalitions avec Achuar, Wampis : personnalité juridique du fleuve, moratoire pétrolier, application stricte du CLPE.</div></div></div></div>
+    <div class="topbar"></div>
+    <div class="deck-portrait__head">
+      <p class="deck-eyebrow deck-eyebrow--pivot"><span class="deck-eyebrow__kicker">Peuple pivot</span><span class="deck-eyebrow__sep" aria-hidden="true"></span><span class="deck-eyebrow__meta">Loreto</span></p>
+      <h1 class="h deck-portrait__title" style="color:var(--green-forest);">Les Kukama-Kukamiria : identité</h1>
+      <p class="deck-portrait__hook">Fil rouge de la formation AKUU — le peuple le plus central sur le terrain.</p>
+    </div>
+    <div class="deck-portrait__body">
+      <div class="deck-portrait__media"><img src="images/image15.jpeg" class="imground photo-in d1 deck-portrait__img--contain" alt="Culture kukama"></div>
+      <div class="deck-portrait__cards">
+        <div class="card card-in d1 deck-portrait__card" data-src-id="m2-kukama-bdpi" data-src="BDPI, Pueblo Kukama Kukamiria · R. Rivas-Ruiz, 2024 · INEI, 2017">
+          <div class="deck-portrait__card-title">Peuple des fleuves</div>
+          <ul class="deck-portrait__list">
+            <li>Marañón, Huallaga, Ucayali, Tigre, Samiria</li>
+            <li>~21 000 personnes (Min. Culture)</li>
+            <li>Vie amphibie sur les llanuras inondables</li>
+          </ul>
+        </div>
+        <div class="card card-in d2 deck-portrait__card">
+          <div class="deck-portrait__card-title">Origines &amp; langue</div>
+          <ul class="deck-portrait__list">
+            <li>Branche tupi, séparés des Omaguas (~XIVᵉ s.)</li>
+            <li>Premier contact espagnol : 1557</li>
+            <li>~1 300 locuteurs · revitalisation depuis 2010</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- ===== S14 MARAÑÓN SUJET DE DROIT ===== -->
-  <section data-label="14 · Le Marañón sujet de droit" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S14 KUKAMA · FLEUVE ===== -->
+  <section data-label="14 · Kukama · fleuve" class="deck-portrait deck-portrait--pivot">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--green-forest);">01 · Qui vivait en Amazonie</div>
-    <div class="topbar" style="background:var(--green-leaf);"></div>
-    <h1 class="h" style="color:var(--green-forest); font-size:var(--fs-3); margin: 22px 0 24px;">Le Marañón, sujet de droit</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">L'arrêt de Loreto (2021)</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Le Marañón reconnu « sujet de droits » : droit à l'existence, à la régénération et à la restauration. Une première péruvienne.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Un modèle global</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Après l'Équateur (Pachamama, 2008), le Whanganui (N.-Zélande, 2017) et l'Atrato (Colombie, 2016) : les fleuves reçoivent une personnalité juridique.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image22.jpeg" class="imground photo-in d1" style="width:100%; height:620px;" alt="Le Marañón au lever du soleil"></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Extraction vs conservation</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Le Marañón traverse de nombreux blocs pétroliers. Les Kukama demandent un moratoire et l'application du CLPE.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Espoir et fragilité</b><div class="xs" style="color:var(--night-2); margin-top:5px;">L'arrêt reste partiellement inapplicable faute de mécanismes d'exécution. Mais un précédent juridique majeur est créé.</div></div></div></div>
+    <div class="topbar"></div>
+    <div class="deck-portrait__head">
+      <p class="deck-eyebrow deck-eyebrow--pivot"><span class="deck-eyebrow__kicker">Peuple pivot</span><span class="deck-eyebrow__sep" aria-hidden="true"></span><span class="deck-eyebrow__meta">Loreto</span></p>
+      <h1 class="h deck-portrait__title" style="color:var(--green-forest);">Les Kukama : le fleuve vivant</h1>
+      <p class="deck-portrait__hook">Le Marañón n'est pas une ressource : c'est un être sacré et un espace social.</p>
+    </div>
+    <div class="deck-portrait__body">
+      <div class="deck-portrait__media"><img src="images/image22.jpeg" class="imground photo-in d1" alt="Fleuve Marañón"></div>
+      <div class="deck-portrait__cards">
+        <div class="card card-in d1 deck-portrait__card">
+          <div class="deck-portrait__card-title">Cosmologie</div>
+          <ul class="deck-portrait__list">
+            <li>Trois mondes : terrestre, souterrain, aquatique</li>
+            <li><i>Yacuruna</i> : cités sous l'eau des ancêtres</li>
+            <li>Le fleuve a une agence : il guide les rythmes de vie</li>
+          </ul>
+        </div>
+        <div class="card card-in d2 deck-portrait__card" data-src-id="m2-maranon-legalpersonhood" data-src="R. Rivas-Ruiz, Anthropia, 2014 · Earth Law Center, 2024 · Equator Initiative, HKK, 2024">
+          <div class="deck-portrait__card-title">Défense aujourd'hui</div>
+          <ul class="deck-portrait__list">
+            <li>HKK : 29 communautés de femmes kukama</li>
+            <li>Lutte contre les marées noires (Petroperú)</li>
+            <li>2024 : Marañón reconnu sujet de droit (ch. 04)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- ===== S15 TITRE PARTIE 02 ===== -->
-  <section data-label="15 · Partie 02 · Conquête" style="background: var(--role-chapter-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
+  <!-- ===== S15 PEUPLES DU MARAÑÓN ===== -->
+  <section data-label="15 · Peuples du Marañón" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--green-forest);">01 · Qui vivait en Amazonie · Loreto</div>
+    <div class="topbar" style="background:var(--green-leaf);"></div>
+    <div class="deck-slide-intro">
+    <p class="deck-eyebrow deck-eyebrow--fast"><span class="deck-eyebrow__kicker">Portrait rapide</span><span class="deck-eyebrow__sep" aria-hidden="true"></span><span class="deck-eyebrow__meta">Loreto aujourd'hui</span></p>
+    <h1 class="h" style="color:var(--green-forest); font-size:var(--fs-3); margin: 0 0 20px;">Les peuples du Marañón</h1>
+    </div>
+    <div class="deck-carousel" data-deck-carousel style="flex:1; min-height:0;">
+      <div class="deck-carousel__stage">
+        <button type="button" class="deck-carousel__arrow deck-carousel__prev" aria-label="Précédent"></button>
+        <div class="deck-carousel__viewport">
+        <div class="deck-carousel__slide deck-carousel__slide--active">
+          <div class="card deck-ethno-card" style="--card-accent:var(--green-leaf); background:var(--cream); height:100%;">
+            <div class="deck-ethno-card__layout">
+    <div class="deck-ethno-card__media">
+    <img src="images/ch01-s15-wampis.png" class="deck-ethno-card__img imground" alt="Fleuve Marañón, territoire wampis">
+    </div>
+    <div class="deck-ethno-card__main">
+    <div class="deck-ethno-card__head">
+              <div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">PEUPLE</div>
+              <div style="font-family:'Playfair Display',serif; font-size:var(--fs-3); font-weight:700; color:var(--green-forest); margin-top:8px;">Wampis</div>
+              <div class="small" style="color:var(--night-2); margin-top:6px; font-style:italic;">Santiago, Morona et Cenepa</div>
+            </div>
+    <div class="deck-ethno-card__body">
+              <div class="body" style="color:var(--night-2); line-height:1.45;">Pêche, agriculture sur brûlis et chasse le long des affluents du nord du Loreto. En 2015 : première autonomie territoriale indigène du Pérou (GAT Wampis).</div>
+              <div class="small" data-src-id="m2-awajun-wampis-bdpi" data-src="Instituto del Bien Común, Pueblo Wampis, 2015" style="color:var(--night-2); line-height:1.4;"><b style="color:var(--green-forest);">Aujourd'hui.</b> ~15 000 Wampis. Alliés des Kukama sur le pétrole et le CLPE. Peuple partagé avec l'Équateur.</div>
+    </div>
+  </div>
+  </div>
+          </div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card deck-ethno-card" style="--card-accent:var(--green-leaf); background:var(--cream); height:100%;">
+            <div class="deck-ethno-card__layout">
+    <div class="deck-ethno-card__media">
+    <img src="images/ch01-s15-candoshi-shapra.jpg" class="deck-ethno-card__img imground" alt="Forêt amazonienne, Alto Marañón">
+    </div>
+    <div class="deck-ethno-card__main">
+    <div class="deck-ethno-card__head">
+              <div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">PEUPLE</div>
+              <div style="font-family:'Playfair Display',serif; font-size:var(--fs-3); font-weight:700; color:var(--green-forest); margin-top:8px;">Candoshi-Shapra</div>
+              <div class="small" style="color:var(--night-2); margin-top:6px; font-style:italic;">Alto Marañón</div>
+            </div>
+    <div class="deck-ethno-card__body">
+              <div class="body" style="color:var(--night-2); line-height:1.45;">Langue isolée, société à clans. Chasse, pêche et agriculture (yuca, plantain). Contact extérieur tardif, peintures corporelles rituelles.</div>
+              <div class="small" data-src-id="m2-awajun-wampis-bdpi" data-src="BDPI, Pueblo Candoshi-Shapra" style="color:var(--night-2); line-height:1.4;"><b style="color:var(--green-forest);">Aujourd'hui.</b> ~2 500 personnes. Communautés de Pacatuba et San Fernando ; pression du logging.</div>
+    </div>
+  </div>
+  </div>
+          </div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card deck-ethno-card" style="--card-accent:var(--green-leaf); background:var(--cream); height:100%;">
+            <div class="deck-ethno-card__layout">
+    <div class="deck-ethno-card__media">
+    <img src="images/ch01-s15-awajun.jpg" class="deck-ethno-card__img imground" alt="Rivière Marañón, territoire awajún">
+    </div>
+    <div class="deck-ethno-card__main">
+    <div class="deck-ethno-card__head">
+              <div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">PEUPLE</div>
+              <div style="font-family:'Playfair Display',serif; font-size:var(--fs-3); font-weight:700; color:var(--green-forest); margin-top:8px;">Awajún</div>
+              <div class="small" style="color:var(--night-2); margin-top:6px; font-style:italic;">Marañón, Cenepa, Morona et Nieva</div>
+            </div>
+    <div class="deck-ethno-card__body">
+              <div class="body" style="color:var(--night-2); line-height:1.45;">2ᵉ peuple indigène du Pérou (jívaro). Chasse, pêche, chacra de yuca. Longue rivalité avec les Wampis, puis alliances. Langue agglutinante (ex-aguaruna).</div>
+              <div class="small" data-src-id="m2-awajun-wampis-bdpi" data-src="BDPI, Pueblo Awajún · M. Brown, Aguaruna, 1984" style="color:var(--night-2); line-height:1.4;"><b style="color:var(--green-forest);">Aujourd'hui.</b> ~55 000 personnes, dont 42 communautés au Loreto. Acteurs du Baguazo (2009).</div>
+    </div>
+  </div>
+  </div>
+          </div>
+        </div>
+        </div>
+        <button type="button" class="deck-carousel__arrow deck-carousel__next" aria-label="Suivant"></button>
+      </div>
+      <div class="deck-carousel__nav"><div class="deck-carousel__dots"><button type="button" class="deck-carousel__dot deck-carousel__dot--active" aria-selected="true" aria-label="Wampis"></button><button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Candoshi"></button><button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Awajún"></button></div></div>
+    </div>
+  </section>
+
+  <!-- ===== S16 PEUPLES DE L'UCAYALI ===== -->
+  <section data-label="16 · Peuples de l'Ucayali" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--green-forest);">01 · Qui vivait en Amazonie · Loreto</div>
+    <div class="topbar" style="background:var(--green-leaf);"></div>
+    <div class="deck-slide-intro">
+    <p class="deck-eyebrow deck-eyebrow--fast"><span class="deck-eyebrow__kicker">Portrait rapide</span><span class="deck-eyebrow__sep" aria-hidden="true"></span><span class="deck-eyebrow__meta">Loreto aujourd'hui</span></p>
+    <h1 class="h" style="color:var(--green-forest); font-size:var(--fs-3); margin: 0 0 20px;">Les peuples de l'Ucayali</h1>
+    </div>
+    <div class="deck-carousel" data-deck-carousel style="flex:1; min-height:0;">
+      <div class="deck-carousel__stage">
+        <button type="button" class="deck-carousel__arrow deck-carousel__prev" aria-label="Précédent"></button>
+        <div class="deck-carousel__viewport">
+        <div class="deck-carousel__slide deck-carousel__slide--active">
+          <div class="card deck-ethno-card" style="--card-accent:var(--green-leaf); background:var(--cream); height:100%;">
+            <div class="deck-ethno-card__layout">
+    <div class="deck-ethno-card__media">
+    <img src="images/ch01-s16-shipibo-konibo.jpg" class="deck-ethno-card__img imground" alt="Art shipibo-konibo">
+    </div>
+    <div class="deck-ethno-card__main">
+    <div class="deck-ethno-card__head">
+              <div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">PEUPLE</div>
+              <div style="font-family:'Playfair Display',serif; font-size:var(--fs-3); font-weight:700; color:var(--green-forest); margin-top:8px;">Shipibo-Konibo</div>
+              <div class="small" style="color:var(--night-2); margin-top:6px; font-style:italic;">Bassin de l'Ucayali</div>
+            </div>
+    <div class="deck-ethno-card__body">
+              <div class="body" style="color:var(--night-2); line-height:1.45;">Célèbres pour le <i>kené</i> (motifs géométriques), l'ayahuasca et la pharmacopée. Chacra, pêche, artisanat. Langue pano, communauté (<i>jono</i>).</div>
+              <div class="small" data-src-id="m2-ucayali-bdpi" data-src="A. Gebissa-Fultz, Shipibo-Konibo, 2015" style="color:var(--night-2); line-height:1.4;"><b style="color:var(--green-forest);">Aujourd'hui.</b> ~35 000 personnes à Pucallpa et Yarinacocha. Art kené reconnu internationalement.</div>
+    </div>
+  </div>
+  </div>
+          </div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card deck-ethno-card" style="--card-accent:var(--green-leaf); background:var(--cream); height:100%;">
+            <div class="deck-ethno-card__layout">
+    <div class="deck-ethno-card__media">
+    <img src="images/ch01-s16-ashaninka.webp" class="deck-ethno-card__img imground" alt="Communauté asháninka">
+    </div>
+    <div class="deck-ethno-card__main">
+    <div class="deck-ethno-card__head">
+              <div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">PEUPLE</div>
+              <div style="font-family:'Playfair Display',serif; font-size:var(--fs-3); font-weight:700; color:var(--green-forest); margin-top:8px;">Asháninka</div>
+              <div class="small" style="color:var(--night-2); margin-top:6px; font-style:italic;">Haut Perené, Tambo et Ene</div>
+            </div>
+    <div class="deck-ethno-card__body">
+              <div class="body" style="color:var(--night-2); line-height:1.45;">Plus grand peuple arawak du Pérou (~55 000). Semi-sédentaires : chacra, chasse, pêche. Résistance historique aux missions et à la colonisation.</div>
+              <div class="small" data-src-id="m2-ucayali-bdpi" data-src="CVR, Informe Final, 2003" style="color:var(--night-2); line-height:1.4;"><b style="color:var(--green-forest);">Aujourd'hui.</b> Victimes majeures du Sentier Lumineux. Défense territoriale via AIDESEP, cacao familial.</div>
+    </div>
+  </div>
+  </div>
+          </div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card deck-ethno-card" style="--card-accent:var(--green-leaf); background:var(--cream); height:100%;">
+            <div class="deck-ethno-card__layout">
+    <div class="deck-ethno-card__media">
+    <img src="images/image20.jpeg" class="deck-ethno-card__img imground" alt="Forêt de l'Ucayali, territoire amahuaca">
+    </div>
+    <div class="deck-ethno-card__main">
+    <div class="deck-ethno-card__head">
+              <div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">PEUPLE</div>
+              <div style="font-family:'Playfair Display',serif; font-size:var(--fs-3); font-weight:700; color:var(--green-forest); margin-top:8px;">Amahuaca</div>
+              <div class="small" style="color:var(--night-2); margin-top:6px; font-style:italic;">Purús, Sepahua et Inuya</div>
+            </div>
+    <div class="deck-ethno-card__body">
+              <div class="body" style="color:var(--night-2); line-height:1.45;">Langue pano. Chasse, arc et sarbacane, chacra en forêt dense. Repoussés vers l'est par les Shipibo et le boom du caoutchouc (XIXᵉ s.).</div>
+              <div class="small" data-src-id="m2-ucayali-bdpi" data-src="BDPI, Pueblo Amahuaca" style="color:var(--night-2); line-height:1.4;"><b style="color:var(--green-forest);">Aujourd'hui.</b> ~4 600 personnes (Purús, Atalaya). Présence aussi en province de l'Ucayali (Loreto). Langue vitale.</div>
+    </div>
+  </div>
+  </div>
+          </div>
+        </div>
+        </div>
+        <button type="button" class="deck-carousel__arrow deck-carousel__next" aria-label="Suivant"></button>
+      </div>
+      <div class="deck-carousel__nav"><div class="deck-carousel__dots"><button type="button" class="deck-carousel__dot deck-carousel__dot--active" aria-selected="true" aria-label="Shipibo"></button><button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Asháninka"></button><button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Amahuaca"></button></div></div>
+    </div>
+  </section>
+  <!-- ===== S17 PEUPLES DE L'AMAZONE ===== -->
+  <section data-label="17 · Peuples de l'Amazone" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--green-forest);">01 · Qui vivait en Amazonie · Loreto</div>
+    <div class="topbar" style="background:var(--green-leaf);"></div>
+    <div class="deck-slide-intro">
+    <p class="deck-eyebrow deck-eyebrow--fast"><span class="deck-eyebrow__kicker">Portrait rapide</span><span class="deck-eyebrow__sep" aria-hidden="true"></span><span class="deck-eyebrow__meta">Loreto aujourd'hui</span></p>
+    <h1 class="h" style="color:var(--green-forest); font-size:var(--fs-3); margin: 0 0 20px;">Les peuples de l'Amazone supérieur</h1>
+    </div>
+    <div class="deck-carousel" data-deck-carousel style="flex:1; min-height:0;">
+      <div class="deck-carousel__stage">
+        <button type="button" class="deck-carousel__arrow deck-carousel__prev" aria-label="Précédent"></button>
+        <div class="deck-carousel__viewport">
+        <div class="deck-carousel__slide deck-carousel__slide--active">
+          <div class="card deck-ethno-card" style="--card-accent:var(--green-leaf); background:var(--cream); height:100%;">
+            <div class="deck-ethno-card__layout">
+    <div class="deck-ethno-card__media">
+    <img src="images/ch01-s17-ticuna.jpg" class="deck-ethno-card__img imground" alt="Amazone supérieur, territoire ticuna">
+    </div>
+    <div class="deck-ethno-card__main">
+    <div class="deck-ethno-card__head">
+              <div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">PEUPLE</div>
+              <div style="font-family:'Playfair Display',serif; font-size:var(--fs-3); font-weight:700; color:var(--green-forest); margin-top:8px;">Ticuna</div>
+              <div class="small" style="color:var(--night-2); margin-top:6px; font-style:italic;">Tri-frontière Pérou-Colombie-Brésil</div>
+            </div>
+    <div class="deck-ethno-card__body">
+              <div class="body" style="color:var(--night-2); line-height:1.45;">Caballococha et Santa Rosa. Plumes, céramique, chacra de manioc. Langue tukano. Commerce fluvial historique entre nations riveraines.</div>
+              <div class="small" data-src-id="m2-maijuna-es2019" data-src="C. Nimuendajú, The Tukuna, 1952" style="color:var(--night-2); line-height:1.4;"><b style="color:var(--green-forest);">Aujourd'hui.</b> ~7 000 au Pérou (~50 000 tri-national). Écoles bilingues, artisanat et pêche.</div>
+    </div>
+  </div>
+  </div>
+          </div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card deck-ethno-card" style="--card-accent:var(--green-leaf); background:var(--cream); height:100%;">
+            <div class="deck-ethno-card__layout">
+    <div class="deck-ethno-card__media">
+    <img src="images/ch01-s17-yagua.jpeg" class="deck-ethno-card__img imground" alt="Motifs de peinture faciale yagua">
+    </div>
+    <div class="deck-ethno-card__main">
+    <div class="deck-ethno-card__head">
+              <div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">PEUPLE</div>
+              <div style="font-family:'Playfair Display',serif; font-size:var(--fs-3); font-weight:700; color:var(--green-forest); margin-top:8px;">Yagua</div>
+              <div class="small" style="color:var(--night-2); margin-top:6px; font-style:italic;">Moyen Amazone et Putumayo</div>
+            </div>
+    <div class="deck-ethno-card__body">
+              <div class="body" style="color:var(--night-2); line-height:1.45;">Sarbacane, peinture faciale, chasse et pêche en várzea. Langue isolée (yagua). Décrits dès l'époque coloniale, commerce fluvial avec Iquitos.</div>
+              <div class="small" data-src-id="m2-maijuna-es2019" data-src="I. Bellier, Les Yagua, SELAF, 1994" style="color:var(--night-2); line-height:1.4;"><b style="color:var(--green-forest);">Aujourd'hui.</b> ~6 000 personnes. Rencontrables près d'Iquitos et sur le Moyen Amazone.</div>
+    </div>
+  </div>
+  </div>
+          </div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card deck-ethno-card" style="--card-accent:var(--green-leaf); background:var(--cream); height:100%;">
+            <div class="deck-ethno-card__layout">
+    <div class="deck-ethno-card__media">
+    <img src="images/ch01-s17-maijuna.jpg" class="deck-ethno-card__img imground" alt="Forêt du Napo, territoire maijuna">
+    </div>
+    <div class="deck-ethno-card__main">
+    <div class="deck-ethno-card__head">
+              <div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">PEUPLE</div>
+              <div style="font-family:'Playfair Display',serif; font-size:var(--fs-3); font-weight:700; color:var(--green-forest); margin-top:8px;">Maijuna (Maihuna)</div>
+              <div class="small" style="color:var(--night-2); margin-top:6px; font-style:italic;">Rivière Sucusari, bassin du Napo</div>
+            </div>
+    <div class="deck-ethno-card__body">
+              <div class="body" style="color:var(--night-2); line-height:1.45;">Contact jésuite dès 1682. Décimés par épidémies et caoutchouc. Peuple forestier du Napo : chasse, pêche, pharmacopée, transmission orale fragile.</div>
+              <div class="small" data-src-id="m2-maijuna-es2019" data-src="Environment &amp; Society, The Maijuna, 2019" style="color:var(--night-2); line-height:1.4;"><b style="color:var(--green-forest);">Aujourd'hui.</b> &lt;500 personnes en 4 communautés (Sucusari). Lutte pour une aire de conservation et contre les routes.</div>
+    </div>
+  </div>
+  </div>
+          </div>
+        </div>
+        </div>
+        <button type="button" class="deck-carousel__arrow deck-carousel__next" aria-label="Suivant"></button>
+      </div>
+      <div class="deck-carousel__nav"><div class="deck-carousel__dots"><button type="button" class="deck-carousel__dot deck-carousel__dot--active" aria-selected="true" aria-label="Ticuna"></button><button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Yagua"></button><button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Maijuna"></button></div></div>
+    </div>
+  </section>
+
+  <!-- ===== S18 PEUPLES DE L'ORIENTE ===== -->
+  <section data-label="18 · Peuples de l'Oriente" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--green-forest);">01 · Qui vivait en Amazonie · Loreto</div>
+    <div class="topbar" style="background:var(--green-leaf);"></div>
+    <div class="deck-slide-intro">
+    <p class="deck-eyebrow deck-eyebrow--fast"><span class="deck-eyebrow__kicker">Portrait rapide</span><span class="deck-eyebrow__sep" aria-hidden="true"></span><span class="deck-eyebrow__meta">Loreto aujourd'hui</span></p>
+    <h1 class="h" style="color:var(--green-forest); font-size:var(--fs-3); margin: 0 0 20px;">Les peuples de l'Oriente et du Putumayo</h1>
+    </div>
+    <div class="deck-carousel" data-deck-carousel style="flex:1; min-height:0;">
+      <div class="deck-carousel__stage">
+        <button type="button" class="deck-carousel__arrow deck-carousel__prev" aria-label="Précédent"></button>
+        <div class="deck-carousel__viewport">
+        <div class="deck-carousel__slide deck-carousel__slide--active">
+          <div class="card deck-ethno-card" style="--card-accent:var(--green-leaf); background:var(--cream); height:100%;">
+            <div class="deck-ethno-card__layout">
+    <div class="deck-ethno-card__media">
+    <img src="images/ch01-s18-ashuar.jpg" class="deck-ethno-card__img imground" alt="Forêt de l'Oriente, territoire achuar">
+    </div>
+    <div class="deck-ethno-card__main">
+    <div class="deck-ethno-card__head">
+              <div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">PEUPLE</div>
+              <div style="font-family:'Playfair Display',serif; font-size:var(--fs-3); font-weight:700; color:var(--green-forest); margin-top:8px;">Ashuar</div>
+              <div class="small" style="color:var(--night-2); margin-top:6px; font-style:italic;">Oriente péruvien</div>
+            </div>
+    <div class="deck-ethno-card__body">
+              <div class="body" style="color:var(--night-2); line-height:1.45;">Peuple jívaro : la <i>wasí</i> (maison) est l'unité sociale. Jardin-forêt, cosmologie animiste (Descola). Résistance à l'extraction pétrolière (Lote 192).</div>
+              <div class="small" data-src-id="m2-matses-bdpi" data-src="P. Descola, La nature et la société, 1986" style="color:var(--night-2); line-height:1.4;"><b style="color:var(--green-forest);">Aujourd'hui.</b> Présence forte dans l'oriente du Loreto. FECONACO, alliances avec les Kukama.</div>
+    </div>
+  </div>
+  </div>
+          </div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card deck-ethno-card" style="--card-accent:var(--green-leaf); background:var(--cream); height:100%;">
+            <div class="deck-ethno-card__layout">
+    <div class="deck-ethno-card__media">
+    <img src="images/ch01-s18-matses.jpg" class="deck-ethno-card__img imground" alt="Forêt amazonienne, territoire matsés">
+    </div>
+    <div class="deck-ethno-card__main">
+    <div class="deck-ethno-card__head">
+              <div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">PEUPLE</div>
+              <div style="font-family:'Playfair Display',serif; font-size:var(--fs-3); font-weight:700; color:var(--green-forest); margin-top:8px;">Matsés</div>
+              <div class="small" style="color:var(--night-2); margin-top:6px; font-style:italic;">Frontière brésilienne (Yaquerana)</div>
+            </div>
+    <div class="deck-ethno-card__body">
+              <div class="body" style="color:var(--night-2); line-height:1.45;">Contact tardif (1969-1974). Chasse, tatouages faciaux, pharmacopée forestière. Langue pano (Mayoruna). Réputation de guerriers redoutables.</div>
+              <div class="small" data-src-id="m2-matses-bdpi" data-src="W. Romanoff, Matses, 1984" style="color:var(--night-2); line-height:1.4;"><b style="color:var(--green-forest);">Aujourd'hui.</b> ~2 200 personnes. Pression du logging et de l'orpaillage ; territoire revendiqué (ROMP).</div>
+    </div>
+  </div>
+  </div>
+          </div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card deck-ethno-card" style="--card-accent:var(--green-leaf); background:var(--cream); height:100%;">
+            <div class="deck-ethno-card__layout">
+    <div class="deck-ethno-card__media">
+    <img src="images/ch01-s18-huitoto.jpg" class="deck-ethno-card__img imground" alt="Putumayo, mémoire du caoutchouc">
+    </div>
+    <div class="deck-ethno-card__main">
+    <div class="deck-ethno-card__head">
+              <div class="xs" style="color:var(--green-leaf); font-weight:800; letter-spacing:2px;">PEUPLE</div>
+              <div style="font-family:'Playfair Display',serif; font-size:var(--fs-3); font-weight:700; color:var(--green-forest); margin-top:8px;">Huitoto (Witoto)</div>
+              <div class="small" style="color:var(--night-2); margin-top:6px; font-style:italic;">Bassin du Putumayo</div>
+            </div>
+    <div class="deck-ethno-card__body">
+              <div class="body" style="color:var(--night-2); line-height:1.45;">Malocas collectives, chefferie, commerce inter-ethnique. L'une des populations les plus décimées par le boom du caoutchouc (chapitre 03).</div>
+              <div class="small" data-src-id="m2-matses-bdpi" data-src="P. Iglesias, La memoria negada del caucho, 2011" style="color:var(--night-2); line-height:1.4;"><b style="color:var(--green-forest);">Aujourd'hui.</b> Communautés reconnues dans le Putumayo péruvien. Reconstruction identitaire en cours.</div>
+    </div>
+  </div>
+  </div>
+          </div>
+        </div>
+        </div>
+        <button type="button" class="deck-carousel__arrow deck-carousel__next" aria-label="Suivant"></button>
+      </div>
+      <div class="deck-carousel__nav"><div class="deck-carousel__dots"><button type="button" class="deck-carousel__dot deck-carousel__dot--active" aria-selected="true" aria-label="Ashuar"></button><button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Matsés"></button><button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Huitoto"></button></div></div>
+    </div>
+  </section>
+
+  <!-- ===== S19 URARINA ===== -->
+  <section data-label="19 · Les Urarina" style="background:var(--green-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--green-forest);">01 · Qui vivait en Amazonie · Loreto</div>
+    <div class="topbar" style="background:var(--green-leaf);"></div>
+    <div class="deck-slide-intro">
+    <p class="deck-eyebrow deck-eyebrow--cas"><span class="deck-eyebrow__kicker">Cas singulier</span><span class="deck-eyebrow__sep" aria-hidden="true"></span><span class="deck-eyebrow__meta">langue isolée</span></p>
+    <h1 class="h" style="color:var(--green-forest); font-size:var(--fs-3); margin: 0 0 6px;">Les Urarina : un cas unique au Loreto</h1>
+    <p class="deck-subtitle">Langue sans parenté avérée, habitat fluvial singulier — justifie un portrait à part, hors carrousel.</p>
+    </div>
+    <div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" data-src-id="m2-urarina-bdpi" data-src="BDPI · J. Ochoa, Los urarina de la selva peruana, 1993 · L. Olschewski, The Urarina, 2008" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Territoire &amp; langue isolée</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Bassin du Chambira et bas Ucayali (~5 800 personnes). Langue urarina : isolat linguistique sans parenté avérée avec les familles voisines.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Maisons flottantes</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Habitat singulier : villages sur pilotis ou maisons flottantes (<i>banon moo</i>) selon le niveau d'eau. Adaptation fine aux plaines inondables.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/ch01-s19-urarina.jpg" class="imground photo-in d1" style="width:100%; height:620px; object-fit:cover;" alt="Rivière Chambira, territoire urarina"></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Économie &amp; artisanat</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Pêche, chasse, agriculture (yuca, plantain). Célèbres pour les fibres de palmier <i>chambira</i> tressées en hamacs et paniers.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Aujourd'hui</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Communautés de Chambira, Dos de Mayo, Pampa Hermosa. Pression pétrolière et acculturation ; transmission orale encore vivante (Ochoa, Olschewski).</div></div></div></div>
+  </section>
+
+  <!-- ===== S · VIDÉO CITÉS AMAZONIENNES ===== -->
+  <section data-label="20 · Vidéo · Cités amazoniennes" style="background: var(--green-pale); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color: var(--green-forest);">01 · Qui vivait en Amazonie</div>
+    <div class="topbar" style="background: var(--green-leaf);"></div>
+    <div class="kicker" style="color:var(--green-forest); margin:24px 0 8px;">Vidéo · Nota Bonus</div>
+    <h1 class="h" style="color: var(--green-forest); margin: 0 0 14px; font-size:var(--fs-3); max-width: 1500px;">On a découvert des cités amazoniennes antiques</h1>
+    <p class="lead" style="color:var(--night-2); margin:0 0 28px; max-width: 1500px; font-size: var(--fs-1);">Avant d'entrer dans la conquête : les découvertes récentes confirment que la forêt amazonienne abritait des agglomérations denses bien avant l'arrivée des Européens.</p>
+    <div class="deck-video">
+      <iframe src="https://www.youtube.com/embed/WHRBi7XOJz8?start=697" title="On a découvert des Cités Amazoniennes antiques ! · Nota Bonus" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
+    </div>
+    <p class="small" style="color:var(--night-2); margin:18px 0 0; font-style:italic;">Source : <a href="https://www.youtube.com/watch?v=WHRBi7XOJz8&t=697s" style="color:var(--blue-akuu);">Nota Bonus · YouTube</a></p>
+  </section>
+  <!-- ===== S20 TITRE PARTIE 02 ===== -->
+  <section data-label="21 · Partie 02 · Conquête" style="background: var(--role-chapter-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="bar" style="background:var(--green-leaf);"></div>
     <div style="font-family:'Playfair Display',serif; font-size:var(--fs-6); font-weight:800; color:rgba(166,198,57,0.16); position:absolute; top:40px; right:90px;">02</div>
@@ -231,48 +758,135 @@
     <div class="small" style="color:var(--green-pale); margin-top:12px;">,  J.V. San Román, 1994</div>
   </section>
 
-  <!-- ===== S16 ORELLANA ===== -->
-  <section data-label="16 · Francisco de Orellana" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S21 ORELLANA ===== -->
+  <section data-label="22 · Francisco de Orellana" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--blue-akuu);">02 · La Conquête et les Missions</div>
     <div class="topbar" style="background:var(--blue-akuu);"></div>
-    <h1 class="h" style="color:var(--blue-akuu); font-size:var(--fs-3); margin: 22px 0 24px;">Francisco de Orellana : la première traversée (1541–1542)</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--blue-akuu); font-size:var(--fs-1);">La séparation d'avec Pizarro</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Envoyé en avant-garde (déc. 1541) chercher des vivres, le courant l'empêche de remonter. Il continue vers l'est ; Pizarro le dit déserteur.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--blue-akuu); font-size:var(--fs-1);">La navigation</b><div class="xs" style="color:var(--night-2); margin-top:5px;">L'équipe construit le « San Pedro », descend le Napo puis le grand fleuve. Orellana apprend plusieurs langues : clé de survie.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image25.jpeg" class="imground photo-in d1" style="width:100%; height:620px; object-fit:contain; background:var(--cream); padding:8px;" alt="Francisco de Orellana (timbre)"></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--blue-akuu); font-size:var(--fs-1);">Gaspar de Carvajal</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Le dominicain rédige la « Relación » (1542) : première description de l'Amazonie, indispensable mais partiale.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--blue-akuu); font-size:var(--fs-1);">Arrivée à l'Atlantique (août 1542)</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Puis Cubagua (Venezuela). Orellana repart en Espagne, revient et meurt en 1546 dans le delta, sans coloniser la région.</div></div></div></div>
+    <h1 class="h" data-src-id="m2-orellana-sanroman" data-src="J.V. San Román, Perfiles Históricos de la Amazonía Peruana, 1994 · José A. del Busto, Francisco de Orellana · Gaspar de Carvajal, Relación, 1542" style="color:var(--blue-akuu); font-size:var(--fs-3); margin: 22px 0 18px;">Francisco de Orellana : la première traversée (1539–1542)</h1>
+    <div class="card" style="background:var(--blue-akuu); margin-bottom:18px; flex-shrink:0; padding:22px 28px 26px;">
+      <div class="xs" style="color:var(--ochre); font-weight:800; letter-spacing:2px; margin-bottom:14px;">FRISE · 5 ÉTAPES CLÉS</div>
+      <div class="deck-timeline" style="--deck-timeline-cols:5;">
+        <div class="deck-timeline__years">
+          <div>1539</div>
+          <div>1540</div>
+          <div>1541</div>
+          <div>Fév. 42</div>
+          <div>Sept. 42</div>
+        </div>
+        <div class="deck-timeline__rail">
+          <div class="deck-timeline__line"></div>
+          <div class="deck-timeline__dots">
+            <span class="deck-timeline__dot"></span>
+            <span class="deck-timeline__dot"></span>
+            <span class="deck-timeline__dot"></span>
+            <span class="deck-timeline__dot"></span>
+            <span class="deck-timeline__dot"></span>
+          </div>
+        </div>
+        <div class="deck-timeline__descs">
+          <div class="xs" style="color:var(--cream);">Départ de Quito<br><b>640 soldats + 4 000 indios</b></div>
+          <div class="xs" style="color:var(--cream);">Cordillère &amp; Quijos<br><b>Zumaco · 2 mois</b></div>
+          <div class="xs" style="color:var(--cream);">Baeza · lanchón<br><b>Orellana + 57 hommes</b></div>
+          <div class="xs" style="color:var(--cream);">12 fév. · Amazonas<br><b>accueil amical</b></div>
+          <div class="xs" style="color:var(--cream);">Putumayo · mer<br><b>île Trinidad</b></div>
+        </div>
+      </div>
+    </div>
+    <div class="deck-carousel" data-deck-carousel style="flex:1; min-height:0;">
+      <div class="deck-carousel__stage">
+        <button type="button" class="deck-carousel__arrow deck-carousel__prev" aria-label="Précédent"></button>
+        <div class="deck-carousel__viewport">
+        <div class="deck-carousel__slide deck-carousel__slide--active">
+          <div class="card" style="--card-accent:var(--blue-akuu); background:var(--cream); height:100%; display:flex; flex-direction:column; padding:32px;"><div class="xs" style="color:var(--blue-akuu); font-weight:800; letter-spacing:2px;">1 · DÉPART</div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--blue-akuu); margin:10px 0 14px;">Gonzalo Pizarro part de Quito</div><div class="body" style="color:var(--night-2); flex:1;">Francisco Pizarro envoie son frère Gonzalo à la recherche des richesses du pays de Quijos et de la Canela. <b>Noël 1539</b> : ~640 soldats et plus de <b>4 000 indigènes</b> de portage quittent Quito.</div></div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card" style="--card-accent:var(--blue-akuu); background:var(--cream); height:100%; display:flex; flex-direction:column; padding:32px;"><div class="xs" style="color:var(--blue-akuu); font-weight:800; letter-spacing:2px;">2 · CALVAIRE</div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--blue-akuu); margin:10px 0 14px;">Cordillère, froid et pertes</div><div class="body" style="color:var(--night-2); flex:1;">Séisme, tempête, passage de la cordillère nevada : morts, désertions, bétail perdu. Les pertes touchent surtout les <b>indigènes porteurs</b>. Halte de <b>2 mois à Zumaco</b> pour se reposer.</div></div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card" style="--card-accent:var(--blue-akuu); background:var(--cream); height:100%; display:flex; flex-direction:column; padding:32px;"><div class="xs" style="color:var(--blue-akuu); font-weight:800; letter-spacing:2px;">3 · MISSION</div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--blue-akuu); margin:10px 0 14px;">Orellana part seul vers l'est</div><div class="body" style="color:var(--night-2); flex:1;">À <b>Baeza</b> (fleuve Quijos), construction d'un lanchón. Gonzalo envoie <b>Orellana + 57 soldats</b> chercher vivres et s'orienter. <b>10 janv. 1542</b> : rencontre amicale. <b>12 fév.</b> : entrée dans l'Amazonas.</div></div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card" style="--card-accent:var(--blue-akuu); background:var(--cream); height:100%; display:flex; flex-direction:column; padding:32px;"><div class="xs" style="color:var(--blue-akuu); font-weight:800; letter-spacing:2px;">4 · DESCENTE</div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--blue-akuu); margin:10px 0 14px;">De l'accueil à la guerre</div><div class="body" style="color:var(--night-2); flex:1;">Accueil cordial sur le Napo et à <b>Aparia</b> (~Pevas), 2 mois de halte. À la <b>bouche du Putumayo</b> : attaques en chaîne jusqu'à la mer. Combat au Yamunda (les « Amazones » de Carvajal). <b>Trinidad</b>, fin août 1542.</div><div class="small" style="color:var(--night-2); margin-top:14px;"><b style="color:var(--blue-akuu);">Pourquoi le changement ?</b> Faute des Espagnols ? Confusion avec une tribu ennemie ? Mémoire de violences passées ?</div></div>
+        </div>
+        </div>
+        <button type="button" class="deck-carousel__arrow deck-carousel__next" aria-label="Suivant"></button>
+      </div>
+      <div class="deck-carousel__nav">
+        <div class="deck-carousel__dots">
+          <button type="button" class="deck-carousel__dot deck-carousel__dot--active" aria-selected="true" aria-label="Départ"></button>
+          <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Calvaire"></button>
+          <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Mission"></button>
+          <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Descente"></button>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- ===== S17 CARVAJAL ===== -->
-  <section data-label="17 · La Relación de Carvajal" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S22 CARVAJAL ===== -->
+  <section data-label="23 · La Relación de Carvajal" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--blue-akuu);">02 · La Conquête et les Missions</div>
     <div class="topbar" style="background:var(--blue-akuu);"></div>
-    <h1 class="h" style="color:var(--blue-akuu); font-size:var(--fs-3); margin: 22px 0 24px;">La Relación de Carvajal : témoignage, mémoire et mythe</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--blue-akuu); font-size:var(--fs-1);">Des rives densément peuplées</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Villages contigus sur des centaines de km, marchés, routes. L'archéologie (terra preta, LIDAR) valide l'essentiel.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--blue-akuu); font-size:var(--fs-1);">Omagua, Aparia, Machiparo</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Les Omagua décrits comme la nation la plus évoluée : céramique fine, coton, grandes maisons. Décimés avant la fin du XVIIᵉ s.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image26.jpeg" class="imground photo-in d1" style="width:100%; height:430px; object-fit:contain; background:var(--cream); padding:8px;" alt="Page manuscrite de la Relación (1542)"><div class="card" style="background:var(--blue-akuu);"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« Et nous avons vu des cités qui brillaient de blancheur, et d'innombrables gens sur les rives, des milliers. »</p><div class="xs" style="color:var(--blue-pale); margin-top:8px;">Gaspar de Carvajal, Relación del nuevo descubrimiento… (1542)</div></div></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--blue-akuu); font-size:var(--fs-1);">Les « Amazones »</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Carvajal dit avoir vu des femmes combattre, d'où le nom du fleuve. Probable confusion (guerriers aux cheveux longs) ou invention.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--blue-akuu); font-size:var(--fs-1);">Source et piège</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Seule source primaire de 1542. Longtemps négligée, réévaluée depuis 1990 : villes denses confirmées, Amazones non.</div></div></div></div>
+    <h1 class="h" data-src-id="m2-carvajal-relacion" data-src="Gaspar de Carvajal, Relación del nuevo descubrimiento del famoso río Grande, 1542 · J.V. San Román, 1994" style="color:var(--blue-akuu); font-size:var(--fs-3); margin: 22px 0 18px;">La Relación de Carvajal : ce qu'il a vu</h1>
+    <div style="display:flex; gap:22px; flex:1; min-height:0;">
+      <div style="flex:0 0 34%; display:flex; flex-direction:column; gap:14px;">
+        <img src="images/image26.jpeg" class="imground photo-in d1" style="width:100%; flex:1; min-height:200px; object-fit:contain; background:var(--cream); padding:8px;" alt="Page manuscrite de la Relación (1542)">
+        <div class="card" style="background:var(--blue-akuu); flex-shrink:0;"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« Et nous avons vu des cités qui brillaient de blancheur, et d'innombrables gens sur les rives, des milliers. »</p><div class="xs" style="color:var(--blue-pale); margin-top:8px;">Gaspar de Carvajal, Relación (1542)</div></div>
+      </div>
+      <div class="deck-carousel" data-deck-carousel style="flex:1; min-height:0;">
+        <div class="deck-carousel__stage">
+          <button type="button" class="deck-carousel__arrow deck-carousel__prev" aria-label="Précédent"></button>
+          <div class="deck-carousel__viewport">
+          <div class="deck-carousel__slide deck-carousel__slide--active">
+            <div class="card" style="--card-accent:var(--blue-akuu); background:var(--cream); height:100%; display:flex; flex-direction:column; padding:32px;"><div class="xs" style="color:var(--blue-akuu); font-weight:800; letter-spacing:2px;">RIVES PEUPLÉES</div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--blue-akuu); margin:10px 0 14px;">L'Amazonie n'est pas vide</div><div class="body" style="color:var(--night-2); flex:1;">Carvajal décrit des <b>villages contigus</b> sur des centaines de km, des marchés et des routes. L'archéologie (terra preta, LIDAR) confirme aujourd'hui cette densité — contrairement au mythe de la forêt vierge.</div></div>
+          </div>
+          <div class="deck-carousel__slide">
+            <div class="card" style="--card-accent:var(--blue-akuu); background:var(--cream); height:100%; display:flex; flex-direction:column; padding:32px;"><div class="xs" style="color:var(--blue-akuu); font-weight:800; letter-spacing:2px;">PEUPLES</div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--blue-akuu); margin:10px 0 14px;">Omagua, Aparia, Machiparo</div><div class="body" style="color:var(--night-2); flex:1;">Les <b>Omagua</b> : céramique fine, coton, grandes maisons — « la nation la plus évoluée » selon Carvajal. <b>Aparia</b> : halte amicale de 2 mois. Ces peuples seront décimés avant la fin du XVIIᵉ s. (voir ch. 01).</div></div>
+          </div>
+          <div class="deck-carousel__slide">
+            <div class="card" style="--card-accent:var(--blue-akuu); background:var(--cream); height:100%; display:flex; flex-direction:column; padding:32px;"><div class="xs" style="color:var(--blue-akuu); font-weight:800; letter-spacing:2px;">SOURCE &amp; MYTHE</div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--blue-akuu); margin:10px 0 14px;">Indispensable, mais à lire avec prudence</div><div class="body" style="color:var(--night-2); flex:1;">Seule source primaire de 1542. Les <b>« Amazones »</b> du Yamunda : probable confusion ou invention — le nom du fleuve en découle. Réévaluée depuis 1990 : <b>villes denses confirmées</b>, légende des femmes guerrières non.</div></div>
+          </div>
+          </div>
+          <button type="button" class="deck-carousel__arrow deck-carousel__next" aria-label="Suivant"></button>
+        </div>
+        <div class="deck-carousel__nav">
+          <div class="deck-carousel__dots">
+            <button type="button" class="deck-carousel__dot deck-carousel__dot--active" aria-selected="true" aria-label="Rives peuplées"></button>
+            <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Peuples"></button>
+            <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Source et mythe"></button>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- ===== S18 PEDRO DE URSÚA ===== -->
-  <section data-label="18 · Pedro de Ursúa" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S23 PEDRO DE URSÚA ===== -->
+  <section data-label="24 · Pedro de Ursúa" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--blue-akuu);">02 · La Conquête et les Missions</div>
     <div class="topbar" style="background:var(--blue-akuu);"></div>
     <h1 class="h" style="color:var(--blue-akuu); font-size:var(--fs-3); margin: 22px 0 24px;">Pedro de Ursúa : l'expédition d'El Dorado (1559–1561)</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--blue-akuu); font-size:var(--fs-1);">Mandat royal</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Le vice-roi confie à Ursúa la découverte d'« El Dorado ». Objectif réel : éloigner les conquistadors sans emploi, dangereux pour l'ordre colonial.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--blue-akuu); font-size:var(--fs-1);">Départ et navigation</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Descente du Huallaga, puis Ucayali et Amazone. Ursúa emmène sa maîtresse, Doña Inés : décision critiquée. Vivres et tensions.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image27.jpg" class="imground photo-in d1" style="width:100%; height:620px; object-fit:contain; background:var(--cream); padding:8px;" alt="Buste de Pedro de Ursúa (Pamplona, Colombie)"></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--blue-akuu); font-size:var(--fs-1);">Le déclin de l'autorité</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Sans or, la faim et les maladies. Le 1ᵉʳ janvier 1561, Ursúa est assassiné dans son hamac, complot de Lope de Aguirre et Guzmán.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--blue-akuu); font-size:var(--fs-1);">Sources</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Trois chroniques (Vázquez, Monguía, Zúñiga). San Román (1994) et Hemming (2008) en font la synthèse la plus fiable.</div></div></div></div>
   </section>
 
-  <!-- ===== S19 LOPE DE AGUIRRE ===== -->
-  <section data-label="19 · Lope de Aguirre" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S24 LOPE DE AGUIRRE ===== -->
+  <section data-label="25 · Lope de Aguirre" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--blue-akuu);">02 · La Conquête et les Missions</div>
     <div class="topbar" style="background:var(--blue-akuu);"></div>
     <h1 class="h" style="color:var(--blue-akuu); font-size:var(--fs-3); margin: 22px 0 24px;">Lope de Aguirre : la mutinerie et « El Tirano » (1561)</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--blue-akuu); font-size:var(--fs-1);">La prise de pouvoir</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Guzmán proclamé « Prince du Pérou », puis assassiné par Aguirre pour régner seul. La terreur commence à bord.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--blue-akuu); font-size:var(--fs-1);">Violence de masse</b><div class="xs" style="color:var(--night-2); margin-top:5px;">De l'Amazone à l'Orénoque jusqu'à Margarita. ~70 personnes exécutées sur 300 : Espagnols, métis, indigènes suspectés de trahison.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image28.jpeg" class="imground photo-in d1" style="width:100%; height:430px; object-fit:contain; background:#111;" alt="Aguirre, la colère de Dieu (Herzog / Kinski)"><div class="card" style="background:var(--blue-akuu);"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« Moi, Lope de Aguirre… je me dénaturalise de l'Espagne et te déclare la guerre la plus cruelle que nos forces pourront soutenir. »</p><div class="xs" style="color:var(--blue-pale); margin-top:8px;">Lettre à Felipe II, 1561, unique document autographe conservé</div></div></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--blue-akuu); font-size:var(--fs-1);">La lettre à Felipe II</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Renonciation à son allégeance, rage politique réelle, écriture brutale et puissante. Document exceptionnel.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--blue-akuu); font-size:var(--fs-1);">Mort à Barquisimeto (oct. 1561)</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Abandonné par ses hommes, il tue sa propre fille puis est exécuté le 27 octobre 1561. Son corps est démembré.</div></div></div></div>
   </section>
 
-  <!-- ===== S20 MISSIONS JÉSUITES ===== -->
-  <section data-label="20 · Missions jésuites" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S25 MISSIONS JÉSUITES ===== -->
+  <section data-label="26 · Missions jésuites" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--blue-akuu);">02 · La Conquête et les Missions</div>
     <div class="topbar" style="background:var(--blue-akuu);"></div>
     <h1 class="h" style="color:var(--blue-akuu); font-size:var(--fs-3); margin: 22px 0 24px;">Les missions jésuites : réseau et organisation (1604–1769)</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--blue-akuu); font-size:var(--fs-1);">Le système des « réductions »</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Regroupement forcé en pueblos organisés : plan en damier, église centrale, travail agricole. Rupture radicale du mode de vie.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--blue-akuu); font-size:var(--fs-1);">Évangélisation par la langue</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Quechua (lingua franca) et langues locales. Grammaires et catéchismes en Omagua, Tupinambá, Iquito.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image29.jpeg" class="imground photo-in d1" style="width:100%; height:620px; object-fit:contain; background:var(--cream); padding:8px;" alt="Carte de la mission du P. Samuel Fritz (1691)"></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--blue-akuu); font-size:var(--fs-1);">Figures clés</b><div class="xs" style="color:var(--night-2); margin-top:5px;">P. Ferrer (1604), P. Cujía (1645), P. Samuel Fritz (cartographe), P. Maroni, bilingues et défenseurs contre les esclavagistes.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--blue-akuu); font-size:var(--fs-1);">Conflits avec le Brésil portugais</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Bandeirantes attaquent les missions Omagua. 1710 : destruction de 40 pueblos du P. Fritz par 1500 soldats du Pará.</div></div></div></div>
   </section>
 
-  <!-- ===== S21 SAMUEL FRITZ ===== -->
-  <section data-label="21 · P. Samuel Fritz" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S26 SAMUEL FRITZ ===== -->
+  <section data-label="27 · P. Samuel Fritz" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--blue-akuu);">02 · La Conquête et les Missions</div>
     <div class="topbar" style="background:var(--blue-akuu);"></div>
@@ -290,8 +904,8 @@
     </div>
   </section>
 
-  <!-- ===== S22 FRANCISCAINS / EXPULSION ===== -->
-  <section data-label="22 · Franciscains &amp; expulsion 1769" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S27 FRANCISCAINS / EXPULSION ===== -->
+  <section data-label="28 · Franciscains &amp; expulsion 1769" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--blue-akuu);">02 · La Conquête et les Missions</div>
     <div class="topbar" style="background:var(--blue-akuu);"></div>
@@ -300,16 +914,49 @@
       <div class="card" style="background:var(--cream);"><div class="xs" style="color:var(--blue-sky); font-weight:800; letter-spacing:2px;">FRANCISCAINS</div><b style="color:var(--blue-akuu); font-size:var(--fs-1);">Mission dans la Montaña (haute selva)</b><div class="small" style="color:var(--night-2); margin-top:5px;">Approche plus coercitive que les jésuites, escorte militaire fréquente. Zones : Ucayali, Huallaga, Pachitea. Fr. Manuel Biedma martyrisé en 1687 par les Cashibos. Baptême rapide, évangélisation en espagnol.</div></div>
       <div class="card" style="background:var(--cream);"><div class="xs" style="color:var(--terracotta); font-weight:800; letter-spacing:2px;">RÉSISTANCE INDIGÈNE</div><b style="color:var(--terracotta); font-size:var(--fs-1);">Résistances armées &amp; fuites en forêt</b><div class="small" style="color:var(--night-2); margin-top:5px;">Soulèvements : Encabellados (1635, 1666), Omaguas (1709), Lamas (1755). La forêt sert de refuge. Missionnaires tués : P. Ferrer (1611), Fr. Biedma (1687), P. Richter (1695).</div></div>
     </div>
-    <div class="card" style="background:var(--blue-akuu); flex:1;"><div class="xs" style="color:var(--ochre); font-weight:800; letter-spacing:2px; margin-bottom:12px;">L'EXPULSION DES JÉSUITES, 1769 · ROI CARLOS III D'ESPAGNE</div><div style="display:grid; grid-template-columns:repeat(4,1fr); gap:18px;">
-      <div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:800; color:var(--ochre);">1767</div><div class="xs" style="color:var(--cream);">Décret royal : expulsion des jésuites de tous les territoires espagnols</div></div>
-      <div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:800; color:var(--ochre);">1769</div><div class="xs" style="color:var(--cream);">Départ forcé des derniers jésuites d'Amazonie péruvienne</div></div>
-      <div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:800; color:var(--ochre);">1770s</div><div class="xs" style="color:var(--cream);">Effondrement du réseau : missions abandonnées, indigènes dispersés</div></div>
-      <div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:800; color:var(--ochre);">1780s</div><div class="xs" style="color:var(--cream);">Tentatives franciscaines de reprise, résultats limités</div></div>
-    </div></div>
+    <div class="card" style="background:var(--blue-akuu); flex:1; display:flex; flex-direction:column;"><div class="xs" style="color:var(--ochre); font-weight:800; letter-spacing:2px; margin-bottom:12px;">L'EXPULSION DES JÉSUITES, 1769 · ROI CARLOS III D'ESPAGNE</div>
+      <div class="deck-timeline">
+        <div class="deck-timeline__years">
+          <div>1767</div>
+          <div>1769</div>
+          <div>1770s</div>
+          <div>1780s</div>
+        </div>
+        <div class="deck-timeline__rail">
+          <div class="deck-timeline__line"></div>
+          <div class="deck-timeline__dots">
+            <span class="deck-timeline__dot"></span>
+            <span class="deck-timeline__dot"></span>
+            <span class="deck-timeline__dot"></span>
+            <span class="deck-timeline__dot"></span>
+          </div>
+        </div>
+        <div class="deck-timeline__descs">
+          <div class="xs" style="color:var(--cream);">Décret royal : expulsion des jésuites de tous les territoires espagnols</div>
+          <div class="xs" style="color:var(--cream);">Départ forcé des derniers jésuites d'Amazonie péruvienne</div>
+          <div class="xs" style="color:var(--cream);">Effondrement du réseau : missions abandonnées, indigènes dispersés</div>
+          <div class="xs" style="color:var(--cream);">Tentatives franciscaines de reprise, résultats limités</div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- ===== S23 TITRE PARTIE 03 ===== -->
-  <section data-label="23 · Partie 03 · Caoutchouc" style="background: var(--role-chapter-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
+  <!-- ===== S · VIDÉO EXPLORATEURS AMAZONIE ===== -->
+  <section data-label="29 · Vidéo · Premiers explorateurs" style="background:var(--blue-pale); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--blue-akuu);">02 · La Conquête et les Missions</div>
+    <div class="topbar" style="background:var(--blue-akuu);"></div>
+    <div class="kicker" style="color:var(--blue-akuu); margin:24px 0 8px;">Vidéo · Luke Reagan</div>
+    <h1 class="h" style="color:var(--blue-akuu); margin: 0 0 14px; font-size:var(--fs-3); max-width: 1500px;">Les premiers explorateurs de l'Amazonie</h1>
+    <p class="lead" style="color:var(--night-2); margin:0 0 28px; max-width: 1500px; font-size: var(--fs-1);">En clôture du chapitre 2 : les traces d'anciennes civilisations et les récits des premières explorations qui ont façonné l'imaginaire de la forêt.</p>
+    <div class="deck-video">
+      <iframe src="https://www.youtube.com/embed/ZvVn05Es7N8?start=797" title="The First Explorers of the Amazon · Luke Reagan" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
+    </div>
+    <p class="small" style="color:var(--night-2); margin:18px 0 0; font-style:italic;">Source : <a href="https://www.youtube.com/watch?v=ZvVn05Es7N8&t=797s" style="color:var(--blue-akuu);">Luke Reagan · YouTube</a></p>
+  </section>
+
+  <!-- ===== S28 TITRE PARTIE 03 ===== -->
+  <section data-label="30 · Partie 03 · Caoutchouc" style="background: var(--role-chapter-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="bar" style="background:var(--green-leaf);"></div>
     <div style="font-family:'Playfair Display',serif; font-size:var(--fs-6); font-weight:800; color:rgba(166,198,57,0.16); position:absolute; top:40px; right:90px;">03</div>
@@ -319,9 +966,8 @@
     <p class="quote" style="font-size:var(--fs-2); color:var(--green-pale); max-width:1500px;">« El caucho fue la maldición de la Amazonia : riqueza para unos pocos, esclavitud y muerte para los pueblos del bosque. »</p>
     <div class="small" style="color:var(--green-pale); margin-top:12px;">,  J.V. San Román, 1994</div>
   </section>
-
-  <!-- ===== S24 BOOM CAOUTCHOUC ===== -->
-  <section data-label="24 · Le boom du caoutchouc" style="background:#F3E3DA; display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S29 BOOM CAOUTCHOUC ===== -->
+  <section data-label="31 · Le boom du caoutchouc" style="background:#F3E3DA; display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--terracotta);">03 · L'Ère du Caoutchouc</div>
     <div class="topbar" style="background:var(--ochre);"></div>
@@ -404,17 +1050,16 @@
     </div>
   </section>
 
-  <!-- ===== S25 JULIO CÉSAR ARANA ===== -->
-  <section data-label="25 · Julio César Arana" style="background:#F3E3DA; display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S30 JULIO CÉSAR ARANA ===== -->
+  <section data-label="32 · Julio César Arana" style="background:#F3E3DA; display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--terracotta);">03 · L'Ère du Caoutchouc</div>
     <div class="topbar" style="background:var(--ochre);"></div>
-    <h1 class="h" style="color:var(--terracotta); font-size:var(--fs-3); margin: 22px 0 24px;">Julio César Arana : l'empire du Putumayo</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Peruvian Amazon Company</b><div class="xs" style="color:var(--night-2); margin-top:5px;">La Casa Arana reconvertie en société à Londres (1907) : actionnaires britanniques, siège en Angleterre pour éviter la justice péruvienne.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Méthodes d'exploitation</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Estaciones aux quotas par famille Huitoto. Non-atteinte = mutilation, flagellation, meurtre. Terreur systématique documentée.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image34.jpeg" class="imground photo-in d1" style="width:100%; height:620px; object-fit:contain; background:#1a1a1a;" alt="Julio César Arana (archive)"></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Le scandale Casement (1911)</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Le consul britannique enquête : la « Blue Book » expose 30 000 Huitotos réduits à ~10 000 en 10 ans. Arana jamais condamné.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Fin de l'impunité, relative</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Procès de La Chorrera (1911) : quelques contremaîtres condamnés, vite libérés. Arana élu sénateur en 1919.</div></div></div></div>
-    <button type="button" class="src-tip src-tip--slide" style="color:var(--terracotta);" data-src="Illustration de Julio César Arana publiée par le journal « La Felpa » en 1908">Source</button>
+    <h1 class="h" style="color:var(--terracotta); font-size:var(--fs-3); margin: 22px 0 24px;">Julio César Arana : l'empire du Putumayo</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Peruvian Amazon Company</b><div class="xs" style="color:var(--night-2); margin-top:5px;">La Casa Arana reconvertie en société à Londres (1907) : actionnaires britanniques, siège en Angleterre pour éviter la justice péruvienne.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Méthodes d'exploitation</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Estaciones aux quotas par famille Huitoto. Non-atteinte = mutilation, flagellation, meurtre. Terreur systématique documentée.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image34.jpeg" class="imground photo-in d1" style="width:100%; height:620px; object-fit:contain; background:#1a1a1a;" alt="Julio César Arana (archive)"></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" data-src-id="m2-putumayo-hardenburg" data-src="Illustration de Julio César Arana publiée par le journal « La Felpa » en 1908" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Le scandale Casement (1911)</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Le consul britannique enquête : la « Blue Book » expose 30 000 Huitotos réduits à ~10 000 en 10 ans. Arana jamais condamné.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Fin de l'impunité, relative</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Procès de La Chorrera (1911) : quelques contremaîtres condamnés, vite libérés. Arana élu sénateur en 1919.</div></div></div></div>
   </section>
 
-  <!-- ===== S26 ATROCITÉS PUTUMAYO ===== -->
-  <section data-label="26 · Atrocités du Putumayo" style="background:#F3E3DA; display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S31 ATROCITÉS PUTUMAYO ===== -->
+  <section data-label="33 · Atrocités du Putumayo" style="background:#F3E3DA; display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--terracotta);">03 · L'Ère du Caoutchouc</div>
     <div class="topbar" style="background:var(--ochre);"></div>
@@ -423,10 +1068,10 @@
       <div style="width:420px; display:flex; flex-direction:column; gap:14px;">
         <img src="images/image35.jpeg" class="imground" style="width:100%; height:210px;" alt="Victimes Huitoto (archives Casement, 1910)">
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-          <div class="card" style="background:var(--cream); text-align:center; padding:12px;"><div class="num" style="font-size:var(--fs-2); color:var(--terracotta);">~30 000</div><div class="xs" style="color:var(--night-2);">Huitotos en 1900</div></div>
-          <div class="card" style="background:var(--cream); text-align:center; padding:12px;"><div class="num" style="font-size:var(--fs-2); color:var(--terracotta);">~8 000</div><div class="xs" style="color:var(--night-2);">en 1912 (−75 %)</div></div>
-          <div class="card" style="background:var(--cream); text-align:center; padding:12px;"><div class="num" style="font-size:var(--fs-2); color:var(--terracotta);">4 000 t</div><div class="xs" style="color:var(--night-2);">de caoutchouc 1900–10</div></div>
-          <div class="card" style="background:var(--cream); text-align:center; padding:12px;"><div class="num" style="font-size:var(--fs-2); color:var(--terracotta);">1911</div><div class="xs" style="color:var(--night-2);">rapport Casement</div></div>
+          <div class="card" style="background:var(--cream); text-align:center; padding:12px;"><div class="num" data-src-id="m2-putumayo-hardenburg" data-src="W. E. Hardenburg, The Putumayo, the Devil's Paradise, 1912" style="font-size:var(--fs-2); color:var(--terracotta);">~30 000</div><div class="xs" style="color:var(--night-2);">Huitotos en 1900</div></div>
+          <div class="card" style="background:var(--cream); text-align:center; padding:12px;"><div class="num" data-src-id="m2-putumayo-hardenburg" data-src="W. E. Hardenburg, The Putumayo, the Devil's Paradise, 1912" style="font-size:var(--fs-2); color:var(--terracotta);">~8 000</div><div class="xs" style="color:var(--night-2);">en 1912 (−75 %)</div></div>
+          <div class="card" style="background:var(--cream); text-align:center; padding:12px;"><div class="num" data-src-id="m2-putumayo-hardenburg" data-src="W. E. Hardenburg, The Putumayo, the Devil's Paradise, 1912" style="font-size:var(--fs-2); color:var(--terracotta);">4 000 t</div><div class="xs" style="color:var(--night-2);">de caoutchouc 1900–10</div></div>
+          <div class="card" style="background:var(--cream); text-align:center; padding:12px;"><div class="num" data-src-id="m2-putumayo-hardenburg" data-src="rapport de Roger Casement au Parlement britannique, 1911-1912" style="font-size:var(--fs-2); color:var(--terracotta);">1911</div><div class="xs" style="color:var(--night-2);">rapport Casement</div></div>
         </div>
       </div>
       <div style="flex:1; display:flex; flex-direction:column; gap:14px; min-height:0;">
@@ -435,7 +1080,7 @@
             <button type="button" class="deck-carousel__arrow deck-carousel__prev" aria-label="Précédent"></button>
             <div class="deck-carousel__viewport">
             <div class="deck-carousel__slide deck-carousel__slide--active">
-              <div class="card" style="background:var(--terracotta); height:100%; display:flex; flex-direction:column; justify-content:center; padding:28px;"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« The Indian has been robbed, beaten, killed, and his family enslaved, in order to enrich those who called themselves masters of the Putumayo. »</p><div class="xs" style="color:var(--ochre-light); margin-top:8px;">Roger Casement, Blue Book, rapport au Parlement britannique, 1912</div></div>
+              <div class="card" style="--card-accent:var(--terracotta); height:100%; display:flex; flex-direction:column; justify-content:center; padding:32px; border-top:8px solid var(--terracotta);"><p class="quote" style="font-size:var(--fs-1); color:var(--night); margin:0; line-height:1.5;">« The Indian has been robbed, beaten, killed, and his family enslaved, in order to enrich those who called themselves masters of the Putumayo. »</p><div class="xs" style="color:var(--terracotta); font-weight:600; margin-top:14px;">Roger Casement</div><div class="xs" style="color:var(--night-2); margin-top:4px;">Blue Book, rapport au Parlement britannique, 1912</div></div>
             </div>
             <div class="deck-carousel__slide">
               <div class="card" style="--card-accent:var(--terracotta); background:var(--cream); height:100%; display:flex; flex-direction:column; padding:32px;"><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--terracotta); margin-bottom:14px;">Le « cepo »</div><div class="body" style="color:var(--night-2); flex:1;">Pilori standard : indigène enchaîné et fouetté devant sa communauté pour quota non atteint. Documenté avec noms.</div></div>
@@ -460,11 +1105,10 @@
         </div>
       </div>
     </div>
-    <button type="button" class="src-tip src-tip--slide" style="color:var(--terracotta);" data-src="Peuple Witoto / Huitoto en 1913">Source</button>
   </section>
 
-  <!-- ===== S27 IQUITOS ===== -->
-  <section data-label="27 · Iquitos, ville du caoutchouc" style="background:#F3E3DA; display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S32 IQUITOS ===== -->
+  <section data-label="34 · Iquitos, ville du caoutchouc" style="background:#F3E3DA; display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--terracotta);">03 · L'Ère du Caoutchouc</div>
     <div class="topbar" style="background:var(--ochre);"></div>
@@ -523,32 +1167,45 @@
     </div>
   </section>
 
-  <!-- ===== S28 EFFONDREMENT 1912 ===== -->
-  <section data-label="28 · L'effondrement de 1912" style="background:#F3E3DA; display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S33 EFFONDREMENT 1912 ===== -->
+  <section data-label="35 · L'effondrement de 1912" style="background:#F3E3DA; display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--terracotta);">03 · L'Ère du Caoutchouc</div>
     <div class="topbar" style="background:var(--ochre);"></div>
     <h1 class="h" style="color:var(--terracotta); font-size:var(--fs-3); margin: 22px 0 24px;">L'effondrement de 1912 et ses séquelles</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Les plantations de Malaisie</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Wickham (1876) : 70 000 graines au Kew Gardens → Malaisie, Ceylan, Java. Caoutchouc cultivé 10× moins cher. Fin du monopole en 5 ans.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Crise sociale immédiate</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Milliers de chômeurs à Iquitos, faillites, bateaux à l'arrêt. Les indigènes rescapés retournent en forêt : structures brisées.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image39.jpeg" class="imground photo-in d1" style="width:100%; height:620px;" alt="Iquitos après l'effondrement"></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Conséquences à long terme</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Traumatismes Huitoto, Bora, Ocaina sur 3 générations. Perte de territoires, langues, rites. Dépopulation permanente.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Un second boom (1942–45)</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Le Japon occupe la Malaisie → les États-Unis relancent l'extraction (« soldats du caoutchouc »). Les abus reprennent brièvement.</div></div></div></div>
   </section>
 
-  <!-- ===== S29 FITZCARRALD ===== -->
-  <section data-label="29 · Carlos Fitzcarrald" style="background:#F3E3DA; display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S34 FITZCARRALD ===== -->
+  <section data-label="36 · Carlos Fitzcarrald" style="background:#F3E3DA; display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--terracotta);">03 · L'Ère du Caoutchouc</div>
     <div class="topbar" style="background:var(--ochre);"></div>
     <h1 class="h" style="color:var(--terracotta); font-size:var(--fs-3); margin: 22px 0 24px;">Carlos Fitzcarrald : le cauchero, l'isthme et la légende</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Un cauchero ambitieux</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Baron du caoutchouc contrôlant l'Ucayali et le Madre de Dios. En 1893, il fait porter un vapeur de 30 t à dos d'homme sur l'isthme.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:var(--fs-1);">La clé d'un empire</b><div class="xs" style="color:var(--night-2); margin-top:5px;">La liaison ouvre des millions d'hectares à l'extraction. Travail forcé imposé aux Shipibo, Matsigenka, Yine. Brutal mais charismatique.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image40.jpg" class="imground photo-in d1" style="width:100%; height:620px; object-fit:contain; background:#111;" alt="Fitzcarraldo (Herzog, 1982)"></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Mort sur l'Urubamba (1897)</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Noyé à 35 ans dans le naufrage de son bateau. Devient une figure mythique, qui inspirera Herzog 85 ans plus tard.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Ce que Herzog a transformé</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Herzog reprend le geste (bateau porté par-dessus la montagne) mais en fait un rêveur d'opéra, la fiction efface la violence réelle.</div></div></div></div>
   </section>
 
-  <!-- ===== S30 HERZOG ===== -->
-  <section data-label="30 · Werner Herzog en Amazonie" style="background:#F3E3DA; display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S35 HERZOG ===== -->
+  <section data-label="37 · Werner Herzog en Amazonie" style="background:#F3E3DA; display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--terracotta);">03 · L'Ère du Caoutchouc</div>
     <div class="topbar" style="background:var(--ochre);"></div>
     <h1 class="h" style="color:var(--terracotta); font-size:var(--fs-3); margin: 22px 0 24px;">Werner Herzog : Aguirre (1972) et Fitzcarraldo (1982)</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Aguirre, la colère de Dieu (1972)</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Tourné au Pérou en 5 semaines avec Kinski. Vision hallucinatoire d'une expédition perdant la raison. Film culte, restauré en 4K (2019).</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Fitzcarraldo (1982)</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Un vapeur de 320 t tiré sur une colline sans effets spéciaux, avec des Machiguenga. Production chaotique (5 ans), Kinski menaçant.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image41.jpeg" class="imground photo-in d1" style="width:100%; height:430px;" alt="Tournage de Fitzcarraldo (Kinski)"><div class="card" style="background:var(--terracotta);"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« Je voulais faire un film sur la nature de l'obsession humaine, le fleuve devait être réel. »</p><div class="xs" style="color:var(--ochre-light); margin-top:8px;">Werner Herzog, Burden of Dreams (Les Blank, 1982)</div></div></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Burden of Dreams</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Le documentaire de Les Blank (1982) capte la folie du projet. « Il n'y a pas d'harmonie ici, que la lutte pour la survie. »</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Impact sur l'imaginaire</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Amazonie comme espace de démesure et de folie. Réalisme cru, mais les peuples indigènes réduits au décor.</div></div></div></div>
   </section>
 
-  <!-- ===== S31 TITRE PARTIE 04 ===== -->
-  <section data-label="31 · Partie 04 · Contemporaine" style="background: var(--role-chapter-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
+  <!-- ===== S · VIDÉO BOOM CAOUTCHOUC ===== -->
+  <section data-label="38 · Vidéo · Boom du caoutchouc" style="background:#F3E3DA; display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--terracotta);">03 · L'Ère du Caoutchouc</div>
+    <div class="topbar" style="background:var(--ochre);"></div>
+    <div class="kicker" style="color:var(--terracotta); margin:24px 0 8px;">Vidéo · Lost in Context</div>
+    <h1 class="h" style="color:var(--terracotta); margin: 0 0 14px; font-size:var(--fs-3); max-width: 1500px;">The Amazonian Rubber Boom</h1>
+    <p class="lead" style="color:var(--night-2); margin:0 0 28px; max-width: 1500px; font-size: var(--fs-1);">Après Herzog et Fitzcarraldo : le contexte historique du boom du caoutchouc, fortune, esclavage et destruction des peuples de la forêt (1880–1914).</p>
+    <div class="deck-video">
+      <iframe src="https://www.youtube.com/embed/7_93Hj3Y9V0?start=1136" title="The Amazonian Rubber Boom · Lost in Context" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
+    </div>
+    <p class="small" style="color:var(--night-2); margin:18px 0 0; font-style:italic;">Source : <a href="https://www.youtube.com/watch?v=7_93Hj3Y9V0&t=1136s" style="color:var(--blue-akuu);">Lost in Context · YouTube</a></p>
+  </section>
+  <!-- ===== S36 TITRE PARTIE 04 ===== -->
+  <section data-label="39 · Partie 04 · Contemporaine" style="background: var(--role-chapter-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="bar" style="background:var(--green-leaf);"></div>
     <div style="font-family:'Playfair Display',serif; font-size:var(--fs-6); font-weight:800; color:rgba(166,198,57,0.16); position:absolute; top:40px; right:90px;">04</div>
@@ -558,86 +1215,151 @@
     <p class="quote" style="font-size:var(--fs-2); color:var(--green-pale); max-width:1500px;">« La conquête n'est pas terminée. Elle continue, sous une autre forme, avec d'autres outils, mais avec la même logique. »</p>
   </section>
 
-  <!-- ===== S32 GUERRE PÉROU-ÉQUATEUR ===== -->
-  <section data-label="32 · Guerre Pérou–Équateur" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S37 GUERRE PÉROU-ÉQUATEUR ===== -->
+  <section data-label="40 · Guerre Pérou–Équateur" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--steel-dark);">04 · L'Amazonie contemporaine</div>
     <div class="topbar" style="background:var(--steel-dark);"></div>
     <h1 class="h" style="color:var(--steel-dark); font-size:var(--fs-3); margin: 22px 0 24px;">La guerre Pérou–Équateur : deux conflits (1941 et 1995)</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Origines coloniales</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Frontière jamais tracée depuis l'indépendance. La Real Cédula de 1563 attribuait l'Amazonie à Quito, l'Équateur revendique l'accès au fleuve.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">1941 et le Protocole de Rio</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Le Pérou envahit l'Oriente équatorien. L'Équateur perd ~200 000 km². Protocole de Rio (1942) garanti par É.-U., Brésil, Argentine, Chili.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image43.jpeg" class="imground photo-in d1" style="width:100%; height:540px;" alt="Soldats, guerre de 1941"><div style="width:100%;"><img src="images/image42.jpeg" class="imground" style="width:100%; height:210px;" alt="Soldats, guerre du Cenepa 1995"></div></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">La guerre de Cenepa (1995)</b><div class="xs" style="color:var(--night-2); margin-top:5px;">L'Équateur occupe des positions dans la vallée du Cenepa. 34 jours de combats en jungle. Cessez-le-feu sous pression des garants.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Peuples pris en étau</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Cenepa = territoire ancestral Awajún et Wampis (côté péruvien), Shuar (côté équatorien). Guerres menées sur leurs terres sans consultation.</div></div></div></div>
   </section>
 
-  <!-- ===== S33 TRAITÉ DE BRASILIA ===== -->
-  <section data-label="33 · Traité de Brasilia 1998" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S38 TRAITÉ DE BRASILIA ===== -->
+  <section data-label="41 · Traité de Brasilia 1998" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--steel-dark);">04 · L'Amazonie contemporaine</div>
     <div class="topbar" style="background:var(--steel-dark);"></div>
     <h1 class="h" style="color:var(--steel-dark); font-size:var(--fs-3); margin: 22px 0 24px;">Le Traité de Brasilia (1998) : paix, pétrole et enjeux indigènes</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Un accord de paix global</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Fixe la frontière selon le Protocole de Rio (1942). L'Équateur obtient 1 km² à Tiwinza en propriété privée, non en souveraineté.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">L'enjeu pétrolier</b><div class="xs" style="color:var(--night-2); margin-top:5px;">La zone chevauche le bassin de l'Oriente et les concessions du Loreto. Accords de co-exploitation et commerce transfrontalier.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image44.jpeg" class="imground photo-in d1" style="width:100%; height:430px;" alt="Signature du Traité de Brasilia (1998)"><div class="card" style="background:var(--steel-dark);"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« Aujourd'hui, nos deux pays renoncent pour toujours à la guerre. La frontière trace un espace de coopération, non de conflit. »</p><div class="xs" style="color:#B9CEDD; margin-top:8px;">Jamil Mahuad, président de l'Équateur, Brasilia, 26 oct. 1998</div></div></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Awajún et Wampis ignorés</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Ils occupent les deux côtés depuis des millénaires. Traité négocié sans consultation, familles divisées, besoin de passeports.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Une paix solide mais fragile</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Relations normales depuis 1998, projets communs (IIRSA). Mais les communautés frontalières restent dans une zone grise juridique.</div></div></div></div>
   </section>
 
-  <!-- ===== S34 PÉTROLE COCA VIOLENCE ===== -->
-  <section data-label="34 · Pétrole, coca et violence" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S39 PÉTROLE COCA VIOLENCE ===== -->
+  <section data-label="42 · Pétrole, coca et violence" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--steel-dark);">04 · L'Amazonie contemporaine</div>
     <div class="topbar" style="background:var(--steel-dark);"></div>
     <h1 class="h" style="color:var(--steel-dark); font-size:var(--fs-3); margin: 22px 0 24px;">Pétrole, coca et violence (1970–1990) : la colonisation interne</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">La transamazonienne (1972)</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Décret militaire : 5 400 km percés, « intégrer pour ne pas livrer ». Peuples expulsés sans consultation. Le Pérou ouvre sa Marginal de la Selva.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">La ruée pétrolière</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Occidental Petroleum (1971) et Petroperú exploitent le Loreto. L'oléoduc (1977) traverse 35 rivières. Déversements sans remédiation.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image45.jpeg" class="imground photo-in d1" style="width:100%; height:330px;" alt="Colonisation : routes et déforestation"><div style="width:100%;"><img src="images/image46.jpeg" class="imground" style="width:100%; height:130px;" alt="Infrastructure extractive en Amazonie"></div><div class="card" style="background:var(--steel-dark);"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« La colonisation de l'Amazonie… a été orchestrée par les États latino-américains eux-mêmes comme politique délibérée. »</p><div class="xs" style="color:#B9CEDD; margin-top:8px;">Barre (1983) ; Chirif &amp; García Hierro, Marcando territorio (2007)</div></div></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Le Sentier Lumineux</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Dès 1980 en forêt haute. Les Asháninka premières victimes : ~5 000 morts, 10 000 déplacés (CVR 2003). L'armée confond indigènes et insurgés.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">La guerre à la drogue</b><div class="xs" style="color:var(--night-2); margin-top:5px;">La coca explose : le Huallaga devient un enjeu géopolitique (DEA, rondas, narcos). Violence triple : État, guérillas, cartels.</div></div></div></div>
   </section>
 
-  <!-- ===== S35 BELO MONTE ===== -->
-  <section data-label="35 · Belo Monte, le chantier" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S40 COLONISATION KUKAMA ===== -->
+  <section data-label="43 · Décimation kukama" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--steel-dark);">04 · L'Amazonie contemporaine</div>
+    <div class="topbar" style="background:var(--steel-dark);"></div>
+    <h1 class="h" style="color:var(--steel-dark); font-size:var(--fs-3); margin: 22px 0 24px;">Colonisation, missions et caoutchouc : la décimation kukama</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Les réductions jésuites (XVIIᵉ–XVIIIᵉ)</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Regroupement forcé sur le Marañón et le Huallaga. Les épidémies (variole, grippe, rougeole) provoquent un effondrement de plus de 80 %.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Le boom du caoutchouc (1880–1920)</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Les Kukama réduits au peonaje (esclavage par dette). Fuites, désorganisation sociale profonde, savoirs partiellement perdus.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image16.jpg" class="imground photo-in d1" style="width:100%; height:430px; object-fit:contain; background:#111;" alt="The Mission, missions jésuites"><div class="card" style="background:var(--green-forest);"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« Nos parents ont honte de nous apprendre le kukama. Les missionnaires disaient que notre langue était la langue du démon. »</p><div class="xs" style="color:var(--green-leaf); margin-top:8px;">Témoignage d'une aînée kukama, ACODECOSPAT (2012)</div></div></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">L'acculturation forcée</b><div class="xs" style="color:var(--night-2); margin-top:5px;">L'école publique impose l'espagnol et stigmatise le kukama comme « langue de sauvages ». En 1980, la langue est proche de l'extinction.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Entre stigmate et re-appropriation</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Longtemps déclarés « mestizos » pour échapper à la discrimination. Depuis 1990, un puissant mouvement de re-appropriation identitaire.</div></div></div></div>
+  </section>
+
+  <!-- ===== S41 PÉTROLE MARAÑÓN ===== -->
+  <section data-label="44 · Pétrole et Marañón" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--steel-dark);">04 · L'Amazonie contemporaine</div>
+    <div class="topbar" style="background:var(--steel-dark);"></div>
+    <h1 class="h" style="color:var(--steel-dark); font-size:var(--fs-3); margin: 22px 0 24px;">Le pétrole et le Marañón : 50 ans de pollution</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">L'oléoduc Norperuano (OCP)</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Construit en 1974 par Petroperú, il traverse le territoire kukama sur +1 000 km. +190 déversements : un tous les 2,5 mois en moyenne.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Lote 192 : le plus controversé</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Plus grand champ pétrolier actif du Pérou. Taux anormaux de plomb, cadmium et baryum chez les communautés kukama et achuar.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image19.jpeg" class="imground photo-in d1" style="width:100%; height:620px;" alt="Oléoduc Norperuano en territoire kukama"></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Impact sanitaire</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Étude Minsa 2016 : 98 % des enfants kukama testés dépassent les seuils OMS en métaux lourds. La pêche contaminée reste la seule option.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Lenteur et impunité</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Remédiations lentes ou inexistantes. L'État péruvien condamné en 2023 par la Cour Interaméricaine des Droits de l'Homme.</div></div></div></div>
+  </section>
+
+  <!-- ===== S42 GUARDIANES DEL AGUA ===== -->
+  <section data-label="45 · Guardianes del agua" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--steel-dark);">04 · L'Amazonie contemporaine</div>
+    <div class="topbar" style="background:var(--steel-dark);"></div>
+    <h1 class="h" style="color:var(--steel-dark); font-size:var(--fs-3); margin: 22px 0 24px;">Guardianes del agua : l'activisme kukama</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">ACODECOSPAT</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Principale organisation kukama. Documente les déversements, accompagne les recours juridiques et porte les demandes de consultation préalable (CLPE).</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Elena Valera Mori</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Voix internationale des peuples fluviaux. A porté le cas kukama devant l'ONU, la CIDH et les médias internationaux.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image20.jpeg" class="imground photo-in d1" style="width:100%; height:330px;" alt="Assemblée kukama"><div style="width:100%;"><img src="images/image21.jpeg" class="imground" style="width:100%; height:130px;" alt="Militant kukama documentant"></div><div class="card" style="background:var(--green-forest);"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« Le Marañón est notre mère. Maintenant c'est nous qui devons le défendre. Nous sommes ses gardiens. »</p><div class="xs" style="color:var(--green-leaf); margin-top:8px;">Elena Valera Mori, dirigeante kukama, ACODECOSPAT (2015)</div></div></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">« La Voz de la Selva »</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Radio communautaire et éducation interculturelle bilingue (EIB) transmettent le kukama et les savoirs ancestraux aux jeunes.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Alliances régionales</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Coalitions avec Achuar, Wampis : personnalité juridique du fleuve, moratoire pétrolier, application stricte du CLPE.</div></div></div></div>
+  </section>
+
+  <!-- ===== S43 MARAÑÓN SUJET DE DROIT ===== -->
+  <section data-label="46 · Le Marañón sujet de droit" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--steel-dark);">04 · L'Amazonie contemporaine</div>
+    <div class="topbar" style="background:var(--steel-dark);"></div>
+    <h1 class="h" style="color:var(--steel-dark); font-size:var(--fs-3); margin: 22px 0 24px;">Le Marañón, sujet de droit</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">L'arrêt de Loreto (2021)</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Le Marañón reconnu « sujet de droits » : droit à l'existence, à la régénération et à la restauration. Une première péruvienne.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Un modèle global</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Après l'Équateur (Pachamama, 2008), le Whanganui (N.-Zélande, 2017) et l'Atrato (Colombie, 2016) : les fleuves reçoivent une personnalité juridique.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image22.jpeg" class="imground photo-in d1" style="width:100%; height:620px;" alt="Le Marañón au lever du soleil"></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Extraction vs conservation</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Le Marañón traverse de nombreux blocs pétroliers. Les Kukama demandent un moratoire et l'application du CLPE.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--green-forest); font-size:var(--fs-1);">Espoir et fragilité</b><div class="xs" style="color:var(--night-2); margin-top:5px;">L'arrêt reste partiellement inapplicable faute de mécanismes d'exécution. Mais un précédent juridique majeur est créé.</div></div></div></div>
+  </section>
+
+  <!-- ===== S44 BELO MONTE ===== -->
+  <section data-label="47 · Belo Monte, le chantier" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--steel-dark);">04 · L'Amazonie contemporaine</div>
     <div class="topbar" style="background:var(--steel-dark);"></div>
     <h1 class="h" style="color:var(--steel-dark); font-size:var(--fs-3); margin: 22px 0 24px;">Belo Monte : le plus grand chantier hydroélectrique (2011–2019)</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Un projet vieux de 40 ans</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Étudié dès 1975 sous la dictature. Bloqué en 1989 (Raoni et Sting). Relancé sous Lula (2005), approuvé en 2010 malgré les protestations.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Norte Energia</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Consortium public-privé (Eletrobrás, Chesf, fonds de pension) + Odebrecht, Camargo Corrêa, Andrade Gutierrez. Épicentre de Lava Jato.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image47.jpg" class="imground photo-in d1" style="width:100%; height:540px;" alt="Barrage de Belo Monte (Xingu)"><div style="width:100%;"><img src="images/image48.jpeg" class="imground" style="width:100%; height:210px;" alt="Chantier de Belo Monte"></div></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Le Xingu</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Affluent majeur (2 600 km), +600 espèces de poissons. La « Volta Grande », cœur écologique, est partiellement asséchée.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">L'énergie contre l'écologie</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Présenté comme nécessité nationale. Mais la centrale ne fonctionne qu'à 20–30 % en saison sèche : projections illusoires.</div></div></div></div>
   </section>
 
-  <!-- ===== S36 ZONE INONDÉE ===== -->
-  <section data-label="36 · Belo Monte, zone inondée" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S45 ZONE INONDÉE ===== -->
+  <section data-label="48 · Belo Monte, zone inondée" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--steel-dark);">04 · L'Amazonie contemporaine</div>
     <div class="topbar" style="background:var(--steel-dark);"></div>
     <h1 class="h" style="color:var(--steel-dark); font-size:var(--fs-3); margin: 22px 0 24px;">La zone inondée : forêt, biodiversité et populations déplacées</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">500 km² inondés</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Forêt en igapó et várzea à biodiversité exceptionnelle. La Volta Grande (100 km) réduite à 20 % de son débit en saison sèche.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">20 000 à 40 000 déplacés</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Chiffres contestés (Norte Energia vs MPF). Indemnisations insuffisantes : logements médiocres en périphérie d'Altamira, sans activité.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image49.jpeg" class="imground photo-in d1" style="width:100%; height:330px; object-fit:contain; background:var(--cream); padding:6px;" alt="Zone inondée, carte avant/après"><div style="width:100%;"><img src="images/image50.jpeg" class="imground" style="width:100%; height:130px;" alt="Forêt inondée, satellite"></div><div class="card" style="background:var(--steel-dark);"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« Belo Monte ne noiera pas seulement la forêt. Il noiera notre mémoire, nos morts, notre vie. Nous ne partirons pas. »</p><div class="xs" style="color:#B9CEDD; margin-top:8px;">Cacique Raoni Metuktire, Tribunal International de Belo Monte (2014)</div></div></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Peuples du Xingu</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Juruna, Araweté, Arara, Xipaya, Kuruaya. La chute du débit détruit les poissons migrateurs. Le CLPE jamais validé.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Altamira en crise</b><div class="xs" style="color:var(--night-2); margin-top:5px;">De 100 000 à +160 000 habitants. Explosion de la violence, de la prostitution (dont enfantine), du trafic. Services publics effondrés.</div></div></div></div>
   </section>
 
-  <!-- ===== S37 LAVA JATO ===== -->
-  <section data-label="37 · Corruption et Lava Jato" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S46 LAVA JATO ===== -->
+  <section data-label="49 · Corruption et Lava Jato" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--steel-dark);">04 · L'Amazonie contemporaine</div>
     <div class="topbar" style="background:var(--steel-dark);"></div>
     <h1 class="h" style="color:var(--steel-dark); font-size:var(--fs-3); margin: 22px 0 24px;">Corruption et Lava Jato : Belo Monte au cœur du scandale Odebrecht</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Le cartel du BTP</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Odebrecht, Camargo Corrêa, Andrade Gutierrez se répartissent les marchés via ententes illicites. Marcelo Odebrecht condamné en 2016.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Le BNDES comme vecteur</b><div class="xs" style="color:var(--night-2); margin-top:5px;">+$11 Mds financés. Conditions négociées hors procédures, avec pression directe du Planalto. Plusieurs enquêtes du MPF.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image51.jpeg" class="imground photo-in d1" style="width:100%; height:620px;" alt="Marcelo Odebrecht (Lava Jato)"></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Lula, Dilma et Belo Monte</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Projet phare des deux gouvernements malgré +20 actions du MPF. Dilma annule personnellement une suspension d'Ibama (2011).</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">L'accord Odebrecht-DOJ (2016)</b><div class="xs" style="color:var(--night-2); margin-top:5px;">$788 M de pots-de-vin dans 12 pays sur 15 ans. Des versements liés à Belo Monte cités (Chesf, Eletronorte).</div></div></div></div>
   </section>
 
-  <!-- ===== S38 RAONI ===== -->
-  <section data-label="38 · Raoni et la résistance" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S47 RAONI ===== -->
+  <section data-label="50 · Raoni et la résistance" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--steel-dark);">04 · L'Amazonie contemporaine</div>
     <div class="topbar" style="background:var(--steel-dark);"></div>
     <h1 class="h" style="color:var(--steel-dark); font-size:var(--fs-3); margin: 22px 0 24px;">Raoni et la résistance : du concert de Sting au Tribunal (1989–2019)</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">1989 : la tournée avec Sting</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Raoni parcourt l'Europe pour alerter sur Kararaô (futur Belo Monte). Projet suspendu, ~$2 M levés. Un premier succès du militantisme indigène.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">2011 : l'occupation d'Altamira</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Kayapó, Juruna et Arara contestent les audiences d'Ibama. Une femme kayapó giflant l'ingénieur fait le tour du monde. Suspension annulée par Dilma.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image52.jpeg" class="imground photo-in d1" style="width:100%; height:430px;" alt="Chef Raoni Metuktire (Kayapó)"><div class="card" style="background:var(--steel-dark);"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« Ils veulent tuer le Xingu. Mais le Xingu, c'est ma vie. Je mourrai avant d'accepter ça. »</p><div class="xs" style="color:#B9CEDD; margin-top:8px;">Chef Raoni Metuktire, Altamira, 2011</div></div></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Tribunal International (2014)</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Juristes et indigènes de 20 pays : Belo Monte viole le droit international (OIT 169, DNUDPI). L'État brésilien ignore le verdict.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Raoni et la CIDH</b><div class="xs" style="color:var(--night-2); margin-top:5px;">En 2020, mesures conservatoires pour les Juruna. Raoni continue sa tournée (Vatican, 2019). Couvert par Le Monde, BBC, NYT.</div></div></div></div>
   </section>
 
-  <!-- ===== S39 BELO MONTE BILAN ===== -->
-  <section data-label="39 · Belo Monte : bilan" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S48 BELO MONTE BILAN ===== -->
+  <section data-label="51 · Belo Monte : bilan" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--steel-dark);">04 · L'Amazonie contemporaine</div>
     <div class="topbar" style="background:var(--steel-dark);"></div>
     <h1 class="h" style="color:var(--steel-dark); font-size:var(--fs-3); margin: 22px 0 24px;">Belo Monte : bilan : promesses non tenues, luttes qui continuent</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Des promesses énergétiques non tenues</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Fearnside (INPA) : 40–45 % de la capacité, parfois &lt;20 % en saison sèche. Loin des 4 500 MW garantis, au prix d'une destruction majeure.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Ville la plus violente du Brésil</b><div class="xs" style="color:var(--night-2); margin-top:5px;">IPEA 2019 : 136 homicides / 100 000 hab. Prostitution enfantine documentée, liée à l'afflux de travailleurs et à la déstructuration.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image53.jpeg" class="imground photo-in d1" style="width:100%; height:540px;" alt="Manifestation « Barragem mata »"><div style="width:100%;"><img src="images/image54.jpeg" class="imground" style="width:100%; height:210px;" alt="Manifestation « Pare Belo Monte »"></div></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Compensations non respectées</b><div class="xs" style="color:var(--night-2); margin-top:5px;">40 conditions (santé indigène, reforestation, logements). En 2020, le MPF constate leur non-respect majoritaire. Procès en cours.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Nouvelle menace : Belo Sun</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Mine d'or à ciel ouvert à 10 km en aval, dans la Volta Grande. La lutte du Xingu devient un symbole mondial anti-extractiviste.</div></div></div></div>
   </section>
 
-  <!-- ===== S40 MOUVEMENTS INDIGÈNES ===== -->
-  <section data-label="40 · Mouvements indigènes" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S49 MOUVEMENTS INDIGÈNES ===== -->
+  <section data-label="52 · Mouvements indigènes" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--steel-dark);">04 · L'Amazonie contemporaine</div>
     <div class="topbar" style="background:var(--steel-dark);"></div>
     <h1 class="h" style="color:var(--steel-dark); font-size:var(--fs-3); margin: 22px 0 24px;">Les mouvements indigènes : identité, droits et résistance</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Le Baguazo, 5 juin 2009</b><div class="xs" style="color:var(--night-2); margin-top:5px;">García ouvre les territoires aux concessions. Awajún et Wampis bloquent les routes. La police tire : 33 morts. Événement fondateur.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">L'efficacité des territoires titrés</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Walker (2014), Schleicher (2017) : 3 à 5× moins de déforestation. La reconnaissance foncière est la meilleure politique de conservation.</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image55.jpeg" class="imground photo-in d1" style="width:100%; height:540px;" alt="Baguazo (5 juin 2009)"><div style="width:100%;"><img src="images/image56.jpg" class="imground" style="width:100%; height:210px;" alt="Affrontements du Baguazo"></div></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Peuples en isolement volontaire</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Au Pérou : 5 000+ personnes de 20+ groupes (Mashco-Piro, Isconahua). Menacés par les pétroliers et narcotrafiquants.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Organisations contemporaines</b><div class="xs" style="color:var(--night-2); margin-top:5px;">AIDESEP, ONAMIAP (femmes), FENAMAD, FECONAU, réseau portant les cas devant la Cour interaméricaine.</div></div></div></div>
   </section>
 
-  <!-- ===== S41 FUJIMORI ===== -->
-  <section data-label="41 · Fujimori, stérilisations forcées" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== S · VIDÉO DÉFENDRE LES RIVIÈRES ===== -->
+  <section data-label="53 · Vidéo · Défendre les rivières" style="background:var(--steel); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--steel-dark);">04 · L'Amazonie contemporaine</div>
     <div class="topbar" style="background:var(--steel-dark);"></div>
-    <h1 class="h" style="color:var(--steel-dark); font-size:var(--fs-3); margin: 22px 0 24px;">Fujimori, stérilisations forcées et colonisation interne</h1><div style="display:flex; gap:28px; flex:1; align-items:stretch;"><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Le Programme PNSRPF (1996–2000)</b><div class="xs" style="color:var(--night-2); margin-top:5px;">« Santé reproductive » avec objectifs chiffrés de stérilisation. Médecins ruraux sous quotas mensuels, sous peine de sanctions.</div></div><div class="card card-in d2" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">272 000 à 350 000 victimes</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Majoritairement quechuas, aymaras et amazoniennes. « Brigades mobiles » ciblant les communautés. « Ligature » traduite en « vaccination ».</div></div></div><div style="flex:1.25; display:flex; flex-direction:column; gap:14px; justify-content:center; align-items:center;"><img src="images/image57.jpeg" class="imground photo-in d1" style="width:100%; height:330px;" alt="« Esterilizaciones forzadas nunca más »"><div style="width:100%;"><img src="images/image58.jpeg" class="imground" style="width:100%; height:130px;" alt="Alberto Fujimori"></div><div class="card" style="background:var(--steel-dark);"><p class="quote" style="font-size:var(--fs-1); color:var(--cream); margin:0;">« Ces femmes n'étaient pas malades. Elles étaient indigènes, pauvres, rurales. C'était ça, leur crime. »</p><div class="xs" style="color:#B9CEDD; margin-top:8px;">Hilaria Supa, députée quechua, survivante, Congrès (2002)</div></div></div><div style="flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center;"><div class="card card-in d3" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">La colonisation interne</b><div class="xs" style="color:var(--night-2); margin-top:5px;">L'État a traité l'Amazonie comme un espace « à civiliser ». Dépeupler = libérer des terres. Le corps des femmes et la terre, même système.</div></div><div class="card card-in d4" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Impunité partielle</b><div class="xs" style="color:var(--night-2); margin-top:5px;">Fujimori condamné en 2009 (crimes contre l'humanité), pas pour les stérilisations. Dossier rouvert en 2022. Cas devant la CIDH.</div></div></div></div>
+    <div class="kicker" style="color:var(--steel-dark); margin:24px 0 8px;">Vidéo · AmazonWatch</div>
+    <h1 class="h" style="color:var(--steel-dark); margin: 0 0 14px; font-size:var(--fs-3); max-width: 1500px;">Défendre les rivières de l'Amazonie</h1>
+    <p class="lead" style="color:var(--night-2); margin:0 0 28px; max-width: 1500px; font-size: var(--fs-1);">Le combat des peuples indigènes et des défenseurs de l'environnement face aux barrages, à l'extraction et à la destruction des fleuves amazoniens.</p>
+    <div class="deck-video">
+      <iframe src="https://www.youtube.com/embed/K-seAAIsJLQ?start=462" title="Defending the Rivers of the Amazon · AmazonWatch" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
+    </div>
+    <p class="small" style="color:var(--night-2); margin:18px 0 0; font-style:italic;">Source : <a href="https://www.youtube.com/watch?v=K-seAAIsJLQ&t=462s" style="color:var(--blue-akuu);">AmazonWatch · YouTube</a></p>
   </section>
 
+  <!-- ===== S · VIDÉO BAGUAZO ===== -->
+  <section data-label="54 · Vidéo · Le Baguazo" style="background:var(--steel); display: flex; flex-direction: column; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--steel-dark);">04 · L'Amazonie contemporaine</div>
+    <div class="topbar" style="background:var(--steel-dark);"></div>
+    <div class="kicker" style="color:var(--steel-dark); margin:24px 0 8px;">Vidéo · Hablemos De</div>
+    <h1 class="h" style="color:var(--steel-dark); margin: 0 0 14px; font-size:var(--fs-3); max-width: 1500px;">Le Baguazo : sang, protestation et pouvoir en Amazonie</h1>
+    <p class="lead" style="color:var(--night-2); margin:0 0 28px; max-width: 1500px; font-size: var(--fs-1);">Complément à la slide sur les mouvements indigènes : retour sur le conflit du 5 juin 2009 à Bagua, événement fondateur de la résistance awajún et wampis face aux concessions sur leurs terres.</p>
+    <div class="deck-video">
+      <iframe src="https://www.youtube.com/embed/XR5QuaNYHZA" title="Hablemos de: EL BAGUAZO · Hablemos De" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
+    </div>
+    <p class="small" style="color:var(--night-2); margin:18px 0 0; font-style:italic;">Source : <a href="https://www.youtube.com/watch?v=XR5QuaNYHZA" style="color:var(--blue-akuu);">Hablemos De · YouTube</a></p>
+  </section>
+
+  <!-- ===== S · CLÔTURE MODULE 2 ===== -->
+  <section data-label="55 · Clôture" style="background: radial-gradient(120% 120% at 50% 20%, #1c3a15 0%, var(--night) 60%, #0a0f0d 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" style="height: 150px; object-fit: contain; margin-bottom: 34px;" alt="AKUU">
+    <div class="bar" style="background: var(--green-leaf);"></div>
+    <div class="kicker" style="color: var(--green-leaf); margin-bottom: 20px;">Module 2 · Terminé</div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:var(--fs-4); font-weight:800; color:var(--cream); margin:0; text-align:center; line-height:1;">Histoire &amp; Archéologie</h1>
+    <p style="font-family:'Playfair Display',serif; font-size:var(--fs-3); font-style:italic; color:var(--green-pale); margin:14px 0 0; text-align:center;">de l'Amazonie</p>
+    <div style="width:120px; height:6px; background:var(--green-leaf); margin:44px 0;"></div>
+    <div class="deck-module-nav">
+      <a href="/formation/module-1" target="_top" rel="noopener" class="deck-next-module"><div class="small deck-next-module__label">MODULE PRÉCÉDENT</div><div class="deck-next-module__title">Module 1 : L'Amazonie : réalités, imaginaires et héritages</div></a>
+      <a href="/formation/module-3" target="_top" rel="noopener" class="deck-next-module"><div class="small deck-next-module__label">PROCHAIN MODULE</div><div class="deck-next-module__title">Module 3 : Géopolitique de l'Amérique latine</div></a>
+    </div>
+  </section>
 </x-import>
 </x-dc>
 </body>
