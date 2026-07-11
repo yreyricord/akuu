@@ -437,6 +437,12 @@
     "summary": "Le centre politique s'est effondré au profit de blocs radicaux : Castillo vs Fujimori au Pérou, Milei vs kirchneristes en Argentine, Petro vs opposition en Colombie.",
     "url": "https://www.latinobarometro.org/lat.html"
   },
+  "m3-reuters-political-map": {
+    "citation": "Reuters · Datawrapper · juin 2026",
+    "title": "De La Espriella win in Colombia cements Latin America's rightward shift",
+    "summary": "Carte du spectre politique en Amérique latine : orientation gauche ou droite des gouvernements en place après les élections de 2025–2026 (Colombie, Pérou, Chili, Argentine…).",
+    "url": "https://www.reuters.com/world/americas/de-la-espriella-win-colombia-cements-latin-americas-rightward-shift-2026-06-22/"
+  },
   "m3-elections-wave-2026": {
     "citation": "ONPE · 2026 · CNE Colombia · Servel Chile · 2025–2026",
     "title": "Vague électorale conservatrice en Amérique latine (2025–2026)",
@@ -592,5 +598,65 @@
     "title": "IPerú — Información y Asistencia al Turista",
     "summary": "Service d'assistance touristique officiel : WhatsApp +51 944 492 314, réponse sous 24 h, bureau à l'aéroport de Lima.",
     "url": "https://www.gob.pe/iperu"
+  },
+  "m3-video-monroe-trump": {
+    "citation": "ARTE Décryptage · YouTube · 2025",
+    "title": "Amérique latine : avec Trump, retour de la doctrine Monroe",
+    "summary": "Analyse du retour de la doctrine Monroe sous la présidence Trump : influence hémisphérique, pression sur les gouvernements latino-américains et rivalités géopolitiques.",
+    "url": "https://www.youtube.com/watch?v=PZ0DPGSY2rg"
+  },
+  "m3-video-monroe-venezuela": {
+    "citation": "ARTE · YouTube",
+    "title": "USA et Venezuela : comprendre la doctrine Monroe",
+    "summary": "Éclairage sur le lien entre doctrine Monroe, pression américaine et crise vénézuélienne (extrait à partir de 20:04).",
+    "url": "https://www.youtube.com/watch?v=Z6V73lW2tsI&t=1204s"
+  },
+  "m3-video-bascule-droite": {
+    "citation": "ARTE Info · YouTube",
+    "title": "L'Amérique latine bascule-t-elle à (l'extrême) droite ?",
+    "summary": "Analyse des causes et mécanismes de la bascule électorale vers la droite en Amérique latine, après des années de polarisation.",
+    "url": "https://www.youtube.com/watch?v=W9hZ9ZkmSt8"
+  },
+  "m3-video-extreme-droite": {
+    "citation": "Dessous des cartes · ARTE · YouTube",
+    "title": "Amérique latine : l'extrême droite progresse",
+    "summary": "Panorama régional de la montée des forces d'extrême droite : Argentine, Chili, Colombie, Pérou et dynamiques électorales 2025–2026.",
+    "url": "https://www.youtube.com/watch?v=LElp_VWEmL8"
+  },
+  "m3-video-colombie-extreme-droite": {
+    "citation": "YouTube",
+    "title": "Colombie : l'extrême droite gagne encore en Amérique latine",
+    "summary": "Focus sur la victoire d'Abelardo de la Espriella au second tour de juin 2026 — cas d'école de la vague conservatrice en Colombie.",
+    "url": "https://www.youtube.com/watch?v=GIwAlR_UzfA"
+  },
+  "m3-video-climat": {
+    "citation": "ARTE · YouTube",
+    "title": "L'Amérique latine sous la menace climatique",
+    "summary": "Panorama des impacts du changement climatique en Amérique latine : sécheresses, inondations, recul des glaciers et vulnérabilité des populations.",
+    "url": "https://www.youtube.com/watch?v=GRJVQTH5ndI"
+  },
+  "m3-video-sous-radars": {
+    "citation": "Dessous des cartes · ARTE · YouTube · nov. 2024",
+    "title": "Amérique latine : une région sous les radars ?",
+    "summary": "Construction politique du terme « Amérique latine » au XIXe siècle, diversité des 20 pays, passage de la colonisation à l'arrière-cour états-unienne, diplomatie BRICS et relégation géopolitique malgré les atouts du sous-continent.",
+    "url": "https://www.youtube.com/watch?v=KsfEyCr4NCo"
+  },
+  "m3-video-china-hidden-costs": {
+    "citation": "YouTube · analyse géopolitique",
+    "title": "The Hidden Costs of China's Influence in Latin America and the Caribbean",
+    "summary": "Influence croissante de la Chine en Amérique latine et dans les Caraïbes : activités économiques, diplomatiques, sécuritaires et politiques, et leur possible contribution au recul démocratique dans la région.",
+    "url": "https://www.youtube.com/watch?v=vQ5wfr8iEzI"
+  },
+  "m3-video-china-eye-latam": {
+    "citation": "CNBC · YouTube · Inter-American Dialogue",
+    "title": "Why China has its eye on Latin America",
+    "summary": "2ᵉ partenaire commercial de l'ALC (≈ 450 Md $ en 2021), investissements extractifs et infrastructures (Belt and Road), partenariat stratégique avec le Venezuela, présence technologique et spatiale en Argentine.",
+    "url": "https://www.youtube.com/watch?v=UM4f9OB7QTM"
+  },
+  "m3-video-cerrejon": {
+    "citation": "Las Huellas Del Cerrejón · YouTube",
+    "title": "Las Huellas Del Cerrejón",
+    "summary": "Documentaire recueillant les expériences de personnes vivant aux côtés de la plus grande mine de charbon du monde. La « minería responsable » a asséché les eaux du département et plongé les habitants dans le désespoir, mais ils restent unis pour défendre leur terre natale.",
+    "url": "https://www.youtube.com/watch?v=ryssy7pJhJI&t=69s"
   }
 }
