@@ -389,11 +389,113 @@
     "summary": "Synthèse CEPAL sur la démographie, le PIB et les inégalités de l'Amérique latine : ~650 M habitants, PIB combiné ~5,5 T USD, indice de Gini parmi les plus élevés au monde.",
     "url": "https://www.cepal.org/es/publicaciones/49113-panorama-social-america-latina-caribe-2024"
   },
+  "m3-regional-actors": {
+    "citation": "CEPAL · 2024 · Freedom House · IDEA International · IBGE · DANE",
+    "title": "L'Amérique du Sud : panorama des 12 acteurs régionaux",
+    "summary": "Comparaison des 12 pays d'Amérique du Sud sur 2 axes : économie et politique & géostratégie (régime, dirigeant, alliances, enjeux régionaux).",
+    "url": "https://www.cepal.org/es/publicaciones/49113-panorama-social-america-latina-caribe-2024"
+  },
+  "m3-country-brazil": {
+    "citation": "IBGE · Banco Central do Brasil · CEPAL · 2024",
+    "title": "Brasil — Regional power & multipolar diplomacy",
+    "summary": "1er PIB sud-américain (≈ 2 000 Md USD). Régime présidentiel, Lula (PT, centre-gauche, 2023–). Institutions stables, diplomatie multipolaire (BRICS, Mercosur).",
+    "url": "https://www.ibge.gov.br/en/statistics/social/population.html"
+  },
+  "m3-country-colombia": {
+    "citation": "DANE · Banco de la República · CNE · Freedom House · 2024–2026",
+    "title": "Colombia — Andean geopolitics & political shift",
+    "summary": "3ᵉ économie sud-américaine. Bascule droite dure : De la Espriella élu juin 2026 (49,66 %), fin du gouvernement Petro (2022–2026). Frontière Venezuela.",
+    "url": "https://www.dane.gov.co/"
+  },
+  "m3-country-paraguay": {
+    "citation": "BCP · CEPAL · World Bank · 2024",
+    "title": "Paraguay — Soy exports & tri-border zone",
+    "summary": "Méga-exportateur de soja, Itaipú. Peña (Colorado, conservateur, 2023–), parti au pouvoir quasi sans interruption depuis 1947.",
+    "url": "https://www.bcp.gov.py/"
+  },
+  "m3-country-guyana": {
+    "citation": "Bureau of Statistics Guyana · ExxonMobil · World Bank · 2024",
+    "title": "Guyana — Oil boom & Essequibo dispute",
+    "summary": "Croissance pétrolière record (offshore Exxon). Irfaan Ali (PPP, centre-gauche, 2020–), démocratie compétitive. Litige Essequibo avec le Venezuela.",
+    "url": "https://statisticsguyana.gov.gy/"
+  },
+  "m3-country-suriname": {
+    "citation": "ABS · World Bank · CEPAL · 2024",
+    "title": "Suriname — Bauxite & Dutch Caribbean Amazon",
+    "summary": "Seul pays néerlandophone d'Amérique du Sud. Santokhi (coalition VHP, 2020–), alternance démocratique, coalition fragile.",
+    "url": "https://statistics-suriname.org/"
+  },
+  "m3-country-argentina": {
+    "citation": "INDEC · FMI · World Bank · 2024",
+    "title": "Argentina — Economic data & Milei reforms",
+    "summary": "2ᵉ économie sud-américaine (PIB ≈ 640 Md USD). Milei (libertarien, 2023–) : réformes austéritaires, polarisation extrême, alignement Washington.",
+    "url": "https://www.imf.org/en/Countries/ARG"
+  },
+  "m3-country-chile": {
+    "citation": "Banco Central de Chile · Servel · Freedom House · 2024–2025",
+    "title": "Chile — Copper, lithium & conservative shift",
+    "summary": "Cuivre nº1 mondial, lithium Triangle. Kast (droite conservatrice) élu déc. 2025 (58,2 %) après Boric. 2 réformes constitutionnelles rejetées (2022, 2023).",
+    "url": "https://www.bcentral.cl/en/home"
+  },
+  "m3-country-peru": {
+    "citation": "INEI · BCRP · Memoria 2024 · COSCO Chancay · 2024",
+    "title": "Perú — Mining economy & Chancay port",
+    "summary": "PIB ≈ 290 Md USD, 60 %+ exportations minières. 9 présidents en 10 ans (2016–2026). Keiko Fujimori élue juin 2026 (50,135 %), investiture 28 juillet.",
+    "url": "https://www.inei.gob.pe/estadisticas/indicadores/"
+  },
+  "m3-country-bolivia": {
+    "citation": "INE Bolivia · USGS lithium · CEPAL · 2024",
+    "title": "Bolivia — Gas, lithium & landlocked economy",
+    "summary": "Gaz naturel, lithium Salar de Uyuni. Arce (MAS, centre-gauche, 2020–) après crise 2019. État plurinational, tensions autonomistes Santa Cruz.",
+    "url": "https://www.ine.gob.bo/"
+  },
+  "m3-country-uruguay": {
+    "citation": "BCU · CEPAL · World Bank · 2024",
+    "title": "Uruguay — Stable economy & regional mediator",
+    "summary": "PIB/hab. le plus élevé du cône sud. Lacalle Pou (centre-droit, 2020–), alternance démocratique stable. Référence institutionnelle régionale.",
+    "url": "https://www.bcu.gub.uy/"
+  },
+  "m3-country-ecuador": {
+    "citation": "BCE · UNODC · Freedom House · 2024",
+    "title": "Ecuador — Dollarization & institutional crisis",
+    "summary": "Dollarisation depuis 2000. Noboa (centre-droit, 2023–) après destitution Lasso. Violence, narcotrafic, état d'urgence récurrent.",
+    "url": "https://www.bce.fin.ec/"
+  },
+  "m3-country-venezuela": {
+    "citation": "OPEC · OHCHR · Freedom House · 2024",
+    "title": "Venezuela — Authoritarian regime & oil sanctions",
+    "summary": "Régime autoritaire bolivarien : Maduro (contestation électorale 2024). Opposition réprimée, faible légitimité démocratique. Pétrole sous sanctions.",
+    "url": "https://www.r4v.info/en/refugeeandmigrants"
+  },
+  "m3-galeano-veins": {
+    "citation": "Eduardo Galeano · Las venas abiertas de América Latina · Siglo XXI · 1971",
+    "title": "Les veines ouvertes de l'Amérique latine",
+    "summary": "Analyse de cinq siècles d'extraction (Potosí, monocultures, compagnies transnationales) : l'Amérique latine comme périphérie drainée au profit de l'Europe puis des États-Unis.",
+    "url": "https://en.wikipedia.org/wiki/Open_Veins_of_Latin_America"
+  },
+  "m3-monroe-doctrine": {
+    "citation": "James Monroe · Message au Congrès · 1823 · Roosevelt corollaire · 1904",
+    "title": "Doctrine Monroe et corollaire Roosevelt",
+    "summary": "1823 : sphère d'influence exclusive des États-Unis sur l'hémisphère. 1904 : corollaire Roosevelt (Big Stick), dollar diplomacy et contrôle du canal de Panama.",
+    "url": "https://history.state.gov/milestones/1801-1829/monroe"
+  },
+  "m3-us-interventions": {
+    "citation": "CIA · Kornbluh · The Pinochet File · Schoultz · Beneath the United States · 2024",
+    "title": "Interventions américaines en Amérique latine (Guerre froide)",
+    "summary": "Guatemala 1954 (United Fruit / CIA), Chili 1973 (Allende / Pinochet), Contras au Nicaragua, Plan Colombie — soutien à des régimes autoritaires anticomunistes.",
+    "url": "https://www.brown.edu/Research/Understanding_the_Cold_War/events/guatemala.php"
+  },
   "m3-china-latam": {
     "citation": "China-Latin America Relations · CID · Reuters · 2024",
     "title": "China and Latin America Economic Bulletin, 2024",
     "summary": "La Chine est devenue le premier partenaire commercial de plusieurs pays d'Amérique latine dès 2010, avec plus de 150 milliards de dollars de prêts d'infrastructure depuis 2000.",
     "url": "https://www.thedialogue.org/wp-content/uploads/2024/02/China-Latin-America-Economic-Bulletin-2024.pdf"
+  },
+  "m3-russia-latam": {
+    "citation": "Wilson Center · CSIS · Reuters · Russia-Latin America relations · 2024",
+    "title": "Russia's Engagement in Latin America",
+    "summary": "De l'alliance soviético-cubaine (1959–62) au retrait post-1991, puis retour sous Poutine via le Venezuela, Cuba et le Nicaragua : présence militaire ciblée, diplomatie BRICS et commerce limité (≈ 12 Md $ vs ≈ 450 Md $ pour la Chine en 2021).",
+    "url": "https://www.wilsoncenter.org/article/russias-strategy-latin-america"
   },
   "m3-chancay-port": {
     "citation": "Port de Chancay · COSCO Shipping · inauguré nov. 2024",
@@ -422,19 +524,19 @@
   "m3-governance-crisis": {
     "citation": "Congreso de la República del Perú · Freedom House · 2024",
     "title": "Crise de gouvernance en Amérique latine",
-    "summary": "Fragilité institutionnelle chronique : six présidents au Pérou entre 2016 et 2021, coups d'État en Bolivie, réformes constitutionnelles échouées au Chili.",
+    "summary": "Fragilité institutionnelle chronique : neuf présidents au Pérou entre 2016 et 2026 (Kuczynski à Fujimori), coups d'État en Bolivie, réformes constitutionnelles échouées au Chili.",
     "url": "https://freedomhouse.org/country/peru/freedom-world/2024"
   },
   "m3-odebrecht-cpi": {
     "citation": "Transparency International · CPI 2024 · Lava Jato · Odebrecht",
-    "title": "Corruption Perceptions Index 2024",
-    "summary": "L'affaire Odebrecht a impliqué quatre présidents péruviens ; le Pérou obtient 37/100 à l'indice de perception de la corruption (corruption très élevée).",
+    "title": "Corruption Perceptions Index 2024 · Affaire Odebrecht",
+    "summary": "Scandale de corruption transnational (2014+) : Odebrecht a versé des centaines de millions de dollars de pots-de-vin en Amérique latine ; quatre présidents péruviens impliqués. Le Pérou obtient 37/100 à l'indice CPI (corruption très élevée).",
     "url": "https://www.transparency.org/en/cpi/2024"
   },
   "m3-polarization": {
-    "citation": "Latinobarómetro · 2024 · IDEA International",
+    "citation": "Latinobarómetro · 2024 · ONPE · CNE Colombia · 2026",
     "title": "Polarisation politique en Amérique latine",
-    "summary": "Le centre politique s'est effondré au profit de blocs radicaux : Castillo vs Fujimori au Pérou, Milei vs kirchneristes en Argentine, Petro vs opposition en Colombie.",
+    "summary": "Scrutins serrés de juin 2026 : Fujimori (50,135 %) au Pérou, de la Espriella (49,66 %) en Colombie. Le centre politique s'est effondré au profit de blocs radicaux — Milei en Argentine, Petro puis bascule conservatrice en Colombie.",
     "url": "https://www.latinobarometro.org/lat.html"
   },
   "m3-reuters-political-map": {
@@ -444,10 +546,16 @@
     "url": "https://www.reuters.com/world/americas/de-la-espriella-win-colombia-cements-latin-americas-rightward-shift-2026-06-22/"
   },
   "m3-elections-wave-2026": {
-    "citation": "ONPE · 2026 · CNE Colombia · Servel Chile · 2025–2026",
+    "citation": "ONPE · 2026 · CNE Colombia · Servel Chile · TSE Brasil · 2025–2026",
     "title": "Vague électorale conservatrice en Amérique latine (2025–2026)",
-    "summary": "Kast élu au Chili (58,2 %, déc. 2025), de la Espriella en Colombie (49,66 %, juin 2026), Fujimori au Pérou (50,135 %, juin 2026) : bascule régionale vers la droite dure.",
+    "summary": "Kast élu au Chili (58,2 %, déc. 2025), de la Espriella en Colombie (49,66 %, juin 2026), Fujimori au Pérou (50,135 %, juin 2026) : bascule régionale vers la droite dure. Prochain scrutin majeur : présidentielle brésilienne (4 oct. 2026).",
     "url": "https://andina.pe/ingles/noticia-peru-2026-elections-jne-proclaims-keiko-fujimori-presidentelect-1082139.aspx"
+  },
+  "m3-brazil-election-2026": {
+    "citation": "TSE · AtlasIntel · Gerp/Aesp · CNN Brasil · juillet 2026",
+    "title": "Élections générales brésiliennes de 2026",
+    "summary": "1er tour le 4 octobre 2026, 2e tour le 25 octobre. Lula (PT) vise un 4e mandat ; principal rival Flávio Bolsonaro (PL), héritier de Jair Bolsonaro inéligible. Sondages juillet 2026 : course serrée (≈ 36–47 % selon instituts).",
+    "url": "https://en.wikipedia.org/wiki/2026_Brazilian_general_election"
   },
   "m3-organized-crime": {
     "citation": "UNODC · Homicidios intencionales · INEI · 2024",
@@ -502,6 +610,24 @@
     "title": "Informe Final de la Comisión de la Verdad y Reconciliación",
     "summary": "De l'Empire inca à la République : conquête espagnole, oligarchie foncière, dictatures militaires, Fujimori et guerre interne (75 000 morts avec le Sendero Luminoso).",
     "url": "https://www.cverdad.org.pe/ifinal/index.php"
+  },
+  "m3-peru-inca": {
+    "citation": "José A. del Busto · Historia del Perú · UNESCO · Qhapaq Ñan",
+    "title": "L'Empire inca (Tawantinsuyu)",
+    "summary": "Empire andin unifié (1200–1533) : Cuzco, réseau Qhapaq Ñan, quechua, mit'a. Chute après guerre civile et conquête de Pizarro (Cajamarca, 1532).",
+    "url": "https://whc.unesco.org/en/list/1459/"
+  },
+  "m3-peru-conquest": {
+    "citation": "José A. del Busto · Historia del Perú · BCRP · Memoria Anual 2024",
+    "title": "Conquête espagnole et vice-royauté du Pérou",
+    "summary": "Vice-royauté de Lima (1533–1821) : mines de Potosí et Huancavelica, encomienda, mestizaje. Révolte de Túpac Amaru II (1780–1781).",
+    "url": "https://www.bcrp.gob.pe/docs/Transparencia/Memoria-Anual/2024/Memoria-Anual-2024.pdf"
+  },
+  "m3-peru-republic": {
+    "citation": "José A. del Busto · Historia del Perú · BCRP · Memoria 2024",
+    "title": "République oligarchique péruvienne (1821–1900)",
+    "summary": "Indépendance San Martín / Bolívar, boom du guano (jusqu'à 40 % des recettes), guerre du Pacifique (1879–1884) et perte des provinces salpêtre au Chili.",
+    "url": "https://www.bcrp.gob.pe/docs/Transparencia/Memoria-Anual/2024/Memoria-Anual-2024.pdf"
   },
   "m3-peru-presidents-2001": {
     "citation": "Lava Jato · Odebrecht · Fiscalía de la Nación · Transparency International",
@@ -658,5 +784,29 @@
     "title": "Las Huellas Del Cerrejón",
     "summary": "Documentaire recueillant les expériences de personnes vivant aux côtés de la plus grande mine de charbon du monde. La « minería responsable » a asséché les eaux du département et plongé les habitants dans le désespoir, mais ils restent unis pour défendre leur terre natale.",
     "url": "https://www.youtube.com/watch?v=ryssy7pJhJI&t=69s"
+  },
+  "m3-acronyms-glossary": {
+    "citation": "Registre acronymes · acronyms.json · Module 3",
+    "title": "Glossaire des acronymes — Module 3",
+    "summary": "Registre centralisé des sigles du deck : survol à la 1ʳᵉ apparition dans le corps des slides, annexes 63–63c pour la référence complète par thème.",
+    "url": "/formation/acronyms.json"
+  },
+  "m4-ayahuasca-risks": {
+    "citation": "Ayahuasca-Induced Serotonin Syndrome · IntechOpen · 2025",
+    "title": "Ayahuasca-Induced Serotonin Syndrome: Risks, Mechanisms, and Clinical Considerations",
+    "summary": "Revue clinique des risques documentés de l'ayahuasca : syndrome sérotoninergique potentiellement mortel en association avec antidépresseurs (ISRS/IMAO), poussées cardiovasculaires (arythmie, AVC), épisodes psychotiques prolongés chez les personnes prédisposées, et décès en contexte de retraite.",
+    "url": "https://www.intechopen.com/chapters/1223993"
+  },
+  "m4-kambo-risks": {
+    "citation": "Shamanic Kambô Frog Hyponatremic Toxicity · Cureus · 2025",
+    "title": "Shamanic Kambô Frog Hyponatremic Toxicity Leading to Brain Death: A Case Report",
+    "summary": "Sécrétion de Phyllomedusa bicolor appliquée sur des brûlures cutanées : peptides puissants (dermorphine, phyllocaéruléine) provoquant vomissements violents, tachycardie et déséquilibres hydriques. Associée à une surhydratation rituelle, elle peut causer une hyponatrémie sévère, un œdème cérébral et la mort (1er cas de mort cérébrale documenté).",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/40502907/"
+  },
+  "m4-timber-valuechain": {
+    "citation": "Forest Trends · Timber Legality Risk Dashboard: Peru · 2022",
+    "title": "Peru Timber Legality Risk Dashboard",
+    "summary": "Chaîne de valeur du bois péruvien : la grume de caoba (acajou) vaut ~227 USD/m³ en forêt contre ~5 590 USD/m³ en bois scié, l'essentiel de la marge se concentrant à l'export et la transformation. 60 à 90 % du bois récolté au Pérou serait d'origine illégale (falsification de permis).",
+    "url": "https://www.forest-trends.org/wp-content/uploads/2022/01/Peru-Timber-Legality-Risk-Dashboard-IDAT-Risk.pdf"
   }
 }

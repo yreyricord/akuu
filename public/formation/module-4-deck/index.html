@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
+<script src="../module-1-deck/deck-interactions.js" defer></script>
 </head>
 <body>
 <x-dc>
@@ -68,7 +69,7 @@
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--green-forest);">01 · Faune</div>
     <div class="topbar" style="background:var(--green-leaf);"></div>
-    <h1 class="h" style="color:var(--green-forest);">Une biodiversité faunistique sans égal</h1>
+    <h1 class="h" data-src-id="wwf2022living" data-src="Living Amazon Report · WWF · 2022" style="color:var(--green-forest);">Une biodiversité faunistique sans égal</h1>
     <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; flex:1;">
       <div class="card stat card-in d1" style="background:var(--cream); justify-content:center;"><div class="stat-n" style="color:var(--green-leaf);">3 000</div><div class="stat-l" style="color:var(--night-2);">espèces de poissons d'eau douce · 12 % du total mondial</div></div>
       <div class="card stat card-in d1" style="background:var(--cream); justify-content:center;"><div class="stat-n" style="color:var(--green-leaf);">430+</div><div class="stat-l" style="color:var(--night-2);">espèces de mammifères</div></div>
@@ -336,7 +337,7 @@
         <div class="card card-in d2" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">Lapacho <span style="font-weight:400;">· ipé</span></b><div class="small" style="color:var(--night-2); margin-top:6px;">Lapacho (ipé) : bois extrêmement dense qui coule dans l'eau, pour terrasses et ponts. Le mogno (acajou du Brésil) est très déplété après un siècle d'exploitation.</div></div>
       </div>
       <div style="flex:1.1; display:flex; flex-direction:column; gap:16px; justify-content:center;">
-        <div class="card stat card-in d1" style="background:#8A5A24;"><div class="stat-n" style="color:var(--ochre);">50 %+</div><div class="stat-l" style="color:var(--ochre-light);">de l'exploitation forestière péruvienne est illégale</div></div>
+        <div class="card stat card-in d1" style="background:#8A5A24;" data-src-id="m4-timber-valuechain" data-src="Forest Trends · Timber Legality Risk Dashboard: Peru · 2022"><div class="stat-n" style="color:var(--ochre);">50 %+</div><div class="stat-l" style="color:var(--ochre-light);">de l'exploitation forestière péruvienne est illégale</div></div>
         <div class="card card-in d2" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">Chaîne de valeur</b><div class="small" style="color:var(--night-2); margin-top:6px;">Exploitant → transporteur → scierie → marchand → consommateur. La corruption des contrôles alimente le trafic (voir Partie 03).</div></div>
       </div>
     </div>
@@ -390,8 +391,42 @@
     </div>
   </section>
 
+  <!-- ===== S24b ALERTE AYAHUASCA ===== -->
+  <section data-label="24 · Ayahuasca : alertes" style="background:var(--ochre-light); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--terracotta);">02 · Flore</div>
+    <div class="topbar" style="background:var(--terracotta);"></div>
+    <h1 class="h" style="color:var(--terracotta);">Ayahuasca : alertes et effets nocifs documentés</h1>
+    <p class="lead" data-src-id="m4-ayahuasca-risks" data-src="Ayahuasca-Induced Serotonin Syndrome · IntechOpen · 2025" style="color:var(--night-2); margin:0 0 18px; max-width:1500px; font-size:var(--fs-1);">À l'intention des volontaires tentés par l'expérience : ce n'est pas anodin. Des effets graves sont scientifiquement documentés. Ne jamais improviser.</p>
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:16px; flex:1; align-content:center;">
+      <div class="card card-in d1" style="background:var(--cream); border-left:8px solid var(--terracotta);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Interactions médicamenteuses mortelles</b><div class="small" style="color:var(--night-2); margin-top:6px;">Avec les antidépresseurs (ISRS, IMAO) et de nombreux médicaments : risque de <b>syndrome sérotoninergique</b>, potentiellement fatal. L'arrêt d'un traitement ne se fait que sous suivi médical.</div></div>
+      <div class="card card-in d2" style="background:var(--cream); border-left:8px solid var(--terracotta);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Risque cardiovasculaire</b><div class="small" style="color:var(--night-2); margin-top:6px;">Le breuvage élève la tension et le rythme cardiaque : danger d'<b>arythmie, AVC ou arrêt cardiaque</b>, surtout en cas de pathologie cardiaque non diagnostiquée.</div></div>
+      <div class="card card-in d3" style="background:var(--cream); border-left:8px solid var(--terracotta);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Risque psychiatrique</b><div class="small" style="color:var(--night-2); margin-top:6px;">Peut déclencher des <b>épisodes psychotiques prolongés</b>, en particulier chez les personnes ayant des antécédents (schizophrénie, bipolarité, manie), personnels ou familiaux.</div></div>
+      <div class="card card-in d4" style="background:var(--cream); border-left:8px solid var(--terracotta);"><b style="color:var(--terracotta); font-size:var(--fs-1);">Centres non régulés</b><div class="small" style="color:var(--night-2); margin-top:6px;">Facilitateurs non qualifiés, additifs dangereux (<i>toé</i>/Brugmansia toxique, tabac), absence de bilan médical. Des cas d'<b>abus et de décès</b> sont documentés en retraite.</div></div>
+    </div>
+    <div class="card" style="background:var(--terracotta); margin-top:16px;"><b style="color:#fff; font-size:var(--fs-1);">Si tu envisages malgré tout :</b> <span class="small" style="color:#fff;">bilan médical préalable, centre sérieux et encadré, déclare TOUS tes médicaments, jamais seul·e, jamais mélangé à d'autres substances.</span></div>
+  </section>
+
+  <!-- ===== S24c KAMBO ===== -->
+  <section data-label="25 · Kambo" style="background:var(--ochre-light); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:#8A5A24;">02 · Flore</div>
+    <div class="topbar" style="background:var(--ochre);"></div>
+    <h1 class="h" style="color:#8A5A24;">Kambo : la « médecine de la grenouille »</h1>
+    <div style="display:flex; gap:28px; flex:1; align-items:stretch;">
+      <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+        <div class="ph photo-in d1" data-ph="M4-10b" style="width:100%; height:600px;"><span class="ph-num">M4-10b</span><span class="ph-kind">IMAGE</span><span class="ph-desc">Grenouille kambo (Phyllomedusa bicolor) et points d'application rituels</span></div>
+      </div>
+      <div style="flex:1.15; display:flex; flex-direction:column; gap:14px; justify-content:center;">
+        <div class="card card-in d1" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">Origine &amp; usage</b><div class="small" style="color:var(--night-2); margin-top:6px;">Sécrétion de la grenouille <i>Phyllomedusa bicolor</i> (« sapo verde »). Usage traditionnel matsés et katukina comme « vaccin de la forêt », appliquée sur de petites brûlures cutanées avant la chasse.</div></div>
+        <div class="card card-in d2" style="background:var(--cream);"><b style="color:#8A5A24; font-size:var(--fs-1);">Effets</b><div class="small" style="color:var(--night-2); margin-top:6px;">Peptides puissants (dermorphine, phyllocaéruléine) : purge violente, vomissements, tachycardie, gonflement du visage, chute de tension. Effet bref mais très intense.</div></div>
+        <div class="card card-in d3" style="background:var(--terracotta);" data-src-id="m4-kambo-risks" data-src="Shamanic Kambô Frog Hyponatremic Toxicity · Cureus · 2025"><b style="color:#fff; font-size:var(--fs-1);">Risques documentés</b><div class="small" style="color:#fff; margin-top:6px;">Hyponatrémie sévère (aggravée par la surhydratation rituelle), convulsions, troubles cardiaques, <b>premier cas de mort cérébrale documenté (2025)</b>. Ce n'est pas un « vaccin » au sens scientifique : prudence maximale, jamais combiné à l'ayahuasca et à de grandes quantités d'eau.</div></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== S25 AUTRES PLANTES PSYCHOACTIVES ===== -->
-  <section data-label="24 · Plantes psychoactives" style="background:var(--ochre-light); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="26 · Plantes psychoactives" style="background:var(--ochre-light); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:#8A5A24;">02 · Flore</div>
     <div class="topbar" style="background:var(--ochre);"></div>
@@ -404,7 +439,7 @@
   </section>
 
   <!-- ===== S26 RESSOURCES ALIMENTAIRES ===== -->
-  <section data-label="25 · Ressources alimentaires" style="background:var(--ochre-light); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="27 · Ressources alimentaires" style="background:var(--ochre-light); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:#8A5A24;">02 · Flore</div>
     <div class="topbar" style="background:var(--ochre);"></div>
@@ -418,7 +453,7 @@
   </section>
 
   <!-- ===== S27 SYMBIOSES ===== -->
-  <section data-label="26 · Symbioses" style="background:var(--ochre-light); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="28 · Symbioses" style="background:var(--ochre-light); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:#8A5A24;">02 · Flore</div>
     <div class="topbar" style="background:var(--ochre);"></div>
@@ -432,7 +467,7 @@
   </section>
 
   <!-- ===== S28 STRATIFICATION FORESTIÈRE ===== -->
-  <section data-label="27 · Stratification" style="background:var(--ochre-light); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="29 · Stratification" style="background:var(--ochre-light); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:#8A5A24;">02 · Flore</div>
     <div class="topbar" style="background:var(--ochre);"></div>
@@ -451,7 +486,7 @@
   </section>
 
   <!-- ===== S29 MENACES À LA FLORE ===== -->
-  <section data-label="28 · Menaces à la flore" style="background:var(--ochre-light); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="30 · Menaces à la flore" style="background:var(--ochre-light); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:#8A5A24;">02 · Flore</div>
     <div class="topbar" style="background:var(--ochre);"></div>
@@ -465,7 +500,7 @@
   </section>
 
   <!-- ===== S31 TITRE PARTIE 03 · ÉCONOMIE ===== -->
-  <section data-label="29 · Partie 03 · Économie" style="background: var(--role-chapter-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
+  <section data-label="31 · Partie 03 · Économie" style="background: var(--role-chapter-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="bar" style="background:var(--green-leaf);"></div>
     <div style="font-family:'Playfair Display',serif; font-size:var(--fs-6); font-weight:800; color:rgba(166,198,57,0.15); position:absolute; top:40px; right:90px;">03</div>
@@ -476,7 +511,7 @@
   </section>
 
   <!-- ===== S32 DISTRIBUTION DES POPULATIONS ===== -->
-  <section data-label="30 · Populations" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="32 · Populations" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--steel-dark);">03 · Économie</div>
     <div class="topbar" style="background:var(--steel-dark);"></div>
@@ -495,7 +530,7 @@
   </section>
 
   <!-- ===== S33 SECTEURS ÉCONOMIQUES MAJEURS ===== -->
-  <section data-label="31 · Secteurs majeurs" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="33 · Secteurs majeurs" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--steel-dark);">03 · Économie</div>
     <div class="topbar" style="background:var(--steel-dark);"></div>
@@ -509,7 +544,7 @@
   </section>
 
   <!-- ===== S34 AGRICULTURE ===== -->
-  <section data-label="32 · Agriculture" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="34 · Agriculture" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--steel-dark);">03 · Économie</div>
     <div class="topbar" style="background:var(--steel-dark);"></div>
@@ -523,23 +558,44 @@
   </section>
 
   <!-- ===== S35 CHAÎNES DE VALEUR · BOIS ===== -->
-  <section data-label="33 · Chaîne de valeur (bois)" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="35 · Chaîne de valeur (bois)" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--steel-dark);">03 · Économie</div>
     <div class="topbar" style="background:var(--steel-dark);"></div>
-    <h1 class="h" style="color:var(--steel-dark);">Chaîne de valeur : le cas de l'acajou</h1>
-    <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:12px; flex:1; align-content:center;">
-      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--steel-dark); font-weight:800;">COUPE (forêt)</div><b style="color:var(--steel-dark); font-size:var(--fs-1); margin:4px 0;">100–200 $</b><div class="xs" style="color:var(--night-2);">/m³ · profit très faible, travail dangereux.</div></div>
-      <div class="card card-in d1" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--steel-dark); font-weight:800;">TRANSPORT</div><b style="color:var(--steel-dark); font-size:var(--fs-1); margin:4px 0;">+50–100 $</b><div class="xs" style="color:var(--night-2);">/m³ · risque de légalité, checkpoints.</div></div>
-      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--steel-dark); font-weight:800;">SCIERIE</div><b style="color:var(--steel-dark); font-size:var(--fs-1); margin:4px 0;">400–600 $</b><div class="xs" style="color:var(--night-2);">/m³ · markup +100 %.</div></div>
-      <div class="card card-in d2" style="background:var(--cream); display:flex; flex-direction:column;"><div class="xs" style="color:var(--steel-dark); font-weight:800;">EXPORT</div><b style="color:var(--steel-dark); font-size:var(--fs-1); margin:4px 0;">600–1000 $</b><div class="xs" style="color:var(--night-2);">/m³ · certifications souvent falsifiées.</div></div>
-      <div class="card card-in d3" style="background:var(--steel-dark); display:flex; flex-direction:column;"><div class="xs" style="color:var(--green-leaf); font-weight:800;">MEUBLE</div><b style="color:var(--cream); font-size:var(--fs-1); margin:4px 0;">1500–3000 $</b><div class="xs" style="color:#B9CEDD;">/m³ · profit énorme, très loin de la source.</div></div>
+    <h1 class="h" data-src-id="m4-timber-valuechain" data-src="Forest Trends · Timber Legality Risk Dashboard: Peru · 2022" style="color:var(--steel-dark);">Chaîne de valeur : le cas de l'acajou</h1>
+    <div class="card" style="background:var(--steel-dark); flex:1; display:flex; flex-direction:column; justify-content:center; padding:26px 30px;">
+      <div class="deck-timeline" data-deck-timeline style="--deck-timeline-cols:5;">
+        <div class="deck-timeline__years">
+          <div>100–200 $</div>
+          <div>+50–100 $</div>
+          <div>400–600 $</div>
+          <div>600–1000 $</div>
+          <div>1500–3000 $</div>
+        </div>
+        <div class="deck-timeline__rail">
+          <div class="deck-timeline__line"></div>
+          <div class="deck-timeline__dots">
+            <span class="deck-timeline__dot"></span>
+            <span class="deck-timeline__dot"></span>
+            <span class="deck-timeline__dot"></span>
+            <span class="deck-timeline__dot"></span>
+            <span class="deck-timeline__dot"></span>
+          </div>
+        </div>
+        <div class="deck-timeline__descs">
+          <div class="xs" style="color:var(--cream);"><b>Coupe (forêt)</b><br>/m³ · profit très faible, travail dangereux.</div>
+          <div class="xs" style="color:var(--cream);"><b>Transport</b><br>/m³ · risque de légalité, checkpoints.</div>
+          <div class="xs" style="color:var(--cream);"><b>Scierie</b><br>/m³ · markup +100 %.</div>
+          <div class="xs" style="color:var(--cream);"><b>Export</b><br>/m³ · certifications souvent falsifiées.</div>
+          <div class="xs" style="color:var(--ochre-light);"><b>Meuble</b><br>/m³ · profit énorme, loin de la source.</div>
+        </div>
+      </div>
     </div>
-    <div class="card" style="background:var(--steel-dark); margin-top:18px;"><b style="color:var(--cream); font-size:var(--fs-1);">Le producteur forestier ne touche que 10–15 %</b> <span class="small" style="color:#B9CEDD;">de la valeur finale · l'incitation économique à la déforestation est extrêmement puissante.</span></div>
+    <div class="card" style="background:var(--steel-dark); margin-top:18px;" data-src-id="m4-timber-valuechain" data-src="Forest Trends · Timber Legality Risk Dashboard: Peru · 2022"><b style="color:var(--cream); font-size:var(--fs-1);">Le producteur forestier ne touche qu'une fraction</b> <span class="small" style="color:#B9CEDD;">de la valeur finale (grume ~227 $/m³ vs bois scié ~5 590 $/m³) · l'incitation économique à la déforestation est extrêmement puissante.</span></div>
   </section>
 
   <!-- ===== S36 ORPAILLAGE ===== -->
-  <section data-label="34 · Orpaillage" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="36 · Orpaillage" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--steel-dark);">03 · Économie</div>
     <div class="topbar" style="background:var(--steel-dark);"></div>
@@ -550,14 +606,14 @@
       </div>
       <div style="flex:1.1; display:flex; flex-direction:column; gap:16px; justify-content:center;">
         <div class="card card-in d1" style="background:var(--cream);"><b style="color:var(--steel-dark); font-size:var(--fs-1);">Une économie de la pauvreté</b><div class="small" style="color:var(--night-2); margin-top:6px;">Orpaillage : 50–100 $/jour contre 10 $/jour en agriculture. L'écart économique explique l'ampleur du phénomène.</div></div>
-        <div class="card card-in d2" style="background:var(--terracotta);"><b style="color:var(--cream); font-size:var(--fs-1);">Le mercure, un poison</b><div class="small" style="color:#FBE7DF; margin-top:6px;">L'amalgame or-mercure est chauffé : 10–20 % du mercure est libéré, TOXIQUE, et contamine les rivières et la chaîne alimentaire.</div></div>
+        <div class="card card-in d2" style="background:var(--terracotta);" data-src-id="mercury-contamination" data-src="Mercury Dynamics and Bioaccumulation Risk Assessment · 2024"><b style="color:var(--cream); font-size:var(--fs-1);">Le mercure, un poison</b><div class="small" style="color:#FBE7DF; margin-top:6px;">L'amalgame or-mercure est chauffé : 10–20 % du mercure est libéré, TOXIQUE, et contamine les rivières et la chaîne alimentaire.</div></div>
         <div class="card card-in d3" style="background:var(--steel-dark);"><b style="color:var(--cream); font-size:var(--fs-1);">~50–100 M USD/an</b><div class="small" style="color:#B9CEDD; margin-top:6px;">d'économie illégale : ni taxes, ni permis, ni contrôle. 50 000+ mineurs, corruption des autorités.</div></div>
       </div>
     </div>
   </section>
 
   <!-- ===== S37 TOURISME ===== -->
-  <section data-label="35 · Tourisme" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="37 · Tourisme" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--steel-dark);">03 · Économie</div>
     <div class="topbar" style="background:var(--steel-dark);"></div>
@@ -570,7 +626,7 @@
   </section>
 
   <!-- ===== S38 INÉGALITÉS ===== -->
-  <section data-label="36 · Inégalités" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="38 · Inégalités" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--steel-dark);">03 · Économie</div>
     <div class="topbar" style="background:var(--steel-dark);"></div>
@@ -590,7 +646,7 @@
   </section>
 
   <!-- ===== S39 CONFLITS ÉCONOMIQUES ===== -->
-  <section data-label="37 · Conflits économiques" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="39 · Conflits économiques" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--steel-dark);">03 · Économie</div>
     <div class="topbar" style="background:var(--steel-dark);"></div>
@@ -604,7 +660,7 @@
   </section>
 
   <!-- ===== S40 COMMERCE INTERNATIONAL ===== -->
-  <section data-label="38 · Commerce international" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="40 · Commerce international" style="background:var(--steel); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--steel-dark);">03 · Économie</div>
     <div class="topbar" style="background:var(--steel-dark);"></div>
@@ -622,7 +678,7 @@
   </section>
 
   <!-- ===== S42 TITRE PARTIE 04 · ENJEUX ===== -->
-  <section data-label="39 · Partie 04 · Enjeux" style="background: var(--role-chapter-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
+  <section data-label="41 · Partie 04 · Enjeux" style="background: var(--role-chapter-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="bar" style="background:var(--green-leaf);"></div>
     <div style="font-family:'Playfair Display',serif; font-size:var(--fs-6); font-weight:800; color:rgba(166,198,57,0.15); position:absolute; top:40px; right:90px;">04</div>
@@ -633,15 +689,15 @@
   </section>
 
   <!-- ===== S43 DÉFORESTATION ===== -->
-  <section data-label="40 · Déforestation" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="42 · Déforestation" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:#A63A22;">04 · Enjeux</div>
     <div class="topbar" style="background:var(--terracotta);"></div>
-    <h1 class="h" style="color:#A63A22;">Déforestation : causes &amp; ampleur</h1>
+    <h1 class="h" data-src-id="mapbiomas2025" data-src="MapBiomas · 2025" style="color:#A63A22;">Déforestation : causes &amp; ampleur</h1>
     <div style="display:flex; gap:28px; flex:1; align-items:stretch;">
       <div style="flex:1; display:flex; flex-direction:column; gap:14px; justify-content:center;">
         <div class="card stat card-in d1" style="background:var(--cream);"><div class="stat-n" style="color:#A63A22;">2 000+ km²</div><div class="stat-l" style="color:var(--night-2);">déforestés chaque année au Pérou · un rythme croissant</div></div>
-        <div class="card stat card-in d2" style="background:var(--terracotta);"><div class="stat-n" style="color:var(--cream);">17–20 %</div><div class="stat-l" style="color:#FBE7DF;">déjà perdus · proche du seuil critique de 20–25 %</div></div>
+        <div class="card stat card-in d2" style="background:var(--terracotta);" data-src-id="wwf2022living" data-src="Living Amazon Report · WWF · 2022"><div class="stat-n" style="color:var(--cream);">17–20 %</div><div class="stat-l" style="color:#FBE7DF;">déjà perdus · proche du seuil critique de 20–25 %</div></div>
       </div>
       <div style="flex:1.15; display:grid; grid-template-columns:repeat(2,1fr); gap:14px; align-content:center;">
         <div class="card card-in d1" style="background:var(--cream);"><b style="color:#A63A22; font-size:var(--fs-1);">Orpaillage (40 %)</b><div class="xs" style="color:var(--night-2); margin-top:4px;">Mercure + défrichement direct.</div></div>
@@ -654,7 +710,7 @@
   </section>
 
   <!-- ===== S44 POLLUTION MERCURE ===== -->
-  <section data-label="41 · Pollution mercure" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="43 · Pollution mercure" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:#A63A22;">04 · Enjeux</div>
     <div class="topbar" style="background:var(--terracotta);"></div>
@@ -672,7 +728,7 @@
   </section>
 
   <!-- ===== S45 CHANGEMENT CLIMATIQUE ===== -->
-  <section data-label="42 · Changement climatique" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="44 · Changement climatique" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:#A63A22;">04 · Enjeux</div>
     <div class="topbar" style="background:var(--terracotta);"></div>
@@ -686,7 +742,7 @@
   </section>
 
   <!-- ===== S46 POINT DE BASCULE ===== -->
-  <section data-label="43 · Point de bascule" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="45 · Point de bascule" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:#A63A22;">04 · Enjeux</div>
     <div class="topbar" style="background:var(--terracotta);"></div>
@@ -696,7 +752,7 @@
         <div class="ph photo-in d1" data-ph="M4-13" style="width:100%; height:600px;"><span class="ph-num">M4-13</span><span class="ph-kind">SCHÉMA</span><span class="ph-desc">Cercle vicieux : réchauffement → moins de pluie → incendies → déforestation</span></div>
       </div>
       <div style="flex:1.1; display:flex; flex-direction:column; gap:16px; justify-content:center;">
-        <div class="card card-in d1" style="background:var(--cream);"><b style="color:#A63A22; font-size:var(--fs-1);">Un seuil irréversible</b><div class="small" style="color:var(--night-2); margin-top:6px;">Au-delà de 20–25 % de déforestation, la forêt peut basculer en savane tropicale. Le Pérou en est à 17–20 %.</div></div>
+        <div class="card card-in d1" style="background:var(--cream);" data-src-id="lovejoy-nobre2018" data-src="Lovejoy &amp; Nobre · Science Advances · 2018"><b style="color:#A63A22; font-size:var(--fs-1);">Un seuil irréversible</b><div class="small" style="color:var(--night-2); margin-top:6px;">Au-delà de 20–25 % de déforestation, la forêt peut basculer en savane tropicale. Le Pérou en est à 17–20 %.</div></div>
         <div class="card card-in d2" style="background:var(--cream);"><b style="color:#A63A22; font-size:var(--fs-1);">Le cercle vicieux</b><div class="small" style="color:var(--night-2); margin-top:6px;">Moins de transpiration → moins de pluie → plus de sécheresse → incendies → plus de déforestation. Auto-amplification.</div></div>
         <div class="card card-in d3" style="background:#A63A22;"><b style="color:var(--cream); font-size:var(--fs-1);">Conséquences globales</b><div class="small" style="color:#FBE7DF; margin-top:6px;">Perte de 90 % de la biodiversité, relâchement de 150–200 Gt de CO₂, effondrement des pluies sud-américaines. Récupération sur des millions d'années.</div></div>
       </div>
@@ -704,7 +760,7 @@
   </section>
 
   <!-- ===== S47 PEUPLES AUTOCHTONES ===== -->
-  <section data-label="44 · Peuples impactés" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="46 · Peuples impactés" style="background:var(--sand); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:#A63A22;">04 · Enjeux</div>
     <div class="topbar" style="background:var(--terracotta);"></div>
@@ -724,7 +780,7 @@
   </section>
 
   <!-- ===== S49 TITRE PARTIE 05 · MYTHOLOGIE ===== -->
-  <section data-label="45 · Partie 05 · Mythologie" style="background: var(--role-chapter-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
+  <section data-label="47 · Partie 05 · Mythologie" style="background: var(--role-chapter-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="bar" style="background:var(--green-leaf);"></div>
     <div style="font-family:'Playfair Display',serif; font-size:var(--fs-6); font-weight:800; color:rgba(166,198,57,0.15); position:absolute; top:40px; right:90px;">05</div>
@@ -735,7 +791,7 @@
   </section>
 
   <!-- ===== S50 BOTO COR-DE-ROSA ===== -->
-  <section data-label="46 · Boto cor-de-rosa" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="48 · Boto cor-de-rosa" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--blue-akuu);">05 · Mythologie</div>
     <div class="topbar" style="background:var(--blue-sky);"></div>
@@ -753,7 +809,7 @@
   </section>
 
   <!-- ===== S51 YACUMAMA ===== -->
-  <section data-label="47 · Yacumama" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="49 · Yacumama" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--blue-akuu);">05 · Mythologie</div>
     <div class="topbar" style="background:var(--blue-sky);"></div>
@@ -771,7 +827,7 @@
   </section>
 
   <!-- ===== S52 CHULLACHAKI ===== -->
-  <section data-label="48 · Chullachaki" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="50 · Chullachaki" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--blue-akuu);">05 · Mythologie</div>
     <div class="topbar" style="background:var(--blue-sky);"></div>
@@ -784,7 +840,7 @@
   </section>
 
   <!-- ===== S53 SHAPISHICO ===== -->
-  <section data-label="49 · Shapishico" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="51 · Shapishico" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--blue-akuu);">05 · Mythologie</div>
     <div class="topbar" style="background:var(--blue-sky);"></div>
@@ -797,7 +853,7 @@
   </section>
 
   <!-- ===== S54 ANACONDA MYTHIQUE VS RÉELLE ===== -->
-  <section data-label="50 · Anaconda : mythe &amp; réel" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="52 · Anaconda : mythe &amp; réel" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--blue-akuu);">05 · Mythologie</div>
     <div class="topbar" style="background:var(--blue-sky);"></div>
@@ -814,7 +870,7 @@
   </section>
 
   <!-- ===== S55 COSMOLOGIE DE LA CRÉATION ===== -->
-  <section data-label="51 · Cosmologie" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="53 · Cosmologie" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--blue-akuu);">05 · Mythologie</div>
     <div class="topbar" style="background:var(--blue-sky);"></div>
@@ -827,8 +883,8 @@
     </div>
   </section>
 
-  <!-- ===== S56 CHAMANISME ===== -->
-  <section data-label="52 · Vegetalismo" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== VEGETALISMO ===== -->
+  <section data-label="54 · Vegetalismo" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--blue-akuu);">05 · Mythologie</div>
     <div class="topbar" style="background:var(--blue-sky);"></div>
@@ -846,7 +902,7 @@
   </section>
 
   <!-- ===== S57 MYTHOLOGIE COMPARÉE & SYNCRÉTISME ===== -->
-  <section data-label="53 · Comparée &amp; syncrétisme" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="55 · Comparée &amp; syncrétisme" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--blue-akuu);">05 · Mythologie</div>
     <div class="topbar" style="background:var(--blue-sky);"></div>
@@ -859,7 +915,7 @@
   </section>
 
   <!-- ===== S58 SAGESSE ÉCOLOGIQUE ===== -->
-  <section data-label="54 · Sagesse écologique" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="56 · Sagesse écologique" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--blue-akuu);">05 · Mythologie</div>
     <div class="topbar" style="background:var(--blue-sky);"></div>
@@ -876,8 +932,8 @@
     </div>
   </section>
 
-  <!-- ===== S59 TOURISME CHAMANIQUE ===== -->
-  <section data-label="55 · Tourisme ayahuasca" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <!-- ===== TOURISME AYAHUASCA ===== -->
+  <section data-label="57 · Tourisme ayahuasca" style="background:var(--blue-pale); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="tag" style="color:var(--blue-akuu);">05 · Mythologie</div>
     <div class="topbar" style="background:var(--blue-sky);"></div>
@@ -895,7 +951,7 @@
   </section>
 
   <!-- ===== S60 CONCLUSION GÉNÉRALE ===== -->
-  <section data-label="56 · Conclusion générale" style="background: radial-gradient(135% 130% at 82% 12%, #0a63b4 0%, var(--blue-akuu) 42%, #022a54 72%, #011d3c 100%); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x); overflow:hidden;">
+  <section data-label="58 · Conclusion générale" style="background: radial-gradient(135% 130% at 82% 12%, #0a63b4 0%, var(--blue-akuu) 42%, #022a54 72%, #011d3c 100%); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x); overflow:hidden;">
     <div style="position:absolute; inset:0; background: radial-gradient(60% 60% at 85% 20%, rgba(166,198,57,0.14) 0%, rgba(166,198,57,0) 60%);"></div>
     <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
     <div class="topbar" style="background: linear-gradient(90deg, var(--blue-sky), var(--green-leaf));"></div>
@@ -913,7 +969,7 @@
   </section>
 
   <!-- ===== S61 CLÔTURE MODULE 4 ===== -->
-  <section data-label="57 · Clôture" style="background: radial-gradient(120% 120% at 50% 20%, #1c3a15 0%, var(--night) 60%, #0a0f0d 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
+  <section data-label="59 · Clôture" style="background: radial-gradient(120% 120% at 50% 20%, #1c3a15 0%, var(--night) 60%, #0a0f0d 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--pad-top) var(--pad-x) var(--pad-bottom);">
     <img src="images/LOGOAKUU.png" style="height: 150px; object-fit: contain; margin-bottom: 34px;" alt="AKUU">
     <div class="bar" style="background: var(--green-leaf);"></div>
     <div class="kicker" style="color: var(--green-leaf); margin-bottom: 20px;">Module 4 · Terminé</div>
