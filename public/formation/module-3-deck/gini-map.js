@@ -1,9 +1,10 @@
 (function () {
   'use strict';
 
-  const GINI_BUCKETS = {
+  const GINI_COLORS = {
     '#240000': 'Au-dessus de 50',
     '#700000': 'Entre 45 et 50',
+    '#800000': 'Entre 45 et 50',
     '#b80000': 'Entre 40 et 45',
     '#ff6829': 'Entre 35 et 40',
     '#ffb18f': 'Entre 30 et 35',
@@ -22,16 +23,29 @@
   function normalizeFill(fill) {
     if (!fill) return '';
     const hex = fill.trim().toLowerCase();
-    if (hex.startsWith('#')) return hex.slice(0, 7);
-    const match = hex.match(/rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);
+    if (hex.startsWith('#')) return hex.length === 4
+      ? `#${hex[1]}${hex[1]}${hex[2]}${hex[2]}${hex[3]}${hex[3]}`
+      : hex.slice(0, 7);
+    const match = hex.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);
     if (!match) return hex;
     const toHex = (n) => Number(n).toString(16).padStart(2, '0');
     return `#${toHex(match[1])}${toHex(match[2])}${toHex(match[3])}`;
   }
 
+  function parseFillFromStyle(style) {
+    if (!style) return '';
+    const match = style.match(/fill:\s*([^;]+)/i);
+    return match ? match[1].trim() : '';
+  }
+
+  function isGiniFill(fill) {
+    const key = normalizeFill(fill);
+    return Object.prototype.hasOwnProperty.call(GINI_COLORS, key);
+  }
+
   function bucketLabel(fill) {
     const key = normalizeFill(fill);
-    return GINI_BUCKETS[key] || 'Pas de données';
+    return GINI_COLORS[key] || 'Pas de données';
   }
 
   function countryCode(el) {
@@ -57,14 +71,38 @@
     return code ? code.toUpperCase() : 'Pays';
   }
 
+  function fillFromNode(node) {
+    const inline = parseFillFromStyle(node.getAttribute('style'));
+    if (inline && isGiniFill(inline)) return normalizeFill(inline);
+
+    try {
+      const computed = node.ownerDocument?.defaultView?.getComputedStyle(node);
+      const fromComputed = computed?.fill || computed?.getPropertyValue('fill');
+      if (fromComputed && isGiniFill(fromComputed)) return normalizeFill(fromComputed);
+    } catch (_) {
+      /* ignore */
+    }
+    return '';
+  }
+
   function readFill(el) {
-    const style = el.getAttribute('style') || '';
-    const inline = style.match(/fill:\s*([^;]+)/i);
-    if (inline) return inline[1].trim();
-    const path = el.querySelector('path[style*="fill"]') || el;
-    const pathStyle = path.getAttribute('style') || '';
-    const pathFill = pathStyle.match(/fill:\s*([^;]+)/i);
-    return pathFill ? pathFill[1].trim() : '';
+    const paths = el.tagName === 'path' ? [el] : [...el.querySelectorAll('path')];
+    const counts = {};
+
+    paths.forEach((path) => {
+      const fill = fillFromNode(path);
+      if (fill) counts[fill] = (counts[fill] || 0) + 1;
+    });
+
+    if (Object.keys(counts).length) {
+      return Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
+    }
+
+    const own = fillFromNode(el);
+    if (own) return own;
+
+    const groupStyle = parseFillFromStyle(el.getAttribute('style'));
+    return isGiniFill(groupStyle) ? normalizeFill(groupStyle) : '';
   }
 
   function collectCountries(svgDoc) {
@@ -187,6 +225,8 @@
     activeSlide = slide;
     const obj = slide.querySelector('[data-gini-object]');
     if (!obj) return;
+
+    delete obj.dataset.giniReady;
 
     if (obj.contentDocument?.documentElement) {
       wireObject(slide, obj);

@@ -395,6 +395,12 @@
     "summary": "Comparaison des 12 pays d'Amérique du Sud sur 2 axes : économie et politique & géostratégie (régime, dirigeant, alliances, enjeux régionaux).",
     "url": "https://www.cepal.org/es/publicaciones/49113-panorama-social-america-latina-caribe-2024"
   },
+  "m3-regional-integration": {
+    "citation": "CEPAL · ALADI · Mercosur · Alianza del Pacífico · OAS · 2024",
+    "title": "Intégration régionale en Amérique latine",
+    "summary": "Multiples blocs depuis les années 1990 — MERCOSUR (union douanière), Alianza del Pacífico (libre-échange), ALBA (coopération pétrolière), UNASUR/PROSUR (forums politiques) — sans marché unique régional ; contraste avec l'USMCA au nord.",
+    "url": "https://www.cepal.org/es/temas/integracion-regional"
+  },
   "m3-country-brazil": {
     "citation": "IBGE · Banco Central do Brasil · CEPAL · 2024",
     "title": "Brasil — Regional power & multipolar diplomacy",
@@ -602,8 +608,14 @@
   "m3-inei-peru": {
     "citation": "INEI · Perú: Compendio Estadístico 2024 · BCRP",
     "title": "Compendio Estadístico del Perú",
-    "summary": "Fiche d'identité : 1,3 M km², PIB ~500 Mds USD, 34 M habitants dont 10 M dans la métropole de Lima.",
+    "summary": "Fiche d'identité : 1,29 M km², PIB ~268 Md USD (2023), 33,7 M habitants, métropole de Lima.",
     "url": "https://www.inei.gob.pe/estadisticas/indicadores/"
+  },
+  "m3-france-diplomatie-fiche-peru": {
+    "citation": "Ministère de l'Europe et des Affaires étrangères · Présentation du Pérou · juin 2026",
+    "title": "Présentation du Pérou — France Diplomatie",
+    "summary": "Données générales, démographiques et économiques officielles : 1 285 220 km², 33,7 M hab., PIB 267,6 Md USD (2023), GINI 0,47, informalité 70 %, instabilité politique depuis 2017.",
+    "url": "https://www.diplomatie.gouv.fr/fr/information-par-pays/perou/presentation-du-perou"
   },
   "m3-peru-history": {
     "citation": "CVR · Informe Final · 2003 · José A. del Busto · Historia del Perú",
@@ -712,6 +724,24 @@
     "title": "INDECI — Gestión de riesgos de desastres",
     "summary": "Risques sismiques, inondations (saison des pluies jan.–mai), incendies forestiers et accidents routiers en zone andine et amazonienne.",
     "url": "https://www.gob.pe/indeci"
+  },
+  "m3-france-diplomatie-entree-sejour": {
+    "citation": "Ministère de l'Europe et des Affaires étrangères · Entrée / séjour · Pérou · juin 2026",
+    "title": "Entrée / séjour — Pérou · France Diplomatie",
+    "summary": "Formalités d'entrée, passeport, visa, tampons frontières terrestres et aériennes, perte de passeport et règles pour mineurs.",
+    "url": "https://www.diplomatie.gouv.fr/fr/conseils-aux-voyageurs/conseils-par-pays-destination/perou/#entree"
+  },
+  "m3-france-diplomatie-sante": {
+    "citation": "Ministère de l'Europe et des Affaires étrangères · Santé · Pérou · juin 2026",
+    "title": "Santé — Pérou · France Diplomatie",
+    "summary": "Assurance, vaccins, paludisme, dengue, fièvre jaune, mal des montagnes, ayahuasca et hygiène alimentaire.",
+    "url": "https://www.diplomatie.gouv.fr/fr/information-par-pays/perou/conseils-aux-voyageurs-sante"
+  },
+  "m3-france-diplomatie-infos-utiles": {
+    "citation": "Ministère de l'Europe et des Affaires étrangères · Informations utiles · Pérou · juin 2026",
+    "title": "Informations utiles — Pérou · France Diplomatie",
+    "summary": "Transport, législation, violences sexistes, volontariat, inscription consulaire et contacts à Lima.",
+    "url": "https://www.diplomatie.gouv.fr/fr/conseils-aux-voyageurs/conseils-par-pays-destination/perou/#infos"
   },
   "m3-pasteur-vaccines": {
     "citation": "Institut Pasteur · Vaccinations voyage Pérou · France Diplomatie",

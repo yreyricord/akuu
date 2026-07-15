@@ -1,0 +1,14 @@
+{
+  "sources": [
+    "Zoobioparque Amaru (faune)",
+    "Wikimedia Commons (flore + compléments)",
+    "iNaturalist — voir README pour extension future"
+  ],
+  "especes_dir": "public/formation/module-4-deck/images/especes",
+  "flores_dir": "public/formation/module-4-deck/images/flores",
+  "errors": [
+    "Wikimedia introuvable: Uncaria tomentosa cat's claw vine → una-de-gato.jpg",
+    "Wikimedia introuvable: Dracontium peruvianum jergon sacha → jergon-sacha.jpg"
+  ],
+  "retry": "python3 scripts/fetch-deck-images.py"
+}

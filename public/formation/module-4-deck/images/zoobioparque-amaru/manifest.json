@@ -1,0 +1,1949 @@
+{
+  "source": "Zoobioparque Amaru · Cuenca, Équateur",
+  "source_urls": [
+    "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/",
+    "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/",
+    "https://www.zoobioparqueamaru.com/nuestros-animales/anfibios/",
+    "https://www.zoobioparqueamaru.com/nuestros-animales/aves/"
+  ],
+  "fetched_at": "2026-07-15T15:52:03Z",
+  "total": 131,
+  "amazon_candidates": 20,
+  "deck_targets": {
+    "sachavaca": [
+      "tapir",
+      "sacha vaca",
+      "danta",
+      "tapirus"
+    ],
+    "sajino": [
+      "pecari",
+      "pécari",
+      "collar",
+      "tajacu",
+      "jabali"
+    ],
+    "ronsoco": [
+      "capibara",
+      "capybara",
+      "hydrochoerus"
+    ],
+    "anuje": [
+      "agouti",
+      "guatusa",
+      "dasyprocta",
+      "añuje",
+      "anuje"
+    ],
+    "majas": [
+      "paca",
+      "guanta",
+      "cuniculus"
+    ],
+    "lobo-de-rio": [
+      "lobo de rio",
+      "nutria gigante",
+      "loutre",
+      "pteronura"
+    ],
+    "coto": [
+      "chorongo",
+      "aullador",
+      "howler",
+      "alouatta"
+    ],
+    "maquisapa": [
+      "mono araña",
+      "mono arana",
+      "spider",
+      "ateles"
+    ],
+    "huapo-pichico": [
+      "saki",
+      "tamarin",
+      "chichico",
+      "capuchino",
+      "huapo",
+      "pichico"
+    ],
+    "M4-03-jaguar": [
+      "jaguar",
+      "otorongo",
+      "panthera onca"
+    ],
+    "M4-04-boto": [
+      "delfin",
+      "dauphin",
+      "bufeo",
+      "inia"
+    ],
+    "M4-05-manati": [
+      "manati",
+      "manatí",
+      "lamantin",
+      "trichechus"
+    ],
+    "M4-06-anaconda-caiman": [
+      "anaconda",
+      "caiman",
+      "caimán",
+      "cocodrilo"
+    ],
+    "M4-07-dendrobate": [
+      "dendrobate",
+      "rana venenosa",
+      "poison dart",
+      "dendrobat"
+    ],
+    "M4-08-morpho-hormiga": [
+      "morpho",
+      "mariposa",
+      "hormiga",
+      "atta",
+      "fourmi"
+    ]
+  },
+  "animals": [
+    {
+      "id": "53",
+      "slug": "oncilla",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=53-oncilla&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/53-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/53-oncilla.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "54",
+      "slug": "oso-andino",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=54-oso-andino&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/54-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/54-oso-andino.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "55",
+      "slug": "venado-colorado-enano",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=55-venado-colorado-enano&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/55-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/55-venado-colorado-enano.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "56",
+      "slug": "venado-de-cola-blanca",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=56-venado-de-cola-blanca&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/56-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/56-venado-de-cola-blanca.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "57",
+      "slug": "lobo-de-paramo",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=57-lobo-de-paramo&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/57-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/57-lobo-de-paramo.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "58",
+      "slug": "puma",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=58-puma&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/58-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/58-puma.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "59",
+      "slug": "comadreja-andina",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=59-comadreja-andina&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/59-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/59-comadreja-andina.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "60",
+      "slug": "cuchucho-amazonico-y-cuchucho-de-nariz-blanca",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=60-cuchucho-amazonico-y-cuchucho-de-nariz-blanca&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/60-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/60-cuchucho-amazonico-y-cuchucho-de-nariz-blanca.jpg",
+      "amazon_candidate": true,
+      "deck_matches": []
+    },
+    {
+      "id": "61",
+      "slug": "guanta-andina",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=61-guanta-andina&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/61-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/61-guanta-andina.jpg",
+      "amazon_candidate": false,
+      "deck_matches": [
+        "majas"
+      ]
+    },
+    {
+      "id": "62",
+      "slug": "llama",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=62-llama&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/62-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/62-llama.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "63",
+      "slug": "jabali-de-collar-blanco",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=63-jabali-de-collar-blanco&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/63-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/63-jabali-de-collar-blanco.jpg",
+      "amazon_candidate": false,
+      "deck_matches": [
+        "sajino"
+      ]
+    },
+    {
+      "id": "64",
+      "slug": "mapache",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=64-mapache&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/64-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/64-mapache.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "65",
+      "slug": "ardilla-de-guayaquil",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=65-ardilla-de-guayaquil&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/65-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/65-ardilla-de-guayaquil.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "66",
+      "slug": "perezoso-de-dos-dedos-del-oriente",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=66-perezoso-de-dos-dedos-del-oriente&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/66-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/66-perezoso-de-dos-dedos-del-oriente.jpg",
+      "amazon_candidate": true,
+      "deck_matches": []
+    },
+    {
+      "id": "67",
+      "slug": "mono-ardilla",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=67-mono-ardilla&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/67-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/67-mono-ardilla.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "68",
+      "slug": "mono-nocturno-lemurino-y-mono-nocturno-vociferante",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=68-mono-nocturno-lemurino-y-mono-nocturno-vociferante&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/68-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/68-mono-nocturno-lemurino-y-mono-nocturno-vociferante.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "69",
+      "slug": "mono-chorongo-de-humboldt",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=69-mono-chorongo-de-humboldt&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/69-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/69-mono-chorongo-de-humboldt.jpg",
+      "amazon_candidate": false,
+      "deck_matches": [
+        "coto"
+      ]
+    },
+    {
+      "id": "70",
+      "slug": "mono-chorongo-de-poppig",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=70-mono-chorongo-de-poppig&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/70-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/70-mono-chorongo-de-poppig.jpg",
+      "amazon_candidate": false,
+      "deck_matches": [
+        "coto"
+      ]
+    },
+    {
+      "id": "71",
+      "slug": "monos-chichicos:-de-manto-rojo-y-del-napo",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=71-monos-chichicos:-de-manto-rojo-y-del-napo&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/71-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/71-monos-chichicos:-de-manto-rojo-y-del-napo.jpg",
+      "amazon_candidate": true,
+      "deck_matches": [
+        "huapo-pichico"
+      ]
+    },
+    {
+      "id": "72",
+      "slug": "mono-araña:-de-vientre-amarillo-y-cabeza-marron.",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=72-mono-ara%C3%B1a:-de-vientre-amarillo-y-cabeza-marron.&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/72-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/72-mono-araña:-de-vientre-amarillo-y-cabeza-marron..jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "73",
+      "slug": "mono-capuchino-blanco",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=73-mono-capuchino-blanco&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/73-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/73-mono-capuchino-blanco.jpg",
+      "amazon_candidate": false,
+      "deck_matches": [
+        "huapo-pichico"
+      ]
+    },
+    {
+      "id": "74",
+      "slug": "guatusa-del-oriente-y-guatusa-de-la-costa",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=74-guatusa-del-oriente-y-guatusa-de-la-costa&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/74-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/74-guatusa-del-oriente-y-guatusa-de-la-costa.jpg",
+      "amazon_candidate": true,
+      "deck_matches": [
+        "anuje"
+      ]
+    },
+    {
+      "id": "75",
+      "slug": "guanta-de-tierras-bajas",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=75-guanta-de-tierras-bajas&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/75-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/75-guanta-de-tierras-bajas.jpg",
+      "amazon_candidate": false,
+      "deck_matches": [
+        "majas"
+      ]
+    },
+    {
+      "id": "76",
+      "slug": "tapir-amazonico",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=76-tapir-amazonico&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/76-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/76-tapir-amazonico.jpg",
+      "amazon_candidate": true,
+      "deck_matches": [
+        "sachavaca"
+      ]
+    },
+    {
+      "id": "77",
+      "slug": "capibara",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=77-capibara&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/77-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/77-capibara.jpg",
+      "amazon_candidate": true,
+      "deck_matches": [
+        "ronsoco"
+      ]
+    },
+    {
+      "id": "78",
+      "slug": "mono-capuchino-negro",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=78-mono-capuchino-negro&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/78-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/78-mono-capuchino-negro.jpg",
+      "amazon_candidate": false,
+      "deck_matches": [
+        "huapo-pichico"
+      ]
+    },
+    {
+      "id": "79",
+      "slug": "tigrillo-margay",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=79-tigrillo-margay&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/79-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/79-tigrillo-margay.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "80",
+      "slug": "ocelote",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=80-ocelote&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/80-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/80-ocelote.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "81",
+      "slug": "leon-africano",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=81-leon-africano&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/81-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/81-leon-africano.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "131",
+      "slug": "jaguar",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=131-jaguar&Grupo=mamiferos",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/mamiferos/131-zoo-cuenca.jpg",
+      "image_file": "raw/mamiferos/131-jaguar.jpg",
+      "amazon_candidate": false,
+      "deck_matches": [
+        "M4-03-jaguar"
+      ]
+    },
+    {
+      "id": "82",
+      "slug": "cocodrilo-americano",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=82-cocodrilo-americano&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/82-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/82-cocodrilo-americano.jpg",
+      "amazon_candidate": false,
+      "deck_matches": [
+        "M4-06-anaconda-caiman"
+      ]
+    },
+    {
+      "id": "83",
+      "slug": "caiman-de-anteojos-y-caiman-marron",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=83-caiman-de-anteojos-y-caiman-marron&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/83-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/83-caiman-de-anteojos-y-caiman-marron.jpg",
+      "amazon_candidate": true,
+      "deck_matches": [
+        "M4-06-anaconda-caiman"
+      ]
+    },
+    {
+      "id": "84",
+      "slug": "caiman-corona",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=84-caiman-corona&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/84-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/84-caiman-corona.jpg",
+      "amazon_candidate": true,
+      "deck_matches": [
+        "M4-06-anaconda-caiman"
+      ]
+    },
+    {
+      "id": "85",
+      "slug": "tortuga-motelo",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=85-tortuga-motelo&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/85-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/85-tortuga-motelo.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "86",
+      "slug": "guagsas-del-austro",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=86-guagsas-del-austro&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/86-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/86-guagsas-del-austro.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "87",
+      "slug": "guagsas-de-simons",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=87-guagsas-de-simons&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/87-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/87-guagsas-de-simons.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "88",
+      "slug": "guagsas-verdes-collarejas",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=88-guagsas-verdes-collarejas&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/88-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/88-guagsas-verdes-collarejas.jpg",
+      "amazon_candidate": false,
+      "deck_matches": [
+        "sajino"
+      ]
+    },
+    {
+      "id": "89",
+      "slug": "guagsas-ventrirrojas",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=89-guagsas-ventrirrojas&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/89-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/89-guagsas-ventrirrojas.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "90",
+      "slug": "anolis-trompudo",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=90-anolis-trompudo&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/90-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/90-anolis-trompudo.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "91",
+      "slug": "iguana-enana-espinosa",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=91-iguana-enana-espinosa&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/91-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/91-iguana-enana-espinosa.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "92",
+      "slug": "basilisco-occidental",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=92-basilisco-occidental&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/92-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/92-basilisco-occidental.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "93",
+      "slug": "iguana-verde",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=93-iguana-verde&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/93-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/93-iguana-verde.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "94",
+      "slug": "matacaballo-amazonica",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=94-matacaballo-amazonica&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/94-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/94-matacaballo-amazonica.jpg",
+      "amazon_candidate": true,
+      "deck_matches": []
+    },
+    {
+      "id": "95",
+      "slug": "boa-arcoiris",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=95-boa-arcoiris&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/95-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/95-boa-arcoiris.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "96",
+      "slug": "boa-del-choco",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=96-boa-del-choco&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/96-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/96-boa-del-choco.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "97",
+      "slug": "boa-esmeralda",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=97-boa-esmeralda&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/97-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/97-boa-esmeralda.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "98",
+      "slug": "boa-amazonica-de-jardin",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=98-boa-amazonica-de-jardin&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/98-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/98-boa-amazonica-de-jardin.jpg",
+      "amazon_candidate": true,
+      "deck_matches": []
+    },
+    {
+      "id": "99",
+      "slug": "boa-lojana",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=99-boa-lojana&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/99-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/99-boa-lojana.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "100",
+      "slug": "matacaballo-costera",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=100-matacaballo-costera&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/100-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/100-matacaballo-costera.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "101",
+      "slug": "anaconda-comun",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=101-anaconda-comun&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/101-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/101-anaconda-comun.jpg",
+      "amazon_candidate": true,
+      "deck_matches": [
+        "M4-06-anaconda-caiman"
+      ]
+    },
+    {
+      "id": "102",
+      "slug": "bejuco",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=102-bejuco&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/102-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/102-bejuco.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "103",
+      "slug": "bejuquillo-verde",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=103-bejuquillo-verde&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/103-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/103-bejuquillo-verde.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "104",
+      "slug": "chonta-tigre",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=104-chonta-tigre&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/104-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/104-chonta-tigre.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "105",
+      "slug": "falsa-coral",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=105-falsa-coral&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/105-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/105-falsa-coral.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "106",
+      "slug": "culebra-estrella",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=106-culebra-estrella&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/106-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/106-culebra-estrella.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "107",
+      "slug": "serpiente-de-maiz",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=107-serpiente-de-maiz&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/107-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/107-serpiente-de-maiz.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "108",
+      "slug": "bejuquillos-verdes",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=108-bejuquillos-verdes&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/108-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/108-bejuquillos-verdes.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "109",
+      "slug": "culebra-corredora-del-rio-yanuncay",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=109-culebra-corredora-del-rio-yanuncay&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/109-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/109-culebra-corredora-del-rio-yanuncay.jpg",
+      "amazon_candidate": true,
+      "deck_matches": []
+    },
+    {
+      "id": "110",
+      "slug": "equis-del-occidente",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=110-equis-del-occidente&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/110-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/110-equis-del-occidente.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "111",
+      "slug": "equis-tigre",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=111-equis-tigre&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/111-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/111-equis-tigre.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "112",
+      "slug": "vibora-moteada-de-arbol",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=112-vibora-moteada-de-arbol&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/112-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/112-vibora-moteada-de-arbol.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "113",
+      "slug": "yamunga",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=113-yamunga&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/113-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/113-yamunga.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "114",
+      "slug": "hoja-podrida",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=114-hoja-podrida&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/114-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/114-hoja-podrida.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "115",
+      "slug": "cabeza-de-candado",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=115-cabeza-de-candado&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/115-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/115-cabeza-de-candado.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "116",
+      "slug": "lorito",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=116-lorito&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/116-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/116-lorito.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "117",
+      "slug": "loro-machacui",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=117-loro-machacui&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/117-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/117-loro-machacui.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "118",
+      "slug": "equis-de-arbol",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=118-equis-de-arbol&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/118-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/118-equis-de-arbol.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "119",
+      "slug": "equis-del-azuay",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=119-equis-del-azuay&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/119-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/119-equis-del-azuay.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "120",
+      "slug": "sabanera",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=120-sabanera&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/120-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/120-sabanera.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "121",
+      "slug": "vibora-macanchi",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=121-vibora-macanchi&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/121-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/121-vibora-macanchi.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "122",
+      "slug": "tortuga-de-madera-montañera",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=122-tortuga-de-madera-monta%C3%B1era&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/122-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/122-tortuga-de-madera-montañera.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "123",
+      "slug": "tortuga-icotea",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=123-tortuga-icotea&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/123-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/123-tortuga-icotea.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "124",
+      "slug": "tortuga-patinaranja",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=124-tortuga-patinaranja&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/124-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/124-tortuga-patinaranja.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "125",
+      "slug": "tortuga-hedionda",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=125-tortuga-hedionda&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/125-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/125-tortuga-hedionda.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "126",
+      "slug": "tortuga-mordedora",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=126-tortuga-mordedora&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/126-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/126-tortuga-mordedora.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "127",
+      "slug": "charapa-pequeña-y-charapa-grande",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=127-charapa-peque%C3%B1a-y-charapa-grande&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/127-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/127-charapa-pequeña-y-charapa-grande.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "128",
+      "slug": "tortuga-charapita-de-aguajal",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=128-tortuga-charapita-de-aguajal&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/128-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/128-tortuga-charapita-de-aguajal.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "129",
+      "slug": "tortuga-taparrabo-de-la-costa",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=129-tortuga-taparrabo-de-la-costa&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/129-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/129-tortuga-taparrabo-de-la-costa.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "130",
+      "slug": "tortuga-gigante-de-galapagos",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=130-tortuga-gigante-de-galapagos&Grupo=reptiles",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/reptiles/130-zoo-cuenca.jpg",
+      "image_file": "raw/reptiles/130-tortuga-gigante-de-galapagos.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "1",
+      "slug": "rana-cohete",
+      "grupo": "anfibios",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=1-rana-cohete&Grupo=anfibios",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/anfibios/1-zoo-cuenca.jpg",
+      "image_file": "raw/anfibios/1-rana-cohete.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "2",
+      "slug": "jambato-de-tres-cruces",
+      "grupo": "anfibios",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=2-jambato-de-tres-cruces&Grupo=anfibios",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/anfibios/2-zoo-cuenca.jpg",
+      "image_file": "raw/anfibios/2-jambato-de-tres-cruces.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "3",
+      "slug": "ranita-punta-de-flecha",
+      "grupo": "anfibios",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=3-ranita-punta-de-flecha&Grupo=anfibios",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/anfibios/3-zoo-cuenca.jpg",
+      "image_file": "raw/anfibios/3-ranita-punta-de-flecha.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "4",
+      "slug": "rana-marsupial-de-san-lucas-y-rana-marsupial-del-azuay",
+      "grupo": "anfibios",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=4-rana-marsupial-de-san-lucas-y-rana-marsupial-del-azuay&Grupo=anfibios",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/anfibios/4-zoo-cuenca.jpg",
+      "image_file": "raw/anfibios/4-rana-marsupial-de-san-lucas-y-rana-marsupial-del-azuay.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "5",
+      "slug": "rana-arlequin-de-limon",
+      "grupo": "anfibios",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=5-rana-arlequin-de-limon&Grupo=anfibios",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/anfibios/5-zoo-cuenca.jpg",
+      "image_file": "raw/anfibios/5-rana-arlequin-de-limon.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "6",
+      "slug": "rana-africana-de-uñas",
+      "grupo": "anfibios",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=6-rana-africana-de-u%C3%B1as&Grupo=anfibios",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/anfibios/6-zoo-cuenca.jpg",
+      "image_file": "raw/anfibios/6-rana-africana-de-uñas.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "7",
+      "slug": "sapo-de-la-caña-y-sapo-gigante-de-veracruz",
+      "grupo": "anfibios",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=7-sapo-de-la-ca%C3%B1a-y-sapo-gigante-de-veracruz&Grupo=anfibios",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/anfibios/7-zoo-cuenca.jpg",
+      "image_file": "raw/anfibios/7-sapo-de-la-caña-y-sapo-gigante-de-veracruz.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "8",
+      "slug": "rana-toro-americana",
+      "grupo": "anfibios",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=8-rana-toro-americana&Grupo=anfibios",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/anfibios/8-zoo-cuenca.jpg",
+      "image_file": "raw/anfibios/8-rana-toro-americana.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "9",
+      "slug": "ajolote",
+      "grupo": "anfibios",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=9-ajolote&Grupo=anfibios",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/anfibios/9-zoo-cuenca.jpg",
+      "image_file": "raw/anfibios/9-ajolote.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "10",
+      "slug": "buho-listado",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=10-buho-listado&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/10-zoo-cuenca.jpg",
+      "image_file": "raw/aves/10-buho-listado.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "11",
+      "slug": "buho-terrestre",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=11-buho-terrestre&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/11-zoo-cuenca.jpg",
+      "image_file": "raw/aves/11-buho-terrestre.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "12",
+      "slug": "chachalaca-cabecirrufa",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=12-chachalaca-cabecirrufa&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/12-zoo-cuenca.jpg",
+      "image_file": "raw/aves/12-chachalaca-cabecirrufa.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "13",
+      "slug": "gallinazo-negro",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=13-gallinazo-negro&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/13-zoo-cuenca.jpg",
+      "image_file": "raw/aves/13-gallinazo-negro.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "14",
+      "slug": "caracara-crestado-norteño",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=14-caracara-crestado-norte%C3%B1o&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/14-zoo-cuenca.jpg",
+      "image_file": "raw/aves/14-caracara-crestado-norteño.jpg",
+      "amazon_candidate": true,
+      "deck_matches": []
+    },
+    {
+      "id": "15",
+      "slug": "caracara-curiquingue",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=15-caracara-curiquingue&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/15-zoo-cuenca.jpg",
+      "image_file": "raw/aves/15-caracara-curiquingue.jpg",
+      "amazon_candidate": true,
+      "deck_matches": []
+    },
+    {
+      "id": "16",
+      "slug": "aguila-pechinegra",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=16-aguila-pechinegra&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/16-zoo-cuenca.jpg",
+      "image_file": "raw/aves/16-aguila-pechinegra.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "17",
+      "slug": "gavilan-de-cola-corta",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=17-gavilan-de-cola-corta&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/17-zoo-cuenca.jpg",
+      "image_file": "raw/aves/17-gavilan-de-cola-corta.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "18",
+      "slug": "condor-andino",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=18-condor-andino&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/18-zoo-cuenca.jpg",
+      "image_file": "raw/aves/18-condor-andino.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "19",
+      "slug": "negro-ojipalido",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=19-negro-ojipalido&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/19-zoo-cuenca.jpg",
+      "image_file": "raw/aves/19-negro-ojipalido.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "20",
+      "slug": "vaquero-brilloso",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=20-vaquero-brilloso&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/20-zoo-cuenca.jpg",
+      "image_file": "raw/aves/20-vaquero-brilloso.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "21",
+      "slug": "gallareta-purpura",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=21-gallareta-purpura&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/21-zoo-cuenca.jpg",
+      "image_file": "raw/aves/21-gallareta-purpura.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "22",
+      "slug": "guacamayo-escarlata-y-guacamayo-rojo-y-verde",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=22-guacamayo-escarlata-y-guacamayo-rojo-y-verde&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/22-zoo-cuenca.jpg",
+      "image_file": "raw/aves/22-guacamayo-escarlata-y-guacamayo-rojo-y-verde.jpg",
+      "amazon_candidate": true,
+      "deck_matches": []
+    },
+    {
+      "id": "23",
+      "slug": "guacamayo-azuliamarillo",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=23-guacamayo-azuliamarillo&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/23-zoo-cuenca.jpg",
+      "image_file": "raw/aves/23-guacamayo-azuliamarillo.jpg",
+      "amazon_candidate": true,
+      "deck_matches": []
+    },
+    {
+      "id": "24",
+      "slug": "tucan-goliblanco",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=24-tucan-goliblanco&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/24-zoo-cuenca.jpg",
+      "image_file": "raw/aves/24-tucan-goliblanco.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "25",
+      "slug": "loras-amazonas:-coroniamarilla",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=25-loras-amazonas:-coroniamarilla&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/25-zoo-cuenca.jpg",
+      "image_file": "raw/aves/25-loras-amazonas:-coroniamarilla.jpg",
+      "amazon_candidate": true,
+      "deck_matches": []
+    },
+    {
+      "id": "26",
+      "slug": "loras-amazonas:-alinaranja",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=26-loras-amazonas:-alinaranja&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/26-zoo-cuenca.jpg",
+      "image_file": "raw/aves/26-loras-amazonas:-alinaranja.jpg",
+      "amazon_candidate": true,
+      "deck_matches": []
+    },
+    {
+      "id": "27",
+      "slug": "loras-amazonas:-farinosa",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=27-loras-amazonas:-farinosa&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/27-zoo-cuenca.jpg",
+      "image_file": "raw/aves/27-loras-amazonas:-farinosa.jpg",
+      "amazon_candidate": true,
+      "deck_matches": []
+    },
+    {
+      "id": "28",
+      "slug": "perico-caretirrojo",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=28-perico-caretirrojo&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/28-zoo-cuenca.jpg",
+      "image_file": "raw/aves/28-perico-caretirrojo.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "29",
+      "slug": "perico-frentiescarlata",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=29-perico-frentiescarlata&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/29-zoo-cuenca.jpg",
+      "image_file": "raw/aves/29-perico-frentiescarlata.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "30",
+      "slug": "perico-ojiblanco",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=30-perico-ojiblanco&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/30-zoo-cuenca.jpg",
+      "image_file": "raw/aves/30-perico-ojiblanco.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "31",
+      "slug": "patos-silbadores:-canelo-y-ventrinegro",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=31-patos-silbadores:-canelo-y-ventrinegro&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/31-zoo-cuenca.jpg",
+      "image_file": "raw/aves/31-patos-silbadores:-canelo-y-ventrinegro.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "32",
+      "slug": "pato-cariblanco",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=32-pato-cariblanco&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/32-zoo-cuenca.jpg",
+      "image_file": "raw/aves/32-pato-cariblanco.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "33",
+      "slug": "pava-ala-de-hoz",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=33-pava-ala-de-hoz&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/33-zoo-cuenca.jpg",
+      "image_file": "raw/aves/33-pava-ala-de-hoz.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "34",
+      "slug": "lechuza-de-campanario",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=34-lechuza-de-campanario&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/34-zoo-cuenca.jpg",
+      "image_file": "raw/aves/34-lechuza-de-campanario.jpg",
+      "amazon_candidate": true,
+      "deck_matches": []
+    },
+    {
+      "id": "35",
+      "slug": "buho-de-anteojos",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=35-buho-de-anteojos&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/35-zoo-cuenca.jpg",
+      "image_file": "raw/aves/35-buho-de-anteojos.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "36",
+      "slug": "buho-estigio",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=36-buho-estigio&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/36-zoo-cuenca.jpg",
+      "image_file": "raw/aves/36-buho-estigio.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "37",
+      "slug": "trompetero-aligris",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=37-trompetero-aligris&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/37-zoo-cuenca.jpg",
+      "image_file": "raw/aves/37-trompetero-aligris.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "38",
+      "slug": "tucan-de-swainson",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=38-tucan-de-swainson&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/38-zoo-cuenca.jpg",
+      "image_file": "raw/aves/38-tucan-de-swainson.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "39",
+      "slug": "garza-tigre-castaña",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=39-garza-tigre-casta%C3%B1a&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/39-zoo-cuenca.jpg",
+      "image_file": "raw/aves/39-garza-tigre-castaña.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "40",
+      "slug": "piquero-patas-azules",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=40-piquero-patas-azules&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/40-zoo-cuenca.jpg",
+      "image_file": "raw/aves/40-piquero-patas-azules.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "41",
+      "slug": "avestruz",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=41-avestruz&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/41-zoo-cuenca.jpg",
+      "image_file": "raw/aves/41-avestruz.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "42",
+      "slug": "loro-cabeciazul",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=42-loro-cabeciazul&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/42-zoo-cuenca.jpg",
+      "image_file": "raw/aves/42-loro-cabeciazul.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "43",
+      "slug": "loro-piquirrojo",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=43-loro-piquirrojo&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/43-zoo-cuenca.jpg",
+      "image_file": "raw/aves/43-loro-piquirrojo.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "44",
+      "slug": "perico-aliamarillo",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=44-perico-aliamarillo&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/44-zoo-cuenca.jpg",
+      "image_file": "raw/aves/44-perico-aliamarillo.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "45",
+      "slug": "inseparables",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=45-inseparables&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/45-zoo-cuenca.jpg",
+      "image_file": "raw/aves/45-inseparables.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "46",
+      "slug": "cacatuas",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=46-cacatuas&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/46-zoo-cuenca.jpg",
+      "image_file": "raw/aves/46-cacatuas.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "47",
+      "slug": "pato-chino",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=47-pato-chino&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/47-zoo-cuenca.jpg",
+      "image_file": "raw/aves/47-pato-chino.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "48",
+      "slug": "cernicalo-americano",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=48-cernicalo-americano&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/48-zoo-cuenca.jpg",
+      "image_file": "raw/aves/48-cernicalo-americano.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "49",
+      "slug": "pavo-real",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=49-pavo-real&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/49-zoo-cuenca.jpg",
+      "image_file": "raw/aves/49-pavo-real.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "50",
+      "slug": "ganso-pera",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=50-ganso-pera&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/50-zoo-cuenca.jpg",
+      "image_file": "raw/aves/50-ganso-pera.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "51",
+      "slug": "pato-domestico",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=51-pato-domestico&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/51-zoo-cuenca.jpg",
+      "image_file": "raw/aves/51-pato-domestico.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    },
+    {
+      "id": "52",
+      "slug": "gallina-de-guinea",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=52-gallina-de-guinea&Grupo=aves",
+      "image_url": "https://www.zoobioparqueamaru.com/nuestros-animales/aves/52-zoo-cuenca.jpg",
+      "image_file": "raw/aves/52-gallina-de-guinea.jpg",
+      "amazon_candidate": false,
+      "deck_matches": []
+    }
+  ],
+  "errors": [],
+  "deck_mapping_suggestions": {
+    "sachavaca": [
+      {
+        "id": "76",
+        "nombre": "",
+        "image_file": "raw/mamiferos/76-tapir-amazonico.jpg",
+        "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=76-tapir-amazonico&Grupo=mamiferos"
+      }
+    ],
+    "sajino": [
+      {
+        "id": "63",
+        "nombre": "",
+        "image_file": "raw/mamiferos/63-jabali-de-collar-blanco.jpg",
+        "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=63-jabali-de-collar-blanco&Grupo=mamiferos"
+      },
+      {
+        "id": "88",
+        "nombre": "",
+        "image_file": "raw/reptiles/88-guagsas-verdes-collarejas.jpg",
+        "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=88-guagsas-verdes-collarejas&Grupo=reptiles"
+      }
+    ],
+    "ronsoco": [
+      {
+        "id": "77",
+        "nombre": "",
+        "image_file": "raw/mamiferos/77-capibara.jpg",
+        "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=77-capibara&Grupo=mamiferos"
+      }
+    ],
+    "anuje": [
+      {
+        "id": "74",
+        "nombre": "",
+        "image_file": "raw/mamiferos/74-guatusa-del-oriente-y-guatusa-de-la-costa.jpg",
+        "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=74-guatusa-del-oriente-y-guatusa-de-la-costa&Grupo=mamiferos"
+      }
+    ],
+    "majas": [
+      {
+        "id": "61",
+        "nombre": "",
+        "image_file": "raw/mamiferos/61-guanta-andina.jpg",
+        "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=61-guanta-andina&Grupo=mamiferos"
+      },
+      {
+        "id": "75",
+        "nombre": "",
+        "image_file": "raw/mamiferos/75-guanta-de-tierras-bajas.jpg",
+        "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=75-guanta-de-tierras-bajas&Grupo=mamiferos"
+      }
+    ],
+    "lobo-de-rio": [],
+    "coto": [
+      {
+        "id": "69",
+        "nombre": "",
+        "image_file": "raw/mamiferos/69-mono-chorongo-de-humboldt.jpg",
+        "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=69-mono-chorongo-de-humboldt&Grupo=mamiferos"
+      },
+      {
+        "id": "70",
+        "nombre": "",
+        "image_file": "raw/mamiferos/70-mono-chorongo-de-poppig.jpg",
+        "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=70-mono-chorongo-de-poppig&Grupo=mamiferos"
+      }
+    ],
+    "maquisapa": [],
+    "huapo-pichico": [
+      {
+        "id": "71",
+        "nombre": "",
+        "image_file": "raw/mamiferos/71-monos-chichicos:-de-manto-rojo-y-del-napo.jpg",
+        "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=71-monos-chichicos:-de-manto-rojo-y-del-napo&Grupo=mamiferos"
+      },
+      {
+        "id": "73",
+        "nombre": "",
+        "image_file": "raw/mamiferos/73-mono-capuchino-blanco.jpg",
+        "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=73-mono-capuchino-blanco&Grupo=mamiferos"
+      },
+      {
+        "id": "78",
+        "nombre": "",
+        "image_file": "raw/mamiferos/78-mono-capuchino-negro.jpg",
+        "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=78-mono-capuchino-negro&Grupo=mamiferos"
+      }
+    ],
+    "M4-03-jaguar": [
+      {
+        "id": "131",
+        "nombre": "",
+        "image_file": "raw/mamiferos/131-jaguar.jpg",
+        "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=131-jaguar&Grupo=mamiferos"
+      }
+    ],
+    "M4-04-boto": [],
+    "M4-05-manati": [],
+    "M4-06-anaconda-caiman": [
+      {
+        "id": "82",
+        "nombre": "",
+        "image_file": "raw/reptiles/82-cocodrilo-americano.jpg",
+        "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=82-cocodrilo-americano&Grupo=reptiles"
+      },
+      {
+        "id": "83",
+        "nombre": "",
+        "image_file": "raw/reptiles/83-caiman-de-anteojos-y-caiman-marron.jpg",
+        "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=83-caiman-de-anteojos-y-caiman-marron&Grupo=reptiles"
+      },
+      {
+        "id": "84",
+        "nombre": "",
+        "image_file": "raw/reptiles/84-caiman-corona.jpg",
+        "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=84-caiman-corona&Grupo=reptiles"
+      },
+      {
+        "id": "101",
+        "nombre": "",
+        "image_file": "raw/reptiles/101-anaconda-comun.jpg",
+        "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=101-anaconda-comun&Grupo=reptiles"
+      }
+    ],
+    "M4-07-dendrobate": [],
+    "M4-08-morpho-hormiga": []
+  },
+  "amazon_extras_suggestions": [
+    {
+      "id": "60",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "image_file": "raw/mamiferos/60-cuchucho-amazonico-y-cuchucho-de-nariz-blanca.jpg",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=60-cuchucho-amazonico-y-cuchucho-de-nariz-blanca&Grupo=mamiferos"
+    },
+    {
+      "id": "66",
+      "grupo": "mamiferos",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "image_file": "raw/mamiferos/66-perezoso-de-dos-dedos-del-oriente.jpg",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=66-perezoso-de-dos-dedos-del-oriente&Grupo=mamiferos"
+    },
+    {
+      "id": "94",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "image_file": "raw/reptiles/94-matacaballo-amazonica.jpg",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=94-matacaballo-amazonica&Grupo=reptiles"
+    },
+    {
+      "id": "98",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "image_file": "raw/reptiles/98-boa-amazonica-de-jardin.jpg",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=98-boa-amazonica-de-jardin&Grupo=reptiles"
+    },
+    {
+      "id": "109",
+      "grupo": "reptiles",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "image_file": "raw/reptiles/109-culebra-corredora-del-rio-yanuncay.jpg",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=109-culebra-corredora-del-rio-yanuncay&Grupo=reptiles"
+    },
+    {
+      "id": "14",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "image_file": "raw/aves/14-caracara-crestado-norteño.jpg",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=14-caracara-crestado-norte%C3%B1o&Grupo=aves"
+    },
+    {
+      "id": "15",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "image_file": "raw/aves/15-caracara-curiquingue.jpg",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=15-caracara-curiquingue&Grupo=aves"
+    },
+    {
+      "id": "22",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "image_file": "raw/aves/22-guacamayo-escarlata-y-guacamayo-rojo-y-verde.jpg",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=22-guacamayo-escarlata-y-guacamayo-rojo-y-verde&Grupo=aves"
+    },
+    {
+      "id": "23",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "image_file": "raw/aves/23-guacamayo-azuliamarillo.jpg",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=23-guacamayo-azuliamarillo&Grupo=aves"
+    },
+    {
+      "id": "25",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "image_file": "raw/aves/25-loras-amazonas:-coroniamarilla.jpg",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=25-loras-amazonas:-coroniamarilla&Grupo=aves"
+    },
+    {
+      "id": "26",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "image_file": "raw/aves/26-loras-amazonas:-alinaranja.jpg",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=26-loras-amazonas:-alinaranja&Grupo=aves"
+    },
+    {
+      "id": "27",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "image_file": "raw/aves/27-loras-amazonas:-farinosa.jpg",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=27-loras-amazonas:-farinosa&Grupo=aves"
+    },
+    {
+      "id": "34",
+      "grupo": "aves",
+      "nombre": "",
+      "nombre_cientifico": "",
+      "image_file": "raw/aves/34-lechuza-de-campanario.jpg",
+      "page_url": "https://www.zoobioparqueamaru.com/nuestros-animales/animal.php?Id_Animal=34-lechuza-de-campanario&Grupo=aves"
+    }
+  ]
+}

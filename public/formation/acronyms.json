@@ -1,0 +1,410 @@
+{
+  "acled": {
+    "group": "institutions",
+    "match": ["ACLED"],
+    "expansion": "Armed Conflict Location & Event Data Project",
+    "hint": "Base de données sur conflits armés et protestations (2019–2024 dans le deck)."
+  },
+  "al": {
+    "group": "geopolitique",
+    "match": ["AL"],
+    "expansion": "Amérique latine",
+    "hint": "Ensemble des pays d'Amérique centrale et du Sud + Mexique et Caraïbes hispanophones."
+  },
+  "alba": {
+    "group": "geopolitique",
+    "match": ["ALBA"],
+    "expansion": "Alianza Bolivariana para los Pueblos de Nuestra América",
+    "hint": "Alliance bolivarienne pro-Venezuela / Cuba ; influence déclinante."
+  },
+  "bcrp": {
+    "group": "perou",
+    "match": ["BCRP"],
+    "expansion": "Banco Central de Reserva del Perú",
+    "hint": "Banque centrale péruvienne ; inflation, taux de change, statistiques macro."
+  },
+  "brics": {
+    "group": "geopolitique",
+    "match": ["BRICS"],
+    "expansion": "Brésil, Russie, Inde, Chine, Afrique du Sud",
+    "hint": "Forum de coopération économique et diplomatique (depuis 2009 ; élargi au BRICS+ en 2024)."
+  },
+  "caricom": {
+    "group": "geopolitique",
+    "match": ["CARICOM"],
+    "expansion": "Communauté caribéenne",
+    "hint": "Organisation régionale de 15 États caribéens ; la Guyana en est membre."
+  },
+  "cepal": {
+    "group": "economie",
+    "match": ["CEPAL"],
+    "expansion": "Commission économique pour l'Amérique latine et les Caraïbes",
+    "hint": "Organisme régional de l'ONU basé à Santiago du Chili ; référence statistique régionale."
+  },
+  "cjng": {
+    "group": "securite",
+    "match": ["CJNG"],
+    "expansion": "Cártel de Jalisco Nueva Generación",
+    "hint": "Cartel mexicain en expansion en Amérique latine ; rival du Sinaloa."
+  },
+  "cia": {
+    "group": "securite",
+    "match": ["CIA"],
+    "expansion": "Central Intelligence Agency",
+    "hint": "Agence de renseignement américaine ; impliquée dans le coup de Guatemala (1954)."
+  },
+  "cne": {
+    "group": "geopolitique",
+    "match": ["CNE"],
+    "expansion": "Consejo Nacional Electoral",
+    "hint": "Autorité électorale (Colombie, Venezuela selon contexte)."
+  },
+  "cosco": {
+    "group": "economie",
+    "match": ["COSCO"],
+    "expansion": "China Ocean Shipping Company",
+    "hint": "Compagnie maritime d'État chinois ; opérateur majoritaire du port de Chancay (Pérou)."
+  },
+  "cvr": {
+    "group": "perou",
+    "match": ["CVR"],
+    "expansion": "Comisión de la Verdad y Reconciliación",
+    "hint": "Commission vérité et réconciliation (Pérou, 2003) ; guerre interne Sendero Luminoso."
+  },
+  "dane": {
+    "group": "economie",
+    "match": ["DANE"],
+    "expansion": "Departamento Administrativo Nacional de Estadística",
+    "hint": "Institut statistique national de Colombie."
+  },
+  "dea": {
+    "group": "securite",
+    "match": ["DEA"],
+    "expansion": "Drug Enforcement Administration",
+    "hint": "Agence antidrogue américaine ; coopération régionale contre le narcotrafic."
+  },
+  "devida": {
+    "group": "perou",
+    "match": ["DEVIDA"],
+    "expansion": "Comisión Nacional para el Desarrollo y Vida sin Drogas",
+    "hint": "Autorité péruvienne de lutte anti-drogue ; monitoring des cultures de coca."
+  },
+  "eln": {
+    "group": "securite",
+    "match": ["ELN"],
+    "expansion": "Ejército de Liberación Nacional",
+    "hint": "Guérilla colombienne ; actif le long des frontières."
+  },
+  "eu": {
+    "group": "geopolitique",
+    "match": ["EU"],
+    "expansion": "European Union (Union européenne)",
+    "hint": "Sigle anglais de l'Union européenne ; sanctions conjointes avec les USA."
+  },
+  "europol": {
+    "group": "securite",
+    "match": ["Europol"],
+    "expansion": "Office européen de police",
+    "hint": "Coopération policière européenne ; narcotrafic transatlantique."
+  },
+  "farc": {
+    "group": "securite",
+    "match": ["FARC"],
+    "expansion": "Fuerzas Armadas Revolucionarias de Colombia",
+    "hint": "Guérilla colombienne (1964–2017) ; dissidents armés actifs."
+  },
+  "fmi": {
+    "group": "economie",
+    "match": ["FMI", "IMF"],
+    "expansion": "Fonds monétaire international",
+    "hint": "Institution de Bretton Woods (1944) ; prête aux États en crise de balance des paiements."
+  },
+  "fta": {
+    "group": "geopolitique",
+    "match": ["FTA"],
+    "expansion": "Free Trade Agreement (accord de libre-échange)",
+    "hint": "Traité bilatéral supprimant ou réduisant les barrières commerciales."
+  },
+  "gini": {
+    "group": "economie",
+    "match": ["Gini"],
+    "expansion": "Indice de Gini",
+    "hint": "Mesure statistique des inégalités de revenus (0 = égalité parfaite)."
+  },
+  "ibge": {
+    "group": "economie",
+    "match": ["IBGE"],
+    "expansion": "Instituto Brasileiro de Geografia e Estatística",
+    "hint": "Institut statistique national du Brésil."
+  },
+  "icsg": {
+    "group": "economie",
+    "match": ["ICSG"],
+    "expansion": "International Copper Study Group",
+    "hint": "Observatoire mondial du cuivre ; données production et commerce."
+  },
+  "indeci": {
+    "group": "perou",
+    "match": ["INDECI"],
+    "expansion": "Instituto Nacional de Defensa Civil del Perú",
+    "hint": "Autorité péruvienne de gestion des risques : séismes, inondations, incendies."
+  },
+  "idea": {
+    "group": "institutions",
+    "match": ["IDEA"],
+    "expansion": "International Institute for Democracy and Electoral Assistance",
+    "hint": "Institut intergouvernemental sur la démocratie et les élections."
+  },
+  "iperu": {
+    "group": "perou",
+    "match": ["IPerú", "IPeru"],
+    "expansion": "Información y Asistencia al Turista",
+    "hint": "Service d'assistance touristique officiel du Pérou ; WhatsApp +51 944 492 314."
+  },
+  "inei": {
+    "group": "perou",
+    "match": ["INEI"],
+    "expansion": "Instituto Nacional de Estadística e Informática",
+    "hint": "Institut statistique national du Pérou ; démographie, criminalité, emploi."
+  },
+  "ingemmet": {
+    "group": "perou",
+    "match": ["INGEMMET"],
+    "expansion": "Instituto Geológico, Minero y Metalúrgico",
+    "hint": "Institut géologique et minier du Pérou ; conflits extractivistes."
+  },
+  "jne": {
+    "group": "perou",
+    "match": ["JNE"],
+    "expansion": "Jurado Nacional de Elecciones",
+    "hint": "Autorité électorale péruvienne ; proclamation des résultats."
+  },
+  "mas": {
+    "group": "geopolitique",
+    "match": ["MAS"],
+    "expansion": "Movimiento al Socialismo",
+    "hint": "Parti bolivien d'Evo Morales ; au pouvoir avec Luis Arce depuis 2020."
+  },
+  "mercosur": {
+    "group": "geopolitique",
+    "match": ["Mercosur", "MERCOSUR"],
+    "expansion": "Marché commun du Sud",
+    "hint": "Union douanière : Argentine, Brésil, Paraguay, Uruguay (+ pays associés)."
+  },
+  "minagri": {
+    "group": "perou",
+    "match": ["MINAGRI"],
+    "expansion": "Ministerio de Agricultura y Riego",
+    "hint": "Ministère de l'agriculture et de l'irrigation du Pérou."
+  },
+  "minem": {
+    "group": "perou",
+    "match": ["MINEM"],
+    "expansion": "Ministerio de Energía y Minas",
+    "hint": "Ministère de l'énergie et des mines du Pérou."
+  },
+  "mimp": {
+    "group": "perou",
+    "match": ["MIMP"],
+    "expansion": "Ministerio de la Mujer y Poblaciones Vulnerables",
+    "hint": "Ministère péruvien des femmes et populations vulnérables."
+  },
+  "ms13": {
+    "group": "securite",
+    "match": ["MS-13"],
+    "expansion": "Mara Salvatrucha",
+    "hint": "Gang transnational originaire d'El Salvador ; présent en Amérique centrale et aux USA."
+  },
+  "ocha": {
+    "group": "institutions",
+    "match": ["OCHA"],
+    "expansion": "Office for the Coordination of Humanitarian Affairs",
+    "hint": "Bras humanitaire de l'ONU ; plans de réponse d'urgence (HRP)."
+  },
+  "ocde": {
+    "group": "economie",
+    "match": ["OCDE"],
+    "expansion": "Organisation de coopération et de développement économiques",
+    "hint": "Club des économies avancées ; Chili membre depuis 2010."
+  },
+  "ohchr": {
+    "group": "institutions",
+    "match": ["OHCHR"],
+    "expansion": "Haut-Commissariat des Nations unies aux droits de l'homme",
+    "hint": "Agence onusienne de promotion et protection des droits humains."
+  },
+  "oim": {
+    "group": "institutions",
+    "match": ["OIM"],
+    "expansion": "Organisation internationale pour les migrations",
+    "hint": "Agence onusienne sur les flux migratoires et la gouvernance migratoire."
+  },
+  "ong": {
+    "group": "institutions",
+    "match": ["ONG", "NGO"],
+    "expansion": "Organisation non gouvernementale",
+    "hint": "Acteur humanitaire, de développement ou de défense des droits."
+  },
+  "onpe": {
+    "group": "perou",
+    "match": ["ONPE"],
+    "expansion": "Oficina Nacional de Procesos Electorales",
+    "hint": "Bureau électoral péruvien ; dépouillement et résultats (ex. élections 2026)."
+  },
+  "onu": {
+    "group": "geopolitique",
+    "match": ["ONU"],
+    "expansion": "Organisation des Nations unies",
+    "hint": "Institution multilatérale fondée en 1945 ; 193 États membres."
+  },
+  "opep": {
+    "group": "economie",
+    "match": ["OPEP", "OPEC"],
+    "expansion": "Organisation des pays exportateurs de pétrole",
+    "hint": "Cartel pétrolier fondé en 1960 ; le Venezuela en est membre fondateur."
+  },
+  "otan": {
+    "group": "geopolitique",
+    "match": ["OTAN", "NATO"],
+    "expansion": "Organisation du traité de l'Atlantique Nord",
+    "hint": "Alliance militaire occidentale ; la Colombie en est partenaire global (seul pays d'AL)."
+  },
+  "promperu": {
+    "group": "perou",
+    "match": ["PromPerú", "PromPeru"],
+    "expansion": "Comisión de Promoción del Perú para la Exportación y el Turismo",
+    "hint": "Agence de promotion du tourisme et des exportations péruviennes ; opère IPerú."
+  },
+  "pdvsa": {
+    "group": "economie",
+    "match": ["PDVSA"],
+    "expansion": "Petróleos de Venezuela, S.A.",
+    "hint": "Compagnie pétrolière nationale vénézuélienne, pilier de l'économie et cible des sanctions."
+  },
+  "pib": {
+    "group": "economie",
+    "match": ["PIB", "GDP"],
+    "expansion": "Produit intérieur brut",
+    "hint": "Valeur totale des biens et services produits sur un territoire en un an."
+  },
+  "ppp": {
+    "group": "geopolitique",
+    "match": ["PPP"],
+    "expansion": "People's Progressive Party",
+    "hint": "Parti guyanien au pouvoir (Irfaan Ali, 2020–)."
+  },
+  "produce": {
+    "group": "perou",
+    "match": ["PRODUCE"],
+    "expansion": "Ministerio de la Producción",
+    "hint": "Ministère péruvien de la production (pêche, industrie)."
+  },
+  "prosur": {
+    "group": "geopolitique",
+    "match": ["PROSUR"],
+    "expansion": "Foro para el Progreso de América del Sur",
+    "hint": "Forum pour la prospérité de l'Amérique du Sud ; tentative de relance post-UNASUR."
+  },
+  "pt": {
+    "group": "geopolitique",
+    "match": ["PT"],
+    "expansion": "Partido dos Trabalhadores",
+    "hint": "Parti brésilien de Lula (centre-gauche)."
+  },
+  "r4v": {
+    "group": "institutions",
+    "match": ["R4V"],
+    "expansion": "Response for Venezuelans",
+    "hint": "Plateforme régionale de coordination humanitaire pour la crise vénézuélienne."
+  },
+  "rcep": {
+    "group": "geopolitique",
+    "match": ["RCEP"],
+    "expansion": "Regional Comprehensive Economic Partnership",
+    "hint": "Zone de libre-échange Asie-Pacifique ; rivalité avec l'USMCA."
+  },
+  "servel": {
+    "group": "geopolitique",
+    "match": ["Servel"],
+    "expansion": "Servicio Electoral de Chile",
+    "hint": "Autorité électorale chilienne."
+  },
+  "sunat": {
+    "group": "perou",
+    "match": ["SUNAT"],
+    "expansion": "Superintendencia Nacional de Aduanas y de Administración Tributaria",
+    "hint": "Douanes et administration fiscale du Pérou."
+  },
+  "ue": {
+    "group": "geopolitique",
+    "match": ["UE"],
+    "expansion": "Union européenne",
+    "hint": "Bloc politique et économique de 27 États membres."
+  },
+  "unasur": {
+    "group": "geopolitique",
+    "match": ["UNASUR"],
+    "expansion": "Union des nations sud-américaines",
+    "hint": "Organisation d'intégration politique (2008–2018), dissoute."
+  },
+  "unhcr": {
+    "group": "institutions",
+    "match": ["UNHCR"],
+    "expansion": "Haut-Commissariat des Nations unies pour les réfugiés",
+    "hint": "Agence onusienne de protection des réfugiés et des déplacés."
+  },
+  "unodc": {
+    "group": "institutions",
+    "match": ["UNODC"],
+    "expansion": "Office des Nations unies contre la drogue et le crime",
+    "hint": "Rapports mondiaux sur la drogue, homicides et criminalité organisée."
+  },
+  "us": {
+    "group": "geopolitique",
+    "match": ["US"],
+    "expansion": "États-Unis",
+    "hint": "Sigle anglais des États-Unis d'Amérique."
+  },
+  "usa": {
+    "group": "geopolitique",
+    "match": ["USA"],
+    "expansion": "États-Unis d'Amérique",
+    "hint": "Puissance hégémonique historique sur l'hémisphère occidental."
+  },
+  "usd": {
+    "group": "economie",
+    "match": ["USD"],
+    "expansion": "United States Dollar (dollar américain)",
+    "hint": "Monnaie de référence ; dollarisation en Équateur et de facto au Venezuela."
+  },
+  "usgs": {
+    "group": "economie",
+    "match": ["USGS"],
+    "expansion": "United States Geological Survey",
+    "hint": "Service géologique américain ; données sur cuivre, lithium, minerais."
+  },
+  "usmca": {
+    "group": "geopolitique",
+    "match": ["USMCA"],
+    "expansion": "United States–Mexico–Canada Agreement",
+    "hint": "Accord commercial nord-américain successeur de l'ALENA (2020)."
+  },
+  "vhp": {
+    "group": "geopolitique",
+    "match": ["VHP"],
+    "expansion": "Vooruit Hoop en Vertrouwen",
+    "hint": "Parti surinamais ; tête de la coalition de Chandrikapersad Santokhi."
+  },
+  "vraem": {
+    "group": "perou",
+    "match": ["VRAEM"],
+    "expansion": "Valle de los ríos Apurímac, Ene y Mantaro",
+    "hint": "Zone andine de production de coca et narcotrafic ; zone rouge au Pérou."
+  },
+  "ypf": {
+    "group": "economie",
+    "match": ["YPF"],
+    "expansion": "Yacimientos Petrolíferos Fiscales",
+    "hint": "Compagnie pétrolière argentine, nationalisée en 2012."
+  }
+}
