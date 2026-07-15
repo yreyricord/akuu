@@ -233,6 +233,61 @@
     if (panelBoxEl.parentNode !== slide) slide.appendChild(panelBoxEl);
   }
 
+  /* ---------- Panneaux d'aide contextuelle (bas-gauche, ?) ---------- */
+  function closeHelpPanels(root = document) {
+    root.querySelectorAll('[data-deck-help-panel].is-open').forEach((panel) => {
+      panel.classList.remove('is-open');
+      panel.setAttribute('aria-hidden', 'true');
+      const slide = panel.closest('section');
+      const panelId = panel.id;
+      const btn = panelId && slide
+        ? slide.querySelector(`[data-deck-help-btn][aria-controls="${panelId}"]`)
+        : slide?.querySelector('[data-deck-help-btn][aria-expanded="true"]');
+      btn?.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  function initHelpPanels(slide) {
+    if (!slide) return;
+    slide.querySelectorAll('[data-deck-help-btn]').forEach((btn) => {
+      if (btn.dataset.deckHelpReady === '1') return;
+      const panelId = btn.getAttribute('aria-controls');
+      const panel = panelId
+        ? slide.querySelector(`#${CSS.escape(panelId)}`)
+        : slide.querySelector('[data-deck-help-panel]');
+      if (!panel) return;
+      btn.dataset.deckHelpReady = '1';
+
+      let isOpen = false;
+
+      function closeHelp() {
+        if (!isOpen) return;
+        isOpen = false;
+        panel.classList.remove('is-open');
+        panel.setAttribute('aria-hidden', 'true');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+
+      function toggleHelp(e) {
+        e.stopPropagation();
+        isOpen = !isOpen;
+        panel.classList.toggle('is-open', isOpen);
+        panel.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+        btn.setAttribute('aria-expanded', String(isOpen));
+      }
+
+      btn.addEventListener('click', toggleHelp);
+      document.addEventListener('click', (e) => {
+        if (!isOpen) return;
+        if (panel.contains(e.target) || btn.contains(e.target)) return;
+        closeHelp();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeHelp();
+      });
+    });
+  }
+
   function initSourcePanelGlobalHandlers() {
     document.addEventListener('click', (e) => {
       if (!panelIsOpen) return;
@@ -1078,10 +1133,44 @@
   }
 
   /* ---------- Slide enter ---------- */
+  /* ---------- Galerie d'espèces : clic sur une carte affiche l'image à droite ---------- */
+  function showSpeciesPic(card) {
+    const section = card.closest('section');
+    const viewer = section?.querySelector('[data-deck-pic-viewer]');
+    if (!viewer) return;
+    section.querySelectorAll('[data-deck-pic]').forEach((c) => c.classList.remove('is-active'));
+    card.classList.add('is-active');
+    const label = card.getAttribute('data-deck-pic-label') || '';
+    const src = card.getAttribute('data-deck-pic');
+    const labelEl = viewer.querySelector('.deck-pic-viewer__label');
+    if (labelEl) labelEl.textContent = label;
+    const img = viewer.querySelector('.deck-pic-viewer__img');
+    if (img && src) {
+      viewer.classList.remove('is-ready'); // fondu sortant
+      img.onload = () => { viewer.classList.add('has-image', 'is-ready'); };
+      img.onerror = () => { viewer.classList.remove('has-image'); viewer.classList.add('is-ready'); };
+      // rAF pour laisser le fondu se jouer avant de changer la source
+      requestAnimationFrame(() => { img.alt = label; img.src = src; });
+    }
+  }
+
+  function initPicViewer(slide) {
+    const cards = slide.querySelectorAll('[data-deck-pic]');
+    if (!cards.length) return;
+    cards.forEach((c) => {
+      if (!c.hasAttribute('tabindex')) c.setAttribute('tabindex', '0');
+      c.setAttribute('role', 'button');
+    });
+    const current = slide.querySelector('[data-deck-pic].is-active') || cards[0];
+    showSpeciesPic(current);
+  }
+
   function onSlideActive(slide) {
     if (!slide) return;
     initSources(slide);
     renderSlideSourcePanel(slide);
+    initHelpPanels(slide);
+    initPicViewer(slide);
     resetToggle(slide);
     resetReveal(slide);
     slide.querySelectorAll('[data-deck-carousel]').forEach(resetCarousel);
@@ -1096,11 +1185,19 @@
     hideTip();
     closeSourcePanel();
     closeFigLightbox();
+    closeHelpPanels();
     onSlideActive(e.detail?.slide);
   }
 
   /* ---------- Délégation clic (capture) ---------- */
   function handleDeckClick(e) {
+    const picCard = e.target.closest('[data-deck-pic]');
+    if (picCard) {
+      stopDeckNav(e);
+      showSpeciesPic(picCard);
+      return;
+    }
+
     const toggleBtn = e.target.closest('[data-deck-toggle]');
     if (toggleBtn) {
       stopDeckNav(e);
@@ -1283,9 +1380,22 @@
     if (swap) swapTo(swap, thumb.dataset.deckSwapThumb);
   }, true);
 
+  function initPicViewerKeyboard() {
+    if (document.documentElement.dataset.deckPicKb) return;
+    document.documentElement.dataset.deckPicKb = '1';
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const card = document.activeElement?.closest?.('[data-deck-pic]');
+      if (!card) return;
+      e.preventDefault();
+      showSpeciesPic(card);
+    });
+  }
+
   function boot() {
     initSourcePointer();
     initSourcePanelGlobalHandlers();
+    initPicViewerKeyboard();
     initSources(document);
     initAutoTimelines(document);
     initCarouselsIn(document);
