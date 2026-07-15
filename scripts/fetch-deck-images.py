@@ -36,6 +36,13 @@ AMARU_COPIES: dict[str, str] = {
     "reptiles/85-tortuga-motelo.jpg": "motelo.jpg",
     "aves/39-garza-tigre-castaña.jpg": "garza-tigre.jpg",
     "aves/21-gallareta-purpura.jpg": "gallareta-purpura.jpg",
+    "reptiles/111-equis-tigre.jpg": "equis.jpg",
+    "aves/15-caracara-curiquingue.jpg": "caracara-curiquingue.jpg",
+    "aves/16-aguila-pechinegra.jpg": "aguila-pechinegra.jpg",
+    "aves/17-gavilan-de-cola-corta.jpg": "gavilan-cola-corta.jpg",
+    "aves/35-buho-de-anteojos.jpg": "buho-anteojos.jpg",
+    "aves/36-buho-estigio.jpg": "buho-estigio.jpg",
+    "aves/10-buho-listado.jpg": "buho-listado.jpg",
 }
 
 # Wikimedia : requête → (dossier, fichier)
@@ -45,6 +52,21 @@ WIKI_FAUNA: list[tuple[str, str, str]] = [
     ("Ardea cocoi cocoi heron", "especes", "garza-cocoi.jpg"),
     ("Cochlearius cochlearius boat-billed heron", "especes", "garza-cuervo.jpg"),
     ("Agamia agami heron", "especes", "garza-agami.jpg"),
+    ("Paraponera clavata bullet ant", "especes", "hormiga-bala.jpg"),
+    ("Avicularia avicularia pinktoe tarantula", "especes", "tarántula-pollito.jpg"),
+    ("Micrurus surinamensis coral snake", "especes", "coral.jpg"),
+    ("Opisthocomus hoazin hoatzin Peru", "especes", "hoatzin.jpg"),
+    ("Anhima cornuta horned screamer Peru", "especes", "camungo.jpg"),
+    ("Busarellus nigricollis black collared hawk", "especes", "mama-vieja.jpg"),
+    ("Rupornis magnirostris roadside hawk", "especes", "gavilan-pollero.jpg"),
+    ("Harpia harpyja harpy eagle", "especes", "aguila-harpia.jpg"),
+    ("Sotalia fluviatilis tucuxi dolphin", "especes", "tucuxi.jpg"),
+    ("Prochilodus nigricans boquichico fish", "especes", "boquichico.jpg"),
+    ("Mylossoma duriventre palometa fish", "especes", "palometa.jpg"),
+    ("Pterygoplichthys pardalis sailfin catfish", "especes", "carachama.jpg"),
+    ("Colossoma macropomum tambaqui gamitana", "especes", "gamitana.jpg"),
+    ("Piaractus brachypomus red pacu", "especes", "paco.jpg"),
+    ("Pseudoplatystoma fasciatum tiger catfish", "especes", "doncella.jpg"),
 ]
 
 WIKI_FLORA: list[tuple[str, str, str]] = [
