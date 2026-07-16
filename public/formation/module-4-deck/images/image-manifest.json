@@ -6,6 +6,10 @@
   ],
   "especes_dir": "public/formation/module-4-deck/images/especes",
   "flores_dir": "public/formation/module-4-deck/images/flores",
-  "errors": [],
+  "errors": [
+    "Wikimedia introuvable: Amburana cearensis ishpingo → ishpingo.jpg",
+    "Wikimedia introuvable: Eschweilera amazonica Lecythidaceae → machimango.jpg",
+    "Wikimedia introuvable: Oenocarpus bataua ungurahui palm fruit → ungurahui.jpg"
+  ],
   "retry": "python3 scripts/fetch-deck-images.py"
 }

@@ -9,7 +9,8 @@ Sources :
 Usage:
   python3 scripts/fetch-deck-images.py
   python3 scripts/fetch-deck-images.py --only flora
-  python3 scripts/fetch-deck-images.py --only fauna
+  python3 scripts/fetch-deck-images.py --only flora --missing-only
+  python3 scripts/fetch-deck-images.py --only flora --force
 """
 
 from __future__ import annotations
@@ -70,22 +71,55 @@ WIKI_FAUNA: list[tuple[str, str, str]] = [
 ]
 
 WIKI_FLORA: list[tuple[str, str, str]] = [
+    # Arbres
+    ("Ceiba pentandra kapok tree", "flores", "lupuna.jpg"),
+    ("Bertholletia excelsa Brazil nut tree", "flores", "castana.jpg"),
+    ("Hevea brasiliensis rubber tree latex", "flores", "shiringa.jpg"),
+    ("Cecropia peltata tree", "flores", "cecropia.jpg"),
+    ("Ochroma pyramidale balsa tree", "flores", "balsa.jpg"),
+    ("Calycophyllum spruceanum capirona", "flores", "capirona.jpg"),
+    ("Dipteryx odorata tonka tree", "flores", "shihuahuaco.jpg"),
     ("Swietenia macrophylla mahogany tree", "flores", "caoba.jpg"),
-    ("Handroanthus impetiginosus ipê tree", "flores", "lapacho.jpg"),
+    ("Handroanthus chrysanthus yellow ipê", "flores", "lapacho.jpg"),
+    ("Hura crepitans sandbox tree", "flores", "catahua.jpg"),
+    ("Amburana cearensis", "flores", "ishpingo.jpg"),
+    ("Eschweilera coriacea", "flores", "machimango.jpg"),
+    # Palmiers
     ("Euterpe oleracea açaí palm fruit", "flores", "acai.jpg"),
     ("Bactris gasipaes peach palm", "flores", "pijuayo.jpg"),
-    ("Mauritia flexuosa aguaje", "flores", "aguaje.jpg"),
+    ("Mauritia flexuosa aguaje fruit", "flores", "aguaje.jpg"),
+    ("Socratea exorrhiza walking palm", "flores", "palma-caminante.jpg"),
+    ("Phytelephas macrocarpa tagua ivory palm", "flores", "yarina.jpg"),
+    ("Astrocaryum chambira palm", "flores", "huicungo.jpg"),
+    ("Oenocarpus bataua", "flores", "ungurahui.jpg"),
+    # Médicinales & rituel
     ("Uncaria tomentosa cat's claw vine", "flores", "una-de-gato.jpg"),
     ("Croton lechleri sangre de grado", "flores", "sangre-de-grado.jpg"),
+    ("Dracontium loretense jergon sacha", "flores", "jergon-sacha.jpg"),
+    ("Maytenus macrocarpa chuchuhuasi", "flores", "chuchuhuasi.jpg"),
+    ("Ptychopetalum olacoides muira puama", "flores", "muira-puama.jpg"),
+    ("Mansoa alliacea garlic vine", "flores", "ajo-sacha.jpg"),
+    ("Nicotiana rustica tobacco plant", "flores", "tabaco.jpg"),
+    # Psychoactives
     ("Banisteriopsis caapi vine", "flores", "ayahuasca.jpg"),
     ("Psychotria viridis chacruna", "flores", "chacruna.jpg"),
+    ("Anadenanthera colubrina yopo seeds", "flores", "yopo.jpg"),
+    ("Echinopsis pachanoi San Pedro cactus", "flores", "huachuma.jpg"),
     ("Phyllomedusa bicolor giant leaf frog", "flores", "kambo.jpg"),
-    ("Theobroma cacao fruit", "flores", "cacao.jpg"),
-    ("Paullinia cupana guarana", "flores", "guarana.jpg"),
-    ("Cecropia peltata tree", "flores", "cecropia.jpg"),
+    # Alimentaires amazoniens
+    ("Myrciaria dubia camu camu fruit", "flores", "camu-camu.jpg"),
+    ("Solanum sessiliflorum cocona fruit", "flores", "cocona.jpg"),
+    ("Theobroma grandiflorum cupuaçu fruit", "flores", "cupuacu.jpg"),
+    ("Theobroma cacao fruit pod", "flores", "cacao.jpg"),
+    ("Paullinia cupana guarana fruit", "flores", "guarana.jpg"),
+    ("Manihot esculenta cassava yuca", "flores", "yuca.jpg"),
+    ("Inga edulis ice cream bean", "flores", "inga.jpg"),
+    ("Lonchocarpus urucu barbasco", "flores", "barbasco.jpg"),
     ("Victoria amazonica water lily", "flores", "victoria-amazonica.jpg"),
-    ("Dracontium peruvianum jergon sacha", "flores", "jergon-sacha.jpg"),
 ]
+
+# Seuil : en dessous, on considère un placeholder à remplacer
+PLACEHOLDER_MAX_BYTES = 80_000
 
 
 def fetch_json(url: str) -> dict:
@@ -125,8 +159,8 @@ def wiki_search_url(query: str) -> str | None:
     return None
 
 
-def download(url: str, dest: Path) -> bool:
-    if dest.exists() and dest.stat().st_size > 5000:
+def download(url: str, dest: Path, *, overwrite: bool = False) -> bool:
+    if dest.exists() and dest.stat().st_size > PLACEHOLDER_MAX_BYTES and not overwrite:
         print(f"  · {dest.name} (présent)")
         return True
     time.sleep(DELAY)
@@ -141,7 +175,7 @@ def download(url: str, dest: Path) -> bool:
         dest.unlink(missing_ok=True)
         print(f"  ✗ {dest.name}: fichier trop petit")
         return False
-    print(f"  ✓ {dest.name}")
+    print(f"  ✓ {dest.name} ({dest.stat().st_size // 1024} ko)")
     return True
 
 
@@ -161,21 +195,37 @@ def copy_amaru() -> list[str]:
     return errors
 
 
-def fetch_wiki(entries: list[tuple[str, str, str]]) -> list[str]:
+def fetch_wiki(entries: list[tuple[str, str, str]], *, force: bool = False) -> list[str]:
     errors: list[str] = []
     for query, folder, filename in entries:
         base = ESPECES if folder == "especes" else FLORES
         dest = base / filename
+        # Aussi accepter .webp / .avif déjà présents sous le même stem
+        stem_hits = list(base.glob(f"{Path(filename).stem}.*"))
+        existing = dest if dest.exists() else (stem_hits[0] if stem_hits else None)
         base.mkdir(parents=True, exist_ok=True)
-        if dest.exists() and dest.stat().st_size > 5000:
-            print(f"  · {filename}")
-            continue
+        if existing and not force:
+            size = existing.stat().st_size
+            if size > PLACEHOLDER_MAX_BYTES:
+                print(f"  · {existing.name} ({size // 1024} ko)")
+                continue
+            print(f"  ↪ {existing.name} — placeholder ({size // 1024} ko), recherche Wikimedia…")
         url = wiki_search_url(query)
         if not url:
             errors.append(f"Wikimedia introuvable: {query} → {filename}")
             print(f"  ? {filename} — pas de résultat pour « {query} »")
             continue
-        if not download(url, dest):
+        # Forcer l'extension selon l'URL
+        ext = Path(urllib.parse.urlparse(url).path).suffix.lower() or ".jpg"
+        if ext not in {".jpg", ".jpeg", ".png", ".webp"}:
+            ext = ".jpg"
+        final = base / f"{Path(filename).stem}{ext}"
+        overwrite = force
+        if existing and existing.exists() and existing.stat().st_size <= PLACEHOLDER_MAX_BYTES:
+            overwrite = True
+        if existing and existing != final and existing.exists():
+            existing.unlink(missing_ok=True)
+        if not download(url, final, overwrite=overwrite):
             errors.append(f"Échec téléchargement: {filename}")
     return errors
 
@@ -198,8 +248,18 @@ def write_manifest(errors: list[str]) -> None:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description="Télécharge images Module 4 depuis Wikimedia Commons")
     parser.add_argument("--only", choices=("flora", "fauna", "all"), default="all")
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Retélécharge même si un fichier volumineux existe déjà",
+    )
+    parser.add_argument(
+        "--missing-only",
+        action="store_true",
+        help="Flore : ne traite que les fichiers absents ou placeholders (< 80 ko)",
+    )
     args = parser.parse_args()
     ESPECES.mkdir(parents=True, exist_ok=True)
     FLORES.mkdir(parents=True, exist_ok=True)
@@ -208,12 +268,23 @@ def main() -> int:
     if args.only in ("fauna", "all"):
         print("\n[fauna] Copie Amaru")
         errors.extend(copy_amaru())
-        print("\n[fauna] Wikimedia (garzas, tuqui tuqui)")
-        errors.extend(fetch_wiki(WIKI_FAUNA))
+        print("\n[fauna] Wikimedia")
+        errors.extend(fetch_wiki(WIKI_FAUNA, force=args.force))
 
     if args.only in ("flora", "all"):
         print("\n[flora] Wikimedia")
-        errors.extend(fetch_wiki(WIKI_FLORA))
+        flora = WIKI_FLORA
+        if args.missing_only and not args.force:
+            filtered: list[tuple[str, str, str]] = []
+            for query, folder, filename in flora:
+                base = FLORES
+                stem = Path(filename).stem
+                hits = list(base.glob(f"{stem}.*"))
+                if not hits or hits[0].stat().st_size <= PLACEHOLDER_MAX_BYTES:
+                    filtered.append((query, folder, filename))
+            flora = filtered
+            print(f"  → {len(flora)} fichier(s) manquant(s) / placeholder(s)")
+        errors.extend(fetch_wiki(flora, force=args.force))
 
     write_manifest(errors)
     print(f"\nTerminé — {len(errors)} erreur(s)")

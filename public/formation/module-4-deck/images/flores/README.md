@@ -1,24 +1,21 @@
 # Images flore — galerie cliquable (Module 4 · Partie 02)
 
-Même logique que `images/especes/` : le fichier doit correspondre à `data-deck-pic` dans `index.html`.
+Max **3 espèces** par slide. Fichier = `data-deck-pic` dans `index.html`.
 
-## Slides
+## Téléchargement Wikimedia
+
+```bash
+# Placeholders / manquants uniquement
+python3 scripts/fetch-deck-images.py --only flora --missing-only
+
+# Forcer un retéléchargement
+python3 scripts/fetch-deck-images.py --only flora --force
+```
+
+## Slides alimentaires
 
 | Slide | Fichiers |
 |-------|----------|
-| Arbres géants | `lupuna.jpg`, `shiringa.jpg`, `castana.jpg` |
-| Bois exploités | `caoba.jpg`, `lapacho.jpg` |
-| Palmiers | `acai.jpg`, `pijuayo.jpg`, `aguaje.jpg` |
-| Plantes médicinales | `una-de-gato.jpg`, `sangre-de-grado.jpg`, `jergon-sacha.jpg` |
-| Ayahuasca | `ayahuasca.jpg`, `chacruna.jpg` |
-| Kambo | `kambo.jpg` |
-| Ressources alimentaires | `acai.jpg`, `cacao.jpg`, `guarana.jpg` |
-| Symbioses / stratification | `cecropia.jpg`, `victoria-amazonica.jpg`, `lupuna.jpg` |
-
-## Mise à jour
-
-```bash
-python3 scripts/fetch-deck-images.py --only flora
-```
-
-Sources : Wikimedia Commons (licences CC). Voir `../image-manifest.json`.
+| Fruits amazoniens 1/2 | `camu-camu.jpg`, `cocona.jpg`, `ungurahui.jpg` |
+| Fruits amazoniens 2/2 | `cupuacu.jpg`, `cacao.jpg`, `guarana.jpg` |
+| Bases & utiles | `yuca.jpg`, `inga.jpg`, `barbasco.jpg` |
