@@ -2612,7 +2612,28 @@ section[data-deck-active] .photo-in {
   background: rgba(0,0,0,0.045);
   border: 2px dashed rgba(0,0,0,0.26);
   border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  min-height: 0;
 }
+.ph.has-img {
+  padding: 0;
+  border-style: solid;
+  border-color: rgba(0,0,0,0.08);
+  background: #1a1a1a;
+}
+.ph.has-img > img,
+.ph.has-img > picture,
+.ph.has-img > picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: inherit;
+}
+.ph.has-img > .ph-num,
+.ph.has-img > .ph-kind,
+.ph.has-img > .ph-desc { display: none; }
 .deck-video {
   width: 100%;
   max-width: 1280px;

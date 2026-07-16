@@ -52,8 +52,27 @@ python3 scripts/fetch-deck-images.py
 | `cupuacu.jpg` | *Theobroma grandiflorum* | Ressources alimentaires |
 | `camu-camu.jpg` | *Myrciaria dubia* | Ressources alimentaires |
 | `yuca.jpg` | *Manihot esculenta* | Ressources alimentaires |
-| `orpaillage.jpg` | lieu Madre de Dios | Partie 03 (M4-12) |
+| `orpaillage.jpg` | lieu Madre de Dios | Partie 03 (M4-12 / M4-12b) |
 | `curandero.jpg` | scène rituelle (stock CC) | Partie 05 (M4-16) |
+
+### Partie 03 · Enjeux — placeholders ajoutés
+
+| ID | Type | Contenu suggéré |
+|----|------|-----------------|
+| M4-12 / M4-12b | satellite / photo | Orpaillage Madre de Dios / rivière turbide |
+| M4-17 | photo / satellite | Frontière agricole pâturages–soja |
+| M4-18 | photo | Grumes / chantier forestier |
+| M4-19 | photo / carte | Route ou barrage |
+| M4-20 / M4-23 | photo / satellite | Feux / fumée / cicatrices de brûlis |
+| M4-21 | carte | Perte forestière (RAISG / MapBiomas / MAAP) |
+| M4-22 | satellite | Forêt dégradée / lisière fragmentée |
+| M4-24 | schéma | Boucle feux ↔ sécheresse ↔ carbone |
+| M4-25 | photo / carte | BR-163 / barrage Madeira |
+| M4-26–28 | photo | Trafic / jaguar / paiche–boto |
+| M4-29 | photo | Sécheresse ou glacier andin |
+| M4-30 | schéma | Tipping point / recycle hydrologique |
+| M4-31 | photo | Communauté / territoire (consentement) |
+| M4-32 | photo | Pacaya-Samiria / gardiens |
 
 ## 4. Schémas & illustrations (M4-11, M4-13, M4-14…)
 
@@ -62,6 +81,7 @@ Pas de photo : générer ou sourcer :
 - **M4-11** stratification → diagramme SVG (canopée / émergents) · NASA Earth Observatory ou WWF
 - **M4-12** orpaillage → MAAP Amazon / MapBiomas (images satellite CC)
 - **M4-13–16** mythologie → illustrations IA ou banques éducatives (Vecteezy, Smithsonian OE)
+- **M4-21 / M4-24 / M4-30** cartes & schémas Enjeux → MAAP, MapBiomas, WWF
 
 ## État actuel
 
