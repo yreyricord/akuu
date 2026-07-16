@@ -930,6 +930,180 @@ a.deck-src-panel__row:focus-visible {
 .deck-pic-card.is-active { outline: 3px solid var(--green-leaf, #8FB33A); outline-offset: 2px; }
 .deck-pic-card.is-active::after { opacity: 0.9; }
 .deck-pic-card:focus-visible { outline: 3px solid var(--green-leaf, #8FB33A); outline-offset: 2px; }
+.deck-pic-card[data-protection="protege"] {
+  border-left: 6px solid var(--terracotta, #E76F51);
+}
+.deck-protect {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border-radius: 6px;
+  line-height: 1.15;
+  flex-shrink: 0;
+  white-space: nowrap;
+  cursor: help;
+  z-index: 2;
+}
+.deck-protect--protege {
+  background: var(--terracotta, #E76F51);
+  color: var(--cream, #F5F0E6);
+}
+.deck-protect--bushmeat {
+  background: var(--ochre, #F4A261);
+  color: var(--night-2, #2A2A2A);
+}
+.deck-protect--veda {
+  background: var(--green-forest, #2C5F2D);
+  color: var(--cream, #F5F0E6);
+}
+.deck-protect[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  transform: translateX(-50%) translateY(4px);
+  min-width: 200px;
+  max-width: 280px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--night-2, #2A2A2A);
+  color: var(--cream, #F5F0E6);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  text-transform: none;
+  line-height: 1.35;
+  white-space: normal;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+  z-index: 30;
+}
+.deck-protect[data-tip]::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 2px);
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--night-2, #2A2A2A);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  z-index: 30;
+}
+.deck-protect[data-tip]:hover::after,
+.deck-protect[data-tip]:focus-visible::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.deck-protect[data-tip]:hover::before,
+.deck-protect[data-tip]:focus-visible::before {
+  opacity: 1;
+}
+
+/* ---------- Slide règle bénévole · protections ---------- */
+.deck-rule-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+  min-height: 0;
+}
+.deck-rule-intro {
+  background: var(--cream, #F5F0E6);
+  padding: 16px 20px;
+  border-radius: 12px;
+  border-left: 6px solid var(--terracotta, #E76F51);
+}
+.deck-rule-intro .lead {
+  margin: 0;
+  font-size: clamp(14px, 1.05vw, 16px);
+  line-height: 1.45;
+  max-width: none;
+}
+.deck-rule-refs {
+  margin: 10px 0 0;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--night-2, #2A2A2A);
+  opacity: 0.82;
+}
+.deck-rule-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  flex: 1;
+  min-height: 0;
+  align-items: stretch;
+}
+.deck-rule-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--cream, #F5F0E6);
+  padding: 14px 16px;
+  border-radius: 12px;
+  min-height: 0;
+}
+.deck-rule-card--protege {
+  border-left: 6px solid var(--terracotta, #E76F51);
+}
+.deck-rule-card--bushmeat {
+  border-left: 6px solid var(--ochre, #F4A261);
+}
+.deck-rule-card--veda {
+  border-left: 6px solid var(--green-forest, #2C5F2D);
+}
+.deck-rule-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.deck-rule-card__title {
+  color: var(--green-forest, #2C5F2D);
+  font-size: var(--fs-1, 15px);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+}
+.deck-rule-card__body {
+  color: var(--night-2, #2A2A2A);
+  font-size: 12px;
+  line-height: 1.45;
+  margin: 0;
+}
+.deck-rule-footer {
+  background: var(--green-forest, #2C5F2D);
+  padding: 14px 20px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.deck-rule-footer__title {
+  color: var(--cream, #F5F0E6);
+  font-size: var(--fs-1, 15px);
+  font-weight: 700;
+  margin: 0;
+}
+.deck-rule-footer__body {
+  color: var(--green-leaf, #8FB33A);
+  font-size: 12px;
+  line-height: 1.45;
+  margin: 0;
+}
+
 .deck-pic-viewer {
   position: relative;
   overflow: hidden;
