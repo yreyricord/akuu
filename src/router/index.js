@@ -78,6 +78,12 @@ export const routes = [
     component: () => import('@/views/PartenairesView.vue')
   },
   {
+    path: '/comptes-ag',
+    name: 'comptes-ag',
+    meta: { seoRoute: 'comptesAg', noIndex: true, solidNav: true },
+    component: () => import('@/views/ComptesAgView.vue')
+  },
+  {
     path: '/formation',
     name: 'formation',
     meta: { seoRoute: 'formation', noIndex: true, solidNav: true },

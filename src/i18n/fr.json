@@ -45,6 +45,10 @@
         "title": "Espace Formation : Bénévoles AKUU",
         "description": "Espace de formation interne pour les bénévoles AKUU en préparation de mission."
       },
+      "comptesAg": {
+        "title": "Comptes de l'assemblée générale — AKUU",
+        "description": "Présentation interne des comptes AKUU consolidés de 2017 à septembre 2026, réservée aux adhérents."
+      },
       "soutenir": {
         "title": "Soutenir l'ONG AKUU — Dons déductibles & adhésion",
         "description": "Faire un don à l'ONG AKUU ou adhérer : financer les projets de solidarité en Amazonie péruvienne. Don déductible des impôts à 66 %."
@@ -197,8 +201,8 @@
     "social_tiktok_title": "Vidéo TikTok",
     "social_instagram_cta": "Ouvrir Instagram",
     "social_tiktok_cta": "Ouvrir TikTok",
-    "social_fallback_instagram": "Actus, reels et coulisses sur {'@'}akuu_association.",
-    "social_fallback_tiktok": "Formats courts sur nos projets, {'@'}akuu_asso.",
+    "social_fallback_instagram": "Actus, reels et coulisses sur {'@'}akuu.asso.",
+    "social_fallback_tiktok": "Formats courts sur nos projets, {'@'}akuu.asso.",
     "social_instagram_label": "Instagram",
     "social_tiktok_label": "TikTok",
     "social_feed_loading": "Chargement des publications…",
@@ -880,6 +884,13 @@
       "title": "Contenu du module à venir",
       "text": "Cette page accueillera bientôt le contenu interactif du module.",
       "back": "Retour à l'espace formation"
+    },
+    "rent_support": {
+      "badge": "Soutenir la maison communautaire",
+      "title": "Participer à l'entretien de la Casa AKUU",
+      "text": "La Casa AKUU est le point de départ de tous nos projets à Puerto Miguel : les volontaires y vivent et y travaillent, les habitants y viennent échanger. Son entretien est financé par une cagnotte dédiée.",
+      "cta": "Contribuer à l'entretien",
+      "note": "Cagnotte HelloAsso · reçu fiscal automatique · aucun frais prélevé sur votre don"
     }
   },
   "soutien": {

@@ -45,6 +45,10 @@
         "title": "Training Space: AKUU Volunteers",
         "description": "Internal training space for AKUU volunteers preparing for their mission."
       },
+      "comptesAg": {
+        "title": "General assembly accounts — AKUU",
+        "description": "Internal presentation of AKUU's consolidated accounts from 2017 to September 2026, for members only."
+      },
       "soutenir": {
         "title": "Support AKUU NGO — Tax-deductible donations & membership",
         "description": "Donate or join AKUU NGO to fund solidarity projects in the Peruvian Amazon. Donations are tax-deductible at 66% in France."
@@ -197,8 +201,8 @@
     "social_tiktok_title": "TikTok video",
     "social_instagram_cta": "Open Instagram",
     "social_tiktok_cta": "Open TikTok",
-    "social_fallback_instagram": "Updates, reels and behind the scenes on {'@'}akuu_association.",
-    "social_fallback_tiktok": "Short videos about our projects, {'@'}akuu_asso.",
+    "social_fallback_instagram": "Updates, reels and behind the scenes on {'@'}akuu.asso.",
+    "social_fallback_tiktok": "Short videos about our projects, {'@'}akuu.asso.",
     "social_instagram_label": "Instagram",
     "social_tiktok_label": "TikTok",
     "social_feed_loading": "Loading latest posts…",
@@ -880,6 +884,13 @@
       "title": "Module content coming soon",
       "text": "This page will soon host the module's interactive content.",
       "back": "Back to the training space"
+    },
+    "rent_support": {
+      "badge": "Support the community house",
+      "title": "Help maintain Casa AKUU",
+      "text": "Casa AKUU is where every one of our projects in Puerto Miguel begins: volunteers live and work there, and villagers come to share ideas. Its upkeep is funded by a dedicated fundraiser.",
+      "cta": "Contribute to its upkeep",
+      "note": "HelloAsso fundraiser · automatic tax receipt · zero fees on your donation"
     }
   },
   "soutien": {

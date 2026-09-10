@@ -45,6 +45,10 @@
         "title": "Espacio de Formación: Voluntarios AKUU",
         "description": "Espacio de formación interno para los voluntarios de AKUU en preparación de su misión."
       },
+      "comptesAg": {
+        "title": "Cuentas de la asamblea general — AKUU",
+        "description": "Presentación interna de las cuentas consolidadas de AKUU de 2017 a septiembre de 2026, reservada a los socios."
+      },
       "soutenir": {
         "title": "Apoyar la ONG AKUU — Donaciones deducibles & membresía",
         "description": "Dona o únete a la ONG AKUU para financiar proyectos de solidaridad en la Amazonía peruana. Donaciones deducibles fiscalmente en Francia."
@@ -197,8 +201,8 @@
     "social_tiktok_title": "Vídeo de TikTok",
     "social_instagram_cta": "Abrir Instagram",
     "social_tiktok_cta": "Abrir TikTok",
-    "social_fallback_instagram": "Actualidad, reels y detrás de cámaras en {'@'}akuu_association.",
-    "social_fallback_tiktok": "Vídeos cortos sobre nuestros proyectos, {'@'}akuu_asso.",
+    "social_fallback_instagram": "Actualidad, reels y detrás de cámaras en {'@'}akuu.asso.",
+    "social_fallback_tiktok": "Vídeos cortos sobre nuestros proyectos, {'@'}akuu.asso.",
     "social_instagram_label": "Instagram",
     "social_tiktok_label": "TikTok",
     "social_feed_loading": "Cargando publicaciones…",
@@ -880,6 +884,13 @@
       "title": "Contenido del módulo próximamente",
       "text": "Esta página pronto tendrá el contenido interactivo del módulo.",
       "back": "Volver al espacio de formación"
+    },
+    "rent_support": {
+      "badge": "Apoyar la casa comunitaria",
+      "title": "Participa en el mantenimiento de la Casa AKUU",
+      "text": "La Casa AKUU es el punto de partida de todos nuestros proyectos en Puerto Miguel: allí viven y trabajan los voluntarios, y los habitantes acuden a intercambiar ideas. Su mantenimiento se financia con una colecta específica.",
+      "cta": "Contribuir al mantenimiento",
+      "note": "Colecta HelloAsso · recibo fiscal automático · sin comisiones sobre tu donación"
     }
   },
   "soutien": {

@@ -38,8 +38,8 @@
     "quote": "A AKUU é um projeto em que acredito fortemente. A AKUU lembra-me a minha ligação com a natureza, as tradições. Essa palavra significa o compartilhamento de energia, o respeito à floresta, à sua fauna, à sua flora...",
     "quote_author": "Marlon Diaz, co-fundador",
     "quote_portrait_alt": "Retrato de Marlon Diaz, co-fundador da AKUU",
-    "social_fallback_instagram": "Notícias, rolos e bastidores em {'@'}akuu_association.",
-    "social_fallback_tiktok": "Formatos curtos nos nossos projetos, {'@'}akuu_asso.",
+    "social_fallback_instagram": "Notícias, rolos e bastidores em {'@'}akuu.asso.",
+    "social_fallback_tiktok": "Formatos curtos nos nossos projetos, {'@'}akuu.asso.",
     "social_feed_loading": "A carregar publicações...",
     "social_instagram_cta": "Abrir Instagram",
     "social_instagram_label": "Instagram",
@@ -925,6 +925,10 @@
         "title": "Espaço de Formação: Voluntários AKUU",
         "description": "Espaço de formação interno para os voluntários da AKUU em preparação para a missão."
       },
+      "comptesAg": {
+        "title": "Contas da assembleia geral — AKUU",
+        "description": "Apresentação interna das contas consolidadas da AKUU de 2017 a setembro de 2026, reservada aos associados."
+      },
       "soutenir": {
         "title": "Apoiar a ONG AKUU — Doações dedutíveis & adesão",
         "description": "Doe ou adira à ONG AKUU para financiar projetos de solidariedade na Amazônia peruana. Doações dedutíveis fiscalmente em França."
@@ -1238,6 +1242,13 @@
       "title": "Conteúdo do módulo em breve",
       "text": "Esta página em breve terá o conteúdo interativo do módulo.",
       "back": "Voltar ao espaço de formação"
+    },
+    "rent_support": {
+      "badge": "Apoiar a casa comunitária",
+      "title": "Participe na manutenção da Casa AKUU",
+      "text": "A Casa AKUU é o ponto de partida de todos os nossos projetos em Puerto Miguel: é onde os voluntários vivem e trabalham, e onde os habitantes vêm trocar ideias. A sua manutenção é financiada por uma angariação dedicada.",
+      "cta": "Contribuir para a manutenção",
+      "note": "Angariação HelloAsso · recibo fiscal automático · sem taxas sobre a sua doação"
     }
   },
   "cta_banner": {

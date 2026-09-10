@@ -1,0 +1,1168 @@
+{
+  "meta": {
+    "generatedAt": "2026-09-10T16:58:01",
+    "periodLabel": "2017 – septembre 2026",
+    "workbook": "Synthese_financiere_AKUU_2017_2026.xlsx",
+    "notes": [
+      "2017 et le début 2018 proviennent des journaux comptables : aucun relevé bancaire n'existe pour cette période.",
+      "Septembre 2026 est une saisie manuelle provisoire, en attente du relevé bancaire.",
+      "Les virements groupés HelloAsso sont comptés une seule fois, à leur arrivée sur le compte.",
+      "Les loyers de la maison sont des recettes, jamais des dons."
+    ]
+  },
+  "totals": {
+    "received": 72623.51,
+    "spent": 69801.87,
+    "resources": 71161.38,
+    "excludedCredits": 1462.13,
+    "engagements": 1548.69,
+    "bankBalance": 2433.34,
+    "bankBalanceDate": "2026-09-10",
+    "cashAfterEngagements": 884.65,
+    "computedCashFromFlows": 2809.45,
+    "adjustedComputedCash": 2433.34,
+    "helloAssoFeesAkuuvision": {
+      "date": "2026-08-31",
+      "amount": 376.11,
+      "project": "AKUUVision",
+      "label": "Frais plateforme HelloAsso campagne AKUUVision",
+      "note": "Prélevés par HelloAsso sur les dons AKUUVision, arrêté au 31/08/2026, retenus sur la plateforme, non débités sur le Crédit Coopératif",
+      "file": "2026/frais_helloasso_akuuvision.csv"
+    },
+    "reconciliationGap": 0.0,
+    "lastStatementClosing": {
+      "date": "2026-08-31",
+      "amount": 1341.17
+    }
+  },
+  "cashPosition": {
+    "method": "solde constaté",
+    "source": "Constat trésorier au 10/09/2026",
+    "note": "Solde compte courant Crédit Coopératif, dernier relevé bancaire : 1 341,17 € au 31/08/2026",
+    "reconciliationNote": "Les dons HelloAsso AKUUVision sont saisis bruts ; les frais plateforme (376.11 € au 2026-08-31) sont retenus par HelloAsso et n'apparaissent pas sur le Crédit Coopératif."
+  },
+  "years": [
+    {
+      "year": 2017,
+      "label": "2017",
+      "credits": 9222.46,
+      "debits": 6943.49,
+      "resources": 8722.46,
+      "coverage": "Journal uniquement",
+      "provisional": false,
+      "closing": 2278.97
+    },
+    {
+      "year": 2018,
+      "label": "2018",
+      "credits": 14681.3,
+      "debits": 9534.83,
+      "resources": 14681.3,
+      "coverage": "Journal jan–18 mai + banque",
+      "provisional": false,
+      "closing": 7413.25
+    },
+    {
+      "year": 2019,
+      "label": "2019",
+      "credits": 18023.89,
+      "debits": 10227.78,
+      "resources": 17553.09,
+      "coverage": "12 mois bancaires",
+      "provisional": false,
+      "closing": 15209.36
+    },
+    {
+      "year": 2020,
+      "label": "2020",
+      "credits": 4602.42,
+      "debits": 5032.81,
+      "resources": 4325.16,
+      "coverage": "12 mois bancaires",
+      "provisional": false,
+      "closing": 14778.97
+    },
+    {
+      "year": 2021,
+      "label": "2021",
+      "credits": 1680.0,
+      "debits": 684.02,
+      "resources": 1680.0,
+      "coverage": "12 mois bancaires",
+      "provisional": false,
+      "closing": 15774.95
+    },
+    {
+      "year": 2022,
+      "label": "2022",
+      "credits": 899.07,
+      "debits": 1446.69,
+      "resources": 899.07,
+      "coverage": "12 mois bancaires",
+      "provisional": false,
+      "closing": 15227.33
+    },
+    {
+      "year": 2023,
+      "label": "2023",
+      "credits": 1075.31,
+      "debits": 2905.09,
+      "resources": 1075.0,
+      "coverage": "12 mois bancaires",
+      "provisional": false,
+      "closing": 13397.55
+    },
+    {
+      "year": 2024,
+      "label": "2024",
+      "credits": 9743.04,
+      "debits": 21215.24,
+      "resources": 9743.04,
+      "coverage": "12 mois bancaires",
+      "provisional": false,
+      "closing": 1925.35
+    },
+    {
+      "year": 2025,
+      "label": "2025",
+      "credits": 6582.26,
+      "debits": 7193.75,
+      "resources": 6582.26,
+      "coverage": "12 mois bancaires",
+      "provisional": false,
+      "closing": 1313.86
+    },
+    {
+      "year": 2026,
+      "label": "2026*",
+      "credits": 6113.76,
+      "debits": 4618.17,
+      "resources": 5900.0,
+      "coverage": "Jan–sept. (sept. provisoire)",
+      "provisional": true,
+      "closing": null,
+      "projectedResources": 15900.0,
+      "projectedResourcesLabel": "Subvention Musée (attendue)"
+    }
+  ],
+  "categoryFlows": {
+    "resources": {
+      "categories": [
+        {
+          "id": "subventions-et-prix",
+          "label": "Subventions et prix",
+          "color": "#2563EB"
+        },
+        {
+          "id": "dons",
+          "label": "Dons",
+          "color": "#EA580C"
+        },
+        {
+          "id": "loyer",
+          "label": "Loyer",
+          "color": "#0D9488"
+        },
+        {
+          "id": "autres",
+          "label": "Autres",
+          "color": "#9333EA"
+        }
+      ],
+      "years": [
+        {
+          "year": 2017,
+          "label": "2017",
+          "total": 8722.46,
+          "amounts": {
+            "dons": 1892.24,
+            "autres": 330.22,
+            "subventions-et-prix": 6500.0
+          }
+        },
+        {
+          "year": 2018,
+          "label": "2018",
+          "total": 14681.3,
+          "amounts": {
+            "dons": 541.3,
+            "loyer": 1160.0,
+            "subventions-et-prix": 12980.0
+          }
+        },
+        {
+          "year": 2019,
+          "label": "2019",
+          "total": 17553.09,
+          "amounts": {
+            "dons": 3561.7,
+            "loyer": 2170.12,
+            "subventions-et-prix": 9920.0,
+            "autres": 1901.27
+          }
+        },
+        {
+          "year": 2020,
+          "label": "2020",
+          "total": 4325.16,
+          "amounts": {
+            "dons": 770.46,
+            "loyer": 2236.0,
+            "autres": 118.7,
+            "subventions-et-prix": 1200.0
+          }
+        },
+        {
+          "year": 2021,
+          "label": "2021",
+          "total": 1680.0,
+          "amounts": {
+            "dons": 680.0,
+            "subventions-et-prix": 1000.0
+          }
+        },
+        {
+          "year": 2022,
+          "label": "2022",
+          "total": 899.07,
+          "amounts": {
+            "dons": 899.07
+          }
+        },
+        {
+          "year": 2023,
+          "label": "2023",
+          "total": 1075.0,
+          "amounts": {
+            "dons": 1075.0
+          }
+        },
+        {
+          "year": 2024,
+          "label": "2024",
+          "total": 9743.04,
+          "amounts": {
+            "dons": 1193.04,
+            "subventions-et-prix": 8550.0
+          }
+        },
+        {
+          "year": 2025,
+          "label": "2025",
+          "total": 6582.26,
+          "amounts": {
+            "dons": 4884.99,
+            "loyer": 697.27,
+            "subventions-et-prix": 1000.0
+          }
+        },
+        {
+          "year": 2026,
+          "label": "2026*",
+          "total": 5900.0,
+          "amounts": {
+            "dons": 3950.0,
+            "loyer": 1000.0,
+            "subventions-et-prix": 950.0
+          }
+        }
+      ],
+      "projections": [
+        {
+          "year": 2026,
+          "categoryId": "subventions-et-prix",
+          "amount": 10000.0,
+          "label": "Subvention Musée (attendue)",
+          "note": "Subvention de 10 000 € pour le projet Musée attendue avant la fin de l'année 2026, non encore encaissée sur le compte."
+        }
+      ]
+    },
+    "projects": {
+      "categories": [
+        {
+          "id": "musee",
+          "label": "Musée",
+          "color": "#2563EB"
+        },
+        {
+          "id": "maison",
+          "label": "Projet Maison communautaire",
+          "color": "#16A34A"
+        },
+        {
+          "id": "akuuvision",
+          "label": "AKUUVision",
+          "color": "#DC2626"
+        },
+        {
+          "id": "anglais",
+          "label": "Projet Cours d’anglais",
+          "color": "#9333EA"
+        },
+        {
+          "id": "hydrama",
+          "label": "Projet Hydrama",
+          "color": "#0891B2"
+        },
+        {
+          "id": "low_tech",
+          "label": "Projet Low Tech",
+          "color": "#CA8A04"
+        },
+        {
+          "id": "autre_ponctuel",
+          "label": "Divers",
+          "color": "#78716C"
+        },
+        {
+          "id": "gestion_dechets",
+          "label": "Projet Gestion des déchets",
+          "color": "#DB2777"
+        },
+        {
+          "id": "functioning",
+          "label": "Frais de fonctionnement",
+          "color": "#475569"
+        }
+      ],
+      "years": [
+        {
+          "year": 2017,
+          "label": "2017",
+          "total": 6943.49,
+          "amounts": {
+            "maison": 5727.79,
+            "akuuvision": 616.14,
+            "functioning": 599.56
+          }
+        },
+        {
+          "year": 2018,
+          "label": "2018",
+          "total": 9534.83,
+          "amounts": {
+            "maison": 6161.45,
+            "hydrama": 2288.23,
+            "akuuvision": 616.61,
+            "functioning": 468.54
+          }
+        },
+        {
+          "year": 2019,
+          "label": "2019",
+          "total": 10227.78,
+          "amounts": {
+            "maison": 532.29,
+            "anglais": 126.18,
+            "hydrama": 1322.87,
+            "low_tech": 1000.0,
+            "autre_ponctuel": 371.6,
+            "gestion_dechets": 113.41,
+            "akuuvision": 6055.39,
+            "functioning": 706.04
+          }
+        },
+        {
+          "year": 2020,
+          "label": "2020",
+          "total": 5032.81,
+          "amounts": {
+            "maison": 3072.8,
+            "akuuvision": 1373.89,
+            "functioning": 586.12
+          }
+        },
+        {
+          "year": 2021,
+          "label": "2021",
+          "total": 684.02,
+          "amounts": {
+            "maison": 40.0,
+            "functioning": 644.02
+          }
+        },
+        {
+          "year": 2022,
+          "label": "2022",
+          "total": 1446.69,
+          "amounts": {
+            "anglais": 697.23,
+            "functioning": 749.46
+          }
+        },
+        {
+          "year": 2023,
+          "label": "2023",
+          "total": 2905.09,
+          "amounts": {
+            "anglais": 2181.94,
+            "functioning": 723.15
+          }
+        },
+        {
+          "year": 2024,
+          "label": "2024",
+          "total": 21215.24,
+          "amounts": {
+            "musee": 20466.57,
+            "functioning": 748.67
+          }
+        },
+        {
+          "year": 2025,
+          "label": "2025",
+          "total": 7193.75,
+          "amounts": {
+            "musee": 1412.4,
+            "maison": 4504.84,
+            "anglais": 850.94,
+            "functioning": 425.57
+          }
+        },
+        {
+          "year": 2026,
+          "label": "2026*",
+          "total": 6542.97,
+          "amounts": {
+            "musee": 4485.76,
+            "functioning": 640.54,
+            "akuuvision": 1416.67
+          },
+          "pendingAmounts": {
+            "akuuvision": 1416.67,
+            "musee": 508.13
+          }
+        }
+      ]
+    }
+  },
+  "projectSpending": {
+    "total": 69801.87,
+    "slices": [
+      {
+        "id": "musee",
+        "label": "Musée",
+        "color": "#2563EB",
+        "amount": 25856.6,
+        "byYear": [
+          {
+            "year": 2024,
+            "amount": 20466.57
+          },
+          {
+            "year": 2025,
+            "amount": 1412.4
+          },
+          {
+            "year": 2026,
+            "amount": 3977.63
+          }
+        ]
+      },
+      {
+        "id": "maison",
+        "label": "Projet Maison communautaire",
+        "color": "#16A34A",
+        "amount": 20039.17,
+        "byYear": [
+          {
+            "year": 2017,
+            "amount": 5727.79
+          },
+          {
+            "year": 2018,
+            "amount": 6161.45
+          },
+          {
+            "year": 2019,
+            "amount": 532.29
+          },
+          {
+            "year": 2020,
+            "amount": 3072.8
+          },
+          {
+            "year": 2021,
+            "amount": 40.0
+          },
+          {
+            "year": 2025,
+            "amount": 4504.84
+          }
+        ]
+      },
+      {
+        "id": "akuuvision",
+        "label": "AKUUVision",
+        "color": "#DC2626",
+        "amount": 8662.03,
+        "byYear": [
+          {
+            "year": 2017,
+            "amount": 616.14
+          },
+          {
+            "year": 2018,
+            "amount": 616.61
+          },
+          {
+            "year": 2019,
+            "amount": 6055.39
+          },
+          {
+            "year": 2020,
+            "amount": 1373.89
+          }
+        ]
+      },
+      {
+        "id": "anglais",
+        "label": "Projet Cours d’anglais",
+        "color": "#9333EA",
+        "amount": 3856.29,
+        "byYear": [
+          {
+            "year": 2019,
+            "amount": 126.18
+          },
+          {
+            "year": 2022,
+            "amount": 697.23
+          },
+          {
+            "year": 2023,
+            "amount": 2181.94
+          },
+          {
+            "year": 2025,
+            "amount": 850.94
+          }
+        ]
+      },
+      {
+        "id": "hydrama",
+        "label": "Projet Hydrama",
+        "color": "#0891B2",
+        "amount": 3611.1,
+        "byYear": [
+          {
+            "year": 2018,
+            "amount": 2288.23
+          },
+          {
+            "year": 2019,
+            "amount": 1322.87
+          }
+        ]
+      },
+      {
+        "id": "low_tech",
+        "label": "Projet Low Tech",
+        "color": "#CA8A04",
+        "amount": 1000.0,
+        "byYear": [
+          {
+            "year": 2019,
+            "amount": 1000.0
+          }
+        ]
+      },
+      {
+        "id": "autre_ponctuel",
+        "label": "Divers",
+        "color": "#78716C",
+        "amount": 371.6,
+        "byYear": [
+          {
+            "year": 2019,
+            "amount": 371.6
+          }
+        ]
+      },
+      {
+        "id": "gestion_dechets",
+        "label": "Projet Gestion des déchets",
+        "color": "#DB2777",
+        "amount": 113.41,
+        "byYear": [
+          {
+            "year": 2019,
+            "amount": 113.41
+          }
+        ]
+      },
+      {
+        "id": "functioning",
+        "label": "Frais de fonctionnement",
+        "color": "#475569",
+        "amount": 6291.67,
+        "byYear": [
+          {
+            "year": 2017,
+            "amount": 599.56
+          },
+          {
+            "year": 2018,
+            "amount": 468.54
+          },
+          {
+            "year": 2019,
+            "amount": 706.04
+          },
+          {
+            "year": 2020,
+            "amount": 586.12
+          },
+          {
+            "year": 2021,
+            "amount": 644.02
+          },
+          {
+            "year": 2022,
+            "amount": 749.46
+          },
+          {
+            "year": 2023,
+            "amount": 723.15
+          },
+          {
+            "year": 2024,
+            "amount": 748.67
+          },
+          {
+            "year": 2025,
+            "amount": 425.57
+          },
+          {
+            "year": 2026,
+            "amount": 640.54
+          }
+        ],
+        "note": "Banque, site web, outils numériques et frais administratifs."
+      }
+    ]
+  },
+  "destinations": [
+    {
+      "id": "terrain",
+      "label": "Sur le terrain, dans nos projets",
+      "description": "Musée, maison communautaire, cours d'anglais et autres projets sur le terrain (hors sensibilisation en France).",
+      "amount": 54848.17,
+      "share": 78.6,
+      "lines": [
+        {
+          "label": "Projet Musée",
+          "amount": 25856.6
+        },
+        {
+          "label": "Projet Maison communautaire",
+          "amount": 20039.17
+        },
+        {
+          "label": "Projet Cours d’anglais",
+          "amount": 3856.29
+        },
+        {
+          "label": "Projet Hydrama",
+          "amount": 3611.1
+        },
+        {
+          "label": "Projet Low Tech",
+          "amount": 1000.0
+        },
+        {
+          "label": "Divers",
+          "amount": 371.6
+        },
+        {
+          "label": "Projet Gestion des déchets",
+          "amount": 113.41
+        }
+      ]
+    },
+    {
+      "id": "france",
+      "label": "En France",
+      "description": "Expositions, impressions, prestations et vie associative.",
+      "amount": 9538.14,
+      "share": 13.7,
+      "lines": [
+        {
+          "label": "Expositions, impressions et prestations",
+          "amount": 9038.14
+        },
+        {
+          "label": "10 ans d'AKUU",
+          "amount": 500.0
+        }
+      ]
+    },
+    {
+      "id": "logistique",
+      "label": "Frais de fonctionnement",
+      "description": "Site internet, outils numériques, frais bancaires et de carte.",
+      "amount": 5791.67,
+      "share": 8.3,
+      "lines": [
+        {
+          "label": "Site web et hébergement",
+          "amount": 2711.64
+        },
+        {
+          "label": "Frais bancaires",
+          "amount": 1783.16
+        },
+        {
+          "label": "Autres outils et services",
+          "amount": 1296.87
+        }
+      ]
+    }
+  ],
+  "income": [
+    {
+      "label": "Subventions et prix",
+      "amount": 42100.0
+    },
+    {
+      "label": "Dons",
+      "amount": 18707.02
+    },
+    {
+      "label": "Loyers de la maison",
+      "amount": 7263.39
+    },
+    {
+      "label": "Ventes et prestations",
+      "amount": 2231.27
+    },
+    {
+      "label": "Adhésions",
+      "amount": 740.78
+    }
+  ],
+  "projects": [
+    {
+      "id": "musee",
+      "name": "Projet Musée",
+      "amount": 26364.73,
+      "flow": "dépenses",
+      "confidence": "documenté",
+      "byYear": [
+        {
+          "year": 2024,
+          "amount": 20466.57
+        },
+        {
+          "year": 2025,
+          "amount": 1412.4
+        },
+        {
+          "year": 2026,
+          "amount": 3977.63
+        },
+        {
+          "year": 2026,
+          "amount": 508.13,
+          "pending": true
+        }
+      ],
+      "sources": [
+        "2024/bilan financier 2024.xlsx · Projet Musée",
+        "2025/Rapport_financier_2025.xlsx · Retrait Projet Musée",
+        "2026/engagements_septembre_2026.csv",
+        "Validation AKUU du 10/09/2026"
+      ],
+      "pendingItems": [
+        {
+          "label": "Remboursements engagés Projet Musée",
+          "amount": 508.13
+        }
+      ]
+    },
+    {
+      "id": "bagazan",
+      "name": "Projet Bagazan",
+      "amount": 0.0,
+      "flow": "dépenses",
+      "confidence": "aucune dépense identifiée",
+      "byYear": [],
+      "sources": []
+    },
+    {
+      "id": "hydrama",
+      "name": "Projet Hydrama",
+      "amount": 3611.1,
+      "flow": "dépenses",
+      "confidence": "documenté",
+      "byYear": [
+        {
+          "year": 2018,
+          "amount": 2288.23
+        },
+        {
+          "year": 2019,
+          "amount": 1322.87
+        }
+      ],
+      "sources": [
+        "2018/Bilan 2018.xlsx · Hydrama",
+        "2019/Bilan 2019.xlsx · Hydrama",
+        "Libellé explicite"
+      ]
+    },
+    {
+      "id": "maison",
+      "name": "Projet Maison communautaire",
+      "amount": 20039.17,
+      "flow": "dépenses",
+      "confidence": "documenté",
+      "byYear": [
+        {
+          "year": 2017,
+          "amount": 5727.79
+        },
+        {
+          "year": 2018,
+          "amount": 6161.45
+        },
+        {
+          "year": 2019,
+          "amount": 532.29
+        },
+        {
+          "year": 2020,
+          "amount": 3072.8
+        },
+        {
+          "year": 2021,
+          "amount": 40.0
+        },
+        {
+          "year": 2025,
+          "amount": 4504.84
+        }
+      ],
+      "sources": [
+        "2017/Bilan 2017.xlsx · Maison communautaire",
+        "2018/Bilan 2018.xlsx · Maison communautaire",
+        "2019/Bilan 2019.xlsx · Maison communautaire",
+        "2020/2020_08.pdf",
+        "2020/Bilan 2020.xlsx · Maison communautaire",
+        "2025/Rapport_financier_2025.xlsx · Casa/Notaire",
+        "2025/Rapport_financier_2025.xlsx · Retrait Casa AKUU",
+        "Libellé explicite",
+        "Validation AKUU du 10/09/2026"
+      ]
+    },
+    {
+      "id": "anglais",
+      "name": "Projet Cours d’anglais",
+      "amount": 3856.29,
+      "flow": "dépenses",
+      "confidence": "documenté",
+      "byYear": [
+        {
+          "year": 2019,
+          "amount": 126.18
+        },
+        {
+          "year": 2022,
+          "amount": 697.23
+        },
+        {
+          "year": 2023,
+          "amount": 2181.94
+        },
+        {
+          "year": 2025,
+          "amount": 850.94
+        }
+      ],
+      "sources": [
+        "2019/Bilan 2019.xlsx · Anglais",
+        "2025/Rapport_financier_2025.xlsx · Études Gladis",
+        "Validation AKUU du 10/09/2026"
+      ]
+    },
+    {
+      "id": "low_tech",
+      "name": "Projet Low Tech",
+      "amount": 1000.0,
+      "flow": "dépenses",
+      "confidence": "documenté",
+      "byYear": [
+        {
+          "year": 2019,
+          "amount": 1000.0
+        }
+      ],
+      "sources": [
+        "2019/Bilan 2019.xlsx · SolidAKUU"
+      ]
+    },
+    {
+      "id": "gestion_dechets",
+      "name": "Projet Gestion des déchets",
+      "amount": 113.41,
+      "flow": "dépenses",
+      "confidence": "documenté",
+      "byYear": [
+        {
+          "year": 2019,
+          "amount": 113.41
+        }
+      ],
+      "sources": [
+        "2019/Bilan 2019.xlsx · Akube"
+      ]
+    },
+    {
+      "id": "akuuvision",
+      "name": "Projet AKUUVision",
+      "amount": 10078.7,
+      "flow": "dépenses",
+      "confidence": "documenté",
+      "byYear": [
+        {
+          "year": 2017,
+          "amount": 616.14
+        },
+        {
+          "year": 2018,
+          "amount": 616.61
+        },
+        {
+          "year": 2019,
+          "amount": 6055.39
+        },
+        {
+          "year": 2020,
+          "amount": 1373.89
+        },
+        {
+          "year": 2026,
+          "amount": 1416.67,
+          "pending": true
+        }
+      ],
+      "sources": [
+        "2018/Bilan 2018.xlsx · Sensibilisation",
+        "2019/Bilan 2019.xlsx · AkuuVision",
+        "2019/Bilan 2019.xlsx · Sensibilisation",
+        "2020/Bilan 2020.xlsx · AkuuVision",
+        "2026/engagements_septembre_2026.csv",
+        "2026/frais_helloasso_akuuvision.csv",
+        "Libellé explicite",
+        "Validation AKUU du 10/09/2026"
+      ],
+      "lineItems": [
+        {
+          "label": "Remboursements bénévoles et prestations",
+          "amount": 3306.6
+        },
+        {
+          "label": "Communication / tournage Pérou (2019)",
+          "amount": 2790.45
+        },
+        {
+          "label": "Matériel et outils numériques",
+          "amount": 1483.84
+        },
+        {
+          "label": "Achat Amazon (2020, à revoir)",
+          "amount": 1242.49
+        },
+        {
+          "label": "Expositions et impressions",
+          "amount": 859.21
+        },
+        {
+          "label": "Autres dépenses sensibilisation",
+          "amount": 396.11
+        }
+      ],
+      "note": "Regroupe les dépenses des feuilles Sensibilisation et AKUUVision des bilans 2018–2020. L'achat Amazon de 1 242 € en 2020 reste à confirmer : il gonfle fortement ce total.",
+      "pendingItems": [
+        {
+          "label": "Frais HelloAsso et remboursements AKUUVision",
+          "amount": 1416.67
+        }
+      ]
+    },
+    {
+      "id": "autre_ponctuel",
+      "name": "Divers",
+      "amount": 371.6,
+      "flow": "dépenses",
+      "confidence": "documenté",
+      "byYear": [
+        {
+          "year": 2019,
+          "amount": 371.6
+        }
+      ],
+      "sources": [
+        "Validation AKUU du 10/09/2026"
+      ]
+    }
+  ],
+  "projectClassification": {
+    "unconfirmedAmount": 0.0,
+    "unconfirmedByYear": [],
+    "unconfirmedItems": [],
+    "functioningAmount": 6291.67,
+    "reconciliationIssues": [
+      {
+        "year": 2024,
+        "project": "Projet Musée",
+        "difference": -62.4,
+        "source": "2024/bilan financier 2024.xlsx"
+      },
+      {
+        "year": 2025,
+        "project": "Projet Maison communautaire",
+        "difference": 1166.35,
+        "source": "2025/Rapport_financier_2025.xlsx"
+      },
+      {
+        "year": 2025,
+        "project": "Projet Cours d’anglais",
+        "difference": -995.06,
+        "source": "2025/Rapport_financier_2025.xlsx"
+      }
+    ]
+  },
+  "engagements": [
+    {
+      "beneficiary": "Yoann",
+      "amount": 1040.56,
+      "nature": "Remboursement d'avances AKUU",
+      "project": "Projet AKUUVision",
+      "projectCode": "AKUUVISION"
+    },
+    {
+      "beneficiary": "François et Ludovie",
+      "amount": 508.13,
+      "nature": "Remboursement d'avances AKUU",
+      "project": "Projet Musée",
+      "projectCode": "MUSEE"
+    }
+  ],
+  "logisticsAverage": {
+    "periodLabel": "2020–2025",
+    "total": 646.17,
+    "lines": [
+      {
+        "label": "Site web et hébergement",
+        "amount": 340.77
+      },
+      {
+        "label": "Frais bancaires",
+        "amount": 200.76
+      },
+      {
+        "label": "Autres outils et services",
+        "amount": 104.64
+      }
+    ]
+  },
+  "logisticsHistory": [
+    {
+      "year": 2020,
+      "projected": false,
+      "web": 287.08,
+      "bank": 204.28,
+      "other": 94.76,
+      "webAndTools": 381.84,
+      "total": 586.12,
+      "actualTotal": 586.12
+    },
+    {
+      "year": 2021,
+      "projected": false,
+      "web": 367.16,
+      "bank": 190.6,
+      "other": 86.26,
+      "webAndTools": 453.42,
+      "total": 644.02,
+      "actualTotal": 644.02
+    },
+    {
+      "year": 2022,
+      "projected": false,
+      "web": 400.36,
+      "bank": 190.6,
+      "other": 158.5,
+      "webAndTools": 558.86,
+      "total": 749.46,
+      "actualTotal": 749.46
+    },
+    {
+      "year": 2023,
+      "projected": false,
+      "web": 462.55,
+      "bank": 190.6,
+      "other": 70.0,
+      "webAndTools": 532.55,
+      "total": 723.15,
+      "actualTotal": 723.15
+    },
+    {
+      "year": 2024,
+      "projected": false,
+      "web": 403.07,
+      "bank": 228.6,
+      "other": 117.0,
+      "webAndTools": 520.07,
+      "total": 748.67,
+      "actualTotal": 748.67
+    },
+    {
+      "year": 2025,
+      "projected": false,
+      "web": 124.39,
+      "bank": 199.87,
+      "other": 101.31,
+      "webAndTools": 225.7,
+      "total": 425.57,
+      "actualTotal": 425.57
+    },
+    {
+      "year": 2026,
+      "projected": true,
+      "web": 26.99,
+      "bank": 204.3,
+      "other": 0.75,
+      "webAndTools": 27.74,
+      "total": 232.04,
+      "actualTotal": 140.54
+    }
+  ],
+  "logisticsOtherNote": "Abonnements et outils numériques (Adobe, Bitwarden, Google One, Skype), cotisations associatives, remboursements d'adhésion et achats administratifs via PayPal ou carte, hors site web, hébergement et frais bancaires.",
+  "logisticsByYear": [
+    {
+      "year": 2026,
+      "projected": true,
+      "actualTotal": 140.54,
+      "total": 232.04,
+      "lines": [
+        {
+          "label": "Site web et hébergement",
+          "actual": 26.99,
+          "amount": 26.99
+        },
+        {
+          "label": "Frais bancaires",
+          "actual": 112.8,
+          "amount": 204.3
+        },
+        {
+          "label": "Autres outils et services",
+          "actual": 0.75,
+          "amount": 0.75
+        }
+      ]
+    }
+  ]
+}

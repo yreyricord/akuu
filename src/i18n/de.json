@@ -45,6 +45,10 @@
         "title": "Schulungsbereich: AKUU-Freiwillige",
         "description": "Interner Schulungsbereich für AKUU-Freiwillige zur Vorbereitung ihres Einsatzes."
       },
+      "comptesAg": {
+        "title": "Rechnungslegung der Mitgliederversammlung — AKUU",
+        "description": "Interne Darstellung der konsolidierten AKUU-Rechnungen von 2017 bis September 2026, nur für Mitglieder."
+      },
       "soutenir": {
         "title": "AKUU NGO unterstützen — Steuerabzugsfähige Spenden & Mitgliedschaft",
         "description": "Spenden Sie oder werden Sie Mitglied bei der AKUU-NGO, um Solidaritätsprojekte im peruanischen Amazonasgebiet zu finanzieren."
@@ -197,8 +201,8 @@
     "social_tiktok_title": "TikTok-Video",
     "social_instagram_cta": "Instagram öffnen",
     "social_tiktok_cta": "TikTok öffnen",
-    "social_fallback_instagram": "Updates, Reels und Einblicke bei {'@'}akuu_association.",
-    "social_fallback_tiktok": "Kurzvideos zu unseren Projekten, {'@'}akuu_asso.",
+    "social_fallback_instagram": "Updates, Reels und Einblicke bei {'@'}akuu.asso.",
+    "social_fallback_tiktok": "Kurzvideos zu unseren Projekten, {'@'}akuu.asso.",
     "social_instagram_label": "Instagram",
     "social_tiktok_label": "TikTok",
     "social_feed_loading": "Neueste Beiträge werden geladen…",
@@ -880,6 +884,13 @@
       "title": "Modulinhalt folgt in Kürze",
       "text": "Diese Seite wird bald den interaktiven Inhalt des Moduls enthalten.",
       "back": "Zurück zum Schulungsbereich"
+    },
+    "rent_support": {
+      "badge": "Das Gemeinschaftshaus unterstützen",
+      "title": "Den Unterhalt der Casa AKUU mittragen",
+      "text": "Die Casa AKUU ist der Ausgangspunkt all unserer Projekte in Puerto Miguel: Dort leben und arbeiten die Freiwilligen, dort kommen die Bewohnerinnen und Bewohner zum Austausch zusammen. Ihr Unterhalt wird über eine eigene Spendenaktion finanziert.",
+      "cta": "Zum Unterhalt beitragen",
+      "note": "HelloAsso-Spendenaktion · automatische Spendenquittung · keine Gebühren auf Ihre Spende"
     }
   },
   "soutien": {
