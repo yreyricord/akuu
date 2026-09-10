@@ -87,16 +87,42 @@
           </div>
         </section>
       </div>
+
+      <section class="fade-in-up relative mt-20 rounded-3xl bg-white shadow-lg border-t-[6px] border-forest p-6 md:p-8 text-center">
+        <p class="text-[11px] font-semibold tracking-[0.18em] uppercase text-forest">
+          {{ $t('formation.rent_support.badge') }}
+        </p>
+        <h2 class="mt-3 font-serif font-bold text-2xl md:text-3xl text-night">
+          {{ $t('formation.rent_support.title') }}
+        </h2>
+        <p class="mt-4 mx-auto max-w-xl text-night/60 leading-relaxed">
+          {{ $t('formation.rent_support.text') }}
+        </p>
+        <a
+          :href="RENT_FUND_URL"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-primary mt-6"
+        >
+          <PhHouseLine :size="20" weight="duotone" class="mr-2" aria-hidden="true" />
+          {{ $t('formation.rent_support.cta') }}
+        </a>
+        <p class="mt-4 text-xs text-night/50">{{ $t('formation.rent_support.note') }}</p>
+      </section>
     </div>
   </div>
 </template>
 
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue'
+import { PhHouseLine } from '@phosphor-icons/vue'
 import { useScrollAnimation } from '@/composables/useScrollAnimation.js'
 import { FORMATION_GROUPS, ACCENT_CLASSES, modulesForGroup } from '@/data/formation-modules.js'
 
 useScrollAnimation()
+
+/** Cagnotte HelloAsso dédiée à l'entretien de la maison communautaire. */
+const RENT_FUND_URL = 'https://www.helloasso.com/associations/akuu/formulaires/2'
 
 // Draws the river progressively as the page scrolls: reveal% tracks where
 // the viewport's vertical center sits within the river container's span,
