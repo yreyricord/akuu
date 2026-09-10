@@ -57,9 +57,9 @@ export function buildOrganizationJsonLdHead () {
   const logo = new URL('/images/LOGOAKUU.png', `${origin}/`).href
   const sameAs = [
     'https://www.facebook.com/AKUUAssociation/',
-    'https://www.instagram.com/akuu_association/',
+    'https://www.instagram.com/akuu.asso/',
     'https://www.linkedin.com/company/akuu-association/',
-    'https://www.tiktok.com/@akuu_asso',
+    'https://www.tiktok.com/@akuu.asso',
     'https://www.helloasso.com/associations/akuu'
   ]
   const graph = {

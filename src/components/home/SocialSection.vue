@@ -35,8 +35,8 @@ import SectionTitle from '@/components/shared/SectionTitle.vue'
 
 const networks = [
   { name: 'Facebook', url: 'https://www.facebook.com/AKUUAssociation/', bgClass: 'bg-[#1877F2]', component: PhFacebookLogo },
-  { name: 'Instagram', url: 'https://www.instagram.com/akuu_association/', bgClass: 'bg-gradient-to-br from-[#F58529] via-[#DD2A7B] to-[#8134AF]', component: PhInstagramLogo },
+  { name: 'Instagram', url: 'https://www.instagram.com/akuu.asso/', bgClass: 'bg-gradient-to-br from-[#F58529] via-[#DD2A7B] to-[#8134AF]', component: PhInstagramLogo },
   { name: 'LinkedIn', url: 'https://www.linkedin.com/company/akuu-association/', bgClass: 'bg-[#0A66C2]', component: PhLinkedinLogo },
-  { name: 'TikTok', url: 'https://www.tiktok.com/@akuu_asso', bgClass: 'bg-night', component: PhTiktokLogo },
+  { name: 'TikTok', url: 'https://www.tiktok.com/@akuu.asso', bgClass: 'bg-night', component: PhTiktokLogo },
 ]
 </script>

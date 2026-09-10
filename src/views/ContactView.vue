@@ -157,7 +157,7 @@
                     <PhFacebookLogo :size="20" weight="fill" />
                   </a>
                   <a
-                    href="https://www.instagram.com/akuu_association/"
+                    href="https://www.instagram.com/akuu.asso/"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="w-10 h-10 rounded-xl bg-forest/10 flex items-center justify-center text-forest hover:bg-forest hover:text-white transition-colors"
@@ -175,7 +175,7 @@
                     <PhLinkedinLogo :size="20" weight="fill" />
                   </a>
                   <a
-                    href="https://www.tiktok.com/@akuu_asso"
+                    href="https://www.tiktok.com/@akuu.asso"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="w-10 h-10 rounded-xl bg-forest/10 flex items-center justify-center text-forest hover:bg-forest hover:text-white transition-colors"

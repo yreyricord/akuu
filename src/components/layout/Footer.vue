@@ -226,9 +226,9 @@ const navLinks = [
 
 const socials = [
   { label: 'Facebook', href: 'https://www.facebook.com/AKUUAssociation/', component: PhFacebookLogo },
-  { label: 'Instagram', href: 'https://www.instagram.com/akuu_association/', component: PhInstagramLogo },
+  { label: 'Instagram', href: 'https://www.instagram.com/akuu.asso/', component: PhInstagramLogo },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/company/akuu-association/', component: PhLinkedinLogo },
-  { label: 'TikTok', href: 'https://www.tiktok.com/@akuu_asso', component: PhTiktokLogo },
+  { label: 'TikTok', href: 'https://www.tiktok.com/@akuu.asso', component: PhTiktokLogo },
 ]
 </script>
 
