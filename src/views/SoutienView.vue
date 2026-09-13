@@ -231,7 +231,28 @@
               <div class="px-3.5 sm:px-5 md:px-6 pt-3 pb-4">
                 <!-- Montant -->
                 <div class="flex items-baseline gap-1.5 mb-2">
-                  <span class="text-5xl sm:text-6xl font-serif font-black text-leaf tabular-nums leading-none">{{ donAmount }}</span>
+                  <input
+                    v-if="useCustomOverMax"
+                    id="don-custom-amount"
+                    ref="customAmountInputRef"
+                    v-model="customAmountDraft"
+                    type="text"
+                    inputmode="numeric"
+                    autocomplete="off"
+                    :aria-label="$t('soutien.slider_custom_label')"
+                    class="w-[min(100%,9rem)] sm:w-[min(100%,10rem)] bg-transparent border-0 border-b-2 border-leaf/40 rounded-none px-0 py-0 text-5xl sm:text-6xl font-serif font-black text-leaf tabular-nums leading-none focus:outline-none focus:border-leaf"
+                    @input="onCustomAmountInput"
+                    @blur="onCustomAmountBlur"
+                  />
+                  <button
+                    v-else
+                    type="button"
+                    class="text-5xl sm:text-6xl font-serif font-black text-leaf tabular-nums leading-none hover:text-leaf/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-leaf/50 rounded"
+                    :title="$t('soutien.slider_custom_label')"
+                    @click="openCustomAmount"
+                  >
+                    {{ donAmount }}
+                  </button>
                   <span class="text-2xl font-serif text-white/50">€</span>
                   <span v-if="donFrequency === 'monthly'" class="text-white/35 text-sm ml-1">/{{ $t('soutien.simulator_month') }}</span>
                 </div>
@@ -267,18 +288,10 @@
                   >
                     {{ $t('soutien.slider_more_link') }}
                   </button>
-                  <div v-else class="flex flex-col sm:flex-row sm:items-end gap-2 rounded-xl border border-leaf/25 bg-white/[0.03] px-3 py-2">
-                    <div class="flex-1 min-w-[10rem]">
-                      <label for="don-custom-amount" class="block text-white/40 text-[10px] uppercase tracking-widest font-semibold mb-1">
-                        {{ $t('soutien.slider_custom_label') }}
-                      </label>
-                      <input
-                        id="don-custom-amount" type="number" :min="CUSTOM_MIN" :max="CUSTOM_MAX" autocomplete="off" step="1" :value="donAmount"
-                        class="w-full rounded-lg border border-white/15 bg-night/40 px-3 py-2 text-white text-base font-serif font-bold tabular-nums focus:outline-none focus:ring-2 focus:ring-leaf/50"
-                        @input="onCustomAmountInput"
-                      />
-                      <p class="text-white/25 text-[10px] mt-1">{{ $t('soutien.slider_custom_help') }}</p>
-                    </div>
+                  <div v-else class="flex flex-col sm:flex-row sm:items-center gap-2 rounded-xl border border-leaf/25 bg-white/[0.03] px-3 py-2">
+                    <p class="flex-1 text-white/50 text-xs leading-relaxed">
+                      {{ $t('soutien.slider_custom_help') }}
+                    </p>
                     <button type="button" class="shrink-0 text-xs text-white/40 hover:text-white underline underline-offset-2" @click="closeCustomAmount">
                       {{ $t('soutien.slider_back_range') }}
                     </button>
@@ -310,7 +323,7 @@
                 <!-- CTA pleine largeur + shimmer -->
                 <button
                   @click="submitDonation"
-                  :disabled="donLoading || donAmount < 1 || (useCustomOverMax && donAmount < CUSTOM_MIN)"
+                  :disabled="donLoading || donAmount < 1"
                   class="cta-donate group relative w-full flex items-center justify-center gap-3 bg-leaf hover:bg-leaf/90 text-white font-bold text-xl py-4 rounded-2xl shadow-xl shadow-leaf/30 transition-all duration-200 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
                 >
                   <span class="cta-shimmer absolute inset-0 pointer-events-none" aria-hidden="true"></span>
@@ -567,7 +580,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onBeforeMount, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onBeforeMount, onMounted, onUnmounted, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import { useScrollExpand } from '@/composables/useScrollExpand'
@@ -584,12 +597,14 @@ const numberLocaleByCode = { fr: 'fr-FR', en: 'en-GB', es: 'es-ES', pt: 'pt-BR',
 
 // ── Slider principal (1–500 €) + montant libre > 500 ─────────────────────
 const SLIDER_MAX = 250
-const CUSTOM_MIN = 251
 const CUSTOM_MAX = 100_000
 const MILESTONE_EUROS = [20, 50, 100, 200, 250, 1000]
 
 const donAmount = ref(20)
 const useCustomOverMax = ref(false)
+/** Saisie libre : texte en cours (chiffres uniquement). */
+const customAmountDraft = ref('')
+const customAmountInputRef = ref(null)
 const colibriBurstActive = ref(false)
 let colibriBurstTimers = []
 let colibriBurstGeneration = 0
@@ -607,30 +622,70 @@ function onSliderInput(e) {
   const raw = Number(e.target.value)
   const v = Math.min(SLIDER_MAX, Math.max(1, Math.round(Number.isFinite(raw) ? raw : 1)))
   useCustomOverMax.value = false
+  customAmountDraft.value = ''
   donAmount.value = v
+}
+
+function sanitizeAmountDraft(raw) {
+  return String(raw ?? '').replace(/\D/g, '')
+}
+
+function syncDonAmountFromDraft() {
+  const digits = sanitizeAmountDraft(customAmountDraft.value)
+  customAmountDraft.value = digits
+  if (digits === '') {
+    donAmount.value = 0
+    return
+  }
+  const parsed = parseInt(digits, 10)
+  if (!Number.isFinite(parsed)) {
+    donAmount.value = 0
+    return
+  }
+  donAmount.value = Math.min(CUSTOM_MAX, parsed)
+}
+
+function focusCustomAmountInput() {
+  nextTick(() => {
+    const el = customAmountInputRef.value
+    if (!el) return
+    el.focus()
+    el.select()
+  })
 }
 
 function openCustomAmount() {
   const prev = donAmount.value
   useCustomOverMax.value = true
-  const next = Math.max(CUSTOM_MIN, prev)
-  donAmount.value = next
+  customAmountDraft.value = prev > 0 ? String(prev) : ''
+  syncDonAmountFromDraft()
+  focusCustomAmountInput()
+  if (donAmount.value > SLIDER_MAX) runColibriMilestones(SLIDER_MAX, donAmount.value)
+}
+
+function onCustomAmountInput() {
+  const prev = donAmount.value
+  syncDonAmountFromDraft()
+  const next = donAmount.value
   if (next > prev) runColibriMilestones(prev, next)
 }
 
-function onCustomAmountInput(e) {
-  const raw = e.target.valueAsNumber
-  if (!Number.isFinite(raw)) return
-  const prev = donAmount.value
-  const v = Math.min(CUSTOM_MAX, Math.max(CUSTOM_MIN, Math.round(raw)))
-  if (v === prev) return
-  donAmount.value = v
-  if (v > prev) runColibriMilestones(prev, v)
+function onCustomAmountBlur() {
+  if (customAmountDraft.value === '' || donAmount.value < 1) {
+    customAmountDraft.value = '1'
+    donAmount.value = 1
+    return
+  }
+  customAmountDraft.value = String(donAmount.value)
 }
 
 function closeCustomAmount() {
   useCustomOverMax.value = false
-  donAmount.value = Math.min(SLIDER_MAX, Math.max(1, donAmount.value))
+  customAmountDraft.value = ''
+  if (donAmount.value < 1) donAmount.value = 1
+  if (donAmount.value > SLIDER_MAX) {
+    donAmount.value = SLIDER_MAX
+  }
 }
 
 function runColibriMilestones(from, to) {
@@ -739,7 +794,9 @@ const heroFeedShellStyle = computed(() => ({
 }))
 
 // ── Stats dynamiques ──────────────────────────────────────────────────────
-const STATIC_TOTAL_EUROS = 66362
+// Ressources consolidees 2017 -> 13/04/2026 (classeur RELEVES, hors versements
+// HelloAsso posterieurs a EXCEL_CUTOFF que la fonction live recompte).
+const STATIC_TOTAL_EUROS = 68230
 
 const statsLoading = ref(true)
 const statsLoadFailed = ref(false)
@@ -962,7 +1019,6 @@ function helloAssoFunctionUrl(path) {
 // ── HelloAsso checkout ────────────────────────────────────────────────────
 async function submitDonation() {
   if (donAmount.value < 1) return
-  if (useCustomOverMax.value && donAmount.value < CUSTOM_MIN) return
   donLoading.value = true
   donFallbackWarning.value = false
   try {
