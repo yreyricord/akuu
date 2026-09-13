@@ -229,10 +229,9 @@
 
               <!-- Corps : montant + slider + CTA -->
               <div class="px-3.5 sm:px-5 md:px-6 pt-3 pb-4">
-                <!-- Montant -->
+                <!-- Montant (toujours éditable au clavier) -->
                 <div class="flex items-baseline gap-1.5 mb-2">
                   <input
-                    v-if="useCustomOverMax"
                     id="don-custom-amount"
                     ref="customAmountInputRef"
                     v-model="customAmountDraft"
@@ -241,25 +240,19 @@
                     autocomplete="off"
                     :aria-label="$t('soutien.slider_custom_label')"
                     class="w-[min(100%,9rem)] sm:w-[min(100%,10rem)] bg-transparent border-0 border-b-2 border-leaf/40 rounded-none px-0 py-0 text-5xl sm:text-6xl font-serif font-black text-leaf tabular-nums leading-none focus:outline-none focus:border-leaf"
+                    @focus="onAmountInputFocus"
+                    @keydown="onAmountKeydown"
                     @input="onCustomAmountInput"
                     @blur="onCustomAmountBlur"
                   />
-                  <button
-                    v-else
-                    type="button"
-                    class="text-5xl sm:text-6xl font-serif font-black text-leaf tabular-nums leading-none hover:text-leaf/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-leaf/50 rounded"
-                    :title="$t('soutien.slider_custom_label')"
-                    @click="openCustomAmount"
-                  >
-                    {{ donAmount }}
-                  </button>
                   <span class="text-2xl font-serif text-white/50">€</span>
                   <span v-if="donFrequency === 'monthly'" class="text-white/35 text-sm ml-1">/{{ $t('soutien.simulator_month') }}</span>
                 </div>
+                <p class="text-white/30 text-[10px] mb-1">{{ $t('soutien.slider_custom_help') }}</p>
 
                 <!-- Slider colibri -->
                 <div
-                  class="mb-1 pt-4 pb-1 colibri-slider-wrap"
+                  class="mb-3 pt-4 pb-1 colibri-slider-wrap"
                   :class="{ 'colibri-slider-wrap--burst': colibriBurstActive }"
                 >
                   <input
@@ -268,33 +261,11 @@
                     :max="SLIDER_MAX"
                     step="1"
                     :value="sliderDisplayedValue"
-                    :disabled="useCustomOverMax"
                     class="colibri-slider w-full"
-                    :class="{ 'colibri-slider--disabled': useCustomOverMax }"
                     @input="onSliderInput"
                   />
                   <div class="flex justify-between text-white/20 text-[9px] sm:text-[10px] mt-1 px-0.5">
                     <span>1 €</span><span class="hidden sm:inline">20 €</span><span>50 €</span><span>100 €</span><span>{{ SLIDER_MAX }} €</span>
-                  </div>
-                </div>
-
-                <!-- Montant libre -->
-                <div class="mb-3">
-                  <button
-                    v-if="!useCustomOverMax"
-                    type="button"
-                    class="text-sm text-leaf/70 hover:text-leaf font-semibold underline underline-offset-2 decoration-leaf/25 hover:decoration-leaf transition-colors"
-                    @click="openCustomAmount"
-                  >
-                    {{ $t('soutien.slider_more_link') }}
-                  </button>
-                  <div v-else class="flex flex-col sm:flex-row sm:items-center gap-2 rounded-xl border border-leaf/25 bg-white/[0.03] px-3 py-2">
-                    <p class="flex-1 text-white/50 text-xs leading-relaxed">
-                      {{ $t('soutien.slider_custom_help') }}
-                    </p>
-                    <button type="button" class="shrink-0 text-xs text-white/40 hover:text-white underline underline-offset-2" @click="closeCustomAmount">
-                      {{ $t('soutien.slider_back_range') }}
-                    </button>
                   </div>
                 </div>
 
@@ -580,7 +551,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onBeforeMount, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, computed, watch, onBeforeMount, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import { useScrollExpand } from '@/composables/useScrollExpand'
@@ -601,16 +572,15 @@ const CUSTOM_MAX = 100_000
 const MILESTONE_EUROS = [20, 50, 100, 200, 250, 1000]
 
 const donAmount = ref(20)
-const useCustomOverMax = ref(false)
-/** Saisie libre : texte en cours (chiffres uniquement). */
-const customAmountDraft = ref('')
+const customAmountDraft = ref('20')
 const customAmountInputRef = ref(null)
+const amountInputReplaceOnNextDigit = ref(false)
 const colibriBurstActive = ref(false)
 let colibriBurstTimers = []
 let colibriBurstGeneration = 0
 
 const sliderDisplayedValue = computed(() =>
-  useCustomOverMax.value ? SLIDER_MAX : Math.min(SLIDER_MAX, donAmount.value)
+  Math.min(SLIDER_MAX, Math.max(1, donAmount.value))
 )
 
 const forestProgress = computed(() => {
@@ -621,9 +591,8 @@ const forestProgress = computed(() => {
 function onSliderInput(e) {
   const raw = Number(e.target.value)
   const v = Math.min(SLIDER_MAX, Math.max(1, Math.round(Number.isFinite(raw) ? raw : 1)))
-  useCustomOverMax.value = false
-  customAmountDraft.value = ''
   donAmount.value = v
+  customAmountDraft.value = String(v)
 }
 
 function sanitizeAmountDraft(raw) {
@@ -645,25 +614,23 @@ function syncDonAmountFromDraft() {
   donAmount.value = Math.min(CUSTOM_MAX, parsed)
 }
 
-function focusCustomAmountInput() {
-  nextTick(() => {
-    const el = customAmountInputRef.value
-    if (!el) return
-    el.focus()
-    el.select()
-  })
+function onAmountInputFocus(e) {
+  amountInputReplaceOnNextDigit.value = true
+  e.target.select()
 }
 
-function openCustomAmount() {
-  const prev = donAmount.value
-  useCustomOverMax.value = true
-  customAmountDraft.value = prev > 0 ? String(prev) : ''
+/** Premier chiffre après focus : remplace tout le montant (mobile inclus). */
+function onAmountKeydown(e) {
+  if (!amountInputReplaceOnNextDigit.value) return
+  if (e.key.length !== 1 || !/\d/.test(e.key)) return
+  e.preventDefault()
+  customAmountDraft.value = e.key
+  amountInputReplaceOnNextDigit.value = false
   syncDonAmountFromDraft()
-  focusCustomAmountInput()
-  if (donAmount.value > SLIDER_MAX) runColibriMilestones(SLIDER_MAX, donAmount.value)
 }
 
 function onCustomAmountInput() {
+  amountInputReplaceOnNextDigit.value = false
   const prev = donAmount.value
   syncDonAmountFromDraft()
   const next = donAmount.value
@@ -677,15 +644,6 @@ function onCustomAmountBlur() {
     return
   }
   customAmountDraft.value = String(donAmount.value)
-}
-
-function closeCustomAmount() {
-  useCustomOverMax.value = false
-  customAmountDraft.value = ''
-  if (donAmount.value < 1) donAmount.value = 1
-  if (donAmount.value > SLIDER_MAX) {
-    donAmount.value = SLIDER_MAX
-  }
 }
 
 function runColibriMilestones(from, to) {
@@ -769,7 +727,6 @@ watch(realCostMonthly, (n, o) => animateValue(o, n, v => {
 
 watch(donAmount, (n, o) => {
   if (o === undefined) return
-  if (useCustomOverMax.value) return
   if (n > o) runColibriMilestones(o, n)
 })
 
