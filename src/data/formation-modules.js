@@ -47,7 +47,8 @@ export const MODULE_DECKS = {
   2: '/formation/module-2-deck/index.html',
   3: '/formation/module-3-deck/index.html',
   4: '/formation/module-4-deck/index.html',
-  5: '/formation/module-5-deck/index.html'
+  5: '/formation/module-5-deck/index.html',
+  6: '/formation/module-6-deck/index.html'
 }
 
 /**

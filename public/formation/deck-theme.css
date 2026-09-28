@@ -1454,6 +1454,26 @@ a.deck-src-panel__row:focus-visible {
 .deck-carousel__slide .card.deck-carousel__card--forest {
   background: var(--green-forest) !important;
 }
+.deck-carousel__slide .card.deck-carousel__card--forest .body,
+.deck-carousel__slide .card.deck-carousel__card--forest .num,
+.deck-carousel__slide .card.deck-carousel__card--forest .small,
+.deck-carousel__slide .card.deck-carousel__card--forest .xs {
+  color: var(--cream);
+}
+.deck-carousel__slide .card.deck-carousel__card--alert {
+  background: var(--terracotta) !important;
+}
+.deck-carousel__slide .card.deck-carousel__card--alert .body,
+.deck-carousel__slide .card.deck-carousel__card--alert .num,
+.deck-carousel__slide .card.deck-carousel__card--alert .small,
+.deck-carousel__slide .card.deck-carousel__card--alert .xs {
+  color: var(--cream);
+}
+.deck-carousel__slide .card.deck-carousel__card--dark .num,
+.deck-carousel__slide .card.deck-carousel__card--dark .small,
+.deck-carousel__slide .card.deck-carousel__card--dark .xs {
+  color: var(--cream);
+}
 /* Portrait ethnie : card horizontale, photo à gauche */
 .deck-ethno-card {
   padding: 0 !important;
