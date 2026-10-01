@@ -134,13 +134,14 @@ export function formatEur(amount) {
 }
 
 /**
- * Seuils · Procédure de gestion des dépenses AKUU (version 2026, en soles PEN)
- * @see Processus de gestion des dépenses.docx
+ * Seuil unique côté site : photos/PDF de devis fournisseurs au-delà de ce montant (PEN).
+ * Toute dépense passe par une demande AKUU-DEM, quel que soit le montant.
  */
-export const PEN_ROUTINE_MAX = 50
-export const PEN_TREASURER_MAX = 300
-/** Au-delà de ce montant : photos/PDF des devis fournisseurs obligatoires (la demande/devis reste toujours requise). */
 export const DEVIS_PEN_THRESHOLD = 1000
+/** @deprecated Ancienne procédure papier (50 / 300 S/.) — non utilisée par le site */
+export const PEN_ROUTINE_MAX = 50
+/** @deprecated Ancienne procédure papier (50 / 300 S/.) — non utilisée par le site */
+export const PEN_TREASURER_MAX = 300
 export const MIN_DEVIS_ATTACHMENTS = 2
 export const ADVANCE_REGULARIZATION_DAYS = 30
 
@@ -188,19 +189,16 @@ export function awaitingVolunteerDevisResubmit(demande) {
   return demande?.status === 'awaiting_approval' && demande?.devis_status === 'rejected'
 }
 
-/** Niveau de validation selon le montant (procédure § IV) */
+/** Deux cas sur le site : avec ou sans photos de devis fournisseurs. */
 export function getValidationLevel(amountPen) {
   const n = Number(amountPen)
   if (!Number.isFinite(n) || n <= 0) return null
-  if (n <= PEN_ROUTINE_MAX) return 'routine'
-  if (n <= PEN_TREASURER_MAX) return 'treasurer'
-  return 'cg'
+  return requiresDevisPhotoAttachments(n) ? 'devis_photos' : 'standard'
 }
 
 export const VALIDATION_LEVEL_LABELS = {
-  routine: 'Dépense courante (≤ 50 S/.) — doit rester utile au projet et prévue au budget',
-  treasurer: 'Validation trésorier requise (51–300 S/.) — demande obligatoire avant achat',
-  cg: 'Validation Conseil général (> 300 S/.) — demande (devis) obligatoire · photos des devis si > 1000 S/.'
+  standard: `Demande obligatoire · pas de photo de devis fournisseur (≤ ${DEVIS_PEN_THRESHOLD} S/.)`,
+  devis_photos: `Demande obligatoire · joindre min. ${MIN_DEVIS_ATTACHMENTS} photos/PDF de devis fournisseurs (> ${DEVIS_PEN_THRESHOLD} S/.)`
 }
 
 export const PROCESS_EXCLUDED_EXPENSES = [

@@ -49,9 +49,10 @@
 
     <!-- Seuils PEN -->
     <section class="rounded-2xl border border-night-100 bg-white p-5 shadow-sm">
-      <h3 class="text-sm font-semibold uppercase tracking-wide text-night">Montants et autorisations (S/.)</h3>
+      <h3 class="text-sm font-semibold uppercase tracking-wide text-night">Deux cas selon le montant (S/.)</h3>
       <p class="mt-1 text-xs text-night-400">
-        Une dépense n'est jamais autorisée automatiquement : elle doit être utile au projet et prévue au budget.
+        Sur le site, <strong>toute dépense</strong> passe par une demande AKUU-DEM validée par le trésorier, puis par une facture après achat.
+        Seule différence : les photos de devis fournisseurs au-delà de {{ DEVIS_PEN_THRESHOLD }} S/.
       </p>
       <ul class="mt-4 space-y-3">
         <li v-for="row in thresholdRows" :key="row.range" class="flex gap-3 rounded-xl bg-night-50/80 px-3 py-2.5">
@@ -60,7 +61,7 @@
         </li>
       </ul>
       <p class="mt-3 text-xs text-night-400">
-        Dépense exceptionnelle ou construction importante : validation préalable obligatoire, quel que soit le montant.
+        Chaque dépense doit rester utile au projet et prévue au budget · montant facturé ≤ devis +{{ AMOUNT_TOLERANCE_PERCENT }}&nbsp;%.
       </p>
     </section>
 
@@ -183,8 +184,6 @@ import {
   DEVIS_PEN_THRESHOLD,
   MIN_DEVIS_ATTACHMENTS,
   AMOUNT_TOLERANCE_PERCENT,
-  PEN_ROUTINE_MAX,
-  PEN_TREASURER_MAX,
   ADVANCE_REGULARIZATION_DAYS,
   PROCESS_EXCLUDED_EXPENSES
 } from '@/data/tresorerie-config.js'
@@ -201,11 +200,11 @@ const store = useTresorerieStore()
 const digitalSteps = [
   {
     title: 'Demande / devis avant achat (obligatoire)',
-    body: `Projet, nature, montant, date souhaitée, description et justification — c'est votre devis. Le trésorier approuve (ou le CG si > ${PEN_TREASURER_MAX} S/.). Vous recevez une référence AKUU-DEM-… à conserver pour les factures.`
+    body: `Projet, nature, montant, date souhaitée, description et justification. Le trésorier approuve · vous recevez une référence AKUU-DEM-… pour les factures.`
   },
   {
-    title: `Photos de devis fournisseurs (> ${DEVIS_PEN_THRESHOLD} S/.)`,
-    body: `Avant approbation : joignez au moins ${MIN_DEVIS_ATTACHMENTS} photos ou PDF de devis · le trésorier les valide, puis approuve la demande.`
+    title: `Si > ${DEVIS_PEN_THRESHOLD} S/. : photos de devis fournisseurs`,
+    body: `En plus de la demande, joignez au moins ${MIN_DEVIS_ATTACHMENTS} photos ou PDF de devis magasin · le trésorier les valide avant d'approuver. En dessous de ce montant : pas de photo à joindre.`
   },
   {
     title: 'Factures après achat — un devis, plusieurs tickets',
@@ -223,16 +222,12 @@ const digitalSteps = [
 
 const thresholdRows = [
   {
-    range: `0 – ${PEN_ROUTINE_MAX} S/.`,
-    rule: 'Dépense courante si utile au projet et prévue au budget. Justificatif et enregistrement obligatoires.'
+    range: `≤ ${DEVIS_PEN_THRESHOLD} S/.`,
+    rule: 'Demande AKUU-DEM · validation trésorier · facture(s) après achat · pas de photo de devis fournisseur.'
   },
   {
-    range: `${PEN_ROUTINE_MAX + 1} – ${PEN_TREASURER_MAX} S/.`,
-    rule: 'Demande de validation préalable au trésorier AKUU (via cet espace) avant achat.'
-  },
-  {
-    range: `> ${PEN_TREASURER_MAX} S/.`,
-    rule: `Validation Conseil général · demande (devis) obligatoire · si > ${DEVIS_PEN_THRESHOLD} S/., joindre min. ${MIN_DEVIS_ATTACHMENTS} photos/PDF de devis fournisseurs.`
+    range: `> ${DEVIS_PEN_THRESHOLD} S/.`,
+    rule: `Idem + joindre min. ${MIN_DEVIS_ATTACHMENTS} photos/PDF de devis fournisseurs · le trésorier valide les pièces avant approbation.`
   }
 ]
 
