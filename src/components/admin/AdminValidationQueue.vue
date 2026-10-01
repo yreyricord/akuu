@@ -294,6 +294,16 @@
             </span>
           </div>
 
+          <dl
+            v-if="group.factures[0]"
+            class="mt-3 grid gap-1 rounded-xl border border-night/10 bg-sand/20 px-3 py-2 text-sm text-night-600 sm:grid-cols-2"
+          >
+            <div><dt class="inline font-medium">Payé par :</dt> {{ group.factures[0].paid_by || '—' }}</div>
+            <div><dt class="inline font-medium">Moyen :</dt> {{ labelFor(group.factures[0].payment_method, PAYMENT_METHODS) }}</div>
+            <div><dt class="inline font-medium">Lieu :</dt> {{ group.factures[0].location || '—' }}</div>
+            <div class="sm:col-span-2"><dt class="inline font-medium">Libellé demande :</dt> {{ group.factures[0].label || '—' }}</div>
+          </dl>
+
           <ul class="mt-3 space-y-3">
             <li
               v-for="f in group.factures"
@@ -307,8 +317,7 @@
               <dl class="mt-2 grid gap-1 text-night-600 sm:grid-cols-2">
                 <div><dt class="inline font-medium">Montant :</dt> {{ formatAmountWithConversion(f) }}</div>
                 <div><dt class="inline font-medium">Date :</dt> {{ f.expense_date }}</div>
-                <div><dt class="inline font-medium">Fournisseur :</dt> {{ f.vendor_name }}</div>
-                <div><dt class="inline font-medium">Lieu :</dt> {{ f.location }}</div>
+                <div class="sm:col-span-2"><dt class="inline font-medium">Fournisseur :</dt> {{ f.vendor_name }}</div>
               </dl>
               <a
                 v-if="f.drive_file_url"
@@ -395,6 +404,7 @@ import { useRoute } from 'vue-router'
 import {
   TRESORERIE_PROJECTS,
   TRESORERIE_CATEGORIES,
+  PAYMENT_METHODS,
   DEVIS_PEN_THRESHOLD,
   labelFor,
   formatPen,

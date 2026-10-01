@@ -37,7 +37,7 @@
         <ul class="space-y-2">
           <li v-for="a in store.history.audit" :key="a.id" class="text-xs text-night-600">
             <span class="font-mono text-night-400">{{ formatTs(a.timestamp) }}</span>
-            · {{ a.actor_email }} · <strong>{{ a.action }}</strong> · {{ a.entity_type }}/{{ a.entity_id.slice(0, 8) }}…
+            · {{ a.actor_email }} · <strong>{{ a.action }}</strong> · {{ a.entity_type }}/{{ formatEntityId(a.entity_id) }}
           </li>
           <li v-if="!store.history.audit?.length" class="text-sm text-night-400">Aucun événement.</li>
         </ul>
@@ -97,6 +97,9 @@
         <template #cell-payment_type="{ row }">
           <AdminPaymentBadge :payment-type="row.payment_type" />
         </template>
+        <template #cell-payment_method="{ row }">
+          <span class="text-xs">{{ labelFor(row.payment_method, PAYMENT_METHODS) }}</span>
+        </template>
         <template #cell-reimbursement="{ row }">
           <AdminReimbursementBadge :facture="row" />
         </template>
@@ -116,6 +119,7 @@
 <script setup>
 import {
   TRESORERIE_PROJECTS,
+  PAYMENT_METHODS,
   labelFor
 } from '@/data/tresorerie-config.js'
 import { formatAmountWithConversion } from '@/data/currency.js'
@@ -141,11 +145,21 @@ const factureColumns = [
   { key: 'reference', label: 'Réf.' },
   { key: 'demand_reference', label: 'Demande' },
   { key: 'status', label: 'Statut' },
+  { key: 'expense_date', label: 'Date' },
+  { key: 'vendor_name', label: 'Fournisseur' },
   { key: 'payment_type', label: 'Paiement' },
+  { key: 'payment_method', label: 'Moyen' },
+  { key: 'paid_by', label: 'Payé par' },
+  { key: 'location', label: 'Lieu' },
   { key: 'reimbursement', label: 'Remboursement' },
   { key: 'amount_pen', label: 'Montant', align: 'right' },
   { key: 'submitter_email', label: 'Auteur' }
 ]
+
+function formatEntityId(id) {
+  const s = String(id || '').trim()
+  return s.length > 8 ? `${s.slice(0, 8)}…` : s || '—'
+}
 
 function formatTs(iso) {
   try {

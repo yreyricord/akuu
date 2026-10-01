@@ -67,7 +67,7 @@
       >
         <p class="font-medium text-forest">Factures enregistrées en brouillon</p>
         <p class="mt-1 text-xs text-night-500">
-          Le trésorier ne les verra qu’après clôture du devis. Vous pouvez encore en ajouter tant que le total reste dans le plafond.
+          Le trésorier ne les verra qu’après clôture du devis. Les informations communes restent modifiables ci-dessous.
         </p>
         <div class="mt-4 flex flex-wrap gap-2">
           <button type="button" class="btn-primary" @click="continueAdding">
@@ -84,9 +84,8 @@
         </div>
       </div>
 
-      <template v-if="selectedDemande && !postSubmitChoice">
-        <fieldset class="space-y-4 rounded-xl border border-night/10 bg-sand/30 p-4">
-          <legend class="px-1 text-sm font-medium text-night">Informations communes</legend>
+      <fieldset v-if="selectedDemande" class="space-y-4 rounded-xl border border-night/10 bg-sand/30 p-4">
+          <legend class="px-1 text-sm font-medium text-night">Informations communes (tout le lot)</legend>
 
           <label class="block space-y-1.5">
             <span class="text-sm font-medium text-night">Moyen de paiement *</span>
@@ -115,9 +114,9 @@
               <p class="sm:col-span-2"><span class="text-night-500">Type de flux :</span> {{ labelFor(form.payment_type, PAYMENT_TYPES) }}</p>
             </div>
           </details>
-        </fieldset>
+      </fieldset>
 
-        <section class="space-y-4">
+      <section v-if="selectedDemande && !postSubmitChoice" class="space-y-4">
           <div class="flex flex-wrap items-end justify-between gap-3">
             <div>
               <h3 class="text-sm font-medium text-night">Factures à déposer</h3>
@@ -203,8 +202,7 @@
             />
             <p v-if="line.fileError" class="text-xs text-terracotta">{{ line.fileError }}</p>
           </div>
-        </section>
-      </template>
+      </section>
 
       <button
         v-if="!postSubmitChoice"

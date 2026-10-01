@@ -359,47 +359,19 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
 
     _inflight.history = (async () => {
       try {
-        let done = 0
-        const bump = (label) => {
-          done += 1
-          historyProgress.value = Math.min(92, Math.round((done / 4) * 88) + 8)
-          historyProgressLabel.value = label
-        }
-
-        const demandesP = tresorerieApi.getAllDemandes().catch(() => []).finally(() => bump('Factures…'))
-        const facturesP = tresorerieApi.getAllFactures().catch(() => []).finally(() => bump('Journal d\'audit…'))
-        const auditP = tresorerieApi.getAuditLog().catch(() => []).finally(() => bump('Statistiques…'))
-        const statsP = tresorerieApi.getValidationStats().catch(() => null).finally(() => bump('Finalisation…'))
-
-        historyProgressLabel.value = 'Demandes…'
-        const [demandes, factures, audit, stats] = await Promise.all([demandesP, facturesP, auditP, statsP])
+        historyProgress.value = 40
+        historyProgressLabel.value = 'Demandes, factures et audit…'
+        const data = await tresorerieApi.getHistory()
         historyProgress.value = 96
         history.value = {
-          demandes: Array.isArray(demandes) ? demandes : [],
-          factures: Array.isArray(factures) ? factures : [],
-          audit: Array.isArray(audit) ? audit : []
+          demandes: Array.isArray(data?.demandes) ? data.demandes : [],
+          factures: Array.isArray(data?.factures) ? data.factures : [],
+          audit: Array.isArray(data?.audit) ? data.audit : []
         }
         _fetchedAt.history = Date.now()
-        if ((stats?.demandes_total ?? 0) > 0 && !history.value.demandes.length) {
-          historyError.value =
-            'Le tableur contient des demandes mais l’API renvoie une liste vide — redeploy Apps Script (Business.gs, App.gs) puis Actualiser.'
-        }
       } catch (e) {
         historyError.value = e.message || 'Chargement historique impossible'
-        try {
-          const data = await tresorerieApi.getHistory()
-          if ((data?.demandes?.length ?? 0) > 0 || (data?.factures?.length ?? 0) > 0) {
-            history.value = {
-              demandes: data.demandes ?? [],
-              factures: data.factures ?? [],
-              audit: data.audit ?? []
-            }
-            historyError.value = null
-            _fetchedAt.history = Date.now()
-          }
-        } catch {
-          history.value = { demandes: [], factures: [], audit: [] }
-        }
+        history.value = { demandes: [], factures: [], audit: [] }
       } finally {
         historyProgress.value = 100
         historyLoading.value = false
