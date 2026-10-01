@@ -27,6 +27,8 @@ var SHEET_HEADERS = {
     "devis_validated_at",
     "devis_validated_by",
     "devis_reject_reason",
+    "invoicing_status",
+    "invoicing_submitted_at",
   ],
   Factures: [
     "id",
@@ -320,6 +322,8 @@ function migrateSheetRow_(sheetName, row) {
     if (!row.devis_validated_at) row.devis_validated_at = "";
     if (!row.devis_validated_by) row.devis_validated_by = "";
     if (!row.devis_reject_reason) row.devis_reject_reason = "";
+    if (!row.invoicing_status) row.invoicing_status = row.status === "approved" ? "open" : "";
+    if (!row.invoicing_submitted_at) row.invoicing_submitted_at = "";
   }
   if (sheetName === "Users" || sheetName === "AccessRequests") {
     row = migrateUserProfileRow_(row);

@@ -98,6 +98,41 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
     }
   }
 
+  async function submitFacturesBatch(sharedPayload, items) {
+    clearMessages()
+    loading.value = true
+    const created = []
+    try {
+      for (const item of items) {
+        const facture = await tresorerieApi.createFacture(
+          {
+            ...sharedPayload,
+            amount: item.amount,
+            vendor_name: item.vendor_name,
+            receipt_number: item.receipt_number || ''
+          },
+          item.file
+        )
+        created.push(facture)
+      }
+      const refs = created.map((f) => f.reference).join(', ')
+      successMessage.value =
+        created.length > 1
+          ? `${created.length} factures enregistrées (brouillon) : ${refs}`
+          : `Facture ${refs} enregistrée (brouillon).`
+      return created
+    } catch (e) {
+      if (created.length) {
+        error.value = `${created.length} facture(s) enregistrée(s), puis erreur : ${e.message}`
+      } else {
+        error.value = e.message
+      }
+      throw e
+    } finally {
+      loading.value = false
+    }
+  }
+
   async function refreshMine(force = false) {
     if (force) delete _fetchedAt.mine
     else if (_fetchedAt.mine && Date.now() - _fetchedAt.mine < CACHE_TTL.mine) return
@@ -249,6 +284,40 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
       delete _fetchedAt.history
       delete _fetchedAt.compta
       await refreshPending(true)
+    } catch (e) {
+      error.value = e.message
+      throw e
+    } finally {
+      loading.value = false
+    }
+  }
+
+  async function closeDemandeInvoicing(reference) {
+    clearMessages()
+    loading.value = true
+    try {
+      const demande = await tresorerieApi.closeDemandeInvoicing(reference)
+      successMessage.value = `Devis ${reference} clôturé — ${demande.pending_facture_count ?? ''} facture(s) envoyée(s) au trésorier.`
+      await loadApprovedDemandes()
+      return demande
+    } catch (e) {
+      error.value = e.message
+      throw e
+    } finally {
+      loading.value = false
+    }
+  }
+
+  async function validateDemandeFactures(reference) {
+    clearMessages()
+    loading.value = true
+    try {
+      const result = await tresorerieApi.validateDemandeFactures(reference)
+      successMessage.value = `${result.count} facture(s) validée(s) pour ${reference} · journal à jour.`
+      delete _fetchedAt.history
+      delete _fetchedAt.compta
+      await refreshPending(true)
+      return result
     } catch (e) {
       error.value = e.message
       throw e
@@ -431,6 +500,7 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
     previewEur,
     submitDemande,
     submitFacture,
+    submitFacturesBatch,
     submitDirectExpense,
     refreshMine,
     refreshPending,
@@ -442,6 +512,8 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
     approveDemande,
     rejectDemande,
     validateFacture,
+    closeDemandeInvoicing,
+    validateDemandeFactures,
     markReimbursed,
     rejectFacture,
     loadHistory,

@@ -265,88 +265,122 @@
 
     <section>
       <h3 class="text-sm font-semibold uppercase tracking-wide text-night">
-        Factures ({{ store.pendingFactures.length }})
+        Factures ({{ store.pendingFactures.length }} · {{ pendingFactureGroups.length }} lot(s))
       </h3>
-      <p v-if="!store.pendingFactures.length" class="mt-2 text-sm text-night-400">Aucune facture en attente.</p>
+      <p class="mt-1 text-xs text-night-400">
+        Une validation par demande/devis — toutes les factures du lot passent au journal en une fois.
+      </p>
+      <p v-if="!pendingFactureGroups.length" class="mt-2 text-sm text-night-400">Aucune facture en attente.</p>
       <ul class="mt-3 space-y-4">
         <li
-          v-for="f in store.pendingFactures"
-          :id="'validation-' + f.reference"
-          :key="f.id"
+          v-for="group in pendingFactureGroups"
+          :id="'validation-' + (group.demand_reference || group.factures[0]?.reference)"
+          :key="group.demand_reference || group.factures[0]?.id"
           class="rounded-2xl border border-night-100 bg-white p-4 shadow-sm transition-shadow duration-500"
-          :class="highlightRef === f.reference ? 'ring-2 ring-forest ring-offset-2 shadow-md' : ''"
+          :class="groupHighlighted(group) ? 'ring-2 ring-forest ring-offset-2 shadow-md' : ''"
         >
           <div class="flex flex-wrap items-start justify-between gap-2">
             <div>
-              <p class="font-mono text-sm font-semibold text-forest">{{ f.reference }}</p>
-              <p class="text-xs text-night-400">Demande {{ f.demand_reference }}</p>
+              <p v-if="group.demand_reference" class="font-mono text-sm font-semibold text-forest">
+                Demande {{ group.demand_reference }}
+              </p>
+              <p v-else class="font-mono text-sm font-semibold text-forest">
+                {{ group.factures[0]?.reference }}
+              </p>
+              <p class="text-xs text-night-400">{{ group.submitter_email }}</p>
             </div>
-            <AdminStatusBadge :status="f.status" type="facture" />
+            <span class="rounded-full bg-ochre/20 px-2.5 py-0.5 text-xs font-semibold text-ochre-700">
+              {{ group.factures.length }} facture(s)
+            </span>
           </div>
-          <div class="mt-2 flex flex-wrap items-center gap-2">
-            <AdminPaymentBadge :payment-type="f.payment_type" />
-            <AdminReimbursementBadge v-if="f.payment_type === 'avance_benevole'" :facture="f" />
-          </div>
-          <dl class="mt-3 grid gap-1 text-sm text-night-600 sm:grid-cols-2">
-            <div><dt class="inline font-medium">Montant :</dt> {{ formatAmountWithConversion(f) }}</div>
-            <div><dt class="inline font-medium">Date :</dt> {{ f.expense_date }}</div>
-            <div><dt class="inline font-medium">Fournisseur :</dt> {{ f.vendor_name }}</div>
-            <div><dt class="inline font-medium">Lieu :</dt> {{ f.location }}</div>
-            <div class="sm:col-span-2"><dt class="inline font-medium">Libellé :</dt> {{ f.label }}</div>
-          </dl>
-          <p v-if="f.file_name" class="mt-2 text-xs text-night-400">Pièce : {{ f.file_name }}</p>
+
+          <ul class="mt-3 space-y-3">
+            <li
+              v-for="f in group.factures"
+              :key="f.id"
+              class="rounded-xl border border-night/10 bg-sand/20 p-3 text-sm"
+            >
+              <div class="flex flex-wrap items-start justify-between gap-2">
+                <p class="font-mono text-xs font-semibold text-forest">{{ f.reference }}</p>
+                <AdminPaymentBadge :payment-type="f.payment_type" />
+              </div>
+              <dl class="mt-2 grid gap-1 text-night-600 sm:grid-cols-2">
+                <div><dt class="inline font-medium">Montant :</dt> {{ formatAmountWithConversion(f) }}</div>
+                <div><dt class="inline font-medium">Date :</dt> {{ f.expense_date }}</div>
+                <div><dt class="inline font-medium">Fournisseur :</dt> {{ f.vendor_name }}</div>
+                <div><dt class="inline font-medium">Lieu :</dt> {{ f.location }}</div>
+              </dl>
+              <a
+                v-if="f.drive_file_url"
+                :href="f.drive_file_url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-2 inline-flex items-center text-xs font-semibold text-bleu hover:underline"
+              >
+                Voir la pièce
+              </a>
+
+              <div v-if="rejectingFacture === f.reference" class="mt-3 space-y-2">
+                <label class="block text-xs font-medium text-night">Message au bénévole (facture) *</label>
+                <textarea
+                  v-model="rejectReason"
+                  rows="3"
+                  class="admin-input"
+                  placeholder="Ex. Montant incorrect, photo illisible…"
+                />
+                <p v-if="rejectError && rejectingFacture === f.reference" class="text-xs text-terracotta">{{ rejectError }}</p>
+                <div class="admin-action-row">
+                  <button type="button" class="rounded-full bg-terracotta px-4 py-2 text-sm font-semibold text-white" @click="confirmRejectFacture(f.reference)">
+                    Confirmer refus
+                  </button>
+                  <button type="button" class="rounded-full border border-night-200 px-4 py-2 text-sm text-night-500" @click="cancelReject">
+                    Annuler
+                  </button>
+                </div>
+              </div>
+              <button
+                v-else
+                type="button"
+                class="mt-2 text-xs font-semibold text-terracotta hover:underline"
+                @click="startRejectFacture(f.reference)"
+              >
+                Refuser cette facture
+              </button>
+            </li>
+          </ul>
+
+          <p class="mt-3 text-sm font-medium text-night">
+            Total lot : {{ formatPen(group.total_pen) }}
+            <span v-if="group.total_eur" class="text-night-400">({{ formatEur(group.total_eur) }})</span>
+          </p>
+
           <p
-            v-if="isOwnSubmission(f.submitter_email) && canTreasurerActOn(f.submitter_email)"
+            v-if="isOwnSubmission(group.submitter_email) && canTreasurerActOn(group.submitter_email)"
             class="mt-2 rounded-lg border border-leaf/30 bg-leaf/10 px-3 py-2 text-xs text-forest-800"
           >
-            Votre propre facture — validation autorisée (admin / mode test, tracée en audit).
+            Votre propre demande — validation autorisée (admin / mode test).
           </p>
           <p
-            v-else-if="isOwnSubmission(f.submitter_email)"
+            v-else-if="isOwnSubmission(group.submitter_email)"
             class="mt-2 rounded-lg border border-terracotta/30 bg-terracotta/10 px-3 py-2 text-xs text-terracotta-700"
           >
-            Votre propre facture — un autre trésorier doit valider.
+            Votre propre demande — un autre trésorier doit valider.
           </p>
 
-          <a
-            v-if="f.drive_file_url"
-            :href="f.drive_file_url"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="mt-2 inline-flex min-h-[48px] items-center rounded-full bg-bleu/10 px-4 py-2 text-sm font-semibold text-bleu"
-          >
-            Voir la pièce justificative
-          </a>
-
-          <div v-if="rejectingFacture === f.reference" class="mt-3 space-y-2">
-            <label class="block text-xs font-medium text-night">Message au bénévole (facture) *</label>
-            <textarea
-              v-model="rejectReason"
-              rows="3"
-              class="admin-input"
-              placeholder="Ex. Montant incorrect, photo illisible, mauvaise date, ou achat hors périmètre de la demande approuvée."
-            />
-            <p v-if="rejectError && rejectingFacture === f.reference" class="text-xs text-terracotta">{{ rejectError }}</p>
-            <div class="admin-action-row">
-              <button type="button" class="rounded-full bg-terracotta px-4 py-2 text-sm font-semibold text-white" @click="confirmRejectFacture(f.reference)">
-                Confirmer refus
-              </button>
-              <button type="button" class="rounded-full border border-night-200 px-4 py-2 text-sm text-night-500" @click="cancelReject">
-                Annuler
-              </button>
-            </div>
-          </div>
-          <div v-else class="admin-action-row mt-4">
+          <div class="admin-action-row mt-4">
             <button
               type="button"
               class="rounded-full bg-forest px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
-              :disabled="!canTreasurerActOn(f.submitter_email) || store.loading"
-              @click="validate(f.reference)"
+              :disabled="!canTreasurerActOn(group.submitter_email) || store.loading || validatingGroup === groupKey(group)"
+              @click="validateGroup(group)"
             >
-              Valider → Journal
-            </button>
-            <button type="button" class="rounded-full border border-terracotta px-4 py-2 text-sm font-semibold text-terracotta" @click="startRejectFacture(f.reference)">
-              Refuser
+              {{
+                validatingGroup === groupKey(group)
+                  ? 'Validation…'
+                  : group.demand_reference
+                    ? `Valider les ${group.factures.length} factures → Journal`
+                    : 'Valider → Journal'
+              }}
             </button>
           </div>
         </li>
@@ -363,6 +397,8 @@ import {
   TRESORERIE_CATEGORIES,
   DEVIS_PEN_THRESHOLD,
   labelFor,
+  formatPen,
+  formatEur,
   requiresDevisAttachments,
   canApproveDemande,
   canValidateDevisPhotos,
@@ -434,6 +470,28 @@ const demandesAwaitingVolunteer = computed(() =>
 const emptyQueues = computed(
   () => !store.pendingDemandes.length && !store.pendingFactures.length
 )
+
+const pendingFactureGroups = computed(() => {
+  const groups = new Map()
+  for (const f of store.pendingFactures) {
+    const key = f.demand_reference || f.reference
+    if (!groups.has(key)) {
+      groups.set(key, {
+        demand_reference: f.demand_reference || '',
+        submitter_email: f.submitter_email,
+        factures: []
+      })
+    }
+    groups.get(key).factures.push(f)
+  }
+  return Array.from(groups.values()).map((g) => ({
+    ...g,
+    total_pen: g.factures.reduce((sum, f) => sum + (Number(f.amount_pen) || 0), 0),
+    total_eur: g.factures.reduce((sum, f) => sum + (Number(f.amount_eur) || 0), 0)
+  }))
+})
+
+const validatingGroup = ref(null)
 
 async function reload() {
   refreshing.value = true
@@ -532,8 +590,29 @@ async function confirmRejectDemande(reference) {
   cancelReject()
 }
 
-async function validate(reference) {
-  await store.validateFacture(reference)
+function groupKey(group) {
+  return group.demand_reference || group.factures[0]?.reference || ''
+}
+
+function groupHighlighted(group) {
+  const ref = highlightRef.value
+  if (!ref) return false
+  if (group.demand_reference === ref) return true
+  return group.factures.some((f) => f.reference === ref)
+}
+
+async function validateGroup(group) {
+  const key = groupKey(group)
+  validatingGroup.value = key
+  try {
+    if (group.demand_reference) {
+      await store.validateDemandeFactures(group.demand_reference)
+    } else {
+      await store.validateFacture(group.factures[0].reference)
+    }
+  } finally {
+    validatingGroup.value = null
+  }
 }
 
 async function confirmRejectFacture(reference) {

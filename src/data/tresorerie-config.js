@@ -66,6 +66,7 @@ export const DEMANDE_STATUSES = {
 }
 
 export const FACTURE_STATUSES = {
+  draft: { label: 'Brouillon', color: 'night' },
   pending: { label: 'En attente', color: 'ochre' },
   validated: { label: 'Validée', color: 'leaf' },
   rejected: { label: 'Refusée', color: 'terracotta' }

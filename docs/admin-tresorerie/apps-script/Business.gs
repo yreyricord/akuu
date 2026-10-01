@@ -143,6 +143,15 @@ function roundPen_(n) {
   return Math.round(Number(n) * 100) / 100;
 }
 
+function normInvoicingStatus_(demande) {
+  return String(demande && demande.invoicing_status || '').toLowerCase().trim();
+}
+
+function isInvoicingOpen_(demande) {
+  var s = normInvoicingStatus_(demande);
+  return !s || s === 'open';
+}
+
 /** Somme des factures non refusées rattachées à une demande (plusieurs tickets magasins possibles). */
 function getDemandeFactureTotals_(demandRef, factures) {
   var ref = normDemandRef_(demandRef);
@@ -169,11 +178,24 @@ function getDemandeRemainingPen_(demandeOrRef, factures) {
 }
 
 function enrichDemandeFactureBudget_(demande, factures) {
+  var ref = normDemandRef_(demande.reference);
   var totals = getDemandeFactureTotals_(demande.reference, factures);
   var maxPen = amountPenMax_(demande.amount_pen_estimated);
+  var draftCount = 0;
+  var pendingCount = 0;
+  (factures || []).forEach(function (f) {
+    if (normDemandRef_(f.demand_reference) !== ref) return;
+    var st = normStatus_(f.status);
+    if (st === 'draft') draftCount++;
+    if (st === 'pending') pendingCount++;
+  });
   demande.invoiced_pen = totals.sum_pen;
   demande.invoiced_eur = totals.sum_eur;
   demande.facture_count = totals.count;
+  demande.draft_count = draftCount;
+  demande.pending_facture_count = pendingCount;
+  demande.invoicing_status = normInvoicingStatus_(demande) || (demande.status === 'approved' ? 'open' : '');
+  demande.invoicing_submitted_at = demande.invoicing_submitted_at || '';
   demande.max_pen = maxPen;
   demande.remaining_pen = Math.max(0, roundPen_(maxPen - totals.sum_pen));
   return demande;
@@ -184,6 +206,7 @@ function getApprovedDemandes_(session) {
   return readAll_('Demandes')
     .filter(function (d) {
       if (d.submitter_email !== session.email || d.status !== 'approved') return false;
+      if (normInvoicingStatus_(d) === 'submitted') return false;
       return getDemandeRemainingPen_(d, factures) > 0;
     })
     .map(function (d) {
@@ -307,7 +330,9 @@ function approveDemande_(session, reference) {
   updateRowByReference_('Demandes', reference, {
     status: 'approved',
     treasurer_email: session.email,
-    decided_at: decided
+    decided_at: decided,
+    invoicing_status: 'open',
+    invoicing_submitted_at: ''
   });
 
   appendAudit_(session.email, 'demande_approved', 'demande', d.id, { reference: reference });
@@ -368,6 +393,9 @@ function createFacture_(session, body) {
   var remainingPen = getDemandeRemainingPen_(demande);
   if (remainingPen <= 0) {
     throw apiError_('CONFLICT', 'Le plafond de la demande ' + body.demand_reference + ' est déjà entièrement couvert par des factures.', 409);
+  }
+  if (!isInvoicingOpen_(demande)) {
+    throw apiError_('CONFLICT', 'Ce devis est clôturé et en attente de validation trésorier. Ajoutez des factures après traitement ou contactez le trésorier.', 409);
   }
   body.resubmission_of = '';
   // Fichier contrôlé AVANT d'attribuer un numéro (pas de trou dans la numérotation si le fichier est refusé)
@@ -432,7 +460,7 @@ function createFacture_(session, body) {
     receipt_number: body.receipt_number || '',
     location: body.location,
     label: body.label,
-    status: 'pending',
+    status: 'draft',
     drive_file_id: driveInfo.drive_file_id,
     drive_file_url: driveInfo.drive_file_url,
     file_name: driveInfo.file_name || '',
@@ -451,23 +479,138 @@ function createFacture_(session, body) {
     trashUploaded_([driveInfo]);
     throw err;
   }
-  appendAudit_(session.email, 'facture_created', 'facture', id, { reference: reference });
+  appendAudit_(session.email, 'facture_created', 'facture', id, { reference: reference, status: 'draft' });
 
-  notifyTreasurersAndAdminMail_(buildNouvelleFactureEmail_({
-    reference: reference,
-    submitter: session.email,
-    demand_reference: body.demand_reference,
-    currency: amounts.currency,
-    amount_pen: amountPen,
-    amount_eur: amounts.amount_eur,
-    drive_file_url: driveInfo.drive_file_url
-  }));
+  if (!normInvoicingStatus_(demande)) {
+    updateRowByReference_('Demandes', body.demand_reference, { invoicing_status: 'open' });
+  }
 
   return facture;
 }
 
+function isFactureVisibleToTreasurer_(facture, demande) {
+  if (normStatus_(facture.status) !== 'pending') return false;
+  if (!facture.demand_reference) return true;
+  if (!demande) return true;
+  var inv = normInvoicingStatus_(demande);
+  return !inv || inv === 'submitted';
+}
+
 function getFacturesPending_() {
-  return readAll_('Factures').filter(function (f) { return normStatus_(f.status) === 'pending'; });
+  var demandesByRef = {};
+  readAll_('Demandes').forEach(function (d) {
+    demandesByRef[normDemandRef_(d.reference)] = d;
+  });
+  return readAll_('Factures').filter(function (f) {
+    var d = demandesByRef[normDemandRef_(f.demand_reference)];
+    return isFactureVisibleToTreasurer_(f, d);
+  });
+}
+
+function closeDemandeInvoicing_(session, reference) {
+  var d = findByReference_('Demandes', reference);
+  if (!d) throw apiError_('DEMAND_NOT_FOUND', 'Demande introuvable');
+  if (d.status !== 'approved') throw apiError_('DEMAND_NOT_APPROVED', 'Demande non approuvée');
+  if (d.submitter_email !== session.email) throw apiError_('FORBIDDEN', 'Demande non autorisée');
+  if (normInvoicingStatus_(d) === 'submitted') {
+    throw apiError_('CONFLICT', 'Ce devis est déjà clôturé et envoyé au trésorier.', 409);
+  }
+  var ref = normDemandRef_(reference);
+  var drafts = readAll_('Factures').filter(function (f) {
+    return normDemandRef_(f.demand_reference) === ref && normStatus_(f.status) === 'draft';
+  });
+  if (!drafts.length) {
+    throw apiError_('VALIDATION_FAILED', 'Aucune facture en brouillon — ajoutez au moins une facture avant de clore le devis.');
+  }
+  var submittedAt = new Date().toISOString();
+  updateRowByReference_('Demandes', reference, {
+    invoicing_status: 'submitted',
+    invoicing_submitted_at: submittedAt
+  });
+  var sumPen = 0;
+  var sumEur = 0;
+  var refs = [];
+  drafts.forEach(function (f) {
+    updateRowByReference_('Factures', f.reference, { status: 'pending' });
+    sumPen += Number(f.amount_pen) || 0;
+    sumEur += Number(f.amount_eur) || 0;
+    refs.push(f.reference);
+  });
+  appendAudit_(session.email, 'demande_invoicing_closed', 'demande', d.id, {
+    reference: reference,
+    facture_count: refs.length,
+    facture_references: refs
+  });
+  notifyTreasurersAndAdminMail_(buildFacturesLotEmail_({
+    demand_reference: reference,
+    submitter: session.email,
+    facture_count: refs.length,
+    facture_references: refs,
+    amount_pen: roundPen_(sumPen),
+    amount_eur: roundPen_(sumEur),
+    currency: d.currency || 'PEN'
+  }));
+  d.invoicing_status = 'submitted';
+  d.invoicing_submitted_at = submittedAt;
+  return enrichDemandeFactureBudget_(rowToDemande_(d), readAll_('Factures'));
+}
+
+function maybeReopenDemandeInvoicing_(demandRef) {
+  var d = findByReference_('Demandes', demandRef);
+  if (!d || normInvoicingStatus_(d) !== 'submitted') return;
+  var ref = normDemandRef_(demandRef);
+  var stillPending = readAll_('Factures').some(function (f) {
+    return normDemandRef_(f.demand_reference) === ref && normStatus_(f.status) === 'pending';
+  });
+  if (!stillPending) {
+    updateRowByReference_('Demandes', demandRef, { invoicing_status: 'open', invoicing_submitted_at: '' });
+  }
+}
+
+function validateDemandeFactures_(session, demandReference) {
+  var d = findByReference_('Demandes', demandReference);
+  if (!d) throw apiError_('DEMAND_NOT_FOUND', 'Demande introuvable');
+  var ref = normDemandRef_(demandReference);
+  var pending = readAll_('Factures').filter(function (f) {
+    return normDemandRef_(f.demand_reference) === ref && normStatus_(f.status) === 'pending';
+  });
+  if (!pending.length) throw apiError_('VALIDATION_FAILED', 'Aucune facture en attente pour cette demande');
+  pending.forEach(function (f) {
+    assertNotSelf_(session, f.submitter_email, 'valider les factures de votre propre demande');
+  });
+  var validatedAt = new Date().toISOString();
+  var validatedRefs = [];
+  pending.forEach(function (f) {
+    var reimbStatus = f.payment_type === 'avance_benevole' ? 'to_pay' : 'not_applicable';
+    updateRowByReference_('Factures', f.reference, {
+      status: 'validated',
+      treasurer_email: session.email,
+      validated_at: validatedAt,
+      reimbursement_status: reimbStatus
+    });
+    f.status = 'validated';
+    f.validated_at = validatedAt;
+    f.reimbursement_status = reimbStatus;
+    appendJournalFromFacture_(f, session.email, validatedAt);
+    validatedRefs.push(f.reference);
+  });
+  appendAudit_(session.email, 'demande_factures_validated', 'demande', d.id, {
+    reference: demandReference,
+    facture_references: validatedRefs
+  });
+  if (getDemandeRemainingPen_(findByReference_('Demandes', demandReference)) > 0) {
+    updateRowByReference_('Demandes', demandReference, { invoicing_status: 'open', invoicing_submitted_at: '' });
+  }
+  sendUserMail_(d.submitter_email, buildFacturesLotValidatedEmail_({
+    demand_reference: demandReference,
+    references: validatedRefs
+  }));
+  return {
+    demand_reference: demandReference,
+    validated: validatedRefs,
+    count: validatedRefs.length,
+    validated_at: validatedAt
+  };
 }
 
 /** Compteurs pour diagnostic Validation (trésorier). */
@@ -690,6 +833,7 @@ function rejectFacture_(session, reference, reason) {
     demand_reference: f.demand_reference,
     reason: reason
   }));
+  if (f.demand_reference) maybeReopenDemandeInvoicing_(f.demand_reference);
   return findByReference_('Factures', reference);
 }
 

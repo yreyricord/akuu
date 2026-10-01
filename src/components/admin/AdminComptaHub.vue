@@ -54,11 +54,6 @@
 
     <AdminComptaFactures v-if="view === 'factures'" />
 
-    <div v-if="view === 'suivi'" class="space-y-10">
-      <AdminAvancesPanel />
-      <AdminCaissePerouPanel :refresh-key="caisseRefreshKey" @journal-updated="caisseRefreshKey += 1" />
-    </div>
-
     <AdminTresorerieMeta v-if="view === 'reglages'" @updated="metaVersion += 1" />
   </div>
 </template>
@@ -83,8 +78,6 @@ import AdminDataTable from './AdminDataTable.vue'
 import AdminComptaOverview from './AdminComptaOverview.vue'
 import AdminComptaEcritures from './AdminComptaEcritures.vue'
 import AdminComptaFactures from './AdminComptaFactures.vue'
-import AdminAvancesPanel from './AdminAvancesPanel.vue'
-import AdminCaissePerouPanel from './AdminCaissePerouPanel.vue'
 import AdminTresorerieMeta from './AdminTresorerieMeta.vue'
 import driveHealthData from '@/data/drive-health.json'
 
@@ -106,7 +99,7 @@ const views = [
   { id: 'overview', label: "Vue d'ensemble" },
   { id: 'ecritures', label: 'Écritures' },
   { id: 'factures', label: 'Factures' },
-  { id: 'suivi', label: 'Suivi terrain' },
+  // Suivi terrain (avances + caisse Pérou) — masqué tant que l’API n’est pas finalisée
   { id: 'reglages', label: 'Réglages' }
 ]
 

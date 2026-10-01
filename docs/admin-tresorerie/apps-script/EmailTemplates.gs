@@ -434,6 +434,71 @@ function buildDevisRejectedEmail_(data) {
   };
 }
 
+/** Lot de factures clôturé par le bénévole — une validation trésorier pour toute la demande. */
+function buildFacturesLotEmail_(data) {
+  data = data || {};
+  var demandRef = data.demand_reference || '';
+  var url = getAdminUrl_('tresorerie', 'validation', { ref: demandRef });
+  var count = Number(data.facture_count) || 0;
+  var refs = (data.facture_references || []).join(', ');
+  var amount = formatAmountLabel_(data.currency, data.amount_pen, data.amount_eur);
+
+  return {
+    subject: '[AKUU] ' + count + ' facture(s) à valider — ' + demandRef,
+    plain: buildPlainFromLayout_({
+      title: count + ' facture(s) à valider en une fois',
+      introPlain: 'Le bénévole a clôturé le devis. Validez l\'ensemble des justificatifs en une seule action.',
+      detailsPlain: [
+        'Demande : ' + demandRef,
+        'Par : ' + (data.submitter || ''),
+        'Factures : ' + refs,
+        'Total : ' + amount
+      ].join('\n'),
+      ctaLabel: 'Valider le lot',
+      ctaUrl: url
+    }),
+    html: buildEmailLayout_({
+      title: count + ' facture(s) à valider',
+      preheader: demandRef + ' · ' + amount,
+      introHtml: '<p style="margin:0;font-size:15px;line-height:1.6;color:' + EMAIL_BRAND_.night + ';">Le bénévole a clôturé le devis. Validez <strong>toutes les factures</strong> en une seule action.</p>',
+      detailsHtml: buildDetailRowsHtml_([
+        { label: 'Demande', value: demandRef },
+        { label: 'Par', value: data.submitter },
+        { label: 'Factures', value: refs },
+        { label: 'Total', value: amount }
+      ]),
+      ctaLabel: 'Valider le lot',
+      ctaUrl: url
+    })
+  };
+}
+
+/** Lot de factures validé (bénévole). */
+function buildFacturesLotValidatedEmail_(data) {
+  data = data || {};
+  var demandRef = data.demand_reference || '';
+  var refs = (data.references || []).join(', ');
+  var url = getAdminUrl_('tresorerie', 'historique');
+
+  return {
+    subject: 'Factures validées — ' + demandRef,
+    plain: buildPlainFromLayout_({
+      title: 'Factures comptabilisées',
+      introPlain: 'Vos factures (' + refs + ') pour la demande ' + demandRef + ' ont été validées et enregistrées au journal.',
+      ctaLabel: 'Voir mon historique',
+      ctaUrl: url
+    }),
+    html: buildEmailLayout_({
+      title: 'Factures comptabilisées',
+      preheader: demandRef + ' · ' + (data.references || []).length + ' facture(s)',
+      introHtml: '<p style="margin:0;font-size:15px;line-height:1.6;color:' + EMAIL_BRAND_.night + ';">Vos factures <strong>' +
+        escapeHtml_(refs) + '</strong> (demande ' + escapeHtml_(demandRef) + ') ont été comptabilisées au journal AKUU.</p>',
+      ctaLabel: 'Voir mon historique',
+      ctaUrl: url
+    })
+  };
+}
+
 /** Facture validée (bénévole). */
 function buildFactureValidatedEmail_(data) {
   data = data || {};

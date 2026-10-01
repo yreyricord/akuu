@@ -63,7 +63,7 @@
           @navigate="setTab"
         />
         <AdminDemandeForm v-else-if="activeTab === 'demande'" @submitted="goAfterSubmit" />
-        <AdminFactureForm v-else-if="activeTab === 'facture'" @submitted="goAfterSubmit" />
+        <AdminFactureForm v-else-if="activeTab === 'facture'" @closed="goAfterFactureClosed" />
         <AdminValidationQueue v-else-if="activeTab === 'validation'" />
         <AdminDirectExpenseForm v-else-if="activeTab === 'fonctionnement'" @submitted="goAfterDirectExpense" />
         <AdminComptaHub v-else-if="activeTab === 'compta'" />
@@ -246,6 +246,10 @@ function setTab(id) {
 }
 
 function goAfterSubmit() {
+  router.replace({ query: { module: 'tresorerie', tab: 'demande' } })
+}
+
+function goAfterFactureClosed() {
   router.replace({ query: { module: 'tresorerie', tab: 'demande' } })
 }
 

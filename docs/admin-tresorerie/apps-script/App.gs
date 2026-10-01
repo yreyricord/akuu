@@ -113,6 +113,15 @@ function route_(method, path, body, e, param) {
       var refA = extractRef_(path, '/approve');
       return jsonResponse({ ok: true, data: approveDemande_(session, refA) });
     }
+    if (path.indexOf('demandes/') === 0 && path.indexOf('/close-invoicing') > 0 && method === 'POST') {
+      var refCi = extractRef_(path, '/close-invoicing');
+      return jsonResponse({ ok: true, data: closeDemandeInvoicing_(session, refCi) });
+    }
+    if (path.indexOf('demandes/') === 0 && path.indexOf('/validate-factures') > 0 && method === 'POST') {
+      requireTreasurer_(session);
+      var refVf = extractRef_(path, '/validate-factures');
+      return jsonResponse({ ok: true, data: validateDemandeFactures_(session, refVf) });
+    }
     if (path.indexOf('demandes/') === 0 && path.indexOf('/reject') > 0 && method === 'POST') {
       requireTreasurer_(session);
       var refR = extractRef_(path, '/reject');

@@ -247,6 +247,16 @@ export const tresorerieApi = {
     return remoteRequest(`/factures/${reference}/validate`, { method: 'POST' })
   },
 
+  closeDemandeInvoicing(reference) {
+    if (isMockMode()) return mockCall(mockBackend.closeDemandeInvoicing, reference)
+    return remoteRequest(`/demandes/${reference}/close-invoicing`, { method: 'POST' })
+  },
+
+  validateDemandeFactures(reference) {
+    if (isMockMode()) return mockCall(mockBackend.validateDemandeFactures, reference)
+    return remoteRequest(`/demandes/${reference}/validate-factures`, { method: 'POST' })
+  },
+
   rejectFacture(reference, rejectReason) {
     if (isMockMode()) return mockCall(mockBackend.rejectFacture, reference, rejectReason)
     return remoteRequest(`/factures/${reference}/reject`, { method: 'POST', body: { reject_reason: rejectReason } })

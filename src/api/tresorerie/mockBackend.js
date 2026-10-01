@@ -320,6 +320,8 @@ export const mockBackend = {
       throw apiError('DEVIS_NOT_VALIDATED', 'Validez les devis avant d\'approuver la demande')
     }
     demande.status = 'approved'
+    demande.invoicing_status = 'open'
+    demande.invoicing_submitted_at = null
     demande.treasurer_email = session.email
     demande.decided_at = new Date().toISOString()
     appendAudit(store, session.email, 'demande_approved', 'demande', demande.id, { reference })
@@ -364,24 +366,35 @@ export const mockBackend = {
   async getApprovedDemandReferences() {
     const session = requireAuth('member')
     const store = loadStore()
-    const totalsFor = (demandRef) => {
+    const enrich = (d) => {
       let sumPen = 0
       let count = 0
+      let draftCount = 0
+      let pendingCount = 0
       store.factures.forEach((f) => {
-        if (f.demand_reference !== demandRef || f.status === 'rejected') return
+        if (f.demand_reference !== d.reference || f.status === 'rejected') return
         sumPen += Number(f.amount_pen) || 0
         count++
+        if (f.status === 'draft') draftCount++
+        if (f.status === 'pending') pendingCount++
       })
-      return { sumPen, count }
+      const maxPen = amountMaxWithTolerance(Number(d.amount_pen_estimated))
+      const remaining_pen = Math.max(0, Math.round((maxPen - sumPen) * 100) / 100)
+      return {
+        ...d,
+        invoiced_pen: sumPen,
+        facture_count: count,
+        draft_count: draftCount,
+        pending_facture_count: pendingCount,
+        invoicing_status: d.invoicing_status || (d.status === 'approved' ? 'open' : ''),
+        max_pen: maxPen,
+        remaining_pen
+      }
     }
     const refs = store.demandes
       .filter((d) => d.submitter_email === session.email && d.status === 'approved')
-      .map((d) => {
-        const maxPen = amountMaxWithTolerance(Number(d.amount_pen_estimated))
-        const { sumPen, count } = totalsFor(d.reference)
-        const remaining_pen = Math.max(0, Math.round((maxPen - sumPen) * 100) / 100)
-        return { ...d, invoiced_pen: sumPen, facture_count: count, max_pen: maxPen, remaining_pen }
-      })
+      .filter((d) => (d.invoicing_status || 'open') !== 'submitted')
+      .map(enrich)
       .filter((d) => d.remaining_pen > 0)
     return ok(refs)
   },
@@ -396,6 +409,9 @@ export const mockBackend = {
     }
     if (demande.submitter_email !== session.email) {
       throw apiError('FORBIDDEN', 'Cette demande ne vous appartient pas')
+    }
+    if ((demande.invoicing_status || 'open') === 'submitted') {
+      throw apiError('CONFLICT', 'Ce devis est clôturé et en attente de validation trésorier.', 409)
     }
     const maxPen = amountMaxWithTolerance(nativeEstimated(demande))
     let invoicedPen = 0
@@ -469,7 +485,7 @@ export const mockBackend = {
       receipt_number: payload.receipt_number ?? '',
       location: payload.location,
       label: payload.label,
-      status: 'pending',
+      status: 'draft',
       drive_file_id: null,
       drive_file_url: null,
       file_name: standardFileName,
@@ -487,8 +503,74 @@ export const mockBackend = {
       reference: facture.reference,
       demand_reference: payload.demand_reference
     })
+    if (!demande.invoicing_status) demande.invoicing_status = 'open'
     saveStore(store)
     return ok(facture)
+  },
+
+  async closeDemandeInvoicing(reference) {
+    const session = requireAuth('member')
+    const store = loadStore()
+    const demande = store.demandes.find((d) => d.reference === reference)
+    if (!demande) throw apiError('DEMAND_NOT_FOUND', 'Demande introuvable')
+    if (demande.status !== 'approved') throw apiError('DEMAND_NOT_APPROVED', 'Demande non approuvée')
+    if (demande.submitter_email !== session.email) throw apiError('FORBIDDEN', 'Demande non autorisée')
+    if (demande.invoicing_status === 'submitted') {
+      throw apiError('CONFLICT', 'Ce devis est déjà clôturé.', 409)
+    }
+    const drafts = store.factures.filter((f) => f.demand_reference === reference && f.status === 'draft')
+    if (!drafts.length) {
+      throw apiError('VALIDATION_FAILED', 'Aucune facture en brouillon')
+    }
+    demande.invoicing_status = 'submitted'
+    demande.invoicing_submitted_at = new Date().toISOString()
+    drafts.forEach((f) => {
+      f.status = 'pending'
+    })
+    appendAudit(store, session.email, 'demande_invoicing_closed', 'demande', demande.id, {
+      reference,
+      facture_count: drafts.length
+    })
+    saveStore(store)
+    return ok({
+      ...demande,
+      pending_facture_count: drafts.length,
+      draft_count: 0
+    })
+  },
+
+  async validateDemandeFactures(reference) {
+    const session = requireAuth('treasurer')
+    const store = loadStore()
+    const demande = store.demandes.find((d) => d.reference === reference)
+    if (!demande) throw apiError('DEMAND_NOT_FOUND', 'Demande introuvable')
+    const pending = store.factures.filter((f) => f.demand_reference === reference && f.status === 'pending')
+    if (!pending.length) throw apiError('VALIDATION_FAILED', 'Aucune facture en attente')
+    const validatedAt = new Date().toISOString()
+    const validated = []
+    pending.forEach((facture) => {
+      facture.status = 'validated'
+      facture.treasurer_email = session.email
+      facture.validated_at = validatedAt
+      facture.reimbursement_status = reimbursementStatusOnValidate(facture.payment_type)
+      store.journal.unshift({ ...facture, journal_at: validatedAt })
+      validated.push(facture.reference)
+    })
+    let invoicedPen = 0
+    store.factures.forEach((f) => {
+      if (f.demand_reference === reference && f.status !== 'rejected') invoicedPen += Number(f.amount_pen) || 0
+    })
+    const maxPen = amountMaxWithTolerance(Number(demande.amount_pen_estimated))
+    if (maxPen - invoicedPen > 0.001) {
+      demande.invoicing_status = 'open'
+      demande.invoicing_submitted_at = null
+    }
+    appendAudit(store, session.email, 'demande_factures_validated', 'demande', demande.id, {
+      reference,
+      facture_references: validated
+    })
+    saveStore(store)
+    return ok({ demand_reference: reference, validated, count: validated.length, validated_at: validatedAt })
   },
 
   async createDirectExpense(payload, fileMeta) {
@@ -585,7 +667,17 @@ export const mockBackend = {
   async getFacturesPending() {
     requireAuth('treasurer')
     const store = loadStore()
-    return ok(store.factures.filter((f) => f.status === 'pending'))
+    const demandesByRef = Object.fromEntries(store.demandes.map((d) => [d.reference, d]))
+    return ok(
+      store.factures.filter((f) => {
+        if (f.status !== 'pending') return false
+        if (!f.demand_reference) return true
+        const d = demandesByRef[f.demand_reference]
+        if (!d) return true
+        const inv = d.invoicing_status || ''
+        return !inv || inv === 'submitted'
+      })
+    )
   },
 
   async validateFacture(reference) {
@@ -612,6 +704,16 @@ export const mockBackend = {
     facture.status = 'rejected'
     facture.reject_reason = rejectReason.trim()
     facture.treasurer_email = session.email
+    if (facture.demand_reference) {
+      const demande = store.demandes.find((d) => d.reference === facture.demand_reference)
+      const stillPending = store.factures.some(
+        (f) => f.demand_reference === facture.demand_reference && f.status === 'pending'
+      )
+      if (demande?.invoicing_status === 'submitted' && !stillPending) {
+        demande.invoicing_status = 'open'
+        demande.invoicing_submitted_at = null
+      }
+    }
     appendAudit(store, session.email, 'facture_rejected', 'facture', facture.id, { reference, rejectReason })
     saveStore(store)
     return ok(facture)
