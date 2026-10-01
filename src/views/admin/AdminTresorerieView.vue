@@ -139,7 +139,7 @@ import {
 } from '@phosphor-icons/vue'
 import { useAuthStore } from '@/store/auth.js'
 import { useTresorerieStore } from '@/store/tresorerie.js'
-import { TREASORERIE_TABS } from '@/data/tresorerie-config.js'
+import { TRESORERIE_TABS, awaitingVolunteerDevisResubmit } from '@/data/tresorerie-config.js'
 import { getModule } from '@/data/admin-modules.js'
 import { userHasTabAccess } from '@/data/member-roles.js'
 import AdminDemandeForm from '@/components/admin/AdminDemandeForm.vue'
@@ -215,9 +215,10 @@ const isWideLayout = computed(
   () => activeModule.value === 'tresorerie' && (activeTab.value === 'compta' || activeTab.value === 'bilan')
 )
 
-const pendingCount = computed(
-  () => store.pendingDemandes.length + store.pendingFactures.length
-)
+const pendingCount = computed(() => {
+  const demandes = store.pendingDemandes.filter((d) => !awaitingVolunteerDevisResubmit(d)).length
+  return demandes + store.pendingFactures.length
+})
 
 const accessPendingCount = computed(() => store.pendingAccessRequests.length)
 

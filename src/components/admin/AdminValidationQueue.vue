@@ -58,12 +58,17 @@
 
     <section>
       <h3 class="text-sm font-semibold uppercase tracking-wide text-night">
-        Demandes ({{ store.pendingDemandes.length }})
+        Demandes à traiter ({{ demandesActionable.length }})
       </h3>
-      <p v-if="!store.pendingDemandes.length" class="mt-2 text-sm text-night-400">Aucune demande en attente.</p>
+      <p v-if="!demandesActionable.length && !demandesAwaitingVolunteer.length" class="mt-2 text-sm text-night-400">
+        Aucune demande en attente.
+      </p>
+      <p v-else-if="!demandesActionable.length" class="mt-2 text-sm text-night-400">
+        Aucune action trésorier — voir ci-dessous les demandes en attente de nouveaux devis.
+      </p>
       <ul class="mt-3 space-y-4">
         <li
-          v-for="d in store.pendingDemandes"
+          v-for="d in demandesActionable"
           :id="'validation-' + d.reference"
           :key="d.id"
           class="rounded-2xl border border-night-100 bg-white p-4 shadow-sm transition-shadow duration-500"
@@ -124,14 +129,6 @@
             Attention : dépense &gt; {{ DEVIS_PEN_THRESHOLD }} S/. sans photos de devis jointes
           </p>
 
-          <p
-            v-if="d.devis_status === 'rejected'"
-            class="mt-2 rounded-lg border border-ochre-200 bg-ochre-50 px-3 py-2 text-xs text-ochre-900"
-          >
-            Devis refusés — en attente de nouveaux devis du bénévole.
-            <span v-if="d.devis_reject_reason" class="mt-1 block font-medium">Votre message : {{ d.devis_reject_reason }}</span>
-          </p>
-
           <div v-if="rejectingDevis === d.reference" class="mt-3 space-y-2">
             <label class="block text-xs font-medium text-night">Message au bénévole (devis) *</label>
             <textarea
@@ -187,7 +184,7 @@
                 Refuser les photos de devis
               </button>
             </div>
-            <p v-if="needsDevisReview(d) && !canApprove(d)" class="text-xs text-ochre-700">
+            <p v-if="needsDevisReview(d) && !canApprove(d) && d.devis_status === 'pending'" class="text-xs text-ochre-700">
               Validez les photos de devis avant d'approuver la demande.
             </p>
             <div class="admin-action-row">
@@ -207,6 +204,60 @@
                 Refuser
               </button>
             </div>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <section v-if="demandesAwaitingVolunteer.length">
+      <h3 class="text-sm font-semibold uppercase tracking-wide text-night-500">
+        En attente du bénévole ({{ demandesAwaitingVolunteer.length }})
+      </h3>
+      <p class="mt-1 text-xs text-night-400">
+        Devis refusés — le bénévole doit renvoyer de nouvelles pièces dans l’onglet <strong>Demande</strong>. Aucune action trésorier tant qu’il n’a pas renvoyé.
+      </p>
+      <ul class="mt-3 space-y-4">
+        <li
+          v-for="d in demandesAwaitingVolunteer"
+          :id="'validation-' + d.reference"
+          :key="'wait-' + d.id"
+          class="rounded-2xl border border-dashed border-night-200 bg-cream-100/80 p-4"
+        >
+          <div class="flex flex-wrap items-start justify-between gap-2">
+            <div>
+              <p class="font-mono text-sm font-semibold text-forest">{{ d.reference }}</p>
+              <p class="text-sm text-night-500">{{ d.submitter_email }}</p>
+            </div>
+            <AdminDevisStatusBadge :demande="d" />
+          </div>
+          <p class="mt-2 text-sm text-night-600">{{ d.description }}</p>
+          <p
+            v-if="d.devis_reject_reason"
+            class="mt-2 rounded-lg border border-ochre-200 bg-ochre-50 px-3 py-2 text-xs text-ochre-900"
+          >
+            Votre message au bénévole : <strong>{{ d.devis_reject_reason }}</strong>
+          </p>
+          <div v-if="rejectingDemande === d.reference" class="mt-3 space-y-2">
+            <label class="block text-xs font-medium text-night">Message au bénévole (refus définitif de la demande) *</label>
+            <textarea v-model="rejectReason" rows="3" class="admin-input" placeholder="Ex. Dépense annulée — ne pas renvoyer de devis." />
+            <p v-if="rejectError && rejectingDemande === d.reference" class="text-xs text-terracotta">{{ rejectError }}</p>
+            <div class="admin-action-row">
+              <button type="button" class="rounded-full bg-terracotta px-4 py-2 text-sm font-semibold text-white" @click="confirmRejectDemande(d.reference)">
+                Confirmer refus
+              </button>
+              <button type="button" class="rounded-full border border-night-200 px-4 py-2 text-sm text-night-500" @click="cancelReject">
+                Annuler
+              </button>
+            </div>
+          </div>
+          <div v-else class="mt-3">
+            <button
+              type="button"
+              class="rounded-full border border-terracotta/50 px-4 py-2 text-sm font-semibold text-terracotta"
+              @click="startRejectDemande(d.reference)"
+            >
+              Refuser la demande entière
+            </button>
           </div>
         </li>
       </ul>
@@ -311,10 +362,11 @@ import {
   TRESORERIE_PROJECTS,
   TRESORERIE_CATEGORIES,
   DEVIS_PEN_THRESHOLD,
-  MIN_DEVIS_ATTACHMENTS,
   labelFor,
   requiresDevisAttachments,
-  canApproveDemande
+  canApproveDemande,
+  canValidateDevisPhotos,
+  awaitingVolunteerDevisResubmit
 } from '@/data/tresorerie-config.js'
 import { ADMIN_EMAIL, isSuperAdmin } from '@/data/member-roles.js'
 import { formatAmountWithConversion } from '@/data/currency.js'
@@ -372,6 +424,13 @@ function canTreasurerActOn(submitterEmail) {
   return String(auth.user?.email || '').toLowerCase() === ADMIN_EMAIL
 }
 const refreshing = ref(false)
+const demandesActionable = computed(() =>
+  store.pendingDemandes.filter((d) => !awaitingVolunteerDevisResubmit(d))
+)
+const demandesAwaitingVolunteer = computed(() =>
+  store.pendingDemandes.filter((d) => awaitingVolunteerDevisResubmit(d))
+)
+
 const emptyQueues = computed(
   () => !store.pendingDemandes.length && !store.pendingFactures.length
 )
@@ -407,9 +466,7 @@ function needsDevisReview(d) {
 }
 
 function canValidateDevis(d) {
-  if (!needsDevisReview(d)) return false
-  if (d.devis_status === 'validated') return false
-  return (d.devis_attachments?.length ?? 0) >= MIN_DEVIS_ATTACHMENTS
+  return canValidateDevisPhotos(d)
 }
 
 function canApprove(d) {

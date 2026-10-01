@@ -81,6 +81,11 @@
   to = "/akuuvision"
   status = 301
 
+[[redirects]]
+  from = "/comptes-ag"
+  to = "/association"
+  status = 301
+
 # Strip ?lang= query param — prevents duplicate indexation by search engines
 # The canonical URL (no param) is already set in <head>; this 301 reinforces it.
 [[redirects]]

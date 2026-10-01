@@ -55,9 +55,6 @@ Disallow: /_api/
 # Espace formation bénévoles : accès par lien direct uniquement, pas d'indexation
 Disallow: /formation
 
-# Comptes présentés en assemblée générale : accès par lien direct uniquement
-Disallow: /comptes-ag
-
 Sitemap: ${base}/sitemap.xml
 `
 

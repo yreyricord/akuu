@@ -188,6 +188,19 @@ export function canApproveDemande(demande) {
   return demande.devis_status === 'validated'
 }
 
+/** Trésorier peut valider ou refuser les pièces de devis (pas si déjà validées ou refusées). */
+export function canValidateDevisPhotos(demande) {
+  if (!demande || !requiresDevisPhotoAttachments(demande.amount_pen_estimated)) return false
+  const st = demande.devis_status || initialDevisStatus(demande.amount_pen_estimated)
+  if (st === 'validated' || st === 'rejected') return false
+  return (demande.devis_attachments?.length ?? 0) >= MIN_DEVIS_ATTACHMENTS
+}
+
+/** Devis refusés : le bénévole doit renvoyer de nouvelles pièces (onglet Demande). */
+export function awaitingVolunteerDevisResubmit(demande) {
+  return demande?.status === 'awaiting_approval' && demande?.devis_status === 'rejected'
+}
+
 /** Niveau de validation selon le montant (procédure § IV) */
 export function getValidationLevel(amountPen) {
   const n = Number(amountPen)
