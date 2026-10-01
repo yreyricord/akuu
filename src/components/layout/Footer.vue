@@ -222,6 +222,7 @@ const navLinks = [
   { to: '/partenaires',      key: 'nav.partenaires' },
   { to: '/soutenir',         key: 'nav.soutenir' },
   { to: '/contact',          key: 'nav.contact' },
+  { to: '/admin/login',      key: 'footer.member_space' },
 ]
 
 const socials = [

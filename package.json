@@ -20,11 +20,15 @@
     "i18n:check": "node scripts/check-i18n-parity.mjs",
     "i18n:check-narratives": "node scripts/check-narrative-structure.mjs",
     "i18n:audit": "node scripts/check-i18n-values.mjs",
-    "test": "node --test scripts/__tests__/build-scripts.test.mjs"
+    "test": "node --test scripts/__tests__/build-scripts.test.mjs scripts/__tests__/drive-health.test.mjs",
+    "test:drive": "cd ../RELEVES/outils && python3 verifier_drive.py --json drive_health.json --site-json ../../akuu/src/data/drive-health.json && python3 -m unittest test_verifier_drive.py -v"
   },
   "dependencies": {
     "@phosphor-icons/vue": "^2.2.1",
     "@vueuse/core": "^10.9.0",
+    "heic2any": "^0.0.4",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^4.10.38",
     "pinia": "^2.1.0",
     "three": "0.152.2",
     "vue": "^3.5.32",

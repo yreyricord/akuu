@@ -1,5 +1,14 @@
 <template>
   <div class="space-y-6">
+    <AdminLoadingPanel
+      v-if="loading"
+      title="Lecture des journaux Google"
+      detail="Calcul des totaux et graphiques depuis les Google Sheets…"
+      :progress="loadProg.progress"
+      :step-label="loadProg.stepLabel"
+    />
+
+    <template v-else>
     <!-- Période -->
     <section class="space-y-4 rounded-2xl border border-night-100 bg-white p-5 shadow-sm">
       <div class="flex flex-wrap items-center gap-2">
@@ -91,16 +100,22 @@
             />
             <div class="absolute inset-0 flex items-end gap-2 px-1 sm:gap-3">
               <div v-for="b in bars" :key="b.key" class="flex h-full flex-1 items-end justify-center gap-1">
-                <div
-                  class="w-1/3 max-w-[36px] rounded-t-md bg-forest"
-                  :style="{ height: b.pH }"
-                  :title="`${b.label} · recettes ${eur(b.produits)}`"
-                />
-                <div
-                  class="w-1/3 max-w-[36px] rounded-t-md bg-bleu"
-                  :style="{ height: b.cH }"
-                  :title="`${b.label} · dépenses ${eur(b.charges)}`"
-                />
+                <div class="group relative flex h-full w-1/3 max-w-[36px] flex-col items-center justify-end">
+                  <span class="pointer-events-none mb-0.5 hidden text-[10px] font-semibold tabular-nums text-forest-700 group-hover:block sm:text-[11px]">{{ eur(b.produits) }}</span>
+                  <div
+                    class="w-full rounded-t-md bg-forest transition-opacity group-hover:opacity-90"
+                    :style="{ height: b.pH }"
+                    :title="`${b.label} · recettes ${eur(b.produits)}`"
+                  />
+                </div>
+                <div class="group relative flex h-full w-1/3 max-w-[36px] flex-col items-center justify-end">
+                  <span class="pointer-events-none mb-0.5 hidden text-[10px] font-semibold tabular-nums text-bleu group-hover:block sm:text-[11px]">{{ eur(b.charges) }}</span>
+                  <div
+                    class="w-full rounded-t-md bg-bleu transition-opacity group-hover:opacity-90"
+                    :style="{ height: b.cH }"
+                    :title="`${b.label} · dépenses ${eur(b.charges)}`"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -159,10 +174,12 @@
     </section>
 
     <!-- Loyers maison communautaire -->
-    <section v-if="loyers.rows.length" class="rounded-2xl border border-night-100 bg-white p-5 shadow-sm">
+    <section v-if="loyers.hasData" class="rounded-2xl border border-night-100 bg-white p-5 shadow-sm">
       <div class="flex flex-wrap items-baseline justify-between gap-3">
         <div>
-          <h3 class="text-base font-semibold text-forest-700">Maison communautaire : loyers et dépenses</h3>
+          <h3 class="text-base font-semibold text-forest-700">
+            {{ mode === 'total' ? 'Maison communautaire : cumul loyers et dépenses' : 'Maison communautaire : loyers et dépenses par année' }}
+          </h3>
           <p class="mt-1 text-xs text-night-500">
             Les loyers des résidents financent l'entretien de la maison · période :
             <strong class="text-night">{{ eur(loyers.totalLoyers) }}</strong> de loyers pour
@@ -174,17 +191,60 @@
           <span class="inline-flex items-center gap-1.5"><span class="h-3 w-3 rounded-sm bg-bleu" />Dépenses maison</span>
         </div>
       </div>
-      <div class="mt-6 flex h-40 items-end gap-3 border-b border-night-100">
-        <div v-for="r in loyers.rows" :key="r.year" class="flex h-full flex-1 items-end justify-center gap-1">
-          <div class="w-1/3 max-w-[36px] rounded-t-md bg-forest" :style="{ height: r.lH }" :title="`${r.year} · loyers ${eur(r.loyers)}`" />
-          <div class="w-1/3 max-w-[36px] rounded-t-md bg-bleu" :style="{ height: r.dH }" :title="`${r.year} · dépenses maison ${eur(r.depenses)}`" />
+      <div class="-mx-5 overflow-x-auto px-5">
+      <div :class="loyers.rows.length > 4 ? 'min-w-[600px]' : ''">
+      <div class="mt-4 flex gap-2 sm:gap-3">
+        <div class="w-11 shrink-0 sm:w-12">
+          <p class="mb-1 text-right text-[10px] font-semibold uppercase tracking-wide text-night-400">
+            {{ loyers.scale.unit }}
+          </p>
+          <div class="flex h-40 flex-col justify-between text-right text-[10px] tabular-nums text-night-500 sm:text-[11px]">
+            <span v-for="t in loyers.scale.ticks" :key="t.value">{{ t.label }}</span>
+          </div>
+        </div>
+        <div class="min-w-0 flex-1">
+          <div class="relative h-40 border-b border-l border-night-200">
+            <div
+              v-for="t in loyers.scale.ticks.slice(1, -1)"
+              :key="`loy-grid-${t.value}`"
+              class="pointer-events-none absolute left-0 right-0 border-t border-dashed border-night-100"
+              :style="{ bottom: barPct(t.value, loyers.scale.top) }"
+            />
+            <div class="absolute inset-0 flex items-end gap-2 px-1 sm:gap-3">
+              <div v-for="r in loyers.rows" :key="r.key" class="flex h-full flex-1 items-end justify-center gap-1">
+                <div class="group relative flex h-full w-1/3 max-w-[36px] flex-col items-center justify-end">
+                  <span class="pointer-events-none mb-0.5 hidden text-[10px] font-semibold tabular-nums text-forest-700 group-hover:block sm:text-[11px]">{{ eur(r.loyers) }}</span>
+                  <div
+                    class="w-full rounded-t-md bg-forest transition-opacity group-hover:opacity-90"
+                    :style="{ height: r.lH }"
+                    :title="`${r.label} · loyers ${eur(r.loyers)}`"
+                  />
+                </div>
+                <div class="group relative flex h-full w-1/3 max-w-[36px] flex-col items-center justify-end">
+                  <span class="pointer-events-none mb-0.5 hidden text-[10px] font-semibold tabular-nums text-bleu group-hover:block sm:text-[11px]">{{ eur(r.depenses) }}</span>
+                  <div
+                    class="w-full rounded-t-md bg-bleu transition-opacity group-hover:opacity-90"
+                    :style="{ height: r.dH }"
+                    :title="`${r.label} · dépenses maison ${eur(r.depenses)}`"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-2 flex gap-2 sm:gap-3">
+            <div v-for="r in loyers.rows" :key="`ly-${r.key}`" class="flex-1 text-center">
+              <p class="text-xs font-semibold sm:text-sm">{{ r.label }}</p>
+              <p class="text-[11px] tabular-nums sm:text-xs" :class="r.loyers - r.depenses >= 0 ? 'text-forest-700' : 'text-terracotta-700'">
+                {{ short(r.loyers - r.depenses, true) }}
+              </p>
+            </div>
+          </div>
+          <p class="mt-2 text-center text-[10px] font-semibold uppercase tracking-wide text-night-400">
+            {{ mode === 'total' ? 'Période' : 'Année' }}
+          </p>
         </div>
       </div>
-      <div class="mt-2 flex gap-3">
-        <div v-for="r in loyers.rows" :key="`ly-${r.year}`" class="flex-1 text-center">
-          <p class="text-xs font-semibold sm:text-sm">{{ r.year }}</p>
-          <p class="text-[11px] tabular-nums text-forest-700 sm:text-xs">{{ r.loyers ? eur(r.loyers) : '—' }}</p>
-        </div>
+      </div>
       </div>
     </section>
 
@@ -231,55 +291,97 @@
       <p class="mt-1 text-xs text-night-500">Solde du compte en fin d'année, égal au relevé bancaire (année provisoire : dernier relevé)</p>
       <div class="-mx-5 overflow-x-auto px-5">
       <div :class="tresoBars.length > 4 ? 'min-w-[600px]' : ''">
-      <div class="mt-6 flex h-40 items-end gap-2 border-b border-night-100 sm:gap-3">
-        <div v-for="t in tresoBars" :key="t.year" class="flex h-full flex-1 flex-col items-center justify-end gap-1">
-          <span class="text-[11px] font-semibold tabular-nums sm:text-xs">{{ short(t.value) }}</span>
-          <div class="w-3/5 max-w-[48px] rounded-t-md bg-leaf-700" :style="{ height: t.h }" :title="`${t.year} : ${eur(t.value)}`" />
+      <div class="mt-4 flex gap-2 sm:gap-3">
+        <div class="w-11 shrink-0 sm:w-12">
+          <p class="mb-1 text-right text-[10px] font-semibold uppercase tracking-wide text-night-400">
+            {{ tresoScale.unit }}
+          </p>
+          <div class="flex h-40 flex-col justify-between text-right text-[10px] tabular-nums text-night-500 sm:text-[11px]">
+            <span v-for="t in tresoScale.ticks" :key="t.value">{{ t.label }}</span>
+          </div>
         </div>
-      </div>
-      <div class="mt-2 flex gap-2 sm:gap-3">
-        <p v-for="t in tresoBars" :key="`tl-${t.year}`" class="flex-1 text-center text-xs font-semibold sm:text-sm">{{ t.year }}</p>
+        <div class="min-w-0 flex-1">
+          <div class="relative h-40 border-b border-l border-night-200">
+            <div
+              v-for="t in tresoScale.ticks.slice(1, -1)"
+              :key="`treso-grid-${t.value}`"
+              class="pointer-events-none absolute left-0 right-0 border-t border-dashed border-night-100"
+              :style="{ bottom: barPct(t.value, tresoScale.top) }"
+            />
+            <div class="absolute inset-0 flex items-end gap-2 px-1 sm:gap-3">
+              <div v-for="t in tresoBars" :key="t.key" class="group relative flex h-full flex-1 flex-col items-center justify-end">
+                <span class="pointer-events-none mb-0.5 hidden text-[10px] font-semibold tabular-nums text-leaf-700 group-hover:block sm:text-[11px]">{{ eur(t.value) }}</span>
+                <span class="mb-0.5 text-[10px] font-semibold tabular-nums text-night-500 group-hover:hidden sm:text-[11px]">{{ short(t.value) }}</span>
+                <div
+                  class="w-3/5 max-w-[48px] rounded-t-md bg-leaf-700 transition-opacity group-hover:opacity-90"
+                  :style="{ height: t.h }"
+                  :title="`${t.label} : ${eur(t.value)}`"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="mt-2 flex gap-2 sm:gap-3">
+            <p v-for="t in tresoBars" :key="`tl-${t.key}`" class="flex-1 text-center text-xs font-semibold sm:text-sm">{{ t.label }}</p>
+          </div>
+          <p class="mt-2 text-center text-[10px] font-semibold uppercase tracking-wide text-night-400">Année</p>
+        </div>
       </div>
       </div>
       </div>
     </section>
 
-    <p class="text-xs text-night-400">
-      Source : journaux 2017–{{ allYears.at(-1)?.year }} (banque), mêmes montants que les comptes de clôture ·
-      mis à jour {{ generatedAt }}
-      <span v-if="liveInfo"> · {{ liveInfo.year }} en direct depuis le journal Google</span>
+    <p
+      v-if="offlineFallback"
+      class="rounded-xl border border-ochre-200 bg-ochre-50 px-4 py-3 text-sm text-ochre-800"
+    >
+      Connexion au journal Google indisponible — chiffres du dernier export ({{ generatedAt }}).
     </p>
+
+    <p class="text-xs text-night-400">
+      <template v-if="liveSource">
+        Chiffres en direct depuis les Google Sheets · mis à jour {{ generatedAt }}
+      </template>
+      <template v-else>
+        Journal Google indisponible — reconnectez-vous ou vérifiez le déploiement Web App.
+      </template>
+    </p>
+    </template>
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-import historique from '@/data/compta-historique.json'
 import { tresorerieApi } from '@/api/tresorerie/client.js'
+import { mapExerciceToComptaYear } from '@/api/tresorerie/exercicesMap.js'
+import { bindLoadingProgress } from '@/composables/useLoadingProgress.js'
+import AdminLoadingPanel from './AdminLoadingPanel.vue'
 
-const yearsData = ref(historique?.years ?? [])
-const liveInfo = ref(null)
+const yearsData = ref([])
+const offlineFallback = ref(false)
+const liveSource = ref(false)
+const generatedAtIso = ref(null)
+const loading = ref(true)
+const loadProg = bindLoadingProgress(loading, {
+  estimateMs: 22_000,
+  label: 'Exercices et totaux…'
+})
 
-// Année en cours : chiffres en direct depuis le journal Google
 onMounted(async () => {
-  const current = new Date().getFullYear()
   try {
-    const live = await tresorerieApi.getComptaAnnee(current)
-    if (!live?.live) return
-    const list = [...yearsData.value]
-    const idx = list.findIndex((y) => y.year === current)
-    const prev = list.find((y) => y.year === current - 1)
-    const debut = prev?.tresorerie?.fin_eur ?? 0
-    const entry = {
-      ...(idx >= 0 ? list[idx] : {}),
-      ...live,
-      tresorerie: { debut_eur: debut, fin_eur: Math.round((debut + live.resultat_eur) * 100) / 100, calcule: true }
+    const res = await tresorerieApi.getExercices()
+    if (res?.years?.length) {
+      yearsData.value = res.years.map(mapExerciceToComptaYear)
+      generatedAtIso.value = res.generated_at
+      liveSource.value = res.source === 'google_sheets'
+      offlineFallback.value = false
+    } else {
+      offlineFallback.value = true
     }
-    if (idx >= 0) list[idx] = entry
-    else list.push(entry)
-    yearsData.value = list
-    liveInfo.value = live
-  } catch { /* hors ligne : derniers chiffres exportés */ }
+  } catch {
+    offlineFallback.value = true
+  } finally {
+    loading.value = false
+  }
 })
 const allYears = computed(() => yearsData.value)
 const selected = ref([])
@@ -343,14 +445,8 @@ function axisLabel(v, useK) {
   return `${Math.round(v).toLocaleString('fr-FR')} €`
 }
 
-const chartScale = computed(() => {
-  let maxVal = 1
-  if (mode.value === 'total') {
-    maxVal = Math.max(totals.value.produits, totals.value.charges, 1)
-  } else {
-    maxVal = Math.max(...selYears.value.map((y) => Math.max(y.produits_eur, y.charges_eur)), 1)
-  }
-  const top = niceAxisMax(maxVal * 1.08)
+function buildChartScale(maxVal) {
+  const top = niceAxisMax(Math.max(maxVal, 1) * 1.08)
   const useK = top >= 2000
   const steps = 4
   const ticks = []
@@ -359,6 +455,16 @@ const chartScale = computed(() => {
     ticks.push({ value, label: axisLabel(value, useK) })
   }
   return { top, ticks, unit: useK ? 'k €' : '€' }
+}
+
+const chartScale = computed(() => {
+  let maxVal = 1
+  if (mode.value === 'total') {
+    maxVal = Math.max(totals.value.produits, totals.value.charges, 1)
+  } else {
+    maxVal = Math.max(...selYears.value.map((y) => Math.max(y.produits_eur, y.charges_eur)), 1)
+  }
+  return buildChartScale(maxVal)
 })
 
 const bars = computed(() => {
@@ -395,15 +501,46 @@ function rank(getMap) {
 const sources = computed(() => rank((y) => y.recettes_groupes))
 
 const MAISON = 'Maison communautaire'
+const LOYERS_RECETTES = 'Loyers maison communautaire'
+
+function loyersMaison(y) {
+  return y.loyers_maison_eur || y.recettes_groupes?.[LOYERS_RECETTES] || 0
+}
+
 const loyers = computed(() => {
-  const rows = selYears.value
-    .map((y) => ({ year: y.year, loyers: y.loyers_maison_eur || 0, depenses: y.charges_projets?.[MAISON] || 0 }))
+  const perYear = selYears.value
+    .map((y) => ({
+      year: y.year,
+      loyers: loyersMaison(y),
+      depenses: y.charges_projets?.[MAISON] || 0
+    }))
     .filter((r) => r.loyers > 0 || r.depenses > 0)
-  const max = Math.max(...rows.map((r) => Math.max(r.loyers, r.depenses)), 1)
+
+  const totalLoyers = perYear.reduce((a, r) => a + r.loyers, 0)
+  const totalDepenses = perYear.reduce((a, r) => a + r.depenses, 0)
+
+  let barRows
+  if (mode.value === 'total') {
+    const ys = selYears.value
+    const label = ys.length > 1 ? `${ys[0].year}–${ys.at(-1).year}` : String(ys[0]?.year ?? '')
+    barRows = [{ key: 'total', label, loyers: totalLoyers, depenses: totalDepenses }]
+  } else {
+    barRows = perYear.map((r) => ({ key: String(r.year), label: String(r.year), loyers: r.loyers, depenses: r.depenses }))
+  }
+
+  const maxVal = Math.max(...barRows.map((r) => Math.max(r.loyers, r.depenses)), 1)
+  const scale = buildChartScale(maxVal)
+
   return {
-    rows: rows.map((r) => ({ ...r, lH: pct(r.loyers, max), dH: pct(r.depenses, max) })),
-    totalLoyers: rows.reduce((a, r) => a + r.loyers, 0),
-    totalDepenses: rows.reduce((a, r) => a + r.depenses, 0)
+    hasData: barRows.length > 0,
+    rows: barRows.map((r) => ({
+      ...r,
+      lH: barPct(r.loyers, scale.top),
+      dH: barPct(r.depenses, scale.top)
+    })),
+    totalLoyers,
+    totalDepenses,
+    scale
   }
 })
 const projects = computed(() => rank((y) => y.charges_projets))
@@ -427,21 +564,28 @@ const heatRows = computed(() => {
   })
 })
 
+const tresoScale = computed(() => {
+  const maxVal = Math.max(...selYears.value.map((y) => y.tresorerie?.fin_eur || 0), 1)
+  return buildChartScale(maxVal)
+})
+
 const tresoBars = computed(() => {
-  const max = Math.max(...selYears.value.map((y) => y.tresorerie?.fin_eur || 0), 1)
+  const max = tresoScale.value.top
   return selYears.value.map((y) => ({
-    year: y.provisoire ? `${y.year}*` : y.year,
+    key: String(y.year),
+    label: y.provisoire ? `${y.year}*` : String(y.year),
     value: y.tresorerie?.fin_eur || 0,
-    h: `${Math.max(3, ((y.tresorerie?.fin_eur || 0) / max) * 78)}%`
+    h: barPct(y.tresorerie?.fin_eur || 0, max)
   }))
 })
 
-const generatedAt = historique?.generated_at
-  ? new Date(historique.generated_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
-  : '—'
+const generatedAt = computed(() =>
+  generatedAtIso.value
+    ? new Date(generatedAtIso.value).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+    : '—'
+)
 
 function barPct(v, max) { return `${Math.max(v > 0 ? 2 : 0, Math.round((v / max) * 100))}%` }
-function pct(v, max) { return barPct(v, max) }
 function eur(v) { return v == null ? '—' : `${Math.round(v).toLocaleString('fr-FR')} €` }
 function signed(v) { return `${v >= 0 ? '+' : '−'}${eur(Math.abs(v))}` }
 function short(v, withSign = false) {

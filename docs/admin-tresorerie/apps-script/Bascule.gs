@@ -143,6 +143,7 @@ function basculeAnnee_(session, body) {
   });
 
   SpreadsheetApp.flush();
+  protectYearJournal_(year);
   var totals = getComptaAnnee_(session, year);
   var lignes = tabRows_(ss.getSheetByName('Journal')).rows.length;
   appendAudit_(session.email, 'bascule_annee', 'journal', String(year),

@@ -1,7 +1,9 @@
 <template>
   <div class="min-h-screen min-h-dvh flex flex-col">
-    <NavBar :solid="route.meta.solidNav === true" />
-    <ScrollProgressBar />
+    <template v-if="!isAdminLayout">
+      <NavBar :solid="route.meta.solidNav === true" />
+      <ScrollProgressBar />
+    </template>
     <main class="flex-1">
       <router-view v-slot="{ Component }">
         <Transition name="page" mode="out-in">
@@ -9,7 +11,7 @@
         </Transition>
       </router-view>
     </main>
-    <Footer class="shrink-0" />
+    <Footer v-if="!isAdminLayout" class="shrink-0" />
 
     <!-- Bouton retour en haut -->
     <Transition
@@ -51,6 +53,8 @@ import { PhCaretUp } from '@phosphor-icons/vue'
 
 const route = useRoute()
 const { locale, t, te } = useI18n()
+
+const isAdminLayout = computed(() => route.meta.adminLayout === true)
 
 const htmlLang = computed(
   () => HTML_LANG[locale.value] ?? HTML_LANG[DEFAULT_LOCALE] ?? DEFAULT_LOCALE

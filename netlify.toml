@@ -101,3 +101,20 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# --- Sécurité (01/10/2026) : en-têtes sans risque de casse pour le site public ---
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(self)"
+
+# Espace trésorerie : pas d'intégration dans un autre site, pas d'indexation, pas de cache partagé
+[[headers]]
+  for = "/admin*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-store"
+    Content-Security-Policy-Report-Only = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://api.frankfurter.app; worker-src 'self' blob:; frame-ancestors 'none'"

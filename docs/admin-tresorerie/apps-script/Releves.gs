@@ -1,0 +1,233 @@
+/**
+ * Import mensuel du relevé bancaire (PDF lu dans le navigateur, opérations validées par le trésorier).
+ * - Ajoute les opérations à l'onglet Journal du journal Google de l'année (références AKUU-IMP-AAAA-NNNN)
+ * - Ignore les opérations déjà présentes (même date, même montant, même début de libellé)
+ * - Range le PDF dans 3_Trésorerie/<année>/Documents/Releves_bancaires/AAAA_MM_RELEVE_PRO_AKUU.pdf
+ * - Note le solde du relevé dans l'onglet « Releves » du journal (rapprochement bancaire)
+ */
+
+var RELEVES_HEADERS = ['mois', 'date_fin', 'solde_debut', 'solde_fin', 'operations_ajoutees', 'operations_ignorees',
+  'fichier', 'url', 'importe_le', 'importe_par'];
+
+function releveKey_(date, amount, label) {
+  return String(date).substring(0, 10) + '|' + Math.round(Math.abs(Number(amount)) * 100) + '|' +
+    normTxt_(label).replace(/[^a-z0-9]/g, '').substring(0, 18);
+}
+
+function importReleve_(session, body) {
+  requireTreasurer_(session);
+  var ops = body.operations || [];
+  var dateFin = String(body.date_fin || '');            // JJ/MM/AAAA
+  var m = dateFin.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (!m) throw apiError_('VALIDATION_FAILED', 'Date de fin du relevé illisible. Indiquez-la au format JJ/MM/AAAA.');
+  var year = Number(m[3]), month = m[2];
+  if (body.solde_fin === '' || body.solde_fin === null || body.solde_fin === undefined || isNaN(Number(body.solde_fin))) {
+    throw apiError_('VALIDATION_FAILED', 'Solde de fin du relevé manquant. Recopiez-le depuis le PDF.');
+  }
+  var ss = openYearJournal_(year);
+  if (!ss) {
+    throw apiError_('FORBIDDEN', 'L\'exercice ' + year + ' est archivé : déposez seulement le PDF (bloc « Relevés manquants » de l\'année ' + year + ').', 403);
+  }
+  assertExerciceModifiable_(year);
+
+  var sh = ss.getSheetByName('Journal');
+  var tr = tabRows_(sh);
+  var existing = {};
+  var maxN = 0;
+  tr.rows.forEach(function (r) {
+    existing[releveKey_(isoDate_(r.expense_date), r.amount_eur, r.label)] = (existing[releveKey_(isoDate_(r.expense_date), r.amount_eur, r.label)] || 0) + 1;
+    var mm = String(r.reference).match(/AKUU-IMP-\d{4}-(\d{4})/);
+    if (mm) maxN = Math.max(maxN, Number(mm[1]));
+  });
+
+  // PDF
+  var fileName = year + '_' + month + '_RELEVE_PRO_AKUU.pdf';
+  var url = '';
+  var receipt = body._attachments && body._attachments.receipt;
+  var blob = blobFromAttachment_(receipt, fileName, ['pdf']);
+  if (blob) {
+    var folder = getYearDocumentsSubfolder_(year, 'Releves_bancaires');
+    var old = folder.getFilesByName(fileName);
+    while (old.hasNext()) old.next().setTrashed(true);
+    url = folder.createFile(blob.setName(fileName)).getUrl();
+  }
+
+  var headers = tr.headers;
+  var added = 0, skipped = 0;
+  var seen = {};
+  ops.forEach(function (o, i) {
+    var key = releveKey_(o.date, o.amount, o.label);
+    seen[key] = (seen[key] || 0) + 1;
+    if ((existing[key] || 0) >= seen[key]) { skipped++; return; }
+    maxN += 1;
+    var obj = {
+      reference: 'AKUU-IMP-' + year + '-' + pad4_(maxN),
+      expense_date: o.date,
+      label: o.label,
+      vendor_name: '',
+      project: o.project || '',
+      category: o.category || '',
+      amount_eur: Math.abs(Number(o.amount)),
+      amount_pen: '',
+      currency: 'EUR',
+      entry_source: 'releve',
+      entry_type: Number(o.amount) > 0 ? 'recette' : 'depense',
+      piece_filename: '',
+      drive_file_url: '',
+      source_file: fileName,
+      source_line: i + 1,
+      needs_review: o.project ? '' : 'oui',
+      notes: 'Importé du relevé ' + month + '/' + year + ' depuis le site (' + session.email + ')'
+    };
+    sh.appendRow(headers.map(function (h) { var v = obj[h]; return v === undefined || v === null ? '' : v; }));
+    added++;
+  });
+
+  var rel = ss.getSheetByName('Releves') || ss.insertSheet('Releves');
+  if (rel.getLastRow() === 0) rel.appendRow(RELEVES_HEADERS);
+  var line = [year + '-' + month, year + '-' + month + '-' + m[1], body.solde_debut === undefined ? '' : body.solde_debut,
+    Number(body.solde_fin), added, skipped, fileName, url, new Date().toISOString(), session.email];
+  // Re-dépôt du même mois : on remplace la ligne (pas de doublon)
+  var relData = rel.getDataRange().getValues();
+  var replaced = false;
+  for (var k = 1; k < relData.length; k++) {
+    if (String(relData[k][0]) === year + '-' + month) {
+      if (!url) line[7] = relData[k][7];
+      rel.getRange(k + 1, 1, 1, line.length).setValues([line]);
+      replaced = true;
+      break;
+    }
+  }
+  if (!replaced) rel.appendRow(line);
+  appendAudit_(session.email, 'releve_imported', 'releve', year + '-' + month, { added: added, skipped: skipped });
+  return { year: year, month: month, added: added, skipped: skipped, file_name: fileName, url: url || line[7], manual: !ops.length };
+}
+
+/** Relevés importés de l'année (du plus récent au plus ancien). */
+function relevesOf_(ss) {
+  var rel = ss.getSheetByName('Releves');
+  if (!rel || rel.getLastRow() < 2) return [];
+  return tabRowsAny_(rel).map(function (r) {
+    return { mois: String(r.mois).substring(0, 7), date_fin: isoDate_(r.date_fin), solde_debut: num_(r.solde_debut),
+      solde_fin: num_(r.solde_fin), url: String(r.url || ''), operations_ajoutees: num_(r.operations_ajoutees) };
+  }).sort(function (a, b) { return b.date_fin.localeCompare(a.date_fin); });
+}
+
+/** Dernier relevé importé (pour le rapprochement affiché sur le site). */
+function lastReleve_(ss) {
+  return relevesOf_(ss)[0] || null;
+}
+
+// --------------------------------------------------------------------------- archives (2017 → année précédente)
+
+var RELEVES_ARCHIVES_HEADERS = ['id', 'year', 'month', 'file_name', 'drive_file_id', 'url', 'uploaded_at', 'uploaded_by', 'status'];
+
+function relevesArchivesSheet_() {
+  var sheet = getSheet_('RelevesArchives');
+  if (sheet) return sheet;
+  sheet = getSpreadsheet_().insertSheet('RelevesArchives');
+  sheet.appendRow(RELEVES_ARCHIVES_HEADERS);
+  return sheet;
+}
+
+/** Dépôt d'un relevé PDF manquant pour une année archivée : rangé sur le Drive, journal Excel inchangé. */
+function uploadReleveArchive_(session, body) {
+  requireTreasurer_(session);
+  var year = Number(body.year), month = Number(body.month);
+  var current = new Date().getFullYear();
+  if (!year || year < 2017 || year > current) throw apiError_('VALIDATION_FAILED', 'Année invalide');
+  if (!month || month < 1 || month > 12) throw apiError_('VALIDATION_FAILED', 'Mois invalide');
+  if (!body.base64) throw apiError_('VALIDATION_FAILED', 'Fichier PDF manquant. Choisissez le relevé puis réessayez.');
+  var mm = (month < 10 ? '0' : '') + month;
+  var fileName = year + '_' + mm + '_RELEVE_PRO_AKUU.pdf';
+  var blob = checkedBlob_({ base64: body.base64, name: fileName }, fileName, ['pdf']);
+  var folder = getYearDocumentsSubfolder_(year, 'Releves_bancaires');
+  var old = folder.getFilesByName(fileName);
+  while (old.hasNext()) old.next().setTrashed(true);
+  var file = folder.createFile(blob);
+
+  var sheet = relevesArchivesSheet_();
+  var data = sheet.getDataRange().getValues();
+  for (var i = data.length - 1; i >= 1; i--) {
+    if (Number(data[i][1]) === year && Number(data[i][2]) === month) sheet.deleteRow(i + 1);
+  }
+  var row = { id: uuid_(), year: year, month: month, file_name: fileName, drive_file_id: file.getId(), url: file.getUrl(),
+    uploaded_at: new Date().toISOString(), uploaded_by: session.email, status: 'pending' };
+  appendRow_('RelevesArchives', row, RELEVES_ARCHIVES_HEADERS);
+  appendAudit_(session.email, 'releve_archive_uploaded', 'releve', year + '-' + mm, { file: fileName });
+  return {
+    filename: fileName, url: file.getUrl(), year: year, month: month,
+    hint: 'Rangé dans 3_Trésorerie/' + year + '/Documents/Releves_bancaires. Le bilan ' + year +
+      ' en tiendra compte à la prochaine mise à jour des archives.'
+  };
+}
+
+function listRelevesArchives_(session) {
+  requireTreasurer_(session);
+  relevesArchivesSheet_();
+  return readAll_('RelevesArchives');
+}
+
+/** Pour le script local (mise à jour des archives) : contenu du PDF en base64. */
+function releveArchiveFile_(session, id) {
+  requireTreasurer_(session);
+  var r = readAll_('RelevesArchives').filter(function (x) { return x.id === id; })[0];
+  if (!r) throw apiError_('NOT_FOUND', 'Relevé inconnu', 404);
+  var blob = DriveApp.getFileById(r.drive_file_id).getBlob();
+  return { file_name: r.file_name, year: r.year, base64: Utilities.base64Encode(blob.getBytes()) };
+}
+
+function markReleveArchiveSynced_(session, id) {
+  requireTreasurer_(session);
+  var sheet = relevesArchivesSheet_();
+  var data = sheet.getDataRange().getValues();
+  var st = data[0].indexOf('status');
+  for (var i = 1; i < data.length; i++) {
+    if (data[i][0] === id) { sheet.getRange(i + 1, st + 1).setValue('synced'); return { id: id, status: 'synced' }; }
+  }
+  throw apiError_('NOT_FOUND', 'Relevé inconnu', 404);
+}
+
+function tabRowsAny_(sheet) {
+  var data = sheet.getDataRange().getValues();
+  var h = data[0], out = [];
+  for (var i = 1; i < data.length; i++) {
+    var o = {};
+    for (var j = 0; j < h.length; j++) o[h[j]] = data[i][j];
+    out.push(o);
+  }
+  return out;
+}
+
+/**
+ * À exécuter UNE FOIS (01/10/2026) : inscrit dans l'onglet « Releves » du journal 2026 les relevés de janvier à août,
+ * déjà intégrés au journal avant la mise en place du dépôt par le site (soldes lus sur les PDF).
+ */
+function initRelevesDejaImportes2026() {
+  var ss = openYearJournal_(2026);
+  if (!ss) throw new Error('Journal 2026 absent : exécutez d\'abord initJournalAnneeEnCours');
+  var rel = ss.getSheetByName('Releves') || ss.insertSheet('Releves');
+  if (rel.getLastRow() === 0) rel.appendRow(RELEVES_HEADERS);
+  var deja = {};
+  tabRowsAny_(rel).forEach(function (r) { deja[String(r.mois).substring(0, 7)] = true; });
+  var base = 'https://drive.google.com/file/d/';
+  var data = [
+    ['2026-01', '2026-01-31', 1313.86, 971.65, '1CqFp-59JXwEPgu2LPRvO0gVf1AoZ5XHE'],
+    ['2026-02', '2026-02-28', 971.65, 1514.04, '1t1F6n6-0UhA0AVpzR5QClh7VdUPn4X5b'],
+    ['2026-03', '2026-03-31', 1514.04, 1119.94, '1UJF26VkzT0FXzA4DWuWIU9HoRKo60D4d'],
+    ['2026-04', '2026-04-30', 1119.94, 1766.16, '1FarwqCXnOxi7fn09yqRGQUGcG3A0bcPV'],
+    ['2026-05', '2026-05-30', 1766.16, 1181.48, '1qlx862eucZGRI2UM5TzJMnHiKslpZqU-'],
+    ['2026-06', '2026-06-30', 1181.48, 1458.53, '1XXPaY3-hL1YdXrtH9RQK3VYScpTsW50c'],
+    ['2026-07', '2026-07-31', 1458.53, 1451.10, '1xwNZg0IJ6z3GmAcJ2lYUkrx5XQQ6eCll'],
+    ['2026-08', '2026-08-31', 1451.10, 1341.17, '122gcEc1zNkjSphI6OEX8gEvKiZ6TkYB_']
+  ];
+  var n = 0;
+  data.forEach(function (d) {
+    if (deja[d[0]]) return;
+    var mm = d[0].substring(5, 7);
+    rel.appendRow([d[0], d[1], d[2], d[3], '', '', '2026_' + mm + '_RELEVE_PRO_AKUU.pdf', base + d[4] + '/view',
+      new Date().toISOString(), 'reprise historique']);
+    n++;
+  });
+  Logger.log(n + ' relevé(s) 2026 inscrit(s) dans l\'onglet Releves.');
+}

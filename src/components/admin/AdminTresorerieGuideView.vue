@@ -200,8 +200,8 @@ const store = useTresorerieStore()
 
 const digitalSteps = [
   {
-    title: 'Demande avant achat (obligatoire sauf ≤ 50 S/. courant)',
-    body: 'Projet, nature, montant PEN, date, description et justification. Le trésorier (ou le CG si > 300 S/.) valide et envoie la référence AKUU-DEM-…'
+    title: 'Demande / devis avant achat (obligatoire)',
+    body: 'Projet, nature, montant PEN, date, description et justification — c\'est votre devis. Le trésorier (ou le CG si > 300 S/.) valide et envoie la référence AKUU-DEM-…'
   },
   {
     title: 'Facture après achat',
@@ -212,8 +212,8 @@ const digitalSteps = [
     body: 'Statuts en temps réel · refus motivé · resoumission possible · justificatif physique conservé à Puerto Miguel.'
   },
   {
-    title: `Achats > ${DEVIS_PEN_THRESHOLD} S/.`,
-    body: `Joignez au moins ${MIN_DEVIS_ATTACHMENTS} devis à la demande · validation Conseil général requise.`
+    title: `Photos de devis (> ${DEVIS_PEN_THRESHOLD} S/.)`,
+    body: `En plus de la demande, joignez au moins ${MIN_DEVIS_ATTACHMENTS} photos ou PDF des devis fournisseurs · le trésorier les valide avant approbation.`
   }
 ]
 
@@ -228,7 +228,7 @@ const thresholdRows = [
   },
   {
     range: `> ${PEN_TREASURER_MAX} S/.`,
-    rule: `Validation Conseil général + plusieurs devis si possible (min. ${MIN_DEVIS_ATTACHMENTS} dans l'app).`
+    rule: `Validation Conseil général · demande (devis) obligatoire · si > ${DEVIS_PEN_THRESHOLD} S/., joindre min. ${MIN_DEVIS_ATTACHMENTS} photos/PDF de devis fournisseurs.`
   }
 ]
 

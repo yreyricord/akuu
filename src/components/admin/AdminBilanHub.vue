@@ -29,7 +29,124 @@
       </nav>
     </header>
 
-    <template v-if="yearData">
+    <AdminLoadingPanel
+      v-if="loadingExercices"
+      title="Lecture des journaux Google"
+      detail="Chargement des exercices 2017 à l'année en cours depuis le Drive…"
+      :progress="exercicesProg.progress"
+      :step-label="exercicesProg.stepLabel"
+    />
+
+    <p
+      v-else-if="offlineFallback"
+      class="rounded-xl border border-ochre-200 bg-ochre-50 px-4 py-3 text-sm text-ochre-800"
+    >
+      Connexion au journal Google indisponible — chiffres du dernier export
+      <span v-if="displayGeneratedAt">({{ formatHealthDate(displayGeneratedAt) }})</span>.
+    </p>
+
+    <template v-else-if="yearData">
+      <p
+        v-if="rouvertBanner"
+        class="rounded-xl border border-ochre-300 bg-ochre-50 px-4 py-3 text-sm text-ochre-900"
+      >
+        {{ rouvertBanner }}
+      </p>
+
+      <section
+        v-if="(auth.isAdmin || auth.isTreasurer) && currentExercice?.live"
+        class="rounded-2xl border border-night-100 bg-white p-5 shadow-sm"
+      >
+        <h3 class="text-base font-semibold text-forest-700">Statut de l'exercice</h3>
+        <p class="mt-1 text-xs text-night-500">
+          Version {{ currentExercice.version || 1 }}
+          <span v-if="currentExercice.statut === 'clos'"> · clôturé</span>
+          <span v-else-if="currentExercice.statut === 'rouvert'"> · rouvert pour correction</span>
+          <span v-else-if="currentExercice.statut === 'ouvert'"> · exercice en cours</span>
+        </p>
+        <div v-if="exerciceActionError" class="mt-3 rounded-lg bg-terracotta/10 px-3 py-2 text-sm text-terracotta-700">
+          {{ exerciceActionError }}
+        </div>
+        <ul v-if="reclotureProblems.length" class="mt-3 list-inside list-disc text-sm text-terracotta-700">
+          <li v-for="(p, i) in reclotureProblems" :key="i">{{ p }}</li>
+        </ul>
+        <div class="mt-4 flex flex-wrap gap-3">
+          <template v-if="auth.isAdmin">
+            <button
+              v-if="currentExercice.statut === 'clos'"
+              type="button"
+              class="min-h-[44px] rounded-xl border border-ochre-300 bg-ochre-50 px-4 text-sm font-semibold text-ochre-800 hover:bg-ochre-100 disabled:opacity-50"
+              :disabled="!!exerciceBusy"
+              @click="showRouvrir = true"
+            >
+              Rouvrir l'exercice
+            </button>
+            <button
+              v-if="currentExercice.statut === 'rouvert' || currentExercice.statut === 'ouvert'"
+              type="button"
+              class="min-h-[44px] rounded-xl border border-forest bg-forest px-4 text-sm font-semibold text-white hover:bg-forest-700 disabled:opacity-50"
+              :disabled="!!exerciceBusy"
+              @click="doRecloturer(false)"
+            >
+              {{ exerciceBusy === 'recloture' ? 'Reclôture…' : currentExercice.statut === 'ouvert' ? 'Clôturer l\'exercice' : 'Reclôturer' }}
+            </button>
+          </template>
+          <button
+            type="button"
+            class="min-h-[44px] rounded-xl border border-bleu bg-white px-4 text-sm font-semibold text-bleu hover:bg-bleu/5 disabled:opacity-50"
+            :disabled="!!exerciceBusy"
+            @click="doRegenerer(false)"
+          >
+            {{ exerciceBusy === 'regenerer' ? 'Génération en cours…' : 'Régénérer le dossier Cloture' }}
+          </button>
+        </div>
+        <p
+          v-if="exerciceBusy === 'regenerer'"
+          class="mt-3 rounded-lg bg-bleu/10 px-3 py-2 text-sm text-bleu-800"
+          role="status"
+        >
+          Génération des 7 tableaux + PDF + ZIP sur le Drive… Comptez 1 à 2 minutes, ne fermez pas l'onglet.
+        </p>
+        <p v-else-if="regenerationMessage" class="mt-3 text-sm text-forest-700">{{ regenerationMessage }}</p>
+        <details v-if="historique.length" class="mt-4">
+          <summary class="cursor-pointer text-sm font-semibold text-night-600">Historique des modifications ({{ historique.length }})</summary>
+          <ul class="mt-2 max-h-48 space-y-2 overflow-y-auto text-xs text-night-600">
+            <li v-for="(h, i) in historique" :key="i">
+              <span class="font-semibold">{{ h.action }}</span> · {{ h.reference || '—' }} · {{ h.auteur }} · {{ formatHealthDate(h.date) }}
+            </li>
+          </ul>
+        </details>
+      </section>
+
+      <div
+        v-if="showRouvrir"
+        class="fixed inset-0 z-50 flex items-end justify-center bg-night/40 p-4 sm:items-center"
+        role="dialog"
+        aria-labelledby="rouvrir-title"
+      >
+        <div class="w-full max-w-md rounded-2xl bg-white p-5 shadow-xl">
+          <h4 id="rouvrir-title" class="font-serif text-lg font-bold text-forest-700">Rouvrir l'exercice {{ selectedYear }}</h4>
+          <p class="mt-1 text-sm text-night-500">Motif obligatoire (10 caractères min.) — sera inscrit dans l'audit et présenté à la prochaine AG.</p>
+          <textarea
+            v-model="rouvrirMotif"
+            rows="3"
+            class="mt-3 w-full rounded-xl border border-night-200 px-3 py-2 text-sm"
+            placeholder="Ex. : correction d'une écriture oubliée avant validation AG"
+          />
+          <div class="mt-4 flex justify-end gap-2">
+            <button type="button" class="min-h-[40px] rounded-xl px-4 text-sm font-semibold text-night-500" @click="showRouvrir = false">Annuler</button>
+            <button
+              type="button"
+              class="min-h-[40px] rounded-xl bg-ochre-600 px-4 text-sm font-semibold text-white disabled:opacity-50"
+              :disabled="rouvrirMotif.trim().length < 10 || exerciceBusy"
+              @click="doRouvrir"
+            >
+              {{ exerciceBusy === 'rouvrir' ? 'Ouverture…' : 'Confirmer la réouverture' }}
+            </button>
+          </div>
+        </div>
+      </div>
+
       <AdminReleveImport
         v-if="yearData.cloture?.provisoire && selectedYear === String(new Date().getFullYear())"
         :year="selectedYear"
@@ -78,8 +195,7 @@
           </div>
         </dl>
         <p v-else class="mt-3 text-sm text-night-500">
-          Pas encore de dossier de clôture. Commande :
-          <code class="rounded bg-night-100 px-1.5 py-0.5 text-xs">python3 generer_cloture_annee.py --year {{ selectedYear }} --publier-site</code>
+          Pas encore de chiffres pour cet exercice — vérifiez que le journal Google est connecté.
         </p>
       </section>
 
@@ -253,11 +369,14 @@
         </button>
       </section>
 
-      <p v-if="data?.generated_at" class="text-xs text-night-400">Mis à jour {{ formatHealthDate(data.generated_at) }}</p>
+      <p v-if="displayGeneratedAt" class="text-xs text-night-400">
+        {{ liveSource ? 'Chiffres en direct depuis les Google Sheets' : 'Mis à jour' }}
+        {{ formatHealthDate(displayGeneratedAt) }}
+      </p>
     </template>
 
-    <p v-else class="rounded-xl border border-night-100 bg-white px-4 py-8 text-center text-sm text-night-400">
-      Aucune donnée bilan — lancez <code class="rounded bg-cream-200 px-1">python3 generer_bilan_site.py</code>
+    <p v-else-if="!loadingExercices" class="rounded-xl border border-night-100 bg-white px-4 py-8 text-center text-sm text-night-400">
+      Aucune donnée bilan — vérifiez la connexion au journal Google (API /exercices).
     </p>
   </div>
 </template>
@@ -268,18 +387,45 @@ import { useRoute, useRouter } from 'vue-router'
 import { PhBank, PhDownloadSimple, PhFilePdf, PhFileZip, PhFolderOpen, PhTable } from '@phosphor-icons/vue'
 import { tresorerieGoogle } from '@/config/tresorerie-google.js'
 import { tresorerieApi } from '@/api/tresorerie/client.js'
+import { mapExerciceToBilanYear } from '@/api/tresorerie/exercicesMap.js'
 import { downloadBase64 } from '@/api/tresorerie/downloadBase64.js'
 import { formatEur, formatPen } from '@/data/tresorerie-config.js'
-import bilanData from '@/data/bilan-comptable.json'
 import driveHealth from '@/data/drive-health.json'
 import AdminReleveImport from './AdminReleveImport.vue'
 import AdminBilanRelevesAlert from './AdminBilanRelevesAlert.vue'
+import AdminLoadingPanel from './AdminLoadingPanel.vue'
+import { bindLoadingProgress } from '@/composables/useLoadingProgress.js'
+import { useAuthStore } from '@/store/auth.js'
 
 const route = useRoute()
 const router = useRouter()
+const auth = useAuthStore()
 
-const data = bilanData?.years?.length ? bilanData : null
-const years = computed(() => data?.years ?? [])
+const exercices = ref(null)
+const loadingExercices = ref(true)
+const exercicesProg = bindLoadingProgress(loadingExercices, {
+  estimateMs: 25_000,
+  label: 'Exercices 2017 → année en cours…'
+})
+const offlineFallback = ref(false)
+const liveSource = computed(() => Boolean(exercices.value?.source === 'google_sheets' && !offlineFallback.value))
+const displayGeneratedAt = computed(() => exercices.value?.generated_at ?? null)
+
+async function loadExercices() {
+  try {
+    exercices.value = await tresorerieApi.getExercices()
+    offlineFallback.value = false
+  } catch {
+    offlineFallback.value = true
+    exercices.value = null
+  } finally {
+    loadingExercices.value = false
+  }
+}
+
+const years = computed(() =>
+  (exercices.value?.years ?? []).map((ex) => mapExerciceToBilanYear(ex))
+)
 const yearsDesc = computed(() => [...years.value].sort((a, b) => b.year - a.year))
 
 function initialYear(list) {
@@ -303,7 +449,106 @@ watch(yearsDesc, (list) => {
 watch(selectedYear, (year) => {
   if (route.query.year === year) return
   router.replace({ query: { ...route.query, year } })
+  loadHistorique(year)
 })
+
+const historique = ref([])
+const showRouvrir = ref(false)
+const rouvrirMotif = ref('')
+const exerciceBusy = ref('')
+const exerciceActionError = ref('')
+const reclotureProblems = ref([])
+const regenerationMessage = ref('')
+
+async function loadHistorique(year) {
+  try { historique.value = await tresorerieApi.getExerciceHistorique(year) } catch { historique.value = [] }
+}
+
+async function doRouvrir() {
+  exerciceBusy.value = 'rouvrir'
+  exerciceActionError.value = ''
+  reclotureProblems.value = []
+  try {
+    await tresorerieApi.rouvrirExercice(selectedYear.value, rouvrirMotif.value.trim())
+    showRouvrir.value = false
+    rouvrirMotif.value = ''
+    await refreshLive()
+    await loadHistorique(selectedYear.value)
+  } catch (e) {
+    exerciceActionError.value = e.message
+  } finally {
+    exerciceBusy.value = ''
+  }
+}
+
+async function doRecloturer(reportOpening) {
+  exerciceBusy.value = 'recloture'
+  exerciceActionError.value = ''
+  reclotureProblems.value = []
+  regenerationMessage.value = ''
+  try {
+    const res = await tresorerieApi.recloturerExercice(selectedYear.value, { report_opening_next: reportOpening })
+    if (!res.ok) {
+      reclotureProblems.value = res.problems || []
+      return
+    }
+    if (res.opening_next_changed && !reportOpening) {
+      const ok = window.confirm(`L'ouverture de ${Number(selectedYear.value) + 1} doit être reportée à ${res.solde_cloture} €. Reporter maintenant ?`)
+      if (ok) return doRecloturer(true)
+    }
+    if (res.regeneration?.ok) {
+      regenerationMessage.value = `Dossier Cloture régénéré (${(res.regeneration.files || []).length} fichiers).`
+    } else if (res.regeneration?.pending) {
+      regenerationMessage.value = res.regeneration.error || 'Reclôture OK — régénération du dossier à relancer manuellement.'
+    }
+    await refreshLive()
+    await loadHistorique(selectedYear.value)
+  } catch (e) {
+    exerciceActionError.value = e.message
+  } finally {
+    exerciceBusy.value = ''
+  }
+}
+
+async function doRegenerer(force) {
+  exerciceBusy.value = 'regenerer'
+  exerciceActionError.value = ''
+  reclotureProblems.value = []
+  regenerationMessage.value = ''
+  try {
+    const res = await tresorerieApi.regenererCloture(selectedYear.value, { force: !!force })
+    if (!res?.ok) {
+      reclotureProblems.value = res?.problems || []
+      if (!force && res?.problems?.length) {
+        const ok = window.confirm(
+          `Écarts détectés par rapport aux totaux de référence :\n\n${res.problems.join('\n')}\n\nForcer la génération quand même ?`
+        )
+        if (ok) {
+          await doRegenerer(true)
+        }
+        return
+      }
+      exerciceActionError.value = res?.problems?.length
+        ? 'Génération refusée — corrigez le journal ou forcez après confirmation.'
+        : 'Génération impossible. Vérifiez que la Web App Google est déployée avec GenererCloture.gs (étape D).'
+      return
+    }
+    regenerationMessage.value = `Dossier Cloture ${selectedYear.value} régénéré (${(res.files || []).length} fichiers sur le Drive).`
+    await refreshLive()
+    await loadHistorique(selectedYear.value)
+  } catch (e) {
+    const msg = e?.message || String(e)
+    if (msg.includes('Route') || msg.includes('404') || msg.includes('inconnue')) {
+      exerciceActionError.value = `${msg} — Recopiez GenererCloture.gs + App.gs dans Apps Script puis « Nouvelle version » du déploiement.`
+    } else if (e?.code === 'GENERATION_FAILED' || e?.code === 'EXPORT_FAILED') {
+      exerciceActionError.value = msg
+    } else {
+      exerciceActionError.value = msg
+    }
+  } finally {
+    exerciceBusy.value = ''
+  }
+}
 
 function relevesMissingCount(y) {
   return y.releves_status?.missing?.length ?? 0
@@ -314,31 +559,46 @@ const yearData = computed(() => years.value.find((y) => String(y.year) === selec
 
 
 const yearsAsc = computed(() => [...years.value].sort((a, b) => a.year - b.year))
-const live = ref(null)
 const exporting = ref('')
 const exportError = ref('')
-const isLiveYear = computed(() => Boolean(yearData.value?.cloture?.provisoire && live.value?.live && String(live.value.year) === selectedYear.value))
-const prevFin = computed(() => years.value.find((y) => y.year === Number(selectedYear.value) - 1)?.cloture?.tresorerie?.releve_fin_eur ?? null)
-const cr = computed(() => {
-  if (isLiveYear.value) {
-    return { produits_eur: live.value.produits_eur, charges_eur: live.value.charges_eur, resultat_eur: live.value.resultat_eur }
-  }
-  return yearData.value?.cloture?.compte_resultat ?? null
+const currentExercice = computed(() =>
+  exercices.value?.years?.find((ex) => ex.year === Number(selectedYear.value)) ?? null
+)
+
+const rouvertBanner = computed(() => {
+  const ex = currentExercice.value
+  if (ex?.statut !== 'rouvert') return ''
+  const meta = ex.cloture_meta || {}
+  const when = meta.rouvert_le ? formatHealthDate(meta.rouvert_le) : ''
+  const who = meta.rouvert_par || 'administrateur'
+  const motif = meta.rouvert_motif ? ` (${meta.rouvert_motif})` : ''
+  return `Exercice ${selectedYear.value} rouvert le ${when} par ${who}${motif}. Version ${ex.version || 2}, à présenter à la prochaine AG.`
 })
+
+const isLiveYear = computed(() =>
+  Boolean(currentExercice.value?.live && yearData.value?.cloture?.provisoire)
+)
+const prevFin = computed(() =>
+  years.value.find((y) => y.year === Number(selectedYear.value) - 1)?.cloture?.tresorerie?.releve_fin_eur ?? null
+)
+const cr = computed(() => yearData.value?.cloture?.compte_resultat ?? null)
 const treso = computed(() => {
-  if (isLiveYear.value && prevFin.value != null) {
-    return { fin_eur: Math.round((prevFin.value + live.value.resultat_eur) * 100) / 100, calcule: true }
-  }
-  return yearData.value?.cloture?.tresorerie ?? null
+  const t = yearData.value?.cloture?.tresorerie
+  if (!t) return null
+  if (isLiveYear.value) return { ...t, calcule: true }
+  return t
 })
 
 const liveRows = ref([])
 async function refreshLive() {
+  await loadExercices()
   const y = new Date().getFullYear()
-  try { live.value = await tresorerieApi.getComptaAnnee(y) } catch { live.value = null }
   try { liveRows.value = (await tresorerieApi.getJournalAnnee(y))?.rows ?? [] } catch { liveRows.value = [] }
 }
-onMounted(refreshLive)
+onMounted(async () => {
+  await refreshLive()
+  await loadHistorique(selectedYear.value)
+})
 
 const MOIS = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.']
 const MOIS_LONG = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
@@ -355,7 +615,7 @@ const liveRelevesStatus = computed(() => {
   const expected = y === now.getFullYear() ? now.getMonth() : 12 // mois écoulés seulement
   const presentMonths = new Set(base?.months_present ?? [])
 
-  ;(live.value?.releves || []).forEach((r) => {
+  ;(currentExercice.value?.releves || []).forEach((r) => {
     const m = Number(String(r.mois || '').slice(5))
     if (m >= 1 && m <= 12) presentMonths.add(m)
   })
@@ -395,14 +655,20 @@ const rappro = computed(() => {
   const y = yearData.value
   if (!y) return {}
   if (isLiveYear.value) {
-    const r = live.value.dernier_releve
-    const rp = live.value.rapprochement || {}
+    const r = currentExercice.value?.dernier_releve
+    const rp = currentExercice.value?.rapprochement || {}
     if (!r || r.solde_fin == null) {
       const t = y.cloture?.tresorerie
-      if (t?.releve_fin_eur != null && (liveRelevesStatus.value?.months_present?.length || y.download_releves?.count)) {
+      if (t?.releve_fin_eur != null) {
         return rapproExercice(y)
       }
-      return { vide: 'Aucun relevé déposé cette année : déposez le relevé de janvier ci-dessus pour activer le rapprochement.' }
+      if (liveRelevesStatus.value?.months_present?.length || y.download_releves?.count) {
+        return rapproExercice(y)
+      }
+      return {
+        vide: 'Rapprochement banque France (Crédit Coop) : déposez les relevés PDF via l’onglet Bilan · Import relevé. ' +
+          'Ce bloc ne concerne pas la caisse espèces au Pérou (onglet Compta → Suivi terrain).'
+      }
     }
     if (prevFin.value == null) return { vide: "Solde de fin d'année précédente inconnu : rapprochement impossible." }
     const calc = Math.round((prevFin.value + rp.recettes_au_releve - rp.depenses_au_releve) * 100) / 100
@@ -529,6 +795,7 @@ const dlClass = 'flex items-center gap-4 rounded-xl border border-night-100 p-4 
 const statusPill = computed(() => {
   const c = yearData.value?.cloture
   if (!c) return { label: 'Pas encore clôturé', cls: 'bg-night-100 text-night' }
+  if (c.rouvert) return { label: `Rouvert · version ${c.version || 2}`, cls: 'bg-ochre-100 text-ochre-800' }
   if (c.provisoire) return { label: 'Provisoire · exercice en cours', cls: 'bg-bleu-100 text-bleu-700' }
   if (c.clos) return { label: 'Clôturé · approuvé en AG', cls: 'bg-forest-100 text-forest-700' }
   if (c.status === 'pret') return { label: "Prêt pour l'AG", cls: 'bg-forest-100 text-forest-700' }
@@ -539,7 +806,7 @@ const rapproLabel = computed(() => {
   const t = treso.value
   if (!t) return ''
   if (t.calcule) {
-    const r = live.value?.dernier_releve
+    const r = currentExercice.value?.dernier_releve
     if (r?.solde_fin == null) {
       const rel = yearData.value?.cloture?.tresorerie?.releve_fin_eur
       if (rel != null && liveRelevesStatus.value?.months_present?.length) {
@@ -559,6 +826,7 @@ const rapproLabel = computed(() => {
 function yearDotClass(y) {
   const c = y.cloture
   if (!c) return 'bg-night-200'
+  if (c.rouvert) return 'bg-ochre-500'
   if (c.provisoire) return 'bg-bleu'
   if (c.clos) return 'bg-forest'
   return c.status === 'pret' ? 'bg-forest' : 'bg-ochre-500'

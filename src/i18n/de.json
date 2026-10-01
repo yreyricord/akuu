@@ -18,27 +18,27 @@
     "team_learn_more": "Mehr erfahren"
   },
   "seo": {
-    "title": "Internationale Solidarität, Peruanisches Amazonasgebiet — AKUU",
-    "description": "Französische NGO für Solidarität mit den Gemeinschaften des peruanischen Amazonasgebiets in Puerto Miguel. Shapishiko-Museum, Freiwillige, VSI und Sensibilisierung.",
+    "title": "Internationale Solidarität Amazonas AKUU",
+    "description": "Französische NGO für internationale Solidarität im Amazonas in Puerto Miguel. Shapishiko-Museum, Freiwillige, VSI und Sensibilisierung.",
     "routes": {
       "home": {
-        "title": "Internationale Solidarität, Peruanisches Amazonasgebiet — AKUU",
-        "description": "Französische NGO für Solidarität mit den Gemeinschaften des peruanischen Amazonasgebiets in Puerto Miguel. Shapishiko-Museum, Freiwillige, VSI und Sensibilisierung."
+        "title": "Internationale Solidarität Amazonas AKUU",
+        "description": "Französische NGO für internationale Solidarität im Amazonas in Puerto Miguel. Shapishiko-Museum, Freiwillige, VSI und Sensibilisierung."
       },
       "association": {
-        "title": "AKUU — Französische NGO, internationale Solidarität Amazonas",
-        "description": "Französischer Verein (loi 1901) im peruanischen Amazonasgebiet: VSI-Missionen und Freiwilligeneinsätze in Puerto Miguel, Sensibilisierung in Frankreich."
+        "title": "AKUU französische NGO internationale Solidarität Amazonas",
+        "description": "Französischer Verein (loi 1901) im Amazonas: VSI-Missionen und Freiwilligeneinsätze in Puerto Miguel, Sensibilisierung in Frankreich."
       },
       "projets": {
-        "title": "Unsere Projekte im peruanischen Amazonasgebiet — AKUU",
+        "title": "Unsere Projekte im Amazonas AKUU",
         "description": "AKUU-NGO-Projekte in Puerto Miguel: Shapishiko-Museum, Casa AKUU, HYDR'AMA-Kleinwasserkraft, Englischkurse, Abfallwirtschaft und Amazonas-Gemeinschaften."
       },
       "museeShapishiko": {
-        "title": "Shapishiko-Museum — Kukama-Kultur · Puerto Miguel — AKUU",
+        "title": "Shapishiko-Museum · Kukama-Kultur · Puerto Miguel AKUU",
         "description": "Gemeinschaftsmuseum des Kukama-Volkes in Puerto Miguel. Gemeinsam getragen von der französischen NGO AKUU: Ausstellungen, lokale Governance, Solidarität."
       },
       "volontaires": {
-        "title": "Freiwilligendienst & VSI im peruanischen Amazonasgebiet — AKUU",
+        "title": "Freiwilligendienst & VSI im Amazonas · AKUU",
         "description": "VSI-Missionen, Freiwilligeneinsätze und Praktika (2–12 Monate) in Puerto Miguel, peruanisches Amazonasgebiet. Engagieren Sie sich mit der NGO AKUU."
       },
       "formation": {
@@ -62,24 +62,24 @@
         "description": "Schwimmende Kleinwasserkraftanlage im peruanischen Amazonasgebiet mit ländlichen Gemeinschaften und WindAid: erneuerbare Energie in Puerto Miguel."
       },
       "akuuvision": {
-        "title": "AKUUVision — Augmented Reality, Peruanisches Amazonasgebiet",
-        "description": "Augmented-Reality-App zur Erkundung des peruanischen Amazonasgebiets und der Kultur von Puerto Miguel. Festivals, Ausstellungen und Sensibilisierung."
+        "title": "AKUUVision · Augmented Reality Amazonas",
+        "description": "Augmented-Reality-App zur Erkundung des Amazonas und der Kultur von Puerto Miguel. Festivals, Ausstellungen und Sensibilisierung."
       },
       "coursAnglais": {
         "title": "Englischkurse & Ökotourismus — Puerto Miguel — AKUU",
-        "description": "Englischprogramm für die Bewohner von Puerto Miguel im peruanischen Amazonasgebiet im Zusammenhang mit dem lokalen Ökotourismus: Ziele, Wirkung und Entwicklung."
+        "description": "Englischprogramm für die Bewohner von Puerto Miguel im Amazonas im Zusammenhang mit dem lokalen Ökotourismus: Ziele, Wirkung und Entwicklung."
       },
       "casaAkuu": {
         "title": "Casa AKUU — Gemeinschaftshaus Puerto Miguel",
-        "description": "Casa AKUU: gemeinsamer Lebensraum für Freiwillige und Bewohner von Puerto Miguel. Drehscheibe für AKUU-Projekte im peruanischen Amazonasgebiet: Englisch, Abfall, Museum."
+        "description": "Casa AKUU: gemeinsamer Lebensraum für Freiwillige und Bewohner von Puerto Miguel. Drehscheibe für AKUU-Projekte im Amazonas: Englisch, Abfall, Museum."
       },
       "gestionDechets": {
         "title": "Kunststoffabfallwirtschaft — Puerto Miguel — AKUU",
-        "description": "Precious-Plastic-Recycling, Abfuhr nach Nauta und Planet'AKUU-Sensibilisierung in Puerto Miguel, peruanisches Amazonasgebiet. Partnerschaft Grenoble INP ENSE3."
+        "description": "Precious-Plastic-Recycling, Abfuhr nach Nauta und Planet'AKUU-Sensibilisierung in Puerto Miguel, Amazonas. Partnerschaft Grenoble INP ENSE3."
       },
       "partenaires": {
         "title": "AKUU-Partner — France Volontaires, AIME ONG, WindAid",
-        "description": "Partner der AKUU-NGO: France Volontaires, AIME ONG, WindAid, Grenoble INP und FONJEP. Gemeinsam für Solidarität im peruanischen Amazonasgebiet."
+        "description": "Partner der AKUU-NGO: France Volontaires, AIME ONG, WindAid, Grenoble INP und FONJEP. Gemeinsam für Solidarität im Amazonas."
       }
     }
   },
@@ -739,7 +739,7 @@
   },
   "volontaires": {
     "hero_title": "Werden Sie Freiwillige",
-    "hero_subtitle": "Erleben Sie eine einzigartige Erfahrung im Herzen des peruanischen Amazonasgebiets",
+    "hero_subtitle": "Erleben Sie eine einzigartige Erfahrung im Herzen des Amazonas",
     "why_title": "Warum mit AKUU?",
     "why_items": {
       "immersion": {
@@ -827,7 +827,7 @@
     "faq": {
       "q1": {
         "question": "Welche Arten von Freiwilligeneinsätzen bietet AKUU im Amazonasgebiet an?",
-        "answer": "AKUU bietet Zivildienstmissionen (6–12 Monate über AIME ONG), Langzeit-Freiwilligeneinsätze (3–6 Monate) und Praktika (2–6 Monate) in Puerto Miguel, peruanisches Amazonasgebiet."
+        "answer": "AKUU bietet Zivildienstmissionen (6–12 Monate über AIME ONG), Langzeit-Freiwilligeneinsätze (3–6 Monate) und Praktika (2–6 Monate) in Puerto Miguel, Amazonas."
       },
       "q2": {
         "question": "Wie bewerbe ich mich als Freiwilliger bei AKUU?",
@@ -835,11 +835,11 @@
       },
       "q3": {
         "question": "Was ist ein VSI — Internationaler Solidaritäts-Freiwilligendienst?",
-        "answer": "Ein VSI ist ein 6- bis 24-monatiger internationaler Solidaritätseinsatz mit einer akkreditierten NGO. AKUU bietet VSI-Missionen über AIME ONG in Puerto Miguel, peruanisches Amazonasgebiet."
+        "answer": "Ein VSI ist ein 6- bis 24-monatiger internationaler Solidaritätseinsatz mit einer akkreditierten NGO. AKUU bietet VSI-Missionen über AIME ONG in Puerto Miguel, im Amazonas."
       },
       "q4": {
         "question": "Muss ich Spanisch sprechen, um bei AKUU freiwillig tätig zu sein?",
-        "answer": "Grundkenntnisse in Spanisch werden empfohlen. Eine Abreisevorbereitung wird organisiert, um Sie optimal auf Ihren Einsatz im peruanischen Amazonasgebiet vorzubereiten."
+        "answer": "Grundkenntnisse in Spanisch werden empfohlen. Eine Abreisevorbereitung wird organisiert, um Sie optimal auf Ihren Einsatz im Amazonas vorzubereiten."
       }
     }
   },
@@ -964,7 +964,7 @@
     "member_spotlight_kicker": "Stimme eines Mitglieds",
     "member_spotlight_quote": "In Puerto Miguel hat mir das Shapishiko-Museumsprojekt eine unvergessliche Erfahrung beschert: an etwas Konkretem teilzunehmen und die Lebensweise und Werte der Gemeinschaft aufzunehmen.",
     "member_spotlight_name": "Ilona Crozes",
-    "member_spotlight_role": "AKUU-Mitglied · Shapishiko-Museum, peruanisches Amazonasgebiet",
+    "member_spotlight_role": "AKUU-Mitglied · Shapishiko-Museum, Amazonas",
     "member_spotlight_photo_alt": "Porträt von Ilona Crozes, AKUU-Mitglied",
     "benevole_title": "Auf Einsatz gehen",
     "benevole_text": "3 bis 6 Monate in Puerto Miguel oder in Frankreich für AKUUVision. Bau, Bildung, Kultur: eine einzigartige menschliche Erfahrung.",
@@ -1198,6 +1198,7 @@
     "address_line2": "Frankreich",
     "nav_title": "Navigation",
     "nav_links_title": "Schnellzugriff",
+    "member_space": "Mitgliederbereich",
     "contact_title": "Kontakt",
     "social_title": "Folgen Sie uns",
     "legal": "© {year} AKUU, französischer Verein (loi 1901)",
@@ -1278,7 +1279,7 @@
   },
   "partenaires_page": {
     "hero_title": "Unsere Partner",
-    "hero_subtitle": "Die AKUU-NGO führt ihre Projekte im peruanischen Amazonasgebiet dank eines Netzwerks engagierter institutioneller, akademischer und zivilgesellschaftlicher Partner durch.",
+    "hero_subtitle": "Die AKUU-NGO führt ihre Projekte im Amazonas dank eines Netzwerks engagierter institutioneller, akademischer und zivilgesellschaftlicher Partner durch.",
     "intro": "Seit 2016 entwickelt der AKUU-Verein seine Projekte der internationalen Solidarität in Puerto Miguel mit Unterstützung französischer und peruanischer Organisationen.",
     "partnership_title": "Partner werden",
     "partnership_text": "Möchten Sie unsere Projekte unterstützen oder eine Mission im Amazonasgebiet mitgestalten? Kontaktieren Sie uns, um eine Zusammenarbeit zu erkunden.",

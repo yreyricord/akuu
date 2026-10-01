@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-10T16:58:01",
+    "generatedAt": "2026-10-01T08:44:42",
     "periodLabel": "2017 – septembre 2026",
     "workbook": "Synthese_financiere_AKUU_2017_2026.xlsx",
     "notes": [
@@ -12,7 +12,7 @@
   },
   "totals": {
     "received": 72623.51,
-    "spent": 69801.87,
+    "spent": 69814.06,
     "resources": 71161.38,
     "excludedCredits": 1462.13,
     "engagements": 1548.69,
@@ -46,11 +46,11 @@
       "year": 2017,
       "label": "2017",
       "credits": 9222.46,
-      "debits": 6943.49,
+      "debits": 6955.68,
       "resources": 8722.46,
-      "coverage": "Journal uniquement",
+      "coverage": "Journal + relevés (juin–déc.)",
       "provisional": false,
-      "closing": 2278.97
+      "closing": 2266.78
     },
     {
       "year": 2018,
@@ -58,7 +58,7 @@
       "credits": 14681.3,
       "debits": 9534.83,
       "resources": 14681.3,
-      "coverage": "Journal jan–18 mai + banque",
+      "coverage": "Journal + 12 relevés",
       "provisional": false,
       "closing": 7413.25
     },
@@ -329,11 +329,11 @@
         {
           "year": 2017,
           "label": "2017",
-          "total": 6943.49,
+          "total": 6955.68,
           "amounts": {
             "maison": 5727.79,
             "akuuvision": 616.14,
-            "functioning": 599.56
+            "functioning": 611.75
           }
         },
         {
@@ -437,7 +437,7 @@
     }
   },
   "projectSpending": {
-    "total": 69801.87,
+    "total": 69814.06,
     "slices": [
       {
         "id": "musee",
@@ -595,11 +595,11 @@
         "id": "functioning",
         "label": "Frais de fonctionnement",
         "color": "#475569",
-        "amount": 6291.67,
+        "amount": 6303.86,
         "byYear": [
           {
             "year": 2017,
-            "amount": 599.56
+            "amount": 611.75
           },
           {
             "year": 2018,
@@ -701,7 +701,7 @@
       "id": "logistique",
       "label": "Frais de fonctionnement",
       "description": "Site internet, outils numériques, frais bancaires et de carte.",
-      "amount": 5791.67,
+      "amount": 5803.86,
       "share": 8.3,
       "lines": [
         {
@@ -714,7 +714,7 @@
         },
         {
           "label": "Autres outils et services",
-          "amount": 1296.87
+          "amount": 1309.06
         }
       ]
     }
@@ -1011,7 +1011,7 @@
     "unconfirmedAmount": 0.0,
     "unconfirmedByYear": [],
     "unconfirmedItems": [],
-    "functioningAmount": 6291.67,
+    "functioningAmount": 6303.86,
     "reconciliationIssues": [
       {
         "year": 2024,

@@ -1,0 +1,468 @@
+{
+ "generated_at": "2026-10-01T08:44:34",
+ "postes": {
+  "P1": "Dons et mécénat",
+  "P2": "Subventions et prix",
+  "P3": "Cotisations / adhésions",
+  "P4": "Loyers et participations",
+  "P5": "Ventes et prestations",
+  "P6": "Autres produits",
+  "C1": "Charges de mission",
+  "C2": "Frais de fonctionnement",
+  "C3": "Frais bancaires",
+  "C4": "Autres charges"
+ },
+ "years": [
+  {
+   "year": 2017,
+   "provisoire": false,
+   "produits_eur": 8722.46,
+   "charges_eur": 6455.68,
+   "resultat_eur": 2266.78,
+   "produits_postes": {
+    "P1": 1614.73,
+    "P2": 6500.0,
+    "P3": 277.73,
+    "P5": 330.0
+   },
+   "charges_postes": {
+    "C1": 5843.93,
+    "C2": 502.8,
+    "C3": 108.95
+   },
+   "recettes_groupes": {
+    "Subventions et prix": 6500.0,
+    "Dons": 1614.73,
+    "Ventes et prestations": 330.0,
+    "Cotisations": 277.73
+   },
+   "loyers_maison_eur": 0.0,
+   "charges_projets": {
+    "Maison communautaire": 5227.79,
+    "AKUUVision": 616.14,
+    "Fonctionnement": 502.8,
+    "Frais bancaires": 108.95
+   },
+   "terrain_pen": {},
+   "tresorerie": {
+    "debut_eur": 0.0,
+    "fin_eur": 2266.78,
+    "ecart_eur": 0.0,
+    "statut": "ok"
+   },
+   "cloture": {
+    "status": "pret",
+    "label": "Clôture prête pour l'AG",
+    "checklist_ok": 13,
+    "checklist_total": 13
+   }
+  },
+  {
+   "year": 2018,
+   "provisoire": false,
+   "produits_eur": 14681.3,
+   "charges_eur": 9534.83,
+   "resultat_eur": 5146.47,
+   "produits_postes": {
+    "P1": 541.3,
+    "P2": 12980.0,
+    "P4": 1160.0
+   },
+   "charges_postes": {
+    "C1": 9058.29,
+    "C2": 234.84,
+    "C3": 241.7
+   },
+   "recettes_groupes": {
+    "Subventions et prix": 12980.0,
+    "Loyers maison communautaire": 1160.0,
+    "Dons": 541.3
+   },
+   "loyers_maison_eur": 1160.0,
+   "charges_projets": {
+    "Maison communautaire": 6161.45,
+    "Hydrama": 2280.23,
+    "AKUUVision": 616.61,
+    "Frais bancaires": 241.7,
+    "Fonctionnement": 234.84
+   },
+   "terrain_pen": {
+    "Maison communautaire": 20352.71,
+    "Hydrama": 5172.0,
+    "Sensibilisation": 500.0
+   },
+   "tresorerie": {
+    "debut_eur": 2266.78,
+    "fin_eur": 7413.25,
+    "ecart_eur": 0.0,
+    "statut": "ok"
+   },
+   "cloture": {
+    "status": "pret",
+    "label": "Clôture prête pour l'AG",
+    "checklist_ok": 13,
+    "checklist_total": 13
+   }
+  },
+  {
+   "year": 2019,
+   "provisoire": false,
+   "produits_eur": 18023.89,
+   "charges_eur": 10227.78,
+   "resultat_eur": 7796.11,
+   "produits_postes": {
+    "P1": 3446.65,
+    "P2": 9920.0,
+    "P3": 115.05,
+    "P4": 2541.92,
+    "P5": 1901.27,
+    "P6": 99.0
+   },
+   "charges_postes": {
+    "C1": 8891.32,
+    "C2": 506.19,
+    "C3": 458.67,
+    "C4": 371.6
+   },
+   "recettes_groupes": {
+    "Subventions et prix": 9920.0,
+    "Dons": 3446.65,
+    "Loyers maison communautaire": 2170.12,
+    "Ventes et prestations": 1901.27,
+    "Week-end de cohésion": 371.8,
+    "Cotisations": 115.05,
+    "Autres recettes": 99.0
+   },
+   "loyers_maison_eur": 2170.12,
+   "charges_projets": {
+    "AKUUVision": 5796.57,
+    "Hydrama": 1322.87,
+    "Low Tech": 1000.0,
+    "Maison communautaire": 532.29,
+    "Fonctionnement": 506.19,
+    "Frais bancaires": 458.67,
+    "Autres / non affecté": 371.6,
+    "Cours d'anglais": 126.18,
+    "Gestion des déchets": 113.41
+   },
+   "terrain_pen": {
+    "Hydrama": 3074.38,
+    "Maison communautaire": 1072.0,
+    "Gestion des déchets": 234.0,
+    "Cours d'anglais": 50.0
+   },
+   "tresorerie": {
+    "debut_eur": 7413.25,
+    "fin_eur": 15209.36,
+    "ecart_eur": 0.0,
+    "statut": "ok"
+   },
+   "cloture": {
+    "status": "attention",
+    "label": "Clôture OK · points d'attention",
+    "checklist_ok": 12,
+    "checklist_total": 13
+   }
+  },
+  {
+   "year": 2020,
+   "provisoire": false,
+   "produits_eur": 4602.42,
+   "charges_eur": 5032.81,
+   "resultat_eur": -430.39,
+   "produits_postes": {
+    "P1": 648.46,
+    "P2": 1200.0,
+    "P3": 122.0,
+    "P4": 2236.0,
+    "P6": 395.96
+   },
+   "charges_postes": {
+    "C1": 4446.69,
+    "C2": 381.84,
+    "C3": 204.28
+   },
+   "recettes_groupes": {
+    "Loyers maison communautaire": 2236.0,
+    "Subventions et prix": 1200.0,
+    "Dons": 648.46,
+    "Autres recettes": 395.96,
+    "Cotisations": 122.0
+   },
+   "loyers_maison_eur": 2236.0,
+   "charges_projets": {
+    "Maison communautaire": 3072.8,
+    "AKUUVision": 1373.89,
+    "Fonctionnement": 381.84,
+    "Frais bancaires": 204.28
+   },
+   "terrain_pen": {
+    "Maison communautaire": 3226.12,
+    "Hydrama": 2366.9,
+    "Bagazan": 564.5,
+    "Gestion des déchets": 540.0,
+    "Cours d'anglais": 65.0
+   },
+   "tresorerie": {
+    "debut_eur": 15209.36,
+    "fin_eur": 14778.97,
+    "ecart_eur": 0.0,
+    "statut": "ok"
+   },
+   "cloture": {
+    "status": "attention",
+    "label": "Clôture OK · points d'attention",
+    "checklist_ok": 11,
+    "checklist_total": 13
+   }
+  },
+  {
+   "year": 2021,
+   "provisoire": false,
+   "produits_eur": 1680.0,
+   "charges_eur": 684.02,
+   "resultat_eur": 995.98,
+   "produits_postes": {
+    "P1": 640.0,
+    "P2": 1000.0,
+    "P6": 40.0
+   },
+   "charges_postes": {
+    "C2": 493.42,
+    "C3": 190.6
+   },
+   "recettes_groupes": {
+    "Subventions et prix": 1000.0,
+    "Dons": 640.0,
+    "Autres recettes": 40.0
+   },
+   "loyers_maison_eur": 0.0,
+   "charges_projets": {
+    "Fonctionnement": 493.42,
+    "Frais bancaires": 190.6
+   },
+   "terrain_pen": {},
+   "tresorerie": {
+    "debut_eur": 14778.97,
+    "fin_eur": 15774.95,
+    "ecart_eur": 0.0,
+    "statut": "ok"
+   },
+   "cloture": {
+    "status": "attention",
+    "label": "Clôture OK · points d'attention",
+    "checklist_ok": 12,
+    "checklist_total": 13
+   }
+  },
+  {
+   "year": 2022,
+   "provisoire": false,
+   "produits_eur": 899.07,
+   "charges_eur": 1446.69,
+   "resultat_eur": -547.62,
+   "produits_postes": {
+    "P1": 899.07
+   },
+   "charges_postes": {
+    "C1": 855.73,
+    "C2": 400.36,
+    "C3": 190.6
+   },
+   "recettes_groupes": {
+    "Dons": 899.07
+   },
+   "loyers_maison_eur": 0.0,
+   "charges_projets": {
+    "Cours d'anglais": 697.23,
+    "Fonctionnement": 400.36,
+    "Frais bancaires": 190.6,
+    "Maison communautaire": 158.5
+   },
+   "terrain_pen": {
+    "Maison communautaire": 520.0
+   },
+   "tresorerie": {
+    "debut_eur": 15774.95,
+    "fin_eur": 15227.33,
+    "ecart_eur": 0.0,
+    "statut": "ok"
+   },
+   "cloture": {
+    "status": "pret",
+    "label": "Clôture prête pour l'AG",
+    "checklist_ok": 13,
+    "checklist_total": 13
+   }
+  },
+  {
+   "year": 2023,
+   "provisoire": false,
+   "produits_eur": 1075.31,
+   "charges_eur": 2905.09,
+   "resultat_eur": -1829.78,
+   "produits_postes": {
+    "P1": 1075.0,
+    "P6": 0.31
+   },
+   "charges_postes": {
+    "C1": 2181.94,
+    "C2": 532.55,
+    "C3": 190.6
+   },
+   "recettes_groupes": {
+    "Dons": 1075.0,
+    "Autres recettes": 0.31
+   },
+   "loyers_maison_eur": 0.0,
+   "charges_projets": {
+    "Cours d'anglais": 2181.94,
+    "Fonctionnement": 532.55,
+    "Frais bancaires": 190.6
+   },
+   "terrain_pen": {
+    "Maison communautaire": 1074.9
+   },
+   "tresorerie": {
+    "debut_eur": 15227.33,
+    "fin_eur": 13397.55,
+    "ecart_eur": 0.0,
+    "statut": "ok"
+   },
+   "cloture": {
+    "status": "pret",
+    "label": "Clôture prête pour l'AG",
+    "checklist_ok": 13,
+    "checklist_total": 13
+   }
+  },
+  {
+   "year": 2024,
+   "provisoire": false,
+   "produits_eur": 9743.04,
+   "charges_eur": 21215.24,
+   "resultat_eur": -11472.2,
+   "produits_postes": {
+    "P1": 1193.04,
+    "P2": 8550.0
+   },
+   "charges_postes": {
+    "C1": 20466.57,
+    "C2": 520.07,
+    "C3": 228.6
+   },
+   "recettes_groupes": {
+    "Subventions et prix": 8550.0,
+    "Dons": 1193.04
+   },
+   "loyers_maison_eur": 0.0,
+   "charges_projets": {
+    "Musée Shapishiko": 20466.57,
+    "Fonctionnement": 520.07,
+    "Frais bancaires": 228.6
+   },
+   "terrain_pen": {
+    "Maison communautaire": 68113.7
+   },
+   "tresorerie": {
+    "debut_eur": 13397.55,
+    "fin_eur": 1925.35,
+    "ecart_eur": 0.0,
+    "statut": "ok"
+   },
+   "cloture": {
+    "status": "attention",
+    "label": "Clôture OK · points d'attention",
+    "checklist_ok": 12,
+    "checklist_total": 13
+   }
+  },
+  {
+   "year": 2025,
+   "provisoire": false,
+   "produits_eur": 6582.26,
+   "charges_eur": 7193.75,
+   "resultat_eur": -611.49,
+   "produits_postes": {
+    "P1": 5582.26,
+    "P2": 1000.0
+   },
+   "charges_postes": {
+    "C1": 6768.18,
+    "C2": 225.7,
+    "C3": 199.87
+   },
+   "recettes_groupes": {
+    "Dons": 5582.26,
+    "Subventions et prix": 1000.0
+   },
+   "loyers_maison_eur": 0.0,
+   "charges_projets": {
+    "Maison communautaire": 4504.84,
+    "Musée Shapishiko": 1412.4,
+    "Cours d'anglais": 850.94,
+    "Fonctionnement": 225.7,
+    "Frais bancaires": 199.87
+   },
+   "terrain_pen": {
+    "Maison communautaire": 20343.45
+   },
+   "tresorerie": {
+    "debut_eur": 1925.35,
+    "fin_eur": 1313.86,
+    "ecart_eur": 0.0,
+    "statut": "ok"
+   },
+   "cloture": {
+    "status": "pret",
+    "label": "Clôture prête pour l'AG",
+    "checklist_ok": 13,
+    "checklist_total": 13
+   }
+  },
+  {
+   "year": 2026,
+   "provisoire": true,
+   "produits_eur": 6113.76,
+   "charges_eur": 4618.17,
+   "resultat_eur": 1495.59,
+   "produits_postes": {
+    "P1": 4950.0,
+    "P2": 950.0,
+    "P6": 213.76
+   },
+   "charges_postes": {
+    "C1": 3977.63,
+    "C2": 539.24,
+    "C3": 101.3
+   },
+   "recettes_groupes": {
+    "Dons": 4950.0,
+    "Subventions et prix": 950.0,
+    "Autres recettes": 213.76
+   },
+   "loyers_maison_eur": 0.0,
+   "charges_projets": {
+    "Musée Shapishiko": 3977.63,
+    "Fonctionnement": 539.24,
+    "Frais bancaires": 101.3
+   },
+   "terrain_pen": {
+    "Maison communautaire": 12041.5,
+    "AKUUVision": 5405.81
+   },
+   "tresorerie": {
+    "debut_eur": 1313.86,
+    "fin_eur": 1341.17,
+    "ecart_eur": 0.0,
+    "statut": "ok"
+   },
+   "cloture": {
+    "status": "attention",
+    "label": "Clôture OK · points d'attention (exercice provisoire)",
+    "checklist_ok": 9,
+    "checklist_total": 13
+   }
+  }
+ ]
+}

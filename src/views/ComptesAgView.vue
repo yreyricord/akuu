@@ -1,5 +1,11 @@
 <template>
-  <div class="bg-cream-200 min-h-screen">
+  <div v-if="loading" class="bg-cream-200 min-h-screen flex items-center justify-center px-4">
+    <p class="text-night-500">Chargement des comptes depuis le journal…</p>
+  </div>
+  <div v-else-if="error" class="bg-cream-200 min-h-screen flex items-center justify-center px-4">
+    <p class="text-terracotta-700">{{ error }}</p>
+  </div>
+  <div v-else-if="data" class="bg-cream-200 min-h-screen">
     <!-- Couverture -->
     <header class="ag-cover relative overflow-hidden text-white px-4 pt-28 pb-14 md:pt-36 md:pb-20">
       <div class="container-narrow">
@@ -352,9 +358,10 @@ import LogisticsTrendChart from '@/components/comptes-ag/LogisticsTrendChart.vue
 import ProjectSpendingPie from '@/components/comptes-ag/ProjectSpendingPie.vue'
 import SectionTitle from '@/components/shared/SectionTitle.vue'
 import { useScrollAnimation } from '@/composables/useScrollAnimation.js'
-import data from '@/data/finances-ag.json'
+import { useFinancesPubliques } from '@/composables/useFinancesPubliques.js'
 
 useScrollAnimation()
+const { data, loading, error } = useFinancesPubliques()
 
 const euroFormatter = new Intl.NumberFormat('fr-FR', {
   style: 'currency',
@@ -394,45 +401,53 @@ const destinationStyle = {
   logistique: { border: 'border-ochre', label: 'text-ochre-600', bar: 'bg-ochre' }
 }
 
-const kpis = computed(() => [
-  {
-    label: 'Solde bancaire',
-    value: data.totals.cashAfterEngagements,
-    hint: 'Prévisionnel après remboursements et paiements non encore reçus (Fin septembre)',
-    border: 'border-forest'
-  },
-  {
-    label: 'Encaissé depuis 2017',
-    value: data.totals.received,
-    hint: 'Tout ce qui est arrivé sur le compte',
-    border: 'border-bleu'
-  },
-  {
-    label: 'Dépensé depuis 2017',
-    value: data.totals.spent,
-    hint: 'Tout ce qui en est sorti',
-    border: 'border-terracotta'
-  }
-])
+const kpis = computed(() => {
+  if (!data.value) return []
+  return [
+    {
+      label: 'Solde bancaire',
+      value: data.value.totals.bankBalance,
+      hint: 'Trésorerie fin d\'exercice en cours (journal Google)',
+      border: 'border-forest'
+    },
+    {
+      label: 'Encaissé depuis 2017',
+      value: data.value.totals.received,
+      hint: 'Tout ce qui est arrivé sur le compte',
+      border: 'border-bleu'
+    },
+    {
+      label: 'Dépensé depuis 2017',
+      value: data.value.totals.spent,
+      hint: 'Tout ce qui en est sorti',
+      border: 'border-terracotta'
+    }
+  ]
+})
 
-const maxDestination = Math.max(...data.destinations.map((item) => item.amount))
-const logistics2026 = data.logisticsByYear.find((item) => item.year === 2026)
+const maxDestination = computed(() =>
+  Math.max(...(data.value?.destinations ?? []).map((item) => item.amount), 1)
+)
+const logistics2026 = computed(() =>
+  data.value?.logisticsByYear?.find((item) => item.year === new Date().getFullYear()) ?? null
+)
 
-const projectNotesById = Object.fromEntries(
-  data.projects
+const projectNotesById = computed(() => Object.fromEntries(
+  (data.value?.projects ?? [])
     .filter((item) => item.note || item.lineItems?.length)
     .map((item) => [item.id, { note: item.note, lineItems: item.lineItems }])
-)
+))
 
-const projectPieSlices = computed(() =>
-  data.projectSpending.slices.map((slice) => ({
+const projectPieSlices = computed(() => {
+  if (!data.value) return []
+  return data.value.projectSpending.slices.map((slice) => ({
     ...slice,
-    share: data.projectSpending.total
-      ? (slice.amount / data.projectSpending.total) * 100
+    share: data.value.projectSpending.total
+      ? (slice.amount / data.value.projectSpending.total) * 100
       : 0,
-    ...projectNotesById[slice.id]
+    ...projectNotesById.value[slice.id]
   }))
-)
+})
 
 const logisticsColor = {
   'Site web et hébergement': 'bg-bleu',
@@ -441,17 +456,18 @@ const logisticsColor = {
 }
 
 const activeYear = computed(
-  () => data.years.find((year) => year.year === selectedYear.value) ?? null
+  () => data.value?.years.find((year) => year.year === selectedYear.value) ?? null
 )
 
 const activeYearStats = computed(() => {
+  if (!data.value) return []
   const year = activeYear.value
   if (!year) {
     return [
-      { label: 'Encaissé', value: euro(data.totals.received) },
-      { label: 'Dépensé', value: euro(data.totals.spent) },
-      { label: 'Ressources du projet', value: euro(data.totals.resources) },
-      { label: 'Exercices couverts', value: `${data.years.length}` }
+      { label: 'Encaissé', value: euro(data.value.totals.received) },
+      { label: 'Dépensé', value: euro(data.value.totals.spent) },
+      { label: 'Ressources du projet', value: euro(data.value.totals.resources) },
+      { label: 'Exercices couverts', value: `${data.value.years.length}` }
     ]
   }
   return [
@@ -479,11 +495,13 @@ const YEAR_COMMENTS = {
 }
 
 const activeYearComment = computed(() => {
+  if (!data.value) return ''
   const year = activeYear.value
   if (!year) {
-    return `Sur dix exercices, ${euro(data.totals.received)} sont entrés et ${euro(data.totals.spent)} sont sortis, soit un flux bancaire net positif de ${euro(data.totals.received - data.totals.spent)}.`
+    return `Sur ${data.value.years.length} exercices, ${euro(data.value.totals.received)} sont entrés et ${euro(data.value.totals.spent)} sont sortis, soit un flux bancaire net positif de ${euro(data.value.totals.received - data.value.totals.spent)}.`
   }
-  return `${YEAR_COMMENTS[year.year]} Couverture : ${year.coverage.toLowerCase()}.`
+  const comment = YEAR_COMMENTS[year.year] || ''
+  return `${comment}${comment ? ' ' : ''}Couverture : ${year.coverage.toLowerCase()}.`
 })
 </script>
 

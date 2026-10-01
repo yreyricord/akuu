@@ -100,6 +100,24 @@ export const routes = [
     name: 'merci',
     component: () => import('@/views/MerciView.vue')
   },
+  {
+    path: '/admin/login',
+    name: 'admin-login',
+    meta: { noIndex: true, adminLayout: true },
+    component: () => import('@/views/admin/AdminLoginView.vue')
+  },
+  {
+    path: '/admin/request-access',
+    name: 'admin-request-access',
+    meta: { noIndex: true, adminLayout: true },
+    component: () => import('@/views/admin/AdminRequestAccessView.vue')
+  },
+  {
+    path: '/admin',
+    name: 'admin-tresorerie',
+    meta: { noIndex: true, adminLayout: true },
+    component: () => import('@/views/admin/AdminTresorerieView.vue')
+  },
 ]
 
 export default routes

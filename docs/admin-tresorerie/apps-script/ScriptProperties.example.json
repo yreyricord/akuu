@@ -1,0 +1,13 @@
+{
+  "SITE_URL": "https://www.akuu.org",
+  "SPREADSHEET_ID": "1VHVisgWvALpvj6xTc5xW7XQ3qihIui6YHYDW00fa-6o",
+  "ROOT_FOLDER_ID": "1hAisydbVLOWUztBxi6XRCeGlrb8vBeSX",
+  "FACTURES_FOLDER_ID": "À_REMPLIR_APRES_setupDriveFolders",
+  "JWT_SECRET": "GÉNÉRER_32_CARACTÈRES_ALÉATOIRES",
+  "ADMIN_EMAIL": "yoannreyricord@gmail.com",
+  "ALLOW_SELF_VALIDATION": "true",
+  "TREASURER_1": "francois.million.FM@gmail.com",
+  "TREASURER_2": "akuu.asso@gmail.com",
+  "INITIAL_PASSWORD": "MotDePasseInitial-ÀChanger",
+  "WHITELIST_JSON": "[{\"email\":\"yoannreyricord@gmail.com\",\"role\":\"admin\",\"name\":\"Yoann Rey-Ricord\"},{\"email\":\"francois.million.FM@gmail.com\",\"role\":\"tresorier\",\"name\":\"François Million\"},{\"email\":\"akuu.asso@gmail.com\",\"role\":\"tresorier\",\"name\":\"Compte asso AKUU (test)\"}]"
+}

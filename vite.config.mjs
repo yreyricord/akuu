@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { createReadStream, createWriteStream } from 'fs'
 import { mkdir, readdir, readFile, stat, writeFile } from 'fs/promises'
@@ -43,6 +43,53 @@ function copyPublicDirResilient() {
       }
 
       await walk()
+    }
+  }
+}
+
+/** Dev only — proxy same-origin vers Apps Script (évite CORS localhost → script.google.com). */
+function devTresorerieProxyPlugin(remoteApiUrl) {
+  const remoteBase = remoteApiUrl?.trim()?.replace(/\/$/, '') || ''
+  if (!remoteBase) {
+    return { name: 'dev-tresorerie-proxy-stub' }
+  }
+
+  return {
+    name: 'dev-tresorerie-proxy',
+    apply: 'serve',
+    configureServer(server) {
+      server.middlewares.use(async (req, res, next) => {
+        if (!req.url?.startsWith('/api/tresorerie-proxy')) return next()
+
+        const queryPart = req.url.slice('/api/tresorerie-proxy'.length)
+        const targetUrl = remoteBase + (queryPart || '')
+
+        try {
+          const chunks = []
+          if (req.method !== 'GET' && req.method !== 'HEAD') {
+            for await (const chunk of req) chunks.push(chunk)
+          }
+          const body = chunks.length ? Buffer.concat(chunks) : undefined
+
+          const upstream = await fetch(targetUrl, {
+            method: req.method || 'POST',
+            redirect: 'follow',
+            headers: {
+              'Content-Type': req.headers['content-type'] || 'text/plain;charset=utf-8'
+            },
+            body
+          })
+
+          res.statusCode = upstream.status
+          const contentType = upstream.headers.get('content-type')
+          if (contentType) res.setHeader('Content-Type', contentType)
+          res.end(await upstream.text())
+        } catch (err) {
+          res.statusCode = 502
+          res.setHeader('Content-Type', 'application/json')
+          res.end(JSON.stringify({ ok: false, error: { message: err.message ?? 'Proxy Apps Script' } }))
+        }
+      })
     }
   }
 }
@@ -102,8 +149,12 @@ function devRelevesUploadPlugin() {
 }
 
 
-export default defineConfig({
-  plugins: [vue(), copyPublicDirResilient(), devRelevesUploadPlugin()],
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, __dirname, '')
+  const remoteApiUrl = env.VITE_TRESORERIE_API_URL || ''
+
+  return {
+  plugins: [vue(), copyPublicDirResilient(), devRelevesUploadPlugin(), devTresorerieProxyPlugin(remoteApiUrl)],
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src')
@@ -120,4 +171,5 @@ export default defineConfig({
     chunkSizeWarningLimit: 3500,
     reportCompressedSize: false
   }
+}
 })

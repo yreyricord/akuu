@@ -1,0 +1,11 @@
+# Emails autorisés — EXEMPLE (ne pas committer la vraie liste)
+
+# Copier vers whitelist-emails.txt (gitignored) ou Apps Script ScriptProperties
+
+# Trésoriers (rôle treasurer)
+# tresorier1@example.com
+# tresorier2@example.com
+
+# Adhérents (rôle member)
+# adherent1@example.com
+# adherent2@example.com

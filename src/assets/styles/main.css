@@ -137,6 +137,49 @@
   .card {
     @apply bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
   }
+
+  .admin-input {
+    @apply w-full rounded-xl border border-night-200 bg-white px-3 py-2.5 text-base text-night
+           placeholder:text-night-300 focus:border-forest focus:outline-none focus:ring-2 focus:ring-forest/20;
+    min-height: 44px;
+  }
+
+  textarea.admin-input {
+    min-height: 88px;
+  }
+
+  .admin-input:disabled {
+    @apply cursor-not-allowed bg-night-50 text-night-500;
+  }
+
+  .admin-touch-btn {
+    @apply inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl border border-forest/30
+           bg-forest/5 px-4 py-3 text-sm font-semibold text-forest transition
+           active:scale-[0.98] active:bg-forest/15 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .admin-touch-btn--secondary {
+    @apply border-night-200 bg-white text-night-600 active:bg-night-50;
+  }
+
+  .admin-action-row {
+    @apply flex flex-col gap-2 sm:flex-row sm:flex-wrap;
+  }
+
+  .admin-action-row > button,
+  .admin-action-row > a {
+    @apply w-full sm:w-auto sm:flex-1;
+    min-height: 48px;
+  }
+
+  .admin-bottom-nav {
+    @apply overflow-x-auto overscroll-x-contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .admin-bottom-nav ul {
+    @apply min-w-max sm:min-w-0;
+  }
 }
 
 @layer utilities {

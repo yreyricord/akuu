@@ -1,16 +1,32 @@
 import { mockBackend } from './mockBackend.js'
 import { fileToAttachment, filesToAttachments } from './filePayload.js'
 
-const API_URL = import.meta.env.VITE_TRESORERIE_API_URL?.trim() || ''
+const REMOTE_API_URL = import.meta.env.VITE_TRESORERIE_API_URL?.trim() || ''
+/** En dev, requêtes same-origin via proxy Vite (évite CORS vers script.google.com). */
+const API_URL =
+  import.meta.env.DEV && REMOTE_API_URL ? '/api/tresorerie-proxy' : REMOTE_API_URL
 const AUTH_KEY = 'akuu_tresorerie_auth'
 const mockCorrections = []
+const JOURNAL_CACHE_TTL_MS = 3 * 60 * 1000
+const _journalCache = {}
+
+function journalCacheHit(year) {
+  const e = _journalCache[String(year)]
+  if (e?.data && Date.now() - e.at < JOURNAL_CACHE_TTL_MS) return e.data
+  return null
+}
+
+export function invalidateJournalCache(year) {
+  if (year != null) delete _journalCache[String(year)]
+  else Object.keys(_journalCache).forEach((k) => { delete _journalCache[k] })
+}
 
 export function isMockMode() {
-  return !API_URL
+  return !REMOTE_API_URL
 }
 
 /** En production, l'absence d'API n'est jamais silencieuse (sinon le site afficherait des données fictives). */
-export const apiMisconfigured = import.meta.env.PROD && !API_URL
+export const apiMisconfigured = import.meta.env.PROD && !REMOTE_API_URL
 
 function getToken() {
   try {
@@ -52,14 +68,24 @@ async function remoteRequest(path, { method = 'GET', body, query } = {}) {
   try {
     res = await fetch(url, options)
   } catch {
-    throw new Error('Connexion impossible au serveur. Vérifiez votre connexion internet puis réessayez.')
+    const hint = import.meta.env.DEV
+      ? ' (dev local · redémarrez npm run dev si vous venez de modifier .env.local)'
+      : ''
+    throw new Error(
+      `Connexion impossible au serveur${hint}. Vérifiez votre connexion internet, ou que l’Apps Script AKUU est bien déployé (App.gs avec doPost).`
+    )
   }
   const text = await res.text()
+  if (/Fonction de script introuvable|Script function not found/i.test(text)) {
+    throw new Error(
+      'API Trésorerie non déployée : le script Google ne contient pas doGet/doPost (App.gs manquant). Redéployez l’Apps Script depuis akuu.asso@gmail.com puis mettez à jour VITE_TRESORERIE_API_URL.'
+    )
+  }
   let json
   try {
     json = JSON.parse(text)
   } catch {
-    throw new Error(res.ok ? 'Réponse du serveur illisible. Réessayez.' : `Serveur indisponible (${res.status}). Réessayez plus tard.`)
+    throw new Error(res.ok ? 'Réponse du serveur illisible. L’URL Apps Script est peut-être incorrecte ou obsolète.' : `Serveur indisponible (${res.status}). Réessayez plus tard.`)
   }
   if (!json.ok) {
     const err = new Error(json.error?.message ?? 'Erreur du serveur')
@@ -125,6 +151,21 @@ export const tresorerieApi = {
     return remoteRequest('/demandes/pending')
   },
 
+  getValidationStats() {
+    if (isMockMode()) {
+      return Promise.resolve({
+        demandes_total: 0,
+        demandes_pending: 0,
+        demandes_by_status: {},
+        factures_total: 0,
+        factures_pending: 0,
+        factures_by_status: {},
+        demandes_sheet_exists: true
+      })
+    }
+    return remoteRequest('/validation/stats', { query: {} })
+  },
+
   approveDemande(reference) {
     if (isMockMode()) return mockCall(mockBackend.approveDemande, reference)
     return remoteRequest(`/demandes/${reference}/approve`, { method: 'POST' })
@@ -133,6 +174,23 @@ export const tresorerieApi = {
   validateDemandeDevis(reference) {
     if (isMockMode()) return mockCall(mockBackend.validateDemandeDevis, reference)
     return remoteRequest(`/demandes/${reference}/validate-devis`, { method: 'POST' })
+  },
+
+  rejectDemandeDevis(reference, rejectReason) {
+    if (isMockMode()) return mockCall(mockBackend.rejectDemandeDevis, reference, rejectReason)
+    return remoteRequest(`/demandes/${reference}/reject-devis`, { method: 'POST', body: { reject_reason: rejectReason } })
+  },
+
+  async resubmitDemandeDevis(reference, devisFiles = []) {
+    if (isMockMode()) {
+      const meta = devisFiles.map((f) => ({ name: f.name, size: f.size, type: f.type }))
+      return mockCall(mockBackend.resubmitDemandeDevis, reference, meta)
+    }
+    const devis = await filesToAttachments(devisFiles)
+    return remoteRequest(`/demandes/${reference}/resubmit-devis`, {
+      method: 'POST',
+      body: { _attachments: { devis } }
+    })
   },
 
   rejectDemande(reference, rejectReason) {
@@ -199,6 +257,16 @@ export const tresorerieApi = {
     return remoteRequest('/factures/reimbursements-pending')
   },
 
+  getAvances(year) {
+    if (isMockMode()) return mockCall(mockBackend.getAvances, year)
+    return remoteRequest('/avances', { query: { year } })
+  },
+
+  getCaissePerou(year) {
+    if (isMockMode()) return mockCall(mockBackend.getCaissePerou, year)
+    return remoteRequest('/caisse-perou', { query: { year } })
+  },
+
   reimburseFacture(reference) {
     if (isMockMode()) return mockCall(mockBackend.reimburseFacture, reference)
     return remoteRequest(`/factures/${reference}/reimburse`, { method: 'POST' })
@@ -207,6 +275,21 @@ export const tresorerieApi = {
   getHistory() {
     if (isMockMode()) return mockCall(mockBackend.getHistory)
     return remoteRequest('/history')
+  },
+
+  getAllDemandes() {
+    if (isMockMode()) return mockCall(mockBackend.getHistory).then((h) => h?.demandes ?? [])
+    return remoteRequest('/demandes/all', { query: {} })
+  },
+
+  getAllFactures() {
+    if (isMockMode()) return mockCall(mockBackend.getHistory).then((h) => h?.factures ?? [])
+    return remoteRequest('/factures/all', { query: {} })
+  },
+
+  getAuditLog() {
+    if (isMockMode()) return mockCall(mockBackend.getHistory).then((h) => h?.audit ?? [])
+    return remoteRequest('/audit', { query: {} })
   },
 
   getCompta() {
@@ -221,7 +304,43 @@ export const tresorerieApi = {
     return remoteRequest('/releves/import', { method: 'POST', body: { ...releve, _attachments: { receipt } } })
   },
 
-  /** Chiffres de l'année en cours calculés depuis le journal Google */
+  /** Tous les exercices (2017 → année en cours) lus depuis les Google Sheets */
+  getExercices() {
+    if (isMockMode()) return Promise.resolve({ source: 'mock', years: [] })
+    return remoteRequest('/exercices')
+  },
+
+  getExercice(year) {
+    if (isMockMode()) return Promise.resolve({ year, live: false })
+    return remoteRequest(`/exercices/${year}`)
+  },
+
+  getExerciceHistorique(year) {
+    if (isMockMode()) return Promise.resolve([])
+    return remoteRequest(`/exercices/${year}/historique`)
+  },
+
+  rouvrirExercice(year, motif) {
+    if (isMockMode()) return Promise.reject(new Error('Réouverture disponible une fois l\'application connectée'))
+    return remoteRequest('/exercice/rouvrir', { method: 'POST', body: { year: Number(year), motif } })
+  },
+
+  recloturerExercice(year, opts = {}) {
+    if (isMockMode()) return Promise.reject(new Error('Reclôture disponible une fois l\'application connectée'))
+    return remoteRequest('/exercice/recloturer', { method: 'POST', body: { year: Number(year), ...opts } })
+  },
+
+  regenererCloture(year, opts = {}) {
+    if (isMockMode()) return Promise.reject(new Error('Régénération disponible une fois l\'application connectée'))
+    return remoteRequest('/exercice/regenerer', { method: 'POST', body: { year: Number(year), ...opts } })
+  },
+
+  getFinancesPubliques() {
+    if (isMockMode()) return Promise.reject(new Error('Finances publiques disponibles une fois l\'application connectée'))
+    return remoteRequest('/finances-publiques')
+  },
+
+  /** Chiffres d'une année calculés depuis le journal Google (alias d'un exercice) */
   getComptaAnnee(year) {
     if (isMockMode()) return Promise.resolve({ year, live: false })
     return remoteRequest('/compta-annee', { query: { year } })
@@ -239,9 +358,29 @@ export const tresorerieApi = {
   },
 
   /** Journal de l'année en cours (Google Sheet) — { live, rows, sheet_url } */
-  getJournalAnnee(year) {
+  getJournalAnnee(year, { force = false } = {}) {
     if (isMockMode()) return Promise.resolve({ year, live: false, rows: [] })
-    return remoteRequest('/journal-annee', { query: { year } })
+    const y = String(year)
+    if (!force) {
+      const hit = journalCacheHit(y)
+      if (hit) return Promise.resolve(hit)
+      if (_journalCache[y]?.inflight) return _journalCache[y].inflight
+    }
+    const inflight = remoteRequest('/journal-annee', { query: { year } })
+      .then((data) => {
+        _journalCache[y] = { at: Date.now(), data, inflight: null }
+        return data
+      })
+      .catch((e) => {
+        if (_journalCache[y]) _journalCache[y].inflight = null
+        throw e
+      })
+    _journalCache[y] = { at: _journalCache[y]?.at || 0, data: _journalCache[y]?.data, inflight }
+    return inflight
+  },
+
+  peekJournalAnnee(year) {
+    return journalCacheHit(year)
   },
 
   /** Corrections du trésorier (suppressions année en cours, factures ajoutées) */
@@ -258,6 +397,26 @@ export const tresorerieApi = {
       return Promise.resolve(c)
     }
     return remoteRequest('/corrections/delete', { method: 'POST', body: { reference, year, reason } })
+  },
+
+  updateJournalLine({ reference, year, project, payment_method, category }) {
+    if (isMockMode()) {
+      return Promise.resolve({ reference, year, project, payment_method, tab: 'Detail_PM' })
+    }
+    return remoteRequest('/corrections/update', { method: 'POST', body: { reference, year, project, payment_method, category } })
+      .then((res) => { invalidateJournalCache(year); return res })
+  },
+
+  getTresorerieMeta() {
+    if (isMockMode()) {
+      return Promise.resolve({ projects: [], categories: [] })
+    }
+    return remoteRequest('/tresorerie-meta', { query: {} })
+  },
+
+  saveTresorerieMeta(body) {
+    if (isMockMode()) return Promise.resolve(body)
+    return remoteRequest('/tresorerie-meta', { method: 'POST', body })
   },
 
   async attachInvoice(row, file) {

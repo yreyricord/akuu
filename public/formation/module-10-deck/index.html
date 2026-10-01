@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<script src="../module-1-deck/deck-interactions.js" defer></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400;1,700&amp;family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../deck-theme.css">
+  <style>
+    :root {
+      --pad-top: 88px; --pad-bottom: 74px; --pad-x: 110px;
+      --m10-chapter: linear-gradient(135deg, #8B3A2A 0%, var(--terracotta) 48%, #5C2418 100%);
+    }
+    .deck-formateur-note {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 14px var(--pad-x);
+      background: rgba(237,237,237,0.9);
+      border-top: 2px solid var(--terracotta);
+    }
+    .deck-formateur-note p {
+      font-family: 'Inter', sans-serif;
+      font-size: var(--fs-1);
+      font-style: italic;
+      color: var(--blue-sky);
+      margin: 0;
+    }
+    .deck-carousel__slide .card {
+      display: flex !important;
+      flex-direction: column;
+      padding: 32px 36px !important;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.10);
+    }
+    .deck-carousel__slide .card .deck-card-fill { margin-top: auto; padding-top: 16px; }
+    .deck-carousel__slide .card .deck-card-fill__box {
+      border-radius: 10px; padding: 14px 18px;
+      font-family: 'Inter', sans-serif; font-size: var(--fs-1); line-height: 1.5;
+      color: var(--night-2); background: rgba(231,111,81,0.10);
+    }
+    .deck-call-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 18px; width: 100%; flex: 1; align-content: center;
+    }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="deck-stage" from="./deck-stage.js" width="1920" height="1080" hint-size="100%,100%" data-uneditable="">
+
+  <!-- 01 COUVERTURE -->
+  <section data-label="01 · Couverture" data-speaker-notes="Accueil module 10. Dernier module du groupe 3 avant l'évaluation. Focus pratique : kit, règlement, vie à PM, puis appel terrain." style="background: radial-gradient(135% 130% at 82% 12%, #0a63b4 0%, var(--blue-akuu) 42%, #022a54 72%, #011d3c 100%); display:flex; flex-direction:column; justify-content:flex-end; padding:0 var(--pad-x) 120px; overflow:hidden;">
+    <div style="position:absolute; inset:0; background: radial-gradient(60% 60% at 85% 20%, rgba(231,111,81,0.22) 0%, rgba(231,111,81,0) 60%);"></div>
+    <img src="images/collibri-akuu.png" style="position:absolute; right:60px; top:120px; height:460px; object-fit:contain; filter:drop-shadow(0 24px 60px rgba(0,0,0,0.4));" alt="Colibri AKUU">
+    <img src="images/LOGOAKUU.png" style="position:absolute; top:44px; left:var(--pad-x); height:112px; object-fit:contain;" alt="AKUU">
+    <div class="bar" style="background:linear-gradient(90deg, var(--terracotta), var(--ochre));"></div>
+    <div class="kicker anim" style="color:var(--ochre); margin-bottom:28px; position:relative;">Module 10 · Formation AKUU · Groupe 3</div>
+    <h1 class="anim anim-d1" style="font-family:'Playfair Display',serif; font-size:var(--fs-5); font-weight:800; color:var(--cream); margin:0; line-height:0.98; position:relative; max-width:1500px;">Vivre sa mission à Puerto Miguel</h1>
+    <p class="anim anim-d2" style="font-family:'Playfair Display',serif; font-size:var(--fs-4); font-style:italic; color:var(--blue-pale); margin:14px 0 0; position:relative;">Organisation · vie quotidienne · immersion · appel terrain</p>
+    <div class="src" style="position:static; opacity:0.7; margin-top:34px; color:var(--blue-pale);">Guide 2026 · Règlement volontaire · Kit de bienvenue · Livret bénévoles</div>
+  </section>
+
+  <!-- 02 SOMMAIRE -->
+  <section data-label="02 · Sommaire" class="toc" style="background:var(--role-toc-bg); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
+    <img src="images/LOGOAKUU.png" class="logo toc-logo" alt="AKUU">
+    <div class="topbar" style="background:linear-gradient(90deg, var(--terracotta), var(--ochre));"></div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:var(--fs-4); font-weight:800; color:var(--cream); margin:0 0 34px;">Sommaire</h1>
+    <div class="toc-list">
+      <div class="toc-row"><span class="toc-num">01</span><div class="toc-txt"><div class="toc-title">Kit &amp; avant de partir</div><div class="toc-desc">Dossier admin · assurances · vaccins · valise</div></div><span class="toc-arrow">→</span></div>
+      <div class="toc-row"><span class="toc-num">02</span><div class="toc-txt"><div class="toc-title">Règlement &amp; bonnes conduites</div><div class="toc-desc">Sécurité · vie collective · interdits · image</div></div><span class="toc-arrow">→</span></div>
+      <div class="toc-row"><span class="toc-num">03</span><div class="toc-txt"><div class="toc-title">Vie quotidienne à Puerto Miguel</div><div class="toc-desc">Trajet · Casa AKUU · eau · repas · net · logement</div></div><span class="toc-arrow">→</span></div>
+      <div class="toc-row"><span class="toc-num">04</span><div class="toc-txt"><div class="toc-title">Missions &amp; posture terrain</div><div class="toc-desc">Rôle · Casa Shapishiko · autonomie · bilan</div></div><span class="toc-arrow">→</span></div>
+      <div class="toc-row"><span class="toc-num">05</span><div class="toc-txt"><div class="toc-title">Appel avec l'équipe terrain</div><div class="toc-desc">Échange live · questions · retours d'expérience</div></div><span class="toc-arrow">→</span></div>
+    </div>
+  </section>
+
+  <!-- 03 POURQUOI -->
+  <section data-label="03 · Pourquoi ce module" style="background:var(--ochre-light); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--terracotta);">01 · Accueil</div>
+    <div class="topbar" style="background:var(--terracotta);"></div>
+    <h1 class="h" style="color:#8B3A2A;">Du cadre éthique au quotidien concret</h1>
+    <div style="display:grid; grid-template-columns:1.2fr 1fr; gap:24px; flex:1; align-content:center;">
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div class="card" style="background:var(--cream);"><b style="color:#8B3A2A;">Tu as déjà</b><p class="small" style="color:var(--night-2); margin-top:8px;">Amazonie (M1–M4) · éthique (M5–M7) · identité AKUU (M8) · musée (M9).</p></div>
+        <div class="card" style="background:var(--cream);"><b style="color:#8B3A2A;">Ici tu prépares</b><p class="small" style="color:var(--night-2); margin-top:8px;">Le kit administratif, le règlement, la Casa, le trajet Nauta → Puerto Miguel, et la posture au quotidien.</p></div>
+        <div class="card" style="background:var(--terracotta);"><b style="color:var(--cream);">Clôture live</b><p class="small" style="color:var(--ochre-light); margin-top:8px;">Dernier chapitre = appel avec l'équipe sur le terrain ou la dernière équipe revenue · questions libres.</p></div>
+      </div>
+      <div class="card" style="background:var(--cream); padding:36px 40px; display:flex; flex-direction:column; justify-content:center;">
+        <p style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-style:italic; color:var(--blue-akuu); margin:0; line-height:1.35;">« Même en dehors des heures de mission, les volontaires restent des représentants d'AKUU. »</p>
+        <p class="small" style="color:var(--terracotta); font-weight:600; margin:20px 0 0;">Règlement volontaire AKUU 2025</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PARTIE 01 ===== -->
+  <section data-label="04 · Titre Partie 1" style="background:var(--m10-chapter); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="bar" style="background:var(--ochre);"></div>
+    <div style="font-family:'Playfair Display',serif; font-size:var(--fs-6); font-weight:800; color:rgba(253,233,209,0.18); position:absolute; top:40px; right:90px;">01</div>
+    <div class="kicker" style="color:var(--ochre); margin-bottom:22px;">Partie 01</div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:var(--fs-5); font-weight:700; color:var(--cream); margin:0;">Kit &amp; avant de partir</h1>
+    <div style="width:120px; height:6px; background:var(--ochre); margin:36px 0 26px;"></div>
+    <p class="lead" style="color:var(--ochre-light);">Dossier · assurances · santé · valise</p>
+  </section>
+
+  <section data-label="05 · Dossier bénévole" style="background:var(--cream); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--terracotta);">01 · Admin</div>
+    <div class="topbar" style="background:var(--terracotta);"></div>
+    <h1 class="h" style="color:#8B3A2A;">Le dossier bénévole (obligatoire)</h1>
+    <p class="lead" style="color:var(--night-2); margin:0 0 18px;">Copier les documents · ne pas remplir les originaux · envoyer un ZIP à <b>akuu.asso@gmail.com</b></p>
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:16px; flex:1; align-content:center;">
+      <div class="card" style="background:var(--ochre-light);"><b style="color:#8B3A2A;">À remplir</b><p class="small" style="color:var(--night-2); margin-top:10px;">Fiche de renseignements · Décharge de responsabilité · Engagement logement Casa AKUU · (option) Certification de présence</p></div>
+      <div class="card" style="background:var(--ochre-light);"><b style="color:#8B3A2A;">À lire</b><p class="small" style="color:var(--night-2); margin-top:10px;">Guide 2026 · Règlement volontaire · Livret bénévoles · Règles de bonnes conduites · AKUUcracy / réflexion impact</p></div>
+      <div class="card" style="background:var(--cream); border-left:6px solid var(--terracotta); grid-column:span 2;"><b style="color:#8B3A2A;">Nomenclature ZIP</b><p class="small" style="color:var(--night-2); margin-top:8px;"><code>Nom_Prénom_Projets_Départ_Retour.zip</code> · questionnaire de départ Google Forms avant le départ</p></div>
+    </div>
+    <div class="deck-formateur-note"><p>Note formateur : Vérifier que chaque participant a bien reçu le kit. Lister les docs manquants avant l'appel terrain.</p></div>
+  </section>
+
+  <section data-label="06 · Santé &amp; formalités" style="background:var(--ochre-light); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--terracotta);">01 · Santé</div>
+    <div class="topbar" style="background:var(--terracotta);"></div>
+    <h1 class="h" style="color:#8B3A2A;">Santé, assurances, formalités</h1>
+    <div class="deck-carousel" data-deck-carousel style="flex:1; min-height:0;">
+      <div class="deck-carousel__stage">
+        <button type="button" class="deck-carousel__arrow deck-carousel__prev" aria-label="Précédent"></button>
+        <div class="deck-carousel__viewport">
+        <div class="deck-carousel__slide deck-carousel__slide--active">
+          <div class="card" style="--card-accent:var(--terracotta); height:100%; border-left:8px solid var(--terracotta);">
+            <div class="xs" style="color:var(--terracotta); font-weight:800; letter-spacing:2px;">ASSURANCE</div>
+            <div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:#8B3A2A; margin:10px 0 14px;">Santé + évacuation d'urgence</div>
+            <div class="body" style="color:var(--night-2);">Preuve d'assurance valide avant le départ · durée couvrant tout le séjour (attention si &gt; 3 mois). Ex. Mondial / Europ Assistance, banque, mutuelle étudiante.</div>
+            <div class="deck-card-fill"><div class="deck-card-fill__box"><b style="color:var(--terracotta);">Aussi</b> · Fil d'Ariane (France Diplomatie) pour signaler ton séjour.</div></div>
+          </div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card" style="--card-accent:var(--terracotta); height:100%; border-left:8px solid var(--terracotta);">
+            <div class="xs" style="color:var(--terracotta); font-weight:800; letter-spacing:2px;">VACCINS</div>
+            <div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:#8B3A2A; margin:10px 0 14px;">Recommandés (avis médical)</div>
+            <div class="body" style="color:var(--night-2);">Fièvre jaune · hépatite A/B · typhoïde · tétanos / DTPolio · rage éventuelle. Paludisme : rare à Puerto Miguel · traiter selon avis médecin (éviter Lariam).</div>
+            <div class="deck-card-fill"><div class="deck-card-fill__box"><b style="color:var(--terracotta);">Centre de vaccinations</b> · demander une ordonnance complète pour la trousse.</div></div>
+          </div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card" style="--card-accent:var(--terracotta); height:100%; border-left:8px solid var(--terracotta);">
+            <div class="xs" style="color:var(--terracotta); font-weight:800; letter-spacing:2px;">TROUSSE</div>
+            <div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:#8B3A2A; margin:10px 0 14px;">Pharmacie personnelle</div>
+            <div class="body" style="color:var(--night-2);">Antiseptique, pansements, paracétamol / ibuprofène, anti-diarrhéique, anti-nausée, répulsif tropical, Apaisil, Aquatabs / gourde filtrante, pince à tiques, boules Quies.</div>
+            <div class="deck-card-fill"><div class="deck-card-fill__box"><b style="color:var(--terracotta);">Réalité</b> · accès aux soins limité sur place · mieux vaut trop que pas assez.</div></div>
+          </div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card" style="--card-accent:var(--blue-akuu); height:100%; border-left:8px solid var(--blue-akuu);">
+            <div class="xs" style="color:var(--blue-akuu); font-weight:800; letter-spacing:2px;">PAPIERS</div>
+            <div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--blue-akuu); margin:10px 0 14px;">Passeport, visa, carte bancaire</div>
+            <div class="body" style="color:var(--night-2);">Passeport valide · visa : durée accordée variable selon le contrôleur (parfois 6 mois). Carte bancaire + cash en soles pour Nauta / Iquitos.</div>
+            <div class="deck-card-fill"><div class="deck-card-fill__box"><b style="color:var(--blue-akuu);">Astuce</b> · photocopies / scans cloud des documents essentiels.</div></div>
+          </div>
+        </div>
+        </div>
+        <button type="button" class="deck-carousel__arrow deck-carousel__next" aria-label="Suivant"></button>
+      </div>
+      <div class="deck-carousel__nav"><div class="deck-carousel__dots">
+        <button type="button" class="deck-carousel__dot deck-carousel__dot--active" aria-selected="true" aria-label="Assurance"></button>
+        <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Vaccins"></button>
+        <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Trousse"></button>
+        <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Papiers"></button>
+      </div></div>
+    </div>
+  </section>
+
+  <section data-label="07 · Valise" style="background:var(--cream); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--terracotta);">01 · Valise</div>
+    <div class="topbar" style="background:var(--terracotta);"></div>
+    <h1 class="h" style="color:#8B3A2A;">Voyager léger, mais complet</h1>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; flex:1; align-content:center;">
+      <div class="card" style="background:var(--ochre-light);"><b style="color:#8B3A2A;">Vêtements</b><p class="small" style="color:var(--night-2); margin-top:10px;">T-shirts respirants (éviter coton) · manches longues anti-moustiques · pantalons trek · k-way · polaire légère · maillot · serviette microfibre</p></div>
+      <div class="card" style="background:var(--ochre-light);"><b style="color:#8B3A2A;">Matériel</b><p class="small" style="color:var(--night-2); margin-top:10px;">Lampe frontale · batterie externe · sac étanche · moustiquaire · drap léger · gourde filtrante · savons biodégradables</p></div>
+      <div class="card" style="background:var(--terracotta);"><b style="color:var(--cream);">Posture valise</b><p class="small" style="color:var(--ochre-light); margin-top:10px;">Discrétion sur le high-tech · ne pas importer ce qui se trouve localement · consommer sobrement sur place</p></div>
+    </div>
+  </section>
+
+  <!-- ===== PARTIE 02 ===== -->
+  <section data-label="08 · Titre Partie 2" style="background:var(--m10-chapter); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="bar" style="background:var(--ochre);"></div>
+    <div style="font-family:'Playfair Display',serif; font-size:var(--fs-6); font-weight:800; color:rgba(253,233,209,0.18); position:absolute; top:40px; right:90px;">02</div>
+    <div class="kicker" style="color:var(--ochre); margin-bottom:22px;">Partie 02</div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:var(--fs-5); font-weight:700; color:var(--cream); margin:0;">Règlement &amp; bonnes conduites</h1>
+    <div style="width:120px; height:6px; background:var(--ochre); margin:36px 0 26px;"></div>
+    <p class="lead" style="color:var(--ochre-light);">Cadre collectif · interdits · image AKUU</p>
+  </section>
+
+  <section data-label="09 · Règlement volontaire" style="background:var(--ochre-light); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--terracotta);">02 · Règlement 2025</div>
+    <div class="topbar" style="background:var(--terracotta);"></div>
+    <h1 class="h" style="color:#8B3A2A;">Sept piliers du règlement</h1>
+    <div class="deck-carousel" data-deck-carousel style="flex:1; min-height:0;">
+      <div class="deck-carousel__stage">
+        <button type="button" class="deck-carousel__arrow deck-carousel__prev" aria-label="Précédent"></button>
+        <div class="deck-carousel__viewport">
+        <div class="deck-carousel__slide deck-carousel__slide--active">
+          <div class="card" style="height:100%; border-left:8px solid var(--terracotta);">
+            <div class="xs" style="color:var(--terracotta); font-weight:800;">1 · SANTÉ &amp; SÉCURITÉ</div>
+            <div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:#8B3A2A; margin:10px 0 14px;">Ne pas partir seul dans la jungle</div>
+            <div class="body" style="color:var(--night-2);">Prévenir avant de s'éloigner · baignade habillée de façon adaptée · pas de chasse · assurance + vaccins à jour.</div>
+          </div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card" style="height:100%; border-left:8px solid var(--terracotta);">
+            <div class="xs" style="color:var(--terracotta); font-weight:800;">2 · LIEUX DE VIE</div>
+            <div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:#8B3A2A; margin:10px 0 14px;">Économiser · trier · partager</div>
+            <div class="body" style="color:var(--night-2);">Eau, électricité, gaz · produits biodégradables · espaces communs rangés · fermer la nourriture et le gaz · tâches ménagères partagées.</div>
+          </div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card" style="height:100%; border-left:8px solid var(--terracotta);">
+            <div class="xs" style="color:var(--terracotta); font-weight:800;">3 · VIE COLLECTIVE</div>
+            <div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:#8B3A2A; margin:10px 0 14px;">Bienveillance &amp; humilité</div>
+            <div class="body" style="color:var(--night-2);">Respect habitants, enfants, volontaires · pas de jugement · ne pas s'immiscer dans les affaires familiales · veiller à ce que personne ne soit isolé.</div>
+          </div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card deck-carousel__card--alert" style="height:100%;">
+            <div class="xs" style="color:var(--ochre-light); font-weight:800;">4 · INTERDITS</div>
+            <div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--cream); margin:10px 0 14px;">Lignes rouges</div>
+            <div class="body" style="color:var(--cream);">Pas d'alcool / drogues en mission ou devant le village (sauf cadre festif) · pas de relation amoureuse avec habitants · pas d'argent / nourriture aux enfants · ne pas toucher les animaux · pas de smoke devant enfants.</div>
+          </div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card" style="height:100%; border-left:8px solid var(--blue-akuu);">
+            <div class="xs" style="color:var(--blue-akuu); font-weight:800;">5 · IMAGE</div>
+            <div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--blue-akuu); margin:10px 0 14px;">Consentement photo</div>
+            <div class="body" style="color:var(--night-2);">Pas de photos d'enfants sans autorisation AKUU + parents · consentement explicite pour toute personne · discrétion lors des cérémonies.</div>
+          </div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card" style="height:100%; border-left:8px solid var(--green-forest);">
+            <div class="xs" style="color:var(--green-forest); font-weight:800;">6 · MISSIONS</div>
+            <div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--green-forest); margin:10px 0 14px;">Sérieux &amp; bilan</div>
+            <div class="body" style="color:var(--night-2);">Sessions d'accueil · implication autonome · réunions d'équipe · rapport / bilan de fin de mission.</div>
+          </div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card" style="height:100%; border-left:8px solid var(--green-forest);">
+            <div class="xs" style="color:var(--green-forest); font-weight:800;">7 · VIE LOCALE</div>
+            <div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--green-forest); margin:10px 0 14px;">Casquette AKUU 24/7</div>
+            <div class="body" style="color:var(--night-2);">Participer à la vie du village · varier les commerces · accepter les propositions locales · comportement cohérent hors « heures de mission ».</div>
+          </div>
+        </div>
+        </div>
+        <button type="button" class="deck-carousel__arrow deck-carousel__next" aria-label="Suivant"></button>
+      </div>
+      <div class="deck-carousel__nav"><div class="deck-carousel__dots">
+        <button type="button" class="deck-carousel__dot deck-carousel__dot--active" aria-selected="true" aria-label="Santé"></button>
+        <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Lieux"></button>
+        <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Collectif"></button>
+        <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Interdits"></button>
+        <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Image"></button>
+        <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Missions"></button>
+        <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Locale"></button>
+      </div></div>
+    </div>
+  </section>
+
+  <section data-label="10 · Bonnes conduites" style="background:var(--cream); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--terracotta);">02 · Bonnes conduites</div>
+    <div class="topbar" style="background:var(--terracotta);"></div>
+    <h1 class="h" style="color:#8B3A2A;">Trois axes d'attention</h1>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px; flex:1; align-content:center;">
+      <div class="card" style="background:var(--ochre-light);"><b style="color:#8B3A2A;">Environnement</b><p class="small" style="color:var(--night-2); margin-top:10px;">Vols directs si possible · bus / bateau / marche · consommer local · pas d'import inutile · zéro plastique · sobriété numérique</p></div>
+      <div class="card" style="background:var(--ochre-light);"><b style="color:#8B3A2A;">Économique &amp; social</b><p class="small" style="color:var(--night-2); margin-top:10px;">Ne pas prendre le travail d'un local · travailler <b>avec</b> · rémunération juste si emploi · budget discret vs niveau de vie local</p></div>
+      <div class="card" style="background:var(--ochre-light);"><b style="color:#8B3A2A;">Image</b><p class="small" style="color:var(--night-2); margin-top:10px;">S'informer avant · ouverture · témoignage au retour pour déconstruire les clichés · pas le mythe du projet parfait</p></div>
+    </div>
+  </section>
+
+  <!-- ===== PARTIE 03 ===== -->
+  <section data-label="11 · Titre Partie 3" style="background:var(--m10-chapter); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="bar" style="background:var(--ochre);"></div>
+    <div style="font-family:'Playfair Display',serif; font-size:var(--fs-6); font-weight:800; color:rgba(253,233,209,0.18); position:absolute; top:40px; right:90px;">03</div>
+    <div class="kicker" style="color:var(--ochre); margin-bottom:22px;">Partie 03</div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:var(--fs-5); font-weight:700; color:var(--cream); margin:0;">Vie quotidienne à Puerto Miguel</h1>
+    <div style="width:120px; height:6px; background:var(--ochre); margin:36px 0 26px;"></div>
+    <p class="lead" style="color:var(--ochre-light);">Trajet · logement · eau · repas · internet</p>
+  </section>
+
+  <section data-label="12 · Trajet" style="background:var(--cream); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--terracotta);">03 · Trajet</div>
+    <div class="topbar" style="background:var(--terracotta);"></div>
+    <h1 class="h" style="color:#8B3A2A;">Se rendre à Puerto Miguel</h1>
+    <div class="card" style="background:var(--terracotta); margin-bottom:18px; flex-shrink:0; padding:22px 28px 26px;">
+      <div class="deck-timeline" data-deck-timeline style="--deck-timeline-cols:4;">
+        <div class="deck-timeline__years"><div>1</div><div>2</div><div>3</div><div>4</div></div>
+        <div class="deck-timeline__rail"><div class="deck-timeline__line"></div><div class="deck-timeline__dots"><span class="deck-timeline__dot"></span><span class="deck-timeline__dot"></span><span class="deck-timeline__dot"></span><span class="deck-timeline__dot"></span></div></div>
+        <div class="deck-timeline__descs">
+          <div class="xs" style="color:var(--cream);">Iquitos<br><b>Aéroport</b></div>
+          <div class="xs" style="color:var(--cream);">Nauta<br><b>Collectivo</b></div>
+          <div class="xs" style="color:var(--cream);">Port<br><b>Grifon verde</b></div>
+          <div class="xs" style="color:var(--cream);">PM<br><b>Bateau</b></div>
+        </div>
+      </div>
+    </div>
+    <div class="deck-carousel" data-deck-carousel data-deck-sync-timeline style="flex:1; min-height:0;">
+      <div class="deck-carousel__stage">
+        <button type="button" class="deck-carousel__arrow deck-carousel__prev" aria-label="Précédent"></button>
+        <div class="deck-carousel__viewport">
+        <div class="deck-carousel__slide deck-carousel__slide--active">
+          <div class="card" style="height:100%;"><div class="xs" style="color:var(--terracotta); font-weight:800;">ÉTAPE 1</div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:#8B3A2A; margin:10px 0 14px;">Iquitos</div><div class="body" style="color:var(--night-2);">Aéroport le plus proche. Mototaxi vers « Collectivos Sachachorro para Nauta ».</div></div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card" style="height:100%;"><div class="xs" style="color:var(--terracotta); font-weight:800;">ÉTAPE 2</div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:#8B3A2A; margin:10px 0 14px;">Nauta</div><div class="body" style="color:var(--night-2);">Mototaxi jusqu'au « Puerto de Nauta Grifon verde ». Arriver tôt (idéalement avant 9h30).</div></div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card" style="height:100%;"><div class="xs" style="color:var(--terracotta); font-weight:800;">ÉTAPE 3</div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:#8B3A2A; margin:10px 0 14px;">Contacter Marín / Ernaldo</div><div class="body" style="color:var(--night-2);">Habitants de Puerto Miguel · trajets quotidiens · ≈ 10 soles. Longe le port à gauche en arrivant.</div></div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card" style="height:100%;"><div class="xs" style="color:var(--terracotta); font-weight:800;">SUR PLACE</div><div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:#8B3A2A; margin:10px 0 14px;">Colectivos &amp; privés</div><div class="body" style="color:var(--night-2);">Port Nauta ≈ 7h30–8h · départs 9h–10h30. Privés (Ángel, Fernando, Manuel) ≈ 20 soles. Enseignants : ven. midi → dim. après-midi vers Iquitos.</div></div>
+        </div>
+        </div>
+        <button type="button" class="deck-carousel__arrow deck-carousel__next" aria-label="Suivant"></button>
+      </div>
+      <div class="deck-carousel__nav"><div class="deck-carousel__dots">
+        <button type="button" class="deck-carousel__dot deck-carousel__dot--active" aria-selected="true" aria-label="Iquitos"></button>
+        <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Nauta"></button>
+        <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Contact"></button>
+        <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Sur place"></button>
+      </div></div>
+    </div>
+  </section>
+
+  <section data-label="13 · Hébergement" style="background:var(--ochre-light); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--terracotta);">03 · Logement</div>
+    <div class="topbar" style="background:var(--terracotta);"></div>
+    <h1 class="h" style="color:#8B3A2A;">Trois options d'hébergement</h1>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; flex:1; align-content:center;">
+      <div class="card" style="background:var(--cream);"><b style="color:#8B3A2A;">Casa AKUU</b><p class="small" style="color:var(--night-2); margin-top:10px;">Maison communautaire · dortoir collectif · lieu de vie et de travail des volontaires · règles de vie partagée</p></div>
+      <div class="card" style="background:var(--cream);"><b style="color:#8B3A2A;">Chez Gladis &amp; Samuel</b><p class="small" style="color:var(--night-2); margin-top:10px;">Famille du village · chambre partagée (3 lits) · électro ≈ 18h–21h (groupe)</p></div>
+      <div class="card" style="background:var(--cream);"><b style="color:#8B3A2A;">Casa Luis (collège)</b><p class="small" style="color:var(--night-2); margin-top:10px;">Chambre individuelle · avec enseignants · ≈ 120 soles / mois · électricité continue</p></div>
+    </div>
+    <div class="card" style="background:var(--terracotta); margin-top:16px;"><b style="color:var(--cream);">Participation Casa AKUU</b><p class="small" style="color:var(--ochre-light); margin-top:8px;"><b>112 € / mois</b> complet · <b>56 €</b> demi-mois · paiement avant le 5 · virement ou don (reçu fiscal) · engagement signé avant départ</p></div>
+  </section>
+
+  <section data-label="14 · Casa AKUU règles" style="background:var(--cream); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--terracotta);">03 · Casa AKUU</div>
+    <div class="topbar" style="background:var(--terracotta);"></div>
+    <h1 class="h" style="color:#8B3A2A;">Vie à la maison communautaire</h1>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; flex:1; align-content:center;">
+      <div class="card" style="background:var(--ochre-light);"><b style="color:#8B3A2A;">On fait</b><p class="small" style="color:var(--night-2); margin-top:10px;">Tâches ménagères · calme matin/soir · prévenir si absence · tri déchets · réunions collectives · dialogue en cas de conflit</p></div>
+      <div class="card" style="background:var(--ochre-light);"><b style="color:#8B3A2A;">On ne fait pas</b><p class="small" style="color:var(--night-2); margin-top:10px;">Éparpiller ses affaires · gaspiller eau/électricité · substances illégales · monopoliser espaces communs</p></div>
+      <div class="card" style="background:var(--cream); border-left:6px solid var(--blue-akuu);"><b style="color:var(--blue-akuu);">Eau</b><p class="small" style="color:var(--night-2); margin-top:8px;">Fleuve = douche / chasse · pluie = douche / cuisine (bouillir) · bouteille ≈ 7 soles / 2 L · gourde filtrante recommandée</p></div>
+      <div class="card" style="background:var(--cream); border-left:6px solid var(--green-forest);"><b style="color:var(--green-forest);">Électricité</b><p class="small" style="color:var(--night-2); margin-top:8px;">Limitée (groupe / solaire) · lampe frontale + powerbank · sobriété numérique</p></div>
+    </div>
+  </section>
+
+  <section data-label="15 · Repas &amp; net" style="background:var(--ochre-light); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--terracotta);">03 · Quotidien</div>
+    <div class="topbar" style="background:var(--terracotta);"></div>
+    <h1 class="h" style="color:#8B3A2A;">Repas, hygiène, internet</h1>
+    <div class="deck-carousel" data-deck-carousel style="flex:1; min-height:0;">
+      <div class="deck-carousel__stage">
+        <button type="button" class="deck-carousel__arrow deck-carousel__prev" aria-label="Précédent"></button>
+        <div class="deck-carousel__viewport">
+        <div class="deck-carousel__slide deck-carousel__slide--active">
+          <div class="card" style="height:100%; border-left:8px solid var(--terracotta);">
+            <div class="xs" style="color:var(--terracotta); font-weight:800;">REPAS</div>
+            <div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:#8B3A2A; margin:10px 0 14px;">Cuisine au gaz · pas de frigo</div>
+            <div class="body" style="color:var(--night-2);">Riz, pâtes, pommes de terre, yuca · légumes &amp; fruits de saison · tiendas du village · marché de Nauta pour plus de variété · bouteille de gaz ≈ 90 soles.</div>
+            <div class="deck-card-fill"><div class="deck-card-fill__box"><b style="color:var(--terracotta);">Économie locale</b> · varier les commerces · ne pas court-circuiter.</div></div>
+          </div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card" style="height:100%; border-left:8px solid var(--blue-akuu);">
+            <div class="xs" style="color:var(--blue-akuu); font-weight:800;">HYGIÈNE</div>
+            <div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--blue-akuu); margin:10px 0 14px;">Río, pluie, lessive</div>
+            <div class="body" style="color:var(--night-2);">Douche dans le río (savons biodégradables) ou eau de pluie · chasse d'eau au seau · lessive à la main · laverie Nauta/Iquitos ≈ 5 soles/kg · moustiquaire + DEET.</div>
+          </div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card" style="height:100%; border-left:8px solid var(--green-forest);">
+            <div class="xs" style="color:var(--green-forest); font-weight:800;">INTERNET</div>
+            <div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--green-forest); margin:10px 0 14px;">Starlink · Bitel / Mobilestar</div>
+            <div class="body" style="color:var(--night-2);">Réseau aléatoire · Wi-Fi Starlink (Casa de Arte et autre point) ≈ 2 soles/h ou 3 soles / 2h30 · usage responsable.</div>
+            <div class="deck-card-fill"><div class="deck-card-fill__box"><b style="color:var(--green-forest);">Sobriété</b> · la connexion sert le projet, pas le scroll permanent.</div></div>
+          </div>
+        </div>
+        </div>
+        <button type="button" class="deck-carousel__arrow deck-carousel__next" aria-label="Suivant"></button>
+      </div>
+      <div class="deck-carousel__nav"><div class="deck-carousel__dots">
+        <button type="button" class="deck-carousel__dot deck-carousel__dot--active" aria-selected="true" aria-label="Repas"></button>
+        <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Hygiène"></button>
+        <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Internet"></button>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- ===== PARTIE 04 ===== -->
+  <section data-label="16 · Titre Partie 4" style="background:var(--m10-chapter); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="bar" style="background:var(--ochre);"></div>
+    <div style="font-family:'Playfair Display',serif; font-size:var(--fs-6); font-weight:800; color:rgba(253,233,209,0.18); position:absolute; top:40px; right:90px;">04</div>
+    <div class="kicker" style="color:var(--ochre); margin-bottom:22px;">Partie 04</div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:var(--fs-5); font-weight:700; color:var(--cream); margin:0;">Missions &amp; posture terrain</h1>
+    <div style="width:120px; height:6px; background:var(--ochre); margin:36px 0 26px;"></div>
+    <p class="lead" style="color:var(--ochre-light);">Rôle · autonomie · bilan</p>
+  </section>
+
+  <section data-label="17 · Rôle volontaire" style="background:var(--cream); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--terracotta);">04 · Missions</div>
+    <div class="topbar" style="background:var(--terracotta);"></div>
+    <h1 class="h" style="color:#8B3A2A;">Pas d'horaires fixes · engagement actif</h1>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; flex:1; align-content:center;">
+      <div class="card" style="background:var(--ochre-light);"><b style="color:#8B3A2A;">Missions possibles</b><p class="small" style="color:var(--night-2); margin-top:10px;">Cours de langues (anglais / français) · ateliers éducatifs / artistiques · chantiers communautaires · com' &amp; fundraising Casa Shapishiko · recherche / muséographie</p></div>
+      <div class="card" style="background:var(--ochre-light);"><b style="color:#8B3A2A;">Attitudes attendues</b><p class="small" style="color:var(--night-2); margin-top:10px;">Autonomie · initiative · écoute · respect · collaboration avec les habitants · intérêt général (social, culturel, environnemental)</p></div>
+      <div class="card" style="background:var(--terracotta); grid-column:span 2;"><b style="color:var(--cream);">Fin de mission</b><p class="small" style="color:var(--ochre-light); margin-top:8px;">Bilan / rapport · transmission des dossiers · témoignage au retour (sans mythe du projet parfait) · continuer à soutenir AKUU si tu le souhaites</p></div>
+    </div>
+  </section>
+
+  <section data-label="18 · Checklist départ" style="background:var(--ochre-light); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--terracotta);">04 · Checklist</div>
+    <div class="topbar" style="background:var(--terracotta);"></div>
+    <h1 class="h" style="color:#8B3A2A;">Avant l'appel terrain · prêt ?</h1>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; flex:1; align-content:center;">
+      <div class="card" style="background:var(--cream);"><p class="body" style="color:var(--night-2); margin:0;">☐ Dossier ZIP envoyé (nomenclature OK)</p></div>
+      <div class="card" style="background:var(--cream);"><p class="body" style="color:var(--night-2); margin:0;">☐ Assurance + Fil d'Ariane</p></div>
+      <div class="card" style="background:var(--cream);"><p class="body" style="color:var(--night-2); margin:0;">☐ Vaccins / trousse validés médecin</p></div>
+      <div class="card" style="background:var(--cream);"><p class="body" style="color:var(--night-2); margin:0;">☐ Engagement logement signé (112 €)</p></div>
+      <div class="card" style="background:var(--cream);"><p class="body" style="color:var(--night-2); margin:0;">☐ Règlement lu et accepté</p></div>
+      <div class="card" style="background:var(--cream);"><p class="body" style="color:var(--night-2); margin:0;">☐ Trajet Iquitos → Nauta → PM compris</p></div>
+      <div class="card" style="background:var(--cream);"><p class="body" style="color:var(--night-2); margin:0;">☐ Questionnaire de départ rempli</p></div>
+      <div class="card" style="background:var(--terracotta);"><p class="body" style="color:var(--cream); margin:0;">☐ Questions notées pour l'appel live</p></div>
+    </div>
+  </section>
+
+  <!-- ===== PARTIE 05 APPEL ===== -->
+  <section data-label="19 · Titre Partie 5" style="background:var(--m10-chapter); display:flex; flex-direction:column; justify-content:center; padding:var(--pad-top) var(--pad-x);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="bar" style="background:var(--ochre);"></div>
+    <div style="font-family:'Playfair Display',serif; font-size:var(--fs-6); font-weight:800; color:rgba(253,233,209,0.18); position:absolute; top:40px; right:90px;">05</div>
+    <div class="kicker" style="color:var(--ochre); margin-bottom:22px;">Partie 05 · Clôture live</div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:var(--fs-5); font-weight:700; color:var(--cream); margin:0;">Appel avec l'équipe terrain</h1>
+    <div style="width:120px; height:6px; background:var(--ochre); margin:36px 0 26px;"></div>
+    <p class="lead" style="color:var(--ochre-light);">Équipe sur place · ou dernière équipe revenue</p>
+  </section>
+
+  <section data-label="20 · Cadre de l'appel" data-speaker-notes="Préparer le lien visioconférence. Inviter soit l'équipe actuellement à Puerto Miguel, soit 1–2 bénévoles de la dernière mission. Durée typique 40–50 min. Le formateur modère et note les réponses utiles pour la suite." style="background:var(--cream); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--terracotta);">05 · Appel</div>
+    <div class="topbar" style="background:var(--terracotta);"></div>
+    <h1 class="h" style="color:#8B3A2A;">Format de l'échange</h1>
+    <div class="deck-call-grid">
+      <div class="card" style="background:var(--ochre-light);"><b style="color:#8B3A2A;">Qui est en ligne ?</b><p class="small" style="color:var(--night-2); margin-top:10px;">Option A · équipe actuellement à Puerto Miguel<br>Option B · bénévoles de la dernière mission revenue<br>Option C · les deux (terrain + retour)</p></div>
+      <div class="card" style="background:var(--ochre-light);"><b style="color:#8B3A2A;">Déroulé suggéré</b><p class="small" style="color:var(--night-2); margin-top:10px;">1. Tour de présentation (5 min)<br>2. « Une journée type » (10 min)<br>3. Ce qui a surpris / ce qui a aidé (10 min)<br>4. Questions des participants (20 min)<br>5. 3 conseils pour le départ (5 min)</p></div>
+      <div class="card" style="background:var(--terracotta); grid-column:span 2;"><b style="color:var(--cream);">Règles de l'appel</b><p class="small" style="color:var(--ochre-light); margin-top:8px;">Écoute active · une question à la fois · pas de jugement · notes personnelles autorisées · ce qui est dit reste dans le cadre formation (sauf accord explicite pour partager hors groupe)</p></div>
+    </div>
+    <div class="deck-formateur-note"><p>Note formateur : Tester le lien 10 min avant. Prévoir un plan B (enregistrement / témoignage écrit) si la connexion Starlink est mauvaise.</p></div>
+  </section>
+
+  <section data-label="21 · Questions guides" style="background:var(--ochre-light); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--terracotta);">05 · Questions</div>
+    <div class="topbar" style="background:var(--terracotta);"></div>
+    <h1 class="h" style="color:#8B3A2A;">Banque de questions (au besoin)</h1>
+    <div class="deck-carousel" data-deck-carousel style="flex:1; min-height:0;">
+      <div class="deck-carousel__stage">
+        <button type="button" class="deck-carousel__arrow deck-carousel__prev" aria-label="Précédent"></button>
+        <div class="deck-carousel__viewport">
+        <div class="deck-carousel__slide deck-carousel__slide--active">
+          <div class="card" style="height:100%; border-left:8px solid var(--terracotta);">
+            <div class="xs" style="color:var(--terracotta); font-weight:800;">QUOTIDIEN</div>
+            <div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:#8B3A2A; margin:10px 0 14px;">Vie à la Casa</div>
+            <div class="body" style="color:var(--night-2);">Comment s'organisent les repas et les tâches ? Qu'est-ce qui a été le plus dur les 2 premières semaines ? Comment gérez-vous l'électricité et l'eau au quotidien ?</div>
+          </div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card" style="height:100%; border-left:8px solid var(--blue-akuu);">
+            <div class="xs" style="color:var(--blue-akuu); font-weight:800;">MISSION</div>
+            <div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--blue-akuu); margin:10px 0 14px;">Travail avec la communauté</div>
+            <div class="body" style="color:var(--night-2);">Comment savoir si on est utile ? Comment les besoins sont-ils définis localement ? Un moment où vous avez dû dire non / ralentir ?</div>
+          </div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card" style="height:100%; border-left:8px solid var(--green-forest);">
+            <div class="xs" style="color:var(--green-forest); font-weight:800;">POSTURE</div>
+            <div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:var(--green-forest); margin:10px 0 14px;">Éthique en vrai</div>
+            <div class="body" style="color:var(--night-2);">Photos / réseaux : comment faites-vous concrètement ? Qu'avez-vous appris sur le « doute = non » ? Un conseil que vous auriez voulu entendre avant de partir ?</div>
+          </div>
+        </div>
+        <div class="deck-carousel__slide">
+          <div class="card" style="height:100%; border-left:8px solid var(--ochre);">
+            <div class="xs" style="color:#8A5A24; font-weight:800;">LOGISTIQUE</div>
+            <div style="font-family:'Playfair Display',serif; font-size:var(--fs-2); font-weight:700; color:#8A5A24; margin:10px 0 14px;">Pratique terrain</div>
+            <div class="body" style="color:var(--night-2);">Budget réel mensuel ? Objets indispensables oubliés dans la valise ? Meilleure façon d'arriver depuis Iquitos cette saison ?</div>
+          </div>
+        </div>
+        </div>
+        <button type="button" class="deck-carousel__arrow deck-carousel__next" aria-label="Suivant"></button>
+      </div>
+      <div class="deck-carousel__nav"><div class="deck-carousel__dots">
+        <button type="button" class="deck-carousel__dot deck-carousel__dot--active" aria-selected="true" aria-label="Quotidien"></button>
+        <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Mission"></button>
+        <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Posture"></button>
+        <button type="button" class="deck-carousel__dot" aria-selected="false" aria-label="Logistique"></button>
+      </div></div>
+    </div>
+  </section>
+
+  <section data-label="22 · Espace live" data-speaker-notes="Slide écran partagé pendant l'appel. Laisser tourner. Le formateur note 3 takeaways sur paperboard." style="background:var(--green-forest); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="topbar" style="background:var(--green-leaf);"></div>
+    <div class="kicker" style="color:var(--green-leaf); margin-bottom:20px;">En direct</div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:var(--fs-4); font-weight:800; color:var(--cream); margin:0; text-align:center; max-width:1400px;">Appel avec l'équipe terrain</h1>
+    <p class="lead" style="color:var(--green-pale); text-align:center; margin-top:24px;">Écoute · questions · notes personnelles</p>
+    <div style="display:flex; gap:16px; margin-top:40px; max-width:1200px; width:100%;">
+      <div class="card" style="background:rgba(255,255,255,0.1); flex:1; text-align:center;"><p class="small" style="color:var(--cream); margin:0;">Une journée type</p></div>
+      <div class="card" style="background:rgba(255,255,255,0.1); flex:1; text-align:center;"><p class="small" style="color:var(--cream); margin:0;">Surprises &amp; aides</p></div>
+      <div class="card" style="background:rgba(255,255,255,0.1); flex:1; text-align:center;"><p class="small" style="color:var(--cream); margin:0;">3 conseils départ</p></div>
+    </div>
+  </section>
+
+  <section data-label="23 · Après l'appel" style="background:var(--ochre-light); display:flex; flex-direction:column; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);">
+    <img src="images/LOGOAKUU.png" class="logo" alt="AKUU">
+    <div class="tag" style="color:var(--terracotta);">05 · Debrief</div>
+    <div class="topbar" style="background:var(--terracotta);"></div>
+    <h1 class="h" style="color:#8B3A2A;">Après l'appel · ancrer</h1>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px; flex:1; align-content:center;">
+      <div class="card" style="background:var(--cream);"><b style="color:#8B3A2A;">Individuel</b><p class="small" style="color:var(--night-2); margin-top:10px;">3 points retenus · 1 peur diminuée · 1 action concrète cette semaine (doc, valise, vaccination…)</p></div>
+      <div class="card" style="background:var(--cream);"><b style="color:#8B3A2A;">Collectif</b><p class="small" style="color:var(--night-2); margin-top:10px;">Tour de table court · ce qui a surpris · ce qu'il faut clarifier avec le bureau AKUU</p></div>
+      <div class="card" style="background:var(--terracotta);"><b style="color:var(--cream);">Suite</b><p class="small" style="color:var(--ochre-light); margin-top:10px;">Module 11 · présentation finale &amp; évaluation des acquis</p></div>
+    </div>
+  </section>
+
+  <!-- CLÔTURE -->
+  <section data-label="24 · Clôture" style="background:var(--green-forest); display:flex; flex-direction:column; align-items:center; justify-content:flex-end; padding:var(--pad-top) var(--pad-x) var(--pad-bottom); gap:12px;">
+    <img src="images/LOGOAKUU.png" style="height:110px; object-fit:contain; margin-bottom:20px;" alt="AKUU">
+    <div class="bar" style="background:var(--green-leaf);"></div>
+    <div class="kicker" style="color:var(--green-leaf);">Module 10 · Clôture</div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:var(--fs-4); font-weight:800; color:var(--cream); margin:0; text-align:center;">Tu as le cadre · maintenant tu as les voix du terrain</h1>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:28px 0; max-width:1500px; width:100%;">
+      <div class="card" style="background:rgba(255,255,255,0.08);"><p class="small" style="color:var(--cream); margin:0;">Kit · règlement · Casa · trajet</p></div>
+      <div class="card" style="background:rgba(255,255,255,0.08);"><p class="small" style="color:var(--cream); margin:0;">Doute = non · casquette AKUU 24/7</p></div>
+      <div class="card" style="background:rgba(255,255,255,0.08);"><p class="small" style="color:var(--cream); margin:0;">Appel terrain · questions ouvertes</p></div>
+    </div>
+    <div class="deck-module-nav">
+      <a href="/formation/module-9" target="_top" rel="noopener" class="deck-next-module"><div class="small deck-next-module__label">MODULE PRÉCÉDENT</div><div class="deck-next-module__title">Module 9 : Le musée Shapishiko</div></a>
+      <a href="/formation/module-11" target="_top" rel="noopener" class="deck-next-module"><div class="small deck-next-module__label">PROCHAIN MODULE</div><div class="deck-next-module__title">Module 11 : Présentation &amp; évaluation</div></a>
+    </div>
+    <div class="deck-formateur-note"><p>Note formateur : Remercier l'équipe invitée. Archiver les 3 takeaways collectifs pour le M11.</p></div>
+  </section>
+
+</x-import>
+</x-dc>
+</body>
+</html>

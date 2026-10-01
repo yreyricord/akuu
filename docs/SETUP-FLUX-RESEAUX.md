@@ -87,7 +87,7 @@ Tu dois voir du JSON avec un tableau `instagram` non vide et éventuellement `me
 
 ### B2. Jeton d’accès utilisateur
 
-L’API attend un **`TIKTOK_ACCESS_TOKEN`** (Bearer) obtenu par **OAuth 2.0** : l’utilisateur (le compte `@akuu_asso`) doit autoriser l’app.  
+L’API attend un **`TIKTOK_ACCESS_TOKEN`** (Bearer) obtenu par **OAuth 2.0** : l’utilisateur (le compte `@akuu.asso`) doit autoriser l’app.
 En pratique :
 
 - En phase de test, tu peux utiliser les outils / flux OAuth du portail développeur pour obtenir un jeton **temporaire**.

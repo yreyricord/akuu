@@ -1,0 +1,489 @@
+<template>
+  <div class="space-y-8">
+    <header>
+      <div class="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-serif font-bold text-night">Validation trésorier</h2>
+          <p class="mt-1 text-sm text-night-400">Demandes et factures en attente · message au bénévole obligatoire en cas de refus</p>
+        </div>
+        <button
+          type="button"
+          class="min-h-[36px] rounded-full border border-night-200 px-4 text-xs font-semibold text-night hover:border-forest/40"
+          :disabled="refreshing"
+          @click="reload"
+        >
+          {{ refreshing ? 'Actualisation…' : 'Actualiser' }}
+        </button>
+      </div>
+    </header>
+
+    <p v-if="store.validationError" class="rounded-xl border border-terracotta/30 bg-terracotta/10 px-4 py-3 text-sm text-terracotta-700">
+      {{ store.validationError }} — vérifiez que l’Apps Script est déployé (route <code class="text-xs">demandes/pending</code>).
+    </p>
+
+    <div
+      v-else-if="emptyQueues && store.validationStats"
+      class="rounded-xl border border-ochre-200 bg-ochre-50 px-4 py-3 text-sm text-ochre-900"
+    >
+      <p class="font-semibold">Aucune file d’attente — diagnostic API</p>
+      <ul class="mt-2 list-inside list-disc space-y-1 text-xs">
+        <li>Demandes dans le tableur : <strong>{{ store.validationStats.demandes_total }}</strong>
+          (en attente : {{ store.validationStats.demandes_pending }})</li>
+        <li>Factures dans le tableur : <strong>{{ store.validationStats.factures_total }}</strong>
+          (en attente : {{ store.validationStats.factures_pending }})</li>
+        <li v-if="!store.validationStats.demandes_sheet_exists" class="text-terracotta-700">
+          Onglet « Demandes » absent — exécuter <code>setupTresorerieSheets</code> dans Apps Script.
+        </li>
+        <li v-else-if="store.validationStats.demandes_total === 0">
+          Aucune demande enregistrée. Créez-en une dans l’onglet <strong>Demande</strong> (pas Compta).
+          Vérifiez le bandeau vert « AKUU-DEM-… envoyée » après envoi.
+        </li>
+        <li v-else-if="store.validationStats.demandes_pending === 0">
+          Des demandes existent mais plus aucune en attente (déjà approuvées ou refusées).
+          Voir <strong>Historique</strong> pour le détail.
+        </li>
+      </ul>
+      <a
+        v-if="store.validationStats.spreadsheet_url"
+        :href="store.validationStats.spreadsheet_url"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-2 inline-block text-xs font-semibold text-bleu hover:underline"
+      >
+        Ouvrir le tableur application (onglet Demandes)
+      </a>
+    </div>
+
+    <AdminReimbursementPanel :pending="store.pendingReimbursements" />
+
+    <section>
+      <h3 class="text-sm font-semibold uppercase tracking-wide text-night">
+        Demandes ({{ store.pendingDemandes.length }})
+      </h3>
+      <p v-if="!store.pendingDemandes.length" class="mt-2 text-sm text-night-400">Aucune demande en attente.</p>
+      <ul class="mt-3 space-y-4">
+        <li
+          v-for="d in store.pendingDemandes"
+          :id="'validation-' + d.reference"
+          :key="d.id"
+          class="rounded-2xl border border-night-100 bg-white p-4 shadow-sm transition-shadow duration-500"
+          :class="highlightRef === d.reference ? 'ring-2 ring-forest ring-offset-2 shadow-md' : ''"
+        >
+          <div class="flex flex-wrap items-start justify-between gap-2">
+            <div>
+              <p class="font-mono text-sm font-semibold text-forest">{{ d.reference }}</p>
+              <p class="text-sm text-night-500">{{ d.submitter_email }}</p>
+            </div>
+            <AdminStatusBadge :status="d.status" />
+          </div>
+          <div class="mt-2 flex flex-wrap gap-2">
+            <AdminPaymentBadge :payment-type="d.payment_type" />
+            <AdminDevisStatusBadge :demande="d" />
+          </div>
+          <dl class="mt-3 grid gap-1 text-sm text-night-600 sm:grid-cols-2">
+            <div><dt class="inline font-medium">Projet :</dt> {{ labelFor(d.project, TRESORERIE_PROJECTS) }}</div>
+            <div><dt class="inline font-medium">Nature :</dt> {{ labelFor(d.category, TRESORERIE_CATEGORIES) }}</div>
+            <div><dt class="inline font-medium">Montant :</dt> {{ formatAmountWithConversion(d) }}</div>
+            <div><dt class="inline font-medium">Besoin :</dt> {{ d.needed_by_date }}</div>
+          </dl>
+          <p class="mt-2 text-sm">{{ d.description }}</p>
+          <p class="mt-1 text-xs text-night-400">{{ d.justification }}</p>
+          <p
+            v-if="isOwnSubmission(d.submitter_email) && canTreasurerActOn(d.submitter_email)"
+            class="mt-2 rounded-lg border border-leaf/30 bg-leaf/10 px-3 py-2 text-xs text-forest-800"
+          >
+            Votre propre demande — validation autorisée (admin / mode test, tracée en audit).
+          </p>
+          <p
+            v-else-if="isOwnSubmission(d.submitter_email)"
+            class="mt-2 rounded-lg border border-terracotta/30 bg-terracotta/10 px-3 py-2 text-xs text-terracotta-700"
+          >
+            Votre propre demande — un autre trésorier doit approuver et valider les devis.
+          </p>
+          <div v-if="d.devis_attachments?.length" class="mt-2 rounded-xl border border-bleu/20 bg-bleu/5 px-3 py-3 text-sm">
+            <p class="font-semibold text-night">{{ d.devis_attachments.length }} devis joint(s)</p>
+            <ul class="mt-2 space-y-2">
+              <li v-for="(f, i) in d.devis_attachments" :key="i" class="flex items-center justify-between gap-2">
+                <span class="truncate text-xs text-night-600">{{ f.name }}</span>
+                <a
+                  v-if="f.drive_file_url"
+                  :href="f.drive_file_url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="shrink-0 rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-bleu hover:underline"
+                >
+                  Voir
+                </a>
+              </li>
+            </ul>
+          </div>
+          <p
+            v-else-if="needsDevisReview(d)"
+            class="mt-2 text-xs font-semibold text-terracotta"
+          >
+            Attention : dépense &gt; {{ DEVIS_PEN_THRESHOLD }} S/. sans photos de devis jointes
+          </p>
+
+          <p
+            v-if="d.devis_status === 'rejected'"
+            class="mt-2 rounded-lg border border-ochre-200 bg-ochre-50 px-3 py-2 text-xs text-ochre-900"
+          >
+            Devis refusés — en attente de nouveaux devis du bénévole.
+            <span v-if="d.devis_reject_reason" class="mt-1 block font-medium">Votre message : {{ d.devis_reject_reason }}</span>
+          </p>
+
+          <div v-if="rejectingDevis === d.reference" class="mt-3 space-y-2">
+            <label class="block text-xs font-medium text-night">Message au bénévole (devis) *</label>
+            <textarea
+              v-model="rejectReason"
+              rows="3"
+              class="admin-input"
+              placeholder="Ex. Devis trop cher — merci de joindre une alternative moins chère, ou un devis détaillé pour les fournitures scolaires."
+            />
+            <p v-if="rejectError && rejectingDevis === d.reference" class="text-xs text-terracotta">{{ rejectError }}</p>
+            <div class="admin-action-row">
+              <button type="button" class="rounded-full bg-terracotta px-4 py-2 text-sm font-semibold text-white" @click="confirmRejectDevis(d.reference)">
+                Confirmer refus des devis
+              </button>
+              <button type="button" class="rounded-full border border-night-200 px-4 py-2 text-sm text-night-500" @click="cancelReject">
+                Annuler
+              </button>
+            </div>
+          </div>
+
+          <div v-else-if="rejectingDemande === d.reference" class="mt-3 space-y-2">
+            <label class="block text-xs font-medium text-night">Message au bénévole (demande entière) *</label>
+            <textarea
+              v-model="rejectReason"
+              rows="3"
+              class="admin-input"
+              placeholder="Ex. Dépense non prévue au budget projet, ou doublon avec une demande existante."
+            />
+            <p v-if="rejectError && rejectingDemande === d.reference" class="text-xs text-terracotta">{{ rejectError }}</p>
+            <div class="admin-action-row">
+              <button type="button" class="rounded-full bg-terracotta px-4 py-2 text-sm font-semibold text-white" @click="confirmRejectDemande(d.reference)">
+                Confirmer refus
+              </button>
+              <button type="button" class="rounded-full border border-night-200 px-4 py-2 text-sm text-night-500" @click="cancelReject">
+                Annuler
+              </button>
+            </div>
+          </div>
+          <div v-else class="mt-4 space-y-2">
+            <div v-if="canValidateDevis(d) && canTreasurerActOn(d.submitter_email)" class="admin-action-row">
+              <button
+                type="button"
+                class="rounded-full bg-bleu px-4 py-2 text-sm font-semibold text-white"
+                :disabled="store.loading || validatingDevis === d.reference"
+                @click="validateDevis(d.reference)"
+              >
+                {{ validatingDevis === d.reference ? '…' : 'Valider les photos de devis' }}
+              </button>
+              <button
+                type="button"
+                class="rounded-full border border-terracotta px-4 py-2 text-sm font-semibold text-terracotta"
+                @click="startRejectDevis(d.reference)"
+              >
+                Refuser les photos de devis
+              </button>
+            </div>
+            <p v-if="needsDevisReview(d) && !canApprove(d)" class="text-xs text-ochre-700">
+              Validez les photos de devis avant d'approuver la demande.
+            </p>
+            <div class="admin-action-row">
+              <button
+                type="button"
+                class="rounded-full bg-forest px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
+                :disabled="!canApprove(d) || store.loading || !canTreasurerActOn(d.submitter_email)"
+                @click="approve(d.reference)"
+              >
+                Approuver la demande
+              </button>
+              <button
+                type="button"
+                class="rounded-full border border-terracotta px-4 py-2 text-sm font-semibold text-terracotta"
+                @click="startRejectDemande(d.reference)"
+              >
+                Refuser
+              </button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h3 class="text-sm font-semibold uppercase tracking-wide text-night">
+        Factures ({{ store.pendingFactures.length }})
+      </h3>
+      <p v-if="!store.pendingFactures.length" class="mt-2 text-sm text-night-400">Aucune facture en attente.</p>
+      <ul class="mt-3 space-y-4">
+        <li
+          v-for="f in store.pendingFactures"
+          :id="'validation-' + f.reference"
+          :key="f.id"
+          class="rounded-2xl border border-night-100 bg-white p-4 shadow-sm transition-shadow duration-500"
+          :class="highlightRef === f.reference ? 'ring-2 ring-forest ring-offset-2 shadow-md' : ''"
+        >
+          <div class="flex flex-wrap items-start justify-between gap-2">
+            <div>
+              <p class="font-mono text-sm font-semibold text-forest">{{ f.reference }}</p>
+              <p class="text-xs text-night-400">Demande {{ f.demand_reference }}</p>
+            </div>
+            <AdminStatusBadge :status="f.status" type="facture" />
+          </div>
+          <div class="mt-2 flex flex-wrap items-center gap-2">
+            <AdminPaymentBadge :payment-type="f.payment_type" />
+            <AdminReimbursementBadge v-if="f.payment_type === 'avance_benevole'" :facture="f" />
+          </div>
+          <dl class="mt-3 grid gap-1 text-sm text-night-600 sm:grid-cols-2">
+            <div><dt class="inline font-medium">Montant :</dt> {{ formatAmountWithConversion(f) }}</div>
+            <div><dt class="inline font-medium">Date :</dt> {{ f.expense_date }}</div>
+            <div><dt class="inline font-medium">Fournisseur :</dt> {{ f.vendor_name }}</div>
+            <div><dt class="inline font-medium">Lieu :</dt> {{ f.location }}</div>
+            <div class="sm:col-span-2"><dt class="inline font-medium">Libellé :</dt> {{ f.label }}</div>
+          </dl>
+          <p v-if="f.file_name" class="mt-2 text-xs text-night-400">Pièce : {{ f.file_name }}</p>
+          <p
+            v-if="isOwnSubmission(f.submitter_email) && canTreasurerActOn(f.submitter_email)"
+            class="mt-2 rounded-lg border border-leaf/30 bg-leaf/10 px-3 py-2 text-xs text-forest-800"
+          >
+            Votre propre facture — validation autorisée (admin / mode test, tracée en audit).
+          </p>
+          <p
+            v-else-if="isOwnSubmission(f.submitter_email)"
+            class="mt-2 rounded-lg border border-terracotta/30 bg-terracotta/10 px-3 py-2 text-xs text-terracotta-700"
+          >
+            Votre propre facture — un autre trésorier doit valider.
+          </p>
+
+          <a
+            v-if="f.drive_file_url"
+            :href="f.drive_file_url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-2 inline-flex min-h-[48px] items-center rounded-full bg-bleu/10 px-4 py-2 text-sm font-semibold text-bleu"
+          >
+            Voir la pièce justificative
+          </a>
+
+          <div v-if="rejectingFacture === f.reference" class="mt-3 space-y-2">
+            <label class="block text-xs font-medium text-night">Message au bénévole (facture) *</label>
+            <textarea
+              v-model="rejectReason"
+              rows="3"
+              class="admin-input"
+              placeholder="Ex. Montant incorrect, photo illisible, mauvaise date, ou achat hors périmètre de la demande approuvée."
+            />
+            <p v-if="rejectError && rejectingFacture === f.reference" class="text-xs text-terracotta">{{ rejectError }}</p>
+            <div class="admin-action-row">
+              <button type="button" class="rounded-full bg-terracotta px-4 py-2 text-sm font-semibold text-white" @click="confirmRejectFacture(f.reference)">
+                Confirmer refus
+              </button>
+              <button type="button" class="rounded-full border border-night-200 px-4 py-2 text-sm text-night-500" @click="cancelReject">
+                Annuler
+              </button>
+            </div>
+          </div>
+          <div v-else class="admin-action-row mt-4">
+            <button
+              type="button"
+              class="rounded-full bg-forest px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
+              :disabled="!canTreasurerActOn(f.submitter_email) || store.loading"
+              @click="validate(f.reference)"
+            >
+              Valider → Journal
+            </button>
+            <button type="button" class="rounded-full border border-terracotta px-4 py-2 text-sm font-semibold text-terracotta" @click="startRejectFacture(f.reference)">
+              Refuser
+            </button>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </div>
+</template>
+
+<script setup>
+import { computed, ref, watch, nextTick, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import {
+  TRESORERIE_PROJECTS,
+  TRESORERIE_CATEGORIES,
+  DEVIS_PEN_THRESHOLD,
+  MIN_DEVIS_ATTACHMENTS,
+  labelFor,
+  requiresDevisAttachments,
+  canApproveDemande
+} from '@/data/tresorerie-config.js'
+import { ADMIN_EMAIL, isSuperAdmin } from '@/data/member-roles.js'
+import { formatAmountWithConversion } from '@/data/currency.js'
+import { useTresorerieStore } from '@/store/tresorerie.js'
+import { useAuthStore } from '@/store/auth.js'
+import AdminStatusBadge from './AdminStatusBadge.vue'
+import AdminPaymentBadge from './AdminPaymentBadge.vue'
+import AdminReimbursementBadge from './AdminReimbursementBadge.vue'
+import AdminReimbursementPanel from './AdminReimbursementPanel.vue'
+import AdminDevisStatusBadge from './AdminDevisStatusBadge.vue'
+
+const store = useTresorerieStore()
+const auth = useAuthStore()
+const route = useRoute()
+const highlightRef = ref(null)
+
+function scrollToValidationRef(refCode) {
+  if (!refCode) return
+  nextTick(() => {
+    const el = document.getElementById('validation-' + refCode)
+    if (!el) return
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    highlightRef.value = refCode
+    window.setTimeout(() => {
+      if (highlightRef.value === refCode) highlightRef.value = null
+    }, 4500)
+  })
+}
+
+watch(
+  () => route.query.ref,
+  (refCode) => scrollToValidationRef(refCode),
+  { immediate: true }
+)
+
+watch(
+  () => store.pendingDemandes.length + store.pendingFactures.length,
+  () => scrollToValidationRef(route.query.ref)
+)
+
+onMounted(() => scrollToValidationRef(route.query.ref))
+
+function isOwnSubmission(email) {
+  return String(email || '').toLowerCase() === String(auth.user?.email || '').toLowerCase()
+}
+
+const allowSelfTest = import.meta.env.VITE_TRESORERIE_ALLOW_SELF_VALIDATION === 'true'
+
+/** Trésorier : pas d'auto-validation · admin / e-mail admin / mode test autorisés. */
+function canTreasurerActOn(submitterEmail) {
+  if (!isOwnSubmission(submitterEmail)) return true
+  if (allowSelfTest) return true
+  if (auth.isAdmin) return true
+  if (isSuperAdmin(auth.user?.email, auth.user?.role)) return true
+  return String(auth.user?.email || '').toLowerCase() === ADMIN_EMAIL
+}
+const refreshing = ref(false)
+const emptyQueues = computed(
+  () => !store.pendingDemandes.length && !store.pendingFactures.length
+)
+
+async function reload() {
+  refreshing.value = true
+  try {
+    await store.refreshPending(true)
+  } finally {
+    refreshing.value = false
+  }
+}
+
+const rejectingDemande = ref(null)
+const rejectingFacture = ref(null)
+const rejectingDevis = ref(null)
+const rejectReason = ref('')
+const rejectError = ref('')
+const validatingDevis = ref(null)
+
+function requireRejectReason() {
+  rejectError.value = ''
+  const text = String(rejectReason.value || '').trim()
+  if (text.length < 5) {
+    rejectError.value = 'Écrivez un message d\'au moins 5 caractères pour le bénévole.'
+    return null
+  }
+  return text
+}
+
+function needsDevisReview(d) {
+  return requiresDevisAttachments(d.amount_pen_estimated)
+}
+
+function canValidateDevis(d) {
+  if (!needsDevisReview(d)) return false
+  if (d.devis_status === 'validated') return false
+  return (d.devis_attachments?.length ?? 0) >= MIN_DEVIS_ATTACHMENTS
+}
+
+function canApprove(d) {
+  return canApproveDemande(d)
+}
+
+function startRejectDemande(ref) {
+  rejectingDemande.value = ref
+  rejectingFacture.value = null
+  rejectingDevis.value = null
+  rejectReason.value = ''
+  rejectError.value = ''
+}
+
+function startRejectDevis(ref) {
+  rejectingDevis.value = ref
+  rejectingDemande.value = null
+  rejectingFacture.value = null
+  rejectReason.value = ''
+  rejectError.value = ''
+}
+
+function startRejectFacture(ref) {
+  rejectingFacture.value = ref
+  rejectingDemande.value = null
+  rejectingDevis.value = null
+  rejectReason.value = ''
+  rejectError.value = ''
+}
+
+function cancelReject() {
+  rejectingDemande.value = null
+  rejectingFacture.value = null
+  rejectingDevis.value = null
+  rejectReason.value = ''
+  rejectError.value = ''
+}
+
+async function validateDevis(reference) {
+  validatingDevis.value = reference
+  try {
+    await store.validateDemandeDevis(reference)
+  } finally {
+    validatingDevis.value = null
+  }
+}
+
+async function approve(reference) {
+  await store.approveDemande(reference)
+}
+
+async function confirmRejectDevis(reference) {
+  const reason = requireRejectReason()
+  if (!reason) return
+  await store.rejectDemandeDevis(reference, reason)
+  cancelReject()
+}
+
+async function confirmRejectDemande(reference) {
+  const reason = requireRejectReason()
+  if (!reason) return
+  await store.rejectDemande(reference, reason)
+  cancelReject()
+}
+
+async function validate(reference) {
+  await store.validateFacture(reference)
+}
+
+async function confirmRejectFacture(reference) {
+  const reason = requireRejectReason()
+  if (!reason) return
+  await store.rejectFacture(reference, reason)
+  cancelReject()
+}
+
+</script>

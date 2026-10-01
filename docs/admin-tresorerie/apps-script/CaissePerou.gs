@@ -1,0 +1,174 @@
+/**
+ * Caisse espèces au Pérou — reste en cash après retraits/WU et dépenses Detail_PM.
+ * Entrées = retraits DAB / Western Union (journal EUR → PEN au taux indicatif).
+ * Sorties = tickets Detail_PM payés en espèces uniquement (hors carte / catalogue journal).
+ * Ouverture = clé Cloture « caisse_pen_ouverture ».
+ */
+
+function isDetailPmCaisseCash_(row) {
+  if (normTxt_(row.entry_type) !== 'depense') return false;
+  if (!(num_(row.amount_pen) > 0)) return false;
+  var method = readPaymentMethod_(row);
+  if (!method) return false;
+  return isPaymentMethodCaisse_(method);
+}
+
+/** Ligne Detail_PM en PEN sans mode de paiement renseigné (ne doit pas alimenter la caisse). */
+function isDetailPmUnclassified_(row) {
+  if (normTxt_(row.entry_type) !== 'depense') return false;
+  if (!(num_(row.amount_pen) > 0)) return false;
+  return !normTxt_(row.payment_method) && !readPaymentMethod_(row);
+}
+
+function isRetraitTerrain_(row) {
+  var cat = normTxt_(row.category);
+  if (cat.indexOf('retrait') >= 0 || cat.indexOf('transfert') >= 0) return true;
+  var txt = normTxt_(String(row.label || '') + ' ' + String(row.notes || ''));
+  return txt.indexOf('western union') >= 0 || txt.indexOf('wu ') >= 0 ||
+    txt.indexOf('dab') >= 0 || txt.indexOf('atm') >= 0;
+}
+
+function rowYear_(dateVal) {
+  var iso = isoDate_(dateVal);
+  return iso ? Number(iso.substring(0, 4)) : null;
+}
+
+/** 1 PEN = penToEur EUR → montant EUR converti en PEN. */
+function eurToPen_(eur, penToEur) {
+  if (!penToEur || !eur) return 0;
+  return r2_(Number(eur) / Number(penToEur));
+}
+
+function getCaissePerou_(session, year) {
+  requireTreasurer_(session);
+  year = Number(year) || new Date().getFullYear();
+  var ss = openYearJournal_(year);
+  if (!ss) {
+    return { year: year, live: false };
+  }
+
+  var cloture = clotureMap_(ss);
+  var ouverturePen = clotureNum_(cloture, 'caisse_pen_ouverture') || 0;
+
+  var retraits = [];
+  var journal = ss.getSheetByName('Journal');
+  (journal ? tabRows_(journal).rows : []).forEach(function (r) {
+    if (normTxt_(r.entry_type) !== 'depense') return;
+    if (rowYear_(r.expense_date) !== year) return;
+    if (!isRetraitTerrain_(r)) return;
+    var eur = num_(r.amount_eur) || 0;
+    if (!eur) return;
+    retraits.push({
+      reference: String(r.reference),
+      date: isoDate_(r.expense_date),
+      label: String(r.label || ''),
+      amount_eur: r2_(eur)
+    });
+  });
+
+  var especes = [];
+  var nonClasses = [];
+  var depensesTerrain = [];
+  var totalsByMode = { especes: 0, avance: 0, cb: 0, yape_plin: 0, virement: 0, autre: 0, non_classe: 0 };
+  var pm = ss.getSheetByName('Detail_PM');
+  (pm ? tabRows_(pm).rows : []).forEach(function (r) {
+    if (rowYear_(r.expense_date) !== year) return;
+    if (normTxt_(r.entry_type) !== 'depense') return;
+    var pen = num_(r.amount_pen) || 0;
+    if (!pen) return;
+    var explicit = normTxt_(r.payment_method);
+    var method = readPaymentMethod_(r);
+    var item = {
+      reference: String(r.reference),
+      date: isoDate_(r.expense_date),
+      label: String(r.label || ''),
+      project: String(r.project || ''),
+      amount_pen: r2_(pen),
+      payment_method: method,
+      payment_method_explicit: explicit,
+      drive_file_url: String(r.drive_file_url || ''),
+      piece_filename: String(r.piece_filename || ''),
+      caisse_cash: isDetailPmCaisseCash_(r)
+    };
+    depensesTerrain.push(item);
+    if (!method) {
+      totalsByMode.non_classe += pen;
+      nonClasses.push(item);
+    } else if (totalsByMode[method] != null) {
+      totalsByMode[method] += pen;
+    } else {
+      totalsByMode.autre += pen;
+    }
+    if (isDetailPmUnclassified_(r)) return;
+    if (!isDetailPmCaisseCash_(r)) return;
+    especes.push({
+      reference: item.reference,
+      date: item.date,
+      label: item.label,
+      project: item.project,
+      amount_pen: item.amount_pen
+    });
+  });
+  depensesTerrain.sort(function (a, b) { return (b.date + b.reference).localeCompare(a.date + a.reference); });
+  Object.keys(totalsByMode).forEach(function (k) { totalsByMode[k] = r2_(totalsByMode[k]); });
+
+  var rateInfo = getExchangeRate_();
+  var penToEur = rateInfo && rateInfo.rate ? Number(rateInfo.rate) : null;
+  var penPerEur = penToEur ? r2_(1 / penToEur) : null;
+
+  var entreesPen = 0;
+  retraits.forEach(function (rt) {
+    rt.amount_pen = eurToPen_(rt.amount_eur, penToEur);
+    entreesPen += rt.amount_pen;
+  });
+  entreesPen = r2_(entreesPen);
+
+  var sortiesPen = r2_(especes.reduce(function (s, x) { return s + x.amount_pen; }, 0));
+  var totalEur = r2_(retraits.reduce(function (s, x) { return s + x.amount_eur; }, 0));
+  var soldePen = r2_(ouverturePen + entreesPen - sortiesPen);
+  var soldeEur = penToEur ? r2_(soldePen * penToEur) : null;
+
+  var nonClassesPen = r2_(nonClasses.reduce(function (s, x) { return s + x.amount_pen; }, 0));
+  var alerte = null;
+  if (nonClasses.length > 0) {
+    alerte = nonClasses.length + ' dépense(s) terrain (' + nonClassesPen + ' PEN) sans mode de paiement — exclues du solde. ' +
+      'Corrigez le mode dans Écritures ou Suivi terrain (Espèces / Avance / Carte).';
+  }
+  if (soldePen < -0.01) {
+    alerte = (alerte ? alerte + ' ' : '') +
+      'Solde négatif : retraits WU/DAB insuffisants dans le journal banque, ou caisse_pen_ouverture manquant (onglet Cloture). ' +
+      'Les avances bénévoles et paiements carte ne passent pas par la caisse espèces.';
+  } else if (!ouverturePen && sortiesPen > entreesPen + 0.01 && !nonClasses.length) {
+    alerte = (alerte ? alerte + ' ' : '') +
+      'Les paiements espèces dépassent les retraits convertis : renseignez caisse_pen_ouverture (espèces au 1er janvier).';
+  }
+
+  return {
+    year: year,
+    live: true,
+    caisse_pen_ouverture: r2_(ouverturePen),
+    caisse_pen_entrees: entreesPen,
+    caisse_pen_sorties: sortiesPen,
+    caisse_pen_solde: soldePen,
+    caisse_eur_equiv: soldeEur,
+    retraits_eur: totalEur,
+    retraits_count: retraits.length,
+    especes_pen: sortiesPen,
+    especes_count: especes.length,
+    non_classes_count: nonClasses.length,
+    non_classes_pen: nonClassesPen,
+    non_classes: nonClasses.slice(0, 50),
+    depenses_terrain: depensesTerrain,
+    depenses_terrain_count: depensesTerrain.length,
+    totals_by_mode: totalsByMode,
+    pen_to_eur: penToEur,
+    pen_per_eur: penPerEur,
+    taux_date: rateInfo ? rateInfo.date : null,
+    retraits: retraits,
+    especes: especes,
+    alerte: alerte,
+    note: 'Retraits DAB / Western Union (journal) et paiements espèces au Pérou (Detail_PM terrain). ' +
+      'Les montants € des retraits sont convertis en S/. au taux indicatif du jour. ' +
+      'Ouverture : onglet Cloture → caisse_pen_ouverture.'
+  };
+}

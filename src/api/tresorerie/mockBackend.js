@@ -1,6 +1,6 @@
 import { fetchPenEurRate } from './exchangeRate.js'
 import {
-  isAmountWithinToleranceNative,
+  amountMaxWithTolerance,
   nativeEstimated,
   normalizeAmountPair
 } from '@/data/currency.js'
@@ -194,7 +194,7 @@ export const mockBackend = {
       if (files.length < MIN_DEVIS_ATTACHMENTS) {
         throw apiError(
           'VALIDATION_FAILED',
-          `Dépense > ${DEVIS_PEN_THRESHOLD} S/. : joignez au moins ${MIN_DEVIS_ATTACHMENTS} devis (fourni : ${files.length}).`
+          `Dépense > ${DEVIS_PEN_THRESHOLD} S/. : joignez au moins ${MIN_DEVIS_ATTACHMENTS} photos/PDF de devis (fourni : ${files.length}).`
         )
       }
     }
@@ -257,7 +257,7 @@ export const mockBackend = {
       throw apiError('VALIDATION_FAILED', 'Demande déjà traitée')
     }
     if (!requiresDevisAttachments(demande.amount_pen_estimated)) {
-      throw apiError('VALIDATION_FAILED', 'Devis non requis pour cette demande')
+      throw apiError('VALIDATION_FAILED', `Photos de devis non requises (≤ ${DEVIS_PEN_THRESHOLD} S/.)`)
     }
     if ((demande.devis_attachments?.length ?? 0) < MIN_DEVIS_ATTACHMENTS) {
       throw apiError('VALIDATION_FAILED', `Devis manquants — au moins ${MIN_DEVIS_ATTACHMENTS} requis`)
@@ -265,7 +265,45 @@ export const mockBackend = {
     demande.devis_status = 'validated'
     demande.devis_validated_at = new Date().toISOString()
     demande.devis_validated_by = session.email
+    demande.devis_reject_reason = ''
     appendAudit(store, session.email, 'devis_validated', 'demande', demande.id, { reference })
+    saveStore(store)
+    return ok(demande)
+  },
+
+  async rejectDemandeDevis(reference, rejectReason) {
+    const session = requireAuth('treasurer')
+    if (!rejectReason?.trim()) throw apiError('REJECT_REASON_REQUIRED', 'Motif de refus obligatoire')
+    const store = loadStore()
+    const demande = store.demandes.find((d) => d.reference === reference)
+    if (!demande) throw apiError('DEMAND_NOT_FOUND', 'Demande introuvable')
+    if (demande.status !== 'awaiting_approval') throw apiError('VALIDATION_FAILED', 'Demande déjà traitée')
+    demande.devis_status = 'rejected'
+    demande.devis_reject_reason = rejectReason.trim()
+    demande.devis_validated_at = null
+    demande.devis_validated_by = null
+    appendAudit(store, session.email, 'devis_rejected', 'demande', demande.id, { reference, rejectReason })
+    saveStore(store)
+    return ok(demande)
+  },
+
+  async resubmitDemandeDevis(reference, devisFiles = []) {
+    const session = requireAuth('member')
+    const store = loadStore()
+    const demande = store.demandes.find((d) => d.reference === reference)
+    if (!demande) throw apiError('DEMAND_NOT_FOUND', 'Demande introuvable')
+    if (demande.submitter_email !== session.email) throw apiError('FORBIDDEN', 'Demande non autorisée')
+    if (demande.status !== 'awaiting_approval') throw apiError('VALIDATION_FAILED', 'Demande déjà traitée')
+    if (demande.devis_status !== 'rejected') {
+      throw apiError('VALIDATION_FAILED', 'Seuls les devis refusés peuvent être renvoyés')
+    }
+    if (devisFiles.length < MIN_DEVIS_ATTACHMENTS) {
+      throw apiError('VALIDATION_FAILED', `Au moins ${MIN_DEVIS_ATTACHMENTS} devis requis`)
+    }
+    demande.devis_attachments = devisFiles.map((f, i) => ({ name: f.name || `devis-${i + 1}.pdf`, drive_file_url: '#' }))
+    demande.devis_status = 'pending'
+    demande.devis_reject_reason = ''
+    appendAudit(store, session.email, 'devis_resubmitted', 'demande', demande.id, { reference })
     saveStore(store)
     return ok(demande)
   },
@@ -326,9 +364,25 @@ export const mockBackend = {
   async getApprovedDemandReferences() {
     const session = requireAuth('member')
     const store = loadStore()
-    const refs = store.demandes.filter(
-      (d) => d.submitter_email === session.email && d.status === 'approved'
-    )
+    const totalsFor = (demandRef) => {
+      let sumPen = 0
+      let count = 0
+      store.factures.forEach((f) => {
+        if (f.demand_reference !== demandRef || f.status === 'rejected') return
+        sumPen += Number(f.amount_pen) || 0
+        count++
+      })
+      return { sumPen, count }
+    }
+    const refs = store.demandes
+      .filter((d) => d.submitter_email === session.email && d.status === 'approved')
+      .map((d) => {
+        const maxPen = amountMaxWithTolerance(Number(d.amount_pen_estimated))
+        const { sumPen, count } = totalsFor(d.reference)
+        const remaining_pen = Math.max(0, Math.round((maxPen - sumPen) * 100) / 100)
+        return { ...d, invoiced_pen: sumPen, facture_count: count, max_pen: maxPen, remaining_pen }
+      })
+      .filter((d) => d.remaining_pen > 0)
     return ok(refs)
   },
 
@@ -343,6 +397,17 @@ export const mockBackend = {
     if (demande.submitter_email !== session.email) {
       throw apiError('FORBIDDEN', 'Cette demande ne vous appartient pas')
     }
+    const maxPen = amountMaxWithTolerance(nativeEstimated(demande))
+    let invoicedPen = 0
+    store.factures.forEach((f) => {
+      if (f.demand_reference === payload.demand_reference && f.status !== 'rejected') {
+        invoicedPen += Number(f.amount_pen) || 0
+      }
+    })
+    const remainingPen = Math.max(0, Math.round((maxPen - invoicedPen) * 100) / 100)
+    if (remainingPen <= 0) {
+      throw apiError('CONFLICT', 'Le plafond de cette demande est déjà entièrement couvert', 409)
+    }
 
     const rateInfo = await fetchPenEurRate()
     const amounts = normalizeAmountPair({
@@ -352,10 +417,10 @@ export const mockBackend = {
       amount_pen: payload.amount_pen
     })
     const actualNative = amounts.currency === 'EUR' ? amounts.amount_eur : amounts.amount_pen
-    if (!isAmountWithinToleranceNative(actualNative, nativeEstimated(demande))) {
+    if (actualNative > remainingPen + 0.001) {
       throw apiError(
         'VALIDATION_FAILED',
-        `Montant supérieur au plafond +${AMOUNT_TOLERANCE_PERCENT} %. Soumettez une nouvelle demande.`
+        `Montant supérieur au reste à facturer (${remainingPen} PEN restants).`
       )
     }
 
@@ -590,6 +655,57 @@ export const mockBackend = {
       String(b.expense_date || b.journal_at).localeCompare(String(a.expense_date || a.journal_at))
     )
     return ok({ journal, summary: buildComptaSummary(journal) })
+  },
+
+  async getAvances(year) {
+    requireAuth('treasurer')
+    const y = Number(year) || new Date().getFullYear()
+    const items =
+      y === 2026
+        ? [
+            {
+              id: 'avance-francois-ludovie-2026',
+              year: 2026,
+              beneficiary: 'François et Ludovie',
+              amount_eur: 508.13,
+              project: 'Musée Shapishiko',
+              label: "Remboursement d'avances AKUU",
+              statut: 'a_rembourser',
+              echeance: '2026-12-31',
+              source: 'engagement_tresorier'
+            }
+          ]
+        : []
+    const pending = items.filter((i) => i.statut === 'a_rembourser')
+    return ok({
+      year: y,
+      items,
+      pending_count: pending.length,
+      total_a_rembourser_eur: pending.reduce((s, i) => s + i.amount_eur, 0)
+    })
+  },
+
+  async getCaissePerou(year) {
+    requireAuth('treasurer')
+    const y = Number(year) || new Date().getFullYear()
+    return ok({
+      year: y,
+      live: true,
+      caisse_pen_ouverture: 0,
+      caisse_pen_entrees: 0,
+      caisse_pen_sorties: 0,
+      caisse_pen_solde: 0,
+      caisse_eur_equiv: 0,
+      retraits_eur: 0,
+      retraits_count: 0,
+      especes_pen: 0,
+      especes_count: 0,
+      pen_to_eur: 0.24,
+      pen_per_eur: 4.17,
+      retraits: [],
+      especes: [],
+      note: 'Données mock — journal non branché.'
+    })
   },
 
   async getHistory() {

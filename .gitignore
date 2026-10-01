@@ -8,6 +8,12 @@ public/sitemap.xml
 *.local
 .env
 .env.*
+!.env.example
+
+# Admin trésorerie · secrets Apps Script
+ScriptProperties.json
+docs/admin-tresorerie/config/whitelist-emails.txt
+docs/admin-tresorerie/_sauvegarde_*/
 vite.config.js.timestamp-*
 
 # Brouillons locaux
@@ -28,3 +34,4 @@ scripts/.locale-pt-cache.json
 
 # Generated QA screenshots (scripts/deck-screenshots.mjs output)
 docs/deck-shots/
+.gstack/
