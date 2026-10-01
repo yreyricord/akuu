@@ -1,4 +1,6 @@
 import { useAuthStore } from '@/store/auth.js'
+// Ancrage du config onglets dans le bundle principal (évite ReferenceError en chunk admin lazy).
+import '@/data/tresorerie-tabs.js'
 
 export function setupAdminGuards(router) {
   router.beforeEach(async (to) => {
