@@ -201,19 +201,23 @@ const store = useTresorerieStore()
 const digitalSteps = [
   {
     title: 'Demande / devis avant achat (obligatoire)',
-    body: 'Projet, nature, montant PEN, date, description et justification — c\'est votre devis. Le trésorier (ou le CG si > 300 S/.) valide et envoie la référence AKUU-DEM-…'
+    body: `Projet, nature, montant, date souhaitée, description et justification — c'est votre devis. Le trésorier approuve (ou le CG si > ${PEN_TREASURER_MAX} S/.). Vous recevez une référence AKUU-DEM-… à conserver pour les factures.`
   },
   {
-    title: 'Facture après achat',
-    body: `Photo lisible du reçu (date, montant, vendeur, produits) + ref DEM. Montant max +${AMOUNT_TOLERANCE_PERCENT} % vs devis (moins = OK). Enregistrement immédiat dans le tableur et Drive.`
+    title: `Photos de devis fournisseurs (> ${DEVIS_PEN_THRESHOLD} S/.)`,
+    body: `Avant approbation : joignez au moins ${MIN_DEVIS_ATTACHMENTS} photos ou PDF de devis · le trésorier les valide, puis approuve la demande.`
+  },
+  {
+    title: 'Factures après achat — un devis, plusieurs tickets',
+    body: `Sélectionnez votre AKUU-DEM-… une seule fois. Renseignez les infos communes (moyen de paiement, payé par, lieu), puis une ligne par reçu : date, magasin, montant, photo. Enregistrement en brouillon — le trésorier ne voit rien tant que vous n'avez pas cliqué « Clore le devis ». Total de toutes les factures ≤ devis +${AMOUNT_TOLERANCE_PERCENT} % (moins = OK).`
+  },
+  {
+    title: 'Clôture du devis et validation trésorier',
+    body: 'Quand tous les reçus sont déposés : « Clore le devis — envoyer au trésorier ». Il valide le lot en une seule action (toutes les factures passent au journal). Il reste du budget ? Vous pouvez déposer d\'autres factures sur la même demande.'
   },
   {
     title: 'Suivi et historique',
-    body: 'Statuts en temps réel · refus motivé · resoumission possible · justificatif physique conservé à Puerto Miguel.'
-  },
-  {
-    title: `Photos de devis (> ${DEVIS_PEN_THRESHOLD} S/.)`,
-    body: `En plus de la demande, joignez au moins ${MIN_DEVIS_ATTACHMENTS} photos ou PDF des devis fournisseurs · le trésorier les valide avant approbation.`
+    body: 'Statuts en temps réel dans Historique · refus motivé · resoumission possible · justificatif papier conservé dans le classeur à Puerto Miguel.'
   }
 ]
 
@@ -241,9 +245,11 @@ const beforePurchaseChecklist = [
 ]
 
 const afterPurchaseSteps = [
-  'Conserver le justificatif papier (classeur sur place).',
-  'Photographier immédiatement le reçu (date, montant, vendeur, produits visibles).',
-  'Soumettre la facture sur cet espace dans la semaine — le site range la pièce automatiquement sur le Drive.'
+  'Conserver chaque justificatif papier (classeur sur place).',
+  'Photographier chaque reçu dès l\'achat (date, montant, vendeur, produits visibles).',
+  'Dans la semaine : onglet Facture → référence DEM → une ligne par ticket (dates différentes possibles).',
+  'Enregistrer en brouillon ; ajouter d\'autres factures si besoin, puis clore le devis pour envoyer au trésorier.',
+  'Le site nomme et range chaque pièce sur le Drive automatiquement.'
 ]
 
 const memberActions = [
@@ -257,7 +263,7 @@ const memberActions = [
   {
     tab: 'facture',
     label: 'Facture',
-    hint: 'Après achat · photo + référence DEM',
+    hint: 'Après achat · plusieurs reçus · clôture devis',
     icon: PhReceipt,
     iconBg: 'bg-leaf/20 text-forest'
   },
@@ -274,7 +280,7 @@ const treasurerActions = [
   {
     tab: 'validation',
     label: 'Validation',
-    hint: 'Approuver demandes et factures',
+    hint: 'Demandes · lots de factures (1 clic par devis)',
     icon: PhCheckSquare
   },
   {
