@@ -88,19 +88,13 @@
         <fieldset class="space-y-4 rounded-xl border border-night/10 bg-sand/30 p-4">
           <legend class="px-1 text-sm font-medium text-night">Informations communes</legend>
 
-          <div class="grid gap-4 sm:grid-cols-2">
-            <label class="block space-y-1.5">
-              <span class="text-sm font-medium text-night">Date de la dépense *</span>
-              <input v-model="form.expense_date" type="date" required class="admin-input" />
-            </label>
-            <label class="block space-y-1.5">
-              <span class="text-sm font-medium text-night">Moyen de paiement *</span>
-              <select v-model="form.payment_method" required class="admin-input">
-                <option value="" disabled>Choisir…</option>
-                <option v-for="m in PAYMENT_METHODS" :key="m.code" :value="m.code">{{ m.label }}</option>
-              </select>
-            </label>
-          </div>
+          <label class="block space-y-1.5">
+            <span class="text-sm font-medium text-night">Moyen de paiement *</span>
+            <select v-model="form.payment_method" required class="admin-input">
+              <option value="" disabled>Choisir…</option>
+              <option v-for="m in PAYMENT_METHODS" :key="m.code" :value="m.code">{{ m.label }}</option>
+            </select>
+          </label>
 
           <div class="grid gap-4 sm:grid-cols-2">
             <label class="block space-y-1.5">
@@ -127,7 +121,7 @@
           <div class="flex flex-wrap items-end justify-between gap-3">
             <div>
               <h3 class="text-sm font-medium text-night">Factures à déposer</h3>
-              <p class="text-xs text-night-400">Une ligne par ticket ou magasin · devise {{ currencyLabel }}</p>
+              <p class="text-xs text-night-400">Une ligne par ticket ou magasin · date et montant propres à chaque facture</p>
             </div>
             <button
               type="button"
@@ -180,6 +174,10 @@
                   class="admin-input"
                   placeholder="Ex. Ferretería El Sol, Taxi Nauta…"
                 />
+              </label>
+              <label class="block space-y-1.5">
+                <span class="text-sm font-medium text-night">Date de la dépense *</span>
+                <input v-model="line.expense_date" type="date" required class="admin-input" />
               </label>
               <AdminCurrencyAmountField
                 v-model="line.amount"
@@ -262,7 +260,6 @@ let lineSeq = 0
 
 const form = reactive({
   demand_reference: '',
-  expense_date: '',
   currency: CURRENCY_PEN,
   project: '',
   category: '',
@@ -279,6 +276,7 @@ function createLine() {
   lineSeq += 1
   return {
     id: lineSeq,
+    expense_date: '',
     vendor_name: '',
     amount: null,
     receipt_number: '',
@@ -359,6 +357,7 @@ const canSubmit = computed(() => {
   if (!selectedDemande.value || batchError.value) return false
   return lines.value.every(
     (line) =>
+      line.expense_date &&
       line.vendor_name.trim() &&
       line.amount != null &&
       Number(line.amount) > 0 &&
@@ -427,7 +426,6 @@ function onLineFile(id, file) {
 
 function resetFormFields(clearReference = true) {
   if (clearReference) form.demand_reference = ''
-  form.expense_date = ''
   form.currency = CURRENCY_PEN
   form.project = ''
   form.category = ''
@@ -456,7 +454,6 @@ async function onSubmit() {
 
   const shared = {
     demand_reference: form.demand_reference,
-    expense_date: form.expense_date,
     currency: form.currency,
     project: form.project,
     category: form.category,
@@ -468,6 +465,7 @@ async function onSubmit() {
   }
 
   const items = lines.value.map((line) => ({
+    expense_date: line.expense_date,
     amount: line.amount,
     vendor_name: line.vendor_name.trim(),
     receipt_number: line.receipt_number.trim(),
@@ -480,7 +478,6 @@ async function onSubmit() {
 
   savedDemandRef.value = refBefore
   form.demand_reference = refBefore
-  form.expense_date = shared.expense_date
   form.payment_method = shared.payment_method
   form.paid_by = shared.paid_by
   form.location = shared.location

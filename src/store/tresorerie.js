@@ -107,6 +107,7 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
         const facture = await tresorerieApi.createFacture(
           {
             ...sharedPayload,
+            expense_date: item.expense_date,
             amount: item.amount,
             vendor_name: item.vendor_name,
             receipt_number: item.receipt_number || ''
