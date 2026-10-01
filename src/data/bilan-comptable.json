@@ -1,0 +1,3934 @@
+{
+  "generated_at": "2026-10-01T08:44:28",
+  "tolerance_eur": 1.0,
+  "years": [
+    {
+      "year": 2017,
+      "journal": {
+        "recettes_eur": 8722.46,
+        "depenses_eur": 6455.68,
+        "solde_eur": 2266.78,
+        "lines": 43
+      },
+      "registre": {
+        "total_lines": 27,
+        "journal_banque": 27,
+        "terrain_pm": 0,
+        "with_piece": 6,
+        "piece_coverage_pct": 22.2,
+        "depenses_eur": 6455.68,
+        "depenses_pen": 0.0,
+        "eur_with_piece": 1165.39,
+        "pen_with_piece": 0.0
+      },
+      "factures": {
+        "files_count": 11,
+        "registre_with_piece": 6
+      },
+      "compte_resultat": {
+        "recettes_eur": null,
+        "depenses_eur": null
+      },
+      "controls": {
+        "bilan_equilibre": "warning",
+        "journal_vs_synthese": "warning",
+        "journal_vs_cr": "unknown",
+        "factures_vs_depenses": "ok",
+        "gap_recettes_synthese_eur": -500.0,
+        "gap_depenses_synthese_eur": -487.81,
+        "gap_recettes_cr_eur": null,
+        "gap_depenses_cr_eur": null,
+        "factures_orphans_estimate": 5,
+        "messages": [
+          {
+            "level": "warning",
+            "text": "Écart Synthèse : recettes -500.00 € · dépenses -487.81 €."
+          },
+          {
+            "level": "info",
+            "text": "Journal = relevés au centime depuis la correction du 01/10/2026 (2 retraits de 10 € et commission de 12,19 € ajoutés). Relevés février–mai et septembre non numérisés."
+          },
+          {
+            "level": "ok",
+            "text": "11 fichiers Factures/ · 6 lignes registre avec pièce (cohérent)."
+          },
+          {
+            "level": "warning",
+            "text": "Couverture pièces registre : 22.2 % — faible."
+          }
+        ]
+      },
+      "manques": {
+        "status": "attention",
+        "label": "Comptes OK · pièces à compléter",
+        "blocking_count": 0,
+        "action_count": 3,
+        "checklist_ok": 6,
+        "checklist_total": 7,
+        "checklist": [
+          {
+            "id": "synthese",
+            "label": "Journal banque = Synthèse bancaire (±1 €)",
+            "ok": true
+          },
+          {
+            "id": "compte_resultat",
+            "label": "Journal = compte de résultat (±1 €)",
+            "ok": true
+          },
+          {
+            "id": "pieces_journal",
+            "label": "Import historique — factures perdues/non numérisées (8 dép.)",
+            "ok": true
+          },
+          {
+            "id": "pieces_registre",
+            "label": "Justificatifs : journal seul (factures perdues — OK pour 2017–2020)",
+            "ok": true
+          },
+          {
+            "id": "factures_orphelines",
+            "label": "Factures classées (6/11 liées)",
+            "ok": false
+          },
+          {
+            "id": "fichiers_manquants",
+            "label": "Fichiers pièce présents sur disque",
+            "ok": true
+          },
+          {
+            "id": "revue",
+            "label": "Lignes journal validées (needs_review)",
+            "ok": true
+          }
+        ],
+        "items": [
+          {
+            "priority": 2,
+            "category": "factures_orphelines",
+            "title": "Factures dans le dossier mais non liées au registre",
+            "detail": "5 fichier(s) dans 2017/Factures/ sans ligne registre.",
+            "count": 5,
+            "action": "Créer la ligne Detail_PM correspondante ou supprimer/déplacer vers _a_classer/.",
+            "samples": []
+          },
+          {
+            "priority": 3,
+            "category": "documentation",
+            "title": "Factures absentes — import historique (2 dépenses · 134,64 €)",
+            "detail": "Aucun dossier Factures/ pour cette année à la migration. Le journal comptable fait foi ; relevé bancaire ou « Relevé OK » sur le site suffit.",
+            "count": 2,
+            "action": "Optionnel : « Tout valider » dans Actions trésorier si vous confirmez les montants.",
+            "samples": []
+          },
+          {
+            "priority": 3,
+            "category": "documentation",
+            "title": "Écart Synthèse documenté (normal pour cette année)",
+            "detail": "Journal = relevés au centime depuis la correction du 01/10/2026 (2 retraits de 10 € et commission de 12,19 € ajoutés). Relevés février–mai et septembre non numérisés. Écart actuel : recettes -500.00 € · dépenses -487.81 €.",
+            "count": 0,
+            "action": "Aucune action — écart connu à la migration.",
+            "samples": []
+          }
+        ],
+        "import_historique": true
+      },
+      "actions": {
+        "lines": [],
+        "orphan_files": [],
+        "stats": {
+          "total": 27,
+          "pending": 2,
+          "releve_auto": 19,
+          "ok": 6,
+          "orphans": 5,
+          "needs_invoice": 8,
+          "needs_with_piece": 6,
+          "coverage_required_pct": 75.0
+        }
+      },
+      "downloads": [
+        {
+          "label": "Journal AKUU 2017",
+          "filename": "Journal_AKUU_2017.xlsx",
+          "path": "/downloads/tresorerie/2017/Journal_AKUU_2017.xlsx",
+          "size_kb": 10.1
+        },
+        {
+          "label": "Registre Depenses 2017",
+          "filename": "Registre_Depenses_2017.xlsx",
+          "path": "/downloads/tresorerie/2017/Registre_Depenses_2017.xlsx",
+          "size_kb": 9.9
+        },
+        {
+          "label": "Bilan Comptable 2017",
+          "filename": "Bilan_Comptable_2017.xlsx",
+          "path": "/downloads/tresorerie/2017/Bilan_Comptable_2017.xlsx",
+          "size_kb": 7.3
+        }
+      ],
+      "download_all": "/downloads/tresorerie/2017/AKUU_Tresorerie_2017.zip",
+      "download_releves": {
+        "count": 6,
+        "download_all": "/downloads/tresorerie/2017/Releves_bancaires_2017.zip",
+        "files": [
+          {
+            "label": "2017 06 RELEVE PRO AKUU",
+            "filename": "2017_06_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 25.1
+          },
+          {
+            "label": "2017 07 RELEVE PRO AKUU",
+            "filename": "2017_07_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 32.7
+          },
+          {
+            "label": "2017 08 RELEVE PRO AKUU",
+            "filename": "2017_08_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 25.6
+          },
+          {
+            "label": "2017 10 RELEVE PRO AKUU",
+            "filename": "2017_10_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 31.4
+          },
+          {
+            "label": "2017 11 RELEVE PRO AKUU",
+            "filename": "2017_11_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 30.4
+          },
+          {
+            "label": "2017 12 RELEVE PRO AKUU",
+            "filename": "2017_12_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 33.7
+          }
+        ]
+      },
+      "releves_status": {
+        "year": 2017,
+        "status": "incomplete",
+        "label": "5 relevé(s) Crédit Coop manquant(s) (depuis février 2017)",
+        "count": 6,
+        "months_present": [
+          6,
+          7,
+          8,
+          10,
+          11,
+          12
+        ],
+        "expected": 11,
+        "missing": [
+          {
+            "month": 2,
+            "year": 2017,
+            "label": "Février 2017",
+            "suggested_filename": "2017_02_RELEVE_PRO_AKUU.pdf"
+          },
+          {
+            "month": 3,
+            "year": 2017,
+            "label": "Mars 2017",
+            "suggested_filename": "2017_03_RELEVE_PRO_AKUU.pdf"
+          },
+          {
+            "month": 4,
+            "year": 2017,
+            "label": "Avril 2017",
+            "suggested_filename": "2017_04_RELEVE_PRO_AKUU.pdf"
+          },
+          {
+            "month": 5,
+            "year": 2017,
+            "label": "Mai 2017",
+            "suggested_filename": "2017_05_RELEVE_PRO_AKUU.pdf"
+          },
+          {
+            "month": 9,
+            "year": 2017,
+            "label": "Septembre 2017",
+            "suggested_filename": "2017_09_RELEVE_PRO_AKUU.pdf"
+          }
+        ],
+        "upload_enabled": true,
+        "account_opening": {
+          "month": 2,
+          "label": "Février 2017",
+          "note": "Compte pro ouvert le 23/02/2017 (journal AKUU-IMP-2017-0001). Le relevé de juin porte le n°5 : les relevés n°1 à 4 (février à mai) existent sur papier mais ne sont pas encore numérisés. Relevés attendus : février à décembre (11 mois)."
+        },
+        "historique_note": "Compte pro ouvert le 23/02/2017 (journal AKUU-IMP-2017-0001). Le relevé de juin porte le n°5 : les relevés n°1 à 4 (février à mai) existent sur papier mais ne sont pas encore numérisés. Relevés attendus : février à décembre (11 mois). Journal = relevés au centime depuis la correction du 01/10/2026 (2 retraits de 10 € et commission de 12,19 € ajoutés). Relevés février–mai et septembre non numérisés."
+      },
+      "download_cloture": {
+        "label": "Pack clôture AG 2017",
+        "filename": "Pack_Cloture_2017.zip",
+        "path": "/downloads/tresorerie/2017/Cloture/Pack_Cloture_2017.zip",
+        "size_kb": 78.2,
+        "pdf": "/downloads/tresorerie/2017/Cloture/06_Synthese_AG.pdf"
+      },
+      "cloture": {
+        "year": 2017,
+        "generated_at": "2026-10-01T08:44:27",
+        "provisoire": false,
+        "clos": true,
+        "status": "pret",
+        "label": "Clôture prête pour l'AG",
+        "checklist_ok": 13,
+        "checklist_total": 13,
+        "checklist": [
+          {
+            "id": "journal_valide",
+            "label": "Journal validé (valider_journal_annee.py)",
+            "statut": "ok",
+            "detail": "0 erreur(s) · 3 avertissement(s)"
+          },
+          {
+            "id": "cr_reference",
+            "label": "Compte de résultat auto = CR de référence (± 1 €)",
+            "statut": "ok",
+            "detail": "Produits 8 722,46 € (écart 0.0) · Charges 6 455,68 € (écart 0.0) · réf. Synthese_financiere_AKUU_2017_2026.xlsx · Synthèse 10 ans"
+          },
+          {
+            "id": "registre_complet",
+            "label": "Registre recettes + dépenses complet",
+            "statut": "ok",
+            "detail": "16 recettes (journal : 16) · 27 dépenses (Registre_Depenses existant : 27) · 0 doublon(s) exclu(s)"
+          },
+          {
+            "id": "rapprochement",
+            "label": "Rapprochement bancaire (solde calculé = relevé ± 1 €)",
+            "statut": "ok",
+            "detail": "Calculé 2 266,78 € · relevé 2 266,78 € · écart 0,00 €"
+          },
+          {
+            "id": "bilan_equilibre",
+            "label": "Bilan simplifié équilibré (Actif = Passif ± 1 €)",
+            "statut": "ok",
+            "detail": "Actif 2 266,78 € · Passif 2 266,78 € · écart 0,00 €"
+          },
+          {
+            "id": "couverture_factures",
+            "label": "Couverture des justificatifs requis",
+            "statut": "info",
+            "detail": "75.0 % (6/8) · année à couverture assouplie"
+          },
+          {
+            "id": "factures_annotees",
+            "label": "Factures annotées concordantes avec le journal",
+            "statut": "ok",
+            "detail": "6 concordante(s) · 0 divergence(s) · 0 archivée(s)"
+          },
+          {
+            "id": "terrain_factures",
+            "label": "Dépenses terrain avec facture annotée",
+            "statut": "ok",
+            "detail": "0 ligne(s) Detail_PM sans facture dans Factures/"
+          },
+          {
+            "id": "needs_review",
+            "label": "Aucune ligne « à revoir » (needs_review)",
+            "statut": "ok",
+            "detail": "0 ligne(s) needs_review=oui"
+          },
+          {
+            "id": "categories",
+            "label": "Catégories toutes reconnues par le mapping CR",
+            "statut": "ok",
+            "detail": "0 ligne(s) à qualifier"
+          },
+          {
+            "id": "liens_view",
+            "label": "Pièces sans nom de fichier (piece_filename = « view »)",
+            "statut": "ok",
+            "detail": "0 ligne(s)"
+          },
+          {
+            "id": "saisies_manuelles",
+            "label": "Saisies manuelles de clôture confirmées (immobilisations, créances, dettes)",
+            "statut": "ok",
+            "detail": "30/09/2026 : aucune immobilisation, dette, créance ni provision au 31/12/2017. Prêts « fonds de secours prospection » Simon Subies et Clémentine Darj (2 × 250 €, 27/07/2017) remboursés les 03 et 05/10/2017. Matériel photo/son passé en charges."
+          },
+          {
+            "id": "exercice_clos",
+            "label": "Exercice clos (12 relevés)",
+            "statut": "ok",
+            "detail": "Arrêté au 2017-12-31"
+          }
+        ],
+        "questions_ouvertes": [],
+        "compte_resultat": {
+          "produits_eur": 8722.46,
+          "charges_eur": 6455.68,
+          "resultat_eur": 2266.78,
+          "controle": {
+            "ecart_produits": 0.0,
+            "ecart_charges": 0.0,
+            "statut": "ok",
+            "explication": "",
+            "source": "Synthese_financiere_AKUU_2017_2026.xlsx · Synthèse 10 ans"
+          },
+          "postes": {
+            "P1": 1614.73,
+            "P2": 6500.0,
+            "P3": 277.73,
+            "P5": 330.0,
+            "C1": 5843.93,
+            "C2": 502.8,
+            "C3": 108.95
+          }
+        },
+        "tresorerie": {
+          "debut_eur": 0.0,
+          "fin_eur": 2266.78,
+          "releve_fin_eur": 2266.78,
+          "ecart_rapprochement_eur": 0.0,
+          "statut_rapprochement": "ok",
+          "explication_ecart": null
+        },
+        "bilan": {
+          "actif_eur": 2266.78,
+          "passif_eur": 2266.78,
+          "ecart_eur": 0.0,
+          "equilibre": true
+        },
+        "terrain": {
+          "lignes": 0,
+          "pen": 0.0
+        },
+        "files": [
+          "01_Registre_recettes_depenses.xlsx",
+          "02_Compte_de_resultat.xlsx",
+          "03_Bilan_simplifie.xlsx",
+          "04_Annexe.xlsx",
+          "05_Rapprochement_bancaire.xlsx",
+          "06_Synthese_AG.xlsx",
+          "06_Synthese_AG.pdf",
+          "07_Checklist_cloture.xlsx"
+        ]
+      },
+      "import_historique": true
+    },
+    {
+      "year": 2018,
+      "journal": {
+        "recettes_eur": 14681.3,
+        "depenses_eur": 9534.83,
+        "solde_eur": 5146.47,
+        "lines": 61
+      },
+      "registre": {
+        "total_lines": 136,
+        "journal_banque": 48,
+        "terrain_pm": 88,
+        "with_piece": 89,
+        "piece_coverage_pct": 65.4,
+        "depenses_eur": 10045.43,
+        "depenses_pen": 26024.71,
+        "eur_with_piece": 920.4,
+        "pen_with_piece": 26024.71
+      },
+      "factures": {
+        "files_count": 88,
+        "registre_with_piece": 89
+      },
+      "compte_resultat": {
+        "recettes_eur": null,
+        "depenses_eur": null
+      },
+      "controls": {
+        "bilan_equilibre": "ok",
+        "journal_vs_synthese": "ok",
+        "journal_vs_cr": "unknown",
+        "factures_vs_depenses": "warning",
+        "gap_recettes_synthese_eur": 0.0,
+        "gap_depenses_synthese_eur": 0.0,
+        "gap_recettes_cr_eur": null,
+        "gap_depenses_cr_eur": null,
+        "factures_orphans_estimate": 0,
+        "messages": [
+          {
+            "level": "ok",
+            "text": "Journal aligné sur la Synthèse bancaire (±1 €)."
+          },
+          {
+            "level": "info",
+            "text": "Journal = relevés au centime depuis la correction du 01/10/2026 (220 € de Laure Le Breton du 17/05/2018 réintégrés). Changement de compte le 18/05/2018."
+          },
+          {
+            "level": "warning",
+            "text": "88 fichiers Factures/ pour 89 lignes avec pièce — scans manquants ?"
+          },
+          {
+            "level": "warning",
+            "text": "Couverture pièces registre : 65.4 % — à compléter."
+          }
+        ]
+      },
+      "manques": {
+        "status": "pret",
+        "label": "Exercice clôturable",
+        "blocking_count": 0,
+        "action_count": 1,
+        "checklist_ok": 7,
+        "checklist_total": 7,
+        "checklist": [
+          {
+            "id": "synthese",
+            "label": "Journal banque = Synthèse bancaire (±1 €)",
+            "ok": true
+          },
+          {
+            "id": "compte_resultat",
+            "label": "Journal = compte de résultat (±1 €)",
+            "ok": true
+          },
+          {
+            "id": "pieces_journal",
+            "label": "Import historique — factures perdues/non numérisées (8 dép.)",
+            "ok": true
+          },
+          {
+            "id": "pieces_registre",
+            "label": "Justificatifs : journal seul (factures perdues — OK pour 2017–2020)",
+            "ok": true
+          },
+          {
+            "id": "factures_orphelines",
+            "label": "Factures classées (88/88 liées)",
+            "ok": true
+          },
+          {
+            "id": "fichiers_manquants",
+            "label": "Fichiers pièce présents sur disque",
+            "ok": true
+          },
+          {
+            "id": "revue",
+            "label": "Lignes journal validées (needs_review)",
+            "ok": true
+          }
+        ],
+        "items": [
+          {
+            "priority": 3,
+            "category": "documentation",
+            "title": "Factures absentes — import historique (7 dépenses · 1 191,46 €)",
+            "detail": "Aucun dossier Factures/ pour cette année à la migration. Le journal comptable fait foi ; relevé bancaire ou « Relevé OK » sur le site suffit.",
+            "count": 7,
+            "action": "Optionnel : « Tout valider » dans Actions trésorier si vous confirmez les montants.",
+            "samples": []
+          }
+        ],
+        "import_historique": true
+      },
+      "actions": {
+        "lines": [],
+        "orphan_files": [],
+        "stats": {
+          "total": 136,
+          "pending": 7,
+          "releve_auto": 40,
+          "ok": 89,
+          "orphans": 0,
+          "needs_invoice": 96,
+          "needs_with_piece": 89,
+          "coverage_required_pct": 92.7
+        }
+      },
+      "downloads": [
+        {
+          "label": "Journal AKUU 2018",
+          "filename": "Journal_AKUU_2018.xlsx",
+          "path": "/downloads/tresorerie/2018/Journal_AKUU_2018.xlsx",
+          "size_kb": 22.4
+        },
+        {
+          "label": "Registre Depenses 2018",
+          "filename": "Registre_Depenses_2018.xlsx",
+          "path": "/downloads/tresorerie/2018/Registre_Depenses_2018.xlsx",
+          "size_kb": 21.9
+        },
+        {
+          "label": "Bilan Comptable 2018",
+          "filename": "Bilan_Comptable_2018.xlsx",
+          "path": "/downloads/tresorerie/2018/Bilan_Comptable_2018.xlsx",
+          "size_kb": 7.0
+        }
+      ],
+      "download_all": "/downloads/tresorerie/2018/AKUU_Tresorerie_2018.zip",
+      "download_releves": {
+        "count": 12,
+        "download_all": "/downloads/tresorerie/2018/Releves_bancaires_2018.zip",
+        "files": [
+          {
+            "label": "2018 01 RELEVE PRO AKUU",
+            "filename": "2018_01_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 29.4
+          },
+          {
+            "label": "2018 02 RELEVE PRO AKUU",
+            "filename": "2018_02_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 27.4
+          },
+          {
+            "label": "2018 03 RELEVE PRO AKUU",
+            "filename": "2018_03_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 32.0
+          },
+          {
+            "label": "2018 04 RELEVE PRO AKUU",
+            "filename": "2018_04_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 31.6
+          },
+          {
+            "label": "2018 05 RELEVE PRO AKUU",
+            "filename": "2018_05_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 104.8
+          },
+          {
+            "label": "2018 06 RELEVE PRO AKUU",
+            "filename": "2018_06_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 109.2
+          },
+          {
+            "label": "2018 07 RELEVE PRO AKUU",
+            "filename": "2018_07_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 101.7
+          },
+          {
+            "label": "2018 08 RELEVE PRO AKUU",
+            "filename": "2018_08_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 109.3
+          },
+          {
+            "label": "2018 09 RELEVE PRO AKUU",
+            "filename": "2018_09_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 97.9
+          },
+          {
+            "label": "2018 10 RELEVE PRO AKUU",
+            "filename": "2018_10_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 115.1
+          },
+          {
+            "label": "2018 11 RELEVE PRO AKUU",
+            "filename": "2018_11_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 96.2
+          },
+          {
+            "label": "2018 12 RELEVE PRO AKUU",
+            "filename": "2018_12_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 113.7
+          }
+        ]
+      },
+      "releves_status": {
+        "year": 2018,
+        "status": "complete",
+        "label": "12 relevé(s) présents",
+        "count": 20,
+        "months_present": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "expected": 12,
+        "missing": [],
+        "upload_enabled": true,
+        "account_opening": null,
+        "historique_note": "Journal = relevés au centime depuis la correction du 01/10/2026 (220 € de Laure Le Breton du 17/05/2018 réintégrés). Changement de compte le 18/05/2018."
+      },
+      "download_cloture": {
+        "label": "Pack clôture AG 2018",
+        "filename": "Pack_Cloture_2018.zip",
+        "path": "/downloads/tresorerie/2018/Cloture/Pack_Cloture_2018.zip",
+        "size_kb": 98.5,
+        "pdf": "/downloads/tresorerie/2018/Cloture/06_Synthese_AG.pdf"
+      },
+      "cloture": {
+        "year": 2018,
+        "generated_at": "2026-10-01T08:44:28",
+        "provisoire": false,
+        "clos": true,
+        "status": "pret",
+        "label": "Clôture prête pour l'AG",
+        "checklist_ok": 13,
+        "checklist_total": 13,
+        "checklist": [
+          {
+            "id": "journal_valide",
+            "label": "Journal validé (valider_journal_annee.py)",
+            "statut": "ok",
+            "detail": "0 erreur(s) · 1 avertissement(s)"
+          },
+          {
+            "id": "cr_reference",
+            "label": "Compte de résultat auto = CR de référence (± 1 €)",
+            "statut": "ok",
+            "detail": "Produits 14 681,30 € (écart 0.0) · Charges 9 534,83 € (écart 0.0) · réf. Synthese_financiere_AKUU_2017_2026.xlsx · Synthèse 10 ans"
+          },
+          {
+            "id": "registre_complet",
+            "label": "Registre recettes + dépenses complet",
+            "statut": "ok",
+            "detail": "13 recettes (journal : 13) · 136 dépenses (Registre_Depenses existant : 136) · 0 doublon(s) exclu(s)"
+          },
+          {
+            "id": "rapprochement",
+            "label": "Rapprochement bancaire (solde calculé = relevé ± 1 €)",
+            "statut": "ok",
+            "detail": "Calculé 7 413,25 € · relevé 7 413,25 € · écart 0,00 €"
+          },
+          {
+            "id": "bilan_equilibre",
+            "label": "Bilan simplifié équilibré (Actif = Passif ± 1 €)",
+            "statut": "ok",
+            "detail": "Actif 7 413,25 € · Passif 7 413,25 € · écart 0,00 €"
+          },
+          {
+            "id": "couverture_factures",
+            "label": "Couverture des justificatifs requis",
+            "statut": "ok",
+            "detail": "92.7 % (89/96) · année à couverture assouplie"
+          },
+          {
+            "id": "factures_annotees",
+            "label": "Factures annotées concordantes avec le journal",
+            "statut": "ok",
+            "detail": "88 concordante(s) · 0 divergence(s) · 0 archivée(s)"
+          },
+          {
+            "id": "terrain_factures",
+            "label": "Dépenses terrain avec facture annotée",
+            "statut": "info",
+            "detail": "1 ligne(s) Detail_PM sans facture dans Factures/"
+          },
+          {
+            "id": "needs_review",
+            "label": "Aucune ligne « à revoir » (needs_review)",
+            "statut": "ok",
+            "detail": "0 ligne(s) needs_review=oui"
+          },
+          {
+            "id": "categories",
+            "label": "Catégories toutes reconnues par le mapping CR",
+            "statut": "ok",
+            "detail": "0 ligne(s) à qualifier"
+          },
+          {
+            "id": "liens_view",
+            "label": "Pièces sans nom de fichier (piece_filename = « view »)",
+            "statut": "ok",
+            "detail": "0 ligne(s)"
+          },
+          {
+            "id": "saisies_manuelles",
+            "label": "Saisies manuelles de clôture confirmées (immobilisations, créances, dettes)",
+            "statut": "ok",
+            "detail": "30/09/2026 : aucune immobilisation, dette, créance, provision ni subvention à justifier au 31/12/2018. Matériel (NAS 409,80 €…) passé en charges."
+          },
+          {
+            "id": "exercice_clos",
+            "label": "Exercice clos (12 relevés)",
+            "statut": "ok",
+            "detail": "Arrêté au 2018-12-31"
+          }
+        ],
+        "questions_ouvertes": [],
+        "compte_resultat": {
+          "produits_eur": 14681.3,
+          "charges_eur": 9534.83,
+          "resultat_eur": 5146.47,
+          "controle": {
+            "ecart_produits": 0.0,
+            "ecart_charges": 0.0,
+            "statut": "ok",
+            "explication": "",
+            "source": "Synthese_financiere_AKUU_2017_2026.xlsx · Synthèse 10 ans"
+          },
+          "postes": {
+            "P1": 541.3,
+            "P2": 12980.0,
+            "P4": 1160.0,
+            "C1": 9058.29,
+            "C2": 234.84,
+            "C3": 241.7
+          }
+        },
+        "tresorerie": {
+          "debut_eur": 2266.78,
+          "fin_eur": 7413.25,
+          "releve_fin_eur": 7413.25,
+          "ecart_rapprochement_eur": 0.0,
+          "statut_rapprochement": "ok",
+          "explication_ecart": null
+        },
+        "bilan": {
+          "actif_eur": 7413.25,
+          "passif_eur": 7413.25,
+          "ecart_eur": 0.0,
+          "equilibre": true
+        },
+        "terrain": {
+          "lignes": 88,
+          "pen": 26024.71
+        },
+        "files": [
+          "01_Registre_recettes_depenses.xlsx",
+          "02_Compte_de_resultat.xlsx",
+          "03_Bilan_simplifie.xlsx",
+          "04_Annexe.xlsx",
+          "05_Rapprochement_bancaire.xlsx",
+          "06_Synthese_AG.xlsx",
+          "06_Synthese_AG.pdf",
+          "07_Checklist_cloture.xlsx"
+        ]
+      },
+      "import_historique": true
+    },
+    {
+      "year": 2019,
+      "journal": {
+        "recettes_eur": 18023.89,
+        "depenses_eur": 10227.78,
+        "solde_eur": 7796.11,
+        "lines": 105
+      },
+      "registre": {
+        "total_lines": 103,
+        "journal_banque": 49,
+        "terrain_pm": 54,
+        "with_piece": 48,
+        "piece_coverage_pct": 46.6,
+        "depenses_eur": 12219.82,
+        "depenses_pen": 4430.38,
+        "eur_with_piece": 7298.46,
+        "pen_with_piece": 2822.38
+      },
+      "factures": {
+        "files_count": 45,
+        "registre_with_piece": 48
+      },
+      "compte_resultat": {
+        "recettes_eur": 18011.48,
+        "depenses_eur": 10215.37
+      },
+      "controls": {
+        "bilan_equilibre": "ok",
+        "journal_vs_synthese": "ok",
+        "journal_vs_cr": "warning",
+        "factures_vs_depenses": "warning",
+        "gap_recettes_synthese_eur": 0.0,
+        "gap_depenses_synthese_eur": 0.0,
+        "gap_recettes_cr_eur": 12.41,
+        "gap_depenses_cr_eur": 12.41,
+        "factures_orphans_estimate": 0,
+        "messages": [
+          {
+            "level": "ok",
+            "text": "Journal aligné sur la Synthèse bancaire (±1 €)."
+          },
+          {
+            "level": "warning",
+            "text": "Écart CR : recettes +12.41 € · dépenses +12.41 €."
+          },
+          {
+            "level": "info",
+            "text": "Journal = flux bancaires Synthèse (105 op.) ; CR comptable exclut +12,41 € recettes et +12,41 € charges (retraitement interne CR 2019, pas erreur migration)."
+          },
+          {
+            "level": "warning",
+            "text": "45 fichiers Factures/ pour 48 lignes avec pièce — scans manquants ?"
+          },
+          {
+            "level": "warning",
+            "text": "Couverture pièces registre : 46.6 % — faible."
+          }
+        ]
+      },
+      "manques": {
+        "status": "attention",
+        "label": "Comptes OK · pièces à compléter",
+        "blocking_count": 0,
+        "action_count": 2,
+        "checklist_ok": 6,
+        "checklist_total": 7,
+        "checklist": [
+          {
+            "id": "synthese",
+            "label": "Journal banque = Synthèse bancaire (±1 €)",
+            "ok": true
+          },
+          {
+            "id": "compte_resultat",
+            "label": "Journal = compte de résultat (±1 €)",
+            "ok": true
+          },
+          {
+            "id": "pieces_journal",
+            "label": "Import historique — factures perdues/non numérisées (32 dép.)",
+            "ok": true
+          },
+          {
+            "id": "pieces_registre",
+            "label": "Justificatifs : journal seul (factures perdues — OK pour 2017–2020)",
+            "ok": true
+          },
+          {
+            "id": "factures_orphelines",
+            "label": "Factures classées (40/45 liées)",
+            "ok": false
+          },
+          {
+            "id": "fichiers_manquants",
+            "label": "Fichiers pièce présents sur disque",
+            "ok": true
+          },
+          {
+            "id": "revue",
+            "label": "Lignes journal validées (needs_review)",
+            "ok": true
+          }
+        ],
+        "items": [
+          {
+            "priority": 2,
+            "category": "factures_orphelines",
+            "title": "Factures dans le dossier mais non liées au registre",
+            "detail": "5 fichier(s) dans 2019/Factures/ sans ligne registre.",
+            "count": 5,
+            "action": "Créer la ligne Detail_PM correspondante ou supprimer/déplacer vers _a_classer/.",
+            "samples": []
+          },
+          {
+            "priority": 3,
+            "category": "documentation",
+            "title": "Factures absentes — import historique (39 dépenses · 4 589,66 €)",
+            "detail": "Aucun dossier Factures/ pour cette année à la migration. Le journal comptable fait foi ; relevé bancaire ou « Relevé OK » sur le site suffit.",
+            "count": 39,
+            "action": "Optionnel : « Tout valider » dans Actions trésorier si vous confirmez les montants.",
+            "samples": []
+          }
+        ],
+        "import_historique": true
+      },
+      "actions": {
+        "lines": [],
+        "orphan_files": [],
+        "stats": {
+          "total": 103,
+          "pending": 39,
+          "releve_auto": 16,
+          "ok": 48,
+          "orphans": 5,
+          "needs_invoice": 86,
+          "needs_with_piece": 47,
+          "coverage_required_pct": 54.7
+        }
+      },
+      "downloads": [
+        {
+          "label": "Journal AKUU 2019",
+          "filename": "Journal_AKUU_2019.xlsx",
+          "path": "/downloads/tresorerie/2019/Journal_AKUU_2019.xlsx",
+          "size_kb": 25.4
+        },
+        {
+          "label": "Registre Depenses 2019",
+          "filename": "Registre_Depenses_2019.xlsx",
+          "path": "/downloads/tresorerie/2019/Registre_Depenses_2019.xlsx",
+          "size_kb": 21.3
+        },
+        {
+          "label": "Bilan Comptable 2019",
+          "filename": "Bilan_Comptable_2019.xlsx",
+          "path": "/downloads/tresorerie/2019/Bilan_Comptable_2019.xlsx",
+          "size_kb": 7.2
+        }
+      ],
+      "download_all": "/downloads/tresorerie/2019/AKUU_Tresorerie_2019.zip",
+      "download_releves": {
+        "count": 12,
+        "download_all": "/downloads/tresorerie/2019/Releves_bancaires_2019.zip",
+        "files": [
+          {
+            "label": "2019 01 RELEVE PRO AKUU",
+            "filename": "2019_01_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 108.7
+          },
+          {
+            "label": "2019 02 RELEVE PRO AKUU",
+            "filename": "2019_02_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 98.6
+          },
+          {
+            "label": "2019 03 RELEVE PRO AKUU",
+            "filename": "2019_03_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 116.3
+          },
+          {
+            "label": "2019 04 RELEVE PRO AKUU",
+            "filename": "2019_04_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 114.5
+          },
+          {
+            "label": "2019 05 RELEVE PRO AKUU",
+            "filename": "2019_05_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 102.0
+          },
+          {
+            "label": "2019 06 RELEVE PRO AKUU",
+            "filename": "2019_06_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 119.4
+          },
+          {
+            "label": "2019 07 RELEVE PRO AKUU",
+            "filename": "2019_07_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 113.5
+          },
+          {
+            "label": "2019 08 RELEVE PRO AKUU",
+            "filename": "2019_08_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 97.8
+          },
+          {
+            "label": "2019 09 RELEVE PRO AKUU",
+            "filename": "2019_09_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 115.2
+          },
+          {
+            "label": "2019 10 RELEVE PRO AKUU",
+            "filename": "2019_10_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 125.2
+          },
+          {
+            "label": "2019 11 RELEVE PRO AKUU",
+            "filename": "2019_11_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 106.0
+          },
+          {
+            "label": "2019 12 RELEVE PRO AKUU",
+            "filename": "2019_12_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 126.3
+          }
+        ]
+      },
+      "releves_status": {
+        "year": 2019,
+        "status": "complete",
+        "label": "12 relevé(s) présents",
+        "count": 24,
+        "months_present": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "expected": 12,
+        "missing": [],
+        "upload_enabled": true,
+        "account_opening": null,
+        "historique_note": "Journal = flux bancaires Synthèse (105 op.) ; CR comptable exclut +12,41 € recettes et +12,41 € charges (retraitement interne CR 2019, pas erreur migration)."
+      },
+      "download_cloture": {
+        "label": "Pack clôture AG 2019",
+        "filename": "Pack_Cloture_2019.zip",
+        "path": "/downloads/tresorerie/2019/Cloture/Pack_Cloture_2019.zip",
+        "size_kb": 106.9,
+        "pdf": "/downloads/tresorerie/2019/Cloture/06_Synthese_AG.pdf"
+      },
+      "cloture": {
+        "year": 2019,
+        "generated_at": "2026-09-30T22:28:07",
+        "provisoire": false,
+        "status": "attention",
+        "label": "Clôture OK · points d'attention",
+        "checklist_ok": 12,
+        "checklist_total": 13,
+        "checklist": [
+          {
+            "id": "journal_valide",
+            "label": "Journal validé (valider_journal_annee.py)",
+            "statut": "ok",
+            "detail": "0 erreur(s) · 0 avertissement(s)"
+          },
+          {
+            "id": "cr_reference",
+            "label": "Compte de résultat auto = CR de référence (± 1 €)",
+            "statut": "warning",
+            "detail": "Produits 18 023,89 € (écart 12.41) · Charges 10 227,78 € (écart 12.41) · réf. 2019/Compte de résultat et bilan financier AKUU 2019.xlsx · Compte de résultats"
+          },
+          {
+            "id": "registre_complet",
+            "label": "Registre recettes + dépenses complet",
+            "statut": "ok",
+            "detail": "56 recettes (journal : 56) · 103 dépenses (Registre_Depenses existant : 103) · 0 doublon(s) exclu(s)"
+          },
+          {
+            "id": "rapprochement",
+            "label": "Rapprochement bancaire (solde calculé = relevé ± 1 €)",
+            "statut": "ok",
+            "detail": "Calculé 15 209,36 € · relevé 15 209,36 € · écart 0,00 €"
+          },
+          {
+            "id": "bilan_equilibre",
+            "label": "Bilan simplifié équilibré (Actif = Passif ± 1 €)",
+            "statut": "ok",
+            "detail": "Actif 15 209,36 € · Passif 15 209,36 € · écart 0,00 €"
+          },
+          {
+            "id": "couverture_factures",
+            "label": "Couverture des justificatifs requis",
+            "statut": "info",
+            "detail": "54.7 % (47/86) · année à couverture assouplie"
+          },
+          {
+            "id": "factures_annotees",
+            "label": "Factures annotées concordantes avec le journal",
+            "statut": "ok",
+            "detail": "41 concordante(s) · 0 divergence(s) · 0 archivée(s)"
+          },
+          {
+            "id": "terrain_factures",
+            "label": "Dépenses terrain avec facture annotée",
+            "statut": "info",
+            "detail": "23 ligne(s) Detail_PM sans facture dans Factures/"
+          },
+          {
+            "id": "needs_review",
+            "label": "Aucune ligne « à revoir » (needs_review)",
+            "statut": "ok",
+            "detail": "0 ligne(s) needs_review=oui"
+          },
+          {
+            "id": "categories",
+            "label": "Catégories toutes reconnues par le mapping CR",
+            "statut": "ok",
+            "detail": "0 ligne(s) à qualifier"
+          },
+          {
+            "id": "liens_view",
+            "label": "Pièces sans nom de fichier (piece_filename = « view »)",
+            "statut": "ok",
+            "detail": "0 ligne(s)"
+          },
+          {
+            "id": "saisies_manuelles",
+            "label": "Saisies manuelles de clôture confirmées (immobilisations, créances, dettes)",
+            "statut": "ok",
+            "detail": "30/09/2026 : rien à inscrire au bilan au 31/12/2019 (ni immobilisation, créance, dette ni provision). Le matériel DJI acheté en Colombie (2 783,95 €, facture 2290 du 10/10/2019) est passé en charges et sera suivi dans l'inventaire du matériel, sans valeur au bilan. Les avances à Solid'AKUU (2 × 500 €) ne sont pas inscrites en créance."
+          },
+          {
+            "id": "exercice_clos",
+            "label": "Exercice clos (12 relevés)",
+            "statut": "ok",
+            "detail": "Arrêté au 2019-12-31"
+          }
+        ],
+        "questions_ouvertes": [],
+        "compte_resultat": {
+          "produits_eur": 18023.89,
+          "charges_eur": 10227.78,
+          "resultat_eur": 7796.11,
+          "controle": {
+            "ecart_produits": 12.41,
+            "ecart_charges": 12.41,
+            "statut": "documente",
+            "explication": "Journal = flux bancaires Synthèse (105 op.) ; CR comptable exclut +12,41 € recettes et +12,41 € charges (retraitement interne CR 2019, pas erreur migration).",
+            "source": "2019/Compte de résultat et bilan financier AKUU 2019.xlsx · Compte de résultats"
+          },
+          "postes": {
+            "P1": 3446.65,
+            "P2": 9920.0,
+            "P3": 115.05,
+            "P4": 2541.92,
+            "P5": 1901.27,
+            "P6": 99.0,
+            "C1": 8891.32,
+            "C2": 506.19,
+            "C3": 458.67,
+            "C4": 371.6
+          }
+        },
+        "tresorerie": {
+          "debut_eur": 7413.25,
+          "fin_eur": 15209.36,
+          "releve_fin_eur": 15209.36,
+          "ecart_rapprochement_eur": 0.0,
+          "statut_rapprochement": "ok",
+          "explication_ecart": null
+        },
+        "bilan": {
+          "actif_eur": 15209.36,
+          "passif_eur": 15209.36,
+          "ecart_eur": 0.0,
+          "equilibre": true
+        },
+        "terrain": {
+          "lignes": 54,
+          "pen": 4430.38
+        },
+        "files": [
+          "01_Registre_recettes_depenses.xlsx",
+          "02_Compte_de_resultat.xlsx",
+          "03_Bilan_simplifie.xlsx",
+          "04_Annexe.xlsx",
+          "05_Rapprochement_bancaire.xlsx",
+          "06_Synthese_AG.xlsx",
+          "06_Synthese_AG.pdf",
+          "07_Checklist_cloture.xlsx"
+        ],
+        "clos": true
+      },
+      "import_historique": true
+    },
+    {
+      "year": 2020,
+      "journal": {
+        "recettes_eur": 4602.42,
+        "depenses_eur": 5032.81,
+        "solde_eur": -430.39,
+        "lines": 118
+      },
+      "registre": {
+        "total_lines": 151,
+        "journal_banque": 71,
+        "terrain_pm": 80,
+        "with_piece": 44,
+        "piece_coverage_pct": 29.1,
+        "depenses_eur": 5662.79,
+        "depenses_pen": 6762.52,
+        "eur_with_piece": 2083.67,
+        "pen_with_piece": 3197.02
+      },
+      "factures": {
+        "files_count": 45,
+        "registre_with_piece": 44
+      },
+      "compte_resultat": {
+        "recettes_eur": null,
+        "depenses_eur": null
+      },
+      "controls": {
+        "bilan_equilibre": "ok",
+        "journal_vs_synthese": "ok",
+        "journal_vs_cr": "unknown",
+        "factures_vs_depenses": "ok",
+        "gap_recettes_synthese_eur": 0.0,
+        "gap_depenses_synthese_eur": 0.0,
+        "gap_recettes_cr_eur": null,
+        "gap_depenses_cr_eur": null,
+        "factures_orphans_estimate": 1,
+        "messages": [
+          {
+            "level": "ok",
+            "text": "Journal aligné sur la Synthèse bancaire (±1 €)."
+          },
+          {
+            "level": "info",
+            "text": "Journal = 118 op. bancaires ; cible CR = produits analytiques partiels (~348 €). Écart solde bilan ~774,97 € connu."
+          },
+          {
+            "level": "ok",
+            "text": "45 fichiers Factures/ · 44 lignes registre avec pièce (cohérent)."
+          },
+          {
+            "level": "warning",
+            "text": "Couverture pièces registre : 29.1 % — faible."
+          }
+        ]
+      },
+      "manques": {
+        "status": "attention",
+        "label": "Comptes OK · pièces à compléter",
+        "blocking_count": 0,
+        "action_count": 2,
+        "checklist_ok": 6,
+        "checklist_total": 7,
+        "checklist": [
+          {
+            "id": "synthese",
+            "label": "Journal banque = Synthèse bancaire (±1 €)",
+            "ok": true
+          },
+          {
+            "id": "compte_resultat",
+            "label": "Journal = compte de résultat (±1 €)",
+            "ok": true
+          },
+          {
+            "id": "pieces_journal",
+            "label": "Import historique — factures perdues/non numérisées (56 dép.)",
+            "ok": true
+          },
+          {
+            "id": "pieces_registre",
+            "label": "Justificatifs : journal seul (factures perdues — OK pour 2017–2020)",
+            "ok": true
+          },
+          {
+            "id": "factures_orphelines",
+            "label": "Factures classées (44/45 liées)",
+            "ok": false
+          },
+          {
+            "id": "fichiers_manquants",
+            "label": "Fichiers pièce présents sur disque",
+            "ok": true
+          },
+          {
+            "id": "revue",
+            "label": "Lignes journal validées (needs_review)",
+            "ok": true
+          }
+        ],
+        "items": [
+          {
+            "priority": 2,
+            "category": "factures_orphelines",
+            "title": "Factures dans le dossier mais non liées au registre",
+            "detail": "1 fichier(s) dans 2020/Factures/ sans ligne registre.",
+            "count": 1,
+            "action": "Créer la ligne Detail_PM correspondante ou supprimer/déplacer vers _a_classer/.",
+            "samples": []
+          },
+          {
+            "priority": 3,
+            "category": "documentation",
+            "title": "Factures absentes — import historique (92 dépenses · 3 374,84 €)",
+            "detail": "Aucun dossier Factures/ pour cette année à la migration. Le journal comptable fait foi ; relevé bancaire ou « Relevé OK » sur le site suffit.",
+            "count": 92,
+            "action": "Optionnel : « Tout valider » dans Actions trésorier si vous confirmez les montants.",
+            "samples": []
+          }
+        ],
+        "import_historique": true
+      },
+      "actions": {
+        "lines": [],
+        "orphan_files": [],
+        "stats": {
+          "total": 151,
+          "pending": 92,
+          "releve_auto": 15,
+          "ok": 44,
+          "orphans": 1,
+          "needs_invoice": 136,
+          "needs_with_piece": 44,
+          "coverage_required_pct": 32.4
+        }
+      },
+      "downloads": [
+        {
+          "label": "Journal AKUU 2020",
+          "filename": "Journal_AKUU_2020.xlsx",
+          "path": "/downloads/tresorerie/2020/Journal_AKUU_2020.xlsx",
+          "size_kb": 27.3
+        },
+        {
+          "label": "Registre Depenses 2020",
+          "filename": "Registre_Depenses_2020.xlsx",
+          "path": "/downloads/tresorerie/2020/Registre_Depenses_2020.xlsx",
+          "size_kb": 25.3
+        },
+        {
+          "label": "Bilan Comptable 2020",
+          "filename": "Bilan_Comptable_2020.xlsx",
+          "path": "/downloads/tresorerie/2020/Bilan_Comptable_2020.xlsx",
+          "size_kb": 7.1
+        }
+      ],
+      "download_all": "/downloads/tresorerie/2020/AKUU_Tresorerie_2020.zip",
+      "download_releves": {
+        "count": 12,
+        "download_all": "/downloads/tresorerie/2020/Releves_bancaires_2020.zip",
+        "files": [
+          {
+            "label": "2020 01 RELEVE PRO AKUU",
+            "filename": "2020_01_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 131.9
+          },
+          {
+            "label": "2020 02 RELEVE PRO AKUU",
+            "filename": "2020_02_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 146.0
+          },
+          {
+            "label": "2020 03 RELEVE PRO AKUU",
+            "filename": "2020_03_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 123.5
+          },
+          {
+            "label": "2020 04 RELEVE PRO AKUU",
+            "filename": "2020_04_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 99.0
+          },
+          {
+            "label": "2020 05 RELEVE PRO AKUU",
+            "filename": "2020_05_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 96.5
+          },
+          {
+            "label": "2020 06 RELEVE PRO AKUU",
+            "filename": "2020_06_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 110.7
+          },
+          {
+            "label": "2020 07 RELEVE PRO AKUU",
+            "filename": "2020_07_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 99.1
+          },
+          {
+            "label": "2020 08 RELEVE PRO AKUU",
+            "filename": "2020_08_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 111.9
+          },
+          {
+            "label": "2020 09 RELEVE PRO AKUU",
+            "filename": "2020_09_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 98.0
+          },
+          {
+            "label": "2020 10 RELEVE PRO AKUU",
+            "filename": "2020_10_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 111.4
+          },
+          {
+            "label": "2020 11 RELEVE PRO AKUU",
+            "filename": "2020_11_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 107.5
+          },
+          {
+            "label": "2020 12 RELEVE PRO AKUU",
+            "filename": "2020_12_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 99.9
+          }
+        ]
+      },
+      "releves_status": {
+        "year": 2020,
+        "status": "complete",
+        "label": "12 relevé(s) présents",
+        "count": 24,
+        "months_present": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "expected": 12,
+        "missing": [],
+        "upload_enabled": true,
+        "account_opening": null,
+        "historique_note": "Journal = 118 op. bancaires ; cible CR = produits analytiques partiels (~348 €). Écart solde bilan ~774,97 € connu."
+      },
+      "download_cloture": {
+        "label": "Pack clôture AG 2020",
+        "filename": "Pack_Cloture_2020.zip",
+        "path": "/downloads/tresorerie/2020/Cloture/Pack_Cloture_2020.zip",
+        "size_kb": 110.7,
+        "pdf": "/downloads/tresorerie/2020/Cloture/06_Synthese_AG.pdf"
+      },
+      "cloture": {
+        "year": 2020,
+        "generated_at": "2026-09-30T22:28:08",
+        "provisoire": false,
+        "status": "attention",
+        "label": "Clôture OK · points d'attention",
+        "checklist_ok": 11,
+        "checklist_total": 13,
+        "checklist": [
+          {
+            "id": "journal_valide",
+            "label": "Journal validé (valider_journal_annee.py)",
+            "statut": "ok",
+            "detail": "0 erreur(s) · 0 avertissement(s)"
+          },
+          {
+            "id": "cr_reference",
+            "label": "Compte de résultat auto = CR de référence (± 1 €)",
+            "statut": "warning",
+            "detail": "Produits 4 602,42 € (écart None) · Charges 5 032,81 € (écart None) · réf. aucune"
+          },
+          {
+            "id": "registre_complet",
+            "label": "Registre recettes + dépenses complet",
+            "statut": "ok",
+            "detail": "47 recettes (journal : 47) · 151 dépenses (Registre_Depenses existant : 151) · 0 doublon(s) exclu(s)"
+          },
+          {
+            "id": "rapprochement",
+            "label": "Rapprochement bancaire (solde calculé = relevé ± 1 €)",
+            "statut": "ok",
+            "detail": "Calculé 14 778,97 € · relevé 14 778,97 € · écart 0,00 €"
+          },
+          {
+            "id": "bilan_equilibre",
+            "label": "Bilan simplifié équilibré (Actif = Passif ± 1 €)",
+            "statut": "ok",
+            "detail": "Actif 14 778,97 € · Passif 14 778,97 € · écart 0,00 €"
+          },
+          {
+            "id": "couverture_factures",
+            "label": "Couverture des justificatifs requis",
+            "statut": "info",
+            "detail": "32.4 % (44/136) · année à couverture assouplie"
+          },
+          {
+            "id": "factures_annotees",
+            "label": "Factures annotées concordantes avec le journal",
+            "statut": "ok",
+            "detail": "44 concordante(s) · 0 divergence(s) · 0 archivée(s)"
+          },
+          {
+            "id": "terrain_factures",
+            "label": "Dépenses terrain avec facture annotée",
+            "statut": "info",
+            "detail": "39 ligne(s) Detail_PM sans facture dans Factures/"
+          },
+          {
+            "id": "needs_review",
+            "label": "Aucune ligne « à revoir » (needs_review)",
+            "statut": "ok",
+            "detail": "0 ligne(s) needs_review=oui"
+          },
+          {
+            "id": "categories",
+            "label": "Catégories toutes reconnues par le mapping CR",
+            "statut": "warning",
+            "detail": "4 ligne(s) à qualifier"
+          },
+          {
+            "id": "liens_view",
+            "label": "Pièces sans nom de fichier (piece_filename = « view »)",
+            "statut": "ok",
+            "detail": "0 ligne(s)"
+          },
+          {
+            "id": "saisies_manuelles",
+            "label": "Saisies manuelles de clôture confirmées (immobilisations, créances, dettes)",
+            "statut": "ok",
+            "detail": "30/09/2026 : rien à inscrire au bilan au 31/12/2020 (ni immobilisation, créance, dette ni provision). Le matériel AKUUVision 2020 (Ricoh Theta Z1 + micros 1 242,49 €, monopode, disque 5 To, lumière LED…) est passé en charges et suivi dans l'inventaire du matériel. La Casa AKUU a été soldée en août 2020 (loyers de mars remboursés, COVID)."
+          },
+          {
+            "id": "exercice_clos",
+            "label": "Exercice clos (12 relevés)",
+            "statut": "ok",
+            "detail": "Arrêté au 2020-12-31"
+          }
+        ],
+        "questions_ouvertes": [
+          "AKUU-IMP-2020-0095 (112,00 €) « VIREMENT SEPA PAR INTERNET | REMBOURSEMENT LOYER MARS PUERTO » : catégorie « Loyers et logement » à qualifier.",
+          "AKUU-IMP-2020-0096 (112,00 €) « VIREMENT SEPA PAR INTERNET | REMBOURSEMENT LOYER MARS PUERTO » : catégorie « Loyers et logement » à qualifier.",
+          "AKUU-IMP-2020-0097 (112,00 €) « VIREMENT SEPA PAR INTERNET » : catégorie « Loyers et logement » à qualifier.",
+          "AKUU-IMP-2020-0098 (112,00 €) « VIREMENT SEPA PAR INTERNET | REMBOURSEMENT LOYER MARS PUERTO » : catégorie « Loyers et logement » à qualifier."
+        ],
+        "compte_resultat": {
+          "produits_eur": 4602.42,
+          "charges_eur": 5032.81,
+          "resultat_eur": -430.39,
+          "controle": {
+            "ecart_produits": null,
+            "ecart_charges": null,
+            "statut": "sans_reference",
+            "explication": "",
+            "source": null
+          },
+          "postes": {
+            "P1": 648.46,
+            "P2": 1200.0,
+            "P3": 122.0,
+            "P4": 2236.0,
+            "P6": 395.96,
+            "C1": 4446.69,
+            "C2": 381.84,
+            "C3": 204.28
+          }
+        },
+        "tresorerie": {
+          "debut_eur": 15209.36,
+          "fin_eur": 14778.97,
+          "releve_fin_eur": 14778.97,
+          "ecart_rapprochement_eur": 0.0,
+          "statut_rapprochement": "ok",
+          "explication_ecart": null
+        },
+        "bilan": {
+          "actif_eur": 14778.97,
+          "passif_eur": 14778.97,
+          "ecart_eur": 0.0,
+          "equilibre": true
+        },
+        "terrain": {
+          "lignes": 80,
+          "pen": 6762.52
+        },
+        "files": [
+          "01_Registre_recettes_depenses.xlsx",
+          "02_Compte_de_resultat.xlsx",
+          "03_Bilan_simplifie.xlsx",
+          "04_Annexe.xlsx",
+          "05_Rapprochement_bancaire.xlsx",
+          "06_Synthese_AG.xlsx",
+          "06_Synthese_AG.pdf",
+          "07_Checklist_cloture.xlsx"
+        ],
+        "clos": true
+      },
+      "import_historique": true
+    },
+    {
+      "year": 2021,
+      "journal": {
+        "recettes_eur": 1680.0,
+        "depenses_eur": 684.02,
+        "solde_eur": 995.98,
+        "lines": 41
+      },
+      "registre": {
+        "total_lines": 20,
+        "journal_banque": 20,
+        "terrain_pm": 0,
+        "with_piece": 5,
+        "piece_coverage_pct": 25.0,
+        "depenses_eur": 684.02,
+        "depenses_pen": 0.0,
+        "eur_with_piece": 453.42,
+        "pen_with_piece": 0.0
+      },
+      "factures": {
+        "files_count": 5,
+        "registre_with_piece": 5
+      },
+      "compte_resultat": {
+        "recettes_eur": 1640.0,
+        "depenses_eur": 644.02
+      },
+      "controls": {
+        "bilan_equilibre": "ok",
+        "journal_vs_synthese": "ok",
+        "journal_vs_cr": "warning",
+        "factures_vs_depenses": "ok",
+        "gap_recettes_synthese_eur": 0.0,
+        "gap_depenses_synthese_eur": 0.0,
+        "gap_recettes_cr_eur": 40.0,
+        "gap_depenses_cr_eur": 40.0,
+        "factures_orphans_estimate": 0,
+        "messages": [
+          {
+            "level": "ok",
+            "text": "Journal aligné sur la Synthèse bancaire (±1 €)."
+          },
+          {
+            "level": "warning",
+            "text": "Écart CR : recettes +40.00 € · dépenses +40.00 €."
+          },
+          {
+            "level": "info",
+            "text": "Journal = flux bancaires Synthèse (41 op.) ; CR de référence 2021 exclut +40 € recettes et +40 € charges (virement REYRICO 40 € + 2 retraits DAB test cartes, mouvement interne net 0, R-023)."
+          },
+          {
+            "level": "ok",
+            "text": "5 fichiers Factures/ · 5 lignes registre avec pièce (cohérent)."
+          },
+          {
+            "level": "warning",
+            "text": "Couverture pièces registre : 25.0 % — faible."
+          }
+        ]
+      },
+      "manques": {
+        "status": "pret",
+        "label": "Exercice clôturable",
+        "blocking_count": 0,
+        "action_count": 0,
+        "checklist_ok": 7,
+        "checklist_total": 7,
+        "checklist": [
+          {
+            "id": "synthese",
+            "label": "Journal banque = Synthèse bancaire (±1 €)",
+            "ok": true
+          },
+          {
+            "id": "compte_resultat",
+            "label": "Journal = compte de résultat (±1 €)",
+            "ok": true
+          },
+          {
+            "id": "pieces_journal",
+            "label": "Factures liées au journal banque (5/5)",
+            "ok": true
+          },
+          {
+            "id": "pieces_registre",
+            "label": "Justificatifs requis (5/5) · relevé OK pour frais banque/WU",
+            "ok": true
+          },
+          {
+            "id": "factures_orphelines",
+            "label": "Factures classées (5/5 liées)",
+            "ok": true
+          },
+          {
+            "id": "fichiers_manquants",
+            "label": "Fichiers pièce présents sur disque",
+            "ok": true
+          },
+          {
+            "id": "revue",
+            "label": "Lignes journal validées (needs_review)",
+            "ok": true
+          }
+        ],
+        "items": [],
+        "import_historique": false
+      },
+      "actions": {
+        "lines": [],
+        "orphan_files": [],
+        "stats": {
+          "total": 20,
+          "pending": 0,
+          "releve_auto": 15,
+          "ok": 5,
+          "orphans": 0,
+          "needs_invoice": 5,
+          "needs_with_piece": 5,
+          "coverage_required_pct": 100.0
+        }
+      },
+      "downloads": [
+        {
+          "label": "Journal AKUU 2021",
+          "filename": "Journal_AKUU_2021.xlsx",
+          "path": "/downloads/tresorerie/2021/Journal_AKUU_2021.xlsx",
+          "size_kb": 9.8
+        },
+        {
+          "label": "Registre Depenses 2021",
+          "filename": "Registre_Depenses_2021.xlsx",
+          "path": "/downloads/tresorerie/2021/Registre_Depenses_2021.xlsx",
+          "size_kb": 8.5
+        },
+        {
+          "label": "Bilan Comptable 2021",
+          "filename": "Bilan_Comptable_2021.xlsx",
+          "path": "/downloads/tresorerie/2021/Bilan_Comptable_2021.xlsx",
+          "size_kb": 6.7
+        }
+      ],
+      "download_all": "/downloads/tresorerie/2021/AKUU_Tresorerie_2021.zip",
+      "download_releves": {
+        "count": 12,
+        "download_all": "/downloads/tresorerie/2021/Releves_bancaires_2021.zip",
+        "files": [
+          {
+            "label": "2021 01 RELEVE PRO AKUU",
+            "filename": "2021_01_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 109.4
+          },
+          {
+            "label": "2021 02 RELEVE PRO AKUU",
+            "filename": "2021_02_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 96.9
+          },
+          {
+            "label": "2021 03 RELEVE PRO AKUU",
+            "filename": "2021_03_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 100.3
+          },
+          {
+            "label": "2021 04 RELEVE PRO AKUU",
+            "filename": "2021_04_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 111.3
+          },
+          {
+            "label": "2021 05 RELEVE PRO AKUU",
+            "filename": "2021_05_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 106.4
+          },
+          {
+            "label": "2021 06 RELEVE PRO AKUU",
+            "filename": "2021_06_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 111.1
+          },
+          {
+            "label": "2021 07 RELEVE PRO AKUU",
+            "filename": "2021_07_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 108.9
+          },
+          {
+            "label": "2021 08 RELEVE PRO AKUU",
+            "filename": "2021_08_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 107.8
+          },
+          {
+            "label": "2021 09 RELEVE PRO AKUU",
+            "filename": "2021_09_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 108.4
+          },
+          {
+            "label": "2021 10 RELEVE PRO AKUU",
+            "filename": "2021_10_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 110.6
+          },
+          {
+            "label": "2021 11 RELEVE PRO AKUU",
+            "filename": "2021_11_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 96.4
+          },
+          {
+            "label": "2021 12 RELEVE PRO AKUU",
+            "filename": "2021_12_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 96.8
+          }
+        ]
+      },
+      "releves_status": {
+        "year": 2021,
+        "status": "complete",
+        "label": "12 relevé(s) présents",
+        "count": 24,
+        "months_present": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "expected": 12,
+        "missing": [],
+        "upload_enabled": true,
+        "account_opening": null,
+        "historique_note": "Journal = flux bancaires Synthèse (41 op.) ; CR de référence 2021 exclut +40 € recettes et +40 € charges (virement REYRICO 40 € + 2 retraits DAB test cartes, mouvement interne net 0, R-023)."
+      },
+      "download_cloture": {
+        "label": "Pack clôture AG 2021",
+        "filename": "Pack_Cloture_2021.zip",
+        "path": "/downloads/tresorerie/2021/Cloture/Pack_Cloture_2021.zip",
+        "size_kb": 76.0,
+        "pdf": "/downloads/tresorerie/2021/Cloture/06_Synthese_AG.pdf"
+      },
+      "cloture": {
+        "year": 2021,
+        "generated_at": "2026-09-30T22:28:09",
+        "provisoire": false,
+        "status": "attention",
+        "label": "Clôture OK · points d'attention",
+        "checklist_ok": 12,
+        "checklist_total": 13,
+        "checklist": [
+          {
+            "id": "journal_valide",
+            "label": "Journal validé (valider_journal_annee.py)",
+            "statut": "ok",
+            "detail": "0 erreur(s) · 0 avertissement(s)"
+          },
+          {
+            "id": "cr_reference",
+            "label": "Compte de résultat auto = CR de référence (± 1 €)",
+            "statut": "warning",
+            "detail": "Produits 1 680,00 € (écart 40.0) · Charges 684,02 € (écart 40.0) · réf. 2021/export (1).xlsx · Compte de Résultat"
+          },
+          {
+            "id": "registre_complet",
+            "label": "Registre recettes + dépenses complet",
+            "statut": "ok",
+            "detail": "21 recettes (journal : 21) · 20 dépenses (Registre_Depenses existant : 20) · 0 doublon(s) exclu(s)"
+          },
+          {
+            "id": "rapprochement",
+            "label": "Rapprochement bancaire (solde calculé = relevé ± 1 €)",
+            "statut": "ok",
+            "detail": "Calculé 15 774,95 € · relevé 15 774,95 € · écart 0,00 €"
+          },
+          {
+            "id": "bilan_equilibre",
+            "label": "Bilan simplifié équilibré (Actif = Passif ± 1 €)",
+            "statut": "ok",
+            "detail": "Actif 15 774,95 € · Passif 15 774,95 € · écart 0,00 €"
+          },
+          {
+            "id": "couverture_factures",
+            "label": "Couverture des justificatifs requis",
+            "statut": "ok",
+            "detail": "100.0 % (5/5)"
+          },
+          {
+            "id": "factures_annotees",
+            "label": "Factures annotées concordantes avec le journal",
+            "statut": "ok",
+            "detail": "5 concordante(s) · 0 divergence(s) · 0 archivée(s)"
+          },
+          {
+            "id": "terrain_factures",
+            "label": "Dépenses terrain avec facture annotée",
+            "statut": "ok",
+            "detail": "0 ligne(s) Detail_PM sans facture dans Factures/"
+          },
+          {
+            "id": "needs_review",
+            "label": "Aucune ligne « à revoir » (needs_review)",
+            "statut": "ok",
+            "detail": "0 ligne(s) needs_review=oui"
+          },
+          {
+            "id": "categories",
+            "label": "Catégories toutes reconnues par le mapping CR",
+            "statut": "ok",
+            "detail": "0 ligne(s) à qualifier"
+          },
+          {
+            "id": "liens_view",
+            "label": "Pièces sans nom de fichier (piece_filename = « view »)",
+            "statut": "ok",
+            "detail": "0 ligne(s)"
+          },
+          {
+            "id": "saisies_manuelles",
+            "label": "Saisies manuelles de clôture confirmées (immobilisations, créances, dettes)",
+            "statut": "ok",
+            "detail": "30/09/2026 : rien à inscrire au bilan au 31/12/2021 (ni immobilisation, créance, dette ni provision). Solde du prix PIEED/E&D encaissé le 25/06/2021."
+          },
+          {
+            "id": "exercice_clos",
+            "label": "Exercice clos (12 relevés)",
+            "statut": "ok",
+            "detail": "Arrêté au 2021-12-31"
+          }
+        ],
+        "questions_ouvertes": [],
+        "compte_resultat": {
+          "produits_eur": 1680.0,
+          "charges_eur": 684.02,
+          "resultat_eur": 995.98,
+          "controle": {
+            "ecart_produits": 40.0,
+            "ecart_charges": 40.0,
+            "statut": "documente",
+            "explication": "Journal = flux bancaires Synthèse (41 op.) ; CR de référence 2021 exclut +40 € recettes et +40 € charges (virement REYRICO 40 € + 2 retraits DAB test cartes, mouvement interne net 0, R-023).",
+            "source": "2021/export (1).xlsx · Compte de Résultat"
+          },
+          "postes": {
+            "P1": 640.0,
+            "P2": 1000.0,
+            "P6": 40.0,
+            "C2": 493.42,
+            "C3": 190.6
+          }
+        },
+        "tresorerie": {
+          "debut_eur": 14778.97,
+          "fin_eur": 15774.95,
+          "releve_fin_eur": 15774.95,
+          "ecart_rapprochement_eur": 0.0,
+          "statut_rapprochement": "ok",
+          "explication_ecart": null
+        },
+        "bilan": {
+          "actif_eur": 15774.95,
+          "passif_eur": 15774.95,
+          "ecart_eur": 0.0,
+          "equilibre": true
+        },
+        "terrain": {
+          "lignes": 0,
+          "pen": 0.0
+        },
+        "files": [
+          "01_Registre_recettes_depenses.xlsx",
+          "02_Compte_de_resultat.xlsx",
+          "03_Bilan_simplifie.xlsx",
+          "04_Annexe.xlsx",
+          "05_Rapprochement_bancaire.xlsx",
+          "06_Synthese_AG.xlsx",
+          "06_Synthese_AG.pdf",
+          "07_Checklist_cloture.xlsx"
+        ],
+        "clos": true
+      },
+      "import_historique": false
+    },
+    {
+      "year": 2022,
+      "journal": {
+        "recettes_eur": 899.07,
+        "depenses_eur": 1446.69,
+        "solde_eur": -547.62,
+        "lines": 45
+      },
+      "registre": {
+        "total_lines": 22,
+        "journal_banque": 21,
+        "terrain_pm": 1,
+        "with_piece": 8,
+        "piece_coverage_pct": 36.4,
+        "depenses_eur": 1446.69,
+        "depenses_pen": 520.0,
+        "eur_with_piece": 713.69,
+        "pen_with_piece": 520.0
+      },
+      "factures": {
+        "files_count": 6,
+        "registre_with_piece": 8
+      },
+      "compte_resultat": {
+        "recettes_eur": 899.07,
+        "depenses_eur": 1446.69
+      },
+      "controls": {
+        "bilan_equilibre": "ok",
+        "journal_vs_synthese": "ok",
+        "journal_vs_cr": "ok",
+        "factures_vs_depenses": "warning",
+        "gap_recettes_synthese_eur": 0.0,
+        "gap_depenses_synthese_eur": 0.0,
+        "gap_recettes_cr_eur": 0.0,
+        "gap_depenses_cr_eur": 0.0,
+        "factures_orphans_estimate": 0,
+        "messages": [
+          {
+            "level": "ok",
+            "text": "Journal aligné sur la Synthèse bancaire (±1 €)."
+          },
+          {
+            "level": "ok",
+            "text": "Journal aligné sur le compte de résultat (±1 €)."
+          },
+          {
+            "level": "warning",
+            "text": "6 fichiers Factures/ pour 8 lignes avec pièce — scans manquants ?"
+          },
+          {
+            "level": "warning",
+            "text": "Couverture pièces registre : 36.4 % — faible."
+          }
+        ]
+      },
+      "manques": {
+        "status": "pret",
+        "label": "Exercice clôturable",
+        "blocking_count": 0,
+        "action_count": 0,
+        "checklist_ok": 7,
+        "checklist_total": 7,
+        "checklist": [
+          {
+            "id": "synthese",
+            "label": "Journal banque = Synthèse bancaire (±1 €)",
+            "ok": true
+          },
+          {
+            "id": "compte_resultat",
+            "label": "Journal = compte de résultat (±1 €)",
+            "ok": true
+          },
+          {
+            "id": "pieces_journal",
+            "label": "Factures liées au journal banque (6/6)",
+            "ok": true
+          },
+          {
+            "id": "pieces_registre",
+            "label": "Justificatifs requis (7/7) · relevé OK pour frais banque/WU",
+            "ok": true
+          },
+          {
+            "id": "factures_orphelines",
+            "label": "Factures classées (6/6 liées)",
+            "ok": true
+          },
+          {
+            "id": "fichiers_manquants",
+            "label": "Fichiers pièce présents sur disque",
+            "ok": true
+          },
+          {
+            "id": "revue",
+            "label": "Lignes journal validées (needs_review)",
+            "ok": true
+          }
+        ],
+        "items": [],
+        "import_historique": false
+      },
+      "actions": {
+        "lines": [],
+        "orphan_files": [],
+        "stats": {
+          "total": 22,
+          "pending": 0,
+          "releve_auto": 14,
+          "ok": 8,
+          "orphans": 0,
+          "needs_invoice": 7,
+          "needs_with_piece": 7,
+          "coverage_required_pct": 100.0
+        }
+      },
+      "downloads": [
+        {
+          "label": "Journal AKUU 2022",
+          "filename": "Journal_AKUU_2022.xlsx",
+          "path": "/downloads/tresorerie/2022/Journal_AKUU_2022.xlsx",
+          "size_kb": 10.8
+        },
+        {
+          "label": "Registre Depenses 2022",
+          "filename": "Registre_Depenses_2022.xlsx",
+          "path": "/downloads/tresorerie/2022/Registre_Depenses_2022.xlsx",
+          "size_kb": 9.1
+        },
+        {
+          "label": "Bilan Comptable 2022",
+          "filename": "Bilan_Comptable_2022.xlsx",
+          "path": "/downloads/tresorerie/2022/Bilan_Comptable_2022.xlsx",
+          "size_kb": 6.6
+        }
+      ],
+      "download_all": "/downloads/tresorerie/2022/AKUU_Tresorerie_2022.zip",
+      "download_releves": {
+        "count": 12,
+        "download_all": "/downloads/tresorerie/2022/Releves_bancaires_2022.zip",
+        "files": [
+          {
+            "label": "2022 01 RELEVE PRO AKUU",
+            "filename": "2022_01_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 108.0
+          },
+          {
+            "label": "2022 02 RELEVE PRO AKUU",
+            "filename": "2022_02_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 106.4
+          },
+          {
+            "label": "2022 03 RELEVE PRO AKUU",
+            "filename": "2022_03_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 111.4
+          },
+          {
+            "label": "2022 04 RELEVE PRO AKUU",
+            "filename": "2022_04_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 108.2
+          },
+          {
+            "label": "2022 05 RELEVE PRO AKUU",
+            "filename": "2022_05_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 111.6
+          },
+          {
+            "label": "2022 06 RELEVE PRO AKUU",
+            "filename": "2022_06_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 96.5
+          },
+          {
+            "label": "2022 07 RELEVE PRO AKUU",
+            "filename": "2022_07_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 97.4
+          },
+          {
+            "label": "2022 08 RELEVE PRO AKUU",
+            "filename": "2022_08_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 95.7
+          },
+          {
+            "label": "2022 09 RELEVE PRO AKUU",
+            "filename": "2022_09_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 111.4
+          },
+          {
+            "label": "2022 10 RELEVE PRO AKUU",
+            "filename": "2022_10_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 109.7
+          },
+          {
+            "label": "2022 11 RELEVE PRO AKUU",
+            "filename": "2022_11_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 109.1
+          },
+          {
+            "label": "2022 12 RELEVE PRO AKUU",
+            "filename": "2022_12_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 97.8
+          }
+        ]
+      },
+      "releves_status": {
+        "year": 2022,
+        "status": "complete",
+        "label": "12 relevé(s) présents",
+        "count": 25,
+        "months_present": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "expected": 12,
+        "missing": [],
+        "upload_enabled": true,
+        "account_opening": null,
+        "historique_note": null
+      },
+      "download_cloture": {
+        "label": "Pack clôture AG 2022",
+        "filename": "Pack_Cloture_2022.zip",
+        "path": "/downloads/tresorerie/2022/Cloture/Pack_Cloture_2022.zip",
+        "size_kb": 76.6,
+        "pdf": "/downloads/tresorerie/2022/Cloture/06_Synthese_AG.pdf"
+      },
+      "cloture": {
+        "year": 2022,
+        "generated_at": "2026-09-30T22:28:09",
+        "provisoire": false,
+        "status": "pret",
+        "label": "Clôture prête pour l'AG",
+        "checklist_ok": 13,
+        "checklist_total": 13,
+        "checklist": [
+          {
+            "id": "journal_valide",
+            "label": "Journal validé (valider_journal_annee.py)",
+            "statut": "ok",
+            "detail": "0 erreur(s) · 0 avertissement(s)"
+          },
+          {
+            "id": "cr_reference",
+            "label": "Compte de résultat auto = CR de référence (± 1 €)",
+            "statut": "ok",
+            "detail": "Produits 899,07 € (écart 0.0) · Charges 1 446,69 € (écart 0.0) · réf. 2022/Compte_de_resultats.xlsx · Compte de Résultat"
+          },
+          {
+            "id": "registre_complet",
+            "label": "Registre recettes + dépenses complet",
+            "statut": "ok",
+            "detail": "24 recettes (journal : 24) · 22 dépenses (Registre_Depenses existant : 22) · 0 doublon(s) exclu(s)"
+          },
+          {
+            "id": "rapprochement",
+            "label": "Rapprochement bancaire (solde calculé = relevé ± 1 €)",
+            "statut": "ok",
+            "detail": "Calculé 15 227,33 € · relevé 15 227,33 € · écart 0,00 €"
+          },
+          {
+            "id": "bilan_equilibre",
+            "label": "Bilan simplifié équilibré (Actif = Passif ± 1 €)",
+            "statut": "ok",
+            "detail": "Actif 15 227,33 € · Passif 15 227,33 € · écart 0,00 €"
+          },
+          {
+            "id": "couverture_factures",
+            "label": "Couverture des justificatifs requis",
+            "statut": "ok",
+            "detail": "100.0 % (7/7)"
+          },
+          {
+            "id": "factures_annotees",
+            "label": "Factures annotées concordantes avec le journal",
+            "statut": "ok",
+            "detail": "6 concordante(s) · 0 divergence(s) · 0 archivée(s)"
+          },
+          {
+            "id": "terrain_factures",
+            "label": "Dépenses terrain avec facture annotée",
+            "statut": "ok",
+            "detail": "0 ligne(s) Detail_PM sans facture dans Factures/"
+          },
+          {
+            "id": "needs_review",
+            "label": "Aucune ligne « à revoir » (needs_review)",
+            "statut": "ok",
+            "detail": "0 ligne(s) needs_review=oui"
+          },
+          {
+            "id": "categories",
+            "label": "Catégories toutes reconnues par le mapping CR",
+            "statut": "ok",
+            "detail": "0 ligne(s) à qualifier"
+          },
+          {
+            "id": "liens_view",
+            "label": "Pièces sans nom de fichier (piece_filename = « view »)",
+            "statut": "ok",
+            "detail": "0 ligne(s)"
+          },
+          {
+            "id": "saisies_manuelles",
+            "label": "Saisies manuelles de clôture confirmées (immobilisations, créances, dettes)",
+            "statut": "ok",
+            "detail": "30/09/2026 : rien à inscrire au bilan au 31/12/2022 (ni immobilisation, créance, dette ni provision)."
+          },
+          {
+            "id": "exercice_clos",
+            "label": "Exercice clos (12 relevés)",
+            "statut": "ok",
+            "detail": "Arrêté au 2022-12-31"
+          }
+        ],
+        "questions_ouvertes": [],
+        "compte_resultat": {
+          "produits_eur": 899.07,
+          "charges_eur": 1446.69,
+          "resultat_eur": -547.62,
+          "controle": {
+            "ecart_produits": 0.0,
+            "ecart_charges": 0.0,
+            "statut": "ok",
+            "explication": "",
+            "source": "2022/Compte_de_resultats.xlsx · Compte de Résultat"
+          },
+          "postes": {
+            "P1": 899.07,
+            "C1": 855.73,
+            "C2": 400.36,
+            "C3": 190.6
+          }
+        },
+        "tresorerie": {
+          "debut_eur": 15774.95,
+          "fin_eur": 15227.33,
+          "releve_fin_eur": 15227.33,
+          "ecart_rapprochement_eur": 0.0,
+          "statut_rapprochement": "ok",
+          "explication_ecart": null
+        },
+        "bilan": {
+          "actif_eur": 15227.33,
+          "passif_eur": 15227.33,
+          "ecart_eur": 0.0,
+          "equilibre": true
+        },
+        "terrain": {
+          "lignes": 1,
+          "pen": 520.0
+        },
+        "files": [
+          "01_Registre_recettes_depenses.xlsx",
+          "02_Compte_de_resultat.xlsx",
+          "03_Bilan_simplifie.xlsx",
+          "04_Annexe.xlsx",
+          "05_Rapprochement_bancaire.xlsx",
+          "06_Synthese_AG.xlsx",
+          "06_Synthese_AG.pdf",
+          "07_Checklist_cloture.xlsx"
+        ],
+        "clos": true
+      },
+      "import_historique": false
+    },
+    {
+      "year": 2023,
+      "journal": {
+        "recettes_eur": 1075.31,
+        "depenses_eur": 2905.09,
+        "solde_eur": -1829.78,
+        "lines": 60
+      },
+      "registre": {
+        "total_lines": 44,
+        "journal_banque": 35,
+        "terrain_pm": 9,
+        "with_piece": 17,
+        "piece_coverage_pct": 38.6,
+        "depenses_eur": 3002.59,
+        "depenses_pen": 1074.9,
+        "eur_with_piece": 974.35,
+        "pen_with_piece": 1074.9
+      },
+      "factures": {
+        "files_count": 17,
+        "registre_with_piece": 17
+      },
+      "compte_resultat": {
+        "recettes_eur": 1075.0,
+        "depenses_eur": 2904.78
+      },
+      "controls": {
+        "bilan_equilibre": "ok",
+        "journal_vs_synthese": "ok",
+        "journal_vs_cr": "ok",
+        "factures_vs_depenses": "ok",
+        "gap_recettes_synthese_eur": 0.0,
+        "gap_depenses_synthese_eur": 0.0,
+        "gap_recettes_cr_eur": 0.31,
+        "gap_depenses_cr_eur": 0.31,
+        "factures_orphans_estimate": 0,
+        "messages": [
+          {
+            "level": "ok",
+            "text": "Journal aligné sur la Synthèse bancaire (±1 €)."
+          },
+          {
+            "level": "ok",
+            "text": "Journal aligné sur le compte de résultat (±1 €)."
+          },
+          {
+            "level": "ok",
+            "text": "17 fichiers Factures/ · 17 lignes registre avec pièce (cohérent)."
+          },
+          {
+            "level": "warning",
+            "text": "Couverture pièces registre : 38.6 % — faible."
+          }
+        ]
+      },
+      "manques": {
+        "status": "attention",
+        "label": "Comptes OK · pièces à compléter",
+        "blocking_count": 0,
+        "action_count": 2,
+        "checklist_ok": 5,
+        "checklist_total": 7,
+        "checklist": [
+          {
+            "id": "synthese",
+            "label": "Journal banque = Synthèse bancaire (±1 €)",
+            "ok": true
+          },
+          {
+            "id": "compte_resultat",
+            "label": "Journal = compte de résultat (±1 €)",
+            "ok": true
+          },
+          {
+            "id": "pieces_journal",
+            "label": "Factures liées au journal banque (5/6)",
+            "ok": false
+          },
+          {
+            "id": "pieces_registre",
+            "label": "Justificatifs requis (14/15) · relevé OK pour frais banque/WU",
+            "ok": false
+          },
+          {
+            "id": "factures_orphelines",
+            "label": "Factures classées (17/17 liées)",
+            "ok": true
+          },
+          {
+            "id": "fichiers_manquants",
+            "label": "Fichiers pièce présents sur disque",
+            "ok": true
+          },
+          {
+            "id": "revue",
+            "label": "Lignes journal validées (needs_review)",
+            "ok": true
+          }
+        ],
+        "items": [
+          {
+            "priority": 2,
+            "category": "pieces_journal",
+            "title": "Dépenses banque sans facture",
+            "detail": "1 ligne(s) · 20,00 € sans pièce justificative.",
+            "count": 1,
+            "action": "Joindre le PDF dans Journal → piece_filename + drive_file_url (onglet Journal).",
+            "samples": []
+          },
+          {
+            "priority": 2,
+            "category": "pieces_registre",
+            "title": "Lignes registre banque sans pièce",
+            "detail": "1 ligne(s) · 20,00 €.",
+            "count": 1,
+            "action": "Compléter piece_filename dans le journal ou Detail_PM.",
+            "samples": []
+          }
+        ],
+        "import_historique": false
+      },
+      "actions": {
+        "lines": [],
+        "orphan_files": [],
+        "stats": {
+          "total": 44,
+          "pending": 1,
+          "releve_auto": 26,
+          "ok": 17,
+          "orphans": 0,
+          "needs_invoice": 15,
+          "needs_with_piece": 14,
+          "coverage_required_pct": 93.3
+        }
+      },
+      "downloads": [
+        {
+          "label": "Journal AKUU 2023",
+          "filename": "Journal_AKUU_2023.xlsx",
+          "path": "/downloads/tresorerie/2023/Journal_AKUU_2023.xlsx",
+          "size_kb": 13.2
+        },
+        {
+          "label": "Registre Depenses 2023",
+          "filename": "Registre_Depenses_2023.xlsx",
+          "path": "/downloads/tresorerie/2023/Registre_Depenses_2023.xlsx",
+          "size_kb": 11.5
+        },
+        {
+          "label": "Bilan Comptable 2023",
+          "filename": "Bilan_Comptable_2023.xlsx",
+          "path": "/downloads/tresorerie/2023/Bilan_Comptable_2023.xlsx",
+          "size_kb": 6.9
+        }
+      ],
+      "download_all": "/downloads/tresorerie/2023/AKUU_Tresorerie_2023.zip",
+      "download_releves": {
+        "count": 12,
+        "download_all": "/downloads/tresorerie/2023/Releves_bancaires_2023.zip",
+        "files": [
+          {
+            "label": "2023 01 RELEVE PRO AKUU",
+            "filename": "2023_01_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 99.2
+          },
+          {
+            "label": "2023 02 RELEVE PRO AKUU",
+            "filename": "2023_02_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 117.5
+          },
+          {
+            "label": "2023 03 RELEVE PRO AKUU",
+            "filename": "2023_03_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 113.2
+          },
+          {
+            "label": "2023 04 RELEVE PRO AKUU",
+            "filename": "2023_04_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 111.0
+          },
+          {
+            "label": "2023 05 RELEVE PRO AKUU",
+            "filename": "2023_05_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 99.5
+          },
+          {
+            "label": "2023 06 RELEVE PRO AKUU",
+            "filename": "2023_06_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 100.6
+          },
+          {
+            "label": "2023 07 RELEVE PRO AKUU",
+            "filename": "2023_07_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 113.3
+          },
+          {
+            "label": "2023 08 RELEVE PRO AKUU",
+            "filename": "2023_08_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 99.5
+          },
+          {
+            "label": "2023 09 RELEVE PRO AKUU",
+            "filename": "2023_09_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 100.4
+          },
+          {
+            "label": "2023 10 RELEVE PRO AKUU",
+            "filename": "2023_10_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 119.0
+          },
+          {
+            "label": "2023 11 RELEVE PRO AKUU",
+            "filename": "2023_11_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 105.4
+          },
+          {
+            "label": "2023 12 RELEVE PRO AKUU",
+            "filename": "2023_12_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 106.5
+          }
+        ]
+      },
+      "releves_status": {
+        "year": 2023,
+        "status": "complete",
+        "label": "12 relevé(s) présents",
+        "count": 24,
+        "months_present": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "expected": 12,
+        "missing": [],
+        "upload_enabled": true,
+        "account_opening": null,
+        "historique_note": null
+      },
+      "download_cloture": {
+        "label": "Pack clôture AG 2023",
+        "filename": "Pack_Cloture_2023.zip",
+        "path": "/downloads/tresorerie/2023/Cloture/Pack_Cloture_2023.zip",
+        "size_kb": 82.0,
+        "pdf": "/downloads/tresorerie/2023/Cloture/06_Synthese_AG.pdf"
+      },
+      "cloture": {
+        "year": 2023,
+        "generated_at": "2026-09-30T22:28:10",
+        "provisoire": false,
+        "status": "pret",
+        "label": "Clôture prête pour l'AG",
+        "checklist_ok": 13,
+        "checklist_total": 13,
+        "checklist": [
+          {
+            "id": "journal_valide",
+            "label": "Journal validé (valider_journal_annee.py)",
+            "statut": "ok",
+            "detail": "0 erreur(s) · 0 avertissement(s)"
+          },
+          {
+            "id": "cr_reference",
+            "label": "Compte de résultat auto = CR de référence (± 1 €)",
+            "statut": "ok",
+            "detail": "Produits 1 075,31 € (écart 0.31) · Charges 2 905,09 € (écart 0.31) · réf. 2023/Compte de résultat_2023.xlsx · Feuil1"
+          },
+          {
+            "id": "registre_complet",
+            "label": "Registre recettes + dépenses complet",
+            "statut": "ok",
+            "detail": "25 recettes (journal : 25) · 44 dépenses (Registre_Depenses existant : 44) · 0 doublon(s) exclu(s)"
+          },
+          {
+            "id": "rapprochement",
+            "label": "Rapprochement bancaire (solde calculé = relevé ± 1 €)",
+            "statut": "ok",
+            "detail": "Calculé 13 397,55 € · relevé 13 397,55 € · écart 0,00 €"
+          },
+          {
+            "id": "bilan_equilibre",
+            "label": "Bilan simplifié équilibré (Actif = Passif ± 1 €)",
+            "statut": "ok",
+            "detail": "Actif 13 397,55 € · Passif 13 397,55 € · écart 0,00 €"
+          },
+          {
+            "id": "couverture_factures",
+            "label": "Couverture des justificatifs requis",
+            "statut": "ok",
+            "detail": "93.3 % (14/15)"
+          },
+          {
+            "id": "factures_annotees",
+            "label": "Factures annotées concordantes avec le journal",
+            "statut": "ok",
+            "detail": "17 concordante(s) · 0 divergence(s) · 0 archivée(s)"
+          },
+          {
+            "id": "terrain_factures",
+            "label": "Dépenses terrain avec facture annotée",
+            "statut": "ok",
+            "detail": "0 ligne(s) Detail_PM sans facture dans Factures/"
+          },
+          {
+            "id": "needs_review",
+            "label": "Aucune ligne « à revoir » (needs_review)",
+            "statut": "ok",
+            "detail": "0 ligne(s) needs_review=oui"
+          },
+          {
+            "id": "categories",
+            "label": "Catégories toutes reconnues par le mapping CR",
+            "statut": "ok",
+            "detail": "0 ligne(s) à qualifier"
+          },
+          {
+            "id": "liens_view",
+            "label": "Pièces sans nom de fichier (piece_filename = « view »)",
+            "statut": "ok",
+            "detail": "0 ligne(s)"
+          },
+          {
+            "id": "saisies_manuelles",
+            "label": "Saisies manuelles de clôture confirmées (immobilisations, créances, dettes)",
+            "statut": "ok",
+            "detail": "30/09/2026 : rien à inscrire au bilan au 31/12/2023 (ni immobilisation, créance, dette ni provision). Le « prêt » remboursé à Yoann le 28/06/2024 est un Western Union du même jour (MTCN 1064470374) avancé sur sa carte personnelle : aucune dette au 31/12/2023."
+          },
+          {
+            "id": "exercice_clos",
+            "label": "Exercice clos (12 relevés)",
+            "statut": "ok",
+            "detail": "Arrêté au 2023-12-31"
+          }
+        ],
+        "questions_ouvertes": [],
+        "compte_resultat": {
+          "produits_eur": 1075.31,
+          "charges_eur": 2905.09,
+          "resultat_eur": -1829.78,
+          "controle": {
+            "ecart_produits": 0.31,
+            "ecart_charges": 0.31,
+            "statut": "ok",
+            "explication": "",
+            "source": "2023/Compte de résultat_2023.xlsx · Feuil1"
+          },
+          "postes": {
+            "P1": 1075.0,
+            "P6": 0.31,
+            "C1": 2181.94,
+            "C2": 532.55,
+            "C3": 190.6
+          }
+        },
+        "tresorerie": {
+          "debut_eur": 15227.33,
+          "fin_eur": 13397.55,
+          "releve_fin_eur": 13397.55,
+          "ecart_rapprochement_eur": 0.0,
+          "statut_rapprochement": "ok",
+          "explication_ecart": null
+        },
+        "bilan": {
+          "actif_eur": 13397.55,
+          "passif_eur": 13397.55,
+          "ecart_eur": 0.0,
+          "equilibre": true
+        },
+        "terrain": {
+          "lignes": 9,
+          "pen": 1074.9
+        },
+        "files": [
+          "01_Registre_recettes_depenses.xlsx",
+          "02_Compte_de_resultat.xlsx",
+          "03_Bilan_simplifie.xlsx",
+          "04_Annexe.xlsx",
+          "05_Rapprochement_bancaire.xlsx",
+          "06_Synthese_AG.xlsx",
+          "06_Synthese_AG.pdf",
+          "07_Checklist_cloture.xlsx"
+        ],
+        "clos": true
+      },
+      "import_historique": false
+    },
+    {
+      "year": 2024,
+      "journal": {
+        "recettes_eur": 9743.04,
+        "depenses_eur": 21215.24,
+        "solde_eur": -11472.2,
+        "lines": 109
+      },
+      "registre": {
+        "total_lines": 303,
+        "journal_banque": 90,
+        "terrain_pm": 213,
+        "with_piece": 230,
+        "piece_coverage_pct": 75.9,
+        "depenses_eur": 21506.06,
+        "depenses_pen": 68833.7,
+        "eur_with_piece": 4952.16,
+        "pen_with_piece": 68833.7
+      },
+      "factures": {
+        "files_count": 192,
+        "registre_with_piece": 230
+      },
+      "compte_resultat": {
+        "recettes_eur": 9743.04,
+        "depenses_eur": 21215.24
+      },
+      "controls": {
+        "bilan_equilibre": "ok",
+        "journal_vs_synthese": "ok",
+        "journal_vs_cr": "ok",
+        "factures_vs_depenses": "warning",
+        "gap_recettes_synthese_eur": 0.0,
+        "gap_depenses_synthese_eur": 0.0,
+        "gap_recettes_cr_eur": 0.0,
+        "gap_depenses_cr_eur": 0.0,
+        "factures_orphans_estimate": 0,
+        "messages": [
+          {
+            "level": "ok",
+            "text": "Journal aligné sur la Synthèse bancaire (±1 €)."
+          },
+          {
+            "level": "ok",
+            "text": "Journal aligné sur le compte de résultat (±1 €)."
+          },
+          {
+            "level": "warning",
+            "text": "192 fichiers Factures/ pour 230 lignes avec pièce — scans manquants ?"
+          },
+          {
+            "level": "warning",
+            "text": "Couverture pièces registre : 75.9 % — à compléter."
+          }
+        ]
+      },
+      "manques": {
+        "status": "attention",
+        "label": "Comptes OK · pièces à compléter",
+        "blocking_count": 0,
+        "action_count": 3,
+        "checklist_ok": 4,
+        "checklist_total": 7,
+        "checklist": [
+          {
+            "id": "synthese",
+            "label": "Journal banque = Synthèse bancaire (±1 €)",
+            "ok": true
+          },
+          {
+            "id": "compte_resultat",
+            "label": "Journal = compte de résultat (±1 €)",
+            "ok": true
+          },
+          {
+            "id": "pieces_journal",
+            "label": "Factures liées au journal banque (14/20)",
+            "ok": false
+          },
+          {
+            "id": "pieces_registre",
+            "label": "Justificatifs requis (227/233) · relevé OK pour frais banque/WU",
+            "ok": false
+          },
+          {
+            "id": "factures_orphelines",
+            "label": "Factures classées (190/192 liées)",
+            "ok": false
+          },
+          {
+            "id": "fichiers_manquants",
+            "label": "Fichiers pièce présents sur disque",
+            "ok": true
+          },
+          {
+            "id": "revue",
+            "label": "Lignes journal validées (needs_review)",
+            "ok": true
+          }
+        ],
+        "items": [
+          {
+            "priority": 2,
+            "category": "pieces_journal",
+            "title": "Dépenses banque sans facture",
+            "detail": "6 ligne(s) · 61,35 € sans pièce justificative.",
+            "count": 6,
+            "action": "Joindre le PDF dans Journal → piece_filename + drive_file_url (onglet Journal).",
+            "samples": []
+          },
+          {
+            "priority": 2,
+            "category": "pieces_registre",
+            "title": "Lignes registre banque sans pièce",
+            "detail": "6 ligne(s) · 61,35 €.",
+            "count": 6,
+            "action": "Compléter piece_filename dans le journal ou Detail_PM.",
+            "samples": []
+          },
+          {
+            "priority": 2,
+            "category": "factures_orphelines",
+            "title": "Factures dans le dossier mais non liées au registre",
+            "detail": "2 fichier(s) dans 2024/Factures/ sans ligne registre.",
+            "count": 2,
+            "action": "Créer la ligne Detail_PM correspondante ou supprimer/déplacer vers _a_classer/.",
+            "samples": []
+          }
+        ],
+        "import_historique": false
+      },
+      "actions": {
+        "lines": [],
+        "orphan_files": [],
+        "stats": {
+          "total": 303,
+          "pending": 6,
+          "releve_auto": 67,
+          "ok": 230,
+          "orphans": 2,
+          "needs_invoice": 233,
+          "needs_with_piece": 227,
+          "coverage_required_pct": 97.4
+        }
+      },
+      "downloads": [
+        {
+          "label": "Journal AKUU 2024",
+          "filename": "Journal_AKUU_2024.xlsx",
+          "path": "/downloads/tresorerie/2024/Journal_AKUU_2024.xlsx",
+          "size_kb": 49.9
+        },
+        {
+          "label": "Registre Depenses 2024",
+          "filename": "Registre_Depenses_2024.xlsx",
+          "path": "/downloads/tresorerie/2024/Registre_Depenses_2024.xlsx",
+          "size_kb": 51.7
+        },
+        {
+          "label": "Bilan Comptable 2024",
+          "filename": "Bilan_Comptable_2024.xlsx",
+          "path": "/downloads/tresorerie/2024/Bilan_Comptable_2024.xlsx",
+          "size_kb": 7.0
+        }
+      ],
+      "download_all": "/downloads/tresorerie/2024/AKUU_Tresorerie_2024.zip",
+      "download_releves": {
+        "count": 12,
+        "download_all": "/downloads/tresorerie/2024/Releves_bancaires_2024.zip",
+        "files": [
+          {
+            "label": "2024 01 RELEVE PRO AKUU",
+            "filename": "2024_01_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 106.0
+          },
+          {
+            "label": "2024 02 RELEVE PRO AKUU",
+            "filename": "2024_02_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 118.2
+          },
+          {
+            "label": "2024 03 RELEVE PRO AKUU",
+            "filename": "2024_03_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 107.6
+          },
+          {
+            "label": "2024 04 RELEVE PRO AKUU",
+            "filename": "2024_04_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 106.4
+          },
+          {
+            "label": "2024 05 RELEVE PRO AKUU",
+            "filename": "2024_05_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 117.4
+          },
+          {
+            "label": "2024 06 RELEVE PRO AKUU",
+            "filename": "2024_06_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 78.2
+          },
+          {
+            "label": "2024 07 RELEVE PRO AKUU",
+            "filename": "2024_07_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 79.1
+          },
+          {
+            "label": "2024 08 RELEVE PRO AKUU",
+            "filename": "2024_08_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 77.1
+          },
+          {
+            "label": "2024 09 RELEVE PRO AKUU",
+            "filename": "2024_09_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 77.2
+          },
+          {
+            "label": "2024 10 RELEVE PRO AKUU",
+            "filename": "2024_10_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 76.6
+          },
+          {
+            "label": "2024 11 RELEVE PRO AKUU",
+            "filename": "2024_11_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 76.9
+          },
+          {
+            "label": "2024 12 RELEVE PRO AKUU",
+            "filename": "2024_12_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 77.1
+          }
+        ]
+      },
+      "releves_status": {
+        "year": 2024,
+        "status": "complete",
+        "label": "12 relevé(s) présents",
+        "count": 26,
+        "months_present": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "expected": 12,
+        "missing": [],
+        "upload_enabled": true,
+        "account_opening": null,
+        "historique_note": null
+      },
+      "download_cloture": {
+        "label": "Pack clôture AG 2024",
+        "filename": "Pack_Cloture_2024.zip",
+        "path": "/downloads/tresorerie/2024/Cloture/Pack_Cloture_2024.zip",
+        "size_kb": 143.0,
+        "pdf": "/downloads/tresorerie/2024/Cloture/06_Synthese_AG.pdf"
+      },
+      "cloture": {
+        "year": 2024,
+        "generated_at": "2026-09-30T22:28:11",
+        "provisoire": false,
+        "status": "attention",
+        "label": "Clôture OK · points d'attention",
+        "checklist_ok": 12,
+        "checklist_total": 13,
+        "checklist": [
+          {
+            "id": "journal_valide",
+            "label": "Journal validé (valider_journal_annee.py)",
+            "statut": "ok",
+            "detail": "0 erreur(s) · 0 avertissement(s)"
+          },
+          {
+            "id": "cr_reference",
+            "label": "Compte de résultat auto = CR de référence (± 1 €)",
+            "statut": "ok",
+            "detail": "Produits 9 743,04 € (écart 0.0) · Charges 21 215,24 € (écart 0.0) · réf. 2024/bilan financier 2024.xlsx · Feuil1"
+          },
+          {
+            "id": "registre_complet",
+            "label": "Registre recettes + dépenses complet",
+            "statut": "ok",
+            "detail": "19 recettes (journal : 19) · 303 dépenses (Registre_Depenses existant : 303) · 0 doublon(s) exclu(s)"
+          },
+          {
+            "id": "rapprochement",
+            "label": "Rapprochement bancaire (solde calculé = relevé ± 1 €)",
+            "statut": "ok",
+            "detail": "Calculé 1 925,35 € · relevé 1 925,35 € · écart 0,00 €"
+          },
+          {
+            "id": "bilan_equilibre",
+            "label": "Bilan simplifié équilibré (Actif = Passif ± 1 €)",
+            "statut": "ok",
+            "detail": "Actif 1 925,35 € · Passif 1 925,35 € · écart 0,00 €"
+          },
+          {
+            "id": "couverture_factures",
+            "label": "Couverture des justificatifs requis",
+            "statut": "ok",
+            "detail": "97.4 % (227/233)"
+          },
+          {
+            "id": "factures_annotees",
+            "label": "Factures annotées concordantes avec le journal",
+            "statut": "ok",
+            "detail": "190 concordante(s) · 0 divergence(s) · 2 archivée(s)"
+          },
+          {
+            "id": "terrain_factures",
+            "label": "Dépenses terrain avec facture annotée",
+            "statut": "warning",
+            "detail": "36 ligne(s) Detail_PM sans facture dans Factures/"
+          },
+          {
+            "id": "needs_review",
+            "label": "Aucune ligne « à revoir » (needs_review)",
+            "statut": "ok",
+            "detail": "0 ligne(s) needs_review=oui"
+          },
+          {
+            "id": "categories",
+            "label": "Catégories toutes reconnues par le mapping CR",
+            "statut": "ok",
+            "detail": "0 ligne(s) à qualifier"
+          },
+          {
+            "id": "liens_view",
+            "label": "Pièces sans nom de fichier (piece_filename = « view »)",
+            "statut": "ok",
+            "detail": "0 ligne(s)"
+          },
+          {
+            "id": "saisies_manuelles",
+            "label": "Saisies manuelles de clôture confirmées (immobilisations, créances, dettes)",
+            "statut": "ok",
+            "detail": "30/09/2026 : rien à inscrire au bilan au 31/12/2024 (ni immobilisation, créance, dette ni provision). Le bâtiment du musée n'est pas inscrit à l'actif (dépenses de chantier passées en charges, comme en 2025). L'avance Western Union de Yoann du 28/06/2024 a été remboursée le jour même. Les remboursements d'avances notés en septembre 2026 concernent 2025-2026."
+          },
+          {
+            "id": "exercice_clos",
+            "label": "Exercice clos (12 relevés)",
+            "statut": "ok",
+            "detail": "Arrêté au 2024-12-31"
+          }
+        ],
+        "questions_ouvertes": [],
+        "compte_resultat": {
+          "produits_eur": 9743.04,
+          "charges_eur": 21215.24,
+          "resultat_eur": -11472.2,
+          "controle": {
+            "ecart_produits": 0.0,
+            "ecart_charges": 0.0,
+            "statut": "ok",
+            "explication": "",
+            "source": "2024/bilan financier 2024.xlsx · Feuil1"
+          },
+          "postes": {
+            "P1": 1193.04,
+            "P2": 8550.0,
+            "C1": 20466.57,
+            "C2": 520.07,
+            "C3": 228.6
+          }
+        },
+        "tresorerie": {
+          "debut_eur": 13397.55,
+          "fin_eur": 1925.35,
+          "releve_fin_eur": 1925.35,
+          "ecart_rapprochement_eur": 0.0,
+          "statut_rapprochement": "ok",
+          "explication_ecart": null
+        },
+        "bilan": {
+          "actif_eur": 1925.35,
+          "passif_eur": 1925.35,
+          "ecart_eur": 0.0,
+          "equilibre": true
+        },
+        "terrain": {
+          "lignes": 213,
+          "pen": 68833.7
+        },
+        "files": [
+          "01_Registre_recettes_depenses.xlsx",
+          "02_Compte_de_resultat.xlsx",
+          "03_Bilan_simplifie.xlsx",
+          "04_Annexe.xlsx",
+          "05_Rapprochement_bancaire.xlsx",
+          "06_Synthese_AG.xlsx",
+          "06_Synthese_AG.pdf",
+          "07_Checklist_cloture.xlsx"
+        ],
+        "clos": true
+      },
+      "import_historique": false
+    },
+    {
+      "year": 2025,
+      "journal": {
+        "recettes_eur": 6582.26,
+        "depenses_eur": 7193.75,
+        "solde_eur": -611.49,
+        "lines": 96
+      },
+      "registre": {
+        "total_lines": 182,
+        "journal_banque": 80,
+        "terrain_pm": 102,
+        "with_piece": 91,
+        "piece_coverage_pct": 50.0,
+        "depenses_eur": 7193.75,
+        "depenses_pen": 20474.25,
+        "eur_with_piece": 97.92,
+        "pen_with_piece": 13590.25
+      },
+      "factures": {
+        "files_count": 91,
+        "registre_with_piece": 91
+      },
+      "compte_resultat": {
+        "recettes_eur": 6582.26,
+        "depenses_eur": 7193.75
+      },
+      "controls": {
+        "bilan_equilibre": "ok",
+        "journal_vs_synthese": "ok",
+        "journal_vs_cr": "ok",
+        "factures_vs_depenses": "ok",
+        "gap_recettes_synthese_eur": 0.0,
+        "gap_depenses_synthese_eur": 0.0,
+        "gap_recettes_cr_eur": 0.0,
+        "gap_depenses_cr_eur": 0.0,
+        "factures_orphans_estimate": 0,
+        "messages": [
+          {
+            "level": "ok",
+            "text": "Journal aligné sur la Synthèse bancaire (±1 €)."
+          },
+          {
+            "level": "ok",
+            "text": "Journal aligné sur le compte de résultat (±1 €)."
+          },
+          {
+            "level": "ok",
+            "text": "91 fichiers Factures/ · 91 lignes registre avec pièce (cohérent)."
+          },
+          {
+            "level": "warning",
+            "text": "Couverture pièces registre : 50.0 % — à compléter."
+          }
+        ]
+      },
+      "manques": {
+        "status": "pret",
+        "label": "Exercice clôturable",
+        "blocking_count": 0,
+        "action_count": 1,
+        "checklist_ok": 7,
+        "checklist_total": 7,
+        "checklist": [
+          {
+            "id": "synthese",
+            "label": "Journal banque = Synthèse bancaire (±1 €)",
+            "ok": true
+          },
+          {
+            "id": "compte_resultat",
+            "label": "Journal = compte de résultat (±1 €)",
+            "ok": true
+          },
+          {
+            "id": "pieces_journal",
+            "label": "Import historique — factures perdues/non numérisées (6 dép.)",
+            "ok": true
+          },
+          {
+            "id": "pieces_registre",
+            "label": "Justificatifs : journal seul (factures perdues — OK pour 2017–2020)",
+            "ok": true
+          },
+          {
+            "id": "factures_orphelines",
+            "label": "Factures classées (91/91 liées)",
+            "ok": true
+          },
+          {
+            "id": "fichiers_manquants",
+            "label": "Fichiers pièce présents sur disque",
+            "ok": true
+          },
+          {
+            "id": "revue",
+            "label": "Lignes journal validées (needs_review)",
+            "ok": true
+          }
+        ],
+        "items": [
+          {
+            "priority": 3,
+            "category": "documentation",
+            "title": "Factures absentes — import historique (17 dépenses · 1 281,47 €)",
+            "detail": "Aucun dossier Factures/ pour cette année à la migration. Le journal comptable fait foi ; relevé bancaire ou « Relevé OK » sur le site suffit.",
+            "count": 17,
+            "action": "Optionnel : « Tout valider » dans Actions trésorier si vous confirmez les montants.",
+            "samples": []
+          }
+        ],
+        "import_historique": true
+      },
+      "actions": {
+        "lines": [],
+        "orphan_files": [],
+        "stats": {
+          "total": 182,
+          "pending": 17,
+          "releve_auto": 74,
+          "ok": 91,
+          "orphans": 0,
+          "needs_invoice": 108,
+          "needs_with_piece": 91,
+          "coverage_required_pct": 84.3
+        }
+      },
+      "downloads": [
+        {
+          "label": "Journal AKUU 2025",
+          "filename": "Journal_AKUU_2025.xlsx",
+          "path": "/downloads/tresorerie/2025/Journal_AKUU_2025.xlsx",
+          "size_kb": 29.3
+        },
+        {
+          "label": "Registre Depenses 2025",
+          "filename": "Registre_Depenses_2025.xlsx",
+          "path": "/downloads/tresorerie/2025/Registre_Depenses_2025.xlsx",
+          "size_kb": 30.2
+        },
+        {
+          "label": "Bilan Comptable 2025",
+          "filename": "Bilan_Comptable_2025.xlsx",
+          "path": "/downloads/tresorerie/2025/Bilan_Comptable_2025.xlsx",
+          "size_kb": 6.9
+        }
+      ],
+      "download_all": "/downloads/tresorerie/2025/AKUU_Tresorerie_2025.zip",
+      "download_releves": {
+        "count": 12,
+        "download_all": "/downloads/tresorerie/2025/Releves_bancaires_2025.zip",
+        "files": [
+          {
+            "label": "2025 01 RELEVE PRO AKUU",
+            "filename": "2025_01_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 78.5
+          },
+          {
+            "label": "2025 02 RELEVE PRO AKUU",
+            "filename": "2025_02_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 77.4
+          },
+          {
+            "label": "2025 03 RELEVE PRO AKUU",
+            "filename": "2025_03_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 77.2
+          },
+          {
+            "label": "2025 04 RELEVE PRO AKUU",
+            "filename": "2025_04_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 77.5
+          },
+          {
+            "label": "2025 05 RELEVE PRO AKUU",
+            "filename": "2025_05_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 77.5
+          },
+          {
+            "label": "2025 06 RELEVE PRO AKUU",
+            "filename": "2025_06_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 77.2
+          },
+          {
+            "label": "2025 07 RELEVE PRO AKUU",
+            "filename": "2025_07_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 79.6
+          },
+          {
+            "label": "2025 08 RELEVE PRO AKUU",
+            "filename": "2025_08_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 77.5
+          },
+          {
+            "label": "2025 09 RELEVE PRO AKUU",
+            "filename": "2025_09_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 78.8
+          },
+          {
+            "label": "2025 10 RELEVE PRO AKUU",
+            "filename": "2025_10_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 79.2
+          },
+          {
+            "label": "2025 11 RELEVE PRO AKUU",
+            "filename": "2025_11_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 79.5
+          },
+          {
+            "label": "2025 12 RELEVE PRO AKUU",
+            "filename": "2025_12_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 78.6
+          }
+        ]
+      },
+      "releves_status": {
+        "year": 2025,
+        "status": "complete",
+        "label": "12 relevé(s) présents",
+        "count": 12,
+        "months_present": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "expected": 12,
+        "missing": [],
+        "upload_enabled": true,
+        "account_opening": null,
+        "historique_note": null
+      },
+      "download_cloture": {
+        "label": "Pack clôture AG 2025",
+        "filename": "Pack_Cloture_2025.zip",
+        "path": "/downloads/tresorerie/2025/Cloture/Pack_Cloture_2025.zip",
+        "size_kb": 112.5,
+        "pdf": "/downloads/tresorerie/2025/Cloture/06_Synthese_AG.pdf"
+      },
+      "cloture": {
+        "year": 2025,
+        "generated_at": "2026-09-30T22:28:12",
+        "provisoire": false,
+        "status": "pret",
+        "label": "Clôture prête pour l'AG",
+        "checklist_ok": 13,
+        "checklist_total": 13,
+        "checklist": [
+          {
+            "id": "journal_valide",
+            "label": "Journal validé (valider_journal_annee.py)",
+            "statut": "ok",
+            "detail": "0 erreur(s) · 0 avertissement(s)"
+          },
+          {
+            "id": "cr_reference",
+            "label": "Compte de résultat auto = CR de référence (± 1 €)",
+            "statut": "ok",
+            "detail": "Produits 6 582,26 € (écart 0.0) · Charges 7 193,75 € (écart 0.0) · réf. 2025/Rapport_financier_2025.xlsx · Synthèse 2025"
+          },
+          {
+            "id": "registre_complet",
+            "label": "Registre recettes + dépenses complet",
+            "statut": "ok",
+            "detail": "16 recettes (journal : 16) · 182 dépenses (Registre_Depenses existant : 182) · 0 doublon(s) exclu(s)"
+          },
+          {
+            "id": "rapprochement",
+            "label": "Rapprochement bancaire (solde calculé = relevé ± 1 €)",
+            "statut": "ok",
+            "detail": "Calculé 1 313,86 € · relevé 1 313,86 € · écart 0,00 €"
+          },
+          {
+            "id": "bilan_equilibre",
+            "label": "Bilan simplifié équilibré (Actif = Passif ± 1 €)",
+            "statut": "ok",
+            "detail": "Actif 1 313,86 € · Passif 1 313,86 € · écart 0,00 €"
+          },
+          {
+            "id": "couverture_factures",
+            "label": "Couverture des justificatifs requis",
+            "statut": "ok",
+            "detail": "84.3 % (91/108) · année à couverture assouplie"
+          },
+          {
+            "id": "factures_annotees",
+            "label": "Factures annotées concordantes avec le journal",
+            "statut": "ok",
+            "detail": "91 concordante(s) · 0 divergence(s) · 0 archivée(s)"
+          },
+          {
+            "id": "terrain_factures",
+            "label": "Dépenses terrain avec facture annotée",
+            "statut": "info",
+            "detail": "12 ligne(s) Detail_PM sans facture dans Factures/"
+          },
+          {
+            "id": "needs_review",
+            "label": "Aucune ligne « à revoir » (needs_review)",
+            "statut": "ok",
+            "detail": "0 ligne(s) needs_review=oui"
+          },
+          {
+            "id": "categories",
+            "label": "Catégories toutes reconnues par le mapping CR",
+            "statut": "ok",
+            "detail": "0 ligne(s) à qualifier"
+          },
+          {
+            "id": "liens_view",
+            "label": "Pièces sans nom de fichier (piece_filename = « view »)",
+            "statut": "ok",
+            "detail": "0 ligne(s)"
+          },
+          {
+            "id": "saisies_manuelles",
+            "label": "Saisies manuelles de clôture confirmées (immobilisations, créances, dettes)",
+            "statut": "ok",
+            "detail": "Q7 : aucune immobilisation à inscrire · Q8 : aucune dette ni prêt au 31/12/2025 (avance Aude 490 € remboursée le 31/12/2025) · Q9 : aucune avance bénévole non remboursée. | 30/09/2026 (régularisation) : avances non remboursées d'Alexis (78,30 S/, plomberie, 15/09/2025) et de Mathéo (9 S/, contreparties mariposas, 20/11/2025) abandonnées au profit de l'association (dons en nature, non comptabilisés) : 0 € dû au 31/12/2025."
+          },
+          {
+            "id": "exercice_clos",
+            "label": "Exercice clos (12 relevés)",
+            "statut": "ok",
+            "detail": "Arrêté au 2025-12-31"
+          }
+        ],
+        "questions_ouvertes": [],
+        "compte_resultat": {
+          "produits_eur": 6582.26,
+          "charges_eur": 7193.75,
+          "resultat_eur": -611.49,
+          "controle": {
+            "ecart_produits": 0.0,
+            "ecart_charges": 0.0,
+            "statut": "ok",
+            "explication": "",
+            "source": "2025/Rapport_financier_2025.xlsx · Synthèse 2025"
+          },
+          "postes": {
+            "P1": 5582.26,
+            "P2": 1000.0,
+            "C1": 6768.18,
+            "C2": 225.7,
+            "C3": 199.87
+          }
+        },
+        "tresorerie": {
+          "debut_eur": 1925.35,
+          "fin_eur": 1313.86,
+          "releve_fin_eur": 1313.86,
+          "ecart_rapprochement_eur": 0.0,
+          "statut_rapprochement": "ok",
+          "explication_ecart": null
+        },
+        "bilan": {
+          "actif_eur": 1313.86,
+          "passif_eur": 1313.86,
+          "ecart_eur": 0.0,
+          "equilibre": true
+        },
+        "terrain": {
+          "lignes": 102,
+          "pen": 20474.25
+        },
+        "files": [
+          "01_Registre_recettes_depenses.xlsx",
+          "02_Compte_de_resultat.xlsx",
+          "03_Bilan_simplifie.xlsx",
+          "04_Annexe.xlsx",
+          "05_Rapprochement_bancaire.xlsx",
+          "06_Synthese_AG.xlsx",
+          "06_Synthese_AG.pdf",
+          "07_Checklist_cloture.xlsx"
+        ],
+        "clos": true
+      },
+      "import_historique": true
+    },
+    {
+      "year": 2026,
+      "journal": {
+        "recettes_eur": 6113.76,
+        "depenses_eur": 4618.17,
+        "solde_eur": 1495.59,
+        "lines": 74
+      },
+      "registre": {
+        "total_lines": 147,
+        "journal_banque": 55,
+        "terrain_pm": 92,
+        "with_piece": 94,
+        "piece_coverage_pct": 63.9,
+        "depenses_eur": 5985.25,
+        "depenses_pen": 17447.31,
+        "eur_with_piece": 2099.09,
+        "pen_with_piece": 17447.31
+      },
+      "factures": {
+        "files_count": 95,
+        "registre_with_piece": 94
+      },
+      "compte_resultat": {
+        "recettes_eur": null,
+        "depenses_eur": null
+      },
+      "controls": {
+        "bilan_equilibre": "ok",
+        "journal_vs_synthese": "ok",
+        "journal_vs_cr": "unknown",
+        "factures_vs_depenses": "ok",
+        "gap_recettes_synthese_eur": 0.0,
+        "gap_depenses_synthese_eur": 0.0,
+        "gap_recettes_cr_eur": null,
+        "gap_depenses_cr_eur": null,
+        "factures_orphans_estimate": 1,
+        "messages": [
+          {
+            "level": "ok",
+            "text": "Journal aligné sur la Synthèse bancaire (±1 €)."
+          },
+          {
+            "level": "info",
+            "text": "Exercice ouvert ; relevés jan–août ; septembre = CSV provisoires."
+          },
+          {
+            "level": "ok",
+            "text": "95 fichiers Factures/ · 94 lignes registre avec pièce (cohérent)."
+          },
+          {
+            "level": "warning",
+            "text": "Couverture pièces registre : 63.9 % — à compléter."
+          }
+        ]
+      },
+      "manques": {
+        "status": "attention",
+        "label": "Comptes OK · pièces à compléter",
+        "blocking_count": 0,
+        "action_count": 2,
+        "checklist_ok": 6,
+        "checklist_total": 7,
+        "checklist": [
+          {
+            "id": "synthese",
+            "label": "Journal banque = Synthèse bancaire (±1 €)",
+            "ok": true
+          },
+          {
+            "id": "compte_resultat",
+            "label": "Journal = compte de résultat (±1 €)",
+            "ok": true
+          },
+          {
+            "id": "pieces_journal",
+            "label": "Import historique — factures perdues/non numérisées (9 dép.)",
+            "ok": true
+          },
+          {
+            "id": "pieces_registre",
+            "label": "Justificatifs : journal seul (factures perdues — OK pour 2017–2020)",
+            "ok": true
+          },
+          {
+            "id": "factures_orphelines",
+            "label": "Factures classées (89/95 liées)",
+            "ok": false
+          },
+          {
+            "id": "fichiers_manquants",
+            "label": "Fichiers pièce présents sur disque",
+            "ok": true
+          },
+          {
+            "id": "revue",
+            "label": "Lignes journal validées (needs_review)",
+            "ok": true
+          }
+        ],
+        "items": [
+          {
+            "priority": 2,
+            "category": "factures_orphelines",
+            "title": "Factures dans le dossier mais non liées au registre",
+            "detail": "6 fichier(s) dans 2026/Factures/ sans ligne registre.",
+            "count": 6,
+            "action": "Créer la ligne Detail_PM correspondante ou supprimer/déplacer vers _a_classer/.",
+            "samples": []
+          },
+          {
+            "priority": 3,
+            "category": "documentation",
+            "title": "Factures absentes — import historique (7 dépenses · 111,32 €)",
+            "detail": "Aucun dossier Factures/ pour cette année à la migration. Le journal comptable fait foi ; relevé bancaire ou « Relevé OK » sur le site suffit.",
+            "count": 7,
+            "action": "Optionnel : « Tout valider » dans Actions trésorier si vous confirmez les montants.",
+            "samples": []
+          }
+        ],
+        "import_historique": true
+      },
+      "actions": {
+        "lines": [],
+        "orphan_files": [],
+        "stats": {
+          "total": 147,
+          "pending": 7,
+          "releve_auto": 46,
+          "ok": 94,
+          "orphans": 6,
+          "needs_invoice": 101,
+          "needs_with_piece": 94,
+          "coverage_required_pct": 93.1
+        }
+      },
+      "downloads": [
+        {
+          "label": "Journal AKUU 2026",
+          "filename": "Journal_AKUU_2026.xlsx",
+          "path": "/downloads/tresorerie/2026/Journal_AKUU_2026.xlsx",
+          "size_kb": 29.4
+        },
+        {
+          "label": "Registre Depenses 2026",
+          "filename": "Registre_Depenses_2026.xlsx",
+          "path": "/downloads/tresorerie/2026/Registre_Depenses_2026.xlsx",
+          "size_kb": 29.1
+        },
+        {
+          "label": "Bilan Comptable 2026",
+          "filename": "Bilan_Comptable_2026.xlsx",
+          "path": "/downloads/tresorerie/2026/Bilan_Comptable_2026.xlsx",
+          "size_kb": 7.1
+        }
+      ],
+      "download_all": "/downloads/tresorerie/2026/AKUU_Tresorerie_2026.zip",
+      "download_releves": {
+        "count": 8,
+        "download_all": "/downloads/tresorerie/2026/Releves_bancaires_2026.zip",
+        "files": [
+          {
+            "label": "2026 01 RELEVE PRO AKUU",
+            "filename": "2026_01_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 77.3
+          },
+          {
+            "label": "2026 02 RELEVE PRO AKUU",
+            "filename": "2026_02_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 80.1
+          },
+          {
+            "label": "2026 03 RELEVE PRO AKUU",
+            "filename": "2026_03_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 77.5
+          },
+          {
+            "label": "2026 04 RELEVE PRO AKUU",
+            "filename": "2026_04_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 78.9
+          },
+          {
+            "label": "2026 05 RELEVE PRO AKUU",
+            "filename": "2026_05_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 78.9
+          },
+          {
+            "label": "2026 06 RELEVE PRO AKUU",
+            "filename": "2026_06_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 77.7
+          },
+          {
+            "label": "2026 07 RELEVE PRO AKUU",
+            "filename": "2026_07_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 77.4
+          },
+          {
+            "label": "2026 08 RELEVE PRO AKUU",
+            "filename": "2026_08_RELEVE_PRO_AKUU.pdf",
+            "size_kb": 77.6
+          }
+        ]
+      },
+      "releves_status": {
+        "year": 2026,
+        "status": "incomplete",
+        "label": "1 relevé(s) bancaire(s) manquant(s)",
+        "count": 8,
+        "months_present": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "expected": 9,
+        "missing": [
+          {
+            "month": 9,
+            "year": 2026,
+            "label": "Septembre 2026",
+            "suggested_filename": "2026_09_RELEVE_PRO_AKUU.pdf"
+          }
+        ],
+        "upload_enabled": true,
+        "account_opening": null,
+        "historique_note": "Exercice ouvert ; relevés jan–août ; septembre = CSV provisoires."
+      },
+      "download_cloture": {
+        "label": "Pack clôture AG 2026",
+        "filename": "Pack_Cloture_2026.zip",
+        "path": "/downloads/tresorerie/2026/Cloture/Pack_Cloture_2026.zip",
+        "size_kb": 112.1,
+        "pdf": "/downloads/tresorerie/2026/Cloture/06_Synthese_AG.pdf"
+      },
+      "cloture": {
+        "year": 2026,
+        "generated_at": "2026-09-30T22:28:13",
+        "provisoire": true,
+        "status": "attention",
+        "label": "Clôture OK · points d'attention (exercice provisoire)",
+        "checklist_ok": 9,
+        "checklist_total": 13,
+        "checklist": [
+          {
+            "id": "journal_valide",
+            "label": "Journal validé (valider_journal_annee.py)",
+            "statut": "ok",
+            "detail": "0 erreur(s) · 0 avertissement(s)"
+          },
+          {
+            "id": "cr_reference",
+            "label": "Compte de résultat auto = CR de référence (± 1 €)",
+            "statut": "warning",
+            "detail": "Produits 6 113,76 € (écart None) · Charges 4 618,17 € (écart None) · réf. aucune"
+          },
+          {
+            "id": "registre_complet",
+            "label": "Registre recettes + dépenses complet",
+            "statut": "ok",
+            "detail": "19 recettes (journal : 19) · 147 dépenses (Registre_Depenses existant : 147) · 0 doublon(s) exclu(s)"
+          },
+          {
+            "id": "rapprochement",
+            "label": "Rapprochement bancaire (solde calculé = relevé ± 1 €)",
+            "statut": "ok",
+            "detail": "Calculé 1 341,17 € · relevé 1 341,17 € · écart 0,00 €"
+          },
+          {
+            "id": "bilan_equilibre",
+            "label": "Bilan simplifié équilibré (Actif = Passif ± 1 €)",
+            "statut": "warning",
+            "detail": "Actif 2 809,45 € · Passif 4 358,14 € · écart -1 548,69 €"
+          },
+          {
+            "id": "couverture_factures",
+            "label": "Couverture des justificatifs requis",
+            "statut": "ok",
+            "detail": "93.1 % (94/101) · année à couverture assouplie"
+          },
+          {
+            "id": "factures_annotees",
+            "label": "Factures annotées concordantes avec le journal",
+            "statut": "ok",
+            "detail": "87 concordante(s) · 0 divergence(s) · 1 archivée(s)"
+          },
+          {
+            "id": "terrain_factures",
+            "label": "Dépenses terrain avec facture annotée",
+            "statut": "info",
+            "detail": "5 ligne(s) Detail_PM sans facture dans Factures/"
+          },
+          {
+            "id": "needs_review",
+            "label": "Aucune ligne « à revoir » (needs_review)",
+            "statut": "ok",
+            "detail": "0 ligne(s) needs_review=oui"
+          },
+          {
+            "id": "categories",
+            "label": "Catégories toutes reconnues par le mapping CR",
+            "statut": "ok",
+            "detail": "0 ligne(s) à qualifier"
+          },
+          {
+            "id": "liens_view",
+            "label": "Pièces sans nom de fichier (piece_filename = « view »)",
+            "statut": "ok",
+            "detail": "0 ligne(s)"
+          },
+          {
+            "id": "saisies_manuelles",
+            "label": "Saisies manuelles de clôture confirmées (immobilisations, créances, dettes)",
+            "statut": "warning",
+            "detail": "Aucune décision trésorier enregistrée dans saisies_manuelles JSON"
+          },
+          {
+            "id": "exercice_clos",
+            "label": "Exercice clos (12 relevés)",
+            "statut": "warning",
+            "detail": "Arrêté au 2026-08-31 · 8 opération(s) provisoire(s) après le dernier relevé"
+          }
+        ],
+        "questions_ouvertes": [
+          "2026 : confirmer l'absence d'immobilisations, de dettes et d'avances bénévoles au 31/12 (ou les saisir dans saisies_manuelles_2026.json).",
+          "Bilan : Variation immobilisations / créances / dettes / provisions non passée en résultat = -1 548,69 € — à confirmer."
+        ],
+        "compte_resultat": {
+          "produits_eur": 6113.76,
+          "charges_eur": 4618.17,
+          "resultat_eur": 1495.59,
+          "controle": {
+            "ecart_produits": null,
+            "ecart_charges": null,
+            "statut": "sans_reference",
+            "explication": "",
+            "source": null
+          },
+          "postes": {
+            "P1": 4950.0,
+            "P2": 950.0,
+            "P6": 213.76,
+            "C1": 3977.63,
+            "C2": 539.24,
+            "C3": 101.3
+          }
+        },
+        "tresorerie": {
+          "debut_eur": 1313.86,
+          "fin_eur": 2809.45,
+          "releve_fin_eur": 1341.17,
+          "ecart_rapprochement_eur": 0.0,
+          "statut_rapprochement": "ok",
+          "explication_ecart": null
+        },
+        "bilan": {
+          "actif_eur": 2809.45,
+          "passif_eur": 4358.14,
+          "ecart_eur": -1548.69,
+          "equilibre": false
+        },
+        "terrain": {
+          "lignes": 92,
+          "pen": 17447.31
+        },
+        "files": [
+          "01_Registre_recettes_depenses.xlsx",
+          "02_Compte_de_resultat.xlsx",
+          "03_Bilan_simplifie.xlsx",
+          "04_Annexe.xlsx",
+          "05_Rapprochement_bancaire.xlsx",
+          "06_Synthese_AG.xlsx",
+          "06_Synthese_AG.pdf",
+          "07_Checklist_cloture.xlsx"
+        ],
+        "clos": false
+      },
+      "import_historique": true
+    }
+  ],
+  "download_all_years": {
+    "label": "Archives 2017–2026",
+    "filename": "AKUU_Tresorerie_2017-2026.zip",
+    "path": "/downloads/tresorerie/AKUU_Tresorerie_2017-2026.zip",
+    "size_kb": 7091.0,
+    "files": 151
+  }
+}
