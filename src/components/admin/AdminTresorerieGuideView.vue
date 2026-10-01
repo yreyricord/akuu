@@ -47,12 +47,12 @@
       </ol>
     </section>
 
-    <!-- Seuils PEN -->
+    <!-- Seuils PEN — 2 cas uniquement -->
     <section class="rounded-2xl border border-night-100 bg-white p-5 shadow-sm">
-      <h3 class="text-sm font-semibold uppercase tracking-wide text-night">Deux cas selon le montant (S/.)</h3>
-      <p class="mt-1 text-xs text-night-400">
-        Sur le site, <strong>toute dépense</strong> passe par une demande AKUU-DEM validée par le trésorier, puis par une facture après achat.
-        Seule différence : les photos de devis fournisseurs au-delà de {{ DEVIS_PEN_THRESHOLD }} S/.
+      <h3 class="text-sm font-semibold uppercase tracking-wide text-night">Règle sur le site (S/.)</h3>
+      <p class="mt-2 text-sm leading-relaxed text-night-600">
+        <strong>Toute dépense</strong> passe par une demande AKUU-DEM (validée par le trésorier), puis par une ou plusieurs factures après achat.
+        La dépense doit être utile au projet et prévue au budget — jamais autorisée automatiquement.
       </p>
       <ul class="mt-4 space-y-3">
         <li v-for="row in thresholdRows" :key="row.range" class="flex gap-3 rounded-xl bg-night-50/80 px-3 py-2.5">
@@ -61,7 +61,7 @@
         </li>
       </ul>
       <p class="mt-3 text-xs text-night-400">
-        Chaque dépense doit rester utile au projet et prévue au budget · montant facturé ≤ devis +{{ AMOUNT_TOLERANCE_PERCENT }}&nbsp;%.
+        Total facturé ≤ montant du devis +{{ AMOUNT_TOLERANCE_PERCENT }}&nbsp;% · justificatif papier conservé à Puerto Miguel.
       </p>
     </section>
 
