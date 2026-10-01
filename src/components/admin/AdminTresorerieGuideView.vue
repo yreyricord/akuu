@@ -223,11 +223,11 @@ const digitalSteps = [
 const thresholdRows = [
   {
     range: `≤ ${DEVIS_PEN_THRESHOLD} S/.`,
-    rule: 'Demande AKUU-DEM · validation trésorier · facture(s) après achat · pas de photo de devis fournisseur.'
+    rule: 'Demande + validation trésorier + facture(s) · sans photo de devis fournisseur à joindre.'
   },
   {
     range: `> ${DEVIS_PEN_THRESHOLD} S/.`,
-    rule: `Idem + joindre min. ${MIN_DEVIS_ATTACHMENTS} photos/PDF de devis fournisseurs · le trésorier valide les pièces avant approbation.`
+    rule: `Demande + min. ${MIN_DEVIS_ATTACHMENTS} photos/PDF de devis fournisseurs (validées par le trésorier) + facture(s) après achat.`
   }
 ]
 

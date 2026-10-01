@@ -53,6 +53,7 @@ var _tabRowsCache_ = {};
 var _journalRowIndex_ = {};
 
 var JOURNAL_API_CACHE_TTL_ = 180;
+var JOURNAL_CLOSED_CACHE_TTL_ = 604800; // 7 j · exercices clos
 
 function journalApiCacheKey_(year) {
   return 'journal_annee_v1_' + year;
@@ -400,7 +401,10 @@ function getJournalAnnee_(session, year) {
   out.sort(function (a, b) { return (b.date + b.ref).localeCompare(a.date + a.ref); });
   var result = { year: year, live: true, sheet_url: ss.getUrl(), rows: out };
   try {
-    CacheService.getScriptCache().put(cacheKey, JSON.stringify(result), JOURNAL_API_CACHE_TTL_);
+    var ttl = (typeof isExerciceClos_ === 'function' && isExerciceClos_(year))
+      ? JOURNAL_CLOSED_CACHE_TTL_
+      : JOURNAL_API_CACHE_TTL_;
+    CacheService.getScriptCache().put(cacheKey, JSON.stringify(result), ttl);
   } catch (e) { Logger.log('journal cache put ' + year + ': ' + e); }
   return result;
 }

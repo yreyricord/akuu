@@ -101,6 +101,7 @@ function completerOngletsCloture() {
 function invalidateExercicesCache_() {
   var cache = CacheService.getScriptCache();
   cache.remove('exercices_all');
+  cache.remove('finances_publiques');
   for (var y = EXERCICES_FIRST_YEAR_; y <= new Date().getFullYear() + 1; y++) {
     cache.remove('exercice_' + y);
   }
@@ -398,17 +399,38 @@ function buildExercicePayload_(year, ss) {
   };
 }
 
+function exerciceSnapshotKey_(year) {
+  return 'EXERCICE_SNAPSHOT_' + year;
+}
+
 function readExercice_(year) {
+  year = Number(year);
   var cache = CacheService.getScriptCache();
   var key = 'exercice_' + year;
   var cached = cache.get(key);
   if (cached) {
     try { return JSON.parse(cached); } catch (e) { /* recalc */ }
   }
+  var props = PropertiesService.getScriptProperties();
+  var snapKey = exerciceSnapshotKey_(year);
+  if (year < new Date().getFullYear()) {
+    var snap = props.getProperty(snapKey);
+    if (snap) {
+      try {
+        var parsed = JSON.parse(snap);
+        cache.put(key, snap, EXERCICES_CACHE_TTL_);
+        return parsed;
+      } catch (e) { /* recalc */ }
+    }
+  }
   var ss = openYearJournal_(year);
   if (!ss) return { year: year, live: false };
   var payload = buildExercicePayload_(year, ss);
-  cache.put(key, JSON.stringify(payload), EXERCICES_CACHE_TTL_);
+  var json = JSON.stringify(payload);
+  cache.put(key, json, EXERCICES_CACHE_TTL_);
+  if (payload.statut === 'clos' || year < new Date().getFullYear()) {
+    try { props.setProperty(snapKey, json); } catch (e) { Logger.log('exercice snapshot ' + year + ': ' + e); }
+  }
   return payload;
 }
 

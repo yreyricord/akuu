@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { tresorerieApi } from '@/api/tresorerie/client.js'
+import { tresorerieApi, invalidateJournalCache } from '@/api/tresorerie/client.js'
 import { fetchPenEurRate, penToEur } from '@/api/tresorerie/exchangeRate.js'
 
 const CACHE_TTL = {
@@ -9,8 +9,11 @@ const CACHE_TTL = {
   compta: 120_000,
   mine: 60_000,
   access: 60_000,
+  approved: 60_000,
   exchangeRate: 86_400_000
 }
+
+const VALIDATION_POLL_MS = 45_000
 
 /** Évite les appels réseau en double (parent + enfant, onglets rapides). */
 function dedupeFetch(key, inflight, fn) {
@@ -33,6 +36,8 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
   const pendingAccessRequests = ref([])
   const validationError = ref(null)
   const validationStats = ref(null)
+  const validationVersion = ref('')
+  let _validationPollTimer = null
   const historyError = ref(null)
   const historyLoading = ref(false)
   const historyProgress = ref(0)
@@ -88,7 +93,8 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
     try {
       const created = await tresorerieApi.createFacture(payload, file)
       successMessage.value = `Facture ${created.reference} soumise.`
-      await loadApprovedDemandes()
+      delete _fetchedAt.approved
+      await loadApprovedDemandes(true)
       return created
     } catch (e) {
       error.value = e.message
@@ -101,26 +107,32 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
   async function submitFacturesBatch(sharedPayload, items) {
     clearMessages()
     loading.value = true
-    const created = []
+    let created = []
     try {
-      for (const item of items) {
-        const facture = await tresorerieApi.createFacture(
-          {
-            ...sharedPayload,
-            expense_date: item.expense_date,
-            amount: item.amount,
-            vendor_name: item.vendor_name,
-            receipt_number: item.receipt_number || ''
-          },
-          item.file
-        )
-        created.push(facture)
+      try {
+        const batch = await tresorerieApi.createFacturesBatch(sharedPayload, items)
+        created = batch.factures || []
+      } catch (batchErr) {
+        if (batchErr.code !== 'NOT_FOUND') throw batchErr
+        for (const item of items) {
+          created.push(await tresorerieApi.createFacture(
+            {
+              ...sharedPayload,
+              expense_date: item.expense_date,
+              amount: item.amount,
+              vendor_name: item.vendor_name,
+              receipt_number: item.receipt_number || ''
+            },
+            item.file
+          ))
+        }
       }
       const refs = created.map((f) => f.reference).join(', ')
       successMessage.value =
         created.length > 1
           ? `${created.length} factures enregistrées (brouillon) : ${refs}`
           : `Facture ${refs} enregistrée (brouillon).`
+      delete _fetchedAt.approved
       return created
     } catch (e) {
       if (created.length) {
@@ -143,22 +155,38 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
     })
   }
 
+  function applyValidationQueue(queue) {
+    pendingDemandes.value = Array.isArray(queue?.demandes) ? queue.demandes : []
+    pendingFactures.value = Array.isArray(queue?.factures) ? queue.factures : []
+    pendingReimbursements.value = Array.isArray(queue?.reimbursements) ? queue.reimbursements : []
+    validationStats.value = queue?.stats ?? null
+    validationVersion.value = queue?.version?.version ?? validationVersion.value
+  }
+
   async function refreshPending(force = false) {
     if (force) delete _fetchedAt.pending
     else if (_fetchedAt.pending && Date.now() - _fetchedAt.pending < CACHE_TTL.pending) return
     return dedupeFetch('pending', _inflight, async () => {
       validationError.value = null
       try {
-        const [dem, fac, reimb, stats] = await Promise.all([
-          tresorerieApi.getDemandesPending(),
-          tresorerieApi.getFacturesPending(),
-          tresorerieApi.getReimbursementsPending().catch(() => []),
-          tresorerieApi.getValidationStats().catch(() => null)
-        ])
-        pendingDemandes.value = Array.isArray(dem) ? dem : []
-        pendingFactures.value = Array.isArray(fac) ? fac : []
-        pendingReimbursements.value = Array.isArray(reimb) ? reimb : []
-        validationStats.value = stats
+        try {
+          const queue = await tresorerieApi.getValidationQueue()
+          applyValidationQueue(queue)
+        } catch (queueErr) {
+          if (queueErr.code !== 'NOT_FOUND') throw queueErr
+          const [dem, fac, reimb, stats] = await Promise.all([
+            tresorerieApi.getDemandesPending(),
+            tresorerieApi.getFacturesPending(),
+            tresorerieApi.getReimbursementsPending().catch(() => []),
+            tresorerieApi.getValidationStats().catch(() => null)
+          ])
+          applyValidationQueue({
+            demandes: dem,
+            factures: fac,
+            reimbursements: reimb,
+            stats
+          })
+        }
         _fetchedAt.pending = Date.now()
       } catch (e) {
         validationError.value = e.message || 'Impossible de charger les files d\'attente'
@@ -166,6 +194,34 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
         pendingFactures.value = []
       }
     })
+  }
+
+  async function pollValidationVersion() {
+    if (typeof document !== 'undefined' && document.visibilityState === 'hidden') return
+    try {
+      const v = await tresorerieApi.getValidationVersion()
+      const next = v?.version ?? ''
+      if (next && next !== validationVersion.value) {
+        validationVersion.value = next
+        await refreshPending(true)
+      } else if (next) {
+        validationVersion.value = next
+      }
+    } catch {
+      /* backend ancien ou hors ligne */
+    }
+  }
+
+  function startValidationPolling() {
+    stopValidationPolling()
+    _validationPollTimer = setInterval(pollValidationVersion, VALIDATION_POLL_MS)
+  }
+
+  function stopValidationPolling() {
+    if (_validationPollTimer) {
+      clearInterval(_validationPollTimer)
+      _validationPollTimer = null
+    }
   }
 
   async function refreshReimbursements() {
@@ -176,8 +232,13 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
     }
   }
 
-  async function loadApprovedDemandes() {
-    approvedDemandes.value = await tresorerieApi.getApprovedDemandReferences()
+  async function loadApprovedDemandes(force = false) {
+    if (force) delete _fetchedAt.approved
+    else if (_fetchedAt.approved && Date.now() - _fetchedAt.approved < CACHE_TTL.approved) return
+    return dedupeFetch('approved', _inflight, async () => {
+      approvedDemandes.value = await tresorerieApi.getApprovedDemandReferences()
+      _fetchedAt.approved = Date.now()
+    })
   }
 
   async function validateDemandeDevis(reference) {
@@ -284,6 +345,7 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
       successMessage.value = `${reference} validée · écriture journal.`
       delete _fetchedAt.history
       delete _fetchedAt.compta
+      invalidateJournalCache()
       await refreshPending(true)
     } catch (e) {
       error.value = e.message
@@ -299,7 +361,8 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
     try {
       const demande = await tresorerieApi.closeDemandeInvoicing(reference)
       successMessage.value = `Devis ${reference} clôturé — ${demande.pending_facture_count ?? ''} facture(s) envoyée(s) au trésorier.`
-      await loadApprovedDemandes()
+      delete _fetchedAt.approved
+      await loadApprovedDemandes(true)
       return demande
     } catch (e) {
       error.value = e.message
@@ -317,6 +380,7 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
       successMessage.value = `${result.count} facture(s) validée(s) pour ${reference} · journal à jour.`
       delete _fetchedAt.history
       delete _fetchedAt.compta
+      invalidateJournalCache()
       await refreshPending(true)
       return result
     } catch (e) {
@@ -361,7 +425,7 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
       try {
         historyProgress.value = 40
         historyProgressLabel.value = 'Demandes, factures et audit…'
-        const data = await tresorerieApi.getHistory()
+        const data = await tresorerieApi.getHistory({ limit: 500 })
         historyProgress.value = 96
         history.value = {
           demandes: Array.isArray(data?.demandes) ? data.demandes : [],
@@ -462,6 +526,7 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
     pendingAccessRequests,
     validationError,
     validationStats,
+    validationVersion,
     historyError,
     historyLoading,
     historyProgress,
@@ -477,6 +542,9 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
     submitDirectExpense,
     refreshMine,
     refreshPending,
+    startValidationPolling,
+    stopValidationPolling,
+    pollValidationVersion,
     refreshReimbursements,
     loadApprovedDemandes,
     validateDemandeDevis,

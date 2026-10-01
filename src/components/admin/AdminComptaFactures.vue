@@ -280,7 +280,6 @@ onMounted(async () => {
 
   await loadLive(year.value)
   pickBestYear()
-  reloadAllInBackground()
 })
 
 /** Choisit la première année utilisable (manques > 0, sinon journal live). */

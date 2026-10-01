@@ -16,26 +16,34 @@ function doOptions(e) {
 }
 
 function handleRequest(method, e) {
+  var t0 = Date.now();
+  var path = '';
+  var body = method === 'POST' ? parseRequestBody_(e) : {};
   try {
     if (typeof resetRequestCaches_ === 'function') resetRequestCaches_();
-    var path = normalizePath_(e.pathInfo || e.parameter.path || '');
-    var body = method === 'POST' ? parseRequestBody_(e) : {};
+    path = normalizePath_(e.pathInfo || e.parameter.path || '');
     // Lectures : envoyées en POST (jeton dans le corps) avec _method: 'GET'
     var isWrite = method === 'POST' && body._method !== 'GET';
     if (method === 'POST' && body._method === 'GET') method = 'GET';
     var param = function (k) { return body[k] !== undefined ? body[k] : (e.parameter || {})[k]; };
     if (isWrite && path.indexOf('auth/') !== 0 && path !== 'access-requests') {
-      return withWriteLock_(function () {
+      var run = function () {
         var res = route_(method, path, body, e, param);
         if (typeof invalidateExercicesCache_ === 'function' && shouldInvalidateExercicesCache_(path)) {
           invalidateExercicesCache_();
         }
         return res;
-      });
+      };
+      if (typeof needsTresorerieWriteLock_ === 'function' && !needsTresorerieWriteLock_(path)) {
+        return run();
+      }
+      return withWriteLock_(run);
     }
     return route_(method, path, body, e, param);
   } catch (err) {
     return jsonResponse({ ok: false, error: publicError_(err) }, err.status || 400);
+  } finally {
+    if (typeof logPerfIfSlow_ === 'function') logPerfIfSlow_(path, Date.now() - t0, '');
   }
 }
 
@@ -87,6 +95,12 @@ function route_(method, path, body, e, param) {
     }
     if (path === 'validation/stats' && method === 'GET') {
       return jsonResponse({ ok: true, data: getValidationStats_(session) });
+    }
+    if (path === 'validation/queue' && method === 'GET') {
+      return jsonResponse({ ok: true, data: getValidationQueue_(session) });
+    }
+    if (path === 'validation/version' && method === 'GET') {
+      return jsonResponse({ ok: true, data: getValidationVersion_(session) });
     }
     if (path === 'demandes/approved' && method === 'GET') {
       return jsonResponse({ ok: true, data: getApprovedDemandes_(session) });
@@ -145,6 +159,9 @@ function route_(method, path, body, e, param) {
       requireTreasurer_(session);
       return jsonResponse({ ok: true, data: createDirectExpense_(session, body) });
     }
+    if (path === 'factures/batch' && method === 'POST') {
+      return jsonResponse({ ok: true, data: createFacturesBatch_(session, body) });
+    }
     if (path === 'factures' && method === 'POST') {
       return jsonResponse({ ok: true, data: createFacture_(session, body) });
     }
@@ -174,7 +191,10 @@ function route_(method, path, body, e, param) {
       return jsonResponse({ ok: true, data: getCaissePerou_(session, param('year')) });
     }
     if (path === 'history' && method === 'GET') {
-      return jsonResponse({ ok: true, data: getHistory_(session) });
+      return jsonResponse({
+        ok: true,
+        data: getHistory_(session, { limit: param('limit'), since: param('since') })
+      });
     }
     if (path === 'compta' && method === 'GET') {
       return jsonResponse({ ok: true, data: getCompta_(session) });

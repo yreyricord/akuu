@@ -12,7 +12,7 @@ var MAX_ATTACHMENTS = 6;                             // par requête
 var LOGIN_MAX_FAILS = 5;                             // puis blocage
 var LOGIN_LOCK_SEC = 15 * 60;                        // 15 min
 var PASSWORD_MIN_LENGTH = 10;
-var HASH_ROUNDS = 2000;
+var HASH_ROUNDS = 500;
 
 var MAGIC_ = [
   { mime: 'application/pdf', ext: 'pdf', bytes: [0x25, 0x50, 0x44, 0x46] },          // %PDF
@@ -185,6 +185,16 @@ function publicError_(err) {
   if (err && err.code) return { code: err.code, message: err.message };
   try { Logger.log('Erreur interne : ' + (err && err.stack || err)); } catch (e) { /* ignore */ }
   return { code: 'INTERNAL_ERROR', message: 'Erreur interne. Réessayez ; si le problème persiste, contactez l\'administrateur.' };
+}
+
+/** Écritures qui ne touchent que le journal d'exercice (pas Demandes/Factures). */
+function needsTresorerieWriteLock_(path) {
+  if (!path) return true;
+  if (path === 'releves/import') return false;
+  if (path === 'bascule') return false;
+  if (path.indexOf('exercice/') === 0) return false;
+  if (path.indexOf('corrections/sync-modes') === 0) return false;
+  return true;
 }
 
 function withWriteLock_(fn) {

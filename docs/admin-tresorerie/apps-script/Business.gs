@@ -530,8 +530,10 @@ function closeDemandeInvoicing_(session, reference) {
   var sumPen = 0;
   var sumEur = 0;
   var refs = [];
+  batchUpdateRowsByReference_('Factures', drafts.map(function (f) {
+    return { reference: f.reference, updates: { status: 'pending' } };
+  }));
   drafts.forEach(function (f) {
-    updateRowByReference_('Factures', f.reference, { status: 'pending' });
     sumPen += Number(f.amount_pen) || 0;
     sumEur += Number(f.amount_eur) || 0;
     refs.push(f.reference);
@@ -580,14 +582,20 @@ function validateDemandeFactures_(session, demandReference) {
   });
   var validatedAt = new Date().toISOString();
   var validatedRefs = [];
+  batchUpdateRowsByReference_('Factures', pending.map(function (f) {
+    var reimbStatus = f.payment_type === 'avance_benevole' ? 'to_pay' : 'not_applicable';
+    return {
+      reference: f.reference,
+      updates: {
+        status: 'validated',
+        treasurer_email: session.email,
+        validated_at: validatedAt,
+        reimbursement_status: reimbStatus
+      }
+    };
+  }));
   pending.forEach(function (f) {
     var reimbStatus = f.payment_type === 'avance_benevole' ? 'to_pay' : 'not_applicable';
-    updateRowByReference_('Factures', f.reference, {
-      status: 'validated',
-      treasurer_email: session.email,
-      validated_at: validatedAt,
-      reimbursement_status: reimbStatus
-    });
     f.status = 'validated';
     f.validated_at = validatedAt;
     f.reimbursement_status = reimbStatus;
@@ -613,11 +621,15 @@ function validateDemandeFactures_(session, demandReference) {
   };
 }
 
-/** Compteurs pour diagnostic Validation (trésorier). */
-function getValidationStats_(session) {
-  requireTreasurer_(session);
-  var demandes = readAll_('Demandes');
-  var factures = readAll_('Factures');
+function filterReimbursementsPending_(factures) {
+  return (factures || readAll_('Factures')).filter(function (f) {
+    if (f.payment_type !== 'avance_benevole' || f.status !== 'validated') return false;
+    var s = String(f.reimbursement_status || '').toLowerCase();
+    return !s || s === 'to_pay';
+  });
+}
+
+function buildValidationStats_(demandes, factures) {
   var byStatus = {};
   demandes.forEach(function (d) {
     var s = normStatus_(d.status) || 'unknown';
@@ -639,6 +651,93 @@ function getValidationStats_(session) {
     spreadsheet_url: ss.getUrl(),
     demandes_sheet_exists: Boolean(getSheet_('Demandes'))
   };
+}
+
+function computeValidationVersion_(demandes, factures, demandesByRef) {
+  demandesByRef = demandesByRef || {};
+  var pendingDem = 0;
+  var pendingFac = 0;
+  var maxTs = '';
+  demandes.forEach(function (d) {
+    if (normStatus_(d.status) === 'awaiting_approval') {
+      pendingDem++;
+      var ts = String(d.created_at || d.decided_at || '');
+      if (ts > maxTs) maxTs = ts;
+    }
+  });
+  factures.forEach(function (f) {
+    var d = demandesByRef[normDemandRef_(f.demand_reference)];
+    if (isFactureVisibleToTreasurer_(f, d)) {
+      pendingFac++;
+      var ts = String(f.created_at || f.validated_at || '');
+      if (ts > maxTs) maxTs = ts;
+    }
+  });
+  return {
+    version: maxTs + '|d' + pendingDem + '|f' + pendingFac,
+    demandes_pending: pendingDem,
+    factures_pending: pendingFac,
+    updated_at: new Date().toISOString()
+  };
+}
+
+/** 1 requête : files d'attente validation + stats + version (perf). */
+function getValidationQueue_(session) {
+  requireTreasurer_(session);
+  var demandes = readAll_('Demandes');
+  var factures = readAll_('Factures');
+  var demandesByRef = {};
+  demandes.forEach(function (d) { demandesByRef[normDemandRef_(d.reference)] = d; });
+  var pendingDemandes = demandes
+    .filter(function (d) { return normStatus_(d.status) === 'awaiting_approval'; })
+    .map(rowToDemande_);
+  var pendingFactures = factures.filter(function (f) {
+    return isFactureVisibleToTreasurer_(f, demandesByRef[normDemandRef_(f.demand_reference)]);
+  });
+  return {
+    demandes: pendingDemandes,
+    factures: pendingFactures,
+    reimbursements: filterReimbursementsPending_(factures),
+    stats: buildValidationStats_(demandes, factures),
+    version: computeValidationVersion_(demandes, factures, demandesByRef)
+  };
+}
+
+/** ETag léger pour polling temps réel (~50 ms). */
+function getValidationVersion_(session) {
+  requireTreasurer_(session);
+  var demandes = readAll_('Demandes');
+  var factures = readAll_('Factures');
+  var demandesByRef = {};
+  demandes.forEach(function (d) { demandesByRef[normDemandRef_(d.reference)] = d; });
+  return computeValidationVersion_(demandes, factures, demandesByRef);
+}
+
+/** N factures en 1 lock / 1 round-trip HTTP. */
+function createFacturesBatch_(session, body) {
+  var items = body.items || [];
+  if (!items.length) throw apiError_('VALIDATION_FAILED', 'Aucune facture dans le lot');
+  var shared = body.shared || {};
+  var created = [];
+  items.forEach(function (item) {
+    var payload = {};
+    Object.keys(shared).forEach(function (k) { payload[k] = shared[k]; });
+    Object.keys(item).forEach(function (k) {
+      if (k !== '_attachments') payload[k] = item[k];
+    });
+    payload._attachments = item._attachments || body._attachments || { receipt: item.receipt || null };
+    if (item.receipt && item.receipt.base64) {
+      payload._attachments = { receipt: item.receipt };
+    }
+    created.push(createFacture_(session, payload));
+  });
+  return { factures: created, count: created.length };
+}
+
+/** Compteurs pour diagnostic Validation (trésorier). */
+function getValidationStats_(session) {
+  requireTreasurer_(session);
+  return buildValidationStats_(readAll_('Demandes'), readAll_('Factures'));
 }
 
 function appendJournalFromFacture_(f, treasurerEmail, validatedAt) {
@@ -809,11 +908,7 @@ function reimburseFacture_(session, reference) {
 }
 
 function getReimbursementsPending_() {
-  return readAll_('Factures').filter(function (f) {
-    if (f.payment_type !== 'avance_benevole' || f.status !== 'validated') return false;
-    var s = String(f.reimbursement_status || '').toLowerCase();
-    return !s || s === 'to_pay';
-  });
+  return filterReimbursementsPending_(readAll_('Factures'));
 }
 
 function rejectFacture_(session, reference, reason) {
@@ -896,11 +991,26 @@ function listAuditLog_(session) {
   return sanitizeHistoryRows_(rows);
 }
 
-function getHistory_(session) {
+function getHistory_(session, opts) {
+  opts = opts || {};
+  var limit = Math.min(Math.max(Number(opts.limit) || 200, 50), 2000);
+  var since = opts.since ? String(opts.since) : '';
+  var demandes = listAllDemandes_(session);
+  var factures = listAllFactures_(session);
+  var audit = listAuditLog_(session);
+  if (since) {
+    demandes = demandes.filter(function (d) { return String(d.created_at || '') >= since; });
+    factures = factures.filter(function (f) {
+      return String(f.created_at || f.expense_date || '') >= since;
+    });
+    audit = audit.filter(function (a) { return String(a.timestamp || '') >= since; });
+  }
   return {
-    demandes: listAllDemandes_(session),
-    factures: listAllFactures_(session),
-    audit: listAuditLog_(session)
+    demandes: demandes.slice(0, limit),
+    factures: factures.slice(0, limit),
+    audit: audit.slice(0, limit),
+    limit: limit,
+    truncated: demandes.length > limit || factures.length > limit || audit.length > limit
   };
 }
 

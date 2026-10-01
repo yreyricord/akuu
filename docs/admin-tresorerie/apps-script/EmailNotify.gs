@@ -55,26 +55,26 @@ function notifyAdminMail_(subjectOrContent, plainBody, htmlBody) {
     return;
   }
   var content = resolveMailContent_(subjectOrContent, plainBody, htmlBody);
-  sendMailContent_(admin, content);
+  if (typeof dispatchMail_ === 'function') dispatchMail_([admin], content);
+  else sendMailContent_(admin, content);
 }
 
 function notifyTreasurersMail_(subjectOrContent, plainBody, htmlBody) {
   var content = resolveMailContent_(subjectOrContent, plainBody, htmlBody);
-  getTreasurerEmails_().forEach(function (email) {
-    sendMailContent_(email, content);
-  });
+  if (typeof dispatchMail_ === 'function') dispatchMail_(getTreasurerEmails_(), content);
+  else getTreasurerEmails_().forEach(function (email) { sendMailContent_(email, content); });
 }
 
 function notifyTreasurersAndAdminMail_(subjectOrContent, plainBody, htmlBody) {
   var content = resolveMailContent_(subjectOrContent, plainBody, htmlBody);
-  getStaffEmails_(true).forEach(function (email) {
-    sendMailContent_(email, content);
-  });
+  if (typeof dispatchMail_ === 'function') dispatchMail_(getStaffEmails_(true), content);
+  else getStaffEmails_(true).forEach(function (email) { sendMailContent_(email, content); });
 }
 
 function sendUserMail_(email, subjectOrContent, plainBody, htmlBody) {
   var content = resolveMailContent_(subjectOrContent, plainBody, htmlBody);
-  sendMailContent_(email, content);
+  if (typeof dispatchMail_ === 'function') dispatchMail_([email], content);
+  else sendMailContent_(email, content);
 }
 
 function resolveMailContent_(subjectOrContent, plainBody, htmlBody) {

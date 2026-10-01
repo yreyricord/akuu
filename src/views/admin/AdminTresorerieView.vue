@@ -123,7 +123,7 @@
 <script setup>
 import AdminAccountMenu from '@/components/admin/AdminAccountMenu.vue'
 import AdminAccountSettings from '@/components/admin/AdminAccountSettings.vue'
-import { computed, watch, onMounted, ref } from 'vue'
+import { computed, watch, onMounted, onBeforeUnmount, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   PhReceipt,
@@ -290,8 +290,16 @@ watch(
 )
 
 onMounted(() => {
-  if (auth.isTreasurer) store.refreshPending()
   if (auth.isSuperAdminUser) store.refreshAccessRequests()
+  if (auth.isTreasurer) {
+    store.startValidationPolling()
+    if (activeTab.value === 'validation') store.refreshPending()
+    else store.pollValidationVersion()
+  }
+})
+
+onBeforeUnmount(() => {
+  store.stopValidationPolling()
 })
 </script>
 

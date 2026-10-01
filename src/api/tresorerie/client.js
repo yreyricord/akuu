@@ -8,7 +8,9 @@ const API_URL =
 const AUTH_KEY = 'akuu_tresorerie_auth'
 const mockCorrections = []
 const JOURNAL_CACHE_TTL_MS = 3 * 60 * 1000
+const EXERCICES_CACHE_TTL_MS = 5 * 60 * 1000
 const _journalCache = {}
+const _exercicesCache = { at: 0, data: null, inflight: null }
 
 function journalCacheHit(year) {
   const e = _journalCache[String(year)]
@@ -64,6 +66,8 @@ async function remoteRequest(path, { method = 'GET', body, query } = {}) {
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify(payload)
   }
+  const perfOn = import.meta.env.DEV || import.meta.env.VITE_TRESORERIE_PERF === 'true'
+  const t0 = perfOn ? performance.now() : 0
   let res
   try {
     res = await fetch(url, options)
@@ -94,6 +98,9 @@ async function remoteRequest(path, { method = 'GET', body, query } = {}) {
       try { localStorage.removeItem(AUTH_KEY) } catch { /* ignore */ }
     }
     throw err
+  }
+  if (perfOn && t0) {
+    console.debug(`[tresorerie] ${path} ${Math.round(performance.now() - t0)}ms`)
   }
   return json.data
 }
@@ -152,18 +159,18 @@ export const tresorerieApi = {
   },
 
   getValidationStats() {
-    if (isMockMode()) {
-      return Promise.resolve({
-        demandes_total: 0,
-        demandes_pending: 0,
-        demandes_by_status: {},
-        factures_total: 0,
-        factures_pending: 0,
-        factures_by_status: {},
-        demandes_sheet_exists: true
-      })
-    }
+    if (isMockMode()) return mockCall(mockBackend.getValidationStats)
     return remoteRequest('/validation/stats', { query: {} })
+  },
+
+  getValidationQueue() {
+    if (isMockMode()) return mockCall(mockBackend.getValidationQueue)
+    return remoteRequest('/validation/queue')
+  },
+
+  getValidationVersion() {
+    if (isMockMode()) return mockCall(mockBackend.getValidationVersion)
+    return remoteRequest('/validation/version')
   },
 
   approveDemande(reference) {
@@ -237,6 +244,23 @@ export const tresorerieApi = {
     })
   },
 
+  async createFacturesBatch(sharedPayload, items) {
+    if (isMockMode()) return mockCall(mockBackend.createFacturesBatch, sharedPayload, items)
+    const batchItems = await Promise.all(
+      items.map(async (item) => ({
+        expense_date: item.expense_date,
+        amount: item.amount,
+        vendor_name: item.vendor_name,
+        receipt_number: item.receipt_number || '',
+        receipt: item.file ? await fileToAttachment(item.file) : null
+      }))
+    )
+    return remoteRequest('/factures/batch', {
+      method: 'POST',
+      body: { shared: sharedPayload, items: batchItems }
+    })
+  },
+
   getFacturesPending() {
     if (isMockMode()) return mockCall(mockBackend.getFacturesPending)
     return remoteRequest('/factures/pending')
@@ -282,9 +306,9 @@ export const tresorerieApi = {
     return remoteRequest(`/factures/${reference}/reimburse`, { method: 'POST' })
   },
 
-  getHistory() {
-    if (isMockMode()) return mockCall(mockBackend.getHistory)
-    return remoteRequest('/history')
+  getHistory(opts = {}) {
+    if (isMockMode()) return mockCall(mockBackend.getHistory, opts)
+    return remoteRequest('/history', { query: { limit: opts.limit, since: opts.since } })
   },
 
   getAllDemandes() {
@@ -315,9 +339,29 @@ export const tresorerieApi = {
   },
 
   /** Tous les exercices (2017 → année en cours) lus depuis les Google Sheets */
-  getExercices() {
+  getExercices({ force = false } = {}) {
     if (isMockMode()) return Promise.resolve({ source: 'mock', years: [] })
-    return remoteRequest('/exercices')
+    if (!force && _exercicesCache.data && Date.now() - _exercicesCache.at < EXERCICES_CACHE_TTL_MS) {
+      return Promise.resolve(_exercicesCache.data)
+    }
+    if (!force && _exercicesCache.inflight) return _exercicesCache.inflight
+    _exercicesCache.inflight = remoteRequest('/exercices')
+      .then((data) => {
+        _exercicesCache.data = data
+        _exercicesCache.at = Date.now()
+        _exercicesCache.inflight = null
+        return data
+      })
+      .catch((e) => {
+        _exercicesCache.inflight = null
+        throw e
+      })
+    return _exercicesCache.inflight
+  },
+
+  invalidateExercicesCache() {
+    _exercicesCache.at = 0
+    _exercicesCache.data = null
   },
 
   getExercice(year) {

@@ -484,7 +484,6 @@ async function onSubmit() {
 }
 
 onMounted(async () => {
-  await store.loadExchangeRate()
-  await store.loadApprovedDemandes()
+  await Promise.all([store.loadExchangeRate(), store.loadApprovedDemandes()])
 })
 </script>

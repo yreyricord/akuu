@@ -248,6 +248,48 @@ export const mockBackend = {
     return ok(store.demandes.filter((d) => d.status === 'awaiting_approval'))
   },
 
+  async getValidationStats() {
+    requireAuth('treasurer')
+    const store = loadStore()
+    return ok({
+      demandes_total: store.demandes.length,
+      demandes_pending: store.demandes.filter((d) => d.status === 'pending').length,
+      demandes_by_status: {},
+      factures_total: store.factures.length,
+      factures_pending: store.factures.filter((f) => f.status === 'pending').length,
+      factures_by_status: {},
+      demandes_sheet_exists: true
+    })
+  },
+
+  async getValidationQueue() {
+    requireAuth('treasurer')
+    const [dem, fac, reimb, stats] = await Promise.all([
+      this.getDemandesPending(),
+      this.getFacturesPending(),
+      this.getReimbursementsPending(),
+      this.getValidationStats()
+    ])
+    const version = {
+      version: `mock|d${dem.data.length}|f${fac.data.length}`,
+      demandes_pending: dem.data.length,
+      factures_pending: fac.data.length,
+      updated_at: new Date().toISOString()
+    }
+    return ok({
+      demandes: dem.data,
+      factures: fac.data,
+      reimbursements: reimb.data,
+      stats: stats.data,
+      version
+    })
+  },
+
+  async getValidationVersion() {
+    const q = await this.getValidationQueue()
+    return ok(q.data.version)
+  },
+
   async validateDemandeDevis(reference) {
     const session = requireAuth('treasurer')
     const store = loadStore()
@@ -506,6 +548,18 @@ export const mockBackend = {
     if (!demande.invoicing_status) demande.invoicing_status = 'open'
     saveStore(store)
     return ok(facture)
+  },
+
+  async createFacturesBatch(sharedPayload, items) {
+    const created = []
+    for (const item of items) {
+      const res = await this.createFacture(
+        { ...sharedPayload, ...item },
+        item.file ? { name: item.file.name, size: item.file.size } : null
+      )
+      created.push(res.data)
+    }
+    return ok({ factures: created, count: created.length })
   },
 
   async closeDemandeInvoicing(reference) {
@@ -810,21 +864,27 @@ export const mockBackend = {
     })
   },
 
-  async getHistory() {
+  async getHistory(opts = {}) {
     const session = requireAuth('member')
     const store = loadStore()
-    const factures = store.factures.map(normalizeFactureReimbursement)
+    const limit = Math.min(Math.max(Number(opts.limit) || 200, 50), 2000)
+    let factures = store.factures.map(normalizeFactureReimbursement)
+    let demandes
+    let audit
     if (isTreasurerRole(session.role)) {
-      return ok({
-        demandes: store.demandes,
-        factures,
-        audit: store.audit
-      })
+      demandes = store.demandes
+      audit = store.audit
+    } else {
+      demandes = store.demandes.filter((d) => d.submitter_email === session.email)
+      factures = factures.filter((f) => f.submitter_email === session.email)
+      audit = store.audit.filter((a) => a.actor_email === session.email)
     }
     return ok({
-      demandes: store.demandes.filter((d) => d.submitter_email === session.email),
-      factures: factures.filter((f) => f.submitter_email === session.email),
-      audit: store.audit.filter((a) => a.actor_email === session.email)
+      demandes: demandes.slice(0, limit),
+      factures: factures.slice(0, limit),
+      audit: audit.slice(0, limit),
+      limit,
+      truncated: demandes.length > limit || factures.length > limit || audit.length > limit
     })
   },
 

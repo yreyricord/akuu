@@ -119,6 +119,18 @@ var SHEET_HEADERS = {
     "decided_by",
     "reject_reason",
   ],
+  PerfLog: ["id", "timestamp", "path", "duration_ms", "actor_email"],
+  EmailQueue: [
+    "id",
+    "created_at",
+    "recipients_json",
+    "subject",
+    "plain",
+    "html",
+    "status",
+    "sent_at",
+    "error",
+  ],
 };
 
 /** Cache par exécution (une requête Web App = une exécution GAS). */
@@ -227,28 +239,87 @@ function findByReference_(sheetName, reference) {
   return null;
 }
 
+/** Index reference → numéro de ligne (1-based) pour une requête. */
+function buildRefRowIndex_(sheetName, keyColumn) {
+  keyColumn = keyColumn || "reference";
+  var sheet = getSheet_(sheetName);
+  if (!sheet || sheet.getLastRow() < 2) return { headers: [], index: {}, data: [[]] };
+  var data = sheet.getDataRange().getValues();
+  var headers = data[0];
+  var keyIdx = headers.indexOf(keyColumn);
+  var index = {};
+  if (keyIdx >= 0) {
+    for (var i = 1; i < data.length; i++) {
+      var k = data[i][keyIdx];
+      if (k !== "" && k !== null && k !== undefined) index[k] = i + 1;
+    }
+  }
+  return { headers: headers, index: index, data: data, sheet: sheet, keyIdx: keyIdx };
+}
+
 function updateRowByReference_(sheetName, reference, updates) {
+  return updateRowByColumn_(sheetName, "reference", reference, updates);
+}
+
+function updateRowById_(sheetName, id, updates) {
+  return updateRowByColumn_(sheetName, "id", id, updates);
+}
+
+function updateRowByColumn_(sheetName, keyColumn, keyValue, updates) {
+  ensureSheetHeadersBeforeWrite_(sheetName);
+  var ctx = buildRefRowIndex_(sheetName, keyColumn);
+  var rowNum = ctx.index[keyValue];
+  if (!rowNum) return null;
+  var result = {};
+  var i = rowNum - 1;
+  for (var j = 0; j < ctx.headers.length; j++) result[ctx.headers[j]] = ctx.data[i][j];
+  Object.keys(updates).forEach(function (key) {
+    var col = ctx.headers.indexOf(key);
+    if (col >= 0) {
+      ctx.sheet.getRange(rowNum, col + 1).setValue(updates[key]);
+      result[key] = updates[key];
+    }
+  });
+  invalidateSheetCache_(sheetName);
+  return result;
+}
+
+/**
+ * Met à jour plusieurs lignes en une passe (1 getDataRange + 1 setValues).
+ * updatesList : [{ reference, updates }] ou [{ id, updates }] si keyColumn = 'id'.
+ */
+function batchUpdateRowsByReference_(sheetName, updatesList, keyColumn) {
+  keyColumn = keyColumn || "reference";
+  if (!updatesList || !updatesList.length) return [];
   ensureSheetHeadersBeforeWrite_(sheetName);
   var sheet = getSheet_(sheetName);
   var data = sheet.getDataRange().getValues();
+  if (data.length < 2) return [];
   var headers = data[0];
-  var refIdx = headers.indexOf("reference");
-  for (var i = 1; i < data.length; i++) {
-    if (data[i][refIdx] === reference) {
-      var result = {};
-      for (var j = 0; j < headers.length; j++) result[headers[j]] = data[i][j];
-      Object.keys(updates).forEach(function (key) {
-        var col = headers.indexOf(key);
-        if (col >= 0) {
-          sheet.getRange(i + 1, col + 1).setValue(updates[key]);
-          result[key] = updates[key];
-        }
-      });
-      invalidateSheetCache_(sheetName);
-      return result;
-    }
-  }
-  return null;
+  var keyIdx = headers.indexOf(keyColumn);
+  if (keyIdx < 0) return [];
+  var index = {};
+  for (var i = 1; i < data.length; i++) index[data[i][keyIdx]] = i;
+  var results = [];
+  updatesList.forEach(function (item) {
+    var key = item[keyColumn] || item.reference || item.id;
+    var rowIdx = index[key];
+    if (rowIdx === undefined) return;
+    var updates = item.updates || item;
+    Object.keys(updates).forEach(function (colName) {
+      if (colName === "reference" || colName === "id") return;
+      var col = headers.indexOf(colName);
+      if (col >= 0) {
+        data[rowIdx][col] = updates[colName];
+      }
+    });
+    var out = {};
+    for (var j = 0; j < headers.length; j++) out[headers[j]] = data[rowIdx][j];
+    results.push(out);
+  });
+  sheet.getRange(1, 1, data.length, headers.length).setValues(data);
+  invalidateSheetCache_(sheetName);
+  return results;
 }
 
 function nextReference_(prefix, year) {

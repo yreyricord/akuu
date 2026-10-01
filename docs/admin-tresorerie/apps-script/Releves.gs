@@ -55,6 +55,7 @@ function importReleve_(session, body) {
   var headers = tr.headers;
   var added = 0, skipped = 0;
   var seen = {};
+  var newRows = [];
   ops.forEach(function (o, i) {
     var key = releveKey_(o.date, o.amount, o.label);
     seen[key] = (seen[key] || 0) + 1;
@@ -79,9 +80,14 @@ function importReleve_(session, body) {
       needs_review: o.project ? '' : 'oui',
       notes: 'Importé du relevé ' + month + '/' + year + ' depuis le site (' + session.email + ')'
     };
-    sh.appendRow(headers.map(function (h) { var v = obj[h]; return v === undefined || v === null ? '' : v; }));
+    newRows.push(headers.map(function (h) { var v = obj[h]; return v === undefined || v === null ? '' : v; }));
     added++;
   });
+  if (newRows.length) {
+    var startRow = sh.getLastRow() + 1;
+    sh.getRange(startRow, 1, startRow + newRows.length - 1, headers.length).setValues(newRows);
+    if (typeof invalidateJournalCaches_ === 'function') invalidateJournalCaches_(ss);
+  }
 
   var rel = ss.getSheetByName('Releves') || ss.insertSheet('Releves');
   if (rel.getLastRow() === 0) rel.appendRow(RELEVES_HEADERS);

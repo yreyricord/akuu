@@ -157,7 +157,9 @@ function appendToWhitelist_(email, role, name) {
     }
   }
   if (!found) wl.push({ email: email, role: role, name: name });
-  PropertiesService.getScriptProperties().setProperty('WHITELIST_JSON', JSON.stringify(wl));
+  var json = JSON.stringify(wl);
+  PropertiesService.getScriptProperties().setProperty('WHITELIST_JSON', json);
+  try { CacheService.getScriptCache().put('whitelist_json', json, 300); } catch (e) { /* ignore */ }
 }
 
 function ensureUserAccount_(email, role, profile) {

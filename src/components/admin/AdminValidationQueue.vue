@@ -17,8 +17,16 @@
       </div>
     </header>
 
+    <p
+      v-if="liveNotice"
+      class="rounded-xl border border-leaf/30 bg-leaf/10 px-4 py-3 text-sm text-forest"
+      role="status"
+    >
+      {{ liveNotice }}
+    </p>
+
     <p v-if="store.validationError" class="rounded-xl border border-terracotta/30 bg-terracotta/10 px-4 py-3 text-sm text-terracotta-700">
-      {{ store.validationError }} — vérifiez que l’Apps Script est déployé (route <code class="text-xs">demandes/pending</code>).
+      {{ store.validationError }} — vérifiez que l’Apps Script est déployé (route <code class="text-xs">validation/queue</code>).
     </p>
 
     <div
@@ -453,6 +461,9 @@ watch(
   () => scrollToValidationRef(route.query.ref)
 )
 
+const liveNotice = ref('')
+const refreshing = ref(false)
+
 onMounted(() => scrollToValidationRef(route.query.ref))
 
 function isOwnSubmission(email) {
@@ -469,7 +480,17 @@ function canTreasurerActOn(submitterEmail) {
   if (isSuperAdmin(auth.user?.email, auth.user?.role)) return true
   return String(auth.user?.email || '').toLowerCase() === ADMIN_EMAIL
 }
-const refreshing = ref(false)
+
+watch(
+  () => store.validationVersion,
+  (next, prev) => {
+    if (prev && next && next !== prev && !refreshing.value) {
+      liveNotice.value = 'File d\'attente mise à jour.'
+      window.setTimeout(() => { liveNotice.value = '' }, 4000)
+    }
+  }
+)
+
 const demandesActionable = computed(() =>
   store.pendingDemandes.filter((d) => !awaitingVolunteerDevisResubmit(d))
 )
