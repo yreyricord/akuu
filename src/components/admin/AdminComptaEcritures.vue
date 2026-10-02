@@ -42,9 +42,9 @@
         <span class="text-xs font-bold uppercase tracking-wide text-night-500">Rechercher</span>
         <input v-model.trim="search" type="search" class="admin-input w-full py-2 text-sm" placeholder="Libellé, fournisseur, réf." />
       </label>
-      <p v-if="fxRate" class="w-full text-xs text-night-500">
-        Conversion du jour (estimée) : 1 S/ = {{ fxRate.rate.toLocaleString('fr-FR', { minimumFractionDigits: 4, maximumFractionDigits: 4 }) }} €
-        · {{ fxRate.source }} · {{ fxRate.date }}
+      <p class="w-full text-xs text-night-500">
+        Colonnes <strong>Euros</strong> / <strong>Soles</strong> : montant officiel en gras ;
+        « ≈ » = conversion estimée au taux PEN/EUR de la <strong>date de l'écriture</strong> (indicatif, pas la compta officielle).
       </p>
     </section>
 
@@ -194,7 +194,7 @@
             row.type === 'recette' ? 'text-forest-700' : 'text-night',
             amountEur(row).estimated ? 'text-sm font-normal text-night-500' : 'font-semibold'
           ]"
-          :title="amountEur(row).estimated ? 'Montant converti au taux du jour' : ''"
+          :title="amountEur(row).estimated ? estimateTitle(amountEur(row)) : ''"
         >
           {{ amountEur(row).estimated ? '≈ ' : '' }}{{ row.type === 'recette' ? '+' : '−' }}{{ eur(amountEur(row).value) }}
         </span>
@@ -208,7 +208,7 @@
             row.type === 'recette' ? 'text-forest-700' : 'text-night',
             amountPen(row).estimated ? 'text-sm font-normal text-night-500' : 'font-semibold'
           ]"
-          :title="amountPen(row).estimated ? 'Montant converti au taux du jour' : ''"
+          :title="amountPen(row).estimated ? estimateTitle(amountPen(row)) : ''"
         >
           {{ amountPen(row).estimated ? '≈ ' : '' }}{{ row.type === 'recette' ? '+' : '−' }}{{ pen(amountPen(row).value) }}
         </span>
@@ -256,7 +256,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { bindLoadingProgress } from '@/composables/useLoadingProgress.js'
 import { TRESORERIE_PROJECTS, PAYMENT_METHODS } from '@/data/tresorerie-config.js'
 import { tresorerieApi } from '@/api/tresorerie/client.js'
-import { eurToPen, fetchPenEurRate, penToEur } from '@/api/tresorerie/exchangeRate.js'
+import { eurToPen, penToEur, prefetchPenEurRatesForDates } from '@/api/tresorerie/exchangeRate.js'
 import AdminDataTable from './AdminDataTable.vue'
 import AdminLoadingPanel from './AdminLoadingPanel.vue'
 
@@ -269,7 +269,7 @@ const props = defineProps({
 const TERRAIN_PAYMENTS = PAYMENT_METHODS.filter((m) => ['especes', 'avance', 'cb', 'virement', 'yape_plin'].includes(m.code))
 const projectsList = ref([...TRESORERIE_PROJECTS])
 const saveOk = ref('')
-const fxRate = ref(null)
+const ratesByDate = ref({})
 
 const MONTHS = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
 const TYPES = [
@@ -357,8 +357,7 @@ onMounted(() => {
     }),
     loadExerciceStatut(year.value),
     loadProjects(),
-    tresorerieApi.getCorrections().then((c) => { corrections.value = c }).catch(() => { corrections.value = [] }),
-    fetchPenEurRate().then((r) => { fxRate.value = r }).catch(() => {})
+    tresorerieApi.getCorrections().then((c) => { corrections.value = c }).catch(() => { corrections.value = [] })
   ]).catch(() => {})
 })
 
@@ -517,6 +516,31 @@ const yearRows = computed(() => {
     .sort((a, b) => (b.date || '').localeCompare(a.date || ''))
 })
 
+const datesNeedingRates = computed(() => {
+  const set = new Set()
+  for (const row of yearRows.value) {
+    const needsEur = row.pen != null && row.pen !== '' && (row.eur == null || row.eur === '')
+    const needsPen = row.eur != null && row.eur !== '' && (row.pen == null || row.pen === '')
+    if ((needsEur || needsPen) && row.date) set.add(String(row.date).slice(0, 10))
+  }
+  return [...set]
+})
+
+watch(
+  datesNeedingRates,
+  async (dates) => {
+    const missing = dates.filter((d) => !ratesByDate.value[d])
+    if (!missing.length) return
+    try {
+      const batch = await prefetchPenEurRatesForDates(missing)
+      ratesByDate.value = { ...ratesByDate.value, ...batch }
+    } catch {
+      /* conversions ≈ indisponibles */
+    }
+  },
+  { immediate: true }
+)
+
 const projectOptions = computed(() => [...new Set(yearRows.value.map((r) => r.project).filter(Boolean))].sort())
 
 const rows = computed(() => {
@@ -554,18 +578,56 @@ const totals = computed(() => {
 function eur(v) { return `${(v || 0).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €` }
 function pen(v) { return `${(v || 0).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} S/` }
 
+function rateForRow(row) {
+  const iso = row.date ? String(row.date).slice(0, 10) : ''
+  return iso ? ratesByDate.value[iso] : null
+}
+
 function amountEur(row) {
   if (row.eur != null && row.eur !== '') return { value: Number(row.eur), estimated: false }
   const p = row.pen != null && row.pen !== '' ? Number(row.pen) : null
-  if (p != null && fxRate.value?.rate) return { value: penToEur(p, fxRate.value.rate), estimated: true }
+  const rateInfo = rateForRow(row)
+  if (p != null && rateInfo?.rate) {
+    return {
+      value: penToEur(p, rateInfo.rate),
+      estimated: true,
+      rateDate: rateInfo.requestedDate || rateInfo.date,
+      rateSource: rateInfo.source,
+      approximate: rateInfo.approximate
+    }
+  }
   return null
 }
 
 function amountPen(row) {
   if (row.pen != null && row.pen !== '') return { value: Number(row.pen), estimated: false }
   const e = row.eur != null && row.eur !== '' ? Number(row.eur) : null
-  if (e != null && fxRate.value?.rate) return { value: eurToPen(e, fxRate.value.rate), estimated: true }
+  const rateInfo = rateForRow(row)
+  if (e != null && rateInfo?.rate) {
+    return {
+      value: eurToPen(e, rateInfo.rate),
+      estimated: true,
+      rateDate: rateInfo.requestedDate || rateInfo.date,
+      rateSource: rateInfo.source,
+      approximate: rateInfo.approximate
+    }
+  }
   return null
+}
+
+function estimateTitle(info) {
+  if (!info?.estimated) return ''
+  const when = info.rateDate ? formatRateDate(info.rateDate) : "date de l'écriture"
+  const src = info.rateSource ? ` · ${info.rateSource}` : ''
+  const note = info.approximate ? ' (taux le plus proche disponible)' : ''
+  return `Estimation au taux PEN/EUR du ${when}${note}${src}`
+}
+
+function formatRateDate(iso) {
+  const d = new Date(`${iso}T12:00:00`)
+  return Number.isNaN(d.getTime())
+    ? iso
+    : d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })
 }
 function formatDate(iso) {
   if (!iso) return '—'
