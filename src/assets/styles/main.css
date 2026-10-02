@@ -56,6 +56,13 @@
            active:translate-y-0 active:scale-100 active:shadow-md;
   }
 
+  /* État désactivé explicite : avant, un CTA désactivé restait vert vif et
+     « sautait » au survol — impossible de savoir qu'il était inactif. */
+  .btn-primary:disabled {
+    @apply cursor-not-allowed bg-night-100 text-night-400 shadow-none
+           hover:translate-y-0 hover:scale-100 hover:bg-night-100 hover:shadow-none;
+  }
+
   .btn-accent {
     @apply inline-flex items-center justify-center px-8 py-4 bg-leaf text-white font-semibold rounded-full
            hover:bg-forest transition-all duration-300 shadow-lg
