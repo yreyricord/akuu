@@ -1,9 +1,9 @@
 <template>
   <div class="space-y-4">
   <section
-    v-if="showAlert"
     class="rounded-2xl border-2 border-ochre-300 bg-ochre-50/80 p-5 shadow-sm"
-    role="alert"
+    role="region"
+    aria-label="Dépôt de relevé bancaire"
   >
     <div class="flex flex-wrap items-start gap-3">
       <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ochre-200 text-lg">
@@ -36,7 +36,7 @@
     <div class="mt-4 grid gap-3 sm:grid-cols-2">
       <label class="block space-y-1">
         <span class="text-xs font-semibold uppercase tracking-wide text-night-400">Mois</span>
-        <select v-model="selectedMonth" class="admin-input w-full py-2 text-sm" :disabled="reading || sending">
+        <select id="releve-month" name="releve_month" v-model="selectedMonth" class="admin-input w-full py-2 text-sm" :disabled="reading || sending">
           <optgroup v-if="resolvedMissing.length" label="À déposer">
             <option v-for="item in resolvedMissing" :key="item.month" :value="monthKey(item.month)">
               {{ item.label }}
@@ -52,6 +52,8 @@
       <label class="block space-y-1">
         <span class="text-xs font-semibold uppercase tracking-wide text-night-400">PDF relevé</span>
         <input
+          id="releve-pdf"
+          name="releve_pdf"
           ref="fileInput"
           type="file"
           accept="application/pdf,.pdf"
@@ -61,6 +63,16 @@
         />
       </label>
     </div>
+
+    <p
+      v-if="isReplaceMonth"
+      class="mt-3 rounded-xl border border-bleu-200 bg-bleu-50 px-4 py-3 text-sm text-bleu-900"
+      role="status"
+    >
+      <strong>Remplacement</strong> — ce mois a déjà un relevé déposé.
+      Les écritures banque importées pour {{ selectedMonthLabel }} seront effacées puis recréées depuis le PDF
+      (saisies provisoires comprises).
+    </p>
 
     <p v-if="reading" class="mt-3 text-sm text-night-500">Lecture du relevé…</p>
     <p v-if="error" class="mt-3 text-sm text-terracotta-700" role="alert">{{ error }}</p>
@@ -73,7 +85,8 @@
         <li>Choisissez le fichier : le site le lit, rien n'est encore enregistré.</li>
         <li>Vérifiez le bandeau vert « le calcul tombe juste » : il prouve qu'aucune opération n'a été oubliée.</li>
         <li>Corrigez si besoin la catégorie et le projet de chaque ligne. « À préciser plus tard » est permis.</li>
-        <li>Les lignes grisées sont déjà dans le journal : elles ne seront pas ajoutées deux fois.</li>
+        <li>Les lignes grisées sont déjà dans le journal (autre mois) : elles ne seront pas ajoutées deux fois.</li>
+        <li>Pour <strong>remplacer</strong> un mois déjà déposé : choisissez-le dans « Déjà déposés (remplacer) » — les écritures banque de ce mois seront refaites.</li>
         <li>Cliquez « Ajouter au journal » : les lignes entrent dans le journal Google et le PDF est rangé sur le Drive.</li>
       </ol>
     </details>
@@ -88,19 +101,27 @@
     <div class="grid gap-3 sm:grid-cols-2">
       <label class="space-y-1">
         <span class="text-xs font-bold uppercase tracking-wide text-night-500">Date de fin (JJ/MM/AAAA)</span>
-        <input v-model.trim="manualDate" type="text" inputmode="numeric" class="admin-input w-full py-2 text-sm" :placeholder="manualDatePlaceholder" />
+        <input id="releve-manual-date" name="releve_manual_date" v-model.trim="manualDate" type="text" inputmode="numeric" class="admin-input w-full py-2 text-sm" :placeholder="manualDatePlaceholder" />
       </label>
       <label class="space-y-1">
         <span class="text-xs font-bold uppercase tracking-wide text-night-500">Solde de fin (€)</span>
-        <input v-model.trim="manualSolde" type="text" inputmode="decimal" class="admin-input w-full py-2 text-sm" placeholder="1 341,17" />
+        <input id="releve-manual-solde" name="releve_manual_solde" v-model.trim="manualSolde" type="text" inputmode="decimal" class="admin-input w-full py-2 text-sm" placeholder="1 341,17" />
       </label>
     </div>
     <button type="button" class="btn-primary" :disabled="sending || !file || !manualOk" @click="sendManual">
-      {{ sending ? 'Envoi…' : `Déposer le relevé de ${selectedMonthLabel}` }}
+      {{ sending ? (isReplaceMonth ? 'Remplacement…' : 'Envoi…') : isReplaceMonth ? `Remplacer le relevé de ${selectedMonthLabel}` : `Déposer le relevé de ${selectedMonthLabel}` }}
     </button>
+    <p
+      v-if="sendError && manual"
+      ref="sendFeedbackRef"
+      class="rounded-xl border border-terracotta/40 bg-terracotta/10 px-4 py-3 text-sm text-terracotta-800"
+      role="alert"
+    >
+      <strong>Enregistrement impossible.</strong> {{ sendError }}
+    </p>
   </div>
   <button
-    v-else-if="file && !reading && !releve && showAlert"
+    v-else-if="file && !reading && !releve"
     type="button"
     class="mt-3 text-sm font-semibold text-bleu underline"
     @click="manual = true"
@@ -141,13 +162,15 @@
         <div class="mt-3 grid gap-2">
           <label class="block text-xs font-semibold text-night-500">
             Catégorie
-            <select v-model="o.category" class="admin-input mt-1 w-full text-base" :disabled="o.duplicate">
+            <select :id="`releve-op-${i}-category`" :name="`releve_op_${i}_category`" v-model="o.category" class="admin-input mt-1 w-full text-base" :disabled="o.duplicate">
               <option v-for="c in (o.amount > 0 ? RECETTE_CATEGORIES : DEPENSE_CATEGORIES)" :key="c" :value="c">{{ c }}</option>
             </select>
           </label>
           <label class="block text-xs font-semibold text-night-500">
             Projet
             <select
+              :id="`releve-op-${i}-project`"
+              :name="`releve_op_${i}_project`"
               v-model="o.project"
               class="admin-input mt-1 w-full text-base"
               :class="!o.project && !o.duplicate ? 'border-ochre-400' : ''"
@@ -183,12 +206,14 @@
               {{ o.amount > 0 ? '+' : '−' }}{{ eur(Math.abs(o.amount)) }}
             </td>
             <td class="py-2 pr-2">
-              <select v-model="o.category" class="admin-input w-full min-w-[11rem] py-1.5 text-xs" :disabled="o.duplicate" :aria-label="`Catégorie ${o.label}`">
+              <select :id="`releve-op-d-${i}-category`" :name="`releve_op_d_${i}_category`" v-model="o.category" class="admin-input w-full min-w-[11rem] py-1.5 text-xs" :disabled="o.duplicate" :aria-label="`Catégorie ${o.label}`">
                 <option v-for="c in (o.amount > 0 ? RECETTE_CATEGORIES : DEPENSE_CATEGORIES)" :key="c" :value="c">{{ c }}</option>
               </select>
             </td>
             <td class="py-2">
               <select
+                :id="`releve-op-d-${i}-project`"
+                :name="`releve_op_d_${i}_project`"
                 v-model="o.project"
                 class="admin-input w-full min-w-[10rem] py-1.5 text-xs"
                 :class="!o.project && !o.duplicate ? 'border-ochre-400' : ''"
@@ -204,17 +229,74 @@
       </table>
     </div>
 
+    <p
+      v-if="!toAdd.length && ops.length && !isReplaceMonth"
+      class="mt-4 rounded-xl border border-bleu-200 bg-bleu-50 px-4 py-3 text-sm text-bleu-900"
+      role="status"
+    >
+      Toutes les opérations de ce relevé sont déjà dans le journal (lignes grisées).
+      Vous pouvez quand même <strong>enregistrer le PDF</strong> pour le rapprochement bancaire.
+    </p>
+    <p
+      v-else-if="isReplaceMonth && releve"
+      class="mt-4 rounded-xl border border-bleu-200 bg-bleu-50 px-4 py-3 text-sm text-bleu-900"
+      role="status"
+    >
+      En confirmant, les écritures banque de {{ selectedMonthLabel }} seront effacées puis recréées
+      ({{ ops.length }} opération(s) depuis le PDF).
+    </p>
+
     <div class="mt-4 flex flex-wrap items-center gap-3">
-      <button type="button" class="btn-primary" :disabled="sending || !toAdd.length" @click="send">
-        {{ sending ? 'Ajout…' : `Ajouter ${toAdd.length} opération(s) au journal` }}
+      <button
+        type="button"
+        class="btn-primary"
+        :disabled="sending || !releve || (!isReplaceMonth && !toAdd.length && !check.ok)"
+        @click="send"
+      >
+        {{
+          sending
+            ? (isReplaceMonth ? 'Remplacement…' : 'Enregistrement…')
+            : isReplaceMonth && toAdd.length
+              ? `Remplacer le relevé (${toAdd.length} opération(s))`
+              : isReplaceMonth
+                ? 'Remplacer le relevé (PDF + soldes)'
+                : toAdd.length
+                  ? `Ajouter ${toAdd.length} opération(s) au journal`
+                  : 'Enregistrer le relevé (PDF uniquement)'
+        }}
       </button>
       <span v-if="dupCount" class="text-sm text-night-500">{{ dupCount }} déjà présente(s)</span>
     </div>
+
+    <p
+      v-if="sendError"
+      ref="sendFeedbackRef"
+      class="mt-4 rounded-xl border border-terracotta/40 bg-terracotta/10 px-4 py-3 text-sm text-terracotta-800"
+      role="alert"
+    >
+      <strong>Enregistrement impossible.</strong> {{ sendError }}
+      <span v-if="sendErrorCode === 'UNAUTHORIZED'" class="mt-1 block">
+        Votre session a expiré — reconnectez-vous puis réessayez.
+      </span>
+    </p>
   </section>
 
-  <p v-if="result" class="mt-4 rounded-lg bg-forest-100 px-3 py-2 text-sm text-forest-700">
-    Relevé {{ result.month }}/{{ result.year }} enregistré : {{ result.added }} opération(s) ajoutée(s),
-    {{ result.skipped }} déjà présente(s). PDF rangé :
+  <p
+    v-if="result"
+    ref="sendFeedbackRef"
+    class="mt-4 rounded-xl border border-forest/30 bg-forest-100 px-4 py-3 text-sm text-forest-800"
+    role="status"
+  >
+    <template v-if="result.replaced && result.cleared">
+      Relevé {{ result.month }}/{{ result.year }} <strong>remplacé</strong> :
+      {{ result.cleared }} ancienne(s) écriture(s) effacée(s),
+      {{ result.added }} ajoutée(s)<span v-if="result.skipped">, {{ result.skipped }} ignorée(s)</span>.
+    </template>
+    <template v-else>
+      Relevé {{ result.month }}/{{ result.year }} enregistré : {{ result.added }} opération(s) ajoutée(s),
+      {{ result.skipped }} déjà présente(s).
+    </template>
+    PDF rangé :
     <a v-if="result.url" :href="result.url" target="_blank" rel="noopener noreferrer" class="font-semibold underline">{{ result.file_name }}</a>
     <span v-else>{{ result.file_name }}</span>.
   </p>
@@ -222,7 +304,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import { tresorerieApi } from '@/api/tresorerie/client.js'
 import { parseReleve, checkReleve } from '@/utils/releveParser.js'
 import { suggest, RECETTE_CATEGORIES, DEPENSE_CATEGORIES, JOURNAL_PROJECTS } from '@/utils/releveCategories.js'
@@ -240,8 +322,11 @@ const emit = defineEmits(['imported'])
 
 const file = ref(null)
 const fileInput = ref(null)
+const sendFeedbackRef = ref(null)
 const reading = ref(false)
 const error = ref('')
+const sendError = ref('')
+const sendErrorCode = ref('')
 const releve = ref(null)
 const ops = ref([])
 const sending = ref(false)
@@ -255,8 +340,6 @@ const expectedCount = computed(() => props.status?.expected ?? 12)
 const allMissing = computed(() => props.status?.missing ?? [])
 const resolvedMissing = computed(() => allMissing.value)
 const presentCount = computed(() => props.status?.months_present?.length ?? Math.max(0, expectedCount.value - resolvedMissing.value.length))
-
-const showAlert = computed(() => resolvedMissing.value.length > 0)
 
 const headline = computed(() => {
   const todo = resolvedMissing.value.length
@@ -282,6 +365,13 @@ function monthKey(month) {
 const selectedMonthLabel = computed(() => {
   const m = Number(selectedMonth.value.slice(5))
   return m ? `${MOIS_LONG[m - 1]} ${props.year}` : selectedMonth.value
+})
+
+/** Mois déjà couvert → re-dépôt = remplacement (efface + réimporte les écritures banque du mois). */
+const isReplaceMonth = computed(() => {
+  const m = Number(selectedMonth.value.slice(5))
+  if (!m) return false
+  return (props.status?.months_present ?? []).includes(m)
 })
 
 const manualDatePlaceholder = computed(() => {
@@ -343,6 +433,26 @@ function key(date, amount, label) {
   return `${String(date).slice(0, 10)}|${Math.round(Math.abs(Number(amount)) * 100)}|${l}`
 }
 
+function formatApiError(e) {
+  if (!e) return 'Erreur inconnue — réessayez.'
+  const msg = e.message || String(e)
+  if (e.code === 'UNAUTHORIZED') return 'Session expirée — reconnectez-vous.'
+  if (e.code === 'BUSY') return 'Serveur occupé — réessayez dans quelques secondes.'
+  if (e.code === 'FORBIDDEN') return msg
+  return msg || 'Erreur inconnue — réessayez.'
+}
+
+async function scrollToFeedback() {
+  await nextTick()
+  sendFeedbackRef.value?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+}
+
+function resetSendState() {
+  sendError.value = ''
+  sendErrorCode.value = ''
+  result.value = null
+}
+
 async function onFile(ev) {
   const f = ev.target.files?.[0]
   if (!f) return
@@ -353,7 +463,7 @@ async function onFile(ev) {
   file.value = f
   manual.value = false
   error.value = ''
-  result.value = null
+  resetSendState()
   releve.value = null
   reading.value = true
   try {
@@ -376,8 +486,13 @@ async function onFile(ev) {
       throw new Error(`Ce relevé est daté du ${r.date_fin} : seuls les relevés ${props.year} s'ajoutent ici.`)
     }
     assertMonthMatch(r.date_fin)
+    const monthPrefix = selectedMonth.value
     const existing = {}
-    props.existingRows.filter((x) => x.source === 'banque').forEach((x) => {
+    props.existingRows.filter((x) => {
+      if (x.source !== 'banque') return false
+      if (isReplaceMonth.value && (x.date || '').startsWith(monthPrefix)) return false
+      return true
+    }).forEach((x) => {
       const k = key(x.date, x.eur, x.label)
       existing[k] = (existing[k] || 0) + 1
     })
@@ -396,29 +511,53 @@ async function onFile(ev) {
 }
 
 async function send() {
+  if (!releve.value) return
+  if (!file.value) {
+    sendError.value = 'Le fichier PDF a été perdu — choisissez-le à nouveau.'
+    sendErrorCode.value = 'VALIDATION'
+    await scrollToFeedback()
+    return
+  }
   sending.value = true
+  sendError.value = ''
+  sendErrorCode.value = ''
   error.value = ''
   try {
-    result.value = await tresorerieApi.importReleve({
+    const opsToSend = isReplaceMonth.value ? ops.value : toAdd.value
+    const data = await tresorerieApi.importReleve({
       date_fin: releve.value.date_fin,
       solde_debut: releve.value.solde_debut,
       solde_fin: releve.value.solde_fin,
-      operations: toAdd.value.map(({ date, label, amount, category, project }) => ({ date, label, amount, category, project }))
+      replace: isReplaceMonth.value,
+      operations: opsToSend.map(({ date, label, amount, category, project }) => ({ date, label, amount, category, project }))
     }, file.value)
+    result.value = data
     releve.value = null
     ops.value = []
     file.value = null
     if (fileInput.value) fileInput.value.value = ''
-    emit('imported', result.value)
+    await scrollToFeedback()
+    emit('imported', data)
   } catch (e) {
-    error.value = e.message
+    sendError.value = formatApiError(e)
+    sendErrorCode.value = e.code || ''
+    error.value = sendError.value
+    await scrollToFeedback()
   } finally {
     sending.value = false
   }
 }
 
 async function sendManual() {
+  if (!file.value) {
+    sendError.value = 'Choisissez d\'abord le fichier PDF du relevé.'
+    sendErrorCode.value = 'VALIDATION'
+    await scrollToFeedback()
+    return
+  }
   sending.value = true
+  sendError.value = ''
+  sendErrorCode.value = ''
   error.value = ''
   try {
     const [, mm, yyyy] = manualDate.value.split('/')
@@ -426,18 +565,23 @@ async function sendManual() {
     if (`${yyyy}-${mm}` !== selectedMonth.value) {
       throw new Error(`La date ${manualDate.value} ne correspond pas au mois ${selectedMonthLabel.value} sélectionné.`)
     }
-    result.value = await tresorerieApi.importReleve({
+    const data = await tresorerieApi.importReleve({
       date_fin: manualDate.value,
       solde_fin: parseSolde(manualSolde.value),
+      replace: isReplaceMonth.value,
       operations: []
     }, file.value)
-    result.value = { ...result.value, month: result.value.month ?? mm }
+    result.value = { ...data, month: data.month ?? mm }
     manual.value = false
     file.value = null
     if (fileInput.value) fileInput.value.value = ''
+    await scrollToFeedback()
     emit('imported', result.value)
   } catch (e) {
-    error.value = e.message
+    sendError.value = formatApiError(e)
+    sendErrorCode.value = e.code || ''
+    error.value = sendError.value
+    await scrollToFeedback()
   } finally {
     sending.value = false
   }

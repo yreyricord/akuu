@@ -35,7 +35,6 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
   const compta = ref({ journal: [], summary: null })
   const pendingAccessRequests = ref([])
   const validationError = ref(null)
-  const validationStats = ref(null)
   const validationVersion = ref('')
   let _validationPollTimer = null
   const historyError = ref(null)
@@ -159,7 +158,6 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
     pendingDemandes.value = Array.isArray(queue?.demandes) ? queue.demandes : []
     pendingFactures.value = Array.isArray(queue?.factures) ? queue.factures : []
     pendingReimbursements.value = Array.isArray(queue?.reimbursements) ? queue.reimbursements : []
-    validationStats.value = queue?.stats ?? null
     validationVersion.value = queue?.version?.version ?? validationVersion.value
   }
 
@@ -174,17 +172,15 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
           applyValidationQueue(queue)
         } catch (queueErr) {
           if (queueErr.code !== 'NOT_FOUND') throw queueErr
-          const [dem, fac, reimb, stats] = await Promise.all([
+          const [dem, fac, reimb] = await Promise.all([
             tresorerieApi.getDemandesPending(),
             tresorerieApi.getFacturesPending(),
-            tresorerieApi.getReimbursementsPending().catch(() => []),
-            tresorerieApi.getValidationStats().catch(() => null)
+            tresorerieApi.getReimbursementsPending().catch(() => [])
           ])
           applyValidationQueue({
             demandes: dem,
             factures: fac,
-            reimbursements: reimb,
-            stats
+            reimbursements: reimb
           })
         }
         _fetchedAt.pending = Date.now()
@@ -525,7 +521,6 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
     compta,
     pendingAccessRequests,
     validationError,
-    validationStats,
     validationVersion,
     historyError,
     historyLoading,

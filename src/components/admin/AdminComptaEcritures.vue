@@ -49,7 +49,7 @@
       <article class="rounded-2xl border border-night-100 bg-white p-4 shadow-sm">
         <p class="text-xs font-bold uppercase tracking-wide text-night-500">Écritures</p>
         <p class="mt-1 text-xl font-bold tabular-nums">{{ rows.length }}</p>
-        <p class="text-xs text-night-500">{{ counts.banque }} banque · {{ counts.terrain }} terrain<span v-if="counts.app"> · {{ counts.app }} appli</span></p>
+        <p class="text-xs text-night-500">{{ counts.banque }} banque · {{ counts.terrain }} terrain</p>
       </article>
       <article class="rounded-2xl border border-night-100 bg-white p-4 shadow-sm">
         <p class="text-xs font-bold uppercase tracking-wide text-night-500">Recettes (banque)</p>
@@ -230,7 +230,7 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
 import { bindLoadingProgress } from '@/composables/useLoadingProgress.js'
-import { TRESORERIE_PROJECTS, PAYMENT_METHODS, labelFor } from '@/data/tresorerie-config.js'
+import { TRESORERIE_PROJECTS, PAYMENT_METHODS } from '@/data/tresorerie-config.js'
 import { tresorerieApi } from '@/api/tresorerie/client.js'
 import AdminDataTable from './AdminDataTable.vue'
 import AdminLoadingPanel from './AdminLoadingPanel.vue'
@@ -238,8 +238,6 @@ import AdminLoadingPanel from './AdminLoadingPanel.vue'
 const emit = defineEmits(['journal-updated'])
 
 const props = defineProps({
-  /** Écritures saisies dans l'application, pas encore dans le journal Google */
-  liveRows: { type: Array, default: () => [] },
   initialYear: { type: String, default: '' }
 })
 
@@ -255,8 +253,7 @@ const TYPES = [
 ]
 const SOURCE = {
   banque: { label: 'Banque', cls: 'bg-bleu-100 text-bleu-700' },
-  terrain: { label: 'Terrain', cls: 'bg-ochre-100 text-ochre-700' },
-  app: { label: 'Appli', cls: 'bg-forest-100 text-forest-700' }
+  terrain: { label: 'Terrain', cls: 'bg-ochre-100 text-ochre-700' }
 }
 const baseColumns = [
   { key: 'date', label: 'Date' },
@@ -322,7 +319,7 @@ onMounted(() => {
   initYearSlots()
   const cached = tresorerieApi.peekJournalAnnee?.(year.value)
   if (cached) applyJournalResponse(year.value, cached)
-  journalLoading.value = !cached && !props.liveRows.length
+  journalLoading.value = !cached
 
   loadLive(year.value)
   Promise.all([
@@ -347,7 +344,7 @@ async function loadLive(y, { force = false } = {}) {
       return cached
     }
   }
-  journalLoading.value = !props.liveRows.length && !(data.value?.years?.[y]?.length)
+  journalLoading.value = !force && !(data.value?.years?.[y]?.length) && !tresorerieApi.peekJournalAnnee?.(y)
   try {
     const res = await tresorerieApi.getJournalAnnee(y, { force })
     applyJournalResponse(y, res)
@@ -403,7 +400,7 @@ function askDelete(row) {
 }
 
 function canEditRow(row) {
-  return canEdit.value && row.source !== 'app' && row.editable !== false
+  return canEdit.value && row.editable !== false
 }
 
 async function loadProjects() {
@@ -471,6 +468,8 @@ async function confirmDelete() {
     const c = await tresorerieApi.requestDeletion({ reference: toDelete.value.ref, year: Number(year.value), reason: deleteReason.value })
     corrections.value = [...corrections.value, c]
     toDelete.value = null
+    await loadLive(year.value, { force: true })
+    emit('journal-updated')
   } catch (e) {
     deleteError.value = e.message
   } finally {
@@ -482,31 +481,9 @@ watch([year, month, project, type, search], () => { limit.value = 150 })
 
 const yearOptions = computed(() => Object.keys(data.value?.years ?? {}).sort().reverse())
 
-const liveMapped = computed(() =>
-  props.liveRows.map((r) => {
-    const pen = Number(r.amount_pen) || null
-    const eurV = Number(r.amount_eur) || null
-    return {
-      ref: r.reference || '',
-      date: (r.expense_date || r.journal_at || '').slice(0, 10),
-      source: 'app',
-      type: 'depense',
-      project: labelFor(r.project, TRESORERIE_PROJECTS),
-      category: r.category || '',
-      label: r.label || '',
-      vendor: r.vendor_name || '',
-      eur: pen ? null : eurV,
-      pen,
-      url: r.drive_file_url || ''
-    }
-  })
-)
-
 const yearRows = computed(() => {
   const base = data.value?.years?.[year.value] ?? []
-  const known = new Set(base.map((r) => r.ref))
-  const live = liveMapped.value.filter((r) => r.date.startsWith(year.value) && !known.has(r.ref))
-  return [...live, ...base]
+  return base
     .filter((r) => !deletedRefs.value.has(r.ref))
     .map((r, i) => ({ ...r, url: r.url || attachedUrls.value[r.ref] || '', key: `${r.source}-${r.ref}-${i}` }))
     .sort((a, b) => (b.date || '').localeCompare(a.date || ''))
@@ -528,8 +505,8 @@ const rows = computed(() => {
 const visibleRows = computed(() => rows.value.slice(0, limit.value))
 
 const counts = computed(() => {
-  const c = { banque: 0, terrain: 0, app: 0 }
-  rows.value.forEach((r) => { c[r.source] += 1 })
+  const c = { banque: 0, terrain: 0 }
+  rows.value.forEach((r) => { if (c[r.source] != null) c[r.source] += 1 })
   return c
 })
 

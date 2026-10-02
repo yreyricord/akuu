@@ -46,7 +46,6 @@
       </p>
       <AdminComptaEcritures
         :key="`${ecrituresYear}-${metaVersion}`"
-        :live-rows="journal"
         :initial-year="ecrituresYear"
         @journal-updated="caisseRefreshKey += 1"
       />

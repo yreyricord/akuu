@@ -153,7 +153,7 @@
         :existing-rows="liveRows"
         :last-releve="live?.dernier_releve ?? null"
         :status="liveRelevesStatus"
-        @imported="refreshLive"
+        @imported="() => refreshLive(true)"
       />
       <AdminBilanRelevesAlert
         v-else-if="!yearData.cloture?.provisoire"
@@ -186,11 +186,11 @@
           </div>
           <div>
             <dt class="text-xs font-bold uppercase tracking-wide text-night-500">
-              Banque {{ isLiveYear ? "aujourd'hui" : yearData.cloture?.provisoire ? 'dernier relevé' : 'au 31/12' }}
+              {{ bankKpi.label }}
             </dt>
-            <dd class="mt-1 text-xl font-bold tabular-nums sm:text-2xl">{{ formatEur(treso?.releve_fin_eur ?? treso?.fin_eur) }}</dd>
-            <dd class="mt-0.5 text-xs" :class="treso?.ecart_rapprochement_eur ? 'text-ochre-700' : 'text-forest-700'">
-              {{ rapproLabel }}
+            <dd class="mt-1 text-xl font-bold tabular-nums sm:text-2xl">{{ formatEur(bankKpi.solde) }}</dd>
+            <dd class="mt-0.5 text-xs" :class="bankKpi.warn ? 'text-ochre-700' : 'text-forest-700'">
+              {{ bankKpi.hint }}
             </dd>
           </div>
         </dl>
@@ -411,9 +411,9 @@ const offlineFallback = ref(false)
 const liveSource = computed(() => Boolean(exercices.value?.source === 'google_sheets' && !offlineFallback.value))
 const displayGeneratedAt = computed(() => exercices.value?.generated_at ?? null)
 
-async function loadExercices() {
+async function loadExercices(force = false) {
   try {
-    exercices.value = await tresorerieApi.getExercices()
+    exercices.value = await tresorerieApi.getExercices({ force })
     offlineFallback.value = false
   } catch {
     offlineFallback.value = true
@@ -578,6 +578,47 @@ const rouvertBanner = computed(() => {
 const isLiveYear = computed(() =>
   Boolean(currentExercice.value?.live && yearData.value?.cloture?.provisoire)
 )
+
+/** Dernier relevé bancaire connu (API live, pas le JSON statique). */
+const lastReleveLive = computed(() => {
+  const ex = currentExercice.value
+  if (ex?.dernier_releve?.solde_fin != null) return ex.dernier_releve
+  const rel = (ex?.releves || []).find((r) => r?.solde_fin != null)
+  return rel || null
+})
+
+const bankKpi = computed(() => {
+  const calc = treso.value?.fin_eur
+  const rel = lastReleveLive.value
+  if (isLiveYear.value) {
+    if (rel?.solde_fin != null) {
+      const mois = rel.mois ? String(rel.mois).slice(5, 7) + '/' + String(rel.mois).slice(0, 4) : ''
+      return {
+        label: 'Banque (dernier relevé)',
+        solde: rel.solde_fin,
+        hint: mois
+          ? `Relevé ${mois} · journal calculé (toutes op.) : ${formatEur(calc)}`
+          : `Journal calculé (toutes op.) : ${formatEur(calc)}`,
+        warn: calc != null && Math.abs(calc - rel.solde_fin) > 0.01
+      }
+    }
+    return {
+      label: 'Banque (journal calculé)',
+      solde: calc,
+      hint: liveRelevesStatus.value?.months_present?.length
+        ? `${liveRelevesStatus.value.months_present.length} mois PDF déposés · solde relevé non lu — rechargez la page`
+        : 'Somme des opérations banque au journal · déposez les relevés PDF pour comparer',
+      warn: true
+    }
+  }
+  const solde = treso.value?.releve_fin_eur ?? calc
+  return {
+    label: yearData.value?.cloture?.provisoire ? 'Banque (dernier relevé)' : 'Banque au 31/12',
+    solde,
+    hint: rapproLabel.value,
+    warn: Boolean(treso.value?.ecart_rapprochement_eur)
+  }
+})
 const prevFin = computed(() =>
   years.value.find((y) => y.year === Number(selectedYear.value) - 1)?.cloture?.tresorerie?.releve_fin_eur ?? null
 )
@@ -590,10 +631,11 @@ const treso = computed(() => {
 })
 
 const liveRows = ref([])
-async function refreshLive() {
-  await loadExercices()
+async function refreshLive(force = false) {
+  if (force) tresorerieApi.invalidateExercicesCache?.()
+  await loadExercices(force)
   const y = new Date().getFullYear()
-  try { liveRows.value = (await tresorerieApi.getJournalAnnee(y))?.rows ?? [] } catch { liveRows.value = [] }
+  try { liveRows.value = (await tresorerieApi.getJournalAnnee(y, { force }))?.rows ?? [] } catch { liveRows.value = [] }
 }
 onMounted(async () => {
   await refreshLive()
@@ -655,7 +697,7 @@ const rappro = computed(() => {
   const y = yearData.value
   if (!y) return {}
   if (isLiveYear.value) {
-    const r = currentExercice.value?.dernier_releve
+    const r = lastReleveLive.value
     const rp = currentExercice.value?.rapprochement || {}
     if (!r || r.solde_fin == null) {
       const t = y.cloture?.tresorerie
@@ -806,15 +848,14 @@ const rapproLabel = computed(() => {
   const t = treso.value
   if (!t) return ''
   if (t.calcule) {
-    const r = currentExercice.value?.dernier_releve
-    if (r?.solde_fin == null) {
-      const rel = yearData.value?.cloture?.tresorerie?.releve_fin_eur
-      if (rel != null && liveRelevesStatus.value?.months_present?.length) {
-        return `dernier relevé connu : ${formatEur(rel)} (${liveRelevesStatus.value.months_present.length} mois déposés)`
-      }
-      return 'calculé depuis le journal · aucun relevé déposé cette année'
+    const r = lastReleveLive.value
+    if (r?.solde_fin != null) {
+      return `relevé ${r.mois || ''} : ${formatEur(r.solde_fin)} · journal toutes op. : ${formatEur(t.fin_eur)}`
     }
-    return `calculé depuis le journal · relevé ${r.mois} : ${formatEur(r.solde_fin)}`
+    if (liveRelevesStatus.value?.months_present?.length) {
+      return `${liveRelevesStatus.value.months_present.length} mois PDF déposés · solde relevé non synchronisé (rechargez)`
+    }
+    return 'journal calculé · déposez les relevés PDF pour le rapprochement'
   }
   const ecart = t.ecart_rapprochement_eur
   if (!ecart) return '✓ égal au relevé bancaire'

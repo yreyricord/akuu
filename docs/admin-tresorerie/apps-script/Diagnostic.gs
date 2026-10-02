@@ -78,6 +78,269 @@ function diagnosticJournaux() {
   return { rows: rows, ok: rows.every(function (r) { return r.ok; }) };
 }
 
+/**
+ * Audit du journal Google 2026 — compteurs, doublons, relevés, legacy « Appli ».
+ * Éditeur Apps Script → sélectionner auditJournal2026 puis ▶ Exécuter.
+ * Résultat : Affichage → Journaux (ou Exécutions → dernière ligne).
+ */
+function auditJournal2026() {
+  return auditJournalAnnee_(2026);
+}
+
+/**
+ * Supprime les 8 écritures banque de septembre 2026 saisies en provisoire (toutes datées 2026-09-01).
+ * Documenté dans REGULARISATION_AKUU.md · refs AKUU-IMP-2026-0067 → 0074.
+ *
+ * Après exécution : redéposer le relevé PDF de septembre sur le site (Bilan → Import relevé).
+ * Les vraies dates seront lues depuis le PDF.
+ *
+ * Éditeur Apps Script → remplacerSeptembreProvisoire2026 → ▶ Exécuter.
+ */
+function remplacerSeptembreProvisoire2026() {
+  var year = 2026;
+  var refs = [];
+  for (var n = 67; n <= 74; n++) refs.push('AKUU-IMP-' + year + '-' + ('0000' + n).slice(-4));
+  var actor = Session.getEffectiveUser().getEmail() || 'script';
+  var removed = [], missing = [], errors = [];
+  refs.forEach(function (ref) {
+    try {
+      var hit = findJournalRow_(openYearJournal_(year), ref);
+      if (!hit) { missing.push(ref); return; }
+      var d = isoDate_(hit.row.expense_date);
+      if (deleteFromYearJournal_(year, ref, actor, 'Remplacement saisie provisoire sept. 2026 — avant re-import relevé PDF')) {
+        removed.push({ ref: ref, date: d, label: String(hit.row.label || '').substring(0, 60) });
+        Logger.log('✅ supprimé ' + ref + ' (' + d + ')');
+      } else {
+        errors.push(ref + ' : suppression refusée');
+      }
+    } catch (e) {
+      errors.push(ref + ' : ' + (e && e.message || e));
+      Logger.log('❌ ' + ref + ' → ' + (e && e.message || e));
+    }
+  });
+  if (typeof invalidateJournalCaches_ === 'function') invalidateJournalCaches_(openYearJournal_(year));
+  if (typeof invalidateExercicesCache_ === 'function') invalidateExercicesCache_();
+  Logger.log('');
+  Logger.log('Résumé : ' + removed.length + ' supprimée(s), ' + missing.length + ' absente(s), ' + errors.length + ' erreur(s).');
+  Logger.log('➡️ Maintenant : site admin → Bilan 2026 → Import relevé → PDF septembre → Ajouter au journal.');
+  return { year: year, removed: removed, missing: missing, errors: errors };
+}
+
+/**
+ * Audit d'une année (2017 → année en cours).
+ * @param {number} year ex. 2026
+ */
+function auditJournalAnnee_(year) {
+  year = Number(year) || new Date().getFullYear();
+  var out = {
+    year: year, ok: true, generated_at: new Date().toISOString(), sheet_url: null,
+    tabs: {}, releves: [], duplicates: { by_reference: [], by_content: [] },
+    legacy_app_journal: { rows_in_year: 0, refs_only_in_app: [], refs_in_both: [] },
+    corrections_delete: [], warnings: []
+  };
+
+  var ss = openYearJournal_(year);
+  if (!ss) {
+    Logger.log('❌ Journal_AKUU_' + year + ' introuvable — exécutez initJournalAnnee_(' + year + ')');
+    return { year: year, ok: false, error: 'JOURNAL_ABSENT' };
+  }
+  out.sheet_url = ss.getUrl();
+  Logger.log('📊 Audit Journal_AKUU_' + year);
+  Logger.log('   ' + ss.getUrl());
+
+  var yearPrefix = String(year);
+  var yearJournalRefs = {};
+
+  JOURNAL_TABS.forEach(function (tabName) {
+    var sh = ss.getSheetByName(tabName);
+    if (!sh) {
+      out.warnings.push('Onglet ' + tabName + ' absent');
+      Logger.log('⚠️ Onglet ' + tabName + ' absent');
+      return;
+    }
+    var tr = tabRows_(sh);
+    var rows = tr.rows;
+    if (tabName === 'Journal') {
+      rows.forEach(function (r) {
+        if (r.reference) yearJournalRefs[String(r.reference)] = true;
+      });
+    }
+    var stats = auditTabRows_(tabName, rows, yearPrefix);
+    out.tabs[tabName] = stats;
+    Logger.log('');
+    Logger.log('── ' + tabName + ' ──');
+    Logger.log('   Lignes avec référence : ' + stats.lines);
+    Logger.log('   Recettes : ' + stats.recettes + ' · Dépenses : ' + stats.depenses);
+    if (stats.needs_review) Logger.log('   À revoir (needs_review) : ' + stats.needs_review);
+    if (stats.by_month && Object.keys(stats.by_month).length) {
+      Logger.log('   Par mois : ' + Object.keys(stats.by_month).sort().map(function (m) {
+        return m + '=' + stats.by_month[m];
+      }).join(', '));
+    }
+    var dupRef = findDuplicateReferences_(rows);
+    var dupContent = tabName === 'Journal'
+      ? findDuplicateContent_(rows, 'banque')
+      : findDuplicateContent_(rows, 'terrain');
+    dupRef.forEach(function (d) {
+      out.duplicates.by_reference.push({ tab: tabName, reference: d.reference, count: d.count, rows: d.rows });
+    });
+    dupContent.forEach(function (d) {
+      out.duplicates.by_content.push({ tab: tabName, key: d.key, count: d.count, samples: d.samples });
+    });
+    if (dupRef.length) {
+      out.ok = false;
+      Logger.log('   ❌ Références en double : ' + dupRef.length);
+      dupRef.forEach(function (d) {
+        Logger.log('      ' + d.reference + ' ×' + d.count + ' (lignes ' + d.rows.join(', ') + ')');
+      });
+    }
+    if (dupContent.length) {
+      Logger.log('   ⚠️ Doublons contenu (date+montant+libellé) : ' + dupContent.length);
+      dupContent.slice(0, 15).forEach(function (d) {
+        Logger.log('      ' + d.key + ' ×' + d.count);
+        d.samples.forEach(function (s) {
+          Logger.log('         → ' + s.reference + ' · ' + s.date + ' · ' + s.label);
+        });
+      });
+      if (dupContent.length > 15) Logger.log('      … et ' + (dupContent.length - 15) + ' autre(s)');
+    }
+    if (!dupRef.length && !dupContent.length) Logger.log('   ✅ Pas de doublon détecté');
+  });
+
+  if (typeof relevesOf_ === 'function') {
+    out.releves = relevesOf_(ss);
+    Logger.log('');
+    Logger.log('── Relevés bancaires ──');
+    if (!out.releves.length) {
+      Logger.log('   ⚠️ Aucun relevé enregistré dans l\'onglet Releves');
+      out.warnings.push('Aucun relevé dans l\'onglet Releves');
+    } else {
+      out.releves.forEach(function (r) {
+        Logger.log('   ' + r.mois + ' · fin ' + r.date_fin + ' · solde ' + r.solde_fin + ' € · +' + (r.operations_ajoutees || 0) + ' op.');
+      });
+      var last = out.releves[0];
+      Logger.log('   Dernier relevé : ' + last.mois + ' · solde fin ' + last.solde_fin + ' €');
+    }
+  }
+
+  if (typeof readAll_ === 'function' && getSheet_('Journal')) {
+    var appRows = readAll_('Journal').filter(function (r) {
+      var raw = r.expense_date || r.journal_at || '';
+      return String(raw).indexOf(yearPrefix) === 0 || String(raw).slice(0, 4) === yearPrefix;
+    });
+    var onlyApp = [], both = [];
+    appRows.forEach(function (r) {
+      var ref = String(r.reference || '');
+      if (!ref) return;
+      if (yearJournalRefs[ref]) both.push(ref);
+      else onlyApp.push(ref);
+    });
+    out.legacy_app_journal = {
+      rows_in_year: appRows.length,
+      refs_only_in_app: onlyApp,
+      refs_in_both: both
+    };
+    Logger.log('');
+    Logger.log('── Tableur Apps Script · onglet Journal (legacy) ──');
+    Logger.log('   Lignes ' + year + ' : ' + appRows.length);
+    Logger.log('   Références aussi dans Journal_AKUU_' + year + ' : ' + both.length);
+    Logger.log('   Références UNIQUEMENT dans l\'appli (fantômes UI) : ' + onlyApp.length);
+    if (onlyApp.length) {
+      Logger.log('   Exemples appli seule : ' + onlyApp.slice(0, 10).join(', ') +
+        (onlyApp.length > 10 ? ' …' : ''));
+      out.warnings.push(onlyApp.length + ' ligne(s) legacy dans le tableur Apps Script absentes du journal Google');
+    }
+  }
+
+  if (typeof readAll_ === 'function' && getSheet_('Corrections')) {
+    readAll_('Corrections').forEach(function (c) {
+      if (c.type === 'delete' && Number(c.year) === year && c.status !== 'cancelled') {
+        out.corrections_delete.push({ reference: c.reference, status: c.status, reason: c.reason });
+      }
+    });
+    if (out.corrections_delete.length) {
+      Logger.log('');
+      Logger.log('── Suppressions enregistrées (Corrections) ──');
+      Logger.log('   ' + out.corrections_delete.length + ' suppression(s) pour ' + year);
+    }
+  }
+
+  out.corrections_delete.forEach(function (c) {
+    if (auditJournalAnnee_refStillPresent_(ss, c.reference)) {
+      out.warnings.push('Suppression demandée mais ligne encore présente : ' + c.reference);
+      Logger.log('⚠️ ' + c.reference + ' marquée supprimée mais encore dans le journal Google');
+    }
+  });
+
+  Logger.log('');
+  Logger.log(out.ok && !out.warnings.length
+    ? '🎉 Audit ' + year + ' OK — journal cohérent'
+    : '➡️ Audit ' + year + ' terminé — voir ⚠️ / ❌ ci-dessus');
+  return out;
+}
+
+function auditJournalAnnee_refStillPresent_(ss, reference) {
+  var hit = findJournalRow_(ss, reference);
+  return Boolean(hit);
+}
+
+function auditTabRows_(tabName, rows, yearPrefix) {
+  var stats = { lines: rows.length, recettes: 0, depenses: 0, needs_review: 0, by_month: {} };
+  rows.forEach(function (r) {
+    var type = String(r.entry_type || '').toLowerCase();
+    if (type === 'recette') stats.recettes++;
+    else if (type === 'depense') stats.depenses++;
+    if (String(r.needs_review || '').toLowerCase() === 'oui') stats.needs_review++;
+    var d = isoDate_(r.expense_date);
+    if (d.indexOf(yearPrefix) === 0) {
+      var m = d.slice(5, 7);
+      stats.by_month[m] = (stats.by_month[m] || 0) + 1;
+    }
+  });
+  return stats;
+}
+
+function findDuplicateReferences_(rows) {
+  var byRef = {};
+  rows.forEach(function (r) {
+    var ref = String(r.reference || '').trim();
+    if (!ref) return;
+    if (!byRef[ref]) byRef[ref] = [];
+    byRef[ref].push(r._row);
+  });
+  var out = [];
+  Object.keys(byRef).forEach(function (ref) {
+    if (byRef[ref].length > 1) out.push({ reference: ref, count: byRef[ref].length, rows: byRef[ref] });
+  });
+  return out.sort(function (a, b) { return b.count - a.count; });
+}
+
+function findDuplicateContent_(rows, mode) {
+  var byKey = {};
+  rows.forEach(function (r) {
+    var date = isoDate_(r.expense_date);
+    var amount = mode === 'terrain' ? num_(r.amount_pen) : num_(r.amount_eur);
+    if (!date || amount == null) return;
+    var key = typeof releveKey_ === 'function'
+      ? releveKey_(date, amount, r.label)
+      : date + '|' + amount + '|' + String(r.label || '').slice(0, 18);
+    if (!byKey[key]) byKey[key] = [];
+    byKey[key].push({
+      reference: String(r.reference || ''),
+      date: date,
+      label: String(r.label || '').substring(0, 60),
+      row: r._row
+    });
+  });
+  var out = [];
+  Object.keys(byKey).forEach(function (key) {
+    if (byKey[key].length > 1) {
+      out.push({ key: key, count: byKey[key].length, samples: byKey[key] });
+    }
+  });
+  return out.sort(function (a, b) { return b.count - a.count; });
+}
+
 function diagnosticGenererCloture(year) {
   year = Number(year) || 2017;
   var session = { email: Session.getEffectiveUser().getEmail() || 'diagnostic', role: 'admin' };

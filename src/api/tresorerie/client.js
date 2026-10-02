@@ -51,7 +51,7 @@ function buildApiUrl(path) {
  * jamais dans l'URL (journaux Google, historique du navigateur, en-tête Referer).
  * Les lectures portent _method: 'GET' ; les paramètres (ex. year) sont dans le corps.
  */
-async function remoteRequest(path, { method = 'GET', body, query } = {}) {
+async function remoteRequest(path, { method = 'GET', body, query, timeoutMs } = {}) {
   const token = getToken()
   const url = buildApiUrl(path)
   const payload = {
@@ -69,15 +69,23 @@ async function remoteRequest(path, { method = 'GET', body, query } = {}) {
   const perfOn = import.meta.env.DEV || import.meta.env.VITE_TRESORERIE_PERF === 'true'
   const t0 = perfOn ? performance.now() : 0
   let res
+  const controller = timeoutMs ? new AbortController() : null
+  const timer = controller ? setTimeout(() => controller.abort(), timeoutMs) : null
+  if (controller) options.signal = controller.signal
   try {
     res = await fetch(url, options)
-  } catch {
+  } catch (err) {
+    if (controller?.signal.aborted) {
+      throw new Error('Délai dépassé (plus de 2 minutes) — le serveur met trop de temps à répondre. Réessayez.')
+    }
     const hint = import.meta.env.DEV
       ? ' (dev local · redémarrez npm run dev si vous venez de modifier .env.local)'
       : ''
     throw new Error(
       `Connexion impossible au serveur${hint}. Vérifiez votre connexion internet, ou que l’Apps Script AKUU est bien déployé (App.gs avec doPost).`
     )
+  } finally {
+    if (timer) clearTimeout(timer)
   }
   const text = await res.text()
   if (/Fonction de script introuvable|Script function not found/i.test(text)) {
@@ -343,9 +351,14 @@ export const tresorerieApi = {
 
   /** Import d'un relevé bancaire lu dans le navigateur : { date_fin, solde_debut, solde_fin, operations } + PDF */
   async importReleve(releve, file) {
-    if (isMockMode()) return { added: releve.operations.length, skipped: 0, file_name: 'mock.pdf', url: '' }
+    if (isMockMode()) return { added: releve.operations?.length ?? 0, skipped: 0, file_name: 'mock.pdf', url: '' }
     const receipt = file ? await fileToAttachment(file) : null
-    return remoteRequest('/releves/import', { method: 'POST', body: { ...releve, _attachments: { receipt } } })
+    const year = String(releve.date_fin || '').slice(-4) || new Date().getFullYear()
+    if (file && file.size > 10 * 1024 * 1024) {
+      throw Object.assign(new Error('PDF trop volumineux (max 10 Mo).'), { code: 'VALIDATION_FAILED' })
+    }
+    return remoteRequest('/releves/import', { method: 'POST', body: { ...releve, _attachments: { receipt } }, timeoutMs: 120_000 })
+      .then((res) => { invalidateJournalCache(year); invalidateExercicesCache(); return res })
   },
 
   /** Tous les exercices (2017 → année en cours) lus depuis les Google Sheets */
@@ -461,6 +474,7 @@ export const tresorerieApi = {
       return Promise.resolve(c)
     }
     return remoteRequest('/corrections/delete', { method: 'POST', body: { reference, year, reason } })
+      .then((res) => { invalidateJournalCache(year); return res })
   },
 
   updateJournalLine({ reference, year, project, payment_method, category }) {

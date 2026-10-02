@@ -14,6 +14,52 @@ function releveKey_(date, amount, label) {
     normTxt_(label).replace(/[^a-z0-9]/g, '').substring(0, 18);
 }
 
+/** true si une ligne Releves existe déjà pour ce mois. */
+function monthHasReleve_(ss, year, month) {
+  var rel = ss.getSheetByName('Releves');
+  if (!rel || rel.getLastRow() < 2) return false;
+  var key = year + '-' + month;
+  var data = rel.getDataRange().getValues();
+  for (var k = 1; k < data.length; k++) {
+    if (String(data[k][0]) === key) return true;
+  }
+  return false;
+}
+
+/**
+ * Avant re-dépôt d'un relevé : efface les écritures banque du mois issues d'un import précédent
+ * (y compris saisies provisoires AKUU-IMP du même mois).
+ */
+function clearMonthReleveJournal_(ss, year, month, fileName, actor) {
+  var prefix = year + '-' + month;
+  var sh = ss.getSheetByName('Journal');
+  if (!sh) return 0;
+  var tr = tabRows_(sh);
+  var toRemove = [];
+  tr.rows.forEach(function (r) {
+    var d = isoDate_(r.expense_date);
+    if (d.indexOf(prefix) !== 0) return;
+    var ref = String(r.reference || '').trim();
+    if (!ref) return;
+    var sf = String(r.source_file || '').trim();
+    var es = String(r.entry_source || '').trim().toLowerCase();
+    var notes = String(r.notes || '');
+    var impRef = ref.indexOf('AKUU-IMP-' + year + '-') === 0;
+    if (sf === fileName || es === 'releve' || impRef || /Import[eé].*relev/i.test(notes)) {
+      toRemove.push({ ref: ref, row: r._row });
+    }
+  });
+  toRemove.sort(function (a, b) { return b.row - a.row; });
+  var n = 0;
+  toRemove.forEach(function (item) {
+    if (typeof deleteFromYearJournal_ === 'function') {
+      if (deleteFromYearJournal_(year, item.ref, actor, 'Remplacement relevé ' + month + '/' + year)) n++;
+    }
+  });
+  if (n && typeof invalidateJournalCaches_ === 'function') invalidateJournalCaches_(ss);
+  return n;
+}
+
 function importReleve_(session, body) {
   requireTreasurer_(session);
   var ops = body.operations || [];
@@ -30,6 +76,13 @@ function importReleve_(session, body) {
   }
   assertExerciceModifiable_(year);
 
+  var fileName = year + '_' + month + '_RELEVE_PRO_AKUU.pdf';
+  var replacing = body.replace === true || body.replace === 'true' || monthHasReleve_(ss, year, month);
+  var cleared = 0;
+  if (replacing) {
+    cleared = clearMonthReleveJournal_(ss, year, month, fileName, session.email);
+  }
+
   var sh = ss.getSheetByName('Journal');
   var tr = tabRows_(sh);
   var existing = {};
@@ -41,7 +94,6 @@ function importReleve_(session, body) {
   });
 
   // PDF
-  var fileName = year + '_' + month + '_RELEVE_PRO_AKUU.pdf';
   var url = '';
   var receipt = body._attachments && body._attachments.receipt;
   var blob = blobFromAttachment_(receipt, fileName, ['pdf']);
@@ -99,14 +151,19 @@ function importReleve_(session, body) {
   for (var k = 1; k < relData.length; k++) {
     if (String(relData[k][0]) === year + '-' + month) {
       if (!url) line[7] = relData[k][7];
-      rel.getRange(k + 1, 1, 1, line.length).setValues([line]);
+      rel.getRange(k + 1, 1, k + 1, line.length).setValues([line]);
       replaced = true;
       break;
     }
   }
   if (!replaced) rel.appendRow(line);
-  appendAudit_(session.email, 'releve_imported', 'releve', year + '-' + month, { added: added, skipped: skipped });
-  return { year: year, month: month, added: added, skipped: skipped, file_name: fileName, url: url || line[7], manual: !ops.length };
+  if (typeof invalidateExercicesCache_ === 'function') invalidateExercicesCache_();
+  appendAudit_(session.email, 'releve_imported', 'releve', year + '-' + month,
+    { added: added, skipped: skipped, replaced: replacing, cleared: cleared });
+  return {
+    year: year, month: month, added: added, skipped: skipped, cleared: cleared, replaced: replacing,
+    file_name: fileName, url: url || line[7], manual: !ops.length
+  };
 }
 
 /** Relevés importés de l'année (du plus récent au plus ancien). */

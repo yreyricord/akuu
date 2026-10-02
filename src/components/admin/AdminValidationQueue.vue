@@ -29,39 +29,6 @@
       {{ store.validationError }} — vérifiez que l’Apps Script est déployé (route <code class="text-xs">validation/queue</code>).
     </p>
 
-    <div
-      v-else-if="emptyQueues && store.validationStats"
-      class="rounded-xl border border-ochre-200 bg-ochre-50 px-4 py-3 text-sm text-ochre-900"
-    >
-      <p class="font-semibold">Aucune file d’attente — diagnostic API</p>
-      <ul class="mt-2 list-inside list-disc space-y-1 text-xs">
-        <li>Demandes dans le tableur : <strong>{{ store.validationStats.demandes_total }}</strong>
-          (en attente : {{ store.validationStats.demandes_pending }})</li>
-        <li>Factures dans le tableur : <strong>{{ store.validationStats.factures_total }}</strong>
-          (en attente : {{ store.validationStats.factures_pending }})</li>
-        <li v-if="!store.validationStats.demandes_sheet_exists" class="text-terracotta-700">
-          Onglet « Demandes » absent — exécuter <code>setupTresorerieSheets</code> dans Apps Script.
-        </li>
-        <li v-else-if="store.validationStats.demandes_total === 0">
-          Aucune demande enregistrée. Créez-en une dans l’onglet <strong>Demande</strong> (pas Compta).
-          Vérifiez le bandeau vert « AKUU-DEM-… envoyée » après envoi.
-        </li>
-        <li v-else-if="store.validationStats.demandes_pending === 0">
-          Des demandes existent mais plus aucune en attente (déjà approuvées ou refusées).
-          Voir <strong>Historique</strong> pour le détail.
-        </li>
-      </ul>
-      <a
-        v-if="store.validationStats.spreadsheet_url"
-        :href="store.validationStats.spreadsheet_url"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="mt-2 inline-block text-xs font-semibold text-bleu hover:underline"
-      >
-        Ouvrir le tableur application (onglet Demandes)
-      </a>
-    </div>
-
     <AdminReimbursementPanel :pending="store.pendingReimbursements" />
 
     <section>
@@ -496,10 +463,6 @@ const demandesActionable = computed(() =>
 )
 const demandesAwaitingVolunteer = computed(() =>
   store.pendingDemandes.filter((d) => awaitingVolunteerDevisResubmit(d))
-)
-
-const emptyQueues = computed(
-  () => !store.pendingDemandes.length && !store.pendingFactures.length
 )
 
 const pendingFactureGroups = computed(() => {
