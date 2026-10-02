@@ -46,10 +46,31 @@
           </div>
           <p class="relative text-night/60 mb-8">{{ $t(`formation.groups.group_${group.id}.description`) }}</p>
 
+          <!-- Mobile : liste pleine largeur -->
+          <div class="flex flex-col gap-3 sm:hidden">
+            <router-link
+              v-for="mod in modulesForGroup(group.id)"
+              :key="`m-${mod.id}`"
+              :to="`/formation/module-${mod.id}`"
+              class="flex min-h-[52px] w-full items-center justify-between gap-3 rounded-2xl bg-white px-4 py-3 shadow-md transition-all active:scale-[0.99]"
+            >
+              <span class="text-night font-semibold leading-snug text-left">
+                {{ $t(`formation.modules.module_${mod.id}.title`) }}
+              </span>
+              <span
+                class="shrink-0 flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold"
+                :class="ACCENT_CLASSES[group.accent].badge"
+              >
+                {{ String(mod.id).padStart(2, '0') }}
+              </span>
+            </router-link>
+          </div>
+
+          <!-- Desktop : rivière zigzag -->
           <div
             v-for="(mod, modIndex) in modulesForGroup(group.id)"
             :key="mod.id"
-            class="fade-in-up relative grid grid-cols-2 gap-6 items-center py-3"
+            class="fade-in-up relative hidden sm:grid grid-cols-2 gap-6 items-center py-3"
           >
             <router-link
               v-if="modIndex % 2 === 0"

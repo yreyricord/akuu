@@ -36,7 +36,7 @@
                       name="name"
                       autocomplete="name"
                       required
-                      class="w-full px-4 py-3 rounded-xl border border-forest/20 bg-cream focus:ring-2 focus:ring-forest focus:border-forest outline-none transition-all"
+                      class="w-full px-4 py-3 text-base rounded-xl border border-forest/20 bg-cream focus:ring-2 focus:ring-forest focus:border-forest outline-none transition-all"
                       :placeholder="$t('contact.name')"
                     />
                   </div>
@@ -52,7 +52,7 @@
                       name="email"
                       autocomplete="email"
                       required
-                      class="w-full px-4 py-3 rounded-xl border border-forest/20 bg-cream focus:ring-2 focus:ring-forest focus:border-forest outline-none transition-all"
+                      class="w-full px-4 py-3 text-base rounded-xl border border-forest/20 bg-cream focus:ring-2 focus:ring-forest focus:border-forest outline-none transition-all"
                       :placeholder="$t('contact.email')"
                     />
                   </div>
@@ -66,7 +66,7 @@
                       v-model="form.subject"
                       name="subject"
                       autocomplete="off"
-                      class="w-full px-4 py-3 rounded-xl border border-forest/20 bg-cream focus:ring-2 focus:ring-forest focus:border-forest outline-none transition-all"
+                      class="w-full px-4 py-3 text-base rounded-xl border border-forest/20 bg-cream focus:ring-2 focus:ring-forest focus:border-forest outline-none transition-all"
                     >
                       <option value="don">{{ $t('contact.subjects.don') }}</option>
                       <option value="volontaire">{{ $t('contact.subjects.volontaire') }}</option>
@@ -86,7 +86,7 @@
                       autocomplete="off"
                       rows="5"
                       required
-                      class="w-full px-4 py-3 rounded-xl border border-forest/20 bg-cream focus:ring-2 focus:ring-forest focus:border-forest outline-none transition-all resize-none"
+                      class="w-full px-4 py-3 text-base rounded-xl border border-forest/20 bg-cream focus:ring-2 focus:ring-forest focus:border-forest outline-none transition-all resize-none"
                       :placeholder="$t('contact.message')"
                     />
                   </div>

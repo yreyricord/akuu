@@ -25,6 +25,7 @@ import { buildStandardFilename } from '@/utils/factureFilename.js'
 
 const STORAGE_KEY = 'akuu_tresorerie_v1'
 const AUTH_KEY = 'akuu_tresorerie_auth'
+const MOCK_RESET_KEY = 'akuu_tresorerie_mock_reset'
 
 const DEMO_USERS = [
   { email: ADMIN_EMAIL, password: 'demo-akuu-2026', role: 'admin', first_name: 'Yoann', last_name: 'Rey-Ricord', name: 'Yoann Rey-Ricord' },
@@ -173,6 +174,35 @@ export const mockBackend = {
   logout() {
     localStorage.removeItem(AUTH_KEY)
     return ok({ loggedOut: true })
+  },
+
+  async forgotPassword({ email }) {
+    const normalized = String(email || '').toLowerCase().trim()
+    const user = findUser(normalized)
+    if (user) {
+      const token = `mock-${uuid()}`
+      const store = JSON.parse(sessionStorage.getItem(MOCK_RESET_KEY) || '{}')
+      store[token] = { email: normalized, exp: Date.now() + 30 * 60 * 1000 }
+      sessionStorage.setItem(MOCK_RESET_KEY, JSON.stringify(store))
+      console.info('[mock] Lien reset :', `/admin/reset-password?token=${token}`)
+    }
+    return ok({
+      message: 'Si un compte existe pour cette adresse, un email de réinitialisation vient d\'être envoyé. Pensez à vérifier vos spams.'
+    })
+  },
+
+  async resetPassword({ token, new_password }) {
+    const store = JSON.parse(sessionStorage.getItem(MOCK_RESET_KEY) || '{}')
+    const entry = store[token]
+    if (!entry || Date.now() > entry.exp) {
+      throw apiError('INVALID_TOKEN', 'Lien invalide ou expiré. Demandez un nouveau lien.')
+    }
+    const user = findUser(entry.email)
+    if (!user) throw apiError('INVALID_TOKEN', 'Lien invalide ou expiré. Demandez un nouveau lien.')
+    user.password = new_password
+    delete store[token]
+    sessionStorage.setItem(MOCK_RESET_KEY, JSON.stringify(store))
+    return ok({ message: 'Mot de passe mis à jour. Vous pouvez vous connecter.' })
   },
 
   async createDemande(payload, devisFiles = []) {

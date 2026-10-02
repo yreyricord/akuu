@@ -153,7 +153,52 @@
         :progress="syncPercent"
         hint=""
       />
-      <div class="mt-4 overflow-x-auto">
+      <div class="mt-4 space-y-3 md:hidden">
+        <article
+          v-for="y in yearRows"
+          :key="`m-${y.year}`"
+          class="rounded-xl border border-night-100 bg-cream-50 p-4"
+        >
+          <div class="flex items-center justify-between gap-2">
+            <button
+              type="button"
+              class="text-xl font-serif font-bold text-night hover:text-forest-700"
+              @click="focusYear(y.year)"
+            >
+              {{ y.year }}
+            </button>
+            <span class="text-sm font-semibold tabular-nums">{{ y.factures }} facture(s)</span>
+          </div>
+          <div class="mt-3 flex items-center gap-3">
+            <div class="h-2 min-w-0 flex-1 overflow-hidden rounded-full bg-cream-200">
+              <div class="h-full rounded-full bg-forest" :style="{ width: `${y.pct}%` }" />
+            </div>
+            <span class="shrink-0 text-xs tabular-nums text-night-500">{{ y.withPiece }}/{{ y.depenses }} · {{ y.pct }} %</span>
+          </div>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <button
+              v-if="y.missing"
+              type="button"
+              class="admin-segment bg-ochre-100 px-3 text-sm text-ochre-700 hover:bg-ochre-200"
+              @click="focusYear(y.year)"
+            >
+              {{ y.missing }} à compléter
+            </button>
+            <span v-else-if="y.journalLoaded" class="inline-flex min-h-[44px] items-center text-sm font-semibold text-forest-700">Complet</span>
+            <a
+              v-if="y.folderUrl"
+              :href="y.folderUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="admin-segment inline-flex items-center gap-1 border border-night-100 px-3 text-sm text-night hover:border-bleu/50"
+            >
+              <PhFolderOpen :size="14" aria-hidden="true" />
+              {{ y.exact ? 'Dossier Factures' : '3_Trésorerie' }}
+            </a>
+          </div>
+        </article>
+      </div>
+      <div class="mt-4 hidden overflow-x-auto md:block">
         <table class="w-full min-w-[640px] text-sm">
           <thead>
             <tr class="border-b border-night-100 text-left text-xs font-bold uppercase tracking-wide text-night-500">
@@ -182,7 +227,7 @@
                 <button
                   v-if="y.missing"
                   type="button"
-                  class="min-h-[36px] rounded-full bg-ochre-100 px-3 text-xs font-semibold text-ochre-700 hover:bg-ochre-200"
+                  class="admin-segment bg-ochre-100 px-3 text-sm text-ochre-700 hover:bg-ochre-200"
                   @click="focusYear(y.year)"
                 >
                   {{ y.missing }} à compléter
@@ -196,7 +241,7 @@
                   :href="y.folderUrl"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="inline-flex min-h-[36px] items-center gap-1 rounded-full border border-night-100 px-3 text-xs font-semibold text-night hover:border-bleu/50"
+                  class="admin-segment inline-flex items-center gap-1 border border-night-100 px-3 text-sm text-night hover:border-bleu/50"
                 >
                   <PhFolderOpen :size="14" aria-hidden="true" />
                   {{ y.exact ? 'Dossier Factures' : '3_Trésorerie' }}
@@ -486,6 +531,6 @@ function formatDate(iso) {
   return Number.isNaN(d.getTime()) ? iso : d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 function segClass(on) {
-  return ['min-h-[36px] rounded-full px-4 text-sm font-semibold transition', on ? 'bg-white text-forest-700 shadow-sm' : 'text-night-500 hover:text-night']
+  return ['admin-segment', on ? 'bg-white text-forest-700 shadow-sm' : 'text-night-500 hover:text-night']
 }
 </script>

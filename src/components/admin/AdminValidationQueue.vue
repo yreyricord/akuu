@@ -8,7 +8,7 @@
         </div>
         <button
           type="button"
-          class="min-h-[36px] rounded-full border border-night-200 px-4 text-xs font-semibold text-night hover:border-forest/40"
+          class="min-h-[44px] rounded-full border border-night-200 px-4 text-sm font-semibold text-night hover:border-forest/40"
           :disabled="refreshing"
           @click="reload"
         >
@@ -123,7 +123,7 @@
                   :href="f.drive_file_url"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="shrink-0 rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-bleu hover:underline"
+                  class="shrink-0 inline-flex min-h-[44px] items-center rounded-full bg-white px-4 text-sm font-semibold text-bleu"
                 >
                   Voir
                 </a>

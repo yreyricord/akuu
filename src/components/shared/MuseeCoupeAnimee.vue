@@ -10,7 +10,7 @@
       <p class="text-night/50 mt-3 max-w-xl mx-auto text-sm">
         {{ $t('musee.coupe.intro') }}
       </p>
-      <p class="text-night/35 mt-2 text-xs font-medium tracking-wide flex items-center justify-center gap-1.5">
+      <p class="text-night/35 mt-2 hidden text-xs font-medium tracking-wide md:flex items-center justify-center gap-1.5">
         <span class="inline-block animate-bounce motion-reduce:animate-none" aria-hidden="true">↓</span>
         {{ $t('musee.coupe.scroll_hint') }}
       </p>
@@ -22,7 +22,7 @@
       :style="stageStyle"
       :aria-label="$t('musee.coupe.title')"
     >
-      <div class="coupe-sticky sticky top-0 h-[100dvh] flex flex-col justify-center py-4 md:py-6">
+      <div class="coupe-sticky sticky top-0 flex h-[82dvh] flex-col justify-center py-3 md:h-[100dvh] md:py-6">
         <div class="w-full max-w-7xl mx-auto flex flex-col min-h-0 max-h-full">
 
           <!-- Plan : aspect-ratio contraint pour coller à l'image -->
@@ -189,6 +189,27 @@
             </div>
           </div>
 
+          <!-- Navigation tactile mobile (évite le long scroll) -->
+          <div
+            v-if="imageReady && isCompact"
+            class="mt-2 flex gap-2 overflow-x-auto pb-1 md:hidden"
+            role="tablist"
+            :aria-label="$t('musee.coupe.title')"
+          >
+            <button
+              v-for="zone in zonesSorted"
+              :key="`chip-${zone.id}`"
+              type="button"
+              role="tab"
+              :aria-selected="isZoneActive(zone)"
+              class="shrink-0 rounded-full px-3 py-2 text-xs font-semibold transition active:scale-[0.98]"
+              :class="isZoneActive(zone) ? 'bg-forest text-white' : 'bg-white/90 text-night border border-night/10'"
+              @click="selectZone(zone)"
+            >
+              {{ zone.badge }}. {{ zone.nom }}
+            </button>
+          </div>
+
           <!-- Card unique pleine largeur, collée sous la coupe -->
           <div class="w-full shrink-0 pt-2">
             <transition name="card-swap" mode="out-in">
@@ -296,6 +317,7 @@ const zonesSorted = computed(() => [...zones.value].sort((a, b) => Number(a.badg
 
 const rootEl = ref(null)
 const stageRef = ref(null)
+const isCompact = ref(false)
 const imageReady = ref(false)
 const imageRevealed = ref(false)
 const zonesVisible = ref(false)
@@ -317,9 +339,10 @@ const activeZone = computed(() => {
   return zonesSorted.value[activeStep.value] ?? null
 })
 
-const stageStyle = computed(() => ({
-  minHeight: `${totalSlices.value * 100}vh`
-}))
+const stageStyle = computed(() => {
+  const sliceVh = isCompact.value ? 55 : 100
+  return { minHeight: `${totalSlices.value * sliceVh}vh` }
+})
 
 /**
  * Zoom + pan fluide : centre le viewport sur la zone active.
@@ -392,7 +415,17 @@ function onScrollOrResize() {
 }
 
 let enterObserver = null
+let compactMq = null
+
+function syncCompact() {
+  isCompact.value = window.matchMedia('(max-width: 767px)').matches
+}
+
 onMounted(() => {
+  syncCompact()
+  compactMq = window.matchMedia('(max-width: 767px)')
+  compactMq.addEventListener('change', syncCompact)
+
   enterObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -419,6 +452,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+  if (compactMq) compactMq.removeEventListener('change', syncCompact)
   if (enterObserver) enterObserver.disconnect()
   window.removeEventListener('scroll', onScrollOrResize)
   window.removeEventListener('resize', onScrollOrResize)

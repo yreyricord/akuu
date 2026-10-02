@@ -84,7 +84,7 @@
         </div>
         <button
           type="button"
-          class="shrink-0 rounded-full p-2 text-night-400 hover:bg-night-50 hover:text-terracotta"
+          class="touch-target shrink-0 rounded-full text-night-400 hover:bg-night-50 hover:text-terracotta"
           aria-label="Retirer le fichier"
           @click="removeAt(i)"
         >

@@ -37,7 +37,15 @@
           />
         </label>
         <label class="block space-y-1.5">
-          <span class="text-sm font-medium text-night">Mot de passe</span>
+          <span class="flex items-center justify-between gap-2 text-sm font-medium text-night">
+            <span>Mot de passe</span>
+            <router-link
+              :to="{ name: 'admin-forgot-password' }"
+              class="text-xs font-semibold text-forest hover:underline"
+            >
+              Mot de passe oublié ?
+            </router-link>
+          </span>
           <input
             v-model="password"
             type="password"

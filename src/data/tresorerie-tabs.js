@@ -1,3 +1,7 @@
+/** Onglets visibles en barre du bas mobile (≤4 + Modules + Plus). */
+export const TREASORERIE_MOBILE_PRIMARY_TREASURER = ['guide', 'demande', 'facture', 'validation']
+export const TREASORERIE_MOBILE_PRIMARY_MEMBER = ['guide', 'demande', 'facture', 'historique']
+
 /** Onglets du module Trésorerie (barre du bas) — fichier léger pour le bundle admin. */
 export const TREASORERIE_TABS = [
   { id: 'guide', label: 'Guide', roles: ['benevole', 'tresorier', 'admin'] },

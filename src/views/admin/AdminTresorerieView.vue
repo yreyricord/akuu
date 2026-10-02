@@ -1,5 +1,5 @@
 <template>
-  <div class="admin-shell min-h-[100dvh] bg-cream-200" :class="activeModule ? 'pb-24' : 'pb-8'">
+  <div class="admin-shell min-h-[100dvh] bg-cream-200" :class="activeModule ? 'pb-28' : 'pb-8'">
     <header class="sticky top-0 z-30 border-b border-night-100 bg-white/95 backdrop-blur px-4 py-3">
       <div
         class="mx-auto flex items-center justify-between gap-3"
@@ -73,28 +73,29 @@
       </template>
     </div>
 
-    <!-- Barre du bas · visible uniquement dans un module -->
+    <!-- Barre du bas · mobile : 4 onglets + Plus · desktop : tous les onglets -->
     <nav
       v-if="activeModule === 'tresorerie'"
       class="admin-bottom-nav fixed bottom-0 inset-x-0 z-40 border-t border-night-100 bg-white/95 backdrop-blur safe-area-pb"
       aria-label="Navigation trésorerie"
     >
       <ul class="mx-auto flex max-w-6xl px-1">
-        <li class="flex-1">
+        <li class="flex-1 min-w-0">
           <button
             type="button"
-            class="relative flex w-full flex-col items-center gap-0.5 px-1 py-2.5 text-[11px] font-semibold text-night-400 transition hover:text-forest"
+            class="nav-tab-btn text-night-400 hover:text-forest"
             @click="goHub"
           >
             <PhSquaresFour :size="22" weight="duotone" aria-hidden="true" />
-            Modules
+            <span>Modules</span>
           </button>
         </li>
-        <li v-for="tab in visibleTabs" :key="tab.id" class="flex-1">
+        <li v-for="tab in bottomPrimaryTabs" :key="tab.id" class="flex-1 min-w-0">
           <button
             type="button"
-            class="relative flex w-full flex-col items-center gap-0.5 px-1 py-2.5 text-[11px] font-semibold transition"
+            class="nav-tab-btn"
             :class="activeTab === tab.id ? 'text-forest' : 'text-night-400'"
+            :aria-current="activeTab === tab.id ? 'page' : undefined"
             @click="setTab(tab.id)"
           >
             <span class="relative">
@@ -102,21 +103,85 @@
               <span
                 v-if="tab.id === 'validation' && pendingCount"
                 class="absolute -right-2 -top-1 min-w-[1.125rem] rounded-full bg-terracotta px-1 text-center text-[10px] font-bold leading-4 text-white"
-              >
-                {{ pendingCount }}
-              </span>
+              >{{ pendingCount }}</span>
+            </span>
+            <span>{{ tab.label }}</span>
+          </button>
+        </li>
+        <li v-if="bottomSecondaryTabs.length" class="flex-1 min-w-0 md:hidden">
+          <button
+            type="button"
+            class="nav-tab-btn"
+            :class="secondaryTabActive ? 'text-forest' : 'text-night-400'"
+            aria-haspopup="dialog"
+            :aria-expanded="plusOpen"
+            @click="plusOpen = true"
+          >
+            <span class="relative">
+              <PhDotsThreeCircle :size="22" weight="duotone" aria-hidden="true" />
+              <span
+                v-if="secondaryBadgeCount"
+                class="absolute -right-2 -top-1 min-w-[1.125rem] rounded-full bg-terracotta px-1 text-center text-[10px] font-bold leading-4 text-white"
+              >{{ secondaryBadgeCount }}</span>
+            </span>
+            <span>Plus</span>
+          </button>
+        </li>
+        <li v-for="tab in bottomSecondaryTabs" :key="`desk-${tab.id}`" class="hidden md:flex flex-1 min-w-0">
+          <button
+            type="button"
+            class="nav-tab-btn"
+            :class="activeTab === tab.id ? 'text-forest' : 'text-night-400'"
+            :aria-current="activeTab === tab.id ? 'page' : undefined"
+            @click="setTab(tab.id)"
+          >
+            <span class="relative">
+              <component :is="tabIcons[tab.id]" :size="22" weight="duotone" aria-hidden="true" />
               <span
                 v-if="tab.id === 'acces' && accessPendingCount"
                 class="absolute -right-2 -top-1 min-w-[1.125rem] rounded-full bg-terracotta px-1 text-center text-[10px] font-bold leading-4 text-white"
-              >
-                {{ accessPendingCount }}
-              </span>
+              >{{ accessPendingCount }}</span>
             </span>
-            {{ tab.label }}
+            <span>{{ tab.label }}</span>
           </button>
         </li>
       </ul>
     </nav>
+
+    <Teleport to="body">
+      <div
+        v-if="plusOpen"
+        class="fixed inset-0 z-50 bg-night/40 md:hidden"
+        aria-hidden="true"
+        @click="plusOpen = false"
+      />
+      <div
+        v-if="plusOpen"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Autres onglets"
+        class="fixed inset-x-0 bottom-0 z-[60] rounded-t-2xl border border-night-100 bg-white p-4 pb-8 shadow-2xl safe-area-pb md:hidden"
+      >
+        <p class="mb-3 text-xs font-bold uppercase tracking-wide text-night-400">Autres sections</p>
+        <ul class="grid grid-cols-2 gap-2">
+          <li v-for="tab in bottomSecondaryTabs" :key="tab.id">
+            <button
+              type="button"
+              class="flex min-h-[52px] w-full flex-col items-center justify-center gap-1 rounded-xl border border-night-100 px-2 py-2 text-xs font-semibold transition"
+              :class="activeTab === tab.id ? 'border-forest/30 bg-forest/5 text-forest' : 'text-night-600'"
+              @click="setTabFromPlus(tab.id)"
+            >
+              <component :is="tabIcons[tab.id]" :size="22" weight="duotone" aria-hidden="true" />
+              {{ tab.label }}
+              <span
+                v-if="tab.id === 'acces' && accessPendingCount"
+                class="mt-0.5 min-w-[1.125rem] rounded-full bg-terracotta px-1.5 text-[10px] font-bold text-white"
+              >{{ accessPendingCount }}</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </Teleport>
   </div>
 </template>
 
@@ -135,11 +200,16 @@ import {
   PhBookOpen,
   PhUserPlus,
   PhSquaresFour,
-  PhBank
+  PhBank,
+  PhDotsThreeCircle
 } from '@phosphor-icons/vue'
 import { useAuthStore } from '@/store/auth.js'
 import { useTresorerieStore } from '@/store/tresorerie.js'
-import { TREASORERIE_TABS } from '@/data/tresorerie-tabs.js'
+import {
+  TREASORERIE_TABS,
+  TREASORERIE_MOBILE_PRIMARY_TREASURER,
+  TREASORERIE_MOBILE_PRIMARY_MEMBER
+} from '@/data/tresorerie-tabs.js'
 import { awaitingVolunteerDevisResubmit } from '@/data/tresorerie-config.js'
 import { getModule } from '@/data/admin-modules.js'
 import { userHasTabAccess } from '@/data/member-roles.js'
@@ -196,12 +266,28 @@ const activeModuleLabel = computed(() => {
   return getModule(activeModule.value)?.label ?? 'Module'
 })
 
+const plusOpen = ref(false)
+
 const visibleTabs = computed(() =>
   TREASORERIE_TABS.filter((t) => {
     if (!userHasTabAccess(auth.user?.role, t.roles)) return false
     if (t.superAdminOnly && !auth.isSuperAdminUser) return false
     return true
   })
+)
+
+const mobilePrimaryIds = computed(() =>
+  (auth.isTreasurer || auth.isAdmin)
+    ? TREASORERIE_MOBILE_PRIMARY_TREASURER
+    : TREASORERIE_MOBILE_PRIMARY_MEMBER
+)
+
+const bottomPrimaryTabs = computed(() =>
+  visibleTabs.value.filter((t) => mobilePrimaryIds.value.includes(t.id))
+)
+
+const bottomSecondaryTabs = computed(() =>
+  visibleTabs.value.filter((t) => !mobilePrimaryIds.value.includes(t.id))
 )
 
 const activeTab = computed(() => {
@@ -223,6 +309,17 @@ const pendingCount = computed(() => {
 
 const accessPendingCount = computed(() => store.pendingAccessRequests.length)
 
+const secondaryTabActive = computed(() =>
+  bottomSecondaryTabs.value.some((t) => t.id === activeTab.value)
+)
+
+const secondaryBadgeCount = computed(() => {
+  if (accessPendingCount.value && bottomSecondaryTabs.value.some((t) => t.id === 'acces')) {
+    return accessPendingCount.value
+  }
+  return 0
+})
+
 function goHub() {
   router.replace({ name: 'admin-tresorerie' })
   store.clearMessages()
@@ -241,8 +338,14 @@ function enterModule(moduleId, tab = null) {
 }
 
 function setTab(id) {
+  plusOpen.value = false
   router.replace({ query: { ...route.query, module: activeModule.value, tab: id } })
   store.clearMessages()
+}
+
+function setTabFromPlus(id) {
+  setTab(id)
+  plusOpen.value = false
 }
 
 function goAfterSubmit() {
@@ -305,6 +408,10 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .safe-area-pb {
-  padding-bottom: env(safe-area-inset-bottom, 0);
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom, 0));
+}
+
+.nav-tab-btn {
+  @apply relative flex w-full min-h-[52px] flex-col items-center justify-center gap-0.5 px-1 py-2 text-xs font-semibold transition;
 }
 </style>

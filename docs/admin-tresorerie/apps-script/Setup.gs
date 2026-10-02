@@ -328,6 +328,25 @@ function installAllTriggers() {
   Logger.log('Triggers installés : relances 24h + nouvelle année');
 }
 
+/**
+ * Admin : renvoie un mot de passe provisoire (éditeur Apps Script uniquement).
+ * Envoi synchrone + affichage dans le journal d'exécution.
+ */
+function renvoyerMotDePasseAdmin(emailOpt) {
+  var email = String(emailOpt || getAdminEmail_()).toLowerCase().trim();
+  var row = findUserRow_(email);
+  if (!row) throw new Error('Compte introuvable dans Users : ' + email);
+  var pwd = randomPassword_();
+  setUserPasswordHash_(email, newPasswordHash_(pwd));
+  clearLoginFailures_(email);
+  sendMailContent_(email, buildPasswordEmail_({
+    first_name: row.first_name || row.name || email,
+    password: pwd
+  }));
+  Logger.log('Mot de passe provisoire envoyé à ' + email + ' · copie journal : ' + pwd);
+  return { email: email, password_sent: true };
+}
+
 /** Menu test après déploiement */
 function testExchangeRate() {
   Logger.log(JSON.stringify(getExchangeRate_()));

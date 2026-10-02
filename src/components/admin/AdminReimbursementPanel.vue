@@ -68,7 +68,7 @@
         <template #cell-actions="{ row }">
           <button
             type="button"
-            class="whitespace-nowrap rounded-full bg-forest px-3 py-1.5 text-xs font-semibold text-white hover:bg-forest-600 disabled:opacity-50"
+            class="whitespace-nowrap inline-flex min-h-[44px] items-center rounded-full bg-forest px-4 text-sm font-semibold text-white hover:bg-forest-600 disabled:opacity-50"
             :disabled="store.loading || marking === row.reference"
             @click="markPaid(row.reference)"
           >

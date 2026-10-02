@@ -19,6 +19,7 @@
    |---------|------|
    | `App.gs` | Routes API (doGet / doPost) |
    | `Auth.gs` | Login, session, rôles |
+   | `PasswordReset.gs` | Mot de passe oublié (lien sécurisé) |
    | `Config.gs` | Constantes, whitelist, emails admin/trésoriers |
    | `Business.gs` | Demandes, factures, compta |
    | `SheetsRepo.gs` | Lecture / écriture Google Sheets |

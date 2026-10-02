@@ -101,6 +101,7 @@
             <div class="absolute inset-0 flex items-end gap-2 px-1 sm:gap-3">
               <div v-for="b in bars" :key="b.key" class="flex h-full flex-1 items-end justify-center gap-1">
                 <div class="group relative flex h-full w-1/3 max-w-[36px] flex-col items-center justify-end">
+                  <span class="pointer-events-none mb-0.5 block text-[10px] font-semibold tabular-nums text-forest-700 sm:hidden">{{ short(b.produits) }}</span>
                   <span class="pointer-events-none mb-0.5 hidden text-[10px] font-semibold tabular-nums text-forest-700 group-hover:block sm:text-[11px]">{{ eur(b.produits) }}</span>
                   <div
                     class="w-full rounded-t-md bg-forest transition-opacity group-hover:opacity-90"
@@ -109,6 +110,7 @@
                   />
                 </div>
                 <div class="group relative flex h-full w-1/3 max-w-[36px] flex-col items-center justify-end">
+                  <span class="pointer-events-none mb-0.5 block text-[10px] font-semibold tabular-nums text-bleu sm:hidden">{{ short(b.charges) }}</span>
                   <span class="pointer-events-none mb-0.5 hidden text-[10px] font-semibold tabular-nums text-bleu group-hover:block sm:text-[11px]">{{ eur(b.charges) }}</span>
                   <div
                     class="w-full rounded-t-md bg-bleu transition-opacity group-hover:opacity-90"
@@ -213,6 +215,7 @@
             <div class="absolute inset-0 flex items-end gap-2 px-1 sm:gap-3">
               <div v-for="r in loyers.rows" :key="r.key" class="flex h-full flex-1 items-end justify-center gap-1">
                 <div class="group relative flex h-full w-1/3 max-w-[36px] flex-col items-center justify-end">
+                  <span class="pointer-events-none mb-0.5 block text-[10px] font-semibold tabular-nums text-forest-700 sm:hidden">{{ short(r.loyers) }}</span>
                   <span class="pointer-events-none mb-0.5 hidden text-[10px] font-semibold tabular-nums text-forest-700 group-hover:block sm:text-[11px]">{{ eur(r.loyers) }}</span>
                   <div
                     class="w-full rounded-t-md bg-forest transition-opacity group-hover:opacity-90"
@@ -221,6 +224,7 @@
                   />
                 </div>
                 <div class="group relative flex h-full w-1/3 max-w-[36px] flex-col items-center justify-end">
+                  <span class="pointer-events-none mb-0.5 block text-[10px] font-semibold tabular-nums text-bleu sm:hidden">{{ short(r.depenses) }}</span>
                   <span class="pointer-events-none mb-0.5 hidden text-[10px] font-semibold tabular-nums text-bleu group-hover:block sm:text-[11px]">{{ eur(r.depenses) }}</span>
                   <div
                     class="w-full rounded-t-md bg-bleu transition-opacity group-hover:opacity-90"
@@ -254,7 +258,33 @@
         <h3 class="text-base font-semibold text-forest-700">Dépenses par projet et par année</h3>
         <p class="text-xs text-night-500">Plus la case est foncée, plus la dépense est forte · clic sur une case : isoler l'année</p>
       </div>
-      <div class="mt-4 overflow-x-auto">
+      <div class="mt-4 space-y-3 md:hidden">
+        <article
+          v-for="p in heatRows"
+          :key="`hm-${p.label}`"
+          class="rounded-xl border border-night-100 bg-cream-50 p-4"
+        >
+          <div class="flex items-baseline justify-between gap-2">
+            <h4 class="text-sm font-semibold text-night">{{ p.label }}</h4>
+            <span class="text-xs font-bold tabular-nums text-forest-700">{{ eur(p.total) }}</span>
+          </div>
+          <div class="mt-3 grid grid-cols-3 gap-2">
+            <button
+              v-for="c in p.cells"
+              :key="`${p.label}-${c.year}`"
+              type="button"
+              class="min-h-[44px] rounded-lg px-2 py-2 text-center text-xs font-semibold tabular-nums transition active:scale-[0.98] disabled:cursor-default"
+              :style="c.style"
+              :disabled="!c.value"
+              @click="selected = [c.year]"
+            >
+              <span class="block text-[10px] font-bold opacity-80">{{ c.year }}</span>
+              {{ c.value ? short(c.value) : '–' }}
+            </button>
+          </div>
+        </article>
+      </div>
+      <div class="mt-4 hidden overflow-x-auto md:block">
         <table class="w-full min-w-[640px] border-separate border-spacing-1 text-sm">
           <thead>
             <tr class="text-xs text-night-500">
@@ -602,7 +632,7 @@ function chipClass(on) {
 }
 function segClass(on) {
   return [
-    'min-h-[36px] rounded-full px-4 text-sm font-semibold transition',
+    'admin-segment px-4 transition',
     on ? 'bg-white text-forest-700 shadow-sm' : 'text-night-500 hover:text-night'
   ]
 }

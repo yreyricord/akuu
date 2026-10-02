@@ -23,7 +23,7 @@
         class="hero-colibri pointer-events-none absolute z-[2] h-24 sm:h-32 md:h-40 xl:h-52 w-auto opacity-[0.14] sm:opacity-[0.20] md:opacity-[0.22] right-[4%] sm:right-[3%] bottom-[12%] sm:bottom-[18%]"
       />
 
-      <div class="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-10 xl:px-6 pt-28 pb-12 md:pt-24 md:pb-6">
+      <div class="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-10 xl:px-6 pt-24 pb-8 md:pt-24 md:pb-6">
 
         <div class="grid lg:grid-cols-2 gap-8 lg:gap-6 xl:gap-10 items-stretch">
 
@@ -36,7 +36,7 @@
                 type="button"
                 @click="donDestination = 'musee'"
                 :class="[
-                  'dest-btn group relative flex items-center gap-2 rounded-xl px-2.5 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-[13px] font-semibold transition-all duration-300 text-left',
+                  'dest-btn group relative flex min-h-[44px] items-center gap-2 rounded-xl px-3 sm:px-4 py-2.5 text-xs sm:text-[13px] font-semibold transition-all duration-300 text-left',
                   donDestination === 'musee'
                     ? 'bg-leaf/15 text-leaf ring-1 ring-leaf/40 shadow-md shadow-leaf/10'
                     : 'bg-white/[0.05] text-white/45 ring-1 ring-white/10 hover:bg-white/[0.08] hover:text-white/70 hover:ring-white/20'
@@ -51,7 +51,7 @@
                 type="button"
                 @click="donDestination = 'fonctionnement'"
                 :class="[
-                  'dest-btn group relative flex items-center gap-2 rounded-xl px-2.5 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-[13px] font-semibold transition-all duration-300 text-left',
+                  'dest-btn group relative flex min-h-[44px] items-center gap-2 rounded-xl px-3 sm:px-4 py-2.5 text-xs sm:text-[13px] font-semibold transition-all duration-300 text-left',
                   donDestination === 'fonctionnement'
                     ? 'bg-leaf/15 text-leaf ring-1 ring-leaf/40 shadow-md shadow-leaf/10'
                     : 'bg-white/[0.05] text-white/45 ring-1 ring-white/10 hover:bg-white/[0.08] hover:text-white/70 hover:ring-white/20'
@@ -248,7 +248,7 @@
                   <span class="text-2xl font-serif text-white/50">€</span>
                   <span v-if="donFrequency === 'monthly'" class="text-white/35 text-sm ml-1">/{{ $t('soutien.simulator_month') }}</span>
                 </div>
-                <p class="text-white/30 text-[10px] mb-1">{{ $t('soutien.slider_custom_help') }}</p>
+                <p class="text-white/30 text-xs mb-1">{{ $t('soutien.slider_custom_help') }}</p>
 
                 <!-- Slider colibri -->
                 <div
@@ -264,7 +264,7 @@
                     class="colibri-slider w-full"
                     @input="onSliderInput"
                   />
-                  <div class="flex justify-between text-white/20 text-[9px] sm:text-[10px] mt-1 px-0.5">
+                  <div class="flex justify-between text-white/20 text-xs mt-1 px-0.5">
                     <span>1 €</span><span class="hidden sm:inline">20 €</span><span>50 €</span><span>100 €</span><span>{{ SLIDER_MAX }} €</span>
                   </div>
                 </div>

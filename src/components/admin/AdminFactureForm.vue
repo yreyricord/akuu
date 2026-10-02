@@ -124,7 +124,7 @@
             </div>
             <button
               type="button"
-              class="text-sm font-medium text-leaf hover:text-forest"
+              class="inline-flex min-h-[44px] items-center rounded-full border border-leaf/40 bg-leaf/10 px-4 text-sm font-semibold text-forest hover:bg-leaf/20"
               @click="addLine"
             >
               + Ajouter une facture
@@ -157,7 +157,7 @@
               <button
                 v-if="lines.length > 1"
                 type="button"
-                class="text-xs text-terracotta hover:underline"
+                class="inline-flex min-h-[44px] items-center rounded-full border border-terracotta/30 px-3 text-sm font-semibold text-terracotta hover:bg-terracotta/10"
                 @click="removeLine(line.id)"
               >
                 Retirer

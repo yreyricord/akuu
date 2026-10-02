@@ -1,5 +1,5 @@
 <template>
-  <section class="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
+  <section class="relative h-[40vh] min-h-[280px] sm:h-[50vh] sm:min-h-[400px] flex items-center justify-center overflow-hidden">
     <!-- Breadcrumb -->
     <nav
       :aria-label="$t('a11y.breadcrumb')"
@@ -42,7 +42,7 @@
       class="absolute inset-0 bg-gradient-to-b from-night/60 via-night/40 to-night/70"
     />
     <div class="relative z-10 text-center text-white px-4 max-w-3xl mx-auto">
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 text-balance">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 text-balance">
         {{ title }}
       </h1>
       <p v-if="subtitle" class="text-lg md:text-xl text-white/80">

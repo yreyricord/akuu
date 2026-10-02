@@ -118,7 +118,50 @@
       </span>
     </div>
 
-    <div class="mt-4 overflow-x-auto">
+    <div class="mt-4 space-y-3 md:hidden">
+      <article
+        v-for="(o, i) in ops"
+        :key="`m-${i}`"
+        class="rounded-xl border border-night-100 bg-cream-50 p-4"
+        :class="o.duplicate ? 'opacity-50' : ''"
+      >
+        <div class="flex items-start justify-between gap-2">
+          <div class="min-w-0">
+            <p class="text-xs font-semibold tabular-nums text-night-500">{{ o.date.slice(8, 10) }}/{{ o.date.slice(5, 7) }}</p>
+            <p class="mt-1 text-sm font-medium leading-snug">{{ o.label }}</p>
+            <p v-if="o.duplicate" class="mt-1 text-xs font-semibold text-night-500">Déjà dans le journal</p>
+          </div>
+          <p
+            class="shrink-0 text-sm font-bold tabular-nums"
+            :class="o.amount > 0 ? 'text-forest-700' : 'text-night'"
+          >
+            {{ o.amount > 0 ? '+' : '−' }}{{ eur(Math.abs(o.amount)) }}
+          </p>
+        </div>
+        <div class="mt-3 grid gap-2">
+          <label class="block text-xs font-semibold text-night-500">
+            Catégorie
+            <select v-model="o.category" class="admin-input mt-1 w-full text-base" :disabled="o.duplicate">
+              <option v-for="c in (o.amount > 0 ? RECETTE_CATEGORIES : DEPENSE_CATEGORIES)" :key="c" :value="c">{{ c }}</option>
+            </select>
+          </label>
+          <label class="block text-xs font-semibold text-night-500">
+            Projet
+            <select
+              v-model="o.project"
+              class="admin-input mt-1 w-full text-base"
+              :class="!o.project && !o.duplicate ? 'border-ochre-400' : ''"
+              :disabled="o.duplicate"
+            >
+              <option value="">À préciser plus tard</option>
+              <option v-for="p in JOURNAL_PROJECTS" :key="p.code" :value="p.code">{{ p.label }}</option>
+            </select>
+          </label>
+        </div>
+      </article>
+    </div>
+
+    <div class="mt-4 hidden overflow-x-auto md:block">
       <table class="w-full min-w-[720px] text-sm">
         <thead>
           <tr class="border-b border-night-100 text-left text-xs font-bold uppercase tracking-wide text-night-500">

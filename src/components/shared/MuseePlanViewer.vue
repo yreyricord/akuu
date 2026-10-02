@@ -47,7 +47,7 @@
         </div>
 
         <!-- Image principale -->
-        <div class="relative overflow-hidden bg-stone-100" style="height: 480px;">
+        <div class="relative overflow-hidden bg-stone-100" style="height: min(480px, 55vh);">
           <transition name="carousel-fade" mode="out-in">
             <img
               :key="carouselIndex"

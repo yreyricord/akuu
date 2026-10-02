@@ -8,7 +8,7 @@
         </div>
         <button
           type="button"
-          class="min-h-[36px] rounded-full border border-night-200 px-4 text-xs font-semibold text-night hover:border-forest/40"
+          class="admin-segment border border-night-200 px-4 text-sm text-night hover:border-forest/40"
           :disabled="store.historyLoading"
           @click="store.loadHistory(true)"
         >

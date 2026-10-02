@@ -23,7 +23,7 @@
           <li v-for="(p, i) in projects" :key="i" class="flex flex-wrap items-center gap-2">
             <input v-model="p.code" class="admin-input w-28 py-1 text-xs font-mono" placeholder="code" />
             <input v-model="p.label" class="admin-input min-w-[12rem] flex-1 py-1 text-xs" placeholder="Libellé" />
-            <button type="button" class="text-xs text-terracotta-700 hover:underline" @click="projects.splice(i, 1)">Retirer</button>
+            <button type="button" class="inline-flex min-h-[44px] items-center rounded-full px-3 text-sm font-semibold text-terracotta-700 hover:bg-terracotta/10" @click="projects.splice(i, 1)">Retirer</button>
           </li>
         </ul>
         <button type="button" class="mt-2 text-xs font-semibold text-forest-700 hover:underline" @click="projects.push({ code: '', label: '' })">
@@ -37,7 +37,7 @@
           <li v-for="(c, i) in categories" :key="i" class="flex flex-wrap items-center gap-2">
             <input v-model="c.code" class="admin-input w-28 py-1 text-xs font-mono" placeholder="code" />
             <input v-model="c.label" class="admin-input min-w-[12rem] flex-1 py-1 text-xs" placeholder="Libellé" />
-            <button type="button" class="text-xs text-terracotta-700 hover:underline" @click="categories.splice(i, 1)">Retirer</button>
+            <button type="button" class="inline-flex min-h-[44px] items-center rounded-full px-3 text-sm font-semibold text-terracotta-700 hover:bg-terracotta/10" @click="categories.splice(i, 1)">Retirer</button>
           </li>
         </ul>
         <button type="button" class="mt-2 text-xs font-semibold text-forest-700 hover:underline" @click="categories.push({ code: '', label: '' })">

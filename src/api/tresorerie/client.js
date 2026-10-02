@@ -119,6 +119,16 @@ export const tresorerieApi = {
     return remoteRequest('/auth/login', { method: 'POST', body: credentials })
   },
 
+  forgotPassword({ email }) {
+    if (isMockMode()) return mockCall(mockBackend.forgotPassword, { email })
+    return remoteRequest('/auth/forgot-password', { method: 'POST', body: { email } })
+  },
+
+  resetPassword({ token, new_password }) {
+    if (isMockMode()) return mockCall(mockBackend.resetPassword, { token, new_password })
+    return remoteRequest('/auth/reset-password', { method: 'POST', body: { token, new_password } })
+  },
+
   me() {
     if (isMockMode()) return mockCall(mockBackend.me)
     return remoteRequest('/auth/me')

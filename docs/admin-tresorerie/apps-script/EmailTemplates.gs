@@ -650,6 +650,39 @@ function buildAccessApprovedEmail_(data) {
   };
 }
 
+/** Lien de réinitialisation mot de passe (30 min). */
+function buildPasswordResetEmail_(data) {
+  data = data || {};
+  var url = data.reset_url || (getSiteUrl_() + '/admin/forgot-password');
+  var mins = data.expires_minutes || 30;
+
+  return {
+    subject: '[AKUU] Réinitialisation de votre mot de passe',
+    plain: [
+      'Réinitialisation du mot de passe',
+      '',
+      'Bonjour ' + (data.first_name || '') + ',',
+      '',
+      'Vous avez demandé à réinitialiser votre mot de passe pour l\'espace adhérent AKUU.',
+      'Cliquez sur le lien ci-dessous (valable ' + mins + ' minutes) :',
+      url,
+      '',
+      'Si vous n\'êtes pas à l\'origine de cette demande, ignorez cet email.',
+      'Votre mot de passe actuel reste inchangé tant que vous n\'avez pas créé un nouveau mot de passe.'
+    ].join('\n'),
+    html: buildEmailLayout_({
+      title: 'Réinitialisation du mot de passe',
+      preheader: 'Lien sécurisé · ' + mins + ' min',
+      introHtml: '<p style="margin:0 0 12px;font-size:15px;line-height:1.6;color:' + EMAIL_BRAND_.night + ';">Bonjour <strong>' +
+        escapeHtml_(data.first_name || '') + '</strong>,</p>' +
+        '<p style="margin:0;font-size:15px;line-height:1.6;color:' + EMAIL_BRAND_.night + ';">Vous avez demandé à réinitialiser votre mot de passe pour l\'espace adhérent AKUU.</p>' +
+        '<p style="margin:12px 0 0;font-size:13px;color:' + EMAIL_BRAND_.muted + ';">Ce lien est valable <strong>' + mins + ' minutes</strong>. Si vous n\'êtes pas à l\'origine de cette demande, ignorez cet email.</p>',
+      ctaLabel: 'Choisir un nouveau mot de passe',
+      ctaUrl: url
+    })
+  };
+}
+
 /** Mot de passe provisoire. */
 function buildPasswordEmail_(data) {
   data = data || {};

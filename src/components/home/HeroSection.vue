@@ -42,14 +42,14 @@
 
       <!-- Ligne 1 -->
       <div class="overflow-hidden mb-1 md:mb-2">
-        <h1 class="hero-item text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-serif font-bold leading-none tracking-tight" style="--delay: 280ms">
+        <h1 class="hero-item text-4xl sm:text-7xl md:text-8xl lg:text-9xl font-serif font-bold leading-none tracking-tight" style="--delay: 280ms">
           {{ $t('hero.tagline_line1') }}
         </h1>
       </div>
 
       <!-- Ligne 2 -->
       <div class="overflow-hidden mb-5 sm:mb-8 md:mb-10">
-        <h1 class="hero-item text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-serif font-bold italic leading-none tracking-tight text-leaf" style="--delay: 420ms">
+        <h1 class="hero-item text-4xl sm:text-7xl md:text-8xl lg:text-9xl font-serif font-bold italic leading-none tracking-tight text-leaf" style="--delay: 420ms">
           {{ $t('hero.tagline_line2') }}
         </h1>
       </div>

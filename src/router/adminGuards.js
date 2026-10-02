@@ -11,7 +11,11 @@ export function setupAdminGuards(router) {
     }
 
     const isAdminRoute = to.path.startsWith('/admin')
-    const isPublicAdmin = to.name === 'admin-login' || to.name === 'admin-request-access'
+    const isPublicAdmin =
+      to.name === 'admin-login' ||
+      to.name === 'admin-request-access' ||
+      to.name === 'admin-forgot-password' ||
+      to.name === 'admin-reset-password'
 
     if (!isAdminRoute) return true
 

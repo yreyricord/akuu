@@ -92,6 +92,7 @@ export const routes = [
   {
     path: '/merci',
     name: 'merci',
+    meta: { solidNav: true },
     component: () => import('@/views/MerciView.vue')
   },
   {
@@ -105,6 +106,18 @@ export const routes = [
     name: 'admin-request-access',
     meta: { noIndex: true, adminLayout: true },
     component: () => import('@/views/admin/AdminRequestAccessView.vue')
+  },
+  {
+    path: '/admin/forgot-password',
+    name: 'admin-forgot-password',
+    meta: { noIndex: true, adminLayout: true },
+    component: () => import('@/views/admin/AdminForgotPasswordView.vue')
+  },
+  {
+    path: '/admin/reset-password',
+    name: 'admin-reset-password',
+    meta: { noIndex: true, adminLayout: true },
+    component: () => import('@/views/admin/AdminResetPasswordView.vue')
   },
   {
     path: '/admin',

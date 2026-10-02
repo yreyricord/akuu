@@ -61,6 +61,12 @@ function route_(method, path, body, e, param) {
     if (path === 'auth/login' && method === 'POST') {
       return jsonResponse({ ok: true, data: authLogin_(body) });
     }
+    if (path === 'auth/forgot-password' && method === 'POST') {
+      return jsonResponse({ ok: true, data: authForgotPassword_(body) });
+    }
+    if (path === 'auth/reset-password' && method === 'POST') {
+      return jsonResponse({ ok: true, data: authResetPassword_(body) });
+    }
     if (path === 'auth/google' && method === 'POST') {
       return jsonResponse({ ok: true, data: authLoginGoogle_(body) });
     }

@@ -29,7 +29,7 @@
             v-for="t in TYPES"
             :key="t.id"
             type="button"
-            class="min-h-[34px] rounded-full px-3 text-sm font-semibold transition"
+            class="admin-segment px-3 transition"
             :class="type === t.id ? 'bg-white text-forest-700 shadow-sm' : 'text-night-500 hover:text-night'"
             :aria-pressed="type === t.id"
             @click="type = t.id"

@@ -1,10 +1,16 @@
 <template>
   <div class="min-h-screen min-h-dvh flex flex-col">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-forest focus:px-4 focus:py-3 focus:text-sm focus:font-semibold focus:text-white focus:shadow-lg safe-area-top"
+    >
+      Aller au contenu
+    </a>
     <template v-if="!isAdminLayout">
       <NavBar :solid="route.meta.solidNav === true" />
       <ScrollProgressBar />
     </template>
-    <main class="flex-1">
+    <main id="main-content" class="flex-1" tabindex="-1">
       <router-view v-slot="{ Component }">
         <Transition name="page" mode="out-in">
           <component :is="Component" />
@@ -25,7 +31,8 @@
       <button
         v-if="showScrollTop"
         @click="scrollToTop"
-        class="fixed bottom-6 right-4 md:right-6 z-40 w-10 h-10 rounded-full bg-forest text-white shadow-lg hover:bg-leaf hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center"
+        class="fixed bottom-6 right-4 md:right-6 z-40 touch-target rounded-full bg-forest text-white shadow-lg hover:bg-leaf hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 safe-area-bottom"
+        style="margin-bottom: max(1.5rem, env(safe-area-inset-bottom))"
         :aria-label="$t('common.back_to_top')"
       >
         <PhCaretUp :size="16" weight="bold" aria-hidden="true" />

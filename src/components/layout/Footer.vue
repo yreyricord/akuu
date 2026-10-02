@@ -289,8 +289,10 @@ const socials = [
 
 /* Social icons */
 .social-icon {
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  min-width: 44px;
+  min-height: 44px;
   border-radius: 0.625rem;
   background: rgb(255 255 255 / 0.03);
   border: 1px solid rgb(255 255 255 / 0.06);
