@@ -253,7 +253,7 @@
         <AdminReleveImport
           :year="selectedYear"
           :existing-rows="liveRows"
-          :last-releve="live?.dernier_releve ?? null"
+          :last-releve="lastReleveLive"
           :status="liveRelevesStatus"
           @imported="() => refreshLive(true)"
         />
