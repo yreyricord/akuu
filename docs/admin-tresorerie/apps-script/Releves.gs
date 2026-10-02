@@ -34,6 +34,7 @@ function clearMonthReleveJournal_(ss, year, month, fileName, actor) {
   var prefix = year + '-' + month;
   var sh = ss.getSheetByName('Journal');
   if (!sh) return 0;
+  if (typeof removeAkuuProtections_ === 'function') removeAkuuProtections_(sh);
   var tr = tabRows_(sh);
   var toRemove = [];
   tr.rows.forEach(function (r) {
@@ -61,6 +62,16 @@ function clearMonthReleveJournal_(ss, year, month, fileName, actor) {
 }
 
 function importReleve_(session, body) {
+  try {
+    return importReleveImpl_(session, body);
+  } catch (e) {
+    if (e && e.code) throw e;
+    Logger.log('importReleve_ : ' + (e && e.stack || e));
+    throw apiError_('IMPORT_FAILED', 'Import relevé : ' + String(e && e.message || e).substring(0, 180));
+  }
+}
+
+function importReleveImpl_(session, body) {
   requireTreasurer_(session);
   var ops = body.operations || [];
   var dateFin = String(body.date_fin || '');            // JJ/MM/AAAA
@@ -137,7 +148,8 @@ function importReleve_(session, body) {
   });
   if (newRows.length) {
     var startRow = sh.getLastRow() + 1;
-    sh.getRange(startRow, 1, startRow + newRows.length - 1, headers.length).setValues(newRows);
+    if (typeof removeAkuuProtections_ === 'function') removeAkuuProtections_(sh);
+    sh.getRange(startRow, 1, newRows.length, headers.length).setValues(newRows);
     if (typeof invalidateJournalCaches_ === 'function') invalidateJournalCaches_(ss);
   }
 
@@ -151,7 +163,7 @@ function importReleve_(session, body) {
   for (var k = 1; k < relData.length; k++) {
     if (String(relData[k][0]) === year + '-' + month) {
       if (!url) line[7] = relData[k][7];
-      rel.getRange(k + 1, 1, k + 1, line.length).setValues([line]);
+      rel.getRange(k + 1, 1, 1, line.length).setValues([line]);
       replaced = true;
       break;
     }

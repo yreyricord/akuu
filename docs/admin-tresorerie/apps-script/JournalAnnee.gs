@@ -444,6 +444,12 @@ function deleteFromYearJournal_(year, reference, actor, reason) {
   if (typeof appendHistoriqueJournal_ === 'function') {
     appendHistoriqueJournal_(ss, actor, 'suppression', reference, copy, {}, reason);
   }
+  var prefix = typeof PROTECTION_DESC_PREFIX_ !== 'undefined' ? PROTECTION_DESC_PREFIX_ : 'AKUU exercice ';
+  hit.sheet.getProtections(SpreadsheetApp.ProtectionType.SHEET).forEach(function (p) {
+    if (String(p.getDescription()).indexOf(prefix) >= 0) {
+      try { p.remove(); } catch (e) { Logger.log('delete: levée protection : ' + e); }
+    }
+  });
   hit.sheet.deleteRow(hit.row._row);
   invalidateJournalCaches_(ss);
   return true;

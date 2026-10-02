@@ -23,6 +23,12 @@ export function invalidateJournalCache(year) {
   else Object.keys(_journalCache).forEach((k) => { delete _journalCache[k] })
 }
 
+export function invalidateExercicesCache() {
+  _exercicesCache.at = 0
+  _exercicesCache.data = null
+  _exercicesCache.inflight = null
+}
+
 export function isMockMode() {
   return !REMOTE_API_URL
 }
@@ -385,6 +391,7 @@ export const tresorerieApi = {
   invalidateExercicesCache() {
     _exercicesCache.at = 0
     _exercicesCache.data = null
+    _exercicesCache.inflight = null
   },
 
   getExercice(year) {
