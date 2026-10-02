@@ -37,7 +37,8 @@
           <div class="flex flex-wrap items-end gap-3">
             <label class="space-y-1">
               <span class="text-xs font-bold uppercase tracking-wide text-night-500">Année</span>
-              <select v-model="year" class="admin-input min-w-[7rem] py-2 text-sm">
+              <select v-model="year" class="admin-input min-w-[9rem] py-2 text-sm">
+                <option :value="ALL_YEARS">Toutes les années</option>
                 <option v-for="y in yearOptions" :key="y" :value="y">{{ y }}</option>
               </select>
             </label>
@@ -47,15 +48,20 @@
             </label>
           </div>
           <AdminLoadingPanel
-            v-if="loadingYear"
+            v-if="loadingCandidates"
             variant="inline"
-            :title="`Journal ${year}`"
-            detail="Recherche des dépenses sans facture"
-            :progress="yearProg.progress"
+            :title="isAllYears ? 'Journaux 2017 → année courante' : `Journal ${year}`"
+            :detail="isAllYears ? `Synchronisation ${loadProgress.done} / ${loadProgress.total} années` : 'Recherche des dépenses sans facture'"
+            :progress="isAllYears ? syncPercent : yearProg.progress"
             hint=""
           />
           <p v-else class="text-sm text-night-500">
-            <template v-if="journalLoaded(year)">
+            <template v-if="isAllYears">
+              <strong class="text-night">{{ candidates.length }}</strong> dépense(s) sans facture · toutes les années
+              <span v-if="unloadedYears.length" class="text-ochre-700"> · {{ unloadedYears.length }} journal(aux) non chargé(s)</span>
+              <span v-if="candidates.length > shown.length"> · {{ shown.length }} affichées, affinez la recherche</span>
+            </template>
+            <template v-else-if="journalLoaded(year)">
               <strong class="text-night">{{ candidates.length }}</strong> dépense(s) sans facture en {{ year }}
               <span v-if="candidates.length > shown.length"> · {{ shown.length }} affichées, affinez la recherche</span>
             </template>
@@ -71,6 +77,7 @@
                 :class="selected?.key === r.key ? 'border-forest bg-forest/5 ring-1 ring-forest/30' : 'border-night-100 hover:border-forest/40'"
                 @click="selected = r"
               >
+                <span v-if="isAllYears" class="w-10 shrink-0 text-xs font-bold tabular-nums text-night-500">{{ r.year }}</span>
                 <span class="w-20 shrink-0 text-xs tabular-nums text-night-500">{{ shortDate(r.date) }}</span>
                 <span class="min-w-0 flex-1">
                   <span class="block truncate text-sm font-medium">{{ r.label }}</span>
@@ -79,14 +86,14 @@
                 <span class="shrink-0 text-sm font-semibold tabular-nums">{{ amount(r) }}</span>
               </button>
             </li>
-            <li v-if="!shown.length && loadingYear" class="rounded-xl bg-cream-200 px-4 py-6 text-center text-sm text-night-500">
-              Chargement… {{ yearProg.progress }} %
+            <li v-if="!shown.length && loadingCandidates" class="rounded-xl bg-cream-200 px-4 py-6 text-center text-sm text-night-500">
+              Chargement… {{ isAllYears ? syncPercent : yearProg.progress }} %
             </li>
-            <li v-else-if="!shown.length && !journalLoaded(year)" class="rounded-xl bg-ochre-50 px-4 py-6 text-center text-sm text-ochre-800">
+            <li v-else-if="!shown.length && !isAllYears && !journalLoaded(year)" class="rounded-xl bg-ochre-50 px-4 py-6 text-center text-sm text-ochre-800">
               {{ journalReason(year) || `Journal ${year} inaccessible.` }}
             </li>
             <li v-else-if="!shown.length" class="rounded-xl bg-cream-200 px-4 py-6 text-center text-sm text-night-500">
-              Toutes les dépenses de {{ year }} ont leur facture.
+              {{ isAllYears ? 'Toutes les dépenses chargées ont leur facture.' : `Toutes les dépenses de ${year} ont leur facture.` }}
             </li>
           </ul>
         </div>
@@ -96,7 +103,9 @@
             <div>
               <p class="text-xs font-bold uppercase tracking-wide text-night-500">Écriture choisie</p>
               <p class="mt-1 font-semibold">{{ selected.label }}</p>
-              <p class="text-sm text-night-500">{{ formatDate(selected.date) }} · {{ amount(selected) }} · {{ selected.project }}</p>
+              <p class="text-sm text-night-500">
+                {{ isAllYears ? `${selected.year} · ` : '' }}{{ formatDate(selected.date) }} · {{ amount(selected) }} · {{ selected.project }}
+              </p>
             </div>
             <AdminFileCapture
               label="Facture"
@@ -274,6 +283,7 @@ import { bindLoadingProgress } from '@/composables/useLoadingProgress.js'
 const NO_INVOICE = ['frais bancaires', 'transferts et retraits terrain', 'virements internes', 'prêts / avances', 'remboursements de prêts / avances']
 
 const EXERCICE_FIRST = 2017
+const ALL_YEARS = 'all'
 const mode = ref('attach')
 const data = ref(null)
 const corrections = ref([])
@@ -302,6 +312,9 @@ function defaultYearList() {
 
 /** Toujours 2017 → année courante (indépendant de l'API exercices). */
 const yearOptions = computed(() => defaultYearList())
+const isAllYears = computed(() => year.value === ALL_YEARS)
+const loadingCandidates = computed(() => (isAllYears.value ? loadingAll.value : loadingYear.value))
+const unloadedYears = computed(() => yearOptions.value.filter((y) => !journalLoaded(y)))
 
 function ensureYearSlot(y) {
   if (!data.value) data.value = { years: {} }
@@ -325,10 +338,12 @@ onMounted(async () => {
 
   await loadLive(year.value)
   pickBestYear()
+  reloadAllInBackground()
 })
 
 /** Choisit la première année utilisable (manques > 0, sinon journal live). */
 function pickBestYear() {
+  if (year.value === ALL_YEARS) return
   const missing = yearOptions.value.find((y) => countMissing(y) > 0)
   if (missing) {
     year.value = missing
@@ -393,6 +408,11 @@ watch(year, (y) => {
   selected.value = null
   search.value = ''
   message.value = null
+  if (y === ALL_YEARS) {
+    live.value = null
+    if (unloadedYears.value.length) reloadAllInBackground()
+    return
+  }
   if (!journalLoaded(y) || !data.value?.years?.[y]?.length) loadLive(y)
   else live.value = { year: Number(y), live: true, rows: data.value.years[y] }
 })
@@ -418,7 +438,7 @@ function countMissing(y) {
 
 const yearBanner = computed(() => {
   const y = year.value
-  if (loadingYear.value) return null
+  if (loadingYear.value || y === ALL_YEARS) return null
   if (journalStatus.value[y] === 'failed') {
     return {
       text: journalReasons.value[y] || `Journal ${y} inaccessible.`,
@@ -433,13 +453,21 @@ function needsInvoice(r) {
   return r.type === 'depense' && !NO_INVOICE.includes((r.category || '').toLowerCase())
 }
 
-const candidates = computed(() => {
-  const rows = data.value?.years?.[year.value] ?? []
-  const q = search.value.toLowerCase()
+function candidateRowsForYear(y) {
+  const rows = data.value?.years?.[y] ?? []
   return rows
-    .map((r, i) => ({ ...r, key: `${r.ref}-${i}` }))
+    .map((r, i) => ({ ...r, key: `${y}-${r.ref}-${i}`, year: y }))
     .filter((r) => needsInvoice(r) && !hasPiece(r) && !deleted.value.has(r.ref))
-    .filter((r) => !q || `${r.label} ${r.vendor} ${r.ref} ${amount(r)}`.toLowerCase().includes(q))
+}
+
+const candidates = computed(() => {
+  const q = search.value.toLowerCase()
+  const years = isAllYears.value ? yearOptions.value : [year.value]
+  const out = years.flatMap((y) => candidateRowsForYear(y))
+  const filtered = q
+    ? out.filter((r) => `${r.label} ${r.vendor} ${r.ref} ${amount(r)} ${r.year}`.toLowerCase().includes(q))
+    : out
+  return filtered.sort((a, b) => String(b.date).localeCompare(String(a.date)))
 })
 const shown = computed(() => candidates.value.slice(0, 80))
 
@@ -458,13 +486,15 @@ async function send() {
   sending.value = true
   message.value = null
   try {
+    const expenseYear = Number(r.year ?? year.value)
     const c = await tresorerieApi.attachInvoice({
-      reference: r.ref, year: Number(year.value), expense_date: r.date,
+      reference: r.ref, year: expenseYear, expense_date: r.date,
       amount_eur: r.eur, amount_pen: r.pen, currency: r.pen != null ? 'PEN' : 'EUR',
       vendor_name: r.vendor, label: r.label
     }, file.value)
     corrections.value = [...corrections.value, c]
-    await loadLive(year.value)
+    await loadLive(String(expenseYear))
+    if (isAllYears.value && unloadedYears.value.length) reloadAllInBackground()
     message.value = {
       ok: true,
       text: c.status === 'applied'
