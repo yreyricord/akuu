@@ -47,11 +47,11 @@
         <div class="text-center sm:text-left">
           <p class="footer-label sm:text-left text-center">{{ $t('footer.nav_links_title') }}</p>
           <nav :aria-label="$t('footer.nav_links_title')">
-            <ul class="space-y-3">
+            <ul class="space-y-0 sm:space-y-3">
               <li v-for="link in navLinks" :key="link.to">
                 <router-link
                   :to="link.to"
-                  class="text-[13.5px] text-white/55 hover:text-white transition-colors duration-200 flex items-center gap-2 justify-center sm:justify-start group"
+                  class="min-h-[44px] sm:min-h-0 text-[13.5px] text-white/55 hover:text-white transition-colors duration-200 flex items-center gap-2 justify-center sm:justify-start group"
                 >
                   <span class="w-1 h-1 rounded-full bg-leaf/50 group-hover:bg-leaf transition-colors duration-200 shrink-0" aria-hidden="true"></span>
                   {{ $t(link.key) }}
@@ -67,7 +67,7 @@
             <p class="footer-label sm:text-left text-center">{{ $t('footer.contact_title') }}</p>
             <ul class="space-y-3 inline-block text-left">
               <li>
-                <a href="mailto:contact@akuu.org" class="group flex items-center gap-3 text-[13.5px] text-white/55 hover:text-white transition-colors duration-200">
+                <a href="mailto:contact@akuu.org" class="group flex min-h-[44px] sm:min-h-0 items-center gap-3 text-[13.5px] text-white/55 hover:text-white transition-colors duration-200">
                   <span class="icon-box group-hover:bg-leaf/15 group-hover:border-leaf/30">
                     <PhEnvelopeSimple :size="16" aria-hidden="true" />
                   </span>
@@ -109,6 +109,7 @@
                 autocomplete="email"
                 required
                 :placeholder="$t('footer.newsletter_placeholder')"
+                :aria-label="$t('footer.newsletter_placeholder')"
                 class="newsletter-input"
               />
               <button type="submit" class="newsletter-btn" :aria-label="$t('footer.newsletter_submit')">
@@ -366,6 +367,10 @@ const socials = [
   transition: border-color 0.2s;
 }
 .newsletter-input::placeholder { color: rgb(255 255 255 / 0.25); }
+/* iOS zoome sur tout champ < 16 px au focus ; 44 px = cible tactile */
+@media (max-width: 639px) {
+  .newsletter-input { font-size: 16px; min-height: 44px; }
+}
 .newsletter-input:focus { border-color: rgb(166 198 57 / 0.5); }
 
 .newsletter-btn {
