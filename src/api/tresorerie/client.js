@@ -120,7 +120,9 @@ async function remoteRequest(path, { method = 'GET', body, query, timeoutMs } = 
 }
 
 async function mockCall(fn, ...args) {
-  const res = await fn(...args)
+  // apply : plusieurs méthodes du mock s'appellent entre elles via `this`
+  // (file de validation, lot de factures) — sans contexte elles plantaient.
+  const res = await fn.apply(mockBackend, args)
   return res.data
 }
 
