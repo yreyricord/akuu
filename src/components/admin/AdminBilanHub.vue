@@ -147,16 +147,8 @@
         </div>
       </div>
 
-      <AdminReleveImport
-        v-if="yearData.cloture?.provisoire && selectedYear === String(new Date().getFullYear())"
-        :year="selectedYear"
-        :existing-rows="liveRows"
-        :last-releve="live?.dernier_releve ?? null"
-        :status="liveRelevesStatus"
-        @imported="() => refreshLive(true)"
-      />
       <AdminBilanRelevesAlert
-        v-else-if="!yearData.cloture?.provisoire"
+        v-if="!showReleveImport"
         :year="selectedYear"
         :status="yearData.releves_status"
       />
@@ -246,8 +238,26 @@
               {{ m.ok ? '✓' : '○' }} {{ m.label }}
             </li>
           </ul>
+          <button
+            v-if="showReleveImport"
+            type="button"
+            class="mt-3 text-sm font-semibold text-bleu underline"
+            @click="scrollToReleveImport"
+          >
+            Remplacer ou déposer un relevé ↓
+          </button>
         </div>
       </section>
+
+      <div v-if="showReleveImport" id="releve-import" class="scroll-mt-4">
+        <AdminReleveImport
+          :year="selectedYear"
+          :existing-rows="liveRows"
+          :last-releve="live?.dernier_releve ?? null"
+          :status="liveRelevesStatus"
+          @imported="() => refreshLive(true)"
+        />
+      </div>
 
       <!-- Télécharger -->
       <section class="rounded-2xl border border-night-100 bg-white p-5 shadow-sm sm:p-6">
@@ -578,6 +588,20 @@ const rouvertBanner = computed(() => {
 const isLiveYear = computed(() =>
   Boolean(currentExercice.value?.live && yearData.value?.cloture?.provisoire)
 )
+
+/** Dépôt / remplacement relevé : exercice en cours (année calendaire). */
+const showReleveImport = computed(() => {
+  if (!(auth.isAdmin || auth.isTreasurer)) return false
+  const y = Number(selectedYear.value)
+  if (y !== new Date().getFullYear()) return false
+  const ex = currentExercice.value
+  if (!ex) return false
+  return ex.statut === 'ouvert' || ex.statut === 'rouvert' || Boolean(yearData.value?.cloture?.provisoire)
+})
+
+function scrollToReleveImport() {
+  document.getElementById('releve-import')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
 
 /** Dernier relevé bancaire connu (API live, pas le JSON statique). */
 const lastReleveLive = computed(() => {

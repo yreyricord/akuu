@@ -344,6 +344,7 @@ const presentCount = computed(() => props.status?.months_present?.length ?? Math
 const headline = computed(() => {
   const todo = resolvedMissing.value.length
   if (todo) return `Il manque ${todo} relevé(s) bancaire(s)`
+  if (depositedMonths.value.length) return 'Déposer ou remplacer un relevé bancaire'
   return props.status?.label ?? 'Relevés bancaires'
 })
 
