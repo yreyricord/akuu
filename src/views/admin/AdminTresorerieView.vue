@@ -160,9 +160,12 @@
       />
       <div
         v-if="plusOpen"
+        ref="plusSheet"
         role="dialog"
         aria-modal="true"
         aria-label="Autres onglets"
+        tabindex="-1"
+        @keydown.esc="plusOpen = false"
         class="fixed inset-x-0 bottom-0 z-[60] rounded-t-2xl border border-night-100 bg-white p-4 pb-8 shadow-2xl safe-area-pb md:hidden"
       >
         <p class="mb-3 text-xs font-bold uppercase tracking-wide text-night-400">Autres sections</p>
@@ -191,7 +194,7 @@
 <script setup>
 import AdminAccountMenu from '@/components/admin/AdminAccountMenu.vue'
 import AdminAccountSettings from '@/components/admin/AdminAccountSettings.vue'
-import { computed, watch, onMounted, onBeforeUnmount, ref } from 'vue'
+import { computed, watch, onMounted, onBeforeUnmount, ref, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   PhReceipt,
@@ -273,6 +276,13 @@ const activeModuleLabel = computed(() => {
 })
 
 const plusOpen = ref(false)
+const plusSheet = ref(null)
+// Feuille « Plus » : focus dedans à l'ouverture (Échap ferme, lecteur d'écran)
+watch(plusOpen, async (open) => {
+  if (!open) return
+  await nextTick()
+  plusSheet.value?.querySelector('button')?.focus()
+})
 
 /** Dégagement bas : nav admin + barre d'envoi éventuelle. */
 const shellPadding = computed(() => {

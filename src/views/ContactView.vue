@@ -151,7 +151,7 @@
                     href="https://www.facebook.com/AKUUAssociation/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="w-10 h-10 rounded-xl bg-forest/10 flex items-center justify-center text-forest hover:bg-forest hover:text-white transition-colors"
+                    class="w-11 h-11 rounded-xl bg-forest/10 flex items-center justify-center text-forest hover:bg-forest hover:text-white transition-colors"
                     aria-label="Facebook"
                   >
                     <PhFacebookLogo :size="20" weight="fill" />
@@ -160,7 +160,7 @@
                     href="https://www.instagram.com/akuu.asso/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="w-10 h-10 rounded-xl bg-forest/10 flex items-center justify-center text-forest hover:bg-forest hover:text-white transition-colors"
+                    class="w-11 h-11 rounded-xl bg-forest/10 flex items-center justify-center text-forest hover:bg-forest hover:text-white transition-colors"
                     aria-label="Instagram"
                   >
                     <PhInstagramLogo :size="20" weight="fill" />
@@ -169,7 +169,7 @@
                     href="https://www.linkedin.com/company/akuu-association/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="w-10 h-10 rounded-xl bg-forest/10 flex items-center justify-center text-forest hover:bg-forest hover:text-white transition-colors"
+                    class="w-11 h-11 rounded-xl bg-forest/10 flex items-center justify-center text-forest hover:bg-forest hover:text-white transition-colors"
                     aria-label="LinkedIn"
                   >
                     <PhLinkedinLogo :size="20" weight="fill" />
@@ -178,7 +178,7 @@
                     href="https://www.tiktok.com/@akuu.asso"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="w-10 h-10 rounded-xl bg-forest/10 flex items-center justify-center text-forest hover:bg-forest hover:text-white transition-colors"
+                    class="w-11 h-11 rounded-xl bg-forest/10 flex items-center justify-center text-forest hover:bg-forest hover:text-white transition-colors"
                     aria-label="TikTok"
                   >
                     <PhTiktokLogo :size="20" weight="fill" />

@@ -41,7 +41,7 @@
             <span>Mot de passe</span>
             <router-link
               :to="{ name: 'admin-forgot-password' }"
-              class="text-xs font-semibold text-forest hover:underline"
+              class="inline-flex min-h-[44px] items-center text-sm font-semibold text-forest hover:underline"
             >
               Mot de passe oublié ?
             </router-link>
