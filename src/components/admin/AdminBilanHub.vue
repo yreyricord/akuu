@@ -217,25 +217,29 @@
           </div>
         </dl>
         <p v-if="rappro.conseil" class="mt-3 max-w-xl text-sm text-night-600">{{ rappro.conseil }}</p>
-        <a
-          v-if="rappro.pdf"
-          :href="rappro.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="mt-3 inline-flex min-h-[40px] items-center text-sm font-semibold text-bleu hover:underline"
-        >Ouvrir le relevé {{ rappro.mois }}</a>
-
         <div v-if="moisDeposes.length" class="mt-4">
           <p class="text-xs font-bold uppercase tracking-wide text-night-500">Relevés déposés en {{ selectedYear }}</p>
+          <p class="mt-0.5 text-xs text-night-500">Cliquez un mois déposé pour ouvrir le PDF sur le Drive.</p>
           <ul class="mt-2 flex flex-wrap gap-1.5">
-            <li
-              v-for="m in moisDeposes"
-              :key="m.mois"
-              class="rounded-full px-2.5 py-1 text-xs font-semibold"
-              :class="m.ok ? 'bg-forest-100 text-forest-700' : 'bg-cream-200 text-night-400'"
-              :title="m.ok ? 'Relevé déposé' : 'Relevé non déposé'"
-            >
-              {{ m.ok ? '✓' : '○' }} {{ m.label }}
+            <li v-for="m in moisDeposes" :key="m.mois">
+              <a
+                v-if="m.ok && m.url"
+                :href="m.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex min-h-[32px] items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-forest-100 text-forest-700 ring-1 ring-forest/20 transition hover:bg-forest-200"
+                :title="m.solde_fin != null ? `Solde fin : ${formatEur(m.solde_fin)}` : 'Ouvrir le relevé PDF'"
+              >
+                ✓ {{ m.label }}
+              </a>
+              <span
+                v-else
+                class="inline-flex min-h-[32px] items-center rounded-full px-2.5 py-1 text-xs font-semibold"
+                :class="m.ok ? 'bg-forest-100 text-forest-700' : 'bg-cream-200 text-night-400'"
+                :title="m.ok ? 'Relevé déposé (PDF non lié — rechargez la page)' : 'Relevé non déposé'"
+              >
+                {{ m.ok ? '✓' : '○' }} {{ m.label }}
+              </span>
             </li>
           </ul>
           <button
@@ -812,13 +816,28 @@ function rapproExercice(y) {
   }
 }
 
+/** Mois → { url, solde_fin } depuis l'onglet Releves du journal Google (API live). */
+const relevesByMonth = computed(() => {
+  const map = {}
+  ;(currentExercice.value?.releves || []).forEach((r) => {
+    const m = Number(String(r.mois || '').slice(5, 7))
+    const url = String(r.url || '').trim()
+    if (m >= 1 && m <= 12 && url) {
+      map[m] = { url, solde_fin: r.solde_fin, date_fin: r.date_fin }
+    }
+  })
+  return map
+})
+
 const moisDeposes = computed(() => {
   const status = liveRelevesStatus.value
   if (!yearData.value?.cloture?.provisoire || !status?.expected) return []
   const present = new Set(status.months_present || [])
   return MOIS.slice(0, status.expected).map((label, i) => {
-    const mois = `${selectedYear.value}-${String(i + 1).padStart(2, '0')}`
-    return { mois, label, ok: present.has(i + 1) }
+    const monthNum = i + 1
+    const mois = `${selectedYear.value}-${String(monthNum).padStart(2, '0')}`
+    const rel = relevesByMonth.value[monthNum]
+    return { mois, label, ok: present.has(monthNum), url: rel?.url || '', solde_fin: rel?.solde_fin ?? null }
   })
 })
 

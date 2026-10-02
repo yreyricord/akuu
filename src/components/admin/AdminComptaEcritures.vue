@@ -42,6 +42,10 @@
         <span class="text-xs font-bold uppercase tracking-wide text-night-500">Rechercher</span>
         <input v-model.trim="search" type="search" class="admin-input w-full py-2 text-sm" placeholder="Libellé, fournisseur, réf." />
       </label>
+      <p v-if="fxRate" class="w-full text-xs text-night-500">
+        Conversion du jour (estimée) : 1 S/ = {{ fxRate.rate.toLocaleString('fr-FR', { minimumFractionDigits: 4, maximumFractionDigits: 4 }) }} €
+        · {{ fxRate.source }} · {{ fxRate.date }}
+      </p>
     </section>
 
     <!-- Totaux -->
@@ -182,13 +186,33 @@
         </template>
         <span v-else class="text-xs text-night-300">—</span>
       </template>
-      <template #cell-amount="{ row }">
+      <template #cell-eur="{ row }">
         <span
-          class="whitespace-nowrap font-semibold tabular-nums"
-          :class="row.type === 'recette' ? 'text-forest-700' : 'text-night'"
+          v-if="amountEur(row)"
+          class="whitespace-nowrap tabular-nums"
+          :class="[
+            row.type === 'recette' ? 'text-forest-700' : 'text-night',
+            amountEur(row).estimated ? 'text-sm font-normal text-night-500' : 'font-semibold'
+          ]"
+          :title="amountEur(row).estimated ? 'Montant converti au taux du jour' : ''"
         >
-          {{ row.type === 'recette' ? '+' : '−' }}{{ row.eur != null ? eur(row.eur) : pen(row.pen) }}
+          {{ amountEur(row).estimated ? '≈ ' : '' }}{{ row.type === 'recette' ? '+' : '−' }}{{ eur(amountEur(row).value) }}
         </span>
+        <span v-else class="text-xs text-night-300">—</span>
+      </template>
+      <template #cell-pen="{ row }">
+        <span
+          v-if="amountPen(row)"
+          class="whitespace-nowrap tabular-nums"
+          :class="[
+            row.type === 'recette' ? 'text-forest-700' : 'text-night',
+            amountPen(row).estimated ? 'text-sm font-normal text-night-500' : 'font-semibold'
+          ]"
+          :title="amountPen(row).estimated ? 'Montant converti au taux du jour' : ''"
+        >
+          {{ amountPen(row).estimated ? '≈ ' : '' }}{{ row.type === 'recette' ? '+' : '−' }}{{ pen(amountPen(row).value) }}
+        </span>
+        <span v-else class="text-xs text-night-300">—</span>
       </template>
       <template #cell-url="{ row }">
         <a
@@ -232,6 +256,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { bindLoadingProgress } from '@/composables/useLoadingProgress.js'
 import { TRESORERIE_PROJECTS, PAYMENT_METHODS } from '@/data/tresorerie-config.js'
 import { tresorerieApi } from '@/api/tresorerie/client.js'
+import { eurToPen, fetchPenEurRate, penToEur } from '@/api/tresorerie/exchangeRate.js'
 import AdminDataTable from './AdminDataTable.vue'
 import AdminLoadingPanel from './AdminLoadingPanel.vue'
 
@@ -244,6 +269,7 @@ const props = defineProps({
 const TERRAIN_PAYMENTS = PAYMENT_METHODS.filter((m) => ['especes', 'avance', 'cb', 'virement', 'yape_plin'].includes(m.code))
 const projectsList = ref([...TRESORERIE_PROJECTS])
 const saveOk = ref('')
+const fxRate = ref(null)
 
 const MONTHS = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
 const TYPES = [
@@ -261,7 +287,8 @@ const baseColumns = [
   { key: 'label', label: 'Libellé' },
   { key: 'project', label: 'Projet' },
   { key: 'payment', label: 'Paiement' },
-  { key: 'amount', label: 'Montant', align: 'right' },
+  { key: 'eur', label: 'Euros', align: 'right' },
+  { key: 'pen', label: 'Soles', align: 'right' },
   { key: 'url', label: 'Pièce', align: 'center' }
 ]
 const columns = computed(() => {
@@ -330,7 +357,8 @@ onMounted(() => {
     }),
     loadExerciceStatut(year.value),
     loadProjects(),
-    tresorerieApi.getCorrections().then((c) => { corrections.value = c }).catch(() => { corrections.value = [] })
+    tresorerieApi.getCorrections().then((c) => { corrections.value = c }).catch(() => { corrections.value = [] }),
+    fetchPenEurRate().then((r) => { fxRate.value = r }).catch(() => {})
   ]).catch(() => {})
 })
 
@@ -525,6 +553,20 @@ const totals = computed(() => {
 
 function eur(v) { return `${(v || 0).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €` }
 function pen(v) { return `${(v || 0).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} S/` }
+
+function amountEur(row) {
+  if (row.eur != null && row.eur !== '') return { value: Number(row.eur), estimated: false }
+  const p = row.pen != null && row.pen !== '' ? Number(row.pen) : null
+  if (p != null && fxRate.value?.rate) return { value: penToEur(p, fxRate.value.rate), estimated: true }
+  return null
+}
+
+function amountPen(row) {
+  if (row.pen != null && row.pen !== '') return { value: Number(row.pen), estimated: false }
+  const e = row.eur != null && row.eur !== '' ? Number(row.eur) : null
+  if (e != null && fxRate.value?.rate) return { value: eurToPen(e, fxRate.value.rate), estimated: true }
+  return null
+}
 function formatDate(iso) {
   if (!iso) return '—'
   const d = new Date(iso)
