@@ -51,6 +51,65 @@ async function heicToJpeg(file) {
   return new File([blob], file.name.replace(/\.[^.]+$/i, '.jpg'), { type: 'image/jpeg' })
 }
 
+/**
+ * Côté le plus long d'une photo de justificatif après compression.
+ * 2200 px ≈ 190 dpi sur un ticket A4 : texte lisible, fichier ~10× plus léger
+ * qu'une photo 12 Mpx (l'envoi vers Apps Script se fait en base64, +33 %).
+ */
+export const RECEIPT_MAX_EDGE = 2200
+export const RECEIPT_JPEG_QUALITY = 0.82
+/** Au-delà, avertir avant l'envoi (connexion lente sur le terrain). */
+export const UPLOAD_WARN_BYTES = 4 * 1024 * 1024
+
+async function loadDrawable(file) {
+  if (typeof createImageBitmap === 'function') {
+    try {
+      // from-image : applique l'orientation EXIF (photos iPhone en portrait)
+      return await createImageBitmap(file, { imageOrientation: 'from-image' })
+    } catch {
+      /* repli <img> ci-dessous */
+    }
+  }
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    const url = URL.createObjectURL(file)
+    img.onload = () => {
+      URL.revokeObjectURL(url)
+      resolve(img)
+    }
+    img.onerror = () => {
+      URL.revokeObjectURL(url)
+      reject(new Error('Image illisible'))
+    }
+    img.src = url
+  })
+}
+
+/**
+ * Redimensionne (côté max `maxEdge`) et ré-encode en JPEG.
+ * Redessiner sur un canvas « redresse » aussi les photos : pdf-lib ignore
+ * l'orientation EXIF, une photo portrait apparaissait couchée dans le PDF.
+ */
+export async function compressImageFile(file, { maxEdge = RECEIPT_MAX_EDGE, quality = RECEIPT_JPEG_QUALITY } = {}) {
+  if (typeof document === 'undefined') return file
+  const src = await loadDrawable(file)
+  const w = src.width || src.naturalWidth
+  const h = src.height || src.naturalHeight
+  if (!w || !h) throw new Error('Image illisible')
+  const scale = Math.min(1, maxEdge / Math.max(w, h))
+  const canvas = document.createElement('canvas')
+  canvas.width = Math.max(1, Math.round(w * scale))
+  canvas.height = Math.max(1, Math.round(h * scale))
+  const ctx = canvas.getContext('2d')
+  ctx.fillStyle = '#ffffff' // fond blanc pour les PNG transparents
+  ctx.fillRect(0, 0, canvas.width, canvas.height)
+  ctx.drawImage(src, 0, 0, canvas.width, canvas.height)
+  if (typeof src.close === 'function') src.close()
+  const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', quality))
+  if (!blob) throw new Error('Conversion image impossible')
+  return new File([blob], file.name.replace(/\.[^.]+$/i, '.jpg'), { type: 'image/jpeg' })
+}
+
 async function rasterToJpeg(file) {
   if (file.type === 'image/jpeg' || ['jpg', 'jpeg'].includes(getReceiptExtension(file))) {
     return file
@@ -86,16 +145,23 @@ async function rasterToJpeg(file) {
 
 async function prepareImageFile(file) {
   const ext = getReceiptExtension(file)
+  let source = file
   if (['heic', 'heif'].includes(ext) || ['image/heic', 'image/heif'].includes(file.type)) {
     try {
-      return await heicToJpeg(file)
+      source = await heicToJpeg(file)
     } catch {
       throw new Error('Fichier HEIC illisible — exportez en JPG ou PDF depuis votre appareil.')
     }
   }
-  if (ext === 'png' || file.type === 'image/png') return file
-  if (['jpg', 'jpeg'].includes(ext) || file.type === 'image/jpeg') return file
-  return rasterToJpeg(file)
+  try {
+    return await compressImageFile(source)
+  } catch {
+    // Repli : comportement historique (pleine résolution)
+    if (source !== file) return source
+    if (ext === 'png' || file.type === 'image/png') return file
+    if (['jpg', 'jpeg'].includes(ext) || file.type === 'image/jpeg') return file
+    return rasterToJpeg(file)
+  }
 }
 
 /** Convertit une image (JPG, PNG, HEIC, WEBP…) en PDF une page. */

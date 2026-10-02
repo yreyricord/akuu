@@ -100,7 +100,10 @@
       class="max-h-52 w-full rounded-xl border border-night-100 object-contain bg-night-50"
     />
 
-    <p v-if="processing" class="text-xs font-medium text-bleu">Conversion en PDF…</p>
+    <p v-if="processing" class="text-xs font-medium text-bleu" role="status">Optimisation et conversion en PDF…</p>
+    <p v-if="heavyWarning" class="rounded-lg bg-ochre-50 px-3 py-2 text-xs text-ochre-800" role="status">
+      {{ heavyWarning }}
+    </p>
     <p v-if="fileError" class="text-xs text-terracotta">{{ fileError }}</p>
     <p v-if="hint" class="text-xs text-night-400">{{ hint }}</p>
 
@@ -150,7 +153,8 @@ import {
   isPdfFile,
   normalizeReceiptToPdf,
   RECEIPT_ACCEPT_ATTR,
-  RECEIPT_FORMATS_LABEL
+  RECEIPT_FORMATS_LABEL,
+  UPLOAD_WARN_BYTES
 } from '@/utils/receiptFile.js'
 
 const props = defineProps({
@@ -207,8 +211,18 @@ function isPdf(file) {
 function formatSize(bytes) {
   if (!bytes) return ''
   if (bytes < 1024) return `${bytes} o`
-  return `${(bytes / 1024).toFixed(1)} Ko`
+  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} Ko`
+  return `${(bytes / 1024 / 1024).toFixed(1).replace('.', ',')} Mo`
 }
+
+/** U7 — fichier lourd (PDF scanné surtout : les photos sont déjà compressées). */
+const heavyWarning = computed(() => {
+  const heavy = files.value.filter((f) => f.size > UPLOAD_WARN_BYTES)
+  if (!heavy.length) return ''
+  const total = heavy.reduce((s, f) => s + f.size, 0)
+  return `Fichier lourd (${formatSize(total)}) : l'envoi peut prendre plusieurs minutes en 4G. `
+    + 'Vous pourrez continuer à utiliser le site pendant l\'envoi.'
+})
 
 function fileKey(file, i) {
   return `${file.name}-${file.size}-${i}`
