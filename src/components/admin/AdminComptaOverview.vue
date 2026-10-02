@@ -26,11 +26,11 @@
         </button>
       </div>
       <div class="flex flex-wrap items-center gap-x-6 gap-y-3">
-        <div class="flex items-center gap-2">
+        <div class="flex flex-wrap items-center gap-2">
           <span class="mr-2 text-xs font-bold uppercase tracking-wide text-night-500">Regrouper</span>
           <div class="flex gap-1 rounded-full bg-cream-200 p-1" role="group" aria-label="Regroupement">
             <button type="button" :class="segClass(mode === 'year')" @click="mode = 'year'">Par année</button>
-            <button type="button" :class="segClass(mode === 'total')" @click="mode = 'total'">Cumul de la période</button>
+            <button type="button" :class="segClass(mode === 'total')" @click="mode = 'total'"><span class="sm:hidden">Cumul</span><span class="hidden sm:inline">Cumul de la période</span></button>
           </div>
         </div>
         <p class="text-sm text-night-500">{{ periodLabel }}</p>
@@ -626,13 +626,13 @@ function short(v, withSign = false) {
 }
 function chipClass(on) {
   return [
-    'min-h-[40px] rounded-full border px-3.5 text-sm font-semibold transition',
+    'min-h-[44px] whitespace-nowrap rounded-full border px-3.5 text-sm font-semibold transition',
     on ? 'border-forest bg-forest text-white' : 'border-night-200 bg-white text-night hover:border-forest/50'
   ]
 }
 function segClass(on) {
   return [
-    'admin-segment px-4 transition',
+    'admin-segment whitespace-nowrap px-3 transition sm:px-4',
     on ? 'bg-white text-forest-700 shadow-sm' : 'text-night-500 hover:text-night'
   ]
 }

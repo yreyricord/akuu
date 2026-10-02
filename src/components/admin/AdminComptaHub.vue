@@ -24,12 +24,13 @@
       </div>
     </header>
 
-    <nav class="flex flex-wrap gap-1 rounded-full bg-cream-200 p-1 sm:w-fit" aria-label="Vues de la comptabilité">
+    <!-- 320 px : défilement horizontal plutôt que libellés cassés sur 2 lignes -->
+    <nav class="-mx-1 flex gap-1 overflow-x-auto rounded-full bg-cream-200 p-1 [scrollbar-width:none] sm:mx-0 sm:w-fit" aria-label="Vues de la comptabilité">
       <button
         v-for="v in views"
         :key="v.id"
         type="button"
-        class="min-h-[40px] flex-1 rounded-full px-4 text-sm font-semibold transition sm:flex-none"
+        class="min-h-[44px] shrink-0 grow whitespace-nowrap rounded-full px-4 text-sm font-semibold transition sm:grow-0"
         :class="view === v.id ? 'bg-white text-forest-700 shadow-sm' : 'text-night-500 hover:text-night'"
         :aria-pressed="view === v.id"
         @click="view = v.id"
