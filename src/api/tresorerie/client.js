@@ -1,5 +1,5 @@
 import { mockBackend } from './mockBackend.js'
-import { fileToAttachment, filesToAttachments } from './filePayload.js'
+import { fileToAttachment, filesToAttachments, estimatePayloadBytes, abortError } from './filePayload.js'
 
 const REMOTE_API_URL = import.meta.env.VITE_TRESORERIE_API_URL?.trim() || ''
 /** En dev, requêtes same-origin via proxy Vite (évite CORS vers script.google.com). */
@@ -57,7 +57,7 @@ function buildApiUrl(path) {
  * jamais dans l'URL (journaux Google, historique du navigateur, en-tête Referer).
  * Les lectures portent _method: 'GET' ; les paramètres (ex. year) sont dans le corps.
  */
-async function remoteRequest(path, { method = 'GET', body, query, timeoutMs } = {}) {
+async function remoteRequest(path, { method = 'GET', body, query, timeoutMs, signal } = {}) {
   const token = getToken()
   const url = buildApiUrl(path)
   const payload = {
@@ -75,12 +75,16 @@ async function remoteRequest(path, { method = 'GET', body, query, timeoutMs } = 
   const perfOn = import.meta.env.DEV || import.meta.env.VITE_TRESORERIE_PERF === 'true'
   const t0 = perfOn ? performance.now() : 0
   let res
-  const controller = timeoutMs ? new AbortController() : null
-  const timer = controller ? setTimeout(() => controller.abort(), timeoutMs) : null
+  if (signal?.aborted) throw abortError()
+  const controller = timeoutMs || signal ? new AbortController() : null
+  const timer = timeoutMs ? setTimeout(() => controller.abort(), timeoutMs) : null
+  const onExternalAbort = () => controller.abort()
+  signal?.addEventListener('abort', onExternalAbort, { once: true })
   if (controller) options.signal = controller.signal
   try {
     res = await fetch(url, options)
   } catch (err) {
+    if (signal?.aborted) throw abortError()
     if (controller?.signal.aborted) {
       throw new Error('Délai dépassé (plus de 2 minutes) — le serveur met trop de temps à répondre. Réessayez.')
     }
@@ -92,6 +96,7 @@ async function remoteRequest(path, { method = 'GET', body, query, timeoutMs } = 
     )
   } finally {
     if (timer) clearTimeout(timer)
+    signal?.removeEventListener('abort', onExternalAbort)
   }
   const text = await res.text()
   if (/Fonction de script introuvable|Script function not found/i.test(text)) {
@@ -117,6 +122,60 @@ async function remoteRequest(path, { method = 'GET', body, query, timeoutMs } = 
     console.debug(`[tresorerie] ${path} ${Math.round(performance.now() - t0)}ms`)
   }
   return json.data
+}
+
+function sleep(ms, signal) {
+  return new Promise((resolve, reject) => {
+    if (signal?.aborted) {
+      reject(abortError())
+      return
+    }
+    const t = setTimeout(resolve, ms)
+    signal?.addEventListener('abort', () => {
+      clearTimeout(t)
+      reject(abortError())
+    }, { once: true })
+  })
+}
+
+/**
+ * Prépare les pièces jointes d'un envoi en signalant la progression :
+ * onProgress('encode', ratio) pendant la lecture, puis onProgress('upload', 0, { bytes })
+ * juste avant la requête (pas de % réseau réel : un écouteur upload XHR
+ * déclencherait un preflight CORS refusé par Apps Script).
+ */
+async function encodeForUpload(files, opts = {}) {
+  const list = Array.from(files || []).filter(Boolean)
+  const attachments = await filesToAttachments(list, {
+    signal: opts.signal,
+    onProgress: (r) => opts.onProgress?.('encode', r)
+  })
+  opts.onProgress?.('upload', 0, { bytes: estimatePayloadBytes(list) })
+  return attachments
+}
+
+/** Mode démo : encode réellement puis simule un réseau ~400 Ko/s (UX testable sans API). */
+async function mockUpload(files, opts = {}) {
+  const list = Array.from(files || []).filter(Boolean)
+  if (!opts.onProgress && !opts.signal) return
+  await encodeForUpload(list, opts)
+  const bytes = estimatePayloadBytes(list)
+  await sleep(Math.min(9000, 1200 + bytes / 400), opts.signal)
+}
+
+/**
+ * Mode démo : quelques dépenses sans facture pour l'année courante, afin de
+ * pouvoir tester « Compta → Factures → rattacher » (scénario UP4) sans API.
+ */
+function mockJournalAnnee(year) {
+  const y = String(year)
+  if (y !== String(new Date().getFullYear())) return { year, live: false, rows: [], reason: 'Mode démo : seul le journal de l\'année courante est simulé.' }
+  const rows = [
+    { ref: `B${y}-014`, date: `${y}-03-12`, label: 'Hébergement site web', vendor: 'GreenGeeks', eur: 131.4, pen: null, type: 'depense', category: 'Frais de fonctionnement', project: 'Fonctionnement', source: 'banque' },
+    { ref: `T${y}-031`, date: `${y}-05-04`, label: 'Ciment et fer', vendor: 'Ferretería El Sol', eur: null, pen: 412.5, type: 'depense', category: 'Matériaux', project: 'Casa AKUU', source: 'terrain' },
+    { ref: `T${y}-032`, date: `${y}-05-06`, label: 'Transport bateau Nauta', vendor: 'Lancha Nauta', eur: null, pen: 60, type: 'depense', category: 'Transport', project: 'Casa AKUU', source: 'terrain' }
+  ]
+  return { year, live: true, rows }
 }
 
 async function mockCall(fn, ...args) {
@@ -162,15 +221,17 @@ export const tresorerieApi = {
     return remoteRequest('/auth/password', { method: 'POST', body: { current_password, new_password } })
   },
 
-  async createDemande(payload, devisFiles = []) {
+  async createDemande(payload, devisFiles = [], opts = {}) {
     if (isMockMode()) {
+      await mockUpload(devisFiles, opts)
       const meta = devisFiles.map((f) => ({ name: f.name, size: f.size, type: f.type }))
       return mockCall(mockBackend.createDemande, payload, meta)
     }
-    const devis = await filesToAttachments(devisFiles)
+    const devis = await encodeForUpload(devisFiles, opts)
     return remoteRequest('/demandes', {
       method: 'POST',
-      body: { ...payload, _attachments: { devis } }
+      body: { ...payload, _attachments: { devis } },
+      signal: opts.signal
     })
   },
 
@@ -248,42 +309,51 @@ export const tresorerieApi = {
     return remoteRequest('/demandes/approved')
   },
 
-  async createDirectExpense(payload, file) {
+  async createDirectExpense(payload, file, opts = {}) {
     if (isMockMode()) {
+      await mockUpload([file], opts)
       return mockCall(mockBackend.createDirectExpense, payload, file ? { name: file.name, size: file.size } : null)
     }
-    const receipt = file ? await fileToAttachment(file) : null
+    const [receipt = null] = file ? await encodeForUpload([file], opts) : []
     return remoteRequest('/expenses/direct', {
       method: 'POST',
-      body: { ...payload, _attachments: { receipt } }
+      body: { ...payload, _attachments: { receipt } },
+      signal: opts.signal
     })
   },
 
-  async createFacture(payload, file) {
+  async createFacture(payload, file, opts = {}) {
     if (isMockMode()) {
+      await mockUpload([file], opts)
       return mockCall(mockBackend.createFacture, payload, file ? { name: file.name, size: file.size } : null)
     }
-    const receipt = file ? await fileToAttachment(file) : null
+    const [receipt = null] = file ? await encodeForUpload([file], opts) : []
     return remoteRequest('/factures', {
       method: 'POST',
-      body: { ...payload, _attachments: { receipt } }
+      body: { ...payload, _attachments: { receipt } },
+      signal: opts.signal
     })
   },
 
-  async createFacturesBatch(sharedPayload, items) {
-    if (isMockMode()) return mockCall(mockBackend.createFacturesBatch, sharedPayload, items)
-    const batchItems = await Promise.all(
-      items.map(async (item) => ({
-        expense_date: item.expense_date,
-        amount: item.amount,
-        vendor_name: item.vendor_name,
-        receipt_number: item.receipt_number || '',
-        receipt: item.file ? await fileToAttachment(item.file) : null
-      }))
-    )
+  async createFacturesBatch(sharedPayload, items, opts = {}) {
+    if (isMockMode()) {
+      await mockUpload(items.map((i) => i.file), opts)
+      return mockCall(mockBackend.createFacturesBatch, sharedPayload, items)
+    }
+    const files = items.map((i) => i.file)
+    const encoded = await encodeForUpload(files, opts)
+    let k = 0
+    const batchItems = items.map((item) => ({
+      expense_date: item.expense_date,
+      amount: item.amount,
+      vendor_name: item.vendor_name,
+      receipt_number: item.receipt_number || '',
+      receipt: item.file ? encoded[k++] : null
+    }))
     return remoteRequest('/factures/batch', {
       method: 'POST',
-      body: { shared: sharedPayload, items: batchItems }
+      body: { shared: sharedPayload, items: batchItems },
+      signal: opts.signal
     })
   },
 
@@ -445,7 +515,7 @@ export const tresorerieApi = {
 
   /** Journal de l'année en cours (Google Sheet) — { live, rows, sheet_url } */
   getJournalAnnee(year, { force = false } = {}) {
-    if (isMockMode()) return Promise.resolve({ year, live: false, rows: [] })
+    if (isMockMode()) return Promise.resolve(mockJournalAnnee(year))
     const y = String(year)
     if (!force) {
       const hit = journalCacheHit(y)
@@ -506,8 +576,9 @@ export const tresorerieApi = {
     return remoteRequest('/tresorerie-meta', { method: 'POST', body })
   },
 
-  async attachInvoice(row, file) {
+  async attachInvoice(row, file, opts = {}) {
     if (isMockMode()) {
+      await mockUpload([file], opts)
       const c = {
         id: `mock-${Date.now()}`, type: 'attach', reference: row.reference, year: row.year, status: 'pending',
         file_name: file?.name ?? 'facture.pdf', drive_file_url: '#', created_at: new Date().toISOString()
@@ -515,10 +586,11 @@ export const tresorerieApi = {
       mockCorrections.push(c)
       return c
     }
-    const receipt = file ? await fileToAttachment(file) : null
+    const [receipt = null] = file ? await encodeForUpload([file], opts) : []
     return remoteRequest('/corrections/attach', {
       method: 'POST',
-      body: { ...row, _attachments: { receipt } }
+      body: { ...row, _attachments: { receipt } },
+      signal: opts.signal
     })
   },
 

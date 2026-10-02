@@ -1,5 +1,5 @@
 <template>
-  <div class="admin-shell min-h-[100dvh] bg-cream-200" :class="activeModule ? 'pb-28' : 'pb-8'">
+  <div class="admin-shell min-h-[100dvh] bg-cream-200" :class="shellPadding">
     <header class="sticky top-0 z-30 border-b border-night-100 bg-white/95 backdrop-blur px-4 py-3">
       <div
         class="mx-auto flex items-center justify-between gap-3"
@@ -148,6 +148,9 @@
       </ul>
     </nav>
 
+    <!-- Envois de fichiers en arrière-plan (non bloquant, au-dessus de la nav) -->
+    <AdminUploadTray :above-nav="activeModule === 'tresorerie'" />
+
     <Teleport to="body">
       <div
         v-if="plusOpen"
@@ -223,6 +226,8 @@ import AdminHubView from '@/components/admin/AdminHubView.vue'
 import AdminTresorerieGuideView from '@/components/admin/AdminTresorerieGuideView.vue'
 import AdminAccessQueue from '@/components/admin/AdminAccessQueue.vue'
 import AdminDirectExpenseForm from '@/components/admin/AdminDirectExpenseForm.vue'
+import AdminUploadTray from '@/components/admin/AdminUploadTray.vue'
+import { useUploadQueue } from '@/store/uploadQueue.js'
 
 const accountSection = computed(() => {
   const c = route.query.compte
@@ -235,6 +240,7 @@ function closeAccount() {
 }
 const auth = useAuthStore()
 const store = useTresorerieStore()
+const uploads = useUploadQueue()
 const route = useRoute()
 const router = useRouter()
 
@@ -267,6 +273,13 @@ const activeModuleLabel = computed(() => {
 })
 
 const plusOpen = ref(false)
+
+/** Dégagement bas : nav admin + barre d'envoi éventuelle. */
+const shellPadding = computed(() => {
+  const tray = uploads.visibleJobs.length > 0
+  if (activeModule.value) return tray ? 'pb-64' : 'pb-28'
+  return tray ? 'pb-48' : 'pb-8'
+})
 
 const visibleTabs = computed(() =>
   TREASORERIE_TABS.filter((t) => {
