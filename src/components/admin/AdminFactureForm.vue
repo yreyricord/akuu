@@ -62,6 +62,18 @@
       </div>
 
       <div
+        v-if="sendingThisDemande"
+        class="rounded-xl border border-bleu/30 bg-bleu/10 px-4 py-3 text-sm text-night"
+        role="status"
+      >
+        <p class="font-medium text-bleu">Envoi en cours en arrière-plan…</p>
+        <p class="mt-1 text-xs text-night-500">
+          Suivez la progression dans la barre en bas de l'écran. Vous pouvez changer d'onglet :
+          l'envoi continue.
+        </p>
+      </div>
+
+      <div
         v-if="postSubmitChoice"
         class="rounded-xl border border-bleu/30 bg-bleu/10 px-4 py-4 text-sm text-night"
       >
@@ -116,7 +128,7 @@
           </details>
       </fieldset>
 
-      <section v-if="selectedDemande && !postSubmitChoice" class="space-y-4">
+      <section v-if="selectedDemande && !postSubmitChoice" class="space-y-4" :inert="sendingThisDemande || undefined" :class="{ 'opacity-60': sendingThisDemande }">
           <div class="flex flex-wrap items-end justify-between gap-3">
             <div>
               <h3 class="text-sm font-medium text-night">Factures à déposer</h3>
@@ -208,11 +220,11 @@
         v-if="!postSubmitChoice"
         type="submit"
         class="btn-primary w-full sm:w-auto"
-        :disabled="store.loading || !selectedDemande || !canSubmit"
+        :disabled="sendingThisDemande || !selectedDemande || !canSubmit"
       >
         {{
-          store.loading
-            ? 'Enregistrement…'
+          sendingThisDemande
+            ? 'Envoi en cours…'
             : lines.length > 1
               ? `Enregistrer ${lines.length} factures (brouillon)`
               : 'Enregistrer la facture (brouillon)'
@@ -223,7 +235,7 @@
 </template>
 
 <script setup>
-import { reactive, computed, onMounted, ref } from 'vue'
+import { reactive, computed, onMounted, onBeforeUnmount, ref } from 'vue'
 import {
   TRESORERIE_PROJECTS,
   TRESORERIE_CATEGORIES,
@@ -246,13 +258,23 @@ import {
 } from '@/data/currency.js'
 import { penToEur } from '@/api/tresorerie/exchangeRate.js'
 import { useTresorerieStore } from '@/store/tresorerie.js'
+import { useUploadQueue } from '@/store/uploadQueue.js'
 import AdminFileCapture from './AdminFileCapture.vue'
 import AdminCurrencyAmountField from './AdminCurrencyAmountField.vue'
 
 const emit = defineEmits(['closed'])
 
 const store = useTresorerieStore()
+const uploads = useUploadQueue()
 const postSubmitChoice = ref(false)
+let mounted = true
+onBeforeUnmount(() => { mounted = false })
+
+/** Upload en cours pour la demande affichée (bloque seulement ce formulaire). */
+const sendingThisDemande = computed(() =>
+  Boolean(form.demand_reference) &&
+  uploads.isBusy('facture', (m) => m.demand === form.demand_reference)
+)
 const savedDemandRef = ref('')
 let lineSeq = 0
 
@@ -471,16 +493,39 @@ async function onSubmit() {
   }))
 
   const refBefore = form.demand_reference
-  await store.submitFacturesBatch(shared, items)
-  await store.loadApprovedDemandes()
-
-  savedDemandRef.value = refBefore
-  form.demand_reference = refBefore
-  form.payment_method = shared.payment_method
-  form.paid_by = shared.paid_by
-  form.location = shared.location
-  postSubmitChoice.value = true
-  resetLines()
+  // Retry après erreur partielle : ne renvoyer que les factures non créées.
+  let remaining = items
+  uploads.enqueue({
+    kind: 'facture',
+    label: items.length > 1 ? `${items.length} factures · ${refBefore}` : `Facture · ${items[0].vendor_name}`,
+    meta: { demand: refBefore },
+    fileCount: items.length,
+    run: ({ onProgress, signal }) =>
+      store.submitFacturesBatch(shared, remaining, { background: true, onProgress, signal }),
+    describe: (created) => {
+      const refs = (created || []).map((f) => f.reference)
+      return {
+        text: refs.length > 1
+          ? `${refs.length} factures enregistrées en brouillon (${refs.join(', ')}). Pensez à clore le devis.`
+          : `Facture ${refs[0] ?? ''} enregistrée en brouillon. Pensez à clore le devis.`,
+        copyText: refs.join(', ') || null,
+        link: (created || []).find((f) => f.drive_file_url)?.drive_file_url || null
+      }
+    },
+    onSuccess: async () => {
+      await store.loadApprovedDemandes(true)
+      if (!mounted || form.demand_reference !== refBefore) return
+      savedDemandRef.value = refBefore
+      form.payment_method = shared.payment_method
+      form.paid_by = shared.paid_by
+      form.location = shared.location
+      postSubmitChoice.value = true
+      resetLines()
+    },
+    onError: (e) => {
+      if (e?.partial) remaining = remaining.filter((_, i) => !e.partial[i]?.ok)
+    }
+  })
 }
 
 onMounted(async () => {

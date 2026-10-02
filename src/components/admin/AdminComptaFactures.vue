@@ -117,11 +117,16 @@
               <p class="text-xs text-night-500">Nom sur le Drive</p>
               <p class="break-all font-mono text-xs">{{ previewName }}</p>
             </div>
-            <button type="button" class="btn-primary w-full" :disabled="!file || sending" @click="send">
-              {{ sending ? 'Envoi…' : 'Envoyer la facture' }}
+            <button type="button" class="btn-primary w-full" :disabled="!file" @click="send">
+              Envoyer la facture
             </button>
           </template>
-          <p v-else class="py-10 text-center text-sm text-night-500">Choisissez une dépense dans la liste.</p>
+          <p v-else class="py-10 text-center text-sm text-night-500">
+            Choisissez une dépense dans la liste.
+            <span v-if="sendingRefs.size" class="mt-2 block text-xs text-bleu">
+              {{ sendingRefs.size }} envoi(s) en cours — suivi en bas de l'écran.
+            </span>
+          </p>
           <p v-if="message" class="rounded-lg px-3 py-2 text-sm" :class="message.ok ? 'bg-forest-100 text-forest-700' : 'bg-terracotta/10 text-terracotta-700'">
             {{ message.text }}
             <a v-if="message.url" :href="message.url" target="_blank" rel="noopener noreferrer" class="ml-1 font-semibold underline">Ouvrir</a>
@@ -278,6 +283,7 @@ import AdminFileCapture from './AdminFileCapture.vue'
 import AdminDirectExpenseForm from './AdminDirectExpenseForm.vue'
 import AdminLoadingPanel from './AdminLoadingPanel.vue'
 import { bindLoadingProgress } from '@/composables/useLoadingProgress.js'
+import { useUploadQueue } from '@/store/uploadQueue.js'
 
 /** Catégories pour lesquelles le relevé bancaire suffit (pas de facture attendue) */
 const NO_INVOICE = ['frais bancaires', 'transferts et retraits terrain', 'virements internes', 'prêts / avances', 'remboursements de prêts / avances']
@@ -291,8 +297,10 @@ const year = ref(String(new Date().getFullYear()))
 const search = ref('')
 const selected = ref(null)
 const file = ref(null)
-const sending = ref(false)
 const message = ref(null)
+const uploads = useUploadQueue()
+/** Écritures dont la facture est en cours d'envoi (masquées pour éviter un double envoi). */
+const sendingRefs = computed(() => uploads.activeMeta('attach', 'ref'))
 const loadingYear = ref(false)
 const yearProg = bindLoadingProgress(loadingYear, { estimateMs: 24_000, label: 'Journal…' })
 const loadingAll = ref(false)
@@ -457,7 +465,7 @@ function candidateRowsForYear(y) {
   const rows = data.value?.years?.[y] ?? []
   return rows
     .map((r, i) => ({ ...r, key: `${y}-${r.ref}-${i}`, year: y }))
-    .filter((r) => needsInvoice(r) && !hasPiece(r) && !deleted.value.has(r.ref))
+    .filter((r) => needsInvoice(r) && !hasPiece(r) && !deleted.value.has(r.ref) && !sendingRefs.value.has(r.ref))
 }
 
 const candidates = computed(() => {
@@ -480,35 +488,44 @@ const previewName = computed(() => {
   return `${r.date}_${r.ref}_${amt}${isPen ? 'PEN' : 'EUR'}_${slug(r.vendor || r.label)}.pdf`
 })
 
-async function send() {
+/**
+ * Envoi non bloquant : la file d'upload prend le relais, la sélection est
+ * libérée tout de suite (on peut rattacher la facture suivante ou changer
+ * d'onglet). Le journal de l'année est relu en arrière-plan après succès.
+ */
+function send() {
   const r = selected.value
-  if (!r || !file.value) return
-  sending.value = true
-  message.value = null
-  try {
-    const expenseYear = Number(r.year ?? year.value)
-    const c = await tresorerieApi.attachInvoice({
-      reference: r.ref, year: expenseYear, expense_date: r.date,
-      amount_eur: r.eur, amount_pen: r.pen, currency: r.pen != null ? 'PEN' : 'EUR',
-      vendor_name: r.vendor, label: r.label
-    }, file.value)
-    corrections.value = [...corrections.value, c]
-    await loadLive(String(expenseYear))
-    if (isAllYears.value && unloadedYears.value.length) reloadAllInBackground()
-    message.value = {
-      ok: true,
+  const f = file.value
+  if (!r || !f) return
+  const expenseYear = Number(r.year ?? year.value)
+  const row = {
+    reference: r.ref, year: expenseYear, expense_date: r.date,
+    amount_eur: r.eur, amount_pen: r.pen, currency: r.pen != null ? 'PEN' : 'EUR',
+    vendor_name: r.vendor, label: r.label
+  }
+  uploads.enqueue({
+    kind: 'attach',
+    label: `Facture · ${r.label}`,
+    meta: { ref: r.ref },
+    run: ({ onProgress, signal }) => tresorerieApi.attachInvoice(row, f, { onProgress, signal }),
+    describe: (c) => ({
       text: c.status === 'applied'
         ? `Facture rangée : ${c.file_name}.`
         : `Facture enregistrée (${c.file_name}) — en attente d'application au journal.`,
-      url: c.drive_file_url
+      link: c.drive_file_url,
+      copyText: c.file_name
+    }),
+    onSuccess: async (c) => {
+      corrections.value = [...corrections.value, c]
+      await loadLive(String(expenseYear), { quiet: true })
     }
-    selected.value = null
-    file.value = null
-  } catch (e) {
-    message.value = { ok: false, text: e.message }
-  } finally {
-    sending.value = false
+  })
+  message.value = {
+    ok: true,
+    text: 'Envoi lancé — progression en bas de l\'écran. Vous pouvez déjà choisir la dépense suivante.'
   }
+  selected.value = null
+  file.value = null
 }
 
 const rootUrl = tresorerieGoogle.driveFolders.find((f) => f.id === 'root')?.url ?? null

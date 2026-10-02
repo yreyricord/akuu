@@ -103,13 +103,23 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
     }
   }
 
-  async function submitFacturesBatch(sharedPayload, items) {
-    clearMessages()
-    loading.value = true
+  /**
+   * Lot de factures bénévole.
+   * opts.background : envoi piloté par la file d'upload (useUploadQueue) —
+   * ne touche ni `loading` (global) ni les bandeaux, pour que le reste de
+   * l'interface reste utilisable. opts.onProgress / opts.signal sont relayés à l'API.
+   */
+  async function submitFacturesBatch(sharedPayload, items, opts = {}) {
+    const background = Boolean(opts.background)
+    const apiOpts = { onProgress: opts.onProgress, signal: opts.signal }
+    if (!background) {
+      clearMessages()
+      loading.value = true
+    }
     let created = []
     try {
       try {
-        const batch = await tresorerieApi.createFacturesBatch(sharedPayload, items)
+        const batch = await tresorerieApi.createFacturesBatch(sharedPayload, items, apiOpts)
         created = batch.factures || []
       } catch (batchErr) {
         if (batchErr.code !== 'NOT_FOUND') throw batchErr
@@ -122,26 +132,34 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
               vendor_name: item.vendor_name,
               receipt_number: item.receipt_number || ''
             },
-            item.file
+            item.file,
+            apiOpts
           ))
         }
       }
       const refs = created.map((f) => f.reference).join(', ')
-      successMessage.value =
-        created.length > 1
-          ? `${created.length} factures enregistrées (brouillon) : ${refs}`
-          : `Facture ${refs} enregistrée (brouillon).`
+      if (!background) {
+        successMessage.value =
+          created.length > 1
+            ? `${created.length} factures enregistrées (brouillon) : ${refs}`
+            : `Facture ${refs} enregistrée (brouillon).`
+      }
       delete _fetchedAt.approved
       return created
     } catch (e) {
       if (created.length) {
-        error.value = `${created.length} facture(s) enregistrée(s), puis erreur : ${e.message}`
-      } else {
-        error.value = e.message
+        // U6 — erreur partielle : détail fichier par fichier pour la barre d'envoi
+        e.partial = items.map((item, i) => ({
+          name: item.vendor_name || item.file?.name || `Facture ${i + 1}`,
+          ok: i < created.length,
+          error: i === created.length ? e.message : (i > created.length ? 'non envoyée' : '')
+        }))
+        e.message = `${created.length} facture(s) enregistrée(s), puis erreur : ${e.message}`
       }
+      if (!background) error.value = e.message
       throw e
     } finally {
-      loading.value = false
+      if (!background) loading.value = false
     }
   }
 
