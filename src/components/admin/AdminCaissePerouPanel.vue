@@ -307,8 +307,6 @@ function effectiveRetraitPen(row) {
 
 const retraitsTotals = computed(() => {
   const rows = data.value?.retraits ?? []
-  const refPen = data.value?.retraits_pen_reference
-  const entreesPen = data.value?.caisse_pen_entrees
   let eur = 0
   let penJournal = 0
   for (const r of rows) {
