@@ -40,12 +40,6 @@
           ≈ {{ formatEur(data.caisse_eur_equiv) }} au taux du {{ data.taux_date || 'jour' }}
           <span v-if="data.pen_per_eur">(1 € ≈ {{ data.pen_per_eur }} S/.)</span>
         </p>
-        <p class="mt-3 text-xs text-night-400">
-          <span v-if="data.caisse_pen_ouverture">Ouverture {{ formatPen(data.caisse_pen_ouverture) }} + </span>
-          retraits {{ formatPen(data.caisse_pen_entrees) }}
-          − espèces caisse {{ formatPen(data.caisse_pen_sorties) }}
-          <span v-if="data.depenses_hors_caisse_pen"> · {{ formatPen(data.depenses_hors_caisse_pen) }} avances/carte (onglet Avances — à venir)</span>
-        </p>
       </div>
 
       <!-- Retraits au Pérou -->
