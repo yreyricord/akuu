@@ -515,6 +515,172 @@ function attachInYearJournal_(year, reference, fileName, url, actor) {
   }
 }
 
+/** Numéro séquentiel AKUU-PM-AAAA-NNNN ou AKUU-IMP-AAAA-NNNN dans un onglet. */
+function maxRefNumberInSheet_(sh, prefix, year) {
+  if (!sh) return 0;
+  var maxN = 0;
+  var re = new RegExp('^' + String(prefix).replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '-' + year + '-(\\d{4})$');
+  tabRows_(sh).rows.forEach(function (r) {
+    var m = String(r.reference || '').match(re);
+    if (m) maxN = Math.max(maxN, Number(m[1]));
+  });
+  return maxN;
+}
+
+function nextYearJournalReference_(ss, tab, year) {
+  var prefix = tab === 'Detail_PM' ? 'AKUU-PM' : 'AKUU-IMP';
+  var sh = ss.getSheetByName(tab);
+  return prefix + '-' + year + '-' + pad4_(maxRefNumberInSheet_(sh, prefix, year) + 1);
+}
+
+/** Ajout manuel depuis l'onglet Écritures (terrain Detail_PM ou banque Journal). */
+function createJournalEntry_(session, body) {
+  requireTreasurer_(session);
+  var year = Number(body.year);
+  if (!year || year < 2017) throw apiError_('VALIDATION_FAILED', 'Année invalide');
+  assertExerciceModifiable_(year);
+  var ss = openYearJournal_(year);
+  if (!ss) throw apiError_('NOT_FOUND', 'Journal ' + year + ' introuvable', 404);
+
+  var source = normTxt_(body.source || 'terrain');
+  if (source !== 'terrain' && source !== 'banque') {
+    throw apiError_('VALIDATION_FAILED', 'Source invalide (terrain ou banque)');
+  }
+  var label = String(body.label || '').trim();
+  if (!label) throw apiError_('VALIDATION_FAILED', 'Libellé obligatoire');
+  var expenseDate = isoDate_(body.expense_date);
+  if (!expenseDate) throw apiError_('VALIDATION_FAILED', 'Date obligatoire');
+  if (Number(String(expenseDate).substring(0, 4)) !== year) {
+    throw apiError_('VALIDATION_FAILED', 'La date doit être en ' + year);
+  }
+
+  ensurePaymentMethodColumn_(ss);
+  var tab = source === 'terrain' ? 'Detail_PM' : 'Journal';
+  var sh = ss.getSheetByName(tab);
+  if (!sh) throw apiError_('NOT_FOUND', 'Onglet ' + tab + ' absent', 404);
+  var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+  var reference = nextYearJournalReference_(ss, tab, year);
+
+  var receipt = body._attachments && body._attachments.receipt;
+  var blob = blobFromAttachment_(receipt, 'justificatif.pdf');
+  var driveInfo = { drive_file_url: '', file_name: '' };
+  if (blob) {
+    var standardName = buildStandardFilename_({
+      expense_date: expenseDate,
+      reference: reference,
+      currency: source === 'terrain' ? 'PEN' : 'EUR',
+      amount_pen: body.amount_pen,
+      amount_eur: body.amount_eur,
+      vendor_name: body.vendor_name,
+      label: label,
+      ext: extensionFromAttachment_(receipt)
+    });
+    var uploaded = uploadFactureFile_(blob, { fileName: standardName, year: year });
+    driveInfo.drive_file_url = uploaded.drive_file_url || '';
+    driveInfo.file_name = uploaded.file_name || standardName;
+  }
+
+  var actor = session.email;
+  var noteBase = 'Ajout manuel depuis Écritures (' + actor + ', ' + isoDate_(new Date()) + ')';
+  if (body.notes) noteBase += ' · ' + String(body.notes).trim();
+
+  var obj, pen = null, eur = null;
+  if (source === 'terrain') {
+    pen = r2_(Number(body.amount_pen));
+    if (!pen || pen <= 0) throw apiError_('VALIDATION_FAILED', 'Montant en soles obligatoire');
+    var pm = normTxt_(body.payment_method) || 'especes';
+    obj = {
+      reference: reference,
+      expense_date: expenseDate,
+      label: label,
+      vendor_name: String(body.vendor_name || '').trim(),
+      project: normalizeProjectCode_(body.project || 'maison'),
+      category: 'Dépenses terrain PM',
+      amount_eur: '',
+      amount_pen: pen,
+      currency: 'PEN',
+      entry_source: 'site',
+      entry_type: 'depense',
+      piece_filename: driveInfo.file_name,
+      drive_file_url: driveInfo.drive_file_url,
+      source_file: 'Écritures · site trésorerie',
+      source_line: '',
+      needs_review: 'non',
+      payment_method: pm,
+      notes: noteBase
+    };
+    if (pm && !isPaymentMethodCaisse_(pm)) {
+      obj.category = 'Facture cataloguée';
+      obj.currency = 'EUR';
+    }
+  } else {
+    var entryType = normTxt_(body.entry_type) === 'recette' ? 'recette' : 'depense';
+    eur = r2_(Math.abs(Number(body.amount_eur)));
+    if (!eur || eur <= 0) throw apiError_('VALIDATION_FAILED', 'Montant en euros obligatoire');
+    obj = {
+      reference: reference,
+      expense_date: expenseDate,
+      label: label,
+      vendor_name: String(body.vendor_name || '').trim(),
+      project: normalizeProjectCode_(body.project || 'fonctionnement'),
+      category: String(body.category || 'Dépenses par carte').trim(),
+      amount_eur: eur,
+      amount_pen: '',
+      currency: 'EUR',
+      entry_source: 'site',
+      entry_type: entryType,
+      piece_filename: driveInfo.file_name,
+      drive_file_url: driveInfo.drive_file_url,
+      source_file: 'Écritures · site trésorerie',
+      source_line: '',
+      needs_review: 'non',
+      payment_method: '',
+      notes: noteBase
+    };
+  }
+
+  var prefix = typeof PROTECTION_DESC_PREFIX_ !== 'undefined' ? PROTECTION_DESC_PREFIX_ : 'AKUU exercice ';
+  sh.getProtections(SpreadsheetApp.ProtectionType.SHEET).forEach(function (p) {
+    if (String(p.getDescription()).indexOf(prefix) >= 0) {
+      try { p.remove(); } catch (e) { Logger.log('create: levée protection : ' + e); }
+    }
+  });
+  try {
+    sh.appendRow(headers.map(function (h) {
+      var v = obj[h];
+      return v === undefined || v === null ? '' : v;
+    }));
+    if (typeof appendHistoriqueJournal_ === 'function') {
+      appendHistoriqueJournal_(ss, actor, 'ajout', reference, {}, obj, String(body.reason || ''));
+    }
+    invalidateJournalCaches_(ss);
+    appendAudit_(actor, 'journal_line_created', 'journal', reference, { year: year, tab: tab, source: source });
+  } catch (e) {
+    Logger.log('createJournalEntry_ : ' + e);
+    throw apiError_('INTERNAL_ERROR', 'Impossible d\'ajouter la ligne au journal');
+  } finally {
+    if (typeof protectYearJournal_ === 'function' && typeof isExerciceClos_ === 'function' && isExerciceClos_(year)) {
+      try { protectYearJournal_(year); } catch (e2) { Logger.log('create: re-protection : ' + e2); }
+    }
+  }
+
+  return {
+    reference: reference,
+    year: year,
+    tab: tab,
+    source: source === 'terrain' ? 'terrain' : 'banque',
+    type: obj.entry_type,
+    date: expenseDate,
+    label: label,
+    project: projectLabel_(obj.project),
+    project_code: projectSlug_(obj.project),
+    payment_method: source === 'terrain' ? readPaymentMethod_(obj) : null,
+    pen: source === 'terrain' ? pen : null,
+    eur: source === 'banque' ? eur : null,
+    url: driveInfo.drive_file_url
+  };
+}
+
 /** Facture validée ou saisie directe → ligne Detail_PM du journal de l'année. */
 function appendToYearJournal_(f) {
   var year = Number(String(f.expense_date || '').substring(0, 4)) || new Date().getFullYear();

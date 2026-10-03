@@ -280,6 +280,9 @@ function route_(method, path, body, e, param) {
     if (path === 'corrections/update' && method === 'POST') {
       return jsonResponse({ ok: true, data: requestUpdate_(session, body) });
     }
+    if (path === 'corrections/create' && method === 'POST') {
+      return jsonResponse({ ok: true, data: requestCreate_(session, body) });
+    }
     if (path === 'corrections/sync-modes' && method === 'POST') {
       return jsonResponse({ ok: true, data: bulkSyncPaymentModes_(session, body) });
     }

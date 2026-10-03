@@ -566,6 +566,22 @@ export const tresorerieApi = {
     }).then((res) => { invalidateJournalCache(year); return res })
   },
 
+  async createJournalLine(payload, file, opts = {}) {
+    if (isMockMode()) {
+      if (file) await mockUpload([file], opts)
+      const ref = payload.source === 'banque'
+        ? `AKUU-IMP-${payload.year}-9999`
+        : `AKUU-PM-${payload.year}-9999`
+      return Promise.resolve({ reference: ref, year: payload.year, source: payload.source || 'terrain', label: payload.label })
+    }
+    const [receipt = null] = file ? await encodeForUpload([file], opts) : []
+    return remoteRequest('/corrections/create', {
+      method: 'POST',
+      body: { ...payload, _attachments: receipt ? { receipt } : undefined },
+      signal: opts.signal
+    }).then((res) => { invalidateJournalCache(payload.year); return res })
+  },
+
   getTresorerieMeta() {
     if (isMockMode()) {
       return Promise.resolve({ projects: [], categories: [] })

@@ -1,5 +1,16 @@
 <template>
   <div class="space-y-5">
+    <AdminEcritureCreateForm
+      v-if="canEdit"
+      :year="year"
+      :can-edit="canEdit"
+      :projects-list="projectsList"
+      @created="onCreated"
+    />
+    <p v-else-if="exerciceStatuts[year] === 'clos'" class="rounded-xl border border-night-200 bg-cream-100 px-4 py-3 text-sm text-night-600">
+      Exercice {{ year }} clôturé — pour ajouter une écriture, rouvrez l'exercice dans Réglages.
+    </p>
+
     <!-- Filtres -->
     <section class="flex flex-wrap items-end gap-3 rounded-2xl border border-night-100 bg-white p-4 shadow-sm">
       <label class="space-y-1">
@@ -267,6 +278,7 @@ import { TRESORERIE_PROJECTS, PAYMENT_METHODS } from '@/data/tresorerie-config.j
 import { tresorerieApi } from '@/api/tresorerie/client.js'
 import { eurToPen, penToEur, prefetchPenEurRatesForDates } from '@/api/tresorerie/exchangeRate.js'
 import AdminDataTable from './AdminDataTable.vue'
+import AdminEcritureCreateForm from './AdminEcritureCreateForm.vue'
 import AdminLoadingPanel from './AdminLoadingPanel.vue'
 
 const emit = defineEmits(['journal-updated'])
@@ -481,6 +493,13 @@ async function saveProject(row, projectCode) {
   } finally {
     savingRef.value = ''
   }
+}
+
+async function onCreated(res) {
+  saveError.value = ''
+  saveOk.value = `Écriture ajoutée (${res.reference} · ${res.label}).`
+  await loadLive(year.value, { force: true })
+  emit('journal-updated')
 }
 
 async function savePayment(row, paymentMethod) {

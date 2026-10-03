@@ -74,6 +74,19 @@ function bulkSyncPaymentModes_(session, body) {
   return { year: year, updated: items.length, items: items };
 }
 
+function requestCreate_(session, body) {
+  requireTreasurer_(session);
+  var result = createJournalEntry_(session, body);
+  correctionsSheet_();
+  appendRow_('Corrections', {
+    id: uuid_(), created_at: new Date().toISOString(), actor_email: session.email, type: 'create',
+    reference: result.reference, year: result.year,
+    reason: String(body.reason || 'Ajout depuis Écritures'), status: 'applied',
+    applied_at: new Date().toISOString()
+  });
+  return result;
+}
+
 function requestUpdate_(session, body) {
   requireTreasurer_(session);
   var ref = String(body.reference || '').trim();
