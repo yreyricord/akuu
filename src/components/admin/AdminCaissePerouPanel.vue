@@ -44,7 +44,7 @@
           <span v-if="data.caisse_pen_ouverture">Ouverture {{ formatPen(data.caisse_pen_ouverture) }} + </span>
           retraits {{ formatPen(data.caisse_pen_entrees) }}
           − espèces caisse {{ formatPen(data.caisse_pen_sorties) }}
-          <span v-if="data.depenses_hors_caisse_pen"> · avances/carte {{ formatPen(data.depenses_hors_caisse_pen) }} exclus</span>
+          <span v-if="data.depenses_hors_caisse_pen"> · {{ formatPen(data.depenses_hors_caisse_pen) }} avances/carte (onglet Avances — à venir)</span>
         </p>
       </div>
 
@@ -141,7 +141,9 @@
               >
                 <td class="whitespace-nowrap px-3 py-2 tabular-nums text-xs">{{ row.date }}</td>
                 <td class="max-w-[12rem] px-3 py-2">
-                  <p class="truncate font-mono text-[10px] text-night-400" :title="row.reference">{{ row.reference }}</p>
+                  <p class="truncate font-mono text-[10px] text-night-400" :title="(row.references || [row.reference]).join(', ')">
+                    {{ row.references?.length > 1 ? `${row.references.length} écritures` : row.reference }}
+                  </p>
                   <p class="truncate text-xs" :title="row.label">{{ row.label || '—' }}</p>
                 </td>
                 <td class="whitespace-nowrap px-3 py-2 text-right font-semibold tabular-nums text-forest">+ {{ formatEur(row.amount_eur) }}</td>
@@ -240,8 +242,7 @@
               <tr>
                 <td colspan="4" class="px-2 py-2 text-right text-night-500">
                   Total filtré
-                  <span v-if="filterMode === 'hors_caisse'" class="font-normal text-night-400"> · hors solde caisse</span>
-                  <span v-else-if="filterMode === 'caisse'" class="font-normal text-forest-700"> · compté dans le solde</span>
+                  <span v-if="filterMode === 'caisse'" class="font-normal text-forest-700"> · compté dans le solde</span>
                 </td>
                 <td class="px-2 py-2 text-right tabular-nums">− {{ formatPen(filteredTotal) }}</td>
                 <td />
@@ -271,8 +272,6 @@ const TERRAIN_MODES = PAYMENT_METHODS.filter((m) =>
   ['especes', 'avance', 'cb', 'virement', 'yape_plin', 'autre'].includes(m.code)
 )
 const CAISSE_MODES = ['especes', 'yape_plin']
-const HORS_CAISSE_MODES = ['avance', 'cb', 'virement', 'autre']
-
 const year = ref(String(new Date().getFullYear()))
 const filterMode = ref('caisse')
 const savingRef = ref(null)
@@ -293,8 +292,6 @@ const modeChips = computed(() => {
     { id: 'caisse', label: 'Caisse', total: data.value?.depenses_caisse_pen ?? ((t.especes ?? 0) + (t.yape_plin ?? 0)) },
     { id: 'especes', label: 'Espèces', total: t.especes ?? 0 },
     { id: 'yape_plin', label: 'Yape/Plin', total: t.yape_plin ?? 0 },
-    { id: 'hors_caisse', label: 'Hors caisse', total: data.value?.depenses_hors_caisse_pen ?? 0, muted: true },
-    { id: 'avance', label: 'Avances', total: t.avance ?? 0, muted: true },
     { id: 'non_classe', label: 'Non classé', total: t.non_classe ?? 0 }
   ]
 })
@@ -303,9 +300,6 @@ const filteredDepenses = computed(() => {
   const rows = data.value?.depenses_terrain ?? []
   if (filterMode.value === 'caisse') {
     return rows.filter((r) => CAISSE_MODES.includes(r.payment_method))
-  }
-  if (filterMode.value === 'hors_caisse') {
-    return rows.filter((r) => HORS_CAISSE_MODES.includes(r.payment_method))
   }
   if (filterMode.value === 'non_classe') return rows.filter((r) => !r.payment_method)
   return rows.filter((r) => r.payment_method === filterMode.value)
@@ -318,20 +312,24 @@ function penChanged(row) {
 }
 
 async function saveRetraitPen(row) {
-  const pen = Number(penDrafts.value[row.reference])
+  const key = row.reference
+  const pen = Number(penDrafts.value[key])
   if (!pen || pen <= 0) {
     error.value = 'Montant PEN invalide'
     return
   }
-  savingRef.value = row.reference
+  savingRef.value = key
   error.value = null
   try {
-    await tresorerieApi.updateJournalLine({
-      reference: row.reference,
-      year: Number(year.value),
-      amount_pen: pen
-    })
-    delete penDrafts.value[row.reference]
+    const refs = row.references?.length ? row.references : [row.reference]
+    for (const ref of refs) {
+      await tresorerieApi.updateJournalLine({
+        reference: ref,
+        year: Number(year.value),
+        amount_pen: pen
+      })
+    }
+    delete penDrafts.value[key]
     await load()
     emit('journal-updated')
   } catch (e) {

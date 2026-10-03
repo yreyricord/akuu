@@ -20,12 +20,114 @@ function isDetailPmUnclassified_(row) {
   return !normTxt_(row.payment_method) && !readPaymentMethod_(row);
 }
 
+/** Abonnements / achats CB France ou SaaS — jamais des retraits caisse Pérou. */
+function isRetraitExcludedMerchant_(txt) {
+  return /greengeeks|google one|la guilde|bitwarden|wix|adobe|weglot|ovh|apple|skype|paypal|vm\*comercial/.test(txt);
+}
+
+/** DAB / WU au Pérou sur le relevé Crédit Coop (CB … N.5770100 … ou catégorie transfert). */
 function isRetraitTerrain_(row) {
   var cat = normTxt_(row.category);
   if (cat.indexOf('retrait') >= 0 || cat.indexOf('transfert') >= 0) return true;
   var txt = normTxt_(String(row.label || '') + ' ' + String(row.notes || ''));
-  return txt.indexOf('western union') >= 0 || txt.indexOf('wu ') >= 0 ||
-    txt.indexOf('dab') >= 0 || txt.indexOf('atm') >= 0;
+  if (isRetraitExcludedMerchant_(txt)) return false;
+  if (/western union|disposicion|\bwu\b/.test(txt)) return true;
+  if (/atm red unicard|red unicard/.test(txt)) return true;
+  if (txt.indexOf('dab') >= 0 || /\batm\b/.test(txt)) return true;
+  // CB au Pérou : « CB AV. MARISCAL CA | N.5770100 M REY RICORD » (sans le mot ATM)
+  if (/\bcb\b/.test(txt) && /5770100|n\.5770100/.test(txt)) {
+    if (/mariscal|junin|yavari|condamine|iquitos|red unicard|\batm\b/.test(txt)) return true;
+  }
+  return false;
+}
+
+/** Même débit CB en double sur le relevé (date + EUR identiques). */
+function dedupeRetraits_(retraits) {
+  var seen = {};
+  var out = [];
+  var dupes = 0;
+  retraits.forEach(function (rt) {
+    var key = String(rt.date || '') + '|' + r2_(rt.amount_eur);
+    if (seen[key]) { dupes += 1; return; }
+    seen[key] = true;
+    out.push(rt);
+  });
+  return { rows: out, duplicates: dupes };
+}
+
+/** Une ligne par jour de retrait (plusieurs débits CB le même jour = un seul retrait caisse). */
+function mergeRetraitsByDate_(retraits) {
+  var byDate = {};
+  retraits.forEach(function (rt) {
+    var d = String(rt.date || '');
+    if (!d) return;
+    if (!byDate[d]) {
+      byDate[d] = {
+        reference: rt.reference,
+        references: [rt.reference],
+        date: d,
+        label: rt.label,
+        amount_eur: 0,
+        amount_pen: num_(rt.amount_pen) || 0,
+        notes: rt.notes || ''
+      };
+    } else {
+      byDate[d].references.push(rt.reference);
+      if (String(rt.label || '').length > String(byDate[d].label || '').length) byDate[d].label = rt.label;
+    }
+    byDate[d].amount_eur = r2_(byDate[d].amount_eur + (num_(rt.amount_eur) || 0));
+    var pen = num_(rt.amount_pen) || 0;
+    if (pen > (num_(byDate[d].amount_pen) || 0)) byDate[d].amount_pen = pen;
+  });
+  return Object.keys(byDate).sort().map(function (d) { return byDate[d]; });
+}
+
+/** Grille indicative EUR débité → PEN reçus (DAB Pérou, d’après suivi bénévoles). */
+function suggestPenFromEurRetrait_(eur) {
+  eur = Number(eur);
+  if (!eur) return 0;
+  if (eur >= 175 && eur <= 195) return 700;
+  if (eur >= 128 && eur <= 145) return 1000;
+  if (eur >= 78 && eur <= 88) return 400;
+  if (eur >= 98 && eur <= 115) return 800;
+  if (eur >= 38 && eur <= 48) return 175;
+  return 0;
+}
+
+/** Référence bénévoles 2026 (onglet « Retrait atm » du compte des dépenses). */
+var RETRAITS_PEN_REFERENCE_2026_ = [
+  { date: '2026-01-13', pen: 800 }, { date: '2026-01-31', pen: 800 }, { date: '2026-02-11', pen: 800 },
+  { date: '2026-02-18', pen: 800 }, { date: '2026-02-20', pen: 800 }, { date: '2026-02-21', pen: 800 },
+  { date: '2026-03-04', pen: 800 }, { date: '2026-03-17', pen: 800 }, { date: '2026-04-25', pen: 400 },
+  { date: '2026-05-03', pen: 800 }, { date: '2026-05-21', pen: 1000 }, { date: '2026-05-24', pen: 1400 },
+  { date: '2026-06-22', pen: 800 }, { date: '2026-08-20', pen: 800 }, { date: '2026-09-29', pen: 700 }
+];
+
+function buildRetraitPenRefPool_(year) {
+  if (Number(year) !== 2026) return [];
+  return RETRAITS_PEN_REFERENCE_2026_.map(function (x) {
+    return { date: x.date, pen: x.pen, used: false };
+  });
+}
+
+function takeRefPenForDate_(pool, isoDate) {
+  if (!isoDate || !pool.length) return 0;
+  var best = null, bestD = 999, i, d;
+  for (i = 0; i < pool.length; i++) {
+    if (pool[i].used) continue;
+    d = Math.abs(daysBetween_(isoDate, pool[i].date));
+    if (d <= 3 && d < bestD) { bestD = d; best = pool[i]; }
+  }
+  if (best) { best.used = true; return best.pen; }
+  return 0;
+}
+
+function daysBetween_(a, b) {
+  try {
+    var da = new Date(String(a).substring(0, 10));
+    var db = new Date(String(b).substring(0, 10));
+    return Math.round((da - db) / 86400000);
+  } catch (e) { return 999; }
 }
 
 function rowYear_(dateVal) {
@@ -67,7 +169,7 @@ function getExchangeRateForDate_(isoDate) {
 }
 
 /** Entrée caisse en PEN : amount_pen journal > notes pen_recu > conversion EUR à la date. */
-function retraitPenEntree_(row, fallbackPenToEur) {
+function retraitPenEntree_(row, fallbackPenToEur, refPenHint) {
   var penCol = num_(row.amount_pen);
   if (penCol > 0) {
     return { pen: r2_(penCol), source: 'amount_pen', estimated: false };
@@ -76,8 +178,15 @@ function retraitPenEntree_(row, fallbackPenToEur) {
   if (fromNotes > 0) {
     return { pen: fromNotes, source: 'notes', estimated: false };
   }
+  if (refPenHint > 0) {
+    return { pen: r2_(refPenHint), source: 'reference_benevoles', estimated: true };
+  }
   var eur = num_(row.amount_eur) || 0;
-  var iso = isoDate_(row.expense_date);
+  var suggested = suggestPenFromEurRetrait_(eur);
+  if (suggested > 0) {
+    return { pen: suggested, source: 'grille_eur_pen', estimated: true };
+  }
+  var iso = isoDate_(row.expense_date || row.date);
   var rateInfo = iso ? getExchangeRateForDate_(iso) : getExchangeRate_();
   var penToEur = rateInfo && rateInfo.rate ? Number(rateInfo.rate) : fallbackPenToEur;
   return {
@@ -205,10 +314,13 @@ function getCaissePerou_(session, year) {
       piece_filename: String(r.piece_filename || ''),
       caisse_cash: isDetailPmCaisseCash_(r)
     };
-    depensesTerrain.push(item);
     if (!method) {
       totalsByMode.non_classe += pen;
       nonClasses.push(item);
+      depensesTerrain.push(item);
+    } else if (isPaymentMethodCaisse_(method)) {
+      totalsByMode[method] += pen;
+      depensesTerrain.push(item);
     } else if (totalsByMode[method] != null) {
       totalsByMode[method] += pen;
     } else {
@@ -234,16 +346,24 @@ function getCaissePerou_(session, year) {
   var penToEur = rateInfo && rateInfo.rate ? Number(rateInfo.rate) : null;
   var penPerEur = penToEur ? r2_(1 / penToEur) : null;
 
+  var deduped = dedupeRetraits_(retraits);
+  var retraitsDupliques = deduped.duplicates;
+  retraits = mergeRetraitsByDate_(deduped.rows);
+
+  var refPool = buildRetraitPenRefPool_(year);
   var entreesPen = 0;
   var retraitsSansPen = 0;
   retraits.forEach(function (rt) {
-    var ent = retraitPenEntree_(rt, penToEur);
+    var hint = takeRefPenForDate_(refPool, rt.date);
+    var ent = retraitPenEntree_(rt, penToEur, hint);
     rt.amount_pen = ent.pen;
     rt.pen_source = ent.source;
     rt.pen_estimated = ent.estimated;
     rt.rate_date = ent.rate_date || null;
+    rt.pen_editable = true;
     if (ent.estimated) retraitsSansPen += 1;
     entreesPen += rt.amount_pen;
+    rt.references = rt.references || [rt.reference];
   });
   entreesPen = r2_(entreesPen);
 
@@ -259,9 +379,20 @@ function getCaissePerou_(session, year) {
     alerte = nonClasses.length + ' dépense(s) terrain (' + nonClassesPen + ' PEN) sans mode de paiement — exclues du solde. ' +
       'Corrigez le mode dans Écritures ou Suivi terrain (Espèces / Avance / Carte).';
   }
+  if (retraitsDupliques > 0) {
+    alerte = (alerte ? alerte + ' ' : '') +
+      retraitsDupliques + ' ligne(s) retrait en double ignorée(s) (même date + même EUR au relevé).';
+  }
   if (retraitsSansPen > 0) {
     alerte = (alerte ? alerte + ' ' : '') +
-      retraitsSansPen + ' retrait(s) sans PEN enregistré — renseignez amount_pen ou notes pen_recu=700 sur la ligne Journal.';
+      retraitsSansPen + ' retrait(s) avec PEN indicatif — validez ou corrigez la colonne S/. reçus puis OK.';
+  }
+  if (horsCaissePen > 0.01 && sortiesPen > 0.01) {
+    var impliedSpend = r2_(entreesPen + ouverturePen - 1300);
+    if (impliedSpend > sortiesPen + 500 && impliedSpend < sortiesPen + horsCaissePen) {
+      alerte = (alerte ? alerte + ' ' : '') +
+        'Écart possible : ' + r2_(horsCaissePen) + ' S/. en « avance/carte » — si payé en cash caisse, repassez en Espèces (onglet Écritures).';
+    }
   }
   if (soldePen < -0.01) {
     alerte = (alerte ? alerte + ' ' : '') +
@@ -299,6 +430,7 @@ function getCaissePerou_(session, year) {
     especes: especes,
     lots: lots,
     retraits_sans_pen: retraitsSansPen,
+    retraits_dupliques_ignores: retraitsDupliques,
     montant_pen_standard: 700,
     alerte: alerte,
     note: 'Retraits DAB / Western Union (journal) et paiements espèces au Pérou (Detail_PM terrain). ' +

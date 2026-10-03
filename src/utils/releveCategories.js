@@ -43,6 +43,9 @@ export function suggest(op) {
   if (/wix|greengeeks|adobe|weglot|skype|google one|apple|bitwarden|ovh/.test(l)) return { category: 'Abonnements et numérique', project: 'FONCTIONNEMENT' }
   if (/western union|disposicion|atm |retrait/.test(l)) return { category: 'Transferts et retraits terrain', project: '' }
   if (/remboursement d un pret|\bpret\b/.test(l)) return { category: 'Remboursements de prêts / avances', project: '' }
+  if (/^cb /.test(l) && /5770100|n\.5770100/.test(l) && /mariscal|junin|yavari|condamine|iquitos|red unicard/.test(l)) {
+    return { category: 'Transferts et retraits terrain', project: '' }
+  }
   if (/^cb /.test(l)) return { category: 'Dépenses par carte', project: '' }
   if (/prlv|prelevement/.test(l)) return { category: 'Prélèvements', project: '' }
   if (/vir/.test(l)) return { category: 'Virements sortants', project: '' }
