@@ -135,6 +135,7 @@ function auditJournalAnnee_(year) {
   var out = {
     year: year, ok: true, generated_at: new Date().toISOString(), sheet_url: null,
     tabs: {}, releves: [], duplicates: { by_reference: [], by_content: [] },
+    retraits_dab: { legitimes: [], suspects: [], total_lignes: 0 },
     legacy_app_journal: { rows_in_year: 0, refs_only_in_app: [], refs_in_both: [] },
     corrections_delete: [], warnings: []
   };
@@ -194,15 +195,25 @@ function auditJournalAnnee_(year) {
         Logger.log('      ' + d.reference + ' ×' + d.count + ' (lignes ' + d.rows.join(', ') + ')');
       });
     }
-    if (dupContent.length) {
-      Logger.log('   ⚠️ Doublons contenu (date+montant+libellé) : ' + dupContent.length);
-      dupContent.slice(0, 15).forEach(function (d) {
-        Logger.log('      ' + d.key + ' ×' + d.count);
-        d.samples.forEach(function (s) {
-          Logger.log('         → ' + s.reference + ' · ' + s.date + ' · ' + s.label);
-        });
+    if (tabName === 'Journal' && dupContent.length) {
+      var dab = analyzeDabDuplicateGroups_(rows, dupContent);
+      out.retraits_dab = dab;
+      Logger.log('');
+      Logger.log('── Retraits DAB (même date + EUR + libellé) ──');
+      Logger.log('   ✅ Légitimes (refs IMP distinctes = 2 DAB le même jour) : ' + dab.legitimes.length);
+      dab.legitimes.forEach(function (g) {
+        Logger.log('      ' + g.date + ' · ' + g.eur + ' € · ' + g.refs.join(' + '));
       });
-      if (dupContent.length > 15) Logger.log('      … et ' + (dupContent.length - 15) + ' autre(s)');
+      if (dab.suspects.length) {
+        Logger.log('   ⚠️ À vérifier (pas DAB ou refs identiques) : ' + dab.suspects.length);
+        dab.suspects.slice(0, 8).forEach(function (g) {
+          Logger.log('      ' + g.key + ' · ' + g.refs.join(', '));
+        });
+      }
+      var otherDup = dupContent.length - dab.legitimes.length - dab.suspects.length;
+      if (otherDup > 0) Logger.log('   ℹ️ Autres paires banque (hors DAB) : ' + otherDup);
+    } else if (dupContent.length) {
+      Logger.log('   ⚠️ Doublons contenu : ' + dupContent.length);
     }
     if (!dupRef.length && !dupContent.length) Logger.log('   ✅ Pas de doublon détecté');
   });
@@ -313,6 +324,52 @@ function findDuplicateReferences_(rows) {
     if (byRef[ref].length > 1) out.push({ reference: ref, count: byRef[ref].length, rows: byRef[ref] });
   });
   return out.sort(function (a, b) { return b.count - a.count; });
+}
+
+/** DAB / WU Pérou (aligné CaissePerou.gs). */
+function isDabJournalRow_(r) {
+  if (typeof isRetraitTerrain_ === 'function') return isRetraitTerrain_(r);
+  var txt = normTxt_(String(r.label || '') + ' ' + String(r.notes || ''));
+  return /\bcb\b/.test(txt) && /5770100|n\.5770100/.test(txt);
+}
+
+/**
+ * Paires date+EUR+libellé : refs IMP toutes différentes + ligne DAB → 2 retraits le même jour (OK).
+ * Même ref en double ou non-DAB → suspect.
+ */
+function analyzeDabDuplicateGroups_(rows, dupContent) {
+  var rowByRef = {};
+  rows.forEach(function (r) {
+    var ref = String(r.reference || '').trim();
+    if (ref) rowByRef[ref] = r;
+  });
+  var legitimes = [], suspects = [], totalLignes = 0;
+  (dupContent || []).forEach(function (d) {
+    var samples = d.samples || [];
+    var refs = samples.map(function (s) { return String(s.reference || '').trim(); }).filter(Boolean);
+    var uniq = {};
+    refs.forEach(function (ref) { uniq[ref] = true; });
+    var uniqRefs = Object.keys(uniq);
+    var dab = samples.length > 0 && samples.every(function (s) {
+      var row = rowByRef[s.reference] || { label: s.label, notes: '', category: '', entry_type: 'depense' };
+      return isDabJournalRow_(row);
+    });
+    var eur = samples[0] && d.key ? String(d.key).split('|')[1] : '';
+    if (dab && uniqRefs.length === refs.length && refs.length > 1) {
+      legitimes.push({
+        date: samples[0].date,
+        eur: eur ? Number(eur) / 100 : num_(rowByRef[refs[0]] && rowByRef[refs[0]].amount_eur),
+        count: d.count,
+        refs: uniqRefs.sort(),
+        key: d.key
+      });
+      totalLignes += d.count;
+    } else {
+      suspects.push({ key: d.key, count: d.count, refs: uniqRefs, dab: dab, label: samples[0] ? samples[0].label : '' });
+    }
+  });
+  legitimes.sort(function (a, b) { return String(a.date).localeCompare(String(b.date)); });
+  return { legitimes: legitimes, suspects: suspects, total_lignes: totalLignes };
 }
 
 function findDuplicateContent_(rows, mode) {
