@@ -3,24 +3,12 @@
     <!-- En-tête -->
     <header class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-forest via-forest-600 to-bleu px-6 py-7 text-white shadow-lg">
       <div class="pointer-events-none absolute -right-6 -top-6 h-32 w-32 rounded-full bg-leaf/25 blur-2xl" aria-hidden="true" />
-      <div class="relative flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-leaf/90">Trésorerie AKUU</p>
-          <h2 class="mt-1 font-serif text-2xl font-bold">Comptabilité</h2>
-          <p class="mt-2 max-w-lg text-sm leading-relaxed text-white/80">
-            Chiffres issus des journaux validés et rapprochés des relevés bancaires.
-          </p>
-        </div>
-        <a
-          v-if="google.sheetEditUrl"
-          :href="google.sheetEditUrl"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex shrink-0 items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/25"
-        >
-          <PhArrowSquareOut :size="16" weight="bold" aria-hidden="true" />
-          Éditer dans Google Sheets
-        </a>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-leaf/90">Trésorerie AKUU</p>
+        <h2 class="mt-1 font-serif text-2xl font-bold">Comptabilité</h2>
+        <p class="mt-2 max-w-lg text-sm leading-relaxed text-white/80">
+          Chiffres issus des journaux validés et rapprochés des relevés bancaires.
+        </p>
       </div>
     </header>
 
@@ -66,7 +54,6 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import { PhArrowSquareOut, PhFolderOpen } from '@phosphor-icons/vue'
 import {
   TRESORERIE_PROJECTS,
   TRESORERIE_CATEGORIES,
@@ -78,7 +65,6 @@ import {
 } from '@/data/tresorerie-config.js'
 import { formatAmountWithConversion } from '@/data/currency.js'
 import { filterJournal } from '@/data/compta-summary.js'
-import { tresorerieGoogle } from '@/config/tresorerie-google.js'
 import { useTresorerieStore } from '@/store/tresorerie.js'
 import AdminDataTable from './AdminDataTable.vue'
 import AdminComptaOverview from './AdminComptaOverview.vue'
@@ -90,8 +76,6 @@ import driveHealthData from '@/data/drive-health.json'
 
 const store = useTresorerieStore()
 const driveHealth = driveHealthData?.ok != null ? driveHealthData : null
-const google = tresorerieGoogle
-const visibleFolders = tresorerieGoogle.driveFolders.filter((f) => f.url && f.id !== 'historique')
 const loading = ref(false)
 const error = ref(null)
 const filterProject = ref('')

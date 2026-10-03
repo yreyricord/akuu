@@ -21,12 +21,6 @@ export function driveFolderUrl(folderId) {
   return `https://drive.google.com/drive/folders/${folderId}`
 }
 
-export function sheetEditUrl(spreadsheetId, gid) {
-  if (!spreadsheetId) return null
-  const base = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit`
-  return gid ? `${base}?gid=${gid}` : base
-}
-
 export function sheetEmbedUrl(spreadsheetId, gid) {
   if (!spreadsheetId) return null
   const params = new URLSearchParams({
@@ -44,10 +38,6 @@ export const tresorerieGoogle = {
 
   get sheetEmbedUrl() {
     return sheetEmbedUrl(this.spreadsheetId, this.sheetGid)
-  },
-
-  get sheetEditUrl() {
-    return sheetEditUrl(this.spreadsheetId, this.sheetGid)
   },
 
   driveFolders: [

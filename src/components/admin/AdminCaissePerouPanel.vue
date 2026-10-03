@@ -66,56 +66,13 @@
         {{ data.alerte }}
       </p>
 
-      <!-- Lots de retrait (FIFO) -->
-      <div v-if="data.lots?.length" class="rounded-xl border border-night-100 bg-white">
-        <h4 class="border-b border-night-100 px-4 py-3 text-sm font-semibold text-forest">
-          Lots de retrait — suivi bénévole
-          <span class="ml-2 font-normal text-night-400">(FIFO · standard {{ data.montant_pen_standard ?? 700 }} S/.)</span>
-        </h4>
-        <p class="border-b border-night-50 px-4 py-2 text-xs text-night-500">
-          Chaque retrait = un lot. Les dépenses espèces consomment les lots du plus ancien au plus récent.
-          Saisir <code class="rounded bg-cream-200 px-1">amount_pen</code> ou <code class="rounded bg-cream-200 px-1">pen_recu=700</code> dans les notes du journal banque.
-        </p>
-        <div class="max-h-64 overflow-y-auto">
-          <table class="w-full text-sm">
-            <thead class="sticky top-0 bg-cream-100 text-xs uppercase tracking-wide text-night-500">
-              <tr>
-                <th class="px-3 py-2 text-left">Date</th>
-                <th class="px-3 py-2 text-left">Lot / retrait</th>
-                <th class="px-3 py-2 text-right">Reçu S/.</th>
-                <th class="px-3 py-2 text-right">Dépensé</th>
-                <th class="px-3 py-2 text-right">Reste</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="lot in data.lots"
-                :key="lot.reference || lot.id"
-                class="border-t border-night-50"
-                :class="lot.reste_pen < 0 ? 'bg-terracotta/5' : ''"
-              >
-                <td class="whitespace-nowrap px-3 py-2 tabular-nums text-xs">{{ lot.date || '—' }}</td>
-                <td class="max-w-[14rem] px-3 py-2">
-                  <p class="truncate font-mono text-xs" :title="lot.reference">{{ lot.reference || lot.id }}</p>
-                  <p class="truncate text-xs text-night-500" :title="lot.label">{{ lot.label }}</p>
-                  <p v-if="lot.pen_estimated" class="text-[10px] text-ochre-700">PEN estimé (EUR converti)</p>
-                </td>
-                <td class="whitespace-nowrap px-3 py-2 text-right tabular-nums text-forest">+ {{ formatPen(lot.pen_recu) }}</td>
-                <td class="whitespace-nowrap px-3 py-2 text-right tabular-nums">− {{ formatPen(lot.depenses_pen) }}</td>
-                <td class="whitespace-nowrap px-3 py-2 text-right font-semibold tabular-nums" :class="lot.reste_pen >= 0 ? 'text-night' : 'text-terracotta-700'">
-                  {{ formatPen(lot.reste_pen) }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
       <!-- Retraits au Pérou -->
       <div class="rounded-xl border border-night-100 bg-white">
         <h4 class="border-b border-night-100 px-4 py-3 text-sm font-semibold text-forest">
           Retraits au Pérou (entrées caisse)
-          <span class="ml-2 font-normal text-night-400">({{ data.retraits_count }}) · {{ formatEur(data.retraits_eur) }}</span>
+          <span class="ml-2 font-normal tabular-nums text-night-400">
+            ({{ data.retraits_count }}) · + {{ formatPen(retraitsTotals.pen) }} · + {{ formatEur(retraitsTotals.eur) }}
+          </span>
         </h4>
         <p class="border-b border-night-50 px-4 py-2 text-xs text-night-500">
           Corrigez les soles réellement reçus au distributeur (souvent 700 S/.). L’EUR vient du relevé bancaire et ne change pas.
@@ -173,6 +130,19 @@
                 </td>
               </tr>
             </tbody>
+            <tfoot class="border-t border-night-200 bg-cream-50 text-xs font-semibold">
+              <tr>
+                <td colspan="2" class="px-3 py-2 text-right text-night-500">Total retraits</td>
+                <td class="whitespace-nowrap px-3 py-2 text-right tabular-nums text-forest">
+                  + {{ formatEur(retraitsTotals.eur) }}
+                </td>
+                <td class="whitespace-nowrap px-3 py-2 text-right tabular-nums text-forest">
+                  + {{ formatPen(retraitsTotals.pen) }}
+                  <span v-if="retraitsTotals.penEur != null" class="block font-normal text-night-400">≈ {{ formatEur(retraitsTotals.penEur) }}</span>
+                </td>
+                <td />
+              </tr>
+            </tfoot>
           </table>
         </div>
       </div>
@@ -181,8 +151,9 @@
       <div class="rounded-xl border border-night-100 bg-white">
         <h4 class="border-b border-night-100 px-4 py-3 text-sm font-semibold text-night">
           Dépenses terrain au Pérou
-          <span class="ml-2 font-normal text-night-400">
-            ({{ filteredDepenses.length }}/{{ data.depenses_terrain_count ?? 0 }})
+          <span class="ml-2 font-normal tabular-nums text-night-400">
+            ({{ filteredDepenses.length }}/{{ data.depenses_terrain_count ?? 0 }}) · − {{ formatPen(filteredTotal) }}
+            <template v-if="filteredTotalEur != null"> · ≈ {{ formatEur(filteredTotalEur) }}</template>
           </span>
         </h4>
         <p class="border-b border-night-50 px-4 py-2 text-xs text-night-500">
@@ -244,7 +215,10 @@
                   Total filtré
                   <span v-if="filterMode === 'caisse'" class="font-normal text-forest-700"> · compté dans le solde</span>
                 </td>
-                <td class="px-2 py-2 text-right tabular-nums">− {{ formatPen(filteredTotal) }}</td>
+                <td class="whitespace-nowrap px-2 py-2 text-right tabular-nums">
+                  − {{ formatPen(filteredTotal) }}
+                  <span v-if="filteredTotalEur != null" class="block font-normal text-night-400">≈ {{ formatEur(filteredTotalEur) }}</span>
+                </td>
                 <td />
               </tr>
             </tfoot>
@@ -258,6 +232,7 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
 import { formatEur, formatPen, PAYMENT_METHODS } from '@/data/tresorerie-config.js'
+import { penToEur } from '@/api/tresorerie/exchangeRate.js'
 import { tresorerieApi } from '@/api/tresorerie/client.js'
 import { bindLoadingProgress } from '@/composables/useLoadingProgress.js'
 import AdminLoadingPanel from './AdminLoadingPanel.vue'
@@ -339,9 +314,32 @@ async function saveRetraitPen(row) {
   }
 }
 
+const penEurRate = computed(() => data.value?.pen_to_eur ?? null)
+
+function penAsEur(pen) {
+  const rate = penEurRate.value
+  if (!rate || !pen) return null
+  return penToEur(pen, rate)
+}
+
+function effectiveRetraitPen(row) {
+  const draft = penDrafts.value[row.reference]
+  if (draft !== undefined && draft !== '') return Number(draft) || 0
+  return Number(row.amount_pen) || 0
+}
+
+const retraitsTotals = computed(() => {
+  const rows = data.value?.retraits ?? []
+  const eur = rows.reduce((s, r) => s + (Number(r.amount_eur) || 0), 0)
+  const pen = rows.reduce((s, r) => s + effectiveRetraitPen(r), 0)
+  return { eur, pen, penEur: penAsEur(pen) }
+})
+
 const filteredTotal = computed(() =>
   filteredDepenses.value.reduce((s, r) => s + (Number(r.amount_pen) || 0), 0)
 )
+
+const filteredTotalEur = computed(() => penAsEur(filteredTotal.value))
 
 const soldeClass = computed(() => {
   const s = data.value?.caisse_pen_solde
