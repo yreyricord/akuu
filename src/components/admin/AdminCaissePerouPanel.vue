@@ -336,7 +336,7 @@ const retraitsTotals = computed(() => {
   return {
     eur,
     pen,
-    penBenevole: refPen ?? penSaisi || pen,
+    penBenevole: refPen ?? (penSaisi || pen),
     penSaisi,
     penEstime,
     extraPen,
