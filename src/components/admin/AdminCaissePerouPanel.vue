@@ -1,14 +1,36 @@
 <template>
   <section class="space-y-4">
-    <div class="flex flex-wrap items-center justify-between gap-3">
-      <h3 class="text-sm font-semibold uppercase tracking-wide text-night">Caisse espèces au Pérou</h3>
-      <label class="flex items-center gap-2 text-sm text-night-600">
-        <span class="font-medium">Année</span>
-        <select v-model="year" class="admin-input w-auto min-w-[5rem] py-1.5" @change="load">
-          <option v-for="y in yearOptions" :key="y" :value="y">{{ y }}</option>
-        </select>
-      </label>
-    </div>
+    <header class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-forest via-forest-600 to-bleu px-5 py-5 text-white shadow-lg">
+      <div class="pointer-events-none absolute -right-2 top-1/2 z-0 -translate-y-1/2 select-none" aria-hidden="true">
+        <img
+          src="/images/collibri-akuu.png"
+          alt=""
+          class="caisse-colibri h-24 w-auto opacity-90 drop-shadow-[0_8px_24px_rgba(166,198,57,0.35)] sm:h-28"
+        />
+      </div>
+      <div class="pointer-events-none absolute -left-8 -top-8 h-32 w-32 rounded-full bg-leaf/20 blur-2xl" aria-hidden="true" />
+      <div class="relative z-[1] flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <div class="caisse-icon-shell flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/15 shadow-inner backdrop-blur-sm">
+            <PhCashRegister class="caisse-icon text-leaf" :size="32" weight="duotone" aria-hidden="true" />
+          </div>
+          <div>
+            <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-leaf/90">Trésorerie terrain</p>
+            <h3 class="font-serif text-xl font-bold leading-tight sm:text-2xl">Caisse au Pérou</h3>
+          </div>
+        </div>
+        <label class="flex items-center gap-2 rounded-full bg-white/15 px-3 py-1.5 text-sm backdrop-blur-sm">
+          <span class="font-medium text-white/90">Année</span>
+          <select
+            v-model="year"
+            class="min-w-[5rem] cursor-pointer rounded-lg border-0 bg-white/95 py-1 pl-2 pr-7 text-sm font-semibold text-forest-700 focus:ring-2 focus:ring-leaf/50"
+            @change="load"
+          >
+            <option v-for="y in yearOptions" :key="y" :value="y">{{ y }}</option>
+          </select>
+        </label>
+      </div>
+    </header>
 
     <AdminLoadingPanel
       v-if="loading"
@@ -188,6 +210,7 @@
 
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
+import { PhCashRegister } from '@phosphor-icons/vue'
 import { formatEur, formatPen, PAYMENT_METHODS } from '@/data/tresorerie-config.js'
 import { penToEur } from '@/api/tresorerie/exchangeRate.js'
 import { tresorerieApi } from '@/api/tresorerie/client.js'
@@ -322,3 +345,51 @@ async function load() {
 onMounted(load)
 watch(() => props.refreshKey, () => { if (props.refreshKey) load() })
 </script>
+
+<style scoped>
+@media (prefers-reduced-motion: no-preference) {
+  .caisse-icon {
+    animation: caisseRegisterPulse 2.4s ease-in-out infinite;
+    transform-origin: center bottom;
+  }
+
+  .caisse-icon-shell {
+    animation: caisseShellGlow 3s ease-in-out infinite;
+  }
+
+  .caisse-colibri {
+    animation: caisseColibriHover 9s linear infinite;
+    transform-origin: center center;
+    will-change: transform;
+  }
+}
+
+@keyframes caisseRegisterPulse {
+  0%, 100% { transform: translateY(0) scale(1); }
+  15% { transform: translateY(-2px) scale(1.06); }
+  30% { transform: translateY(0) scale(1); }
+  45% { transform: translateY(-1px) scale(1.03); }
+  60% { transform: translateY(0) scale(1); }
+}
+
+@keyframes caisseShellGlow {
+  0%, 100% { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15), 0 0 0 rgba(166, 198, 57, 0); }
+  50% { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25), 0 0 20px rgba(166, 198, 57, 0.25); }
+}
+
+@keyframes caisseColibriHover {
+  0% { transform: translate3d(0, 0, 0) rotate(2deg) scale(1); }
+  25% { transform: translate3d(-8px, -10px, 0) rotate(-2deg) scale(1.04); }
+  50% { transform: translate3d(0, -14px, 0) rotate(2deg) scale(1.06); }
+  75% { transform: translate3d(8px, -8px, 0) rotate(-1deg) scale(1.03); }
+  100% { transform: translate3d(0, 0, 0) rotate(2deg) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .caisse-icon,
+  .caisse-icon-shell,
+  .caisse-colibri {
+    animation: none;
+  }
+}
+</style>
