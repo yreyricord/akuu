@@ -23,9 +23,9 @@ Dans l’éditeur Apps Script du projet trésorerie, mettre à jour puis **Dépl
 
 ---
 
-## 2. Frontend — commit & push Netlify
+## 2. Frontend — commit & push Netlify ✅ (fait le 03/10/2026 · `1fa7a0c`)
 
-Fichiers modifiés (non encore sur `main` au 03/10/2026) :
+Fichiers poussés sur `main` :
 
 | Fichier | Contenu |
 |---------|---------|
