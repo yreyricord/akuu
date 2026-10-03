@@ -48,36 +48,15 @@
         </p>
       </div>
 
-      <div v-if="data.totals_by_mode" class="flex flex-wrap gap-2 text-xs">
-        <span
-          v-for="chip in modeChips"
-          :key="chip.id"
-          class="cursor-pointer rounded-full px-3 py-1 font-semibold transition"
-          :class="filterMode === chip.id
-            ? (chip.muted ? 'bg-night-600 text-white' : 'bg-forest text-white')
-            : (chip.muted ? 'bg-cream-100 text-night-500 hover:bg-cream-200' : 'bg-cream-200 text-night-600 hover:bg-cream-300')"
-          @click="filterMode = chip.id"
-        >
-          {{ chip.label }} · {{ formatPen(chip.total) }}
-        </span>
-      </div>
-
-      <p v-if="data.alerte" class="rounded-xl border border-ochre-300 bg-ochre-50 px-4 py-3 text-sm text-ochre-900">
-        {{ data.alerte }}
-      </p>
-
       <!-- Retraits au Pérou -->
       <div class="rounded-xl border border-night-100 bg-white">
         <h4 class="border-b border-night-100 px-4 py-3 text-sm font-semibold text-forest">
-          Retraits au Pérou (entrées caisse)
+          Retraits
           <span class="ml-2 font-normal tabular-nums text-night-400">
-            ({{ data.retraits_count }}) · + {{ formatPen(retraitsTotals.pen) }} · + {{ formatEur(retraitsTotals.eur) }}
+            + {{ formatPen(retraitsTotals.pen) }} · + {{ formatEur(retraitsTotals.eur) }}
           </span>
         </h4>
-        <p class="border-b border-night-50 px-4 py-2 text-xs text-night-500">
-          Corrigez les soles réellement reçus au distributeur (souvent 700 S/.). L’EUR vient du relevé bancaire et ne change pas.
-        </p>
-        <p v-if="!data.retraits?.length" class="px-4 py-6 text-sm text-night-400">Aucun retrait DAB / Western Union cette année.</p>
+        <p v-if="!data.retraits?.length" class="px-4 py-6 text-sm text-night-400">Aucun retrait cette année.</p>
         <div v-else class="max-h-64 overflow-y-auto">
           <table class="w-full text-sm">
             <thead class="sticky top-0 bg-cream-100 text-xs uppercase tracking-wide text-night-500">
@@ -130,36 +109,20 @@
                 </td>
               </tr>
             </tbody>
-            <tfoot class="border-t border-night-200 bg-cream-50 text-xs font-semibold">
-              <tr>
-                <td colspan="2" class="px-3 py-2 text-right text-night-500">Total retraits</td>
-                <td class="whitespace-nowrap px-3 py-2 text-right tabular-nums text-forest">
-                  + {{ formatEur(retraitsTotals.eur) }}
-                </td>
-                <td class="whitespace-nowrap px-3 py-2 text-right tabular-nums text-forest">
-                  + {{ formatPen(retraitsTotals.pen) }}
-                  <span v-if="retraitsTotals.penEur != null" class="block font-normal text-night-400">≈ {{ formatEur(retraitsTotals.penEur) }}</span>
-                </td>
-                <td />
-              </tr>
-            </tfoot>
           </table>
         </div>
       </div>
 
-      <!-- Toutes les dépenses terrain -->
+      <!-- Dépenses terrain -->
       <div class="rounded-xl border border-night-100 bg-white">
         <h4 class="border-b border-night-100 px-4 py-3 text-sm font-semibold text-night">
-          Dépenses terrain au Pérou
+          Dépenses
           <span class="ml-2 font-normal tabular-nums text-night-400">
-            ({{ filteredDepenses.length }}/{{ data.depenses_terrain_count ?? 0 }}) · − {{ formatPen(filteredTotal) }}
-            <template v-if="filteredTotalEur != null"> · ≈ {{ formatEur(filteredTotalEur) }}</template>
+            − {{ formatPen(depensesTotal) }}
+            <template v-if="depensesTotalEur != null"> · ≈ {{ formatEur(depensesTotalEur) }}</template>
           </span>
         </h4>
-        <p class="border-b border-night-50 px-4 py-2 text-xs text-night-500">
-          Seules les dépenses <strong>espèces / Yape</strong> alimentent le solde caisse. Les avances bénévoles et cartes sont listées à part — hors caisse.
-        </p>
-        <p v-if="!filteredDepenses.length" class="px-4 py-6 text-sm text-night-400">Aucune dépense pour ce filtre.</p>
+        <p v-if="!depensesRows.length" class="px-4 py-6 text-sm text-night-400">Aucune dépense cette année.</p>
         <div v-else class="max-h-[28rem] overflow-y-auto">
           <table class="w-full text-sm">
             <thead class="sticky top-0 bg-cream-100 text-xs uppercase tracking-wide text-night-500">
@@ -174,7 +137,7 @@
             </thead>
             <tbody>
               <tr
-                v-for="row in filteredDepenses"
+                v-for="row in depensesRows"
                 :key="row.reference"
                 class="border-t border-night-50"
                 :class="row.caisse_cash ? 'bg-terracotta/[0.04]' : ''"
@@ -209,19 +172,6 @@
                 </td>
               </tr>
             </tbody>
-            <tfoot class="border-t border-night-100 bg-cream-50 text-xs font-semibold">
-              <tr>
-                <td colspan="4" class="px-2 py-2 text-right text-night-500">
-                  Total filtré
-                  <span v-if="filterMode === 'caisse'" class="font-normal text-forest-700"> · compté dans le solde</span>
-                </td>
-                <td class="whitespace-nowrap px-2 py-2 text-right tabular-nums">
-                  − {{ formatPen(filteredTotal) }}
-                  <span v-if="filteredTotalEur != null" class="block font-normal text-night-400">≈ {{ formatEur(filteredTotalEur) }}</span>
-                </td>
-                <td />
-              </tr>
-            </tfoot>
           </table>
         </div>
       </div>
@@ -246,9 +196,7 @@ const emit = defineEmits(['journal-updated'])
 const TERRAIN_MODES = PAYMENT_METHODS.filter((m) =>
   ['especes', 'avance', 'cb', 'virement', 'yape_plin', 'autre'].includes(m.code)
 )
-const CAISSE_MODES = ['especes', 'yape_plin']
 const year = ref(String(new Date().getFullYear()))
-const filterMode = ref('caisse')
 const savingRef = ref(null)
 const penDrafts = ref({})
 const loading = ref(false)
@@ -261,24 +209,7 @@ const yearOptions = computed(() => {
   return Array.from({ length: cur - 2016 }, (_, i) => String(cur - i))
 })
 
-const modeChips = computed(() => {
-  const t = data.value?.totals_by_mode || {}
-  return [
-    { id: 'caisse', label: 'Caisse', total: data.value?.depenses_caisse_pen ?? ((t.especes ?? 0) + (t.yape_plin ?? 0)) },
-    { id: 'especes', label: 'Espèces', total: t.especes ?? 0 },
-    { id: 'yape_plin', label: 'Yape/Plin', total: t.yape_plin ?? 0 },
-    { id: 'non_classe', label: 'Non classé', total: t.non_classe ?? 0 }
-  ]
-})
-
-const filteredDepenses = computed(() => {
-  const rows = data.value?.depenses_terrain ?? []
-  if (filterMode.value === 'caisse') {
-    return rows.filter((r) => CAISSE_MODES.includes(r.payment_method))
-  }
-  if (filterMode.value === 'non_classe') return rows.filter((r) => !r.payment_method)
-  return rows.filter((r) => r.payment_method === filterMode.value)
-})
+const depensesRows = computed(() => data.value?.depenses_terrain ?? [])
 
 function penChanged(row) {
   const draft = penDrafts.value[row.reference]
@@ -335,11 +266,11 @@ const retraitsTotals = computed(() => {
   return { eur, pen, penEur: penAsEur(pen) }
 })
 
-const filteredTotal = computed(() =>
-  filteredDepenses.value.reduce((s, r) => s + (Number(r.amount_pen) || 0), 0)
+const depensesTotal = computed(() =>
+  depensesRows.value.reduce((s, r) => s + (Number(r.amount_pen) || 0), 0)
 )
 
-const filteredTotalEur = computed(() => penAsEur(filteredTotal.value))
+const depensesTotalEur = computed(() => penAsEur(depensesTotal.value))
 
 const soldeClass = computed(() => {
   const s = data.value?.caisse_pen_solde
