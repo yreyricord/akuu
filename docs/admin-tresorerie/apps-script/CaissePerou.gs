@@ -226,6 +226,9 @@ function getCaissePerou_(session, year) {
   });
   depensesTerrain.sort(function (a, b) { return (b.date + b.reference).localeCompare(a.date + a.reference); });
   Object.keys(totalsByMode).forEach(function (k) { totalsByMode[k] = r2_(totalsByMode[k]); });
+  var horsCaissePen = r2_((totalsByMode.avance || 0) + (totalsByMode.cb || 0) +
+    (totalsByMode.virement || 0) + (totalsByMode.autre || 0));
+  var caisseDepensesPen = r2_((totalsByMode.especes || 0) + (totalsByMode.yape_plin || 0));
 
   var rateInfo = getExchangeRate_();
   var penToEur = rateInfo && rateInfo.rate ? Number(rateInfo.rate) : null;
@@ -287,6 +290,8 @@ function getCaissePerou_(session, year) {
     depenses_terrain: depensesTerrain,
     depenses_terrain_count: depensesTerrain.length,
     totals_by_mode: totalsByMode,
+    depenses_caisse_pen: caisseDepensesPen,
+    depenses_hors_caisse_pen: horsCaissePen,
     pen_to_eur: penToEur,
     pen_per_eur: penPerEur,
     taux_date: rateInfo ? rateInfo.date : null,

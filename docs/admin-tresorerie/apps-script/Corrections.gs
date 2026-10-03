@@ -80,12 +80,17 @@ function requestUpdate_(session, body) {
   var year = Number(body.year || 0);
   if (!ref) throw apiError_('VALIDATION_FAILED', 'Référence manquante');
   assertExerciceModifiable_(year);
-  if (!body.project && !body.payment_method && !body.category) throw apiError_('VALIDATION_FAILED', 'Rien à modifier');
+  var hasPen = body.amount_pen != null && body.amount_pen !== '';
+  if (!body.project && !body.payment_method && !body.category && !hasPen && body.notes == null) {
+    throw apiError_('VALIDATION_FAILED', 'Rien à modifier');
+  }
 
   var result = updateJournalLine_(year, ref, session.email, {
     project: body.project,
     payment_method: body.payment_method,
     category: body.category,
+    amount_pen: hasPen ? body.amount_pen : undefined,
+    notes: body.notes != null ? body.notes : undefined,
     reason: body.reason || ''
   });
   if (!result) throw apiError_('NOT_FOUND', 'Écriture introuvable dans le journal ' + year, 404);

@@ -44,6 +44,7 @@
           <span v-if="data.caisse_pen_ouverture">Ouverture {{ formatPen(data.caisse_pen_ouverture) }} + </span>
           retraits {{ formatPen(data.caisse_pen_entrees) }}
           − espèces caisse {{ formatPen(data.caisse_pen_sorties) }}
+          <span v-if="data.depenses_hors_caisse_pen"> · avances/carte {{ formatPen(data.depenses_hors_caisse_pen) }} exclus</span>
         </p>
       </div>
 
@@ -52,7 +53,9 @@
           v-for="chip in modeChips"
           :key="chip.id"
           class="cursor-pointer rounded-full px-3 py-1 font-semibold transition"
-          :class="filterMode === chip.id ? 'bg-forest text-white' : 'bg-cream-200 text-night-600 hover:bg-cream-300'"
+          :class="filterMode === chip.id
+            ? (chip.muted ? 'bg-night-600 text-white' : 'bg-forest text-white')
+            : (chip.muted ? 'bg-cream-100 text-night-500 hover:bg-cream-200' : 'bg-cream-200 text-night-600 hover:bg-cream-300')"
           @click="filterMode = chip.id"
         >
           {{ chip.label }} · {{ formatPen(chip.total) }}
@@ -114,27 +117,57 @@
           Retraits au Pérou (entrées caisse)
           <span class="ml-2 font-normal text-night-400">({{ data.retraits_count }}) · {{ formatEur(data.retraits_eur) }}</span>
         </h4>
+        <p class="border-b border-night-50 px-4 py-2 text-xs text-night-500">
+          Corrigez les soles réellement reçus au distributeur (souvent 700 S/.). L’EUR vient du relevé bancaire et ne change pas.
+        </p>
         <p v-if="!data.retraits?.length" class="px-4 py-6 text-sm text-night-400">Aucun retrait DAB / Western Union cette année.</p>
-        <div v-else class="max-h-48 overflow-y-auto">
+        <div v-else class="max-h-64 overflow-y-auto">
           <table class="w-full text-sm">
             <thead class="sticky top-0 bg-cream-100 text-xs uppercase tracking-wide text-night-500">
               <tr>
                 <th class="px-3 py-2 text-left">Date</th>
                 <th class="px-3 py-2 text-left">Libellé</th>
                 <th class="px-3 py-2 text-right">EUR</th>
-                <th class="px-3 py-2 text-right">S/.</th>
-                <th class="px-3 py-2 text-left">Source PEN</th>
+                <th class="px-3 py-2 text-right">S/. reçus</th>
+                <th class="px-3 py-2 text-right" />
               </tr>
             </thead>
             <tbody>
-              <tr v-for="row in data.retraits" :key="row.reference" class="border-t border-night-50 bg-forest/[0.03]">
-                <td class="whitespace-nowrap px-3 py-2 tabular-nums">{{ row.date }}</td>
-                <td class="max-w-[16rem] truncate px-3 py-2" :title="row.label">{{ row.label || '—' }}</td>
+              <tr
+                v-for="row in data.retraits"
+                :key="row.reference"
+                class="border-t border-night-50 bg-forest/[0.03]"
+                :class="row.pen_estimated ? 'ring-1 ring-inset ring-ochre-200' : ''"
+              >
+                <td class="whitespace-nowrap px-3 py-2 tabular-nums text-xs">{{ row.date }}</td>
+                <td class="max-w-[12rem] px-3 py-2">
+                  <p class="truncate font-mono text-[10px] text-night-400" :title="row.reference">{{ row.reference }}</p>
+                  <p class="truncate text-xs" :title="row.label">{{ row.label || '—' }}</p>
+                </td>
                 <td class="whitespace-nowrap px-3 py-2 text-right font-semibold tabular-nums text-forest">+ {{ formatEur(row.amount_eur) }}</td>
-                <td class="whitespace-nowrap px-3 py-2 text-right tabular-nums text-night-600">+ {{ formatPen(row.amount_pen) }}</td>
-                <td class="px-3 py-2 text-xs text-night-500">
-                  {{ row.pen_source || '—' }}
-                  <span v-if="row.pen_estimated" class="text-ochre-700"> (estimé)</span>
+                <td class="whitespace-nowrap px-3 py-2 text-right">
+                  <input
+                    type="number"
+                    min="1"
+                    step="50"
+                    class="admin-input w-[5.5rem] py-1 text-right text-xs tabular-nums"
+                    :value="penDrafts[row.reference] ?? row.amount_pen"
+                    :disabled="savingRef === row.reference"
+                    @input="penDrafts[row.reference] = $event.target.value"
+                  />
+                  <p v-if="row.pen_estimated" class="mt-0.5 text-[10px] text-ochre-700">estimé (EUR→PEN)</p>
+                  <p v-else class="mt-0.5 text-[10px] text-forest-700">{{ row.pen_source || 'saisi' }}</p>
+                </td>
+                <td class="whitespace-nowrap px-2 py-2 text-right">
+                  <button
+                    v-if="penChanged(row)"
+                    type="button"
+                    class="rounded-lg bg-forest px-2 py-1 text-[11px] font-semibold text-white disabled:opacity-50"
+                    :disabled="savingRef === row.reference"
+                    @click="saveRetraitPen(row)"
+                  >
+                    {{ savingRef === row.reference ? '…' : 'OK' }}
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -151,7 +184,7 @@
           </span>
         </h4>
         <p class="border-b border-night-50 px-4 py-2 text-xs text-night-500">
-          Changez le mode de paiement pour reclasser (espèces caisse, avance bénévole, carte…). Lien = facture sur Drive.
+          Seules les dépenses <strong>espèces / Yape</strong> alimentent le solde caisse. Les avances bénévoles et cartes sont listées à part — hors caisse.
         </p>
         <p v-if="!filteredDepenses.length" class="px-4 py-6 text-sm text-night-400">Aucune dépense pour ce filtre.</p>
         <div v-else class="max-h-[28rem] overflow-y-auto">
@@ -205,7 +238,11 @@
             </tbody>
             <tfoot class="border-t border-night-100 bg-cream-50 text-xs font-semibold">
               <tr>
-                <td colspan="4" class="px-2 py-2 text-right text-night-500">Total filtré</td>
+                <td colspan="4" class="px-2 py-2 text-right text-night-500">
+                  Total filtré
+                  <span v-if="filterMode === 'hors_caisse'" class="font-normal text-night-400"> · hors solde caisse</span>
+                  <span v-else-if="filterMode === 'caisse'" class="font-normal text-forest-700"> · compté dans le solde</span>
+                </td>
                 <td class="px-2 py-2 text-right tabular-nums">− {{ formatPen(filteredTotal) }}</td>
                 <td />
               </tr>
@@ -233,10 +270,13 @@ const emit = defineEmits(['journal-updated'])
 const TERRAIN_MODES = PAYMENT_METHODS.filter((m) =>
   ['especes', 'avance', 'cb', 'virement', 'yape_plin', 'autre'].includes(m.code)
 )
+const CAISSE_MODES = ['especes', 'yape_plin']
+const HORS_CAISSE_MODES = ['avance', 'cb', 'virement', 'autre']
 
 const year = ref(String(new Date().getFullYear()))
-const filterMode = ref('all')
+const filterMode = ref('caisse')
 const savingRef = ref(null)
+const penDrafts = ref({})
 const loading = ref(false)
 const loadProg = bindLoadingProgress(loading, { estimateMs: 18_000, label: 'Calcul caisse…' })
 const error = ref(null)
@@ -250,21 +290,56 @@ const yearOptions = computed(() => {
 const modeChips = computed(() => {
   const t = data.value?.totals_by_mode || {}
   return [
-    { id: 'all', label: 'Toutes', total: data.value?.depenses_terrain?.reduce((s, r) => s + (r.amount_pen || 0), 0) ?? 0 },
-    { id: 'especes', label: 'Espèces caisse', total: t.especes ?? 0 },
-    { id: 'avance', label: 'Avance', total: t.avance ?? 0 },
-    { id: 'cb', label: 'Carte', total: t.cb ?? 0 },
+    { id: 'caisse', label: 'Caisse', total: data.value?.depenses_caisse_pen ?? ((t.especes ?? 0) + (t.yape_plin ?? 0)) },
+    { id: 'especes', label: 'Espèces', total: t.especes ?? 0 },
     { id: 'yape_plin', label: 'Yape/Plin', total: t.yape_plin ?? 0 },
+    { id: 'hors_caisse', label: 'Hors caisse', total: data.value?.depenses_hors_caisse_pen ?? 0, muted: true },
+    { id: 'avance', label: 'Avances', total: t.avance ?? 0, muted: true },
     { id: 'non_classe', label: 'Non classé', total: t.non_classe ?? 0 }
   ]
 })
 
 const filteredDepenses = computed(() => {
   const rows = data.value?.depenses_terrain ?? []
-  if (filterMode.value === 'all') return rows
+  if (filterMode.value === 'caisse') {
+    return rows.filter((r) => CAISSE_MODES.includes(r.payment_method))
+  }
+  if (filterMode.value === 'hors_caisse') {
+    return rows.filter((r) => HORS_CAISSE_MODES.includes(r.payment_method))
+  }
   if (filterMode.value === 'non_classe') return rows.filter((r) => !r.payment_method)
   return rows.filter((r) => r.payment_method === filterMode.value)
 })
+
+function penChanged(row) {
+  const draft = penDrafts.value[row.reference]
+  if (draft === undefined || draft === '') return false
+  return Math.abs(Number(draft) - Number(row.amount_pen)) > 0.009
+}
+
+async function saveRetraitPen(row) {
+  const pen = Number(penDrafts.value[row.reference])
+  if (!pen || pen <= 0) {
+    error.value = 'Montant PEN invalide'
+    return
+  }
+  savingRef.value = row.reference
+  error.value = null
+  try {
+    await tresorerieApi.updateJournalLine({
+      reference: row.reference,
+      year: Number(year.value),
+      amount_pen: pen
+    })
+    delete penDrafts.value[row.reference]
+    await load()
+    emit('journal-updated')
+  } catch (e) {
+    error.value = e.message || 'Enregistrement PEN impossible — redéployez JournalAnnee.gs + Corrections.gs'
+  } finally {
+    savingRef.value = null
+  }
+}
 
 const filteredTotal = computed(() =>
   filteredDepenses.value.reduce((s, r) => s + (Number(r.amount_pen) || 0), 0)

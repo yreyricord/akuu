@@ -358,12 +358,26 @@ function updateJournalLine_(year, reference, actor, patch) {
       set(k, pmPatch[k]);
     });
   }
+  if (patch.amount_pen != null && patch.amount_pen !== '' && hit.sheet.getName() === 'Journal') {
+    var penVal = r2_(Number(patch.amount_pen));
+    if (isNaN(penVal) || penVal <= 0) throw apiError_('VALIDATION_FAILED', 'Montant PEN invalide');
+    after.amount_pen = penVal;
+    set('amount_pen', penVal);
+  }
+  if (patch.notes != null && hit.sheet.getName() === 'Journal') {
+    after.notes = String(patch.notes);
+    set('notes', after.notes);
+  }
   if (typeof appendHistoriqueJournal_ === 'function') {
     appendHistoriqueJournal_(ss, actor, 'modification', reference, before, after, String(patch.reason || ''));
   }
   appendAudit_(actor, 'journal_line_updated', 'journal', reference, { year: year, before: before, after: after });
   invalidateJournalCaches_(ss);
-  return { reference: reference, year: year, tab: hit.sheet.getName(), payment_method: readPaymentMethod_(after), project: after.project };
+  return {
+    reference: reference, year: year, tab: hit.sheet.getName(),
+    payment_method: readPaymentMethod_(after), project: after.project,
+    amount_pen: num_(after.amount_pen), notes: String(after.notes || '')
+  };
 }
 
 /** Lignes au format du site (onglets Écritures / Factures). */

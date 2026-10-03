@@ -556,12 +556,14 @@ export const tresorerieApi = {
       .then((res) => { invalidateJournalCache(year); return res })
   },
 
-  updateJournalLine({ reference, year, project, payment_method, category }) {
+  updateJournalLine({ reference, year, project, payment_method, category, amount_pen, notes }) {
     if (isMockMode()) {
-      return Promise.resolve({ reference, year, project, payment_method, tab: 'Detail_PM' })
+      return Promise.resolve({ reference, year, project, payment_method, amount_pen, tab: 'Detail_PM' })
     }
-    return remoteRequest('/corrections/update', { method: 'POST', body: { reference, year, project, payment_method, category } })
-      .then((res) => { invalidateJournalCache(year); return res })
+    return remoteRequest('/corrections/update', {
+      method: 'POST',
+      body: { reference, year, project, payment_method, category, amount_pen, notes }
+    }).then((res) => { invalidateJournalCache(year); return res })
   },
 
   getTresorerieMeta() {

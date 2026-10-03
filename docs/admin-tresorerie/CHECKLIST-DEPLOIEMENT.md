@@ -84,5 +84,6 @@ Fichiers poussés sur `main` :
 | Date | Sujet | Statut |
 |------|-------|--------|
 | 2026-10-03 | Fix `readPaymentMethod_` — imports catalogue ≠ carte | **Apps Script déployé** ✅ |
-| 2026-10-03 | API caisse lots FIFO (`CaissePerou.gs`) | **Apps Script déployé** ✅ · frontend **à pousser** |
+| 2026-10-03 | API caisse lots FIFO (`CaissePerou.gs`) | **Apps Script déployé** ✅ · frontend poussé ✅ |
+| 2026-10-03 | Avances hors total caisse + saisie PEN retraits | **À redéployer** : `JournalAnnee.gs`, `Corrections.gs`, `CaissePerou.gs` · **push frontend** |
 | 2026-10-03 | Design v2 Caisse Pérou (spec) | Voir `docs/superpowers/specs/2026-10-03-caisse-perou-design.md` |
