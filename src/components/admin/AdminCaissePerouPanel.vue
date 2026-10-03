@@ -69,13 +69,13 @@
             <div class="min-w-[8.5rem] rounded-xl border border-forest/25 bg-white px-3 py-2 shadow-sm">
               <p class="text-[10px] font-bold uppercase tracking-wider text-forest/80">Entrées S/.</p>
               <p class="font-serif text-xl font-bold tabular-nums leading-tight text-forest">
-                + {{ formatPen(retraitsEntreesPen) }}
+                + {{ formatPen(retraitsTotals.penJournal) }}
               </p>
               <p
-                v-if="Math.abs(retraitsTotals.penJournal - retraitsEntreesPen) > 0.5"
+                v-if="data.retraits_pen_reference != null && Math.abs(retraitsTotals.penJournal - data.retraits_pen_reference) > 0.5"
                 class="mt-0.5 text-[10px] leading-snug text-night-400"
               >
-                suivi bénévole · Σ journal {{ formatPen(retraitsTotals.penJournal) }}
+                suivi bénévole {{ formatPen(data.retraits_pen_reference) }}
               </p>
             </div>
             <div class="min-w-[7.5rem] rounded-xl border border-bleu/25 bg-white px-3 py-2 shadow-sm">
@@ -137,6 +137,14 @@
                 </td>
               </tr>
             </tbody>
+            <tfoot class="border-t border-forest/20 bg-cream-50 text-xs font-semibold">
+              <tr>
+                <td colspan="2" class="px-3 py-2 text-right text-night-500">Total tableau</td>
+                <td class="whitespace-nowrap px-3 py-2 text-right tabular-nums text-bleu">+ {{ formatEur(retraitsTotals.eur) }}</td>
+                <td class="whitespace-nowrap px-3 py-2 text-right tabular-nums text-forest">+ {{ formatPen(retraitsTotals.penJournal) }}</td>
+                <td />
+              </tr>
+            </tfoot>
           </table>
         </div>
       </div>
@@ -310,15 +318,8 @@ const retraitsTotals = computed(() => {
   return {
     eur,
     penJournal,
-    penEur: penAsEur(entreesPen ?? refPen ?? penJournal)
+    penEur: penAsEur(penJournal)
   }
-})
-
-/** Même montant que le solde caisse (API), pas la somme des lignes journal. */
-const retraitsEntreesPen = computed(() => {
-  const d = data.value
-  if (!d) return 0
-  return Number(d.caisse_pen_entrees ?? d.retraits_pen_reference ?? retraitsTotals.value.penJournal) || 0
 })
 
 const depensesTotal = computed(() =>
