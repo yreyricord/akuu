@@ -321,7 +321,6 @@ function getCaissePerou_(session, year) {
       String(a.reference || '').localeCompare(String(b.reference || ''));
   });
 
-  var refList = retraitReferenceForYear_(year);
   var refPool = buildRetraitPenRefPool_(year);
   var retraitsSansPen = 0;
   retraits.forEach(function (rt) {
@@ -336,10 +335,8 @@ function getCaissePerou_(session, year) {
     if (ent.estimated) retraitsSansPen += 1;
   });
 
-  // Total caisse : suivi bénévole (12 700 S/. en 2026) — affichage = 1 ligne journal par retrait.
-  var entreesPen = refList
-    ? retraitsPenReferenceTotal_(refList)
-    : r2_(retraits.reduce(function (s, x) { return s + (num_(x.amount_pen) || 0); }, 0));
+  // Total caisse : somme S/. reçus (amount_pen, notes, grille ou conversion EUR).
+  var entreesPen = r2_(retraits.reduce(function (s, x) { return s + (num_(x.amount_pen) || 0); }, 0));
 
   var lots = buildLotsCaisse_(ouverturePen, retraits, especes);
   var sortiesPen = r2_(especes.reduce(function (s, x) { return s + x.amount_pen; }, 0));
@@ -383,7 +380,6 @@ function getCaissePerou_(session, year) {
     caisse_eur_equiv: soldeEur,
     retraits_eur: totalEur,
     retraits_count: retraits.length,
-    retraits_pen_reference: refList ? retraitsPenReferenceTotal_(refList) : null,
     especes_pen: sortiesPen,
     especes_count: especes.length,
     non_classes_count: nonClasses.length,

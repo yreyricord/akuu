@@ -71,12 +71,6 @@
               <p class="font-serif text-xl font-bold tabular-nums leading-tight text-forest">
                 + {{ formatPen(retraitsTotals.penJournal) }}
               </p>
-              <p
-                v-if="data.retraits_pen_reference != null && Math.abs(retraitsTotals.penJournal - data.retraits_pen_reference) > 0.5"
-                class="mt-0.5 text-[10px] leading-snug text-night-400"
-              >
-                suivi bénévole {{ formatPen(data.retraits_pen_reference) }}
-              </p>
             </div>
             <div class="min-w-[7.5rem] rounded-xl border border-bleu/25 bg-white px-3 py-2 shadow-sm">
               <p class="text-[10px] font-bold uppercase tracking-wider text-bleu/80">Débit €</p>
