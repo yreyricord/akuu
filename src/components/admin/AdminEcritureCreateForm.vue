@@ -1,19 +1,24 @@
 <template>
-  <section class="rounded-2xl border border-forest/25 bg-forest/5 p-4 shadow-sm">
-    <button
-      type="button"
-      class="flex w-full items-center justify-between gap-2 text-left"
-      :aria-expanded="open"
-      @click="open = !open"
-    >
-      <span>
-        <span class="text-sm font-bold text-forest-800">Ajouter une écriture</span>
-        <span class="mt-0.5 block text-xs text-night-500">Dépense terrain (soles) ou ligne banque (euros) · exercice ouvert uniquement</span>
-      </span>
-      <span class="text-forest-700">{{ open ? '−' : '+' }}</span>
-    </button>
+  <section
+    v-show="props.open"
+    id="ecriture-add-form"
+    class="rounded-2xl border border-forest/30 bg-white p-4 shadow-md ring-1 ring-forest/10"
+  >
+    <div class="mb-4 flex items-start justify-between gap-3">
+      <div>
+        <h3 class="text-sm font-bold text-forest-800">Nouvelle écriture</h3>
+        <p class="mt-0.5 text-xs text-night-500">Terrain (S/.) ou banque (€) · enregistrée dans le journal Google</p>
+      </div>
+      <button type="button" class="rounded-lg px-2 py-1 text-sm text-night-500 hover:bg-cream-200" @click="setOpen(false)">
+        Fermer
+      </button>
+    </div>
 
-    <form v-if="open" class="mt-4 space-y-4 border-t border-forest/15 pt-4" @submit.prevent="onSubmit">
+    <p v-if="!canSubmit" class="mb-4 rounded-xl border border-ochre-200 bg-ochre-50 px-3 py-2 text-sm text-ochre-900">
+      Journal {{ year }} non connecté — attendez le chargement ou vérifiez le déploiement Apps Script.
+    </p>
+
+    <form class="space-y-4" @submit.prevent="onSubmit">
       <div class="flex flex-wrap gap-2" role="group" aria-label="Origine">
         <button
           v-for="s in SOURCES"
@@ -107,7 +112,7 @@
           class="min-h-[44px] rounded-full bg-forest px-5 text-sm font-semibold text-white disabled:opacity-50"
           :disabled="!canSubmit || saving"
         >
-          {{ saving ? 'Enregistrement…' : 'Ajouter au journal' }}
+          {{ saving ? 'Enregistrement…' : 'Enregistrer dans le journal' }}
         </button>
         <p v-if="error" class="text-sm text-terracotta-700">{{ error }}</p>
       </div>
@@ -122,12 +127,17 @@ import { tresorerieApi } from '@/api/tresorerie/client.js'
 import AdminFileCapture from './AdminFileCapture.vue'
 
 const props = defineProps({
+  open: { type: Boolean, default: false },
   year: { type: String, required: true },
-  canEdit: { type: Boolean, default: false },
+  canSubmit: { type: Boolean, default: false },
   projectsList: { type: Array, default: () => [...TRESORERIE_PROJECTS] }
 })
 
-const emit = defineEmits(['created'])
+const emit = defineEmits(['created', 'update:open'])
+
+function setOpen(v) {
+  emit('update:open', v)
+}
 
 const SOURCES = [
   { id: 'terrain', label: 'Terrain (Detail_PM · soles)' },
@@ -137,7 +147,6 @@ const TERRAIN_PAYMENTS = PAYMENT_METHODS.filter((m) =>
   ['especes', 'avance', 'cb', 'virement', 'yape_plin'].includes(m.code)
 )
 
-const open = ref(false)
 const saving = ref(false)
 const error = ref('')
 const receiptFile = ref(null)
@@ -156,7 +165,7 @@ const form = ref({
   notes: ''
 })
 
-const canSubmit = computed(() => props.canEdit && Number(props.year) >= 2017)
+const canSubmit = computed(() => props.canSubmit && Number(props.year) >= 2017)
 
 watch(() => props.year, (y) => {
   if (form.value.expense_date && !form.value.expense_date.startsWith(y)) {
@@ -193,7 +202,8 @@ async function onSubmit() {
     form.value.amount_pen = null
     form.value.amount_eur = null
     receiptFile.value = null
-    open.value = false
+    setOpen(false)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   } catch (e) {
     error.value = e.message || 'Ajout impossible'
   } finally {

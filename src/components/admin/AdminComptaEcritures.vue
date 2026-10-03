@@ -1,16 +1,5 @@
 <template>
   <div class="space-y-5">
-    <AdminEcritureCreateForm
-      v-if="canEdit"
-      :year="year"
-      :can-edit="canEdit"
-      :projects-list="projectsList"
-      @created="onCreated"
-    />
-    <p v-else-if="exerciceStatuts[year] === 'clos'" class="rounded-xl border border-night-200 bg-cream-100 px-4 py-3 text-sm text-night-600">
-      Exercice {{ year }} clôturé — pour ajouter une écriture, rouvrez l'exercice dans Réglages.
-    </p>
-
     <!-- Filtres -->
     <section class="flex flex-wrap items-end gap-3 rounded-2xl border border-night-100 bg-white p-4 shadow-sm">
       <label class="space-y-1">
@@ -267,12 +256,39 @@
         Afficher plus ({{ rows.length - visibleRows.length }} restantes)
       </button>
     </div>
+
+    <AdminEcritureCreateForm
+      v-if="canAddEcriture"
+      v-model:open="addFormOpen"
+      :year="year"
+      :can-submit="canEdit"
+      :projects-list="projectsList"
+      @created="onCreated"
+    />
+
+    <p v-else-if="exerciceStatuts[year] === 'clos'" class="rounded-xl border border-night-200 bg-cream-100 px-4 py-3 text-sm text-night-600">
+      Exercice {{ year }} clôturé — rouvrez-le dans Réglages pour ajouter des écritures.
+    </p>
+
+    <div
+      v-if="canAddEcriture"
+      class="sticky bottom-4 z-20 flex justify-center pb-[env(safe-area-inset-bottom)] pt-2"
+    >
+      <button
+        type="button"
+        class="inline-flex min-h-[52px] items-center gap-2 rounded-full bg-forest px-6 text-sm font-bold text-white shadow-lg transition hover:bg-forest-600 focus:outline-none focus:ring-2 focus:ring-forest/40"
+        @click="openAddForm"
+      >
+        <PhPlus :size="20" weight="bold" aria-hidden="true" />
+        Ajouter une écriture
+      </button>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
-import { PhArrowSquareOut, PhTrash } from '@phosphor-icons/vue'
+import { PhArrowSquareOut, PhPlus, PhTrash } from '@phosphor-icons/vue'
 import { bindLoadingProgress } from '@/composables/useLoadingProgress.js'
 import { TRESORERIE_PROJECTS, PAYMENT_METHODS } from '@/data/tresorerie-config.js'
 import { tresorerieApi } from '@/api/tresorerie/client.js'
@@ -430,11 +446,21 @@ const canDelete = computed(() => {
   const s = exerciceStatuts.value[year.value]
   return s === 'ouvert' || s === 'rouvert'
 })
+/** Bouton + sauf exercice explicitement clôturé (statut encore en chargement → on affiche quand même). */
+const canAddEcriture = computed(() => exerciceStatuts.value[year.value] !== 'clos')
 const canEdit = computed(() => {
   if (!live.value?.live || year.value !== String(live.value.year)) return false
   const s = exerciceStatuts.value[year.value]
   return s !== 'clos'
 })
+const addFormOpen = ref(false)
+
+function openAddForm() {
+  addFormOpen.value = true
+  requestAnimationFrame(() => {
+    document.getElementById('ecriture-add-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  })
+}
 const savingRef = ref('')
 const saveError = ref('')
 const deletedRefs = computed(() => new Set(corrections.value.filter((c) => c.type === 'delete').map((c) => c.reference)))
