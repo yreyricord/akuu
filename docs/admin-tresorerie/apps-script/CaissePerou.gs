@@ -39,6 +39,119 @@ function eurToPen_(eur, penToEur) {
   return r2_(Number(eur) / Number(penToEur));
 }
 
+/** PEN réellement reçus au DAB / WU — notes « pen_recu=700 » ou « 700 S/ recu ». */
+function parsePenRecuFromNotes_(notes) {
+  var s = String(notes || '');
+  var m = s.match(/pen[_\s-]?recu\s*[=:]\s*(\d+(?:[.,]\d+)?)/i) ||
+    s.match(/retrait\s*[=:]\s*(\d+(?:[.,]\d+)?)\s*pen/i) ||
+    s.match(/(\d+(?:[.,]\d+)?)\s*s\/?\.?\s*recu/i);
+  if (!m) return 0;
+  return r2_(Number(String(m[1]).replace(',', '.')));
+}
+
+function getExchangeRateForDate_(isoDate) {
+  if (!isoDate) return getExchangeRate_();
+  var cache = CacheService.getScriptCache();
+  var key = 'pen_eur_' + String(isoDate).substring(0, 10);
+  var cached = cache.get(key);
+  if (cached) return JSON.parse(cached);
+  try {
+    var res = UrlFetchApp.fetch('https://api.frankfurter.app/' + key + '?from=PEN&to=EUR', { muteHttpExceptions: true });
+    var data = JSON.parse(res.getContentText());
+    var payload = { rate: data.rates.EUR, source: 'Frankfurter/ECB', date: key, requestedDate: key };
+    cache.put(key, JSON.stringify(payload), 604800);
+    return payload;
+  } catch (e) {
+    return getExchangeRate_();
+  }
+}
+
+/** Entrée caisse en PEN : amount_pen journal > notes pen_recu > conversion EUR à la date. */
+function retraitPenEntree_(row, fallbackPenToEur) {
+  var penCol = num_(row.amount_pen);
+  if (penCol > 0) {
+    return { pen: r2_(penCol), source: 'amount_pen', estimated: false };
+  }
+  var fromNotes = parsePenRecuFromNotes_(row.notes);
+  if (fromNotes > 0) {
+    return { pen: fromNotes, source: 'notes', estimated: false };
+  }
+  var eur = num_(row.amount_eur) || 0;
+  var iso = isoDate_(row.expense_date);
+  var rateInfo = iso ? getExchangeRateForDate_(iso) : getExchangeRate_();
+  var penToEur = rateInfo && rateInfo.rate ? Number(rateInfo.rate) : fallbackPenToEur;
+  return {
+    pen: eurToPen_(eur, penToEur),
+    source: 'eur_converti',
+    estimated: true,
+    rate_date: rateInfo ? rateInfo.date : null
+  };
+}
+
+/** Lots FIFO : chaque retrait = lot ; dépenses espèces consomment du plus ancien au plus récent. */
+function buildLotsCaisse_(ouverturePen, retraits, especes) {
+  var lots = [];
+  if (ouverturePen > 0.001) {
+    lots.push({
+      id: 'ouverture',
+      reference: 'ouverture',
+      date: '',
+      label: 'Caisse au 1er janvier',
+      amount_eur: 0,
+      pen_recu: r2_(ouverturePen),
+      pen_source: 'caisse_pen_ouverture',
+      pen_estimated: false,
+      depenses_pen: 0,
+      reste_pen: r2_(ouverturePen),
+      depenses: []
+    });
+  }
+  retraits.slice().sort(function (a, b) {
+    return String(a.date || '').localeCompare(String(b.date || ''));
+  }).forEach(function (rt) {
+    lots.push({
+      id: rt.reference,
+      reference: rt.reference,
+      date: rt.date,
+      label: rt.label,
+      amount_eur: rt.amount_eur,
+      pen_recu: rt.amount_pen,
+      pen_source: rt.pen_source || 'eur_converti',
+      pen_estimated: !!rt.pen_estimated,
+      rate_date: rt.rate_date || null,
+      depenses_pen: 0,
+      reste_pen: rt.amount_pen,
+      depenses: []
+    });
+  });
+  var poolIdx = 0;
+  especes.slice().sort(function (a, b) {
+    return String(a.date || '').localeCompare(String(b.date || ''));
+  }).forEach(function (exp) {
+    var remaining = num_(exp.amount_pen) || 0;
+    while (remaining > 0.001 && poolIdx < lots.length) {
+      var lot = lots[poolIdx];
+      var room = r2_(lot.pen_recu - lot.depenses_pen);
+      if (room <= 0.001) {
+        poolIdx += 1;
+        continue;
+      }
+      var take = Math.min(room, remaining);
+      lot.depenses.push({
+        reference: exp.reference,
+        date: exp.date,
+        label: exp.label,
+        amount_pen: r2_(take)
+      });
+      lot.depenses_pen = r2_(lot.depenses_pen + take);
+      lot.reste_pen = r2_(lot.pen_recu - lot.depenses_pen);
+      remaining = r2_(remaining - take);
+      if (lot.reste_pen <= 0.001) poolIdx += 1;
+    }
+  });
+  return lots;
+}
+
 function getCaissePerou_(session, year) {
   requireTreasurer_(session);
   year = Number(year) || new Date().getFullYear();
@@ -62,7 +175,9 @@ function getCaissePerou_(session, year) {
       reference: String(r.reference),
       date: isoDate_(r.expense_date),
       label: String(r.label || ''),
-      amount_eur: r2_(eur)
+      amount_eur: r2_(eur),
+      amount_pen: num_(r.amount_pen) || 0,
+      notes: String(r.notes || '')
     });
   });
 
@@ -117,12 +232,19 @@ function getCaissePerou_(session, year) {
   var penPerEur = penToEur ? r2_(1 / penToEur) : null;
 
   var entreesPen = 0;
+  var retraitsSansPen = 0;
   retraits.forEach(function (rt) {
-    rt.amount_pen = eurToPen_(rt.amount_eur, penToEur);
+    var ent = retraitPenEntree_(rt, penToEur);
+    rt.amount_pen = ent.pen;
+    rt.pen_source = ent.source;
+    rt.pen_estimated = ent.estimated;
+    rt.rate_date = ent.rate_date || null;
+    if (ent.estimated) retraitsSansPen += 1;
     entreesPen += rt.amount_pen;
   });
   entreesPen = r2_(entreesPen);
 
+  var lots = buildLotsCaisse_(ouverturePen, retraits, especes);
   var sortiesPen = r2_(especes.reduce(function (s, x) { return s + x.amount_pen; }, 0));
   var totalEur = r2_(retraits.reduce(function (s, x) { return s + x.amount_eur; }, 0));
   var soldePen = r2_(ouverturePen + entreesPen - sortiesPen);
@@ -133,6 +255,10 @@ function getCaissePerou_(session, year) {
   if (nonClasses.length > 0) {
     alerte = nonClasses.length + ' dépense(s) terrain (' + nonClassesPen + ' PEN) sans mode de paiement — exclues du solde. ' +
       'Corrigez le mode dans Écritures ou Suivi terrain (Espèces / Avance / Carte).';
+  }
+  if (retraitsSansPen > 0) {
+    alerte = (alerte ? alerte + ' ' : '') +
+      retraitsSansPen + ' retrait(s) sans PEN enregistré — renseignez amount_pen ou notes pen_recu=700 sur la ligne Journal.';
   }
   if (soldePen < -0.01) {
     alerte = (alerte ? alerte + ' ' : '') +
@@ -166,9 +292,13 @@ function getCaissePerou_(session, year) {
     taux_date: rateInfo ? rateInfo.date : null,
     retraits: retraits,
     especes: especes,
+    lots: lots,
+    retraits_sans_pen: retraitsSansPen,
+    montant_pen_standard: 700,
     alerte: alerte,
     note: 'Retraits DAB / Western Union (journal) et paiements espèces au Pérou (Detail_PM terrain). ' +
-      'Les montants € des retraits sont convertis en S/. au taux indicatif du jour. ' +
+      'Priorité : amount_pen ou notes pen_recu=700 sur chaque retrait ; sinon conversion EUR au taux du jour de l\'écriture. ' +
+      'Lots FIFO : chaque retrait = lot ; dépenses espèces consommées du plus ancien au plus récent. ' +
       'Ouverture : onglet Cloture → caisse_pen_ouverture.'
   };
 }

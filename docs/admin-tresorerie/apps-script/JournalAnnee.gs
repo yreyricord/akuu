@@ -233,9 +233,18 @@ function readPaymentMethod_(row) {
   var explicit = normTxt_(row.payment_method);
   if (explicit) return explicit;
   if (String(row.category) === 'Facture cataloguée') return 'cb';
-  if (num_(row.amount_eur) > 0) return 'cb';
+  var pen = num_(row.amount_pen) || 0;
+  var eur = num_(row.amount_eur) || 0;
   var notes = normTxt_(row.notes);
-  if (notes.indexOf('import catalogue factures') >= 0) return 'cb';
+  // Detail_PM en soles = dépense terrain ; amount_eur peut être une conversion indicative (import catalogue).
+  if (pen > 0 && String(row.category) === 'Dépenses terrain PM') {
+    if (notes.indexOf('import detail pm') >= 0 && notes.indexOf('esp') >= 0) return 'especes';
+    if (notes.indexOf('avance') >= 0) return 'avance';
+    if (notes.indexOf('yape') >= 0 || notes.indexOf('plin') >= 0) return 'yape_plin';
+    if (notes.indexOf('carte') >= 0 || notes.indexOf('cb ') >= 0) return 'cb';
+    return 'especes';
+  }
+  if (eur > 0) return 'cb';
   if (notes.indexOf('import detail pm') >= 0 && notes.indexOf('esp') >= 0) return 'especes';
   if (notes.indexOf('western union') >= 0 || notes.indexOf('wu ') >= 0) return 'virement';
   if (notes.indexOf('avance') >= 0) return 'avance';
