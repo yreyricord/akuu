@@ -63,27 +63,19 @@
         <div class="flex flex-wrap items-center justify-between gap-3 border-b border-forest/15 bg-gradient-to-r from-forest/[0.06] to-transparent px-4 py-3">
           <div>
             <h4 class="text-sm font-bold uppercase tracking-wide text-forest">Retraits</h4>
-            <p class="mt-0.5 text-xs text-night-500">
-              <template v-if="data.retraits_pen_reference != null">
-                {{ retraitsTotals.benevoleCount }} DAB · suivi bénévole
-                <span v-if="data.retraits_journal_count > retraitsTotals.benevoleCount" class="text-night-400">
-                  · {{ data.retraits_journal_count }} écritures journal
-                </span>
-              </template>
-              <template v-else>{{ data.retraits_count }} opération(s)</template>
-            </p>
+            <p class="mt-0.5 text-xs text-night-500">{{ data.retraits_count }} écriture(s) journal</p>
           </div>
           <div class="flex flex-wrap gap-2">
             <div class="min-w-[8.5rem] rounded-xl border border-forest/25 bg-white px-3 py-2 shadow-sm">
               <p class="text-[10px] font-bold uppercase tracking-wider text-forest/80">Entrées S/.</p>
               <p class="font-serif text-xl font-bold tabular-nums leading-tight text-forest">
-                + {{ formatPen(retraitsTotals.penBenevole ?? retraitsTotals.pen) }}
+                + {{ formatPen(retraitsTotals.penTotal) }}
               </p>
-              <p v-if="retraitsTotals.extraPen > 0" class="mt-0.5 text-[10px] leading-snug text-night-500">
-                + {{ formatPen(retraitsTotals.extraPen) }} WU / hors suivi
-              </p>
-              <p v-else-if="retraitsTotals.penEstime > 0" class="mt-0.5 text-[10px] leading-snug text-ochre-700">
-                + {{ formatPen(retraitsTotals.penEstime) }} estimés
+              <p
+                v-if="data.retraits_pen_reference != null && Math.abs(retraitsTotals.penJournal - retraitsTotals.penTotal) > 0.5"
+                class="mt-0.5 text-[10px] leading-snug text-night-400"
+              >
+                suivi bénévole · Σ journal {{ formatPen(retraitsTotals.penJournal) }}
               </p>
             </div>
             <div class="min-w-[7.5rem] rounded-xl border border-bleu/25 bg-white px-3 py-2 shadow-sm">
@@ -108,10 +100,8 @@
               <tr
                 v-for="row in data.retraits"
                 :key="row.reference"
-                class="border-t border-night-50"
-                :class="row.extra_journal && !row.counts_in_reference
-                  ? 'bg-night-50/80 opacity-60'
-                  : (row.pen_estimated ? 'bg-forest/[0.03] ring-1 ring-inset ring-ochre-200' : 'bg-forest/[0.03]')"
+                class="border-t border-night-50 bg-forest/[0.03]"
+                :class="row.pen_estimated ? 'ring-1 ring-inset ring-ochre-200' : ''"
               >
                 <td class="whitespace-nowrap px-3 py-2 tabular-nums text-xs">{{ row.date }}</td>
                 <td class="max-w-[12rem] px-3 py-2">
@@ -128,13 +118,10 @@
                     step="50"
                     class="admin-input w-[5.5rem] py-1 text-right text-xs tabular-nums"
                     :value="penDrafts[row.reference] ?? row.amount_pen"
-                    :disabled="savingRef === row.reference || row.pen_editable === false || (row.extra_journal && !row.counts_in_reference)"
+                    :disabled="savingRef === row.reference"
                     @input="penDrafts[row.reference] = $event.target.value"
                   />
-                  <p v-if="row.no_journal" class="mt-0.5 text-[10px] text-night-400">sans écriture journal rapprochée</p>
-                  <p v-else-if="row.extra_journal && !row.counts_in_reference" class="mt-0.5 text-[10px] text-night-400">hors suivi bénévole</p>
-                  <p v-else-if="row.pen_estimated" class="mt-0.5 text-[10px] text-ochre-700">estimé (EUR→PEN)</p>
-                  <p v-else-if="row.pen_source === 'reference_benevoles'" class="mt-0.5 text-[10px] text-forest-700">suivi bénévole</p>
+                  <p v-if="row.pen_estimated" class="mt-0.5 text-[10px] text-ochre-700">estimé (EUR→PEN)</p>
                   <p v-else class="mt-0.5 text-[10px] text-forest-700">{{ row.pen_source || 'saisi' }}</p>
                 </td>
                 <td class="whitespace-nowrap px-2 py-2 text-right">
@@ -313,35 +300,19 @@ function effectiveRetraitPen(row) {
 const retraitsTotals = computed(() => {
   const rows = data.value?.retraits ?? []
   const refPen = data.value?.retraits_pen_reference
+  const entreesPen = data.value?.caisse_pen_entrees
   let eur = 0
-  let pen = 0
-  let penSaisi = 0
-  let penEstime = 0
-  let extraPen = 0
-  let benevoleCount = 0
+  let penJournal = 0
   for (const r of rows) {
-    if (r.extra_journal && !r.counts_in_reference) continue
     eur += Number(r.amount_eur) || 0
-    if (!r.extra_journal) benevoleCount += 1
-    const p = effectiveRetraitPen(r)
-    pen += p
-    if (r.extra_journal && r.counts_in_reference) {
-      extraPen += p
-    } else if (r.pen_estimated) {
-      penEstime += p
-    } else if (refPen == null) {
-      penSaisi += p
-    }
+    penJournal += effectiveRetraitPen(r)
   }
+  const penTotal = refPen ?? entreesPen ?? penJournal
   return {
     eur,
-    pen,
-    penBenevole: refPen ?? (penSaisi || pen),
-    penSaisi,
-    penEstime,
-    extraPen,
-    benevoleCount,
-    penEur: penAsEur(refPen ?? pen)
+    penJournal,
+    penTotal,
+    penEur: penAsEur(penTotal)
   }
 })
 
