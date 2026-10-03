@@ -137,105 +137,113 @@
 
     <AdminDataTable
       v-if="!journalLoading || yearRows.length"
+      compact
       :columns="columns"
       :rows="visibleRows"
       row-key-field="key"
       empty-message="Aucune écriture pour ces filtres."
     >
       <template #cell-date="{ row }">
-        <span class="whitespace-nowrap text-sm tabular-nums">{{ formatDate(row.date) }}</span>
-      </template>
-      <template #cell-source="{ row }">
-        <span class="inline-flex rounded-full px-2 py-0.5 text-[11px] font-semibold" :class="SOURCE[row.source].cls">
-          {{ SOURCE[row.source].label }}
+        <span class="block text-[10px] tabular-nums leading-[1.15] text-night" :title="formatDateFull(row.date)">
+          <span class="block font-semibold">{{ formatDateDay(row.date) }}</span>
+          <span class="block text-night-500">{{ formatDateMonth(row.date) }}</span>
         </span>
       </template>
+      <template #cell-source="{ row }">
+        <span
+          class="inline-flex rounded-md px-1.5 py-0.5 text-[10px] font-semibold leading-tight"
+          :class="SOURCE[row.source].cls"
+          :title="SOURCE[row.source].label"
+        >{{ SOURCE[row.source].short }}</span>
+      </template>
       <template #cell-label="{ row }">
-        <span class="line-clamp-2 text-sm">{{ row.label }}</span>
-        <span class="block font-mono text-[11px] text-night-400">{{ row.ref }}</span>
+        <p class="line-clamp-2 text-sm leading-snug text-night" :title="row.label">{{ row.label }}</p>
+        <p class="mt-0.5 truncate font-mono text-[10px] leading-tight text-night-400" :title="row.ref">{{ row.ref }}</p>
       </template>
       <template #cell-project="{ row }">
         <select
           v-if="canEditRow(row)"
-          class="admin-input max-w-[11rem] py-1 text-xs"
+          class="ecriture-select"
           :value="normalizeProjectCode(row)"
           :disabled="savingRef === row.ref"
+          :title="row.project"
           @change="saveProject(row, $event.target.value)"
         >
           <option v-for="p in projectsList" :key="p.code" :value="p.code">{{ p.label }}</option>
         </select>
-        <span v-else class="text-xs">{{ row.project }}</span>
+        <span v-else class="block truncate text-xs text-night-600" :title="row.project">{{ row.project }}</span>
       </template>
       <template #cell-payment="{ row }">
         <template v-if="row.source === 'terrain' && row.type === 'depense'">
-          <select
-            v-if="canEditRow(row)"
-            class="admin-input max-w-[9rem] py-1 text-xs"
-            :value="row.payment_method || 'especes'"
-            :disabled="savingRef === row.ref"
-            @change="savePayment(row, $event.target.value)"
-          >
-            <option v-for="m in TERRAIN_PAYMENTS" :key="m.code" :value="m.code">{{ m.label }}</option>
-          </select>
-          <span v-else class="text-xs">{{ paymentLabel(row.payment_method) }}</span>
-          <span
-            v-if="row.caisse_cash"
-            class="ml-1 inline-flex rounded-full bg-leaf/15 px-1.5 py-0.5 text-[10px] font-semibold text-forest-700"
-            title="Compté dans la caisse espèces au Pérou"
-          >Caisse</span>
+          <div class="min-w-0 space-y-0.5">
+            <select
+              v-if="canEditRow(row)"
+              class="ecriture-select w-full"
+              :value="row.payment_method || 'especes'"
+              :disabled="savingRef === row.ref"
+              @change="savePayment(row, $event.target.value)"
+            >
+              <option v-for="m in TERRAIN_PAYMENTS" :key="m.code" :value="m.code" :title="m.label">{{ PAYMENT_SHORT[m.code] || m.label }}</option>
+            </select>
+            <span v-else class="block truncate text-xs text-night-600">{{ paymentLabel(row.payment_method) }}</span>
+            <span
+              v-if="row.caisse_cash"
+              class="inline-flex rounded bg-leaf/15 px-1.5 py-0.5 text-[9px] font-semibold leading-none text-forest-700"
+              title="Espèces comptées au Pérou"
+            >Caisse</span>
+          </div>
         </template>
         <span v-else class="text-xs text-night-300">—</span>
       </template>
-      <template #cell-eur="{ row }">
-        <span
+      <template #cell-amounts="{ row }">
+        <p
           v-if="amountEur(row)"
-          class="whitespace-nowrap tabular-nums"
+          class="whitespace-nowrap text-sm tabular-nums leading-tight"
           :class="[
             row.type === 'recette' ? 'text-forest-700' : 'text-night',
-            amountEur(row).estimated ? 'text-sm font-normal text-night-500' : 'font-semibold'
+            amountEur(row).estimated ? 'font-normal text-night-500' : 'font-semibold'
           ]"
           :title="amountEur(row).estimated ? estimateTitle(amountEur(row)) : ''"
         >
-          {{ amountEur(row).estimated ? '≈ ' : '' }}{{ row.type === 'recette' ? '+' : '−' }}{{ eur(amountEur(row).value) }}
-        </span>
-        <span v-else class="text-xs text-night-300">—</span>
-      </template>
-      <template #cell-pen="{ row }">
-        <span
+          {{ amountEur(row).estimated ? '≈' : '' }}{{ row.type === 'recette' ? '+' : '−' }}{{ eur(amountEur(row).value) }}
+        </p>
+        <p
           v-if="amountPen(row)"
-          class="whitespace-nowrap tabular-nums"
+          class="mt-0.5 whitespace-nowrap text-sm tabular-nums leading-tight"
           :class="[
-            row.type === 'recette' ? 'text-forest-700' : 'text-night',
-            amountPen(row).estimated ? 'text-sm font-normal text-night-500' : 'font-semibold'
+            row.type === 'recette' ? 'text-forest-600' : 'text-night-600',
+            amountPen(row).estimated ? 'font-normal text-night-500' : 'font-medium'
           ]"
           :title="amountPen(row).estimated ? estimateTitle(amountPen(row)) : ''"
         >
-          {{ amountPen(row).estimated ? '≈ ' : '' }}{{ row.type === 'recette' ? '+' : '−' }}{{ pen(amountPen(row).value) }}
-        </span>
-        <span v-else class="text-xs text-night-300">—</span>
+          {{ amountPen(row).estimated ? '≈' : '' }}{{ row.type === 'recette' ? '+' : '−' }}{{ pen(amountPen(row).value) }}
+        </p>
+        <span v-if="!amountEur(row) && !amountPen(row)" class="text-xs text-night-300">—</span>
       </template>
       <template #cell-url="{ row }">
-        <a
-          v-if="row.url"
-          :href="row.url"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex min-h-[32px] items-center text-xs font-semibold text-bleu hover:underline"
-        >
-          Voir
-        </a>
-        <span v-else class="text-xs text-night-300">—</span>
-      </template>
-      <template #cell-actions="{ row }">
-        <button
-          v-if="canDelete"
-          type="button"
-          class="inline-flex min-h-[32px] items-center rounded-full px-2 text-xs font-semibold text-terracotta-700 hover:bg-terracotta/10"
-          :aria-label="`Supprimer ${row.label}`"
-          @click="askDelete(row)"
-        >
-          Supprimer
-        </button>
+        <div class="flex items-center justify-end gap-1">
+          <a
+            v-if="row.url"
+            :href="row.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex h-7 w-7 items-center justify-center rounded-lg text-bleu hover:bg-bleu/10"
+            title="Voir la pièce"
+          >
+            <PhArrowSquareOut :size="14" weight="bold" aria-hidden="true" />
+            <span class="sr-only">Voir</span>
+          </a>
+          <button
+            v-if="canDelete"
+            type="button"
+            class="inline-flex h-7 w-7 items-center justify-center rounded-lg text-terracotta-700 hover:bg-terracotta/10"
+            :aria-label="`Supprimer ${row.label}`"
+            title="Supprimer"
+            @click="askDelete(row)"
+          >
+            <PhTrash :size="14" weight="bold" aria-hidden="true" />
+          </button>
+        </div>
       </template>
     </AdminDataTable>
 
@@ -253,6 +261,7 @@
 
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
+import { PhArrowSquareOut, PhTrash } from '@phosphor-icons/vue'
 import { bindLoadingProgress } from '@/composables/useLoadingProgress.js'
 import { TRESORERIE_PROJECTS, PAYMENT_METHODS } from '@/data/tresorerie-config.js'
 import { tresorerieApi } from '@/api/tresorerie/client.js'
@@ -267,6 +276,13 @@ const props = defineProps({
 })
 
 const TERRAIN_PAYMENTS = PAYMENT_METHODS.filter((m) => ['especes', 'avance', 'cb', 'virement', 'yape_plin'].includes(m.code))
+const PAYMENT_SHORT = {
+  especes: 'Espèces',
+  avance: 'Avance',
+  cb: 'Carte',
+  virement: 'Virement',
+  yape_plin: 'Yape/Plin'
+}
 const projectsList = ref([...TRESORERIE_PROJECTS])
 const saveOk = ref('')
 const ratesByDate = ref({})
@@ -278,24 +294,20 @@ const TYPES = [
   { id: 'recette', label: 'Recettes' }
 ]
 const SOURCE = {
-  banque: { label: 'Banque', cls: 'bg-bleu-100 text-bleu-700' },
-  terrain: { label: 'Terrain', cls: 'bg-ochre-100 text-ochre-700' }
+  banque: { label: 'Banque', short: 'Banq.', cls: 'bg-bleu-100 text-bleu-700' },
+  terrain: { label: 'Terrain', short: 'Terr.', cls: 'bg-ochre-100 text-ochre-700' }
 }
+/** Grille retenue · scripts/balance-ecritures-columns.mjs · variante « final » */
 const baseColumns = [
-  { key: 'date', label: 'Date' },
-  { key: 'source', label: 'Origine' },
-  { key: 'label', label: 'Libellé' },
-  { key: 'project', label: 'Projet' },
-  { key: 'payment', label: 'Paiement' },
-  { key: 'eur', label: 'Euros', align: 'right' },
-  { key: 'pen', label: 'Soles', align: 'right' },
-  { key: 'url', label: 'Pièce', align: 'center' }
+  { key: 'date', label: 'Date', thClass: 'w-[2.75rem] !pl-2 !pr-0.5', tdClass: 'align-middle !pl-2 !pr-0.5' },
+  { key: 'source', label: 'Orig.', thClass: 'w-[4rem] !pl-0.5 !pr-1', tdClass: 'align-middle !pl-0.5 !pr-1' },
+  { key: 'label', label: 'Libellé', thClass: 'w-[14rem] !pl-1', tdClass: 'min-w-0 max-w-[14rem] align-middle !pl-1' },
+  { key: 'project', label: 'Projet', thClass: 'w-[10rem]', tdClass: 'align-middle' },
+  { key: 'payment', label: 'Paiement', thClass: 'w-[7.5rem]', tdClass: 'align-middle' },
+  { key: 'amounts', label: 'Montants', align: 'right', thClass: 'w-[7.25rem]', tdClass: 'align-middle' },
+  { key: 'url', label: '', align: 'right', thClass: 'w-[4rem]', tdClass: 'align-middle' }
 ]
-const columns = computed(() => {
-  const cols = [...baseColumns]
-  if (canEdit.value) cols.push({ key: 'actions', label: '', align: 'right' })
-  return cols
-})
+const columns = computed(() => [...baseColumns])
 
 const data = ref(null)
 const journalLoading = ref(false)
@@ -450,7 +462,7 @@ function projectCodeFromLabel(label) {
 }
 
 function paymentLabel(code) {
-  return TERRAIN_PAYMENTS.find((m) => m.code === code)?.label || code || '—'
+  return PAYMENT_SHORT[code] || TERRAIN_PAYMENTS.find((m) => m.code === code)?.label || code || '—'
 }
 
 async function saveProject(row, projectCode) {
@@ -629,9 +641,51 @@ function formatRateDate(iso) {
     ? iso
     : d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })
 }
+function parseDate(iso) {
+  if (!iso) return null
+  const d = new Date(iso.includes('T') ? iso : `${iso}T12:00:00`)
+  return Number.isNaN(d.getTime()) ? null : d
+}
+
+function formatDateFull(iso) {
+  const d = parseDate(iso)
+  if (!d) return iso || '—'
+  return d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' })
+}
+
+function formatDateDay(iso) {
+  const d = parseDate(iso)
+  if (!d) return '—'
+  return d.toLocaleDateString('fr-FR', { day: '2-digit' })
+}
+
+function formatDateMonth(iso) {
+  const d = parseDate(iso)
+  if (!d) return ''
+  return d.toLocaleDateString('fr-FR', { month: 'short' }).replace('.', '')
+}
+
 function formatDate(iso) {
-  if (!iso) return '—'
-  const d = new Date(iso)
-  return Number.isNaN(d.getTime()) ? iso : d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })
+  const d = parseDate(iso)
+  if (!d) return iso || '—'
+  const opts = year.value ? { day: '2-digit', month: 'short' } : { day: '2-digit', month: 'short', year: 'numeric' }
+  return d.toLocaleDateString('fr-FR', opts)
 }
 </script>
+
+<style scoped>
+.ecriture-select {
+  @apply w-full min-w-0 rounded-lg border border-night-200/80 bg-cream-50 px-2 text-xs text-night shadow-none;
+  height: 1.75rem;
+  min-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 1.75rem;
+}
+.ecriture-select:focus {
+  @apply border-forest outline-none ring-1 ring-forest/20;
+}
+.ecriture-select:disabled {
+  @apply cursor-not-allowed bg-night-50 text-night-500;
+}
+</style>

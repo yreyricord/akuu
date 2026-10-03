@@ -1,7 +1,7 @@
 <template>
-  <div class="admin-table-wrap overflow-hidden rounded-2xl border border-night-100 bg-white shadow-sm">
+  <div class="admin-table-wrap overflow-hidden rounded-2xl border border-night-100 bg-white shadow-sm" :class="{ 'admin-table-wrap--compact': compact }">
     <div class="overflow-x-auto">
-      <table class="admin-table min-w-full text-left text-sm">
+      <table class="admin-table w-full table-fixed text-left text-sm">
         <thead class="sticky top-0 z-10 bg-cream-100/95 backdrop-blur">
           <tr>
             <th
@@ -9,7 +9,7 @@
               :key="col.key"
               scope="col"
               class="whitespace-nowrap px-4 py-3 text-[11px] font-bold uppercase tracking-wide text-night-400"
-              :class="alignClass(col.align)"
+              :class="[alignClass(col.align), col.thClass]"
             >
               {{ col.label }}
             </th>
@@ -26,8 +26,9 @@
               v-for="col in columns"
               :key="col.key"
               :data-label="col.label"
+              :data-col="col.key"
               class="px-4 py-3 align-middle text-night-600"
-              :class="alignClass(col.align)"
+              :class="[alignClass(col.align), col.tdClass]"
             >
               <slot :name="`cell-${col.key}`" :row="row" :value="row[col.key]">
                 {{ formatCell(row, col) }}
@@ -52,7 +53,8 @@ const props = defineProps({
   rows: { type: Array, default: () => [] },
   emptyMessage: { type: String, default: 'Aucune entrée.' },
   rowKeyField: { type: String, default: 'id' },
-  rowClass: { type: Function, default: null }
+  rowClass: { type: Function, default: null },
+  compact: { type: Boolean, default: false }
 })
 
 function rowKey(row, idx) {
@@ -74,6 +76,13 @@ function formatCell(row, col) {
 </script>
 
 <style scoped>
+.admin-table-wrap--compact :deep(.admin-table thead th) {
+  padding: 0.5rem 0.625rem;
+  font-size: 10px;
+}
+.admin-table-wrap--compact :deep(.admin-table tbody td) {
+  padding: 0.375rem 0.625rem;
+}
 @media (max-width: 639px) {
   .admin-table-wrap :deep(.admin-table thead) {
     display: none;
@@ -101,6 +110,19 @@ function formatCell(row, col) {
     letter-spacing: 0.04em;
     color: rgb(var(--night-400));
     flex-shrink: 0;
+  }
+  /* Colonnes texte : contenu empilé sur mobile */
+  .admin-table-wrap :deep(.admin-table tbody td[data-col='label']),
+  .admin-table-wrap :deep(.admin-table tbody td[data-col='project']),
+  .admin-table-wrap :deep(.admin-table tbody td[data-col='payment']) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.35rem;
+  }
+  .admin-table-wrap :deep(.admin-table tbody td[data-col='label'])::before,
+  .admin-table-wrap :deep(.admin-table tbody td[data-col='project'])::before,
+  .admin-table-wrap :deep(.admin-table tbody td[data-col='payment'])::before {
+    margin-bottom: 0.15rem;
   }
 }
 </style>
