@@ -69,10 +69,10 @@
             <div class="min-w-[8.5rem] rounded-xl border border-forest/25 bg-white px-3 py-2 shadow-sm">
               <p class="text-[10px] font-bold uppercase tracking-wider text-forest/80">Entrées S/.</p>
               <p class="font-serif text-xl font-bold tabular-nums leading-tight text-forest">
-                + {{ formatPen(retraitsTotals.penTotal) }}
+                + {{ formatPen(retraitsEntreesPen) }}
               </p>
               <p
-                v-if="data.retraits_pen_reference != null && Math.abs(retraitsTotals.penJournal - retraitsTotals.penTotal) > 0.5"
+                v-if="Math.abs(retraitsTotals.penJournal - retraitsEntreesPen) > 0.5"
                 class="mt-0.5 text-[10px] leading-snug text-night-400"
               >
                 suivi bénévole · Σ journal {{ formatPen(retraitsTotals.penJournal) }}
@@ -307,13 +307,18 @@ const retraitsTotals = computed(() => {
     eur += Number(r.amount_eur) || 0
     penJournal += effectiveRetraitPen(r)
   }
-  const penTotal = refPen ?? entreesPen ?? penJournal
   return {
     eur,
     penJournal,
-    penTotal,
-    penEur: penAsEur(penTotal)
+    penEur: penAsEur(entreesPen ?? refPen ?? penJournal)
   }
+})
+
+/** Même montant que le solde caisse (API), pas la somme des lignes journal. */
+const retraitsEntreesPen = computed(() => {
+  const d = data.value
+  if (!d) return 0
+  return Number(d.caisse_pen_entrees ?? d.retraits_pen_reference ?? retraitsTotals.value.penJournal) || 0
 })
 
 const depensesTotal = computed(() =>
