@@ -66,9 +66,13 @@
             <p class="mt-0.5 text-xs text-night-500">{{ data.retraits_count }} opération(s)</p>
           </div>
           <div class="flex flex-wrap gap-2">
-            <div class="min-w-[7.5rem] rounded-xl border border-forest/25 bg-white px-3 py-2 shadow-sm">
+            <div class="min-w-[8.5rem] rounded-xl border border-forest/25 bg-white px-3 py-2 shadow-sm">
               <p class="text-[10px] font-bold uppercase tracking-wider text-forest/80">Entrées S/.</p>
-              <p class="font-serif text-xl font-bold tabular-nums leading-tight text-forest">+ {{ formatPen(retraitsTotals.pen) }}</p>
+              <p class="font-serif text-xl font-bold tabular-nums leading-tight text-forest">+ {{ formatPen(retraitsTotals.penSaisi) }}</p>
+              <p v-if="retraitsTotals.penEstime > 0" class="mt-0.5 text-[10px] leading-snug text-ochre-700">
+                + {{ formatPen(retraitsTotals.penEstime) }} estimés
+                <span class="text-night-400">· total {{ formatPen(retraitsTotals.pen) }}</span>
+              </p>
             </div>
             <div class="min-w-[7.5rem] rounded-xl border border-bleu/25 bg-white px-3 py-2 shadow-sm">
               <p class="text-[10px] font-bold uppercase tracking-wider text-bleu/80">Débit €</p>
@@ -291,9 +295,23 @@ function effectiveRetraitPen(row) {
 
 const retraitsTotals = computed(() => {
   const rows = data.value?.retraits ?? []
-  const eur = rows.reduce((s, r) => s + (Number(r.amount_eur) || 0), 0)
-  const pen = rows.reduce((s, r) => s + effectiveRetraitPen(r), 0)
-  return { eur, pen, penEur: penAsEur(pen) }
+  let eur = 0
+  let pen = 0
+  let penSaisi = 0
+  let penEstime = 0
+  let estimeCount = 0
+  for (const r of rows) {
+    eur += Number(r.amount_eur) || 0
+    const p = effectiveRetraitPen(r)
+    pen += p
+    if (r.pen_estimated) {
+      penEstime += p
+      estimeCount += 1
+    } else {
+      penSaisi += p
+    }
+  }
+  return { eur, pen, penSaisi, penEstime, estimeCount, penEur: penAsEur(pen) }
 })
 
 const depensesTotal = computed(() =>
