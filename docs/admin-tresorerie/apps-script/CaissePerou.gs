@@ -53,14 +53,98 @@ function suggestPenFromEurRetrait_(eur) {
   return 0;
 }
 
-/** Référence bénévoles 2026 (onglet « Retrait atm » du compte des dépenses). */
+/** Référence bénévoles 2026 (onglet « Retrait atm » du compte des dépenses) — 16 DAB, 12 700 S/. */
 var RETRAITS_PEN_REFERENCE_2026_ = [
-  { date: '2026-01-13', pen: 800 }, { date: '2026-01-31', pen: 800 }, { date: '2026-02-11', pen: 800 },
-  { date: '2026-02-18', pen: 800 }, { date: '2026-02-20', pen: 800 }, { date: '2026-02-21', pen: 800 },
-  { date: '2026-03-04', pen: 800 }, { date: '2026-03-17', pen: 800 }, { date: '2026-04-25', pen: 400 },
-  { date: '2026-05-03', pen: 800 }, { date: '2026-05-21', pen: 1000 }, { date: '2026-05-24', pen: 1400 },
-  { date: '2026-06-22', pen: 800 }, { date: '2026-08-20', pen: 800 }, { date: '2026-09-29', pen: 700 }
+  { date: '2026-01-13', pen: 800 }, { date: '2026-01-14', pen: 400 }, { date: '2026-01-31', pen: 800 },
+  { date: '2026-02-11', pen: 800 }, { date: '2026-02-18', pen: 800 }, { date: '2026-02-20', pen: 800 },
+  { date: '2026-02-21', pen: 800 }, { date: '2026-03-04', pen: 800 }, { date: '2026-03-17', pen: 800 },
+  { date: '2026-04-25', pen: 400 }, { date: '2026-05-03', pen: 800 }, { date: '2026-05-21', pen: 1000 },
+  { date: '2026-05-24', pen: 1400 }, { date: '2026-06-22', pen: 800 }, { date: '2026-08-20', pen: 800 },
+  { date: '2026-09-29', pen: 700 }
 ];
+
+function retraitReferenceForYear_(year) {
+  if (Number(year) === 2026) return RETRAITS_PEN_REFERENCE_2026_;
+  return null;
+}
+
+/**
+ * Rapproche chaque écriture journal du retrait bénévole le plus proche (±3 j),
+ * puis affiche 1 ligne par date de référence (12 700 S/. en 2026).
+ */
+function consolidateRetraitsFromReference_(rawRetraits, refList, penToEur) {
+  if (!refList || !refList.length) return null;
+  var buckets = {};
+  refList.forEach(function (ref) { buckets[ref.date] = { ref: ref, lines: [] }; });
+  var extras = [];
+
+  rawRetraits.forEach(function (rt) {
+    var bestRef = null;
+    var bestD = 999;
+    refList.forEach(function (ref) {
+      var d = Math.abs(daysBetween_(rt.date, ref.date));
+      if (d <= 3 && d < bestD) {
+        bestD = d;
+        bestRef = ref;
+      }
+    });
+    if (bestRef) buckets[bestRef.date].lines.push(rt);
+    else extras.push(rt);
+  });
+
+  var out = refList.map(function (ref) {
+    var lines = buckets[ref.date].lines;
+    var eur = 0;
+    var refs = [];
+    lines.forEach(function (ln) {
+      eur += num_(ln.amount_eur) || 0;
+      refs.push(String(ln.reference));
+    });
+    return {
+      reference: refs[0] || ('REF-' + ref.date),
+      references: refs,
+      date: ref.date,
+      journal_date: refs.length ? lines[0].date : ref.date,
+      label: refs.length > 1
+        ? ('DAB · ' + refs.length + ' écritures journal')
+        : (refs.length ? String(lines[0].label || '') : 'Retrait DAB · suivi bénévole'),
+      amount_eur: r2_(eur),
+      amount_pen: r2_(ref.pen),
+      pen_source: 'reference_benevoles',
+      pen_estimated: false,
+      pen_editable: refs.length > 0,
+      consolidated: refs.length > 1,
+      no_journal: refs.length === 0
+    };
+  });
+
+  extras.forEach(function (rt) {
+    var ent = retraitPenEntree_(rt, penToEur, 0);
+    var isWu = /western union|disposicion|\bwu\b/.test(normTxt_(String(rt.label || '') + ' ' + String(rt.notes || '')));
+    out.push({
+      reference: String(rt.reference),
+      references: [String(rt.reference)],
+      date: rt.date,
+      journal_date: rt.date,
+      label: String(rt.label || ''),
+      amount_eur: r2_(rt.amount_eur),
+      amount_pen: ent.pen,
+      pen_source: ent.source,
+      pen_estimated: ent.estimated,
+      rate_date: ent.rate_date || null,
+      pen_editable: true,
+      consolidated: false,
+      extra_journal: true,
+      counts_in_reference: isWu
+    });
+  });
+
+  out.sort(function (a, b) {
+    return String(a.date || '').localeCompare(String(b.date || '')) ||
+      String(a.reference || '').localeCompare(String(b.reference || ''));
+  });
+  return out;
+}
 
 function buildRetraitPenRefPool_(year) {
   if (Number(year) !== 2026) return [];
@@ -305,31 +389,42 @@ function getCaissePerou_(session, year) {
   var penToEur = rateInfo && rateInfo.rate ? Number(rateInfo.rate) : null;
   var penPerEur = penToEur ? r2_(1 / penToEur) : null;
 
-  // Une ligne journal = un retrait caisse (même date + même EUR possibles : 2 DAB le même jour).
   retraits.sort(function (a, b) {
     return String(a.date || '').localeCompare(String(b.date || '')) ||
       String(a.reference || '').localeCompare(String(b.reference || ''));
   });
 
-  var refPool = buildRetraitPenRefPool_(year);
+  var retraitsJournalCount = retraits.length;
+  var refList = retraitReferenceForYear_(year);
+  var retraitsDisplay = consolidateRetraitsFromReference_(retraits, refList, penToEur);
+  if (!retraitsDisplay) {
+    var refPool = buildRetraitPenRefPool_(year);
+    retraits.forEach(function (rt) {
+      var hint = takeRefPenForDate_(refPool, rt.date);
+      var ent = retraitPenEntree_(rt, penToEur, hint);
+      rt.amount_pen = ent.pen;
+      rt.pen_source = ent.source;
+      rt.pen_estimated = ent.estimated;
+      rt.rate_date = ent.rate_date || null;
+      rt.pen_editable = true;
+      rt.references = [rt.reference];
+      rt.consolidated = false;
+    });
+    retraitsDisplay = retraits;
+  }
+
   var entreesPen = 0;
   var retraitsSansPen = 0;
-  retraits.forEach(function (rt) {
-    var hint = takeRefPenForDate_(refPool, rt.date);
-    var ent = retraitPenEntree_(rt, penToEur, hint);
-    rt.amount_pen = ent.pen;
-    rt.pen_source = ent.source;
-    rt.pen_estimated = ent.estimated;
-    rt.rate_date = ent.rate_date || null;
-    rt.pen_editable = true;
-    if (ent.estimated) retraitsSansPen += 1;
-    entreesPen += rt.amount_pen;
+  retraitsDisplay.forEach(function (rt) {
+    if (rt.pen_estimated) retraitsSansPen += 1;
+    if (rt.extra_journal && !rt.counts_in_reference) return;
+    entreesPen += num_(rt.amount_pen) || 0;
   });
   entreesPen = r2_(entreesPen);
 
-  var lots = buildLotsCaisse_(ouverturePen, retraits, especes);
+  var lots = buildLotsCaisse_(ouverturePen, retraitsDisplay, especes);
   var sortiesPen = r2_(especes.reduce(function (s, x) { return s + x.amount_pen; }, 0));
-  var totalEur = r2_(retraits.reduce(function (s, x) { return s + x.amount_eur; }, 0));
+  var totalEur = r2_(retraitsDisplay.reduce(function (s, x) { return s + x.amount_eur; }, 0));
   var soldePen = r2_(ouverturePen + entreesPen - sortiesPen);
   var soldeEur = penToEur ? r2_(soldePen * penToEur) : null;
 
@@ -368,7 +463,9 @@ function getCaissePerou_(session, year) {
     caisse_pen_solde: soldePen,
     caisse_eur_equiv: soldeEur,
     retraits_eur: totalEur,
-    retraits_count: retraits.length,
+    retraits_count: retraitsDisplay.length,
+    retraits_journal_count: retraitsJournalCount,
+    retraits_pen_reference: refList ? r2_(refList.reduce(function (s, x) { return s + x.pen; }, 0)) : null,
     especes_pen: sortiesPen,
     especes_count: especes.length,
     non_classes_count: nonClasses.length,
@@ -382,7 +479,7 @@ function getCaissePerou_(session, year) {
     pen_to_eur: penToEur,
     pen_per_eur: penPerEur,
     taux_date: rateInfo ? rateInfo.date : null,
-    retraits: retraits,
+    retraits: retraitsDisplay,
     especes: especes,
     lots: lots,
     retraits_sans_pen: retraitsSansPen,
