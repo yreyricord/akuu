@@ -41,47 +41,6 @@ function isRetraitTerrain_(row) {
   return false;
 }
 
-/** Même débit CB en double sur le relevé (date + EUR identiques). */
-function dedupeRetraits_(retraits) {
-  var seen = {};
-  var out = [];
-  var dupes = 0;
-  retraits.forEach(function (rt) {
-    var key = String(rt.date || '') + '|' + r2_(rt.amount_eur);
-    if (seen[key]) { dupes += 1; return; }
-    seen[key] = true;
-    out.push(rt);
-  });
-  return { rows: out, duplicates: dupes };
-}
-
-/** Une ligne par jour de retrait (plusieurs débits CB le même jour = un seul retrait caisse). */
-function mergeRetraitsByDate_(retraits) {
-  var byDate = {};
-  retraits.forEach(function (rt) {
-    var d = String(rt.date || '');
-    if (!d) return;
-    if (!byDate[d]) {
-      byDate[d] = {
-        reference: rt.reference,
-        references: [rt.reference],
-        date: d,
-        label: rt.label,
-        amount_eur: 0,
-        amount_pen: num_(rt.amount_pen) || 0,
-        notes: rt.notes || ''
-      };
-    } else {
-      byDate[d].references.push(rt.reference);
-      if (String(rt.label || '').length > String(byDate[d].label || '').length) byDate[d].label = rt.label;
-    }
-    byDate[d].amount_eur = r2_(byDate[d].amount_eur + (num_(rt.amount_eur) || 0));
-    var pen = num_(rt.amount_pen) || 0;
-    if (pen > (num_(byDate[d].amount_pen) || 0)) byDate[d].amount_pen = pen;
-  });
-  return Object.keys(byDate).sort().map(function (d) { return byDate[d]; });
-}
-
 /** Grille indicative EUR débité → PEN reçus (DAB Pérou, d’après suivi bénévoles). */
 function suggestPenFromEurRetrait_(eur) {
   eur = Number(eur);
@@ -346,9 +305,11 @@ function getCaissePerou_(session, year) {
   var penToEur = rateInfo && rateInfo.rate ? Number(rateInfo.rate) : null;
   var penPerEur = penToEur ? r2_(1 / penToEur) : null;
 
-  var deduped = dedupeRetraits_(retraits);
-  var retraitsDupliques = deduped.duplicates;
-  retraits = mergeRetraitsByDate_(deduped.rows);
+  // Une ligne journal = un retrait caisse (même date + même EUR possibles : 2 DAB le même jour).
+  retraits.sort(function (a, b) {
+    return String(a.date || '').localeCompare(String(b.date || '')) ||
+      String(a.reference || '').localeCompare(String(b.reference || ''));
+  });
 
   var refPool = buildRetraitPenRefPool_(year);
   var entreesPen = 0;
@@ -363,7 +324,6 @@ function getCaissePerou_(session, year) {
     rt.pen_editable = true;
     if (ent.estimated) retraitsSansPen += 1;
     entreesPen += rt.amount_pen;
-    rt.references = rt.references || [rt.reference];
   });
   entreesPen = r2_(entreesPen);
 
@@ -378,10 +338,6 @@ function getCaissePerou_(session, year) {
   if (nonClasses.length > 0) {
     alerte = nonClasses.length + ' dépense(s) terrain (' + nonClassesPen + ' PEN) sans mode de paiement — exclues du solde. ' +
       'Corrigez le mode dans Écritures ou Suivi terrain (Espèces / Avance / Carte).';
-  }
-  if (retraitsDupliques > 0) {
-    alerte = (alerte ? alerte + ' ' : '') +
-      retraitsDupliques + ' ligne(s) retrait en double ignorée(s) (même date + même EUR au relevé).';
   }
   if (retraitsSansPen > 0) {
     alerte = (alerte ? alerte + ' ' : '') +
@@ -430,7 +386,7 @@ function getCaissePerou_(session, year) {
     especes: especes,
     lots: lots,
     retraits_sans_pen: retraitsSansPen,
-    retraits_dupliques_ignores: retraitsDupliques,
+    retraits_dupliques_ignores: 0,
     montant_pen_standard: 700,
     alerte: alerte,
     note: 'Retraits DAB / Western Union (journal) et paiements espèces au Pérou (Detail_PM terrain). ' +
