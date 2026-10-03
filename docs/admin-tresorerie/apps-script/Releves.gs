@@ -9,6 +9,93 @@
 var RELEVES_HEADERS = ['mois', 'date_fin', 'solde_debut', 'solde_fin', 'operations_ajoutees', 'operations_ignorees',
   'fichier', 'url', 'importe_le', 'importe_par'];
 
+function driveReleveViewUrl_(fileId) {
+  return 'https://drive.google.com/file/d/' + String(fileId) + '/view';
+}
+
+function standardReleveFileName_(year, month) {
+  var mm = month < 10 ? '0' + month : String(month);
+  return year + '_' + mm + '_RELEVE_PRO_AKUU.pdf';
+}
+
+function parseReleveMonthFromName_(name, year) {
+  var n = String(name || '');
+  if (n.toLowerCase().indexOf('paypal') >= 0) return null;
+  var m = n.match(new RegExp('^' + year + '[_\\s-]*(\\d{2})[_\\s-]*RELEVE', 'i'));
+  if (m) return Number(m[1]);
+  m = n.match(new RegExp('RELEVE[^\\d]*(\\d{2})[^\\d]*' + year, 'i'));
+  if (m) return Number(m[1]);
+  m = n.match(new RegExp('^' + year + '-(\\d{2})', 'i'));
+  if (m) return Number(m[1]);
+  m = n.match(new RegExp('\\b' + year + '[_\\s.-](\\d{2})\\b'));
+  if (m) return Number(m[1]);
+  return null;
+}
+
+/** Mois → { file_name, url, drive_file_id } depuis 3_Trésorerie/<année>/Documents/Releves_bancaires. */
+function listDriveReleveMonths_(year) {
+  var months = {};
+  try {
+    var folder = getYearDocumentsSubfolder_(year, 'Releves_bancaires');
+    for (var m = 1; m <= 12; m++) {
+      var expected = standardReleveFileName_(year, m);
+      var byName = folder.getFilesByName(expected);
+      if (byName.hasNext()) {
+        var f0 = byName.next();
+        months[m] = { file_name: f0.getName(), url: driveReleveViewUrl_(f0.getId()), drive_file_id: f0.getId() };
+      }
+    }
+    var it = folder.getFiles();
+    while (it.hasNext()) {
+      var f = it.next();
+      var name = f.getName();
+      var mo = parseReleveMonthFromName_(name, year);
+      if (mo >= 1 && mo <= 12 && !months[mo]) {
+        months[mo] = { file_name: name, url: driveReleveViewUrl_(f.getId()), drive_file_id: f.getId() };
+      }
+    }
+  } catch (e) { /* dossier absent */ }
+  return months;
+}
+
+/** Lien PDF d'un relevé (onglet Releves puis Drive). Route GET releves/link. */
+function getRelevePdfLink_(session, year, month) {
+  requireTreasurer_(session);
+  year = Number(year);
+  month = Number(month);
+  if (!year || year < 2017 || !month || month < 1 || month > 12) {
+    throw apiError_('VALIDATION_FAILED', 'Année ou mois invalide');
+  }
+  var moisStr = year + '-' + (month < 10 ? '0' : '') + month;
+  var fileName = standardReleveFileName_(year, month);
+
+  var ss = openYearJournal_(year);
+  if (ss) {
+    var rows = relevesOf_(ss);
+    for (var i = 0; i < rows.length; i++) {
+      if (String(rows[i].mois || '').substring(0, 7) !== moisStr) continue;
+      var sheetUrl = String(rows[i].url || '').trim();
+      if (sheetUrl) {
+        return {
+          year: year, month: month, mois: moisStr, url: sheetUrl, file_name: fileName,
+          solde_fin: rows[i].solde_fin, source: 'sheet'
+        };
+      }
+    }
+  }
+
+  var drive = listDriveReleveMonths_(year);
+  if (drive[month] && drive[month].url) {
+    return {
+      year: year, month: month, mois: moisStr, url: drive[month].url,
+      file_name: drive[month].file_name || fileName, solde_fin: null, source: 'drive'
+    };
+  }
+
+  throw apiError_('NOT_FOUND', 'Relevé PDF introuvable pour ' + moisStr +
+    '. Vérifiez le fichier ' + fileName + ' dans 3_Trésorerie/' + year + '/Documents/Releves_bancaires.', 404);
+}
+
 function releveKey_(date, amount, label) {
   return String(date).substring(0, 10) + '|' + Math.round(Math.abs(Number(amount)) * 100) + '|' +
     normTxt_(label).replace(/[^a-z0-9]/g, '').substring(0, 18);
@@ -112,7 +199,7 @@ function importReleveImpl_(session, body) {
     var folder = getYearDocumentsSubfolder_(year, 'Releves_bancaires');
     var old = folder.getFilesByName(fileName);
     while (old.hasNext()) old.next().setTrashed(true);
-    url = folder.createFile(blob.setName(fileName)).getUrl();
+    url = driveReleveViewUrl_(folder.createFile(blob.setName(fileName)).getId());
   }
 
   var headers = tr.headers;

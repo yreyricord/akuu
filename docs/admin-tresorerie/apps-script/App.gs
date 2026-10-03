@@ -232,6 +232,9 @@ function route_(method, path, body, e, param) {
     if (path.indexOf('releves/archives/') === 0 && path.indexOf('/synced') > 0 && method === 'POST') {
       return jsonResponse({ ok: true, data: markReleveArchiveSynced_(session, path.split('/')[2]) });
     }
+    if (path === 'releves/link' && method === 'GET') {
+      return jsonResponse({ ok: true, data: getRelevePdfLink_(session, param('year'), param('month')) });
+    }
     if (path === 'releves/import' && method === 'POST') {
       return jsonResponse({ ok: true, data: importReleve_(session, body) });
     }

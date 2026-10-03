@@ -639,6 +639,12 @@ export const tresorerieApi = {
     return remoteRequest('/archive-zip', { query: opts })
   },
 
+  /** Lien PDF d'un relevé mensuel (Drive ou onglet Releves). */
+  getRelevePdfLink(year, month) {
+    if (isMockMode()) return Promise.resolve({ url: '', file_name: 'mock.pdf' })
+    return remoteRequest('/releves/link', { query: { year: String(year), month: String(month) } })
+  },
+
   /** Relevé PDF seul (années archivées) → 3_Trésorerie/<année>/Documents/Releves_bancaires sur le Drive. */
   async uploadReleve({ year, month, file }) {
     const attachment = await fileToAttachment(file)

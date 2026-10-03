@@ -222,23 +222,22 @@
           <p class="mt-0.5 text-xs text-night-500">Cliquez un mois déposé pour ouvrir le PDF sur le Drive.</p>
           <ul class="mt-2 flex flex-wrap gap-1.5">
             <li v-for="m in moisDeposes" :key="m.mois">
-              <a
-                v-if="m.ok && m.url"
-                :href="m.url"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex min-h-[32px] items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-forest-100 text-forest-700 ring-1 ring-forest/20 transition hover:bg-forest-200"
+              <button
+                v-if="m.ok"
+                type="button"
+                :disabled="releveOpening === m.mois"
+                class="inline-flex min-h-[32px] items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-forest-100 text-forest-700 ring-1 ring-forest/20 transition hover:bg-forest-200 disabled:opacity-60"
                 :title="m.solde_fin != null ? `Solde fin : ${formatEur(m.solde_fin)}` : 'Ouvrir le relevé PDF'"
+                @click="openReleveMonth(m)"
               >
                 ✓ {{ m.label }}
-              </a>
+              </button>
               <span
                 v-else
-                class="inline-flex min-h-[32px] items-center rounded-full px-2.5 py-1 text-xs font-semibold"
-                :class="m.ok ? 'bg-forest-100 text-forest-700' : 'bg-cream-200 text-night-400'"
-                :title="m.ok ? 'Relevé déposé (PDF non lié — rechargez la page)' : 'Relevé non déposé'"
+                class="inline-flex min-h-[32px] items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-cream-200 text-night-400"
+                title="Relevé non déposé"
               >
-                {{ m.ok ? '✓' : '○' }} {{ m.label }}
+                ○ {{ m.label }}
               </span>
             </li>
           </ul>
@@ -402,7 +401,7 @@ import { PhBank, PhDownloadSimple, PhFilePdf, PhFileZip, PhFolderOpen, PhTable }
 import { tresorerieGoogle } from '@/config/tresorerie-google.js'
 import { tresorerieApi } from '@/api/tresorerie/client.js'
 import { mapExerciceToBilanYear } from '@/api/tresorerie/exercicesMap.js'
-import { downloadBase64 } from '@/api/tresorerie/downloadBase64.js'
+import { downloadBase64, openBase64Pdf } from '@/api/tresorerie/downloadBase64.js'
 import { formatEur, formatPen } from '@/data/tresorerie-config.js'
 import driveHealth from '@/data/drive-health.json'
 import AdminReleveImport from './AdminReleveImport.vue'
@@ -816,7 +815,7 @@ function rapproExercice(y) {
   }
 }
 
-/** Mois → { url, solde_fin } depuis l'onglet Releves du journal Google (API live). */
+/** Mois → { url, solde_fin } : onglet Releves + PDF sur le Drive (releves_by_month). */
 const relevesByMonth = computed(() => {
   const map = {}
   ;(currentExercice.value?.releves || []).forEach((r) => {
@@ -824,6 +823,34 @@ const relevesByMonth = computed(() => {
     const url = String(r.url || '').trim()
     if (m >= 1 && m <= 12 && url) {
       map[m] = { url, solde_fin: r.solde_fin, date_fin: r.date_fin }
+    }
+  })
+  const fromStatus = currentExercice.value?.releves_status?.releves_by_month
+    || yearData.value?.releves_status?.releves_by_month
+  if (fromStatus) {
+    Object.entries(fromStatus).forEach(([k, info]) => {
+      const m = Number(k)
+      const url = String(info?.url || '').trim()
+      if (m >= 1 && m <= 12 && url) {
+        map[m] = {
+          url,
+          solde_fin: map[m]?.solde_fin ?? info.solde_fin ?? null,
+          date_fin: map[m]?.date_fin ?? info.date_fin ?? null
+        }
+      }
+    })
+  }
+  const links = currentExercice.value?.releves_status?.releves_links
+    || yearData.value?.releves_status?.releves_links
+  ;(links || []).forEach((info) => {
+    const m = Number(info?.month)
+    const url = String(info?.url || '').trim()
+    if (m >= 1 && m <= 12 && url) {
+      map[m] = {
+        url,
+        solde_fin: map[m]?.solde_fin ?? info.solde_fin ?? null,
+        date_fin: map[m]?.date_fin ?? null
+      }
     }
   })
   return map
@@ -842,6 +869,39 @@ const moisDeposes = computed(() => {
 })
 
 const busy = ref('')
+const releveOpening = ref('')
+
+async function openReleveMonth(m) {
+  exportError.value = ''
+  const cached = String(m.url || '').trim()
+  if (cached) {
+    window.open(cached, '_blank', 'noopener,noreferrer')
+    return
+  }
+  const year = Number(selectedYear.value)
+  const month = Number(String(m.mois || '').slice(5, 7))
+  if (!year || !month) return
+  releveOpening.value = m.mois
+  try {
+    try {
+      const link = await tresorerieApi.getRelevePdfLink(year, month)
+      if (link?.url) {
+        window.open(link.url, '_blank', 'noopener,noreferrer')
+        return
+      }
+    } catch {
+      /* repli téléchargement direct ci-dessous */
+    }
+    const mm = String(month).padStart(2, '0')
+    const path = `${year}/Documents/Releves_bancaires/${year}_${mm}_RELEVE_PRO_AKUU.pdf`
+    openBase64Pdf(await tresorerieApi.downloadArchiveFile(path))
+  } catch (e) {
+    exportError.value = e?.message || `Relevé ${m.label} introuvable sur le Drive.`
+  } finally {
+    releveOpening.value = ''
+  }
+}
+
 /** '/downloads/tresorerie/2025/Cloture/x.pdf' → chemin sur le Drive '2025/Cloture/x.pdf' */
 function drivePath(p) { return String(p || '').replace(/^\/?downloads\/tresorerie\//, '') }
 async function getArchive(p) {

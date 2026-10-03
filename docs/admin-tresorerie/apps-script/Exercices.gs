@@ -194,29 +194,63 @@ function expectedReleveMonths_(year) {
   return out;
 }
 
-function parseReleveMonthFromName_(name, year) {
-  var n = String(name || '');
-  var m = n.match(new RegExp('^' + year + '_(\\d{2})_RELEVE_PRO_AKUU', 'i'));
-  if (m) return Number(m[1]);
-  m = n.match(new RegExp('^' + year + '-(\\d{2})', 'i'));
-  if (m) return Number(m[1]);
-  return null;
+/** Fusion onglet Releves + PDF Drive (liens cliquables mois par mois sur le site). */
+function relevesByMonthMap_(year, ss) {
+  var byMonth = {};
+  if (ss) {
+    relevesOf_(ss).forEach(function (r) {
+      var m = Number(String(r.mois || '').slice(5));
+      if (m >= 1 && m <= 12) {
+        byMonth[m] = {
+          url: String(r.url || '').trim(),
+          solde_fin: r.solde_fin,
+          date_fin: r.date_fin,
+          file_name: ''
+        };
+      }
+    });
+  }
+  var drive = listDriveReleveMonths_(year);
+  Object.keys(drive).forEach(function (k) {
+    var m = Number(k);
+    var d = drive[m];
+    if (!byMonth[m]) {
+      byMonth[m] = { url: d.url, file_name: d.file_name, solde_fin: null, date_fin: '' };
+    } else if (!byMonth[m].url) {
+      byMonth[m].url = d.url;
+      byMonth[m].file_name = d.file_name;
+    }
+  });
+  return byMonth;
 }
 
-function listDriveReleveMonths_(year) {
-  var months = {};
-  try {
-    var folder = getYearDocumentsSubfolder_(year, 'Releves_bancaires');
-    var it = folder.getFiles();
-    while (it.hasNext()) {
-      var f = it.next();
-      var name = f.getName();
-      if (name.toLowerCase().indexOf('paypal') >= 0) continue;
-      var m = parseReleveMonthFromName_(name, year);
-      if (m >= 1 && m <= 12) months[m] = name;
+function enrichRelevesWithDrive_(year, releves) {
+  var drive = listDriveReleveMonths_(year);
+  var out = releves.map(function (r) {
+    var copy = {
+      mois: r.mois, date_fin: r.date_fin, solde_debut: r.solde_debut,
+      solde_fin: r.solde_fin, url: String(r.url || ''), operations_ajoutees: r.operations_ajoutees
+    };
+    var m = Number(String(copy.mois || '').slice(5));
+    if (m >= 1 && m <= 12 && !copy.url && drive[m]) copy.url = drive[m].url;
+    return copy;
+  });
+  Object.keys(drive).forEach(function (k) {
+    var m = Number(k);
+    var moisStr = year + '-' + (m < 10 ? '0' : '') + m;
+    var found = out.some(function (r) { return String(r.mois || '').substring(0, 7) === moisStr; });
+    if (!found) {
+      out.push({
+        mois: moisStr, date_fin: '', solde_debut: null, solde_fin: null,
+        url: drive[m].url, operations_ajoutees: 0
+      });
     }
-  } catch (e) { /* dossier absent */ }
-  return months;
+  });
+  return out.sort(function (a, b) {
+    var da = String(a.date_fin || a.mois || '');
+    var db = String(b.date_fin || b.mois || '');
+    return db.localeCompare(da);
+  });
 }
 
 function relevesStatusForYear_(year, ss) {
@@ -255,6 +289,17 @@ function relevesStatusForYear_(year, ss) {
     note = 'Relevés PDF complets à partir de mai 2018 ; janvier–avril reposent sur le journal comptable (relevés papier non numérisés).';
   }
 
+  var byMonth = relevesByMonthMap_(year, ss);
+  var relevesLinks = monthsPresent.map(function (m) {
+    var info = byMonth[m] || {};
+    return {
+      month: m,
+      url: String(info.url || ''),
+      solde_fin: info.solde_fin != null ? info.solde_fin : null,
+      file_name: info.file_name || standardReleveFileName_(year, m)
+    };
+  });
+
   return {
     year: year,
     status: missing.length ? 'incomplete' : 'complete',
@@ -268,7 +313,9 @@ function relevesStatusForYear_(year, ss) {
     expected: expected.length,
     missing: missing,
     upload_enabled: true,
-    historique_note: note || null
+    historique_note: note || null,
+    releves_by_month: byMonth,
+    releves_links: relevesLinks
   };
 }
 
@@ -360,6 +407,9 @@ function buildTresorerie_(year, cloture, compta) {
 function buildExercicePayload_(year, ss) {
   var cloture = clotureMap_(ss);
   var compta = computeComptaFromJournal_(ss);
+  var releves = enrichRelevesWithDrive_(year, compta.releves);
+  compta.releves = releves;
+  compta.dernier_releve = releves.length ? releves[0] : null;
   var statut = exerciceStatut_(cloture, year);
   var version = Number(clotureStr_(cloture, 'version') || 1);
   var treso = buildTresorerie_(year, cloture, compta);
