@@ -1,13 +1,7 @@
 <template>
   <section class="space-y-4">
-    <div class="flex flex-wrap items-end justify-between gap-3">
-      <div>
-        <h3 class="text-sm font-semibold uppercase tracking-wide text-night">Caisse espèces au Pérou</h3>
-        <p class="mt-1 max-w-xl text-xs leading-relaxed text-night-500">
-          Solde caisse = ouverture + retraits WU/DAB − dépenses payées en <strong>espèces trésorerie</strong> ou Yape/Plin.
-          Les avances bénévoles et paiements carte ne passent pas par la caisse.
-        </p>
-      </div>
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <h3 class="text-sm font-semibold uppercase tracking-wide text-night">Caisse espèces au Pérou</h3>
       <label class="flex items-center gap-2 text-sm text-night-600">
         <span class="font-medium">Année</span>
         <select v-model="year" class="admin-input w-auto min-w-[5rem] py-1.5" @change="load">
@@ -42,14 +36,24 @@
         </p>
       </div>
 
-      <!-- Retraits au Pérou -->
-      <div class="rounded-xl border border-night-100 bg-white">
-        <h4 class="border-b border-night-100 px-4 py-3 text-sm font-semibold text-forest">
-          Retraits
-          <span class="ml-2 font-normal tabular-nums text-night-400">
-            + {{ formatPen(retraitsTotals.pen) }} · + {{ formatEur(retraitsTotals.eur) }}
-          </span>
-        </h4>
+      <!-- Retraits -->
+      <div class="overflow-hidden rounded-2xl border border-night-100 bg-white shadow-sm">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-forest/15 bg-gradient-to-r from-forest/[0.06] to-transparent px-4 py-3">
+          <div>
+            <h4 class="text-sm font-bold uppercase tracking-wide text-forest">Retraits</h4>
+            <p class="mt-0.5 text-xs text-night-500">{{ data.retraits_count }} opération(s)</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <div class="min-w-[7.5rem] rounded-xl border border-forest/25 bg-white px-3 py-2 shadow-sm">
+              <p class="text-[10px] font-bold uppercase tracking-wider text-forest/80">Entrées S/.</p>
+              <p class="font-serif text-xl font-bold tabular-nums leading-tight text-forest">+ {{ formatPen(retraitsTotals.pen) }}</p>
+            </div>
+            <div class="min-w-[7.5rem] rounded-xl border border-bleu/25 bg-white px-3 py-2 shadow-sm">
+              <p class="text-[10px] font-bold uppercase tracking-wider text-bleu/80">Débit €</p>
+              <p class="font-serif text-xl font-bold tabular-nums leading-tight text-bleu">+ {{ formatEur(retraitsTotals.eur) }}</p>
+            </div>
+          </div>
+        </div>
         <p v-if="!data.retraits?.length" class="px-4 py-6 text-sm text-night-400">Aucun retrait cette année.</p>
         <div v-else class="max-h-64 overflow-y-auto">
           <table class="w-full text-sm">
@@ -107,15 +111,24 @@
         </div>
       </div>
 
-      <!-- Dépenses terrain -->
-      <div class="rounded-xl border border-night-100 bg-white">
-        <h4 class="border-b border-night-100 px-4 py-3 text-sm font-semibold text-night">
-          Dépenses
-          <span class="ml-2 font-normal tabular-nums text-night-400">
-            − {{ formatPen(depensesTotal) }}
-            <template v-if="depensesTotalEur != null"> · ≈ {{ formatEur(depensesTotalEur) }}</template>
-          </span>
-        </h4>
+      <!-- Dépenses -->
+      <div class="overflow-hidden rounded-2xl border border-night-100 bg-white shadow-sm">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-terracotta/15 bg-gradient-to-r from-terracotta/[0.06] to-transparent px-4 py-3">
+          <div>
+            <h4 class="text-sm font-bold uppercase tracking-wide text-terracotta-700">Dépenses</h4>
+            <p class="mt-0.5 text-xs text-night-500">{{ depensesRows.length }} ligne(s)</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <div class="min-w-[7.5rem] rounded-xl border border-terracotta/25 bg-white px-3 py-2 shadow-sm">
+              <p class="text-[10px] font-bold uppercase tracking-wider text-terracotta-700/80">Sorties S/.</p>
+              <p class="font-serif text-xl font-bold tabular-nums leading-tight text-terracotta-700">− {{ formatPen(depensesTotal) }}</p>
+            </div>
+            <div v-if="depensesTotalEur != null" class="min-w-[7.5rem] rounded-xl border border-night-200 bg-white px-3 py-2 shadow-sm">
+              <p class="text-[10px] font-bold uppercase tracking-wider text-night-500">Équiv. €</p>
+              <p class="font-serif text-xl font-bold tabular-nums leading-tight text-night-700">≈ {{ formatEur(depensesTotalEur) }}</p>
+            </div>
+          </div>
+        </div>
         <p v-if="!depensesRows.length" class="px-4 py-6 text-sm text-night-400">Aucune dépense cette année.</p>
         <div v-else class="max-h-[28rem] overflow-y-auto">
           <table class="w-full text-sm">
