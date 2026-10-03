@@ -50,10 +50,10 @@
       <div class="rounded-2xl border px-5 py-5 shadow-sm" :class="soldeClass">
         <p class="text-xs font-bold uppercase tracking-wide text-night-500">Reste en caisse espèces (estimé)</p>
         <p class="mt-2 font-serif text-3xl font-bold tabular-nums text-night">
-          {{ formatPen(data.caisse_pen_solde) }}
+          {{ formatPen(soldePen) }}
         </p>
-        <p v-if="data.caisse_eur_equiv != null" class="mt-1 text-sm text-night-500">
-          ≈ {{ formatEur(data.caisse_eur_equiv) }} au taux du {{ data.taux_date || 'jour' }}
+        <p v-if="soldeEur != null" class="mt-1 text-sm text-night-500">
+          ≈ {{ formatEur(soldeEur) }} au taux du {{ data.taux_date || 'jour' }}
           <span v-if="data.pen_per_eur">(1 € ≈ {{ data.pen_per_eur }} S/.)</span>
         </p>
       </div>
@@ -320,8 +320,23 @@ const depensesTotal = computed(() =>
 
 const depensesTotalEur = computed(() => penAsEur(depensesTotal.value))
 
+/** Sorties caisse espèces uniquement (aligné FIFO backend). */
+const caisseSortiesPen = computed(() =>
+  depensesRows.value
+    .filter((r) => r.caisse_cash)
+    .reduce((s, r) => s + (Number(r.amount_pen) || 0), 0)
+)
+
+/** Solde = ouverture + Σ retraits tableau − dépenses espèces caisse. */
+const soldePen = computed(() => {
+  const ouverture = Number(data.value?.caisse_pen_ouverture) || 0
+  return ouverture + retraitsTotals.value.penJournal - caisseSortiesPen.value
+})
+
+const soldeEur = computed(() => penAsEur(soldePen.value))
+
 const soldeClass = computed(() => {
-  const s = data.value?.caisse_pen_solde
+  const s = soldePen.value
   if (s == null) return 'border-night-100 bg-white'
   if (s < 0) return 'border-terracotta/40 bg-terracotta/5'
   return 'border-leaf/40 bg-leaf/5'
