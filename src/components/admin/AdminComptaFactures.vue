@@ -281,6 +281,8 @@ import { tresorerieGoogle } from '@/config/tresorerie-google.js'
 import driveHealth from '@/data/drive-health.json'
 import AdminFileCapture from './AdminFileCapture.vue'
 import AdminDirectExpenseForm from './AdminDirectExpenseForm.vue'
+import { buildStandardFilename } from '@/utils/factureFilename.js'
+import { CURRENCY_EUR, CURRENCY_PEN, normalizeCurrency } from '@/data/currency.js'
 import AdminLoadingPanel from './AdminLoadingPanel.vue'
 import { bindLoadingProgress } from '@/composables/useLoadingProgress.js'
 import { useUploadQueue } from '@/store/uploadQueue.js'
@@ -479,13 +481,31 @@ const candidates = computed(() => {
 })
 const shown = computed(() => candidates.value.slice(0, 80))
 
+function rowCurrency(r) {
+  if (r?.currency) return normalizeCurrency(r.currency)
+  if (r?.pen != null && r.pen !== '' && (r.eur == null || r.eur === '')) return CURRENCY_PEN
+  return CURRENCY_EUR
+}
+
+function isPrimaryAmount(r, field) {
+  const cur = rowCurrency(r)
+  return field === 'eur' ? cur === CURRENCY_EUR : cur === CURRENCY_PEN
+}
+
 const previewName = computed(() => {
   const r = selected.value
   if (!r) return ''
-  const isPen = r.pen != null
-  const v = isPen ? r.pen : r.eur
-  const amt = Math.abs(v - Math.round(v)) < 1e-9 ? String(Math.round(v)) : v.toFixed(2).replace('.', '_')
-  return `${r.date}_${r.ref}_${amt}${isPen ? 'PEN' : 'EUR'}_${slug(r.vendor || r.label)}.pdf`
+  const cur = rowCurrency(r)
+  return buildStandardFilename({
+    expense_date: r.date,
+    reference: r.ref,
+    currency: cur,
+    amount_eur: cur === CURRENCY_EUR ? r.eur : undefined,
+    amount_pen: cur === CURRENCY_PEN ? r.pen : undefined,
+    vendor_name: r.vendor,
+    label: r.label,
+    ext: '.pdf'
+  })
 })
 
 /**
@@ -498,9 +518,12 @@ function send() {
   const f = file.value
   if (!r || !f) return
   const expenseYear = Number(r.year ?? year.value)
+  const cur = rowCurrency(r)
   const row = {
     reference: r.ref, year: expenseYear, expense_date: r.date,
-    amount_eur: r.eur, amount_pen: r.pen, currency: r.pen != null ? 'PEN' : 'EUR',
+    currency: cur,
+    amount_eur: cur === CURRENCY_EUR ? r.eur : '',
+    amount_pen: cur === CURRENCY_PEN ? r.pen : '',
     vendor_name: r.vendor, label: r.label
   }
   uploads.enqueue({
@@ -565,9 +588,13 @@ function slug(t) {
   return (s || 'piece').slice(0, 48).replace(/-+$/g, '')
 }
 function amount(r) {
-  return r.pen != null
-    ? `${r.pen.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} S/`
-    : `${(r.eur ?? 0).toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €`
+  if (isPrimaryAmount(r, 'pen') && r.pen != null) {
+    return `${r.pen.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} S/.`
+  }
+  if (isPrimaryAmount(r, 'eur') && r.eur != null) {
+    return `${r.eur.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €`
+  }
+  return '—'
 }
 function shortDate(iso) {
   const d = new Date(iso)

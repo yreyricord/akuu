@@ -11,15 +11,9 @@ function slugify_(text, maxLen) {
 
 function formatAmountForFilename_(currency, amountPen, amountEur) {
   var cur = String(currency || 'EUR').toUpperCase();
-  var val;
-  if (cur === 'PEN') {
-    val = amountPen != null && amountPen !== '' ? amountPen : amountEur;
-    if ((amountPen == null || amountPen === '') && amountEur != null && amountEur !== '') {
-      return formatAmountForFilename_('EUR', null, amountEur);
-    }
-  } else {
-    val = amountEur != null && amountEur !== '' ? amountEur : amountPen;
-  }
+  var val = cur === 'PEN'
+    ? (amountPen != null && amountPen !== '' ? amountPen : null)
+    : (amountEur != null && amountEur !== '' ? amountEur : null);
   if (val == null || val === '') return { amount: '0', currency: cur };
   var n = Number(val);
   if (isNaN(n)) return { amount: '0', currency: cur };
@@ -41,4 +35,41 @@ function buildStandardFilename_(opts) {
   if (ext.charAt(0) !== '.') ext = '.' + ext;
   ext = ext.toLowerCase();
   return datePart + '_' + ref + '_' + fmt.amount + fmt.currency + '_' + slug + ext;
+}
+
+function extFromPieceFilename_(name) {
+  var m = String(name || '').match(/(\.[a-z0-9]{1,5})$/i);
+  return m ? m[1].toLowerCase() : '.pdf';
+}
+
+function driveFileIdFromUrl_(url) {
+  var m = String(url || '').match(/\/d\/([a-zA-Z0-9_-]+)/);
+  return m ? m[1] : '';
+}
+
+/** Renomme la pièce Drive si montant ou devise de référence change. */
+function maybeRenameJournalPiece_(hit, after, reference, setCol) {
+  var url = String(after.drive_file_url || hit.row.drive_file_url || '').trim();
+  if (!url) return;
+  var cur = String(after.currency || hit.row.currency || 'EUR').toUpperCase();
+  var pen = cur === 'PEN' ? (after.amount_pen != null ? after.amount_pen : hit.row.amount_pen) : null;
+  var eur = cur === 'EUR' ? (after.amount_eur != null ? after.amount_eur : hit.row.amount_eur) : null;
+  var newName = buildStandardFilename_({
+    expense_date: isoDate_(after.expense_date || hit.row.expense_date),
+    reference: reference,
+    currency: cur,
+    amount_pen: pen,
+    amount_eur: eur,
+    vendor_name: after.vendor_name || hit.row.vendor_name,
+    label: after.label || hit.row.label,
+    ext: extFromPieceFilename_(after.piece_filename || hit.row.piece_filename)
+  });
+  try {
+    var fid = driveFileIdFromUrl_(url);
+    if (fid) DriveApp.getFileById(fid).setName(newName);
+  } catch (e) {
+    Logger.log('maybeRenameJournalPiece_ : ' + e);
+  }
+  after.piece_filename = newName;
+  setCol('piece_filename', newName);
 }

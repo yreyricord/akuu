@@ -411,6 +411,10 @@ function updateJournalLine_(year, reference, actor, patch) {
     after.notes = String(patch.notes);
     set('notes', after.notes);
   }
+  var amountTouched = patch.amount_pen !== undefined || patch.amount_eur !== undefined || patch.currency;
+  if (amountTouched && typeof maybeRenameJournalPiece_ === 'function') {
+    maybeRenameJournalPiece_(hit, after, reference, set);
+  }
   if (typeof appendHistoriqueJournal_ === 'function') {
     appendHistoriqueJournal_(ss, actor, 'modification', reference, before, after, String(patch.reason || ''));
   }
@@ -607,38 +611,19 @@ function createJournalEntry_(session, body) {
   var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
   var reference = nextYearJournalReference_(ss, tab, year);
 
-  var receipt = body._attachments && body._attachments.receipt;
-  var blob = blobFromAttachment_(receipt, 'justificatif.pdf');
-  var driveInfo = { drive_file_url: '', file_name: '' };
-  if (blob) {
-    var standardName = buildStandardFilename_({
-      expense_date: expenseDate,
-      reference: reference,
-      currency: source === 'terrain' ? 'PEN' : 'EUR',
-      amount_pen: body.amount_pen,
-      amount_eur: body.amount_eur,
-      vendor_name: body.vendor_name,
-      label: label,
-      ext: extensionFromAttachment_(receipt)
-    });
-    var uploaded = uploadFactureFile_(blob, { fileName: standardName, year: year });
-    driveInfo.drive_file_url = uploaded.drive_file_url || '';
-    driveInfo.file_name = uploaded.file_name || standardName;
-  }
-
   var actor = session.email;
   var noteBase = 'Ajout manuel depuis Écritures (' + actor + ', ' + isoDate_(new Date()) + ')';
   if (body.notes) noteBase += ' · ' + String(body.notes).trim();
 
   var resolved = resolveJournalAmountsFromBody_(body, expenseDate);
   var obj, pen = null, eur = null;
+  var userCur = normTxt_(body.currency || '') === 'eur' ? 'EUR' : 'PEN';
+  if (source === 'banque' && !body.currency) userCur = 'EUR';
   if (source === 'terrain') {
     pen = resolved.pen;
     eur = resolved.eur;
     if (!pen && !eur) throw apiError_('VALIDATION_FAILED', 'Montant obligatoire');
     var pm = normTxt_(body.payment_method) || 'especes';
-    var curTerrain = normTxt_(body.currency || (pen ? 'pen' : 'eur'));
-    var caissePm = isPaymentMethodCaisse_(pm) || pm === 'avance';
     obj = {
       reference: reference,
       expense_date: expenseDate,
@@ -646,13 +631,13 @@ function createJournalEntry_(session, body) {
       vendor_name: String(body.vendor_name || '').trim(),
       project: normalizeProjectCode_(body.project || 'maison'),
       category: 'Dépenses terrain PM',
-      amount_eur: caissePm ? '' : (eur || ''),
-      amount_pen: pen || '',
-      currency: caissePm ? 'PEN' : (curTerrain === 'eur' ? 'EUR' : 'PEN'),
+      amount_eur: userCur === 'EUR' ? r2_(eur) : '',
+      amount_pen: userCur === 'PEN' ? r2_(pen) : '',
+      currency: userCur,
       entry_source: 'site',
       entry_type: 'depense',
-      piece_filename: driveInfo.file_name,
-      drive_file_url: driveInfo.drive_file_url,
+      piece_filename: '',
+      drive_file_url: '',
       source_file: 'Écritures · site trésorerie',
       source_line: '',
       needs_review: 'non',
@@ -661,14 +646,12 @@ function createJournalEntry_(session, body) {
     };
     if (pm && !isPaymentMethodCaisse_(pm)) {
       obj.category = 'Facture cataloguée';
-      obj.currency = 'EUR';
     }
   } else {
     var entryType = normTxt_(body.entry_type) === 'recette' ? 'recette' : 'depense';
     eur = resolved.eur;
     pen = resolved.pen;
     if (!eur && !pen) throw apiError_('VALIDATION_FAILED', 'Montant obligatoire');
-    var curBanque = normTxt_(body.currency || (eur ? 'eur' : 'pen'));
     obj = {
       reference: reference,
       expense_date: expenseDate,
@@ -676,19 +659,38 @@ function createJournalEntry_(session, body) {
       vendor_name: String(body.vendor_name || '').trim(),
       project: normalizeProjectCode_(body.project || 'fonctionnement'),
       category: String(body.category || 'Dépenses par carte').trim(),
-      amount_eur: eur || '',
-      amount_pen: pen || '',
-      currency: curBanque === 'pen' ? 'PEN' : 'EUR',
+      amount_eur: userCur === 'EUR' ? r2_(eur) : '',
+      amount_pen: userCur === 'PEN' ? r2_(pen) : '',
+      currency: userCur,
       entry_source: 'site',
       entry_type: entryType,
-      piece_filename: driveInfo.file_name,
-      drive_file_url: driveInfo.drive_file_url,
+      piece_filename: '',
+      drive_file_url: '',
       source_file: 'Écritures · site trésorerie',
       source_line: '',
       needs_review: 'non',
       payment_method: '',
       notes: noteBase
     };
+  }
+
+  var receipt = body._attachments && body._attachments.receipt;
+  var blob = blobFromAttachment_(receipt, 'justificatif.pdf');
+  if (blob) {
+    var fnameCur = String(obj.currency || 'EUR').toUpperCase();
+    var standardName = buildStandardFilename_({
+      expense_date: expenseDate,
+      reference: reference,
+      currency: fnameCur,
+      amount_pen: fnameCur === 'PEN' ? obj.amount_pen : null,
+      amount_eur: fnameCur === 'EUR' ? obj.amount_eur : null,
+      vendor_name: body.vendor_name,
+      label: label,
+      ext: extensionFromAttachment_(receipt)
+    });
+    var uploaded = uploadFactureFile_(blob, { fileName: standardName, year: year });
+    obj.drive_file_url = uploaded.drive_file_url || '';
+    obj.piece_filename = uploaded.file_name || standardName;
   }
 
   var prefix = typeof PROTECTION_DESC_PREFIX_ !== 'undefined' ? PROTECTION_DESC_PREFIX_ : 'AKUU exercice ';

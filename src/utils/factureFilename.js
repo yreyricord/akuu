@@ -14,15 +14,9 @@ export function slugify(text, maxLen = 48) {
 
 export function formatAmountForFilename({ currency = 'EUR', amount_pen, amount_eur }) {
   const cur = String(currency || 'EUR').toUpperCase()
-  let val
-  if (cur === 'PEN') {
-    val = amount_pen ?? amount_eur
-    if (amount_pen == null && amount_eur != null) {
-      return formatAmountForFilename({ currency: 'EUR', amount_eur })
-    }
-  } else {
-    val = amount_eur ?? amount_pen
-  }
+  const val = cur === 'PEN'
+    ? (amount_pen != null && amount_pen !== '' ? amount_pen : null)
+    : (amount_eur != null && amount_eur !== '' ? amount_eur : null)
   if (val == null || val === '') return { amount: '0', currency: cur }
   const n = Number(val)
   if (!Number.isFinite(n)) return { amount: '0', currency: cur }

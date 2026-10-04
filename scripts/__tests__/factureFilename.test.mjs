@@ -30,4 +30,17 @@ describe('factureFilename', () => {
   it('slugify removes accents', () => {
     assert.equal(slugify('Ferretería Nauta'), 'ferreteria-nauta')
   })
+
+  it('EUR filename ignores PEN counterpart', () => {
+    const name = buildStandardFilename({
+      expense_date: '2026-10-31',
+      reference: 'AKUU-PM-2026-0143',
+      currency: 'EUR',
+      amount_eur: 34.99,
+      amount_pen: 135.78,
+      label: 'Rycote undercover fixation',
+      ext: '.pdf'
+    })
+    assert.equal(name, '2026-10-31_AKUU-PM-2026-0143_34_99EUR_rycote-undercover-fixation.pdf')
+  })
 })
