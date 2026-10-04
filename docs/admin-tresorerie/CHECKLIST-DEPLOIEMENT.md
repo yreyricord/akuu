@@ -87,3 +87,4 @@ Fichiers poussés sur `main` :
 | 2026-10-03 | API caisse lots FIFO (`CaissePerou.gs`) | **Apps Script déployé** ✅ · frontend poussé ✅ |
 | 2026-10-03 | Avances hors total caisse + saisie PEN retraits | Frontend poussé ✅ (`fe700cb`) · **redéployer Apps Script** : `JournalAnnee.gs`, `Corrections.gs`, `CaissePerou.gs` |
 | 2026-10-03 | Design v2 Caisse Pérou (spec) | Voir `docs/superpowers/specs/2026-10-03-caisse-perou-design.md` |
+| 2026-10-04 | File tâches background (Écritures, validations, relevés…) | Frontend `18a8057`+ · **Apps Script** : redéployer `JournalAnnee.gs` (fix `driveInfo` → erreur interne à l’ajout écriture+PDF) |

@@ -9,6 +9,16 @@
         <p class="mt-2 max-w-lg text-sm leading-relaxed text-white/80">
           Chiffres issus des journaux validés et rapprochés des relevés bancaires.
         </p>
+        <div class="mt-3 flex flex-wrap items-center gap-2">
+          <AdminTasksIndicator />
+          <button
+            type="button"
+            class="rounded-full border border-white/30 bg-white/10 px-3 py-1 text-xs font-semibold text-white hover:bg-white/20"
+            @click="refreshAll"
+          >
+            Rafraîchir les données
+          </button>
+        </div>
       </div>
     </header>
 
@@ -34,7 +44,7 @@
         Saisies de l'application indisponibles ({{ error }}) · les écritures des journaux s'affichent quand même.
       </p>
       <AdminComptaEcritures
-        :key="`${ecrituresYear}-${metaVersion}`"
+        :key="`${ecrituresYear}-${metaVersion}-${journalRefreshKey}`"
         :initial-year="ecrituresYear"
         @journal-updated="caisseRefreshKey += 1"
       />
@@ -72,6 +82,7 @@ import AdminComptaEcritures from './AdminComptaEcritures.vue'
 import AdminComptaFactures from './AdminComptaFactures.vue'
 import AdminCaissePerouPanel from './AdminCaissePerouPanel.vue'
 import AdminTresorerieMeta from './AdminTresorerieMeta.vue'
+import AdminTasksIndicator from './AdminTasksIndicator.vue'
 import driveHealthData from '@/data/drive-health.json'
 
 const store = useTresorerieStore()
@@ -85,7 +96,13 @@ const journalSectionRef = ref(null)
 const view = ref('overview')
 const ecrituresYear = ref(String(new Date().getFullYear()))
 const caisseRefreshKey = ref(0)
+const journalRefreshKey = ref(0)
 const metaVersion = ref(0)
+
+function refreshAll() {
+  journalRefreshKey.value += 1
+  caisseRefreshKey.value += 1
+}
 const views = [
   { id: 'overview', label: "Vue d'ensemble" },
   { id: 'ecritures', label: 'Écritures' },

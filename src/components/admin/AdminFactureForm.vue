@@ -54,10 +54,10 @@
         <button
           type="button"
           class="mt-3 rounded-full border border-forest bg-white px-4 py-2 text-sm font-semibold text-forest hover:bg-leaf/10"
-          :disabled="store.loading"
+          :disabled="closingDemande"
           @click="closeInvoicing"
         >
-          Clore le devis — envoyer au trésorier
+          {{ closingDemande ? 'Clôture…' : 'Clore le devis — envoyer au trésorier' }}
         </button>
       </div>
 
@@ -88,10 +88,10 @@
           <button
             type="button"
             class="rounded-full border border-forest bg-white px-4 py-2 text-sm font-semibold text-forest hover:bg-leaf/10"
-            :disabled="store.loading || !canCloseInvoicing"
+            :disabled="closingDemande || !canCloseInvoicing"
             @click="closeInvoicing"
           >
-            {{ store.loading ? 'Envoi…' : 'Clore le devis — envoyer au trésorier' }}
+            {{ closingDemande ? 'Clôture…' : 'Clore le devis — envoyer au trésorier' }}
           </button>
         </div>
       </div>
@@ -258,7 +258,7 @@ import {
 } from '@/data/currency.js'
 import { penToEur } from '@/api/tresorerie/exchangeRate.js'
 import { useTresorerieStore } from '@/store/tresorerie.js'
-import { useUploadQueue } from '@/store/uploadQueue.js'
+import { TASK_ESTIMATE_MS, useUploadQueue } from '@/store/uploadQueue.js'
 import AdminFileCapture from './AdminFileCapture.vue'
 import AdminCurrencyAmountField from './AdminCurrencyAmountField.vue'
 
@@ -267,6 +267,7 @@ const emit = defineEmits(['closed'])
 const store = useTresorerieStore()
 const uploads = useUploadQueue()
 const postSubmitChoice = ref(false)
+const savedDemandRef = ref('')
 let mounted = true
 onBeforeUnmount(() => { mounted = false })
 
@@ -275,7 +276,10 @@ const sendingThisDemande = computed(() =>
   Boolean(form.demand_reference) &&
   uploads.isBusy('facture', (m) => m.demand === form.demand_reference)
 )
-const savedDemandRef = ref('')
+const closingDemande = computed(() => {
+  const ref = form.demand_reference || savedDemandRef.value
+  return ref && uploads.isBusy('validation', (m) => m.ref === ref)
+})
 let lineSeq = 0
 
 const form = reactive({
@@ -415,13 +419,28 @@ function continueAdding() {
   resetLines()
 }
 
-async function closeInvoicing() {
+function closeInvoicing() {
   const ref = form.demand_reference || savedDemandRef.value
-  if (!ref) return
-  await store.closeDemandeInvoicing(ref)
-  postSubmitChoice.value = false
-  resetFormFields(true)
-  emit('closed')
+  if (!ref || closingDemande.value) return
+  uploads.enqueue({
+    kind: 'validation',
+    label: `Clôture devis · ${ref}`,
+    meta: { ref },
+    hasFile: false,
+    abortable: false,
+    estimateMs: TASK_ESTIMATE_MS.validation,
+    run: () => store.closeDemandeInvoicing(ref, { background: true }),
+    describe: (demande) => ({
+      text: `Devis ${ref} clôturé — ${demande?.pending_facture_count ?? ''} facture(s) chez le trésorier.`,
+      copyText: ref
+    }),
+    onSuccess: async () => {
+      postSubmitChoice.value = false
+      resetFormFields(true)
+      await store.loadApprovedDemandes(true)
+      emit('closed')
+    }
+  })
 }
 
 function resetLines() {

@@ -17,6 +17,7 @@
           </div>
         </div>
         <div class="flex shrink-0 items-center gap-2">
+          <AdminTasksIndicator v-if="activeModule === 'tresorerie'" />
           <AdminAccountMenu @logout="onLogout" />
         </div>
       </div>
@@ -230,6 +231,7 @@ import AdminTresorerieGuideView from '@/components/admin/AdminTresorerieGuideVie
 import AdminAccessQueue from '@/components/admin/AdminAccessQueue.vue'
 import AdminDirectExpenseForm from '@/components/admin/AdminDirectExpenseForm.vue'
 import AdminUploadTray from '@/components/admin/AdminUploadTray.vue'
+import AdminTasksIndicator from '@/components/admin/AdminTasksIndicator.vue'
 import { useUploadQueue } from '@/store/uploadQueue.js'
 
 const accountSection = computed(() => {

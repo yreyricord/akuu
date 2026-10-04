@@ -428,20 +428,27 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
     }
   }
 
-  async function closeDemandeInvoicing(reference) {
-    clearMessages()
-    loading.value = true
+  async function closeDemandeInvoicing(reference, opts = {}) {
+    const background = Boolean(opts.background)
+    if (!background) {
+      clearMessages()
+      loading.value = true
+    }
     try {
       const demande = await tresorerieApi.closeDemandeInvoicing(reference)
-      successMessage.value = `Devis ${reference} clôturé — ${demande.pending_facture_count ?? ''} facture(s) envoyée(s) au trésorier.`
-      delete _fetchedAt.approved
-      await loadApprovedDemandes(true)
+      if (!background) {
+        successMessage.value = `Devis ${reference} clôturé — ${demande.pending_facture_count ?? ''} facture(s) envoyée(s) au trésorier.`
+        delete _fetchedAt.approved
+        await loadApprovedDemandes(true)
+      } else {
+        delete _fetchedAt.approved
+      }
       return demande
     } catch (e) {
-      error.value = e.message
+      if (!background) error.value = e.message
       throw e
     } finally {
-      loading.value = false
+      if (!background) loading.value = false
     }
   }
 
