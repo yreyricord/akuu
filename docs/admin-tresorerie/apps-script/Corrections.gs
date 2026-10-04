@@ -94,7 +94,8 @@ function requestUpdate_(session, body) {
   if (!ref) throw apiError_('VALIDATION_FAILED', 'Référence manquante');
   assertExerciceModifiable_(year);
   var hasPen = body.amount_pen != null && body.amount_pen !== '';
-  if (!body.project && !body.payment_method && !body.category && !hasPen && body.notes == null) {
+  var hasEur = body.amount_eur != null && body.amount_eur !== '';
+  if (!body.project && !body.payment_method && !body.category && !hasPen && !hasEur && body.notes == null) {
     throw apiError_('VALIDATION_FAILED', 'Rien à modifier');
   }
 
@@ -103,6 +104,8 @@ function requestUpdate_(session, body) {
     payment_method: body.payment_method,
     category: body.category,
     amount_pen: hasPen ? body.amount_pen : undefined,
+    amount_eur: hasEur ? body.amount_eur : undefined,
+    currency: body.currency || undefined,
     notes: body.notes != null ? body.notes : undefined,
     reason: body.reason || ''
   });

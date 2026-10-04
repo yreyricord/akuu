@@ -43,8 +43,7 @@
         <input v-model.trim="search" type="search" class="admin-input w-full py-2 text-sm" placeholder="Libellé, fournisseur, réf." />
       </label>
       <p class="w-full text-xs text-night-500">
-        Colonnes <strong>Euros</strong> / <strong>Soles</strong> : montant officiel en gras ;
-        « ≈ » = conversion estimée au taux PEN/EUR de la <strong>date de l'écriture</strong> (indicatif, pas la compta officielle).
+        Montants modifiables en € ou S/. · « ≈ » = conversion estimée au taux de la <strong>date de l'écriture</strong>.
       </p>
     </section>
 
@@ -106,7 +105,7 @@
 
     <p v-if="live && year === String(live.year)" class="flex flex-wrap items-center gap-2 text-xs text-forest-700">
       <span class="inline-block h-2 w-2 rounded-full bg-forest" aria-hidden="true" />
-      {{ year }} en direct depuis le journal Google — projet et mode de paiement modifiables (badge « Caisse » = espèces comptées au Pérou)
+      {{ year }} en direct depuis le journal Google — projet, montants et mode de paiement modifiables (badge « Caisse » = espèces comptées au Pérou)
       <a :href="live.sheet_url" target="_blank" rel="noopener noreferrer" class="font-semibold text-bleu hover:underline">Ouvrir le journal</a>
     </p>
     <p v-else-if="!journalLoading && year >= String(new Date().getFullYear() - 1)" class="rounded-xl border border-ochre-200 bg-ochre-50 px-4 py-3 text-sm text-ochre-900">
@@ -196,29 +195,70 @@
         <span v-else class="text-xs text-night-300">—</span>
       </template>
       <template #cell-amounts="{ row }">
-        <p
-          v-if="amountEur(row)"
-          class="whitespace-nowrap text-sm tabular-nums leading-tight"
-          :class="[
-            row.type === 'recette' ? 'text-forest-700' : 'text-night',
-            amountEur(row).estimated ? 'font-normal text-night-500' : 'font-semibold'
-          ]"
-          :title="amountEur(row).estimated ? estimateTitle(amountEur(row)) : ''"
-        >
-          {{ amountEur(row).estimated ? '≈' : '' }}{{ row.type === 'recette' ? '+' : '−' }}{{ eur(amountEur(row).value) }}
-        </p>
-        <p
-          v-if="amountPen(row)"
-          class="mt-0.5 whitespace-nowrap text-sm tabular-nums leading-tight"
-          :class="[
-            row.type === 'recette' ? 'text-forest-600' : 'text-night-600',
-            amountPen(row).estimated ? 'font-normal text-night-500' : 'font-medium'
-          ]"
-          :title="amountPen(row).estimated ? estimateTitle(amountPen(row)) : ''"
-        >
-          {{ amountPen(row).estimated ? '≈' : '' }}{{ row.type === 'recette' ? '+' : '−' }}{{ pen(amountPen(row).value) }}
-        </p>
-        <span v-if="!amountEur(row) && !amountPen(row)" class="text-xs text-night-300">—</span>
+        <div v-if="canEditRow(row)" class="space-y-1">
+          <div class="flex items-center justify-end gap-1">
+            <span class="w-4 text-right text-[10px] text-night-400">€</span>
+            <input
+              type="number"
+              step="0.01"
+              min="0.01"
+              class="ecriture-amount-input"
+              :value="amountDraft(row, 'eur')"
+              :disabled="savingRef === row.ref"
+              placeholder="—"
+              @input="setAmountDraft(row.ref, 'eur', $event.target.value)"
+              @keydown.enter="saveAmounts(row)"
+            />
+          </div>
+          <div class="flex items-center justify-end gap-1">
+            <span class="w-4 text-right text-[10px] text-night-400">S/.</span>
+            <input
+              type="number"
+              step="0.01"
+              min="0.01"
+              class="ecriture-amount-input"
+              :value="amountDraft(row, 'pen')"
+              :disabled="savingRef === row.ref"
+              placeholder="—"
+              @input="setAmountDraft(row.ref, 'pen', $event.target.value)"
+              @keydown.enter="saveAmounts(row)"
+            />
+            <button
+              v-if="amountsChanged(row)"
+              type="button"
+              class="rounded bg-forest px-1.5 py-0.5 text-[10px] font-semibold text-white disabled:opacity-50"
+              :disabled="savingRef === row.ref"
+              @click="saveAmounts(row)"
+            >
+              {{ savingRef === row.ref ? '…' : 'OK' }}
+            </button>
+          </div>
+        </div>
+        <template v-else>
+          <p
+            v-if="amountEur(row)"
+            class="whitespace-nowrap text-sm tabular-nums leading-tight"
+            :class="[
+              row.type === 'recette' ? 'text-forest-700' : 'text-night',
+              amountEur(row).estimated ? 'font-normal text-night-500' : 'font-semibold'
+            ]"
+            :title="amountEur(row).estimated ? estimateTitle(amountEur(row)) : ''"
+          >
+            {{ amountEur(row).estimated ? '≈' : '' }}{{ row.type === 'recette' ? '+' : '−' }}{{ eur(amountEur(row).value) }}
+          </p>
+          <p
+            v-if="amountPen(row)"
+            class="mt-0.5 whitespace-nowrap text-sm tabular-nums leading-tight"
+            :class="[
+              row.type === 'recette' ? 'text-forest-600' : 'text-night-600',
+              amountPen(row).estimated ? 'font-normal text-night-500' : 'font-medium'
+            ]"
+            :title="amountPen(row).estimated ? estimateTitle(amountPen(row)) : ''"
+          >
+            {{ amountPen(row).estimated ? '≈' : '' }}{{ row.type === 'recette' ? '+' : '−' }}{{ pen(amountPen(row).value) }}
+          </p>
+          <span v-if="!amountEur(row) && !amountPen(row)" class="text-xs text-night-300">—</span>
+        </template>
       </template>
       <template #cell-url="{ row }">
         <div class="flex items-center justify-end gap-1">
@@ -332,7 +372,7 @@ const baseColumns = [
   { key: 'label', label: 'Libellé', thClass: 'w-[14rem] !pl-1', tdClass: 'min-w-0 max-w-[14rem] align-middle !pl-1' },
   { key: 'project', label: 'Projet', thClass: 'w-[10rem]', tdClass: 'align-middle' },
   { key: 'payment', label: 'Paiement', thClass: 'w-[7.5rem]', tdClass: 'align-middle' },
-  { key: 'amounts', label: 'Montants', align: 'right', thClass: 'w-[7.25rem]', tdClass: 'align-middle' },
+  { key: 'amounts', label: 'Montants', align: 'right', thClass: 'w-[9rem]', tdClass: 'align-middle' },
   { key: 'url', label: '', align: 'right', thClass: 'w-[4rem]', tdClass: 'align-middle' }
 ]
 const columns = computed(() => [...baseColumns])
@@ -425,6 +465,7 @@ async function loadLive(y, { force = false } = {}) {
 }
 
 watch(year, (y) => {
+  amountDrafts.value = {}
   loadLive(y)
   loadExerciceStatut(y)
 })
@@ -463,6 +504,7 @@ function openAddForm() {
 }
 const savingRef = ref('')
 const saveError = ref('')
+const amountDrafts = ref({})
 const deletedRefs = computed(() => new Set(corrections.value.filter((c) => c.type === 'delete').map((c) => c.reference)))
 const attachedUrls = computed(() => Object.fromEntries(
   corrections.value.filter((c) => c.type === 'attach').map((c) => [c.reference, c.drive_file_url])
@@ -526,6 +568,69 @@ async function onCreated(res) {
   saveOk.value = `Écriture ajoutée (${res.reference} · ${res.label}).`
   await loadLive(year.value, { force: true })
   emit('journal-updated')
+}
+
+function ensureAmountDraft(ref, row) {
+  if (!amountDrafts.value[ref]) {
+    amountDrafts.value = {
+      ...amountDrafts.value,
+      [ref]: {
+        eur: row.eur != null && row.eur !== '' ? String(row.eur) : '',
+        pen: row.pen != null && row.pen !== '' ? String(row.pen) : ''
+      }
+    }
+  }
+  return amountDrafts.value[ref]
+}
+
+function amountDraft(row, field) {
+  return ensureAmountDraft(row.ref, row)[field]
+}
+
+function setAmountDraft(ref, field, value) {
+  const row = yearRows.value.find((r) => r.ref === ref)
+  if (!row) return
+  ensureAmountDraft(ref, row)
+  amountDrafts.value = {
+    ...amountDrafts.value,
+    [ref]: { ...amountDrafts.value[ref], [field]: value }
+  }
+}
+
+function amountsChanged(row) {
+  const d = amountDrafts.value[row.ref]
+  if (!d) return false
+  const eurChanged = d.eur !== '' && Math.abs(Number(d.eur) - Number(row.eur || 0)) > 0.009
+  const penChanged = d.pen !== '' && Math.abs(Number(d.pen) - Number(row.pen || 0)) > 0.009
+  return eurChanged || penChanged
+}
+
+async function saveAmounts(row) {
+  if (!amountsChanged(row)) return
+  const d = amountDrafts.value[row.ref]
+  savingRef.value = row.ref
+  saveError.value = ''
+  saveOk.value = ''
+  try {
+    const payload = { reference: row.ref, year: Number(year.value) }
+    if (d.eur !== '' && Math.abs(Number(d.eur) - Number(row.eur || 0)) > 0.009) {
+      payload.amount_eur = Number(d.eur)
+    }
+    if (d.pen !== '' && Math.abs(Number(d.pen) - Number(row.pen || 0)) > 0.009) {
+      payload.amount_pen = Number(d.pen)
+    }
+    await tresorerieApi.updateJournalLine(payload)
+    const next = { ...amountDrafts.value }
+    delete next[row.ref]
+    amountDrafts.value = next
+    await loadLive(year.value, { force: true })
+    saveOk.value = `Montant mis à jour (${row.ref}).`
+    emit('journal-updated')
+  } catch (e) {
+    saveError.value = e.message || 'Modification impossible'
+  } finally {
+    savingRef.value = ''
+  }
 }
 
 async function savePayment(row, paymentMethod) {
@@ -731,6 +836,20 @@ function formatDate(iso) {
   @apply border-forest outline-none ring-1 ring-forest/20;
 }
 .ecriture-select:disabled {
+  @apply cursor-not-allowed bg-night-50 text-night-500;
+}
+.ecriture-amount-input {
+  @apply w-[5.25rem] rounded-lg border border-night-200/80 bg-cream-50 px-1.5 text-right text-xs tabular-nums text-night shadow-none;
+  height: 1.75rem;
+  min-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 1.75rem;
+}
+.ecriture-amount-input:focus {
+  @apply border-forest outline-none ring-1 ring-forest/20;
+}
+.ecriture-amount-input:disabled {
   @apply cursor-not-allowed bg-night-50 text-night-500;
 }
 </style>

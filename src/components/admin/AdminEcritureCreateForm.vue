@@ -7,7 +7,7 @@
     <div class="mb-4 flex items-start justify-between gap-3">
       <div>
         <h3 class="text-sm font-bold text-forest-800">Nouvelle écriture</h3>
-        <p class="mt-0.5 text-xs text-night-500">Terrain (S/.) ou banque (€) · enregistrée dans le journal Google</p>
+        <p class="mt-0.5 text-xs text-night-500">Terrain ou banque · montant en € ou S/. · enregistrée dans le journal Google</p>
       </div>
       <button type="button" class="rounded-lg px-2 py-1 text-sm text-night-500 hover:bg-cream-200" @click="setOpen(false)">
         Fermer
@@ -71,28 +71,15 @@
         </label>
       </div>
 
-      <label v-if="form.source === 'terrain'" class="block space-y-1">
-        <span class="text-xs font-bold uppercase tracking-wide text-night-500">Montant (S/.) *</span>
-        <input
-          v-model.number="form.amount_pen"
-          type="number"
-          min="0.01"
-          step="0.01"
-          required
-          class="admin-input w-full max-w-xs py-2 text-sm tabular-nums"
-        />
-      </label>
-      <label v-else class="block space-y-1">
-        <span class="text-xs font-bold uppercase tracking-wide text-night-500">Montant (€) *</span>
-        <input
-          v-model.number="form.amount_eur"
-          type="number"
-          min="0.01"
-          step="0.01"
-          required
-          class="admin-input w-full max-w-xs py-2 text-sm tabular-nums"
-        />
-      </label>
+      <AdminCurrencyAmountField
+        v-model="form.amount"
+        :currency="form.currency"
+        label="Montant *"
+        :rate="entryRate"
+        :rate-source="entryRateSource"
+        input-class="w-full max-w-xs py-2 text-sm tabular-nums"
+        @update:currency="form.currency = $event"
+      />
 
       <label class="block space-y-1">
         <span class="text-xs font-bold uppercase tracking-wide text-night-500">Notes (optionnel)</span>
@@ -121,9 +108,13 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { PAYMENT_METHODS, TRESORERIE_PROJECTS } from '@/data/tresorerie-config.js'
+import { CURRENCY_EUR, CURRENCY_PEN, normalizeAmountPair } from '@/data/currency.js'
+import { fetchPenEurRateForDate } from '@/api/tresorerie/exchangeRate.js'
 import { tresorerieApi } from '@/api/tresorerie/client.js'
+import { useTresorerieStore } from '@/store/tresorerie.js'
+import AdminCurrencyAmountField from './AdminCurrencyAmountField.vue'
 import AdminFileCapture from './AdminFileCapture.vue'
 
 const props = defineProps({
@@ -135,13 +126,15 @@ const props = defineProps({
 
 const emit = defineEmits(['created', 'update:open'])
 
+const store = useTresorerieStore()
+
 function setOpen(v) {
   emit('update:open', v)
 }
 
 const SOURCES = [
-  { id: 'terrain', label: 'Terrain (Detail_PM · soles)' },
-  { id: 'banque', label: 'Banque (Journal · euros)' }
+  { id: 'terrain', label: 'Terrain (Detail_PM)' },
+  { id: 'banque', label: 'Banque (Journal)' }
 ]
 const TERRAIN_PAYMENTS = PAYMENT_METHODS.filter((m) =>
   ['especes', 'avance', 'cb', 'virement', 'yape_plin'].includes(m.code)
@@ -150,6 +143,7 @@ const TERRAIN_PAYMENTS = PAYMENT_METHODS.filter((m) =>
 const saving = ref(false)
 const error = ref('')
 const receiptFile = ref(null)
+const entryRateInfo = ref(null)
 
 const today = new Date().toISOString().slice(0, 10)
 const form = ref({
@@ -160,12 +154,15 @@ const form = ref({
   vendor_name: '',
   payment_method: 'especes',
   entry_type: 'depense',
-  amount_pen: null,
-  amount_eur: null,
+  currency: CURRENCY_PEN,
+  amount: null,
   notes: ''
 })
 
 const canSubmit = computed(() => props.canSubmit && Number(props.year) >= 2017)
+
+const entryRate = computed(() => entryRateInfo.value?.rate ?? store.exchangeRate?.rate ?? null)
+const entryRateSource = computed(() => entryRateInfo.value?.source ?? store.exchangeRate?.source ?? '')
 
 watch(() => props.year, (y) => {
   if (form.value.expense_date && !form.value.expense_date.startsWith(y)) {
@@ -173,11 +170,35 @@ watch(() => props.year, (y) => {
   }
 })
 
+watch(() => form.value.source, (source) => {
+  form.value.currency = source === 'banque' ? CURRENCY_EUR : CURRENCY_PEN
+})
+
+watch(
+  () => form.value.expense_date,
+  async (date) => {
+    if (!date) return
+    try {
+      entryRateInfo.value = await fetchPenEurRateForDate(date)
+    } catch {
+      entryRateInfo.value = store.exchangeRate
+    }
+  },
+  { immediate: true }
+)
+
+onMounted(() => store.loadExchangeRate())
+
 async function onSubmit() {
   if (!canSubmit.value || saving.value) return
   saving.value = true
   error.value = ''
   try {
+    const pair = normalizeAmountPair({
+      currency: form.value.currency,
+      amount: form.value.amount,
+      rate: entryRate.value
+    })
     const payload = {
       year: Number(props.year),
       source: form.value.source,
@@ -185,13 +206,14 @@ async function onSubmit() {
       project: form.value.project,
       label: form.value.label.trim(),
       vendor_name: form.value.vendor_name.trim(),
-      notes: form.value.notes.trim()
+      notes: form.value.notes.trim(),
+      currency: form.value.currency,
+      amount_pen: pair.amount_pen,
+      amount_eur: pair.amount_eur
     }
     if (form.value.source === 'terrain') {
-      payload.amount_pen = form.value.amount_pen
       payload.payment_method = form.value.payment_method
     } else {
-      payload.amount_eur = form.value.amount_eur
       payload.entry_type = form.value.entry_type
     }
     const res = await tresorerieApi.createJournalLine(payload, receiptFile.value)
@@ -199,8 +221,7 @@ async function onSubmit() {
     form.value.label = ''
     form.value.vendor_name = ''
     form.value.notes = ''
-    form.value.amount_pen = null
-    form.value.amount_eur = null
+    form.value.amount = null
     receiptFile.value = null
     setOpen(false)
     window.scrollTo({ top: 0, behavior: 'smooth' })

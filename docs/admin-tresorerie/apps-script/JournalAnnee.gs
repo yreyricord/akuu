@@ -261,6 +261,25 @@ function isPaymentMethodCaisse_(method) {
   return !!PAYMENT_METHOD_CAISSE_[normTxt_(method)];
 }
 
+/** Montants saisis (EUR ou PEN) + contre-valeur au taux du jour de l'écriture. */
+function resolveJournalAmountsFromBody_(body, expenseDate) {
+  var pen = body.amount_pen != null && body.amount_pen !== '' ? r2_(Number(body.amount_pen)) : 0;
+  var eur = body.amount_eur != null && body.amount_eur !== '' ? r2_(Math.abs(Number(body.amount_eur))) : 0;
+  var amount = body.amount != null && body.amount !== '' ? Number(body.amount) : null;
+  var currency = normTxt_(body.currency || '');
+  if (amount != null && !isNaN(amount) && amount > 0) {
+    if (currency === 'eur') eur = r2_(Math.abs(amount));
+    else pen = r2_(amount);
+  }
+  var rateInfo = typeof getExchangeRateForDate_ === 'function'
+    ? (getExchangeRateForDate_(expenseDate) || getExchangeRate_())
+    : getExchangeRate_();
+  var rate = rateInfo && rateInfo.rate ? Number(rateInfo.rate) : 0;
+  if (eur > 0 && !pen && rate > 0) pen = r2_(eur / rate);
+  if (pen > 0 && !eur && rate > 0) eur = r2_(pen * rate);
+  return { pen: pen || 0, eur: eur || 0 };
+}
+
 function applyPaymentMethodPatch_(row, method) {
   method = normTxt_(method);
   var patch = { payment_method: method };
@@ -358,11 +377,21 @@ function updateJournalLine_(year, reference, actor, patch) {
       set(k, pmPatch[k]);
     });
   }
-  if (patch.amount_pen != null && patch.amount_pen !== '' && hit.sheet.getName() === 'Journal') {
+  if (patch.amount_pen != null && patch.amount_pen !== '') {
     var penVal = r2_(Number(patch.amount_pen));
     if (isNaN(penVal) || penVal <= 0) throw apiError_('VALIDATION_FAILED', 'Montant PEN invalide');
     after.amount_pen = penVal;
     set('amount_pen', penVal);
+  }
+  if (patch.amount_eur != null && patch.amount_eur !== '') {
+    var eurVal = r2_(Math.abs(Number(patch.amount_eur)));
+    if (isNaN(eurVal) || eurVal <= 0) throw apiError_('VALIDATION_FAILED', 'Montant EUR invalide');
+    after.amount_eur = eurVal;
+    set('amount_eur', eurVal);
+  }
+  if (patch.currency) {
+    after.currency = String(patch.currency).toUpperCase() === 'EUR' ? 'EUR' : 'PEN';
+    set('currency', after.currency);
   }
   if (patch.notes != null && hit.sheet.getName() === 'Journal') {
     after.notes = String(patch.notes);
@@ -376,7 +405,8 @@ function updateJournalLine_(year, reference, actor, patch) {
   return {
     reference: reference, year: year, tab: hit.sheet.getName(),
     payment_method: readPaymentMethod_(after), project: after.project,
-    amount_pen: num_(after.amount_pen), notes: String(after.notes || '')
+    amount_pen: num_(after.amount_pen), amount_eur: num_(after.amount_eur),
+    currency: String(after.currency || ''), notes: String(after.notes || '')
   };
 }
 
@@ -405,7 +435,8 @@ function getJournalAnnee_(session, year) {
       var type = String(r.entry_type || '').toLowerCase();
       if (type !== 'recette' && type !== 'depense') return;
       var pen = num_(r.amount_pen), eur = num_(r.amount_eur);
-      if (src === 'terrain' && !pen) return;
+      if (src === 'terrain' && !pen && !eur) return;
+      if (src === 'banque' && !eur && !pen) return;
       var piece = String(r.piece_filename || '').trim();
       var url = String(r.drive_file_url || '').trim();
       var pm = src === 'terrain' ? readPaymentMethod_(r) : null;
@@ -415,8 +446,8 @@ function getJournalAnnee_(session, year) {
         category: String(r.category || ''), payment_method: pm,
         caisse_cash: src === 'terrain' && type === 'depense' && pen && isPaymentMethodCaisse_(readPaymentMethod_(r)),
         label: String(r.label || '').substring(0, 160), vendor: String(r.vendor_name || '').substring(0, 60),
-        eur: src === 'banque' ? eur : (eur && !isPaymentMethodCaisse_(pm) ? eur : null),
-        pen: src === 'terrain' ? pen : null,
+        eur: eur || null,
+        pen: pen || null,
         url: url, piece: piece, editable: true
       });
     });
@@ -584,11 +615,15 @@ function createJournalEntry_(session, body) {
   var noteBase = 'Ajout manuel depuis Écritures (' + actor + ', ' + isoDate_(new Date()) + ')';
   if (body.notes) noteBase += ' · ' + String(body.notes).trim();
 
+  var resolved = resolveJournalAmountsFromBody_(body, expenseDate);
   var obj, pen = null, eur = null;
   if (source === 'terrain') {
-    pen = r2_(Number(body.amount_pen));
-    if (!pen || pen <= 0) throw apiError_('VALIDATION_FAILED', 'Montant en soles obligatoire');
+    pen = resolved.pen;
+    eur = resolved.eur;
+    if (!pen && !eur) throw apiError_('VALIDATION_FAILED', 'Montant obligatoire');
     var pm = normTxt_(body.payment_method) || 'especes';
+    var curTerrain = normTxt_(body.currency || (pen ? 'pen' : 'eur'));
+    var caissePm = isPaymentMethodCaisse_(pm) || pm === 'avance';
     obj = {
       reference: reference,
       expense_date: expenseDate,
@@ -596,9 +631,9 @@ function createJournalEntry_(session, body) {
       vendor_name: String(body.vendor_name || '').trim(),
       project: normalizeProjectCode_(body.project || 'maison'),
       category: 'Dépenses terrain PM',
-      amount_eur: '',
-      amount_pen: pen,
-      currency: 'PEN',
+      amount_eur: caissePm ? '' : (eur || ''),
+      amount_pen: pen || '',
+      currency: caissePm ? 'PEN' : (curTerrain === 'eur' ? 'EUR' : 'PEN'),
       entry_source: 'site',
       entry_type: 'depense',
       piece_filename: driveInfo.file_name,
@@ -615,8 +650,10 @@ function createJournalEntry_(session, body) {
     }
   } else {
     var entryType = normTxt_(body.entry_type) === 'recette' ? 'recette' : 'depense';
-    eur = r2_(Math.abs(Number(body.amount_eur)));
-    if (!eur || eur <= 0) throw apiError_('VALIDATION_FAILED', 'Montant en euros obligatoire');
+    eur = resolved.eur;
+    pen = resolved.pen;
+    if (!eur && !pen) throw apiError_('VALIDATION_FAILED', 'Montant obligatoire');
+    var curBanque = normTxt_(body.currency || (eur ? 'eur' : 'pen'));
     obj = {
       reference: reference,
       expense_date: expenseDate,
@@ -624,9 +661,9 @@ function createJournalEntry_(session, body) {
       vendor_name: String(body.vendor_name || '').trim(),
       project: normalizeProjectCode_(body.project || 'fonctionnement'),
       category: String(body.category || 'Dépenses par carte').trim(),
-      amount_eur: eur,
-      amount_pen: '',
-      currency: 'EUR',
+      amount_eur: eur || '',
+      amount_pen: pen || '',
+      currency: curBanque === 'pen' ? 'PEN' : 'EUR',
       entry_source: 'site',
       entry_type: entryType,
       piece_filename: driveInfo.file_name,
@@ -675,8 +712,8 @@ function createJournalEntry_(session, body) {
     project: projectLabel_(obj.project),
     project_code: projectSlug_(obj.project),
     payment_method: source === 'terrain' ? readPaymentMethod_(obj) : null,
-    pen: source === 'terrain' ? pen : null,
-    eur: source === 'banque' ? eur : null,
+    pen: pen || null,
+    eur: eur || null,
     url: driveInfo.drive_file_url
   };
 }
