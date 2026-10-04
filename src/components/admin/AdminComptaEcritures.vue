@@ -195,36 +195,44 @@
         <span v-else class="text-xs text-night-300">—</span>
       </template>
       <template #cell-amounts="{ row }">
-        <div v-if="canEditRow(row)" class="space-y-1">
+        <div v-if="canEditRow(row)" class="space-y-0.5">
           <div class="flex items-center justify-end gap-1">
             <span class="w-4 text-right text-[10px] text-night-400">€</span>
             <input
-              type="number"
-              step="0.01"
-              min="0.01"
+              type="text"
+              inputmode="decimal"
               class="ecriture-amount-input"
               :value="amountDraft(row, 'eur')"
               :disabled="savingRef === row.ref"
               placeholder="—"
+              @focus="ensureAmountDraft(row.ref, row)"
               @input="setAmountDraft(row.ref, 'eur', $event.target.value)"
-              @keydown.enter="saveAmounts(row)"
+              @keydown.enter.prevent.stop="saveAmounts(row)"
             />
           </div>
           <div class="flex items-center justify-end gap-1">
             <span class="w-4 text-right text-[10px] text-night-400">S/.</span>
             <input
-              type="number"
-              step="0.01"
-              min="0.01"
+              type="text"
+              inputmode="decimal"
               class="ecriture-amount-input"
               :value="amountDraft(row, 'pen')"
               :disabled="savingRef === row.ref"
               placeholder="—"
+              @focus="ensureAmountDraft(row.ref, row)"
               @input="setAmountDraft(row.ref, 'pen', $event.target.value)"
-              @keydown.enter="saveAmounts(row)"
+              @keydown.enter.prevent.stop="saveAmounts(row)"
             />
+          </div>
+          <p v-if="amountEditPreviewEur(row)" class="text-right text-[10px] leading-tight text-night-400">
+            ≈ {{ amountEditPreviewEur(row) }}
+          </p>
+          <p v-if="amountEditPreviewPen(row)" class="text-right text-[10px] leading-tight text-night-400">
+            ≈ {{ amountEditPreviewPen(row) }}
+          </p>
+          <div v-if="amountsChanged(row) || amountSaveErrors[row.ref]" class="flex items-center justify-end gap-1 pt-0.5">
+            <p v-if="amountSaveErrors[row.ref]" class="text-[10px] text-terracotta-700">{{ amountSaveErrors[row.ref] }}</p>
             <button
-              v-if="amountsChanged(row)"
               type="button"
               class="rounded bg-forest px-1.5 py-0.5 text-[10px] font-semibold text-white disabled:opacity-50"
               :disabled="savingRef === row.ref"
@@ -466,6 +474,7 @@ async function loadLive(y, { force = false } = {}) {
 
 watch(year, (y) => {
   amountDrafts.value = {}
+  amountSaveErrors.value = {}
   loadLive(y)
   loadExerciceStatut(y)
 })
@@ -505,6 +514,7 @@ function openAddForm() {
 const savingRef = ref('')
 const saveError = ref('')
 const amountDrafts = ref({})
+const amountSaveErrors = ref({})
 const deletedRefs = computed(() => new Set(corrections.value.filter((c) => c.type === 'delete').map((c) => c.reference)))
 const attachedUrls = computed(() => Object.fromEntries(
   corrections.value.filter((c) => c.type === 'attach').map((c) => [c.reference, c.drive_file_url])
@@ -570,13 +580,27 @@ async function onCreated(res) {
   emit('journal-updated')
 }
 
+function parseAmountInput(raw) {
+  if (raw == null || raw === '') return null
+  const n = Number(String(raw).trim().replace(/\s/g, '').replace(',', '.'))
+  return Number.isFinite(n) && n > 0 ? n : null
+}
+
+function draftSeed(row, field) {
+  const stored = field === 'eur' ? row.eur : row.pen
+  if (stored != null && stored !== '') return String(stored)
+  const est = field === 'eur' ? amountEur(row) : amountPen(row)
+  if (est?.value) return String(Math.round(est.value * 100) / 100)
+  return ''
+}
+
 function ensureAmountDraft(ref, row) {
   if (!amountDrafts.value[ref]) {
     amountDrafts.value = {
       ...amountDrafts.value,
       [ref]: {
-        eur: row.eur != null && row.eur !== '' ? String(row.eur) : '',
-        pen: row.pen != null && row.pen !== '' ? String(row.pen) : ''
+        eur: draftSeed(row, 'eur'),
+        pen: draftSeed(row, 'pen')
       }
     }
   }
@@ -597,27 +621,85 @@ function setAmountDraft(ref, field, value) {
   }
 }
 
+function storedAmount(row, field) {
+  const v = field === 'eur' ? row.eur : row.pen
+  if (v != null && v !== '') return Number(v)
+  const est = field === 'eur' ? amountEur(row) : amountPen(row)
+  return est?.estimated ? null : (est?.value ?? null)
+}
+
 function amountsChanged(row) {
   const d = amountDrafts.value[row.ref]
   if (!d) return false
-  const eurChanged = d.eur !== '' && Math.abs(Number(d.eur) - Number(row.eur || 0)) > 0.009
-  const penChanged = d.pen !== '' && Math.abs(Number(d.pen) - Number(row.pen || 0)) > 0.009
+  const eurVal = parseAmountInput(d.eur)
+  const penVal = parseAmountInput(d.pen)
+  const storedEur = storedAmount(row, 'eur')
+  const storedPen = storedAmount(row, 'pen')
+  const eurChanged = eurVal != null && (storedEur == null || Math.abs(eurVal - storedEur) > 0.009)
+  const penChanged = penVal != null && (storedPen == null || Math.abs(penVal - storedPen) > 0.009)
   return eurChanged || penChanged
 }
 
-async function saveAmounts(row) {
-  if (!amountsChanged(row)) return
+function amountEditPreviewEur(row) {
   const d = amountDrafts.value[row.ref]
+  if (!d) return null
+  const penVal = parseAmountInput(d.pen)
+  const rateInfo = rateForRow(row)
+  if (!penVal || !rateInfo?.rate) return null
+  const eurVal = parseAmountInput(d.eur)
+  if (eurVal != null) return null
+  return eur(penToEur(penVal, rateInfo.rate))
+}
+
+function amountEditPreviewPen(row) {
+  const d = amountDrafts.value[row.ref]
+  if (!d) return null
+  const eurVal = parseAmountInput(d.eur)
+  const rateInfo = rateForRow(row)
+  if (!eurVal || !rateInfo?.rate) return null
+  const penVal = parseAmountInput(d.pen)
+  if (penVal != null) return null
+  return pen(eurToPen(eurVal, rateInfo.rate))
+}
+
+async function saveAmounts(row) {
+  ensureAmountDraft(row.ref, row)
+  if (!amountsChanged(row)) {
+    amountSaveErrors.value = {
+      ...amountSaveErrors.value,
+      [row.ref]: 'Aucun changement détecté — vérifiez le montant (utilisez . ou ,).'
+    }
+    return
+  }
+  const d = amountDrafts.value[row.ref]
+  const eurVal = parseAmountInput(d.eur)
+  const penVal = parseAmountInput(d.pen)
+  if (eurVal == null && penVal == null) {
+    amountSaveErrors.value = {
+      ...amountSaveErrors.value,
+      [row.ref]: 'Montant invalide — saisissez un nombre (ex. 52,12 ou 207,17).'
+    }
+    return
+  }
   savingRef.value = row.ref
   saveError.value = ''
   saveOk.value = ''
+  const nextErr = { ...amountSaveErrors.value }
+  delete nextErr[row.ref]
+  amountSaveErrors.value = nextErr
   try {
     const payload = { reference: row.ref, year: Number(year.value) }
-    if (d.eur !== '' && Math.abs(Number(d.eur) - Number(row.eur || 0)) > 0.009) {
-      payload.amount_eur = Number(d.eur)
+    const storedEur = storedAmount(row, 'eur')
+    const storedPen = storedAmount(row, 'pen')
+    if (eurVal != null && (storedEur == null || Math.abs(eurVal - storedEur) > 0.009)) {
+      payload.amount_eur = eurVal
     }
-    if (d.pen !== '' && Math.abs(Number(d.pen) - Number(row.pen || 0)) > 0.009) {
-      payload.amount_pen = Number(d.pen)
+    if (penVal != null && (storedPen == null || Math.abs(penVal - storedPen) > 0.009)) {
+      payload.amount_pen = penVal
+    }
+    if (!payload.amount_eur && !payload.amount_pen) {
+      amountSaveErrors.value = { ...amountSaveErrors.value, [row.ref]: 'Aucun changement à enregistrer.' }
+      return
     }
     await tresorerieApi.updateJournalLine(payload)
     const next = { ...amountDrafts.value }
@@ -627,7 +709,9 @@ async function saveAmounts(row) {
     saveOk.value = `Montant mis à jour (${row.ref}).`
     emit('journal-updated')
   } catch (e) {
-    saveError.value = e.message || 'Modification impossible'
+    const msg = e.message || 'Modification impossible'
+    saveError.value = msg
+    amountSaveErrors.value = { ...amountSaveErrors.value, [row.ref]: msg }
   } finally {
     savingRef.value = ''
   }
