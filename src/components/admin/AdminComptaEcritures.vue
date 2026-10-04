@@ -43,7 +43,7 @@
         <input v-model.trim="search" type="search" class="admin-input w-full py-2 text-sm" placeholder="Libellé, fournisseur, réf." />
       </label>
       <p class="w-full text-xs text-night-500">
-        Champs en <strong>gras</strong> = montant réel enregistré ou saisi · « ≈ estimation » = conversion indicative (non enregistrée).
+        <strong class="text-forest-700">Vert</strong> = montant de référence enregistré · l’autre case affiche l’estimation convertie (cliquer pour saisir).
       </p>
     </section>
 
@@ -195,52 +195,58 @@
         <span v-else class="text-xs text-night-300">—</span>
       </template>
       <template #cell-amounts="{ row }">
-        <div v-if="canEditRow(row)" class="space-y-0.5">
+        <div v-if="canEditRow(row)" class="space-y-1">
           <div class="flex items-center justify-end gap-1">
             <span class="w-4 text-right text-[10px] text-night-400">€</span>
             <input
+              v-if="showAmountInput(row, 'eur')"
               type="text"
               inputmode="decimal"
-              class="ecriture-amount-input"
-              :class="amountInputClass(row, 'eur')"
+              class="ecriture-amount-input ecriture-amount-ref"
               :value="amountDraft(row, 'eur')"
               :disabled="savingRef === row.ref"
-              :placeholder="hasOfficialEur(row) ? '' : '—'"
-              :title="hasOfficialEur(row) ? 'Montant € enregistré' : 'Saisir le montant € réel'"
+              placeholder="—"
+              title="Montant € de référence"
               @input="setAmountDraft(row.ref, 'eur', $event.target.value)"
               @keydown.enter.prevent.stop="saveAmounts(row)"
             />
+            <button
+              v-else-if="estimateEurLine(row)"
+              type="button"
+              class="ecriture-amount-estimate"
+              :title="estimateTitleForRow(row) + ' — cliquer pour saisir en €'"
+              @click="openAmountInput(row, 'eur')"
+            >
+              ≈ {{ estimateEurLine(row) }}
+            </button>
+            <span v-else class="ecriture-amount-empty">—</span>
           </div>
-          <p
-            v-if="estimateEurLine(row)"
-            class="text-right text-[10px] leading-tight text-night-400"
-            :title="estimateTitleForRow(row)"
-          >
-            ≈ {{ estimateEurLine(row) }} <span class="text-[9px] uppercase tracking-wide">estimation</span>
-          </p>
           <div class="flex items-center justify-end gap-1">
             <span class="w-4 text-right text-[10px] text-night-400">S/.</span>
             <input
+              v-if="showAmountInput(row, 'pen')"
               type="text"
               inputmode="decimal"
-              class="ecriture-amount-input"
-              :class="amountInputClass(row, 'pen')"
+              class="ecriture-amount-input ecriture-amount-ref"
               :value="amountDraft(row, 'pen')"
               :disabled="savingRef === row.ref"
-              :placeholder="hasOfficialPen(row) ? '' : '—'"
-              :title="hasOfficialPen(row) ? 'Montant S/. enregistré' : 'Saisir le montant S/. réel'"
+              placeholder="—"
+              title="Montant S/. de référence"
               @input="setAmountDraft(row.ref, 'pen', $event.target.value)"
               @keydown.enter.prevent.stop="saveAmounts(row)"
             />
+            <button
+              v-else-if="estimatePenLine(row)"
+              type="button"
+              class="ecriture-amount-estimate"
+              :title="estimateTitleForRow(row) + ' — cliquer pour saisir en S/.'"
+              @click="openAmountInput(row, 'pen')"
+            >
+              ≈ {{ estimatePenLine(row) }}
+            </button>
+            <span v-else class="ecriture-amount-empty">—</span>
           </div>
-          <p
-            v-if="estimatePenLine(row)"
-            class="text-right text-[10px] leading-tight text-night-400"
-            :title="estimateTitleForRow(row)"
-          >
-            ≈ {{ estimatePenLine(row) }} <span class="text-[9px] uppercase tracking-wide">estimation</span>
-          </p>
-          <div v-if="amountsChanged(row) || amountSaveErrors[row.ref]" class="flex items-center justify-end gap-1 pt-0.5">
+          <div v-if="amountsChanged(row) || amountSaveErrors[row.ref]" class="flex items-center justify-end gap-1">
             <p v-if="amountSaveErrors[row.ref]" class="text-[10px] text-terracotta-700">{{ amountSaveErrors[row.ref] }}</p>
             <button
               type="button"
@@ -256,22 +262,16 @@
           <p
             v-if="amountEur(row)"
             class="whitespace-nowrap text-sm tabular-nums leading-tight"
-            :class="[
-              row.type === 'recette' ? 'text-forest-700' : 'text-night',
-              amountEur(row).estimated ? 'font-normal text-night-500' : 'font-semibold'
-            ]"
-            :title="amountEur(row).estimated ? estimateTitle(amountEur(row)) : ''"
+            :class="amountDisplayClass(row, 'eur')"
+            :title="amountEur(row).estimated ? estimateTitle(amountEur(row)) : 'Montant € de référence'"
           >
             {{ amountEur(row).estimated ? '≈' : '' }}{{ row.type === 'recette' ? '+' : '−' }}{{ eur(amountEur(row).value) }}
           </p>
           <p
             v-if="amountPen(row)"
             class="mt-0.5 whitespace-nowrap text-sm tabular-nums leading-tight"
-            :class="[
-              row.type === 'recette' ? 'text-forest-600' : 'text-night-600',
-              amountPen(row).estimated ? 'font-normal text-night-500' : 'font-medium'
-            ]"
-            :title="amountPen(row).estimated ? estimateTitle(amountPen(row)) : ''"
+            :class="amountDisplayClass(row, 'pen')"
+            :title="amountPen(row).estimated ? estimateTitle(amountPen(row)) : 'Montant S/. de référence'"
           >
             {{ amountPen(row).estimated ? '≈' : '' }}{{ row.type === 'recette' ? '+' : '−' }}{{ pen(amountPen(row).value) }}
           </p>
@@ -622,11 +622,25 @@ function hasOfficialPen(row) {
   return isPrimaryAmount(row, 'pen') && row.pen != null && row.pen !== ''
 }
 
-function amountInputClass(row, field) {
-  const official = field === 'eur' ? hasOfficialEur(row) : hasOfficialPen(row)
-  const draft = amountDrafts.value[row.ref]
-  const hasDraft = draft && parseAmountInput(draft[field]) != null
-  return official || hasDraft ? 'font-semibold text-night' : 'font-normal text-night-500'
+function showAmountInput(row, field) {
+  if (isPrimaryAmount(row, field)) return true
+  const d = amountDrafts.value[row.ref]
+  return d?._edited === field
+}
+
+function openAmountInput(row, field) {
+  ensureAmountDraft(row.ref, row)
+  amountDrafts.value = {
+    ...amountDrafts.value,
+    [row.ref]: { ...amountDrafts.value[row.ref], _edited: field, [field]: '' }
+  }
+}
+
+function amountDisplayClass(row, field) {
+  const info = field === 'eur' ? amountEur(row) : amountPen(row)
+  if (!info) return 'text-night-300'
+  if (info.estimated) return 'text-night-400'
+  return row.type === 'recette' ? 'font-medium text-forest-700' : 'font-medium text-forest-700'
 }
 
 function ensureAmountDraft(ref, row) {
@@ -993,17 +1007,26 @@ function formatDate(iso) {
   @apply cursor-not-allowed bg-night-50 text-night-500;
 }
 .ecriture-amount-input {
-  @apply w-[5.25rem] rounded-lg border border-night-200/80 bg-cream-50 px-1.5 text-right text-xs tabular-nums text-night shadow-none;
+  @apply w-[5.25rem] rounded-lg px-1.5 text-right text-xs tabular-nums shadow-none;
   height: 1.75rem;
   min-height: 0;
   padding-top: 0;
   padding-bottom: 0;
   line-height: 1.75rem;
 }
-.ecriture-amount-input:focus {
-  @apply border-forest outline-none ring-1 ring-forest/20;
+.ecriture-amount-ref {
+  @apply border border-forest/35 bg-leaf/10 font-medium text-forest-700;
 }
-.ecriture-amount-input:disabled {
-  @apply cursor-not-allowed bg-night-50 text-night-500;
+.ecriture-amount-ref:focus {
+  @apply border-forest outline-none ring-1 ring-forest/25;
+}
+.ecriture-amount-ref:disabled {
+  @apply cursor-not-allowed bg-night-50 text-night-400;
+}
+.ecriture-amount-estimate {
+  @apply inline-flex h-[1.75rem] min-w-[5.25rem] cursor-pointer items-center justify-end rounded-lg border border-night-100 bg-cream-50 px-1.5 text-right text-xs tabular-nums text-night-400 transition hover:border-night-200 hover:bg-cream-100;
+}
+.ecriture-amount-empty {
+  @apply inline-flex h-[1.75rem] min-w-[5.25rem] items-center justify-end px-1.5 text-xs text-night-300;
 }
 </style>
