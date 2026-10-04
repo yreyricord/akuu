@@ -202,33 +202,43 @@
               type="text"
               inputmode="decimal"
               class="ecriture-amount-input"
+              :class="amountInputClass(row, 'eur')"
               :value="amountDraft(row, 'eur')"
               :disabled="savingRef === row.ref"
-              placeholder="—"
-              @focus="ensureAmountDraft(row.ref, row)"
+              :placeholder="hasOfficialEur(row) ? '' : '—'"
+              :title="hasOfficialEur(row) ? 'Montant € enregistré' : 'Saisir le montant € réel'"
               @input="setAmountDraft(row.ref, 'eur', $event.target.value)"
               @keydown.enter.prevent.stop="saveAmounts(row)"
             />
           </div>
+          <p
+            v-if="estimateEurLine(row)"
+            class="text-right text-[10px] leading-tight text-night-400"
+            :title="estimateTitleForRow(row)"
+          >
+            ≈ {{ estimateEurLine(row) }} <span class="text-[9px] uppercase tracking-wide">estimation</span>
+          </p>
           <div class="flex items-center justify-end gap-1">
             <span class="w-4 text-right text-[10px] text-night-400">S/.</span>
             <input
               type="text"
               inputmode="decimal"
               class="ecriture-amount-input"
+              :class="amountInputClass(row, 'pen')"
               :value="amountDraft(row, 'pen')"
               :disabled="savingRef === row.ref"
-              placeholder="—"
-              @focus="ensureAmountDraft(row.ref, row)"
+              :placeholder="hasOfficialPen(row) ? '' : '—'"
+              :title="hasOfficialPen(row) ? 'Montant S/. enregistré' : 'Saisir le montant S/. réel'"
               @input="setAmountDraft(row.ref, 'pen', $event.target.value)"
               @keydown.enter.prevent.stop="saveAmounts(row)"
             />
           </div>
-          <p v-if="amountEditPreviewEur(row)" class="text-right text-[10px] leading-tight text-night-400">
-            ≈ {{ amountEditPreviewEur(row) }}
-          </p>
-          <p v-if="amountEditPreviewPen(row)" class="text-right text-[10px] leading-tight text-night-400">
-            ≈ {{ amountEditPreviewPen(row) }}
+          <p
+            v-if="estimatePenLine(row)"
+            class="text-right text-[10px] leading-tight text-night-400"
+            :title="estimateTitleForRow(row)"
+          >
+            ≈ {{ estimatePenLine(row) }} <span class="text-[9px] uppercase tracking-wide">estimation</span>
           </p>
           <div v-if="amountsChanged(row) || amountSaveErrors[row.ref]" class="flex items-center justify-end gap-1 pt-0.5">
             <p v-if="amountSaveErrors[row.ref]" class="text-[10px] text-terracotta-700">{{ amountSaveErrors[row.ref] }}</p>
@@ -589,9 +599,22 @@ function parseAmountInput(raw) {
 function draftSeed(row, field) {
   const stored = field === 'eur' ? row.eur : row.pen
   if (stored != null && stored !== '') return String(stored)
-  const est = field === 'eur' ? amountEur(row) : amountPen(row)
-  if (est?.value) return String(Math.round(est.value * 100) / 100)
   return ''
+}
+
+function hasOfficialEur(row) {
+  return row.eur != null && row.eur !== ''
+}
+
+function hasOfficialPen(row) {
+  return row.pen != null && row.pen !== ''
+}
+
+function amountInputClass(row, field) {
+  const official = field === 'eur' ? hasOfficialEur(row) : hasOfficialPen(row)
+  const draft = amountDrafts.value[row.ref]
+  const hasDraft = draft && parseAmountInput(draft[field]) != null
+  return official || hasDraft ? 'font-semibold text-night' : 'font-normal text-night-500'
 }
 
 function ensureAmountDraft(ref, row) {
@@ -624,8 +647,52 @@ function setAmountDraft(ref, field, value) {
 function storedAmount(row, field) {
   const v = field === 'eur' ? row.eur : row.pen
   if (v != null && v !== '') return Number(v)
-  const est = field === 'eur' ? amountEur(row) : amountPen(row)
-  return est?.estimated ? null : (est?.value ?? null)
+  return null
+}
+
+function penBaseForEstimate(row) {
+  const d = amountDrafts.value[row.ref]
+  const draftPen = d ? parseAmountInput(d.pen) : null
+  if (draftPen != null) return draftPen
+  return hasOfficialPen(row) ? Number(row.pen) : null
+}
+
+function eurBaseForEstimate(row) {
+  const d = amountDrafts.value[row.ref]
+  const draftEur = d ? parseAmountInput(d.eur) : null
+  if (draftEur != null) return draftEur
+  return hasOfficialEur(row) ? Number(row.eur) : null
+}
+
+function estimateEurLine(row) {
+  if (hasOfficialEur(row)) return null
+  ensureAmountDraft(row.ref, row)
+  const d = amountDrafts.value[row.ref]
+  if (d && parseAmountInput(d.eur) != null) return null
+  const penBase = penBaseForEstimate(row)
+  if (!penBase) return null
+  const rateInfo = rateForRow(row)
+  if (!rateInfo?.rate) return null
+  return eur(penToEur(penBase, rateInfo.rate))
+}
+
+function estimatePenLine(row) {
+  if (hasOfficialPen(row)) return null
+  ensureAmountDraft(row.ref, row)
+  const d = amountDrafts.value[row.ref]
+  if (d && parseAmountInput(d.pen) != null) return null
+  const eurBase = eurBaseForEstimate(row)
+  if (!eurBase) return null
+  const rateInfo = rateForRow(row)
+  if (!rateInfo?.rate) return null
+  return pen(eurToPen(eurBase, rateInfo.rate))
+}
+
+function estimateTitleForRow(row) {
+  const rateInfo = rateForRow(row)
+  if (!rateInfo?.rate) return 'Estimation — taux indisponible'
+  const when = rateInfo.requestedDate || rateInfo.date || row.date
+  return `Estimation au taux PEN/EUR du ${formatRateDate(String(when).slice(0, 10))} · ${rateInfo.source || ''}`
 }
 
 function amountsChanged(row) {
@@ -638,28 +705,6 @@ function amountsChanged(row) {
   const eurChanged = eurVal != null && (storedEur == null || Math.abs(eurVal - storedEur) > 0.009)
   const penChanged = penVal != null && (storedPen == null || Math.abs(penVal - storedPen) > 0.009)
   return eurChanged || penChanged
-}
-
-function amountEditPreviewEur(row) {
-  const d = amountDrafts.value[row.ref]
-  if (!d) return null
-  const penVal = parseAmountInput(d.pen)
-  const rateInfo = rateForRow(row)
-  if (!penVal || !rateInfo?.rate) return null
-  const eurVal = parseAmountInput(d.eur)
-  if (eurVal != null) return null
-  return eur(penToEur(penVal, rateInfo.rate))
-}
-
-function amountEditPreviewPen(row) {
-  const d = amountDrafts.value[row.ref]
-  if (!d) return null
-  const eurVal = parseAmountInput(d.eur)
-  const rateInfo = rateForRow(row)
-  if (!eurVal || !rateInfo?.rate) return null
-  const penVal = parseAmountInput(d.pen)
-  if (penVal != null) return null
-  return pen(eurToPen(eurVal, rateInfo.rate))
 }
 
 async function saveAmounts(row) {
