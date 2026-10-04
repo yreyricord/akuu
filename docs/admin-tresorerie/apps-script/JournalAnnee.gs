@@ -377,13 +377,19 @@ function updateJournalLine_(year, reference, actor, patch) {
       set(k, pmPatch[k]);
     });
   }
-  if (patch.amount_pen != null && patch.amount_pen !== '') {
+  if (patch.amount_pen === '' || patch.amount_pen === null) {
+    after.amount_pen = '';
+    set('amount_pen', '');
+  } else if (patch.amount_pen != null && patch.amount_pen !== '') {
     var penVal = r2_(Number(patch.amount_pen));
     if (isNaN(penVal) || penVal <= 0) throw apiError_('VALIDATION_FAILED', 'Montant PEN invalide');
     after.amount_pen = penVal;
     set('amount_pen', penVal);
   }
-  if (patch.amount_eur != null && patch.amount_eur !== '') {
+  if (patch.amount_eur === '' || patch.amount_eur === null) {
+    after.amount_eur = '';
+    set('amount_eur', '');
+  } else if (patch.amount_eur != null && patch.amount_eur !== '') {
     var eurVal = r2_(Math.abs(Number(patch.amount_eur)));
     if (isNaN(eurVal) || eurVal <= 0) throw apiError_('VALIDATION_FAILED', 'Montant EUR invalide');
     after.amount_eur = eurVal;
@@ -392,6 +398,14 @@ function updateJournalLine_(year, reference, actor, patch) {
   if (patch.currency) {
     after.currency = String(patch.currency).toUpperCase() === 'EUR' ? 'EUR' : 'PEN';
     set('currency', after.currency);
+    if (after.currency === 'EUR' && patch.amount_pen === undefined) {
+      after.amount_pen = '';
+      set('amount_pen', '');
+    }
+    if (after.currency === 'PEN' && patch.amount_eur === undefined && hit.sheet.getName() === 'Detail_PM') {
+      after.amount_eur = '';
+      set('amount_eur', '');
+    }
   }
   if (patch.notes != null && hit.sheet.getName() === 'Journal') {
     after.notes = String(patch.notes);
@@ -448,6 +462,7 @@ function getJournalAnnee_(session, year) {
         label: String(r.label || '').substring(0, 160), vendor: String(r.vendor_name || '').substring(0, 60),
         eur: eur || null,
         pen: pen || null,
+        currency: String(r.currency || '').toUpperCase() || (src === 'banque' ? 'EUR' : 'PEN'),
         url: url, piece: piece, editable: true
       });
     });

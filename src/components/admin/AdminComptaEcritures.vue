@@ -43,7 +43,7 @@
         <input v-model.trim="search" type="search" class="admin-input w-full py-2 text-sm" placeholder="Libellé, fournisseur, réf." />
       </label>
       <p class="w-full text-xs text-night-500">
-        Montants modifiables en € ou S/. · « ≈ » = conversion estimée au taux de la <strong>date de l'écriture</strong>.
+        Champs en <strong>gras</strong> = montant réel enregistré ou saisi · « ≈ estimation » = conversion indicative (non enregistrée).
       </p>
     </section>
 
@@ -349,6 +349,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { PhArrowSquareOut, PhPlus, PhTrash } from '@phosphor-icons/vue'
 import { bindLoadingProgress } from '@/composables/useLoadingProgress.js'
 import { TRESORERIE_PROJECTS, PAYMENT_METHODS } from '@/data/tresorerie-config.js'
+import { CURRENCY_EUR, CURRENCY_PEN, normalizeCurrency } from '@/data/currency.js'
 import { tresorerieApi } from '@/api/tresorerie/client.js'
 import { eurToPen, penToEur, prefetchPenEurRatesForDates } from '@/api/tresorerie/exchangeRate.js'
 import AdminDataTable from './AdminDataTable.vue'
@@ -596,18 +597,29 @@ function parseAmountInput(raw) {
   return Number.isFinite(n) && n > 0 ? n : null
 }
 
+function rowCurrency(row) {
+  if (row.currency) return normalizeCurrency(row.currency)
+  return row.source === 'banque' ? CURRENCY_EUR : CURRENCY_PEN
+}
+
+function isPrimaryAmount(row, field) {
+  const cur = rowCurrency(row)
+  return field === 'eur' ? cur === CURRENCY_EUR : cur === CURRENCY_PEN
+}
+
 function draftSeed(row, field) {
+  if (!isPrimaryAmount(row, field)) return ''
   const stored = field === 'eur' ? row.eur : row.pen
   if (stored != null && stored !== '') return String(stored)
   return ''
 }
 
 function hasOfficialEur(row) {
-  return row.eur != null && row.eur !== ''
+  return isPrimaryAmount(row, 'eur') && row.eur != null && row.eur !== ''
 }
 
 function hasOfficialPen(row) {
-  return row.pen != null && row.pen !== ''
+  return isPrimaryAmount(row, 'pen') && row.pen != null && row.pen !== ''
 }
 
 function amountInputClass(row, field) {
@@ -640,7 +652,7 @@ function setAmountDraft(ref, field, value) {
   ensureAmountDraft(ref, row)
   amountDrafts.value = {
     ...amountDrafts.value,
-    [ref]: { ...amountDrafts.value[ref], [field]: value }
+    [ref]: { ...amountDrafts.value[ref], [field]: value, _edited: field }
   }
 }
 
@@ -653,14 +665,14 @@ function storedAmount(row, field) {
 function penBaseForEstimate(row) {
   const d = amountDrafts.value[row.ref]
   const draftPen = d ? parseAmountInput(d.pen) : null
-  if (draftPen != null) return draftPen
+  if (draftPen != null && (d._edited === 'pen' || hasOfficialPen(row))) return draftPen
   return hasOfficialPen(row) ? Number(row.pen) : null
 }
 
 function eurBaseForEstimate(row) {
   const d = amountDrafts.value[row.ref]
   const draftEur = d ? parseAmountInput(d.eur) : null
-  if (draftEur != null) return draftEur
+  if (draftEur != null && (d._edited === 'eur' || hasOfficialEur(row))) return draftEur
   return hasOfficialEur(row) ? Number(row.eur) : null
 }
 
@@ -736,13 +748,25 @@ async function saveAmounts(row) {
     const payload = { reference: row.ref, year: Number(year.value) }
     const storedEur = storedAmount(row, 'eur')
     const storedPen = storedAmount(row, 'pen')
-    if (eurVal != null && (storedEur == null || Math.abs(eurVal - storedEur) > 0.009)) {
+    const eurChanged = eurVal != null && (storedEur == null || Math.abs(eurVal - storedEur) > 0.009)
+    const penChanged = penVal != null && (storedPen == null || Math.abs(penVal - storedPen) > 0.009)
+    const edited = d._edited || (eurChanged && !penChanged ? 'eur' : penChanged && !eurChanged ? 'pen' : null)
+
+    if (eurChanged && !penChanged) {
       payload.amount_eur = eurVal
-    }
-    if (penVal != null && (storedPen == null || Math.abs(penVal - storedPen) > 0.009)) {
+      payload.currency = CURRENCY_EUR
+      payload.amount_pen = ''
+    } else if (penChanged && !eurChanged) {
       payload.amount_pen = penVal
-    }
-    if (!payload.amount_eur && !payload.amount_pen) {
+      payload.currency = CURRENCY_PEN
+      if (row.source === 'terrain') payload.amount_eur = ''
+    } else if (eurChanged && penChanged) {
+      payload.amount_eur = eurVal
+      payload.amount_pen = penVal
+      payload.currency = edited === 'pen' ? CURRENCY_PEN : CURRENCY_EUR
+      if (payload.currency === CURRENCY_EUR) payload.amount_pen = ''
+      else if (row.source === 'terrain') payload.amount_eur = ''
+    } else {
       amountSaveErrors.value = { ...amountSaveErrors.value, [row.ref]: 'Aucun changement à enregistrer.' }
       return
     }
@@ -859,8 +883,9 @@ const totals = computed(() => {
     if (r.source === 'banque') {
       if (r.type === 'recette') t.recettes += r.eur || 0
       else t.depenses += r.eur || 0
-    } else if (r.pen && r.caisse_cash !== false) {
-      t.terrain += r.pen
+    } else {
+      const p = amountPen(r)
+      if (p && !p.estimated && r.caisse_cash !== false) t.terrain += p.value
     }
   })
   return t
@@ -875,8 +900,8 @@ function rateForRow(row) {
 }
 
 function amountEur(row) {
-  if (row.eur != null && row.eur !== '') return { value: Number(row.eur), estimated: false }
-  const p = row.pen != null && row.pen !== '' ? Number(row.pen) : null
+  if (hasOfficialEur(row)) return { value: Number(row.eur), estimated: false }
+  const p = hasOfficialPen(row) ? Number(row.pen) : null
   const rateInfo = rateForRow(row)
   if (p != null && rateInfo?.rate) {
     return {
@@ -891,8 +916,8 @@ function amountEur(row) {
 }
 
 function amountPen(row) {
-  if (row.pen != null && row.pen !== '') return { value: Number(row.pen), estimated: false }
-  const e = row.eur != null && row.eur !== '' ? Number(row.eur) : null
+  if (hasOfficialPen(row)) return { value: Number(row.pen), estimated: false }
+  const e = hasOfficialEur(row) ? Number(row.eur) : null
   const rateInfo = rateForRow(row)
   if (e != null && rateInfo?.rate) {
     return {

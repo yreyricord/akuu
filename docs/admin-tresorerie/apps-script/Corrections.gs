@@ -93,9 +93,10 @@ function requestUpdate_(session, body) {
   var year = Number(body.year || 0);
   if (!ref) throw apiError_('VALIDATION_FAILED', 'Référence manquante');
   assertExerciceModifiable_(year);
-  var hasPen = body.amount_pen != null && body.amount_pen !== '';
-  var hasEur = body.amount_eur != null && body.amount_eur !== '';
-  if (!body.project && !body.payment_method && !body.category && !hasPen && !hasEur && body.notes == null) {
+  var hasPenPatch = Object.prototype.hasOwnProperty.call(body, 'amount_pen');
+  var hasEurPatch = Object.prototype.hasOwnProperty.call(body, 'amount_eur');
+  if (!body.project && !body.payment_method && !body.category && !hasPenPatch && !hasEurPatch &&
+      !body.currency && body.notes == null) {
     throw apiError_('VALIDATION_FAILED', 'Rien à modifier');
   }
 
@@ -103,8 +104,8 @@ function requestUpdate_(session, body) {
     project: body.project,
     payment_method: body.payment_method,
     category: body.category,
-    amount_pen: hasPen ? body.amount_pen : undefined,
-    amount_eur: hasEur ? body.amount_eur : undefined,
+    amount_pen: hasPenPatch ? body.amount_pen : undefined,
+    amount_eur: hasEurPatch ? body.amount_eur : undefined,
     currency: body.currency || undefined,
     notes: body.notes != null ? body.notes : undefined,
     reason: body.reason || ''
@@ -183,4 +184,3 @@ function markCorrectionApplied_(session, id) {
   }
   throw apiError_('NOT_FOUND', 'Correction inconnue', 404);
 }
-`
