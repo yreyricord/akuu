@@ -848,9 +848,7 @@ const yearRows = computed(() => {
 const datesNeedingRates = computed(() => {
   const set = new Set()
   for (const row of yearRows.value) {
-    const needsEur = row.pen != null && row.pen !== '' && (row.eur == null || row.eur === '')
-    const needsPen = row.eur != null && row.eur !== '' && (row.pen == null || row.pen === '')
-    if ((needsEur || needsPen) && row.date) set.add(String(row.date).slice(0, 10))
+    if (row.date) set.add(String(row.date).slice(0, 10))
   }
   return [...set]
 })
