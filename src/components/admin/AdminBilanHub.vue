@@ -126,7 +126,7 @@
       >
         <div class="w-full max-w-md rounded-2xl bg-white p-5 shadow-xl">
           <h4 id="rouvrir-title" class="font-serif text-lg font-bold text-forest-700">Rouvrir l'exercice {{ selectedYear }}</h4>
-          <p class="mt-1 text-sm text-night-500">Motif obligatoire (10 caractères min.) — sera inscrit dans l'audit et présenté à la prochaine AG.</p>
+          <p class="mt-1 text-sm text-night-500">Motif obligatoire (10 caractères min.) sera inscrit dans l'audit et présenté à la prochaine AG.</p>
           <textarea
             v-model="rouvrirMotif"
             rows="3"
@@ -138,7 +138,7 @@
             <button
               type="button"
               class="min-h-[40px] rounded-xl bg-ochre-600 px-4 text-sm font-semibold text-white disabled:opacity-50"
-              :disabled="rouvrirMotif.trim().length < 10 || exerciceBusy"
+              :disabled="rouvrirMotif.trim().length < 10 || exerciceBusy === 'rouvrir'"
               @click="doRouvrir"
             >
               {{ exerciceBusy === 'rouvrir' ? 'Ouverture…' : 'Confirmer la réouverture' }}
@@ -468,7 +468,7 @@ watch(selectedYear, (year) => {
 const historique = ref([])
 const showRouvrir = ref(false)
 const rouvrirMotif = ref('')
-const exerciceBusy = ref('')
+const exerciceBusy = ref(null)
 const exerciceActionError = ref('')
 const reclotureProblems = ref([])
 const regenerationMessage = ref('')
