@@ -146,10 +146,10 @@
               <button
                 type="button"
                 class="rounded-full bg-bleu px-4 py-2 text-sm font-semibold text-white"
-                :disabled="store.loading || validatingDevis === d.reference"
+                :disabled="validationPending(d.reference)"
                 @click="validateDevis(d.reference)"
               >
-                {{ validatingDevis === d.reference ? '…' : 'Valider les photos de devis' }}
+                {{ validationPending(d.reference) ? '…' : 'Valider les photos de devis' }}
               </button>
               <button
                 type="button"
@@ -166,7 +166,7 @@
               <button
                 type="button"
                 class="rounded-full bg-forest px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
-                :disabled="!canApprove(d) || store.loading || !canTreasurerActOn(d.submitter_email)"
+                :disabled="!canApprove(d) || validationPending(d.reference) || !canTreasurerActOn(d.submitter_email)"
                 @click="approve(d.reference)"
               >
                 Approuver la demande
@@ -355,11 +355,11 @@
             <button
               type="button"
               class="rounded-full bg-forest px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
-              :disabled="!canTreasurerActOn(group.submitter_email) || store.loading || validatingGroup === groupKey(group)"
+              :disabled="!canTreasurerActOn(group.submitter_email) || validationPending(groupKey(group))"
               @click="validateGroup(group)"
             >
               {{
-                validatingGroup === groupKey(group)
+                validationPending(groupKey(group))
                   ? 'Validation…'
                   : group.demand_reference
                     ? `Valider les ${group.factures.length} factures → Journal`
@@ -393,6 +393,7 @@ import { ADMIN_EMAIL, isSuperAdmin } from '@/data/member-roles.js'
 import { formatAmountWithConversion } from '@/data/currency.js'
 import { useTresorerieStore } from '@/store/tresorerie.js'
 import { useAuthStore } from '@/store/auth.js'
+import { TASK_ESTIMATE_MS, useUploadQueue } from '@/store/uploadQueue.js'
 import AdminStatusBadge from './AdminStatusBadge.vue'
 import AdminPaymentBadge from './AdminPaymentBadge.vue'
 import AdminReimbursementBadge from './AdminReimbursementBadge.vue'
@@ -401,6 +402,7 @@ import AdminDevisStatusBadge from './AdminDevisStatusBadge.vue'
 
 const store = useTresorerieStore()
 const auth = useAuthStore()
+const uploads = useUploadQueue()
 const route = useRoute()
 const highlightRef = ref(null)
 
@@ -485,7 +487,26 @@ const pendingFactureGroups = computed(() => {
   }))
 })
 
-const validatingGroup = ref(null)
+function validationPending(ref) {
+  return uploads.activeMeta('validation', 'ref').has(ref)
+}
+
+function enqueueValidation({ label, ref, run, describe }) {
+  uploads.enqueue({
+    kind: 'validation',
+    label,
+    meta: { ref },
+    hasFile: false,
+    abortable: false,
+    estimateMs: TASK_ESTIMATE_MS.validation,
+    run: () => run({ background: true }),
+    describe,
+    onSuccess: async () => {
+      await store.refreshPending(true)
+      await store.refreshReimbursements()
+    }
+  })
+}
 
 async function reload() {
   refreshing.value = true
@@ -501,8 +522,6 @@ const rejectingFacture = ref(null)
 const rejectingDevis = ref(null)
 const rejectReason = ref('')
 const rejectError = ref('')
-const validatingDevis = ref(null)
-
 function requireRejectReason() {
   rejectError.value = ''
   const text = String(rejectReason.value || '').trim()
@@ -557,30 +576,45 @@ function cancelReject() {
   rejectError.value = ''
 }
 
-async function validateDevis(reference) {
-  validatingDevis.value = reference
-  try {
-    await store.validateDemandeDevis(reference)
-  } finally {
-    validatingDevis.value = null
-  }
+function validateDevis(reference) {
+  enqueueValidation({
+    label: `Devis · ${reference}`,
+    ref: reference,
+    run: (opts) => store.validateDemandeDevis(reference, opts),
+    describe: () => ({ text: `Devis validés pour ${reference}.`, copyText: reference })
+  })
 }
 
-async function approve(reference) {
-  await store.approveDemande(reference)
+function approve(reference) {
+  enqueueValidation({
+    label: `Approbation · ${reference}`,
+    ref: reference,
+    run: (opts) => store.approveDemande(reference, opts),
+    describe: () => ({ text: `${reference} approuvée.`, copyText: reference })
+  })
 }
 
-async function confirmRejectDevis(reference) {
+function confirmRejectDevis(reference) {
   const reason = requireRejectReason()
   if (!reason) return
-  await store.rejectDemandeDevis(reference, reason)
+  enqueueValidation({
+    label: `Refus devis · ${reference}`,
+    ref: reference,
+    run: (opts) => store.rejectDemandeDevis(reference, reason, opts),
+    describe: () => ({ text: `Devis refusés pour ${reference}.`, copyText: reference })
+  })
   cancelReject()
 }
 
-async function confirmRejectDemande(reference) {
+function confirmRejectDemande(reference) {
   const reason = requireRejectReason()
   if (!reason) return
-  await store.rejectDemande(reference, reason)
+  enqueueValidation({
+    label: `Refus demande · ${reference}`,
+    ref: reference,
+    run: (opts) => store.rejectDemande(reference, reason, opts),
+    describe: () => ({ text: `${reference} refusée.`, copyText: reference })
+  })
   cancelReject()
 }
 
@@ -595,24 +629,36 @@ function groupHighlighted(group) {
   return group.factures.some((f) => f.reference === ref)
 }
 
-async function validateGroup(group) {
+function validateGroup(group) {
   const key = groupKey(group)
-  validatingGroup.value = key
-  try {
-    if (group.demand_reference) {
-      await store.validateDemandeFactures(group.demand_reference)
-    } else {
-      await store.validateFacture(group.factures[0].reference)
-    }
-  } finally {
-    validatingGroup.value = null
-  }
+  const ref = group.demand_reference || group.factures[0]?.reference
+  enqueueValidation({
+    label: group.demand_reference
+      ? `Factures · ${group.demand_reference} (${group.factures.length})`
+      : `Facture · ${ref}`,
+    ref: key,
+    run: (opts) =>
+      group.demand_reference
+        ? store.validateDemandeFactures(group.demand_reference, opts)
+        : store.validateFacture(group.factures[0].reference, opts),
+    describe: (result) => ({
+      text: group.demand_reference
+        ? `${result?.count ?? group.factures.length} facture(s) validée(s) pour ${group.demand_reference}.`
+        : `${ref} validée · journal à jour.`,
+      copyText: ref
+    })
+  })
 }
 
-async function confirmRejectFacture(reference) {
+function confirmRejectFacture(reference) {
   const reason = requireRejectReason()
   if (!reason) return
-  await store.rejectFacture(reference, reason)
+  enqueueValidation({
+    label: `Refus facture · ${reference}`,
+    ref: reference,
+    run: (opts) => store.rejectFacture(reference, reason, opts),
+    describe: () => ({ text: `${reference} refusée.`, copyText: reference })
+  })
   cancelReject()
 }
 

@@ -79,9 +79,10 @@
         @update:single="onReceiptFile"
       />
 
-      <button type="submit" class="btn-primary w-full sm:w-auto" :disabled="store.loading">
-        {{ store.loading ? 'Enregistrement…' : 'Comptabiliser au journal' }}
+      <button type="submit" class="btn-primary w-full sm:w-auto">
+        Comptabiliser au journal
       </button>
+      <p v-if="submitHint" class="text-sm text-forest-700">{{ submitHint }}</p>
     </form>
   </div>
 </template>
@@ -97,13 +98,16 @@ import {
 } from '@/data/tresorerie-config.js'
 import { CURRENCY_EUR } from '@/data/currency.js'
 import { useTresorerieStore } from '@/store/tresorerie.js'
+import { useUploadQueue } from '@/store/uploadQueue.js'
 import AdminCurrencyAmountField from './AdminCurrencyAmountField.vue'
 import AdminFileCapture from './AdminFileCapture.vue'
 
 const emit = defineEmits(['submitted'])
 
 const store = useTresorerieStore()
+const uploads = useUploadQueue()
 const selectedFile = ref(null)
+const submitHint = ref('')
 
 const form = reactive({
   expense_date: '',
@@ -142,10 +146,32 @@ function resetForm() {
   selectedFile.value = null
 }
 
-async function onSubmit() {
-  await store.submitDirectExpense({ ...form }, selectedFile.value)
+function onSubmit() {
+  const payload = { ...form }
+  const file = selectedFile.value
+  const labelText = form.label.trim() || 'Frais de fonctionnement'
+  uploads.enqueue({
+    kind: 'expense',
+    label: `Dépense · ${labelText}`,
+    hasFile: Boolean(file),
+    fileCount: file ? 1 : 0,
+    run: ({ onProgress, signal }) =>
+      store.submitDirectExpense(payload, file, { background: true, onProgress, signal }),
+    describe: (created) => ({
+      text: `${created.reference} comptabilisé · visible dans Compta.`,
+      copyText: created.reference,
+      link: created.drive_file_url || null
+    }),
+    onSuccess: () => {
+      submitHint.value = ''
+      emit('submitted')
+    },
+    onError: () => {
+      submitHint.value = ''
+    }
+  })
+  submitHint.value = 'Enregistrement lancé — progression en bas de l\'écran.'
   resetForm()
-  emit('submitted')
 }
 
 onMounted(() => store.loadExchangeRate())

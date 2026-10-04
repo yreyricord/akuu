@@ -228,6 +228,10 @@ export const tresorerieApi = {
       return mockCall(mockBackend.createDemande, payload, meta)
     }
     const devis = await encodeForUpload(devisFiles, opts)
+    if (devisFiles.length && opts.onProgress) {
+      const bytes = devisFiles.reduce((s, f) => s + (f.size || 0), 0)
+      opts.onProgress('upload', 0, { bytes })
+    }
     return remoteRequest('/demandes', {
       method: 'POST',
       body: { ...payload, _attachments: { devis } },
@@ -275,15 +279,21 @@ export const tresorerieApi = {
     return remoteRequest(`/demandes/${reference}/reject-devis`, { method: 'POST', body: { reject_reason: rejectReason } })
   },
 
-  async resubmitDemandeDevis(reference, devisFiles = []) {
+  async resubmitDemandeDevis(reference, devisFiles = [], opts = {}) {
     if (isMockMode()) {
+      await mockUpload(devisFiles, opts)
       const meta = devisFiles.map((f) => ({ name: f.name, size: f.size, type: f.type }))
       return mockCall(mockBackend.resubmitDemandeDevis, reference, meta)
     }
-    const devis = await filesToAttachments(devisFiles)
+    const devis = await encodeForUpload(devisFiles, opts)
+    if (devisFiles.length && opts.onProgress) {
+      const bytes = devisFiles.reduce((s, f) => s + (f.size || 0), 0)
+      opts.onProgress('upload', 0, { bytes })
+    }
     return remoteRequest(`/demandes/${reference}/resubmit-devis`, {
       method: 'POST',
-      body: { _attachments: { devis } }
+      body: { _attachments: { devis } },
+      signal: opts.signal
     })
   },
 
@@ -292,15 +302,21 @@ export const tresorerieApi = {
     return remoteRequest(`/demandes/${reference}/reject`, { method: 'POST', body: { reject_reason: rejectReason } })
   },
 
-  async resubmitDemande(parentId, payload, devisFiles = []) {
+  async resubmitDemande(parentId, payload, devisFiles = [], opts = {}) {
     if (isMockMode()) {
+      await mockUpload(devisFiles, opts)
       const meta = devisFiles.map((f) => ({ name: f.name, size: f.size, type: f.type }))
       return mockCall(mockBackend.resubmitDemande, parentId, payload, meta)
     }
-    const devis = await filesToAttachments(devisFiles)
+    const devis = await encodeForUpload(devisFiles, opts)
+    if (devisFiles.length && opts.onProgress) {
+      const bytes = devisFiles.reduce((s, f) => s + (f.size || 0), 0)
+      opts.onProgress('upload', 0, { bytes })
+    }
     return remoteRequest(`/demandes/${parentId}/resubmit`, {
       method: 'POST',
-      body: { ...payload, _attachments: { devis } }
+      body: { ...payload, _attachments: { devis } },
+      signal: opts.signal
     })
   },
 
@@ -315,6 +331,7 @@ export const tresorerieApi = {
       return mockCall(mockBackend.createDirectExpense, payload, file ? { name: file.name, size: file.size } : null)
     }
     const [receipt = null] = file ? await encodeForUpload([file], opts) : []
+    if (file && opts.onProgress) opts.onProgress('upload', 0, { bytes: file.size || 0 })
     return remoteRequest('/expenses/direct', {
       method: 'POST',
       body: { ...payload, _attachments: { receipt } },
@@ -428,15 +445,23 @@ export const tresorerieApi = {
   },
 
   /** Import d'un relevé bancaire lu dans le navigateur : { date_fin, solde_debut, solde_fin, operations } + PDF */
-  async importReleve(releve, file) {
-    if (isMockMode()) return { added: releve.operations?.length ?? 0, skipped: 0, file_name: 'mock.pdf', url: '' }
-    const receipt = file ? await fileToAttachment(file) : null
+  async importReleve(releve, file, opts = {}) {
+    if (isMockMode()) {
+      await mockUpload(file ? [file] : [], opts)
+      return { added: releve.operations?.length ?? 0, skipped: 0, file_name: 'mock.pdf', url: '' }
+    }
+    const [receipt = null] = file ? await encodeForUpload([file], opts) : []
     const year = String(releve.date_fin || '').slice(-4) || new Date().getFullYear()
     if (file && file.size > 10 * 1024 * 1024) {
       throw Object.assign(new Error('PDF trop volumineux (max 10 Mo).'), { code: 'VALIDATION_FAILED' })
     }
-    return remoteRequest('/releves/import', { method: 'POST', body: { ...releve, _attachments: { receipt } }, timeoutMs: 120_000 })
-      .then((res) => { invalidateJournalCache(year); invalidateExercicesCache(); return res })
+    if (file && opts.onProgress) opts.onProgress('upload', 0, { bytes: file.size || 0 })
+    return remoteRequest('/releves/import', {
+      method: 'POST',
+      body: { ...releve, _attachments: receipt ? { receipt } : undefined },
+      signal: opts.signal,
+      timeoutMs: 120_000
+    }).then((res) => { invalidateJournalCache(year); invalidateExercicesCache(); return res })
   },
 
   /** Tous les exercices (2017 → année en cours) lus depuis les Google Sheets */
@@ -575,6 +600,7 @@ export const tresorerieApi = {
       return Promise.resolve({ reference: ref, year: payload.year, source: payload.source || 'terrain', label: payload.label })
     }
     const [receipt = null] = file ? await encodeForUpload([file], opts) : []
+    if (file && opts.onProgress) opts.onProgress('upload', 0, { bytes: file.size || 0 })
     return remoteRequest('/corrections/create', {
       method: 'POST',
       body: { ...payload, _attachments: receipt ? { receipt } : undefined },
@@ -662,13 +688,16 @@ export const tresorerieApi = {
   },
 
   /** Relevé PDF seul (années archivées) → 3_Trésorerie/<année>/Documents/Releves_bancaires sur le Drive. */
-  async uploadReleve({ year, month, file }) {
-    const attachment = await fileToAttachment(file)
+  async uploadReleve({ year, month, file }, opts = {}) {
+    if (isMockMode()) await mockUpload([file], opts)
+    const [attachment] = await encodeForUpload([file], opts)
+    if (file && opts.onProgress) opts.onProgress('upload', 0, { bytes: file.size || 0 })
     let result = null
     if (!isMockMode()) {
       result = await remoteRequest('/releves', {
         method: 'POST',
-        body: { year, month, filename: attachment.name, base64: attachment.base64 }
+        body: { year, month, filename: attachment.name, base64: attachment.base64 },
+        signal: opts.signal
       })
     }
     // En développement local : copie aussi dans RELEVES/UPLOAD_DRIVE (bilan regénérable tout de suite)

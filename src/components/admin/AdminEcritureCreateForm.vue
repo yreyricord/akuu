@@ -97,9 +97,9 @@
         <button
           type="submit"
           class="min-h-[44px] rounded-full bg-forest px-5 text-sm font-semibold text-white disabled:opacity-50"
-          :disabled="!canSubmit || saving"
+          :disabled="!canSubmit"
         >
-          {{ saving ? 'Enregistrement…' : 'Enregistrer dans le journal' }}
+          Enregistrer dans le journal
         </button>
         <p v-if="error" class="text-sm text-terracotta-700">{{ error }}</p>
       </div>
@@ -114,6 +114,7 @@ import { CURRENCY_EUR, CURRENCY_PEN, normalizeAmountPair } from '@/data/currency
 import { fetchPenEurRateForDate } from '@/api/tresorerie/exchangeRate.js'
 import { tresorerieApi } from '@/api/tresorerie/client.js'
 import { useTresorerieStore } from '@/store/tresorerie.js'
+import { TASK_ESTIMATE_MS, useUploadQueue } from '@/store/uploadQueue.js'
 import AdminCurrencyAmountField from './AdminCurrencyAmountField.vue'
 import AdminFileCapture from './AdminFileCapture.vue'
 
@@ -127,6 +128,7 @@ const props = defineProps({
 const emit = defineEmits(['created', 'update:open'])
 
 const store = useTresorerieStore()
+const uploads = useUploadQueue()
 
 function setOpen(v) {
   emit('update:open', v)
@@ -140,7 +142,6 @@ const TERRAIN_PAYMENTS = PAYMENT_METHODS.filter((m) =>
   ['especes', 'avance', 'cb', 'virement', 'yape_plin'].includes(m.code)
 )
 
-const saving = ref(false)
 const error = ref('')
 const receiptFile = ref(null)
 const entryRateInfo = ref(null)
@@ -189,46 +190,58 @@ watch(
 
 onMounted(() => store.loadExchangeRate())
 
-async function onSubmit() {
-  if (!canSubmit.value || saving.value) return
-  saving.value = true
+function onSubmit() {
+  if (!canSubmit.value) return
   error.value = ''
-  try {
-    const pair = normalizeAmountPair({
-      currency: form.value.currency,
-      amount: form.value.amount,
-      rate: entryRate.value
-    })
-    const payload = {
-      year: Number(props.year),
-      source: form.value.source,
-      expense_date: form.value.expense_date,
-      project: form.value.project,
-      label: form.value.label.trim(),
-      vendor_name: form.value.vendor_name.trim(),
-      notes: form.value.notes.trim(),
-      currency: form.value.currency,
-      amount_pen: pair.amount_pen,
-      amount_eur: pair.amount_eur
-    }
-    if (form.value.source === 'terrain') {
-      payload.payment_method = form.value.payment_method
-    } else {
-      payload.entry_type = form.value.entry_type
-    }
-    const res = await tresorerieApi.createJournalLine(payload, receiptFile.value)
-    emit('created', res)
-    form.value.label = ''
-    form.value.vendor_name = ''
-    form.value.notes = ''
-    form.value.amount = null
-    receiptFile.value = null
-    setOpen(false)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  } catch (e) {
-    error.value = e.message || 'Ajout impossible'
-  } finally {
-    saving.value = false
+  const pair = normalizeAmountPair({
+    currency: form.value.currency,
+    amount: form.value.amount,
+    rate: entryRate.value
+  })
+  const payload = {
+    year: Number(props.year),
+    source: form.value.source,
+    expense_date: form.value.expense_date,
+    project: form.value.project,
+    label: form.value.label.trim(),
+    vendor_name: form.value.vendor_name.trim(),
+    notes: form.value.notes.trim(),
+    currency: form.value.currency,
+    amount_pen: pair.amount_pen,
+    amount_eur: pair.amount_eur
   }
+  if (form.value.source === 'terrain') {
+    payload.payment_method = form.value.payment_method
+  } else {
+    payload.entry_type = form.value.entry_type
+  }
+  const file = receiptFile.value
+  const labelText = payload.label || 'Nouvelle écriture'
+  uploads.enqueue({
+    kind: 'journal',
+    label: file ? `Écriture + justificatif · ${labelText}` : `Écriture · ${labelText}`,
+    hasFile: Boolean(file),
+    fileCount: file ? 1 : 0,
+    estimateMs: file ? undefined : TASK_ESTIMATE_MS.journal,
+    run: ({ onProgress, signal }) => tresorerieApi.createJournalLine(payload, file, { onProgress, signal }),
+    describe: (res) => ({
+      text: `Écriture ajoutée (${res.reference} · ${res.label}).`,
+      link: res.url || undefined
+    }),
+    onSuccess: (res) => {
+      emit('created', res)
+    },
+    onError: (e) => {
+      error.value = e.message || 'Ajout impossible'
+    }
+  })
+  form.value.label = ''
+  form.value.vendor_name = ''
+  form.value.notes = ''
+  form.value.amount = null
+  receiptFile.value = null
+  setOpen(false)
+  emit('created', { label: labelText, pending: true })
+  window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 </script>

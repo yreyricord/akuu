@@ -88,10 +88,10 @@
         <button
           type="button"
           class="min-h-[40px] rounded-full bg-terracotta-700 px-4 text-sm font-semibold text-white disabled:opacity-50"
-          :disabled="deleteReason.length < 3 || deleting"
+          :disabled="deleteReason.length < 3"
           @click="confirmDelete"
         >
-          {{ deleting ? 'Suppression…' : 'Supprimer la ligne' }}
+          Supprimer la ligne
         </button>
         <button type="button" class="min-h-[40px] rounded-full border border-night-200 px-4 text-sm font-semibold" @click="toDelete = null">
           Annuler
@@ -164,7 +164,7 @@
           v-if="canEditRow(row)"
           class="ecriture-select"
           :value="normalizeProjectCode(row)"
-          :disabled="savingRef === row.ref"
+          :disabled="rowPending(row.ref)"
           :title="row.project"
           @change="saveProject(row, $event.target.value)"
         >
@@ -179,7 +179,7 @@
               v-if="canEditRow(row)"
               class="ecriture-select w-full"
               :value="row.payment_method || 'especes'"
-              :disabled="savingRef === row.ref"
+              :disabled="rowPending(row.ref)"
               @change="savePayment(row, $event.target.value)"
             >
               <option v-for="m in TERRAIN_PAYMENTS" :key="m.code" :value="m.code" :title="m.label">{{ PAYMENT_SHORT[m.code] || m.label }}</option>
@@ -204,7 +204,7 @@
               inputmode="decimal"
               class="ecriture-amount-input ecriture-amount-ref"
               :value="amountDraft(row, 'eur')"
-              :disabled="savingRef === row.ref"
+              :disabled="rowPending(row.ref)"
               placeholder="—"
               title="Montant € de référence"
               @input="setAmountDraft(row.ref, 'eur', $event.target.value)"
@@ -229,7 +229,7 @@
               inputmode="decimal"
               class="ecriture-amount-input ecriture-amount-ref"
               :value="amountDraft(row, 'pen')"
-              :disabled="savingRef === row.ref"
+              :disabled="rowPending(row.ref)"
               placeholder="—"
               title="Montant S/. de référence"
               @input="setAmountDraft(row.ref, 'pen', $event.target.value)"
@@ -251,10 +251,10 @@
             <button
               type="button"
               class="rounded bg-forest px-1.5 py-0.5 text-[10px] font-semibold text-white disabled:opacity-50"
-              :disabled="savingRef === row.ref"
+              :disabled="rowPending(row.ref)"
               @click="saveAmounts(row)"
             >
-              {{ savingRef === row.ref ? '…' : 'OK' }}
+              {{ rowPending(row.ref) ? '…' : 'OK' }}
             </button>
           </div>
         </div>
@@ -348,7 +348,9 @@
 import { computed, onMounted, ref, watch } from 'vue'
 import { PhArrowSquareOut, PhPlus, PhTrash } from '@phosphor-icons/vue'
 import { bindLoadingProgress } from '@/composables/useLoadingProgress.js'
+import { useDebouncedJournalRefresh } from '@/composables/useDebouncedJournalRefresh.js'
 import { TRESORERIE_PROJECTS, PAYMENT_METHODS } from '@/data/tresorerie-config.js'
+import { useUploadQueue } from '@/store/uploadQueue.js'
 import { CURRENCY_EUR, CURRENCY_PEN, normalizeCurrency } from '@/data/currency.js'
 import { tresorerieApi } from '@/api/tresorerie/client.js'
 import { eurToPen, penToEur, prefetchPenEurRatesForDates } from '@/api/tresorerie/exchangeRate.js'
@@ -494,7 +496,6 @@ watch(year, (y) => {
 const corrections = ref([])
 const toDelete = ref(null)
 const deleteReason = ref('')
-const deleting = ref(false)
 const deleteError = ref('')
 const exerciceStatuts = ref({})
 async function loadExerciceStatut(y) {
@@ -522,7 +523,9 @@ function openAddForm() {
     document.getElementById('ecriture-add-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   })
 }
-const savingRef = ref('')
+const taskQueue = useUploadQueue()
+const journalRefresh = useDebouncedJournalRefresh((y, opts) => loadLive(y, opts))
+const journalPendingRefs = computed(() => taskQueue.activeMeta('journal', 'ref'))
 const saveError = ref('')
 const amountDrafts = ref({})
 const amountSaveErrors = ref({})
@@ -566,28 +569,70 @@ function paymentLabel(code) {
   return PAYMENT_SHORT[code] || TERRAIN_PAYMENTS.find((m) => m.code === code)?.label || code || '—'
 }
 
-async function saveProject(row, projectCode) {
-  const current = normalizeProjectCode(row)
-  if (!projectCode || projectCode === current) return
-  savingRef.value = row.ref
-  saveError.value = ''
-  saveOk.value = ''
-  try {
-    const res = await tresorerieApi.updateJournalLine({ reference: row.ref, year: Number(year.value), project: projectCode })
-    await loadLive(year.value, { force: true })
-    saveOk.value = `Projet mis à jour (${row.ref} → ${res.project || projectCode}).`
-    emit('journal-updated')
-  } catch (e) {
-    saveError.value = e.message || 'Modification impossible'
-  } finally {
-    savingRef.value = ''
-  }
+function projectLabelFromCode(code) {
+  const hit = projectsList.value.find((p) => p.code === code)
+  return hit?.label || code
 }
 
-async function onCreated(res) {
+function patchRow(ref, patch) {
+  const y = year.value
+  const rows = data.value?.years?.[y]
+  if (!rows) return null
+  const idx = rows.findIndex((r) => r.ref === ref)
+  if (idx < 0) return null
+  const prev = { ...rows[idx] }
+  const next = { ...prev, ...patch }
+  const newRows = [...rows]
+  newRows[idx] = next
+  data.value = { ...data.value, years: { ...data.value.years, [y]: newRows } }
+  return prev
+}
+
+function revertRow(ref, prev) {
+  if (!prev) return
+  patchRow(ref, prev)
+}
+
+function rowPending(ref) {
+  return journalPendingRefs.value.has(ref)
+}
+
+function saveProject(row, projectCode) {
+  const current = normalizeProjectCode(row)
+  if (!projectCode || projectCode === current) return
+  const label = projectLabelFromCode(projectCode)
+  const prev = patchRow(row.ref, { project_code: projectCode, project: label })
   saveError.value = ''
+  saveOk.value = ''
+  taskQueue.enqueueJournalTask({
+    label: `Projet · ${row.ref}`,
+    meta: { ref: row.ref },
+    run: () => tresorerieApi.updateJournalLine({
+      reference: row.ref,
+      year: Number(year.value),
+      project: projectCode
+    }),
+    describe: (res) => ({ text: `Projet mis à jour (${row.ref} → ${res.project || label}).` }),
+    onSuccess: () => {
+      saveOk.value = `Projet mis à jour (${row.ref}).`
+      journalRefresh.schedule(year.value)
+      emit('journal-updated')
+    },
+    onError: (e) => {
+      revertRow(row.ref, prev)
+      saveError.value = e.message || 'Modification impossible'
+    }
+  })
+}
+
+function onCreated(res) {
+  saveError.value = ''
+  if (res?.pending) {
+    saveOk.value = `Ajout lancé (${res.label}) — progression en bas de l'écran.`
+    return
+  }
   saveOk.value = `Écriture ajoutée (${res.reference} · ${res.label}).`
-  await loadLive(year.value, { force: true })
+  journalRefresh.schedule(year.value)
   emit('journal-updated')
 }
 
@@ -733,7 +778,7 @@ function amountsChanged(row) {
   return eurChanged || penChanged
 }
 
-async function saveAmounts(row) {
+function saveAmounts(row) {
   ensureAmountDraft(row.ref, row)
   if (!amountsChanged(row)) {
     amountSaveErrors.value = {
@@ -752,85 +797,121 @@ async function saveAmounts(row) {
     }
     return
   }
-  savingRef.value = row.ref
   saveError.value = ''
   saveOk.value = ''
   const nextErr = { ...amountSaveErrors.value }
   delete nextErr[row.ref]
   amountSaveErrors.value = nextErr
-  try {
-    const payload = { reference: row.ref, year: Number(year.value) }
-    const storedEur = storedAmount(row, 'eur')
-    const storedPen = storedAmount(row, 'pen')
-    const eurChanged = eurVal != null && (storedEur == null || Math.abs(eurVal - storedEur) > 0.009)
-    const penChanged = penVal != null && (storedPen == null || Math.abs(penVal - storedPen) > 0.009)
-    const edited = d._edited || (eurChanged && !penChanged ? 'eur' : penChanged && !eurChanged ? 'pen' : null)
 
-    if (eurChanged && !penChanged) {
-      payload.amount_eur = eurVal
-      payload.currency = CURRENCY_EUR
-      payload.amount_pen = ''
-    } else if (penChanged && !eurChanged) {
-      payload.amount_pen = penVal
-      payload.currency = CURRENCY_PEN
-      if (row.source === 'terrain') payload.amount_eur = ''
-    } else if (eurChanged && penChanged) {
-      payload.amount_eur = eurVal
-      payload.amount_pen = penVal
-      payload.currency = edited === 'pen' ? CURRENCY_PEN : CURRENCY_EUR
-      if (payload.currency === CURRENCY_EUR) payload.amount_pen = ''
-      else if (row.source === 'terrain') payload.amount_eur = ''
-    } else {
-      amountSaveErrors.value = { ...amountSaveErrors.value, [row.ref]: 'Aucun changement à enregistrer.' }
-      return
-    }
-    await tresorerieApi.updateJournalLine(payload)
-    const next = { ...amountDrafts.value }
-    delete next[row.ref]
-    amountDrafts.value = next
-    await loadLive(year.value, { force: true })
-    saveOk.value = `Montant mis à jour (${row.ref}).`
-    emit('journal-updated')
-  } catch (e) {
-    const msg = e.message || 'Modification impossible'
-    saveError.value = msg
-    amountSaveErrors.value = { ...amountSaveErrors.value, [row.ref]: msg }
-  } finally {
-    savingRef.value = ''
+  const payload = { reference: row.ref, year: Number(year.value) }
+  const storedEur = storedAmount(row, 'eur')
+  const storedPen = storedAmount(row, 'pen')
+  const eurChanged = eurVal != null && (storedEur == null || Math.abs(eurVal - storedEur) > 0.009)
+  const penChanged = penVal != null && (storedPen == null || Math.abs(penVal - storedPen) > 0.009)
+  const edited = d._edited || (eurChanged && !penChanged ? 'eur' : penChanged && !eurChanged ? 'pen' : null)
+
+  if (eurChanged && !penChanged) {
+    payload.amount_eur = eurVal
+    payload.currency = CURRENCY_EUR
+    payload.amount_pen = ''
+  } else if (penChanged && !eurChanged) {
+    payload.amount_pen = penVal
+    payload.currency = CURRENCY_PEN
+    if (row.source === 'terrain') payload.amount_eur = ''
+  } else if (eurChanged && penChanged) {
+    payload.amount_eur = eurVal
+    payload.amount_pen = penVal
+    payload.currency = edited === 'pen' ? CURRENCY_PEN : CURRENCY_EUR
+    if (payload.currency === CURRENCY_EUR) payload.amount_pen = ''
+    else if (row.source === 'terrain') payload.amount_eur = ''
+  } else {
+    amountSaveErrors.value = { ...amountSaveErrors.value, [row.ref]: 'Aucun changement à enregistrer.' }
+    return
   }
+
+  const optimistic = {}
+  if (payload.currency === CURRENCY_EUR) {
+    optimistic.currency = CURRENCY_EUR
+    optimistic.eur = payload.amount_eur
+    if (payload.amount_pen === '') optimistic.pen = null
+  } else {
+    optimistic.currency = CURRENCY_PEN
+    optimistic.pen = payload.amount_pen
+    if (payload.amount_eur === '') optimistic.eur = null
+  }
+  const prev = patchRow(row.ref, optimistic)
+  const next = { ...amountDrafts.value }
+  delete next[row.ref]
+  amountDrafts.value = next
+
+  taskQueue.enqueueJournalTask({
+    label: `Montant · ${row.ref}`,
+    meta: { ref: row.ref },
+    run: () => tresorerieApi.updateJournalLine(payload),
+    describe: () => ({ text: `Montant mis à jour (${row.ref}).` }),
+    onSuccess: () => {
+      saveOk.value = `Montant mis à jour (${row.ref}).`
+      journalRefresh.schedule(year.value)
+      emit('journal-updated')
+    },
+    onError: (e) => {
+      revertRow(row.ref, prev)
+      const msg = e.message || 'Modification impossible'
+      saveError.value = msg
+      amountSaveErrors.value = { ...amountSaveErrors.value, [row.ref]: msg }
+    }
+  })
 }
 
-async function savePayment(row, paymentMethod) {
+function savePayment(row, paymentMethod) {
   if (!paymentMethod || paymentMethod === row.payment_method) return
-  savingRef.value = row.ref
+  const prev = patchRow(row.ref, { payment_method: paymentMethod })
   saveError.value = ''
   saveOk.value = ''
-  try {
-    await tresorerieApi.updateJournalLine({ reference: row.ref, year: Number(year.value), payment_method: paymentMethod })
-    await loadLive(year.value, { force: true })
-    saveOk.value = `Paiement mis à jour (${row.ref}).`
-    emit('journal-updated')
-  } catch (e) {
-    saveError.value = e.message || 'Modification impossible'
-  } finally {
-    savingRef.value = ''
-  }
+  taskQueue.enqueueJournalTask({
+    label: `Paiement · ${row.ref}`,
+    meta: { ref: row.ref },
+    run: () => tresorerieApi.updateJournalLine({
+      reference: row.ref,
+      year: Number(year.value),
+      payment_method: paymentMethod
+    }),
+    describe: () => ({ text: `Paiement mis à jour (${row.ref}).` }),
+    onSuccess: () => {
+      saveOk.value = `Paiement mis à jour (${row.ref}).`
+      journalRefresh.schedule(year.value)
+      emit('journal-updated')
+    },
+    onError: (e) => {
+      revertRow(row.ref, prev)
+      saveError.value = e.message || 'Modification impossible'
+    }
+  })
 }
 
-async function confirmDelete() {
-  deleting.value = true
+function confirmDelete() {
+  const row = toDelete.value
+  if (!row || deleteReason.value.length < 3) return
+  const ref = row.ref
+  const reason = deleteReason.value
+  toDelete.value = null
+  deleteReason.value = ''
   deleteError.value = ''
-  try {
-    const c = await tresorerieApi.requestDeletion({ reference: toDelete.value.ref, year: Number(year.value), reason: deleteReason.value })
-    corrections.value = [...corrections.value, c]
-    toDelete.value = null
-    await loadLive(year.value, { force: true })
-    emit('journal-updated')
-  } catch (e) {
-    deleteError.value = e.message
-  } finally {
-    deleting.value = false
-  }
+  taskQueue.enqueueJournalTask({
+    label: `Suppression · ${ref}`,
+    meta: { ref },
+    estimateMs: 10_000,
+    run: () => tresorerieApi.requestDeletion({ reference: ref, year: Number(year.value), reason }),
+    describe: () => ({ text: `Suppression enregistrée (${ref}).` }),
+    onSuccess: (c) => {
+      corrections.value = [...corrections.value, c]
+      journalRefresh.schedule(year.value)
+      emit('journal-updated')
+    },
+    onError: (e) => {
+      deleteError.value = e.message || 'Suppression impossible'
+    }
+  })
 }
 
 watch([year, month, project, type, search], () => { limit.value = 150 })

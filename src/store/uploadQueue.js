@@ -19,12 +19,26 @@ export const UPLOAD_PHASES = {
   prepare: 'Préparation',
   encode: 'Encodage',
   upload: 'Envoi au serveur',
+  processing: 'Traitement serveur',
   done: 'Terminé',
   error: 'Échec',
   cancelled: 'Annulé'
 }
 
-const ACTIVE = new Set(['queued', 'prepare', 'encode', 'upload'])
+/** Durée estimée pour les tâches sans fichier (Apps Script). */
+export const TASK_ESTIMATE_MS = {
+  journal: 8000,
+  validation: 6000,
+  sync: 28_000,
+  releve: 45_000,
+  attach: null,
+  facture: null,
+  demande: null,
+  expense: null
+}
+
+const ACTIVE = new Set(['queued', 'prepare', 'encode', 'upload', 'processing'])
+const UPLOAD_KINDS = new Set(['attach', 'facture', 'demande', 'expense', 'releve'])
 const SUCCESS_TTL_MS = 8000
 /** Traitement Apps Script (Drive + Sheets) mesuré à ~4–12 s par fichier. */
 const SERVER_OVERHEAD_MS = 6000
@@ -76,20 +90,35 @@ export const useUploadQueue = defineStore('uploadQueue', () => {
     }
   }
 
-  function startUploadEstimate(job) {
+  function startTimedEstimate(job, phase, fromPct) {
     stopTimer(job.id)
-    const sendMs = (job.bytes || 0) / assumedUplinkBytesPerSec() * 1000
-    job.estimateMs = sendMs + SERVER_OVERHEAD_MS + SERVER_PER_FILE_MS * Math.max(1, job.fileCount)
+    job.phase = phase
     job.uploadStartedAt = Date.now()
-    const from = Math.max(job.progress, 25)
+    const from = Math.max(job.progress, fromPct)
     const tick = () => {
       const t = (Date.now() - job.uploadStartedAt) / job.estimateMs
-      // Courbe qui ralentit à l'approche de 95 % sans jamais l'atteindre
       const eased = 1 - Math.exp(-2.2 * t)
       setProgress(job, from + (95 - from) * eased)
     }
     tick()
     timers.set(job.id, setInterval(tick, 250))
+  }
+
+  function startUploadEstimate(job) {
+    const sendMs = (job.bytes || 0) / assumedUplinkBytesPerSec() * 1000
+    job.estimateMs = sendMs + SERVER_OVERHEAD_MS + SERVER_PER_FILE_MS * Math.max(1, job.fileCount)
+    startTimedEstimate(job, 'upload', 25)
+  }
+
+  function startProcessingEstimate(job) {
+    job.estimateMs = job.estimateMs || TASK_ESTIMATE_MS[job.kind] || 8000
+    startTimedEstimate(job, 'processing', 5)
+  }
+
+  function jobUsesUploadPipeline(job) {
+    if (job.hasFile === true) return true
+    if (job.hasFile === false) return false
+    return UPLOAD_KINDS.has(job.kind) || (job.kind === 'journal' && job.fileCount > 0)
   }
 
   async function execute(job) {
@@ -103,10 +132,13 @@ export const useUploadQueue = defineStore('uploadQueue', () => {
     job.startedAt = Date.now()
     job.endedAt = null
     setProgress(job, 2)
+    const usesUpload = jobUsesUploadPipeline(job)
+    const abortable = job.abortable !== false && usesUpload
+    if (!usesUpload) startProcessingEstimate(job)
     try {
       const result = await job.run({
         onProgress: makeProgressHandler(job),
-        signal: controller.signal
+        signal: abortable ? controller.signal : undefined
       })
       stopTimer(job.id)
       job.result = result
@@ -150,6 +182,9 @@ export const useUploadQueue = defineStore('uploadQueue', () => {
    * @param {string} spec.label      titre affiché
    * @param {object} [spec.meta]     données métier (référence…) pour isBusy()
    * @param {number} [spec.fileCount]
+   * @param {boolean} [spec.hasFile]     true/false pour forcer pipeline upload ou processing
+   * @param {boolean} [spec.abortable]   false pour journal/validation (pas d'annulation)
+   * @param {number} [spec.estimateMs]   durée estimée processing (ms)
    * @param {(ctx: {onProgress: Function, signal: AbortSignal}) => Promise<any>} spec.run
    * @param {(result: any) => {text?: string, link?: string, copyText?: string, files?: Array}} [spec.describe]
    * @param {(result: any) => any} [spec.onSuccess]
@@ -157,12 +192,20 @@ export const useUploadQueue = defineStore('uploadQueue', () => {
    */
   function enqueue(spec) {
     seq += 1
+    const hasFile = spec.hasFile
+    const fileCount = spec.fileCount ?? (hasFile === false ? 0 : 1)
+    const usesUpload = hasFile === true || (hasFile !== false && (
+      UPLOAD_KINDS.has(spec.kind) || (spec.kind === 'journal' && fileCount > 0)
+    ))
     const job = {
       id: `up-${Date.now()}-${seq}`,
       kind: spec.kind,
       label: spec.label,
       meta: spec.meta || {},
-      fileCount: spec.fileCount || 1,
+      fileCount,
+      hasFile,
+      abortable: spec.abortable !== undefined ? spec.abortable : usesUpload,
+      estimateMs: spec.estimateMs,
       run: spec.run,
       describe: spec.describe,
       onSuccess: spec.onSuccess,
@@ -221,9 +264,21 @@ export const useUploadQueue = defineStore('uploadQueue', () => {
 
   /** Secondes restantes estimées (phase upload uniquement). */
   function etaSeconds(job) {
-    if (job.phase !== 'upload' || !job.estimateMs) return null
+    if ((job.phase !== 'upload' && job.phase !== 'processing') || !job.estimateMs) return null
     const left = job.estimateMs - (Date.now() - job.uploadStartedAt)
     return left > 0 ? Math.ceil(left / 1000) : null
+  }
+
+  /** Helper : modification journal (sans fichier). */
+  function enqueueJournalTask(spec) {
+    return enqueue({
+      kind: 'journal',
+      abortable: false,
+      hasFile: false,
+      estimateMs: TASK_ESTIMATE_MS.journal,
+      fileCount: 0,
+      ...spec
+    })
   }
 
   return {
@@ -232,6 +287,7 @@ export const useUploadQueue = defineStore('uploadQueue', () => {
     activeJobs,
     hasActive,
     enqueue,
+    enqueueJournalTask,
     cancel,
     retry,
     dismiss,

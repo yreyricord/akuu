@@ -48,7 +48,7 @@
 
     <template v-else-if="data?.live">
       <div class="rounded-2xl border px-5 py-5 shadow-sm" :class="soldeClass">
-        <p class="text-xs font-bold uppercase tracking-wide text-night-500">Reste en caisse espèces (estimé)</p>
+        <p class="text-xs font-bold uppercase tracking-wide text-night-500">Solde caisse au Pérou · espèces (estimé)</p>
         <p class="mt-2 font-serif text-3xl font-bold tabular-nums text-night">
           {{ formatPen(soldePen) }}
         </p>
@@ -62,19 +62,19 @@
       <div class="overflow-hidden rounded-2xl border border-night-100 bg-white shadow-sm">
         <div class="flex flex-wrap items-center justify-between gap-3 border-b border-forest/15 bg-gradient-to-r from-forest/[0.06] to-transparent px-4 py-3">
           <div>
-            <h4 class="text-sm font-bold uppercase tracking-wide text-forest">Retraits</h4>
-            <p class="mt-0.5 text-xs text-night-500">{{ data.retraits_count }} écriture(s) journal</p>
+            <h4 class="text-sm font-bold uppercase tracking-wide text-forest">Retraits banque → Pérou</h4>
+            <p class="mt-0.5 text-xs text-night-500">{{ data.retraits_count }} retrait(s) · journal bancaire</p>
           </div>
           <div class="flex flex-wrap gap-2">
             <div class="min-w-[8.5rem] rounded-xl border border-forest/25 bg-white px-3 py-2 shadow-sm">
-              <p class="text-[10px] font-bold uppercase tracking-wider text-forest/80">Entrées S/.</p>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-forest/80">Retraits soles</p>
               <p class="font-serif text-xl font-bold tabular-nums leading-tight text-forest">
-                + {{ formatPen(retraitsTotals.penJournal) }}
+                {{ formatPen(retraitsTotals.penJournal) }}
               </p>
             </div>
             <div class="min-w-[7.5rem] rounded-xl border border-bleu/25 bg-white px-3 py-2 shadow-sm">
-              <p class="text-[10px] font-bold uppercase tracking-wider text-bleu/80">Débit €</p>
-              <p class="font-serif text-xl font-bold tabular-nums leading-tight text-bleu">+ {{ formatEur(retraitsTotals.eur) }}</p>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-bleu/80">Retraits euros</p>
+              <p class="font-serif text-xl font-bold tabular-nums leading-tight text-bleu">{{ formatEur(retraitsTotals.eur) }}</p>
             </div>
           </div>
         </div>
@@ -85,8 +85,8 @@
               <tr>
                 <th class="px-3 py-2 text-left">Date</th>
                 <th class="px-3 py-2 text-left">Libellé</th>
-                <th class="px-3 py-2 text-right">EUR</th>
-                <th class="px-3 py-2 text-right">S/. reçus</th>
+                <th class="px-3 py-2 text-right">Retrait €</th>
+                <th class="px-3 py-2 text-right">Retrait soles</th>
                 <th class="px-3 py-2 text-right" />
               </tr>
             </thead>
@@ -104,7 +104,7 @@
                   </p>
                   <p class="truncate text-xs" :title="row.label">{{ row.label || '—' }}</p>
                 </td>
-                <td class="whitespace-nowrap px-3 py-2 text-right font-semibold tabular-nums text-forest">+ {{ formatEur(row.amount_eur) }}</td>
+                <td class="whitespace-nowrap px-3 py-2 text-right font-semibold tabular-nums text-bleu">{{ formatEur(row.amount_eur) }}</td>
                 <td class="whitespace-nowrap px-3 py-2 text-right">
                   <input
                     type="number"
@@ -112,7 +112,7 @@
                     step="50"
                     class="admin-input w-[5.5rem] py-1 text-right text-xs tabular-nums"
                     :value="penDrafts[row.reference] ?? row.amount_pen"
-                    :disabled="savingRef === row.reference"
+                    :disabled="rowPending(row.reference)"
                     @input="penDrafts[row.reference] = $event.target.value"
                   />
                   <p v-if="row.pen_estimated" class="mt-0.5 text-[10px] text-ochre-700">estimé (EUR→PEN)</p>
@@ -123,10 +123,10 @@
                     v-if="penChanged(row)"
                     type="button"
                     class="rounded-lg bg-forest px-2 py-1 text-[11px] font-semibold text-white disabled:opacity-50"
-                    :disabled="savingRef === row.reference"
+                    :disabled="rowPending(row.reference)"
                     @click="saveRetraitPen(row)"
                   >
-                    {{ savingRef === row.reference ? '…' : 'OK' }}
+                    {{ rowPending(row.reference) ? '…' : 'OK' }}
                   </button>
                 </td>
               </tr>
@@ -134,8 +134,8 @@
             <tfoot class="border-t border-forest/20 bg-cream-50 text-xs font-semibold">
               <tr>
                 <td colspan="2" class="px-3 py-2 text-right text-night-500">Total tableau</td>
-                <td class="whitespace-nowrap px-3 py-2 text-right tabular-nums text-bleu">+ {{ formatEur(retraitsTotals.eur) }}</td>
-                <td class="whitespace-nowrap px-3 py-2 text-right tabular-nums text-forest">+ {{ formatPen(retraitsTotals.penJournal) }}</td>
+                <td class="whitespace-nowrap px-3 py-2 text-right tabular-nums text-bleu">{{ formatEur(retraitsTotals.eur) }}</td>
+                <td class="whitespace-nowrap px-3 py-2 text-right tabular-nums text-forest">{{ formatPen(retraitsTotals.penJournal) }}</td>
                 <td />
               </tr>
             </tfoot>
@@ -147,16 +147,21 @@
       <div class="overflow-hidden rounded-2xl border border-night-100 bg-white shadow-sm">
         <div class="flex flex-wrap items-center justify-between gap-3 border-b border-terracotta/15 bg-gradient-to-r from-terracotta/[0.06] to-transparent px-4 py-3">
           <div>
-            <h4 class="text-sm font-bold uppercase tracking-wide text-terracotta-700">Dépenses</h4>
-            <p class="mt-0.5 text-xs text-night-500">{{ depensesRows.length }} ligne(s)</p>
+            <h4 class="text-sm font-bold uppercase tracking-wide text-terracotta-700">Dépenses terrain</h4>
+            <p class="mt-0.5 text-xs text-night-500">
+              {{ depensesRows.length }} ligne(s) · surlignées = sorties caisse au Pérou (espèces / Yape)
+            </p>
           </div>
           <div class="flex flex-wrap gap-2">
             <div class="min-w-[7.5rem] rounded-xl border border-terracotta/25 bg-white px-3 py-2 shadow-sm">
-              <p class="text-[10px] font-bold uppercase tracking-wider text-terracotta-700/80">Sorties S/.</p>
-              <p class="font-serif text-xl font-bold tabular-nums leading-tight text-terracotta-700">− {{ formatPen(depensesTotal) }}</p>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-terracotta-700/80">Dépenses soles</p>
+              <p class="font-serif text-xl font-bold tabular-nums leading-tight text-terracotta-700">{{ formatPen(depensesTotal) }}</p>
+              <p v-if="caisseSortiesPen > 0" class="mt-0.5 text-[10px] text-night-500">
+                dont {{ formatPen(caisseSortiesPen) }} caisse Pérou
+              </p>
             </div>
             <div v-if="depensesTotalEur != null" class="min-w-[7.5rem] rounded-xl border border-night-200 bg-white px-3 py-2 shadow-sm">
-              <p class="text-[10px] font-bold uppercase tracking-wider text-night-500">Équiv. €</p>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-night-500">Dépenses euros</p>
               <p class="font-serif text-xl font-bold tabular-nums leading-tight text-night-700">≈ {{ formatEur(depensesTotalEur) }}</p>
             </div>
           </div>
@@ -170,7 +175,7 @@
                 <th class="px-2 py-2 text-left">Libellé</th>
                 <th class="px-2 py-2 text-left">Projet</th>
                 <th class="px-2 py-2 text-left">Mode</th>
-                <th class="px-2 py-2 text-right">S/.</th>
+                <th class="px-2 py-2 text-right">Dépense soles</th>
                 <th class="px-2 py-2 text-center">Pièce</th>
               </tr>
             </thead>
@@ -188,15 +193,15 @@
                   <select
                     class="admin-input max-w-[9rem] py-1 text-xs"
                     :value="row.payment_method || ''"
-                    :disabled="savingRef === row.reference"
+                    :disabled="rowPending(row.reference)"
                     @change="onModeChange(row, $event.target.value)"
                   >
                     <option value="">— Non classé —</option>
                     <option v-for="m in TERRAIN_MODES" :key="m.code" :value="m.code">{{ m.label }}</option>
                   </select>
                 </td>
-                <td class="whitespace-nowrap px-2 py-2 text-right font-semibold tabular-nums">
-                  − {{ formatPen(row.amount_pen) }}
+                <td class="whitespace-nowrap px-2 py-2 text-right font-semibold tabular-nums text-terracotta-700">
+                  {{ formatPen(row.amount_pen) }}
                 </td>
                 <td class="px-2 py-2 text-center">
                   <a
@@ -225,6 +230,8 @@ import { formatEur, formatPen, PAYMENT_METHODS } from '@/data/tresorerie-config.
 import { penToEur } from '@/api/tresorerie/exchangeRate.js'
 import { tresorerieApi } from '@/api/tresorerie/client.js'
 import { bindLoadingProgress } from '@/composables/useLoadingProgress.js'
+import { useDebouncedJournalRefresh } from '@/composables/useDebouncedJournalRefresh.js'
+import { useUploadQueue } from '@/store/uploadQueue.js'
 import AdminLoadingPanel from './AdminLoadingPanel.vue'
 
 const props = defineProps({
@@ -237,7 +244,9 @@ const TERRAIN_MODES = PAYMENT_METHODS.filter((m) =>
   ['especes', 'avance', 'cb', 'virement', 'yape_plin', 'autre'].includes(m.code)
 )
 const year = ref(String(new Date().getFullYear()))
-const savingRef = ref(null)
+const taskQueue = useUploadQueue()
+const caisseRefresh = useDebouncedJournalRefresh((y) => load(Number(y)))
+const journalPendingRefs = computed(() => taskQueue.activeMeta('journal', 'ref'))
 const penDrafts = ref({})
 const loading = ref(false)
 const loadProg = bindLoadingProgress(loading, { estimateMs: 18_000, label: 'Calcul caisse…' })
@@ -257,32 +266,45 @@ function penChanged(row) {
   return Math.abs(Number(draft) - Number(row.amount_pen)) > 0.009
 }
 
-async function saveRetraitPen(row) {
+function rowPending(ref) {
+  return journalPendingRefs.value.has(ref)
+}
+
+function saveRetraitPen(row) {
   const key = row.reference
   const pen = Number(penDrafts.value[key])
   if (!pen || pen <= 0) {
     error.value = 'Montant PEN invalide'
     return
   }
-  savingRef.value = key
   error.value = null
-  try {
-    const refs = row.references?.length ? row.references : [row.reference]
-    for (const ref of refs) {
-      await tresorerieApi.updateJournalLine({
-        reference: ref,
-        year: Number(year.value),
-        amount_pen: pen
-      })
+  const refs = row.references?.length ? row.references : [row.reference]
+  const prevPen = row.amount_pen
+  row.amount_pen = pen
+  delete penDrafts.value[key]
+
+  taskQueue.enqueueJournalTask({
+    label: `Retrait S/. · ${key}`,
+    meta: { ref: key },
+    run: async () => {
+      for (const ref of refs) {
+        await tresorerieApi.updateJournalLine({
+          reference: ref,
+          year: Number(year.value),
+          amount_pen: pen
+        })
+      }
+    },
+    describe: () => ({ text: `Montant S/. enregistré (${key}).` }),
+    onSuccess: () => {
+      caisseRefresh.schedule(year.value)
+      emit('journal-updated')
+    },
+    onError: (e) => {
+      row.amount_pen = prevPen
+      error.value = e.message || 'Enregistrement PEN impossible — redéployez JournalAnnee.gs + Corrections.gs'
     }
-    delete penDrafts.value[key]
-    await load()
-    emit('journal-updated')
-  } catch (e) {
-    error.value = e.message || 'Enregistrement PEN impossible — redéployez JournalAnnee.gs + Corrections.gs'
-  } finally {
-    savingRef.value = null
-  }
+  })
 }
 
 const penEurRate = computed(() => data.value?.pen_to_eur ?? null)
@@ -342,22 +364,28 @@ const soldeClass = computed(() => {
   return 'border-leaf/40 bg-leaf/5'
 })
 
-async function onModeChange(row, paymentMethod) {
+function onModeChange(row, paymentMethod) {
   if (!paymentMethod || paymentMethod === row.payment_method) return
-  savingRef.value = row.reference
-  try {
-    await tresorerieApi.updateJournalLine({
+  const prev = row.payment_method
+  row.payment_method = paymentMethod
+  taskQueue.enqueueJournalTask({
+    label: `Mode paiement · ${row.reference}`,
+    meta: { ref: row.reference },
+    run: () => tresorerieApi.updateJournalLine({
       reference: row.reference,
       year: Number(year.value),
       payment_method: paymentMethod
-    })
-    await load()
-    emit('journal-updated')
-  } catch (e) {
-    error.value = e.message || 'Mise à jour impossible'
-  } finally {
-    savingRef.value = null
-  }
+    }),
+    describe: () => ({ text: `Mode de paiement mis à jour (${row.reference}).` }),
+    onSuccess: () => {
+      caisseRefresh.schedule(year.value)
+      emit('journal-updated')
+    },
+    onError: (e) => {
+      row.payment_method = prev
+      error.value = e.message || 'Mise à jour impossible'
+    }
+  })
 }
 
 async function load() {

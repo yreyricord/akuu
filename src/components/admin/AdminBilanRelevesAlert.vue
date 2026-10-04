@@ -107,6 +107,7 @@
 import { computed, ref, watch } from 'vue'
 import { tresorerieApi } from '@/api/tresorerie/client.js'
 import { markReleveUploaded, useRelevesPending } from '@/composables/useRelevesPending.js'
+import { TASK_ESTIMATE_MS, useUploadQueue } from '@/store/uploadQueue.js'
 
 const props = defineProps({
   year: { type: [String, Number], required: true },
@@ -115,6 +116,7 @@ const props = defineProps({
 
 const emit = defineEmits(['uploaded'])
 
+const uploads = useUploadQueue()
 const { isMonthPending: isLocalPending, refreshPending } = useRelevesPending(() => props.year)
 const serverList = ref([])
 async function loadServer() {
@@ -130,8 +132,10 @@ function isMonthPending(month) { return isLocalPending(month) || Boolean(serverR
 const selectedMonth = ref(null)
 const file = ref(null)
 const fileInput = ref(null)
-const uploading = ref(false)
 const uploadError = ref(null)
+const uploading = computed(() =>
+  uploads.isBusy('releve', (m) => m.month === `${props.year}-${String(selectedMonth.value).padStart(2, '0')}`)
+)
 const uploadDone = ref(false)
 const lastUpload = ref(null)
 
@@ -172,29 +176,42 @@ function onFileChange(e) {
   uploadError.value = null
 }
 
-async function submit() {
+function submit() {
   if (!file.value || !selectedMonth.value) return
-  uploading.value = true
   uploadError.value = null
-  try {
-    const result = await tresorerieApi.uploadReleve({
-      year: Number(props.year),
-      month: Number(selectedMonth.value),
-      file: file.value
-    })
-    markReleveUploaded(Number(props.year), Number(selectedMonth.value), result.filename)
-    refreshPending()
-    lastUpload.value = { ...result, month: Number(selectedMonth.value) }
-    uploadDone.value = true
-    loadServer()
-    file.value = null
-    if (fileInput.value) fileInput.value.value = ''
-    emit('uploaded', result)
-  } catch (e) {
-    uploadError.value = e.message ?? 'Le dépôt a échoué. Réessayez, ou envoyez le PDF au trésorier technique.'
-  } finally {
-    uploading.value = false
-  }
+  const month = Number(selectedMonth.value)
+  const year = Number(props.year)
+  const pdf = file.value
+  const monthKey = `${year}-${String(month).padStart(2, '0')}`
+  const item = resolvedMissing.value.find((x) => x.month === month)
+  uploads.enqueue({
+    kind: 'releve',
+    label: `Relevé PDF · ${item?.label || monthKey}`,
+    meta: { month: monthKey },
+    fileCount: 1,
+    estimateMs: TASK_ESTIMATE_MS.releve,
+    run: ({ onProgress, signal }) =>
+      tresorerieApi.uploadReleve({ year, month, file: pdf }, { onProgress, signal }),
+    describe: (result) => ({
+      text: `Relevé enregistré : ${result.filename}`,
+      link: result.url || null
+    }),
+    onSuccess: (result) => {
+      markReleveUploaded(year, month, result.filename)
+      refreshPending()
+      lastUpload.value = { ...result, month }
+      uploadDone.value = true
+      loadServer()
+      file.value = null
+      if (fileInput.value) fileInput.value.value = ''
+      emit('uploaded', result)
+    },
+    onError: (e) => {
+      uploadError.value = e.message ?? 'Le dépôt a échoué. Réessayez, ou envoyez le PDF au trésorier technique.'
+    }
+  })
+  file.value = null
+  if (fileInput.value) fileInput.value.value = ''
 }
 
 function resetUpload() {

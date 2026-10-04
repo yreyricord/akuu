@@ -306,6 +306,7 @@
 <script setup>
 import { computed, nextTick, ref, watch } from 'vue'
 import { tresorerieApi } from '@/api/tresorerie/client.js'
+import { TASK_ESTIMATE_MS, useUploadQueue } from '@/store/uploadQueue.js'
 import { parseReleve, checkReleve } from '@/utils/releveParser.js'
 import { suggest, RECETTE_CATEGORIES, DEPENSE_CATEGORIES, JOURNAL_PROJECTS } from '@/utils/releveCategories.js'
 
@@ -320,6 +321,7 @@ const props = defineProps({
 })
 const emit = defineEmits(['imported'])
 
+const uploads = useUploadQueue()
 const file = ref(null)
 const fileInput = ref(null)
 const sendFeedbackRef = ref(null)
@@ -329,8 +331,8 @@ const sendError = ref('')
 const sendErrorCode = ref('')
 const releve = ref(null)
 const ops = ref([])
-const sending = ref(false)
 const result = ref(null)
+const sending = computed(() => uploads.isBusy('releve', (m) => m.month === selectedMonth.value))
 const manual = ref(false)
 const manualDate = ref('')
 const manualSolde = ref('')
@@ -511,81 +513,92 @@ async function onFile(ev) {
   }
 }
 
-async function send() {
+function enqueueReleveImport(body, pdfFile, label) {
+  const month = selectedMonth.value
+  sendError.value = ''
+  sendErrorCode.value = ''
+  error.value = ''
+  uploads.enqueue({
+    kind: 'releve',
+    label,
+    meta: { month },
+    fileCount: 1,
+    estimateMs: TASK_ESTIMATE_MS.releve,
+    run: ({ onProgress, signal }) => tresorerieApi.importReleve(body, pdfFile, { onProgress, signal }),
+    describe: (data) => ({
+      text: data.replaced
+        ? `Relevé ${data.month}/${data.year} remplacé (${data.added} op.).`
+        : `Relevé ${data.month}/${data.year} enregistré (${data.added} op.).`,
+      link: data.url || null
+    }),
+    onSuccess: async (data) => {
+      result.value = data
+      releve.value = null
+      ops.value = []
+      manual.value = false
+      file.value = null
+      if (fileInput.value) fileInput.value.value = ''
+      await scrollToFeedback()
+      emit('imported', data)
+    },
+    onError: async (e) => {
+      sendError.value = formatApiError(e)
+      sendErrorCode.value = e.code || ''
+      error.value = sendError.value
+      await scrollToFeedback()
+    }
+  })
+}
+
+function send() {
   if (!releve.value) return
   if (!file.value) {
     sendError.value = 'Le fichier PDF a été perdu — choisissez-le à nouveau.'
     sendErrorCode.value = 'VALIDATION'
-    await scrollToFeedback()
+    scrollToFeedback()
     return
   }
-  sending.value = true
-  sendError.value = ''
-  sendErrorCode.value = ''
-  error.value = ''
-  try {
-    const opsToSend = isReplaceMonth.value ? ops.value : toAdd.value
-    const data = await tresorerieApi.importReleve({
-      date_fin: releve.value.date_fin,
-      solde_debut: releve.value.solde_debut,
-      solde_fin: releve.value.solde_fin,
-      replace: isReplaceMonth.value,
-      operations: opsToSend.map(({ date, label, amount, category, project }) => ({ date, label, amount, category, project }))
-    }, file.value)
-    result.value = data
-    releve.value = null
-    ops.value = []
-    file.value = null
-    if (fileInput.value) fileInput.value.value = ''
-    await scrollToFeedback()
-    emit('imported', data)
-  } catch (e) {
-    sendError.value = formatApiError(e)
-    sendErrorCode.value = e.code || ''
-    error.value = sendError.value
-    await scrollToFeedback()
-  } finally {
-    sending.value = false
-  }
+  const opsToSend = isReplaceMonth.value ? ops.value : toAdd.value
+  const label = isReplaceMonth.value
+    ? `Relevé ${selectedMonthLabel.value} (remplacement)`
+    : `Relevé ${selectedMonthLabel.value}${opsToSend.length ? ` · ${opsToSend.length} op.` : ''}`
+  enqueueReleveImport({
+    date_fin: releve.value.date_fin,
+    solde_debut: releve.value.solde_debut,
+    solde_fin: releve.value.solde_fin,
+    replace: isReplaceMonth.value,
+    operations: opsToSend.map(({ date, label: l, amount, category, project }) => ({
+      date, label: l, amount, category, project
+    }))
+  }, file.value, label)
 }
 
-async function sendManual() {
+function sendManual() {
   if (!file.value) {
     sendError.value = 'Choisissez d\'abord le fichier PDF du relevé.'
     sendErrorCode.value = 'VALIDATION'
-    await scrollToFeedback()
+    scrollToFeedback()
     return
   }
-  sending.value = true
-  sendError.value = ''
-  sendErrorCode.value = ''
-  error.value = ''
-  try {
-    const [, mm, yyyy] = manualDate.value.split('/')
-    if (yyyy !== props.year) throw new Error(`Ce relevé est de ${yyyy} : ici, seuls les relevés ${props.year} sont acceptés.`)
-    if (`${yyyy}-${mm}` !== selectedMonth.value) {
-      throw new Error(`La date ${manualDate.value} ne correspond pas au mois ${selectedMonthLabel.value} sélectionné.`)
-    }
-    const data = await tresorerieApi.importReleve({
-      date_fin: manualDate.value,
-      solde_fin: parseSolde(manualSolde.value),
-      replace: isReplaceMonth.value,
-      operations: []
-    }, file.value)
-    result.value = { ...data, month: data.month ?? mm }
-    manual.value = false
-    file.value = null
-    if (fileInput.value) fileInput.value.value = ''
-    await scrollToFeedback()
-    emit('imported', result.value)
-  } catch (e) {
-    sendError.value = formatApiError(e)
-    sendErrorCode.value = e.code || ''
-    error.value = sendError.value
-    await scrollToFeedback()
-  } finally {
-    sending.value = false
+  const [, mm, yyyy] = manualDate.value.split('/')
+  if (yyyy !== props.year) {
+    sendError.value = `Ce relevé est de ${yyyy} : ici, seuls les relevés ${props.year} sont acceptés.`
+    sendErrorCode.value = 'VALIDATION'
+    scrollToFeedback()
+    return
   }
+  if (`${yyyy}-${mm}` !== selectedMonth.value) {
+    sendError.value = `La date ${manualDate.value} ne correspond pas au mois ${selectedMonthLabel.value} sélectionné.`
+    sendErrorCode.value = 'VALIDATION'
+    scrollToFeedback()
+    return
+  }
+  enqueueReleveImport({
+    date_fin: manualDate.value,
+    solde_fin: parseSolde(manualSolde.value),
+    replace: isReplaceMonth.value,
+    operations: []
+  }, file.value, `Relevé ${selectedMonthLabel.value} (saisie manuelle)`)
 }
 
 function eur(v) {

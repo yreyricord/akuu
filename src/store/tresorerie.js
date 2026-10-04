@@ -68,21 +68,30 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
     return penToEur(amountPen, exchangeRate.value.rate)
   }
 
-  async function submitDemande(payload, devisFiles = []) {
-    clearMessages()
-    loading.value = true
+  async function submitDemande(payload, devisFiles = [], opts = {}) {
+    const background = Boolean(opts.background)
+    const apiOpts = { onProgress: opts.onProgress, signal: opts.signal }
+    if (!background) {
+      clearMessages()
+      loading.value = true
+    }
     try {
-      const created = await tresorerieApi.createDemande(payload, devisFiles)
-      successMessage.value = `Demande ${created.reference} envoyée au trésorier.`
-      delete _fetchedAt.mine
-      delete _fetchedAt.pending
-      await refreshMine(true)
+      const created = await tresorerieApi.createDemande(payload, devisFiles, apiOpts)
+      if (!background) {
+        successMessage.value = `Demande ${created.reference} envoyée au trésorier.`
+        delete _fetchedAt.mine
+        delete _fetchedAt.pending
+        await refreshMine(true)
+      } else {
+        delete _fetchedAt.mine
+        delete _fetchedAt.pending
+      }
       return created
     } catch (e) {
-      error.value = e.message
+      if (!background) error.value = e.message
       throw e
     } finally {
-      loading.value = false
+      if (!background) loading.value = false
     }
   }
 
@@ -255,117 +264,167 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
     })
   }
 
-  async function validateDemandeDevis(reference) {
-    clearMessages()
-    loading.value = true
+  async function validateDemandeDevis(reference, opts = {}) {
+    const background = Boolean(opts.background)
+    if (!background) {
+      clearMessages()
+      loading.value = true
+    }
     try {
       await tresorerieApi.validateDemandeDevis(reference)
-      successMessage.value = `Devis validés pour ${reference}.`
-      delete _fetchedAt.history
-      await refreshPending(true)
+      if (!background) {
+        successMessage.value = `Devis validés pour ${reference}.`
+        delete _fetchedAt.history
+        await refreshPending(true)
+      } else {
+        delete _fetchedAt.history
+      }
     } catch (e) {
-      error.value = e.message
+      if (!background) error.value = e.message
       throw e
     } finally {
-      loading.value = false
+      if (!background) loading.value = false
     }
   }
 
-  async function rejectDemandeDevis(reference, reason) {
-    clearMessages()
-    loading.value = true
+  async function rejectDemandeDevis(reference, reason, opts = {}) {
+    const background = Boolean(opts.background)
+    if (!background) {
+      clearMessages()
+      loading.value = true
+    }
     try {
       await tresorerieApi.rejectDemandeDevis(reference, reason)
-      successMessage.value = `Devis refusés pour ${reference} · le bénévole a été notifié.`
-      delete _fetchedAt.history
-      await refreshPending(true)
+      if (!background) {
+        successMessage.value = `Devis refusés pour ${reference} · le bénévole a été notifié.`
+        delete _fetchedAt.history
+        await refreshPending(true)
+      } else {
+        delete _fetchedAt.history
+      }
     } catch (e) {
-      error.value = e.message
+      if (!background) error.value = e.message
       throw e
     } finally {
-      loading.value = false
+      if (!background) loading.value = false
     }
   }
 
-  async function resubmitDemandeDevis(reference, devisFiles) {
-    clearMessages()
-    loading.value = true
+  async function resubmitDemandeDevis(reference, devisFiles, opts = {}) {
+    const background = Boolean(opts.background)
+    const apiOpts = { onProgress: opts.onProgress, signal: opts.signal }
+    if (!background) {
+      clearMessages()
+      loading.value = true
+    }
     try {
-      await tresorerieApi.resubmitDemandeDevis(reference, devisFiles)
-      successMessage.value = `Nouveaux devis envoyés pour ${reference}.`
-      delete _fetchedAt.history
-      await refreshMine()
+      await tresorerieApi.resubmitDemandeDevis(reference, devisFiles, apiOpts)
+      if (!background) {
+        successMessage.value = `Nouveaux devis envoyés pour ${reference}.`
+        delete _fetchedAt.history
+        await refreshMine()
+      } else {
+        delete _fetchedAt.history
+      }
     } catch (e) {
-      error.value = e.message
+      if (!background) error.value = e.message
       throw e
     } finally {
-      loading.value = false
+      if (!background) loading.value = false
     }
   }
 
-  async function approveDemande(reference) {
-    clearMessages()
-    loading.value = true
+  async function approveDemande(reference, opts = {}) {
+    const background = Boolean(opts.background)
+    if (!background) {
+      clearMessages()
+      loading.value = true
+    }
     try {
       const approved = await tresorerieApi.approveDemande(reference)
-      successMessage.value = `${reference} approuvée · email simulé.`
-      delete _fetchedAt.history
-      await refreshPending(true)
+      if (!background) {
+        successMessage.value = `${reference} approuvée · email simulé.`
+        delete _fetchedAt.history
+        await refreshPending(true)
+      } else {
+        delete _fetchedAt.history
+      }
       return approved
     } catch (e) {
-      error.value = e.message
+      if (!background) error.value = e.message
       throw e
     } finally {
-      loading.value = false
+      if (!background) loading.value = false
     }
   }
 
-  async function rejectDemande(reference, reason) {
-    clearMessages()
-    loading.value = true
+  async function rejectDemande(reference, reason, opts = {}) {
+    const background = Boolean(opts.background)
+    if (!background) {
+      clearMessages()
+      loading.value = true
+    }
     try {
       await tresorerieApi.rejectDemande(reference, reason)
-      successMessage.value = `${reference} refusée.`
-      delete _fetchedAt.history
-      await refreshPending(true)
+      if (!background) {
+        successMessage.value = `${reference} refusée.`
+        delete _fetchedAt.history
+        await refreshPending(true)
+      } else {
+        delete _fetchedAt.history
+      }
     } catch (e) {
-      error.value = e.message
+      if (!background) error.value = e.message
       throw e
     } finally {
-      loading.value = false
+      if (!background) loading.value = false
     }
   }
 
-  async function markReimbursed(reference) {
-    clearMessages()
-    loading.value = true
+  async function markReimbursed(reference, opts = {}) {
+    const background = Boolean(opts.background)
+    if (!background) {
+      clearMessages()
+      loading.value = true
+    }
     try {
       await tresorerieApi.reimburseFacture(reference)
-      successMessage.value = `${reference} marquée remboursée.`
-      await refreshReimbursements()
+      if (!background) {
+        successMessage.value = `${reference} marquée remboursée.`
+        await refreshReimbursements()
+      }
     } catch (e) {
-      error.value = e.message
+      if (!background) error.value = e.message
       throw e
     } finally {
-      loading.value = false
+      if (!background) loading.value = false
     }
   }
 
-  async function validateFacture(reference) {
-    clearMessages()
-    loading.value = true
+  async function validateFacture(reference, opts = {}) {
+    const background = Boolean(opts.background)
+    if (!background) {
+      clearMessages()
+      loading.value = true
+    }
     try {
       await tresorerieApi.validateFacture(reference)
-      successMessage.value = `${reference} validée · écriture journal.`
-      delete _fetchedAt.history
-      delete _fetchedAt.compta
-      invalidateJournalCache()
-      await refreshPending(true)
+      if (!background) {
+        successMessage.value = `${reference} validée · écriture journal.`
+        delete _fetchedAt.history
+        delete _fetchedAt.compta
+        invalidateJournalCache()
+        await refreshPending(true)
+      } else {
+        delete _fetchedAt.history
+        delete _fetchedAt.compta
+        invalidateJournalCache()
+      }
     } catch (e) {
-      error.value = e.message
+      if (!background) error.value = e.message
       throw e
     } finally {
-      loading.value = false
+      if (!background) loading.value = false
     }
   }
 
@@ -386,38 +445,54 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
     }
   }
 
-  async function validateDemandeFactures(reference) {
-    clearMessages()
-    loading.value = true
+  async function validateDemandeFactures(reference, opts = {}) {
+    const background = Boolean(opts.background)
+    if (!background) {
+      clearMessages()
+      loading.value = true
+    }
     try {
       const result = await tresorerieApi.validateDemandeFactures(reference)
-      successMessage.value = `${result.count} facture(s) validée(s) pour ${reference} · journal à jour.`
-      delete _fetchedAt.history
-      delete _fetchedAt.compta
-      invalidateJournalCache()
-      await refreshPending(true)
+      if (!background) {
+        successMessage.value = `${result.count} facture(s) validée(s) pour ${reference} · journal à jour.`
+        delete _fetchedAt.history
+        delete _fetchedAt.compta
+        invalidateJournalCache()
+        await refreshPending(true)
+      } else {
+        delete _fetchedAt.history
+        delete _fetchedAt.compta
+        invalidateJournalCache()
+      }
       return result
     } catch (e) {
-      error.value = e.message
+      if (!background) error.value = e.message
       throw e
     } finally {
-      loading.value = false
+      if (!background) loading.value = false
     }
   }
 
-  async function rejectFacture(reference, reason) {
-    clearMessages()
-    loading.value = true
+  async function rejectFacture(reference, reason, opts = {}) {
+    const background = Boolean(opts.background)
+    if (!background) {
+      clearMessages()
+      loading.value = true
+    }
     try {
       await tresorerieApi.rejectFacture(reference, reason)
-      successMessage.value = `${reference} refusée.`
-      delete _fetchedAt.history
-      await refreshPending(true)
+      if (!background) {
+        successMessage.value = `${reference} refusée.`
+        delete _fetchedAt.history
+        await refreshPending(true)
+      } else {
+        delete _fetchedAt.history
+      }
     } catch (e) {
-      error.value = e.message
+      if (!background) error.value = e.message
       throw e
     } finally {
-      loading.value = false
+      if (!background) loading.value = false
     }
   }
 
@@ -496,35 +571,49 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
     return tresorerieApi.createAccessRequest(payload)
   }
 
-  async function submitDirectExpense(payload, file = null) {
-    clearMessages()
-    loading.value = true
+  async function submitDirectExpense(payload, file = null, opts = {}) {
+    const background = Boolean(opts.background)
+    const apiOpts = { onProgress: opts.onProgress, signal: opts.signal }
+    if (!background) {
+      clearMessages()
+      loading.value = true
+    }
     try {
-      const created = await tresorerieApi.createDirectExpense(payload, file)
-      successMessage.value = `${created.reference} comptabilisé · visible dans Compta.`
+      const created = await tresorerieApi.createDirectExpense(payload, file, apiOpts)
+      if (!background) {
+        successMessage.value = `${created.reference} comptabilisé · visible dans Compta.`
+      }
       delete _fetchedAt.compta
       return created
     } catch (e) {
-      error.value = e.message
+      if (!background) error.value = e.message
       throw e
     } finally {
-      loading.value = false
+      if (!background) loading.value = false
     }
   }
 
-  async function resubmitDemande(parentId, payload, devisFiles = []) {
-    clearMessages()
-    loading.value = true
+  async function resubmitDemande(parentId, payload, devisFiles = [], opts = {}) {
+    const background = Boolean(opts.background)
+    const apiOpts = { onProgress: opts.onProgress, signal: opts.signal }
+    if (!background) {
+      clearMessages()
+      loading.value = true
+    }
     try {
-      const created = await tresorerieApi.resubmitDemande(parentId, payload, devisFiles)
-      successMessage.value = `Nouvelle version ${created.reference} envoyée.`
-      await refreshMine()
+      const created = await tresorerieApi.resubmitDemande(parentId, payload, devisFiles, apiOpts)
+      if (!background) {
+        successMessage.value = `Nouvelle version ${created.reference} envoyée.`
+        await refreshMine()
+      } else {
+        delete _fetchedAt.mine
+      }
       return created
     } catch (e) {
-      error.value = e.message
+      if (!background) error.value = e.message
       throw e
     } finally {
-      loading.value = false
+      if (!background) loading.value = false
     }
   }
 

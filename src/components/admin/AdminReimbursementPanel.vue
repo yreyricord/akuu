@@ -69,10 +69,10 @@
           <button
             type="button"
             class="whitespace-nowrap inline-flex min-h-[44px] items-center rounded-full bg-forest px-4 text-sm font-semibold text-white hover:bg-forest-600 disabled:opacity-50"
-            :disabled="store.loading || marking === row.reference"
+            :disabled="validationPending(row.reference)"
             @click="markPaid(row.reference)"
           >
-            {{ marking === row.reference ? '…' : 'Remboursé ✓' }}
+            {{ validationPending(row.reference) ? '…' : 'Remboursé ✓' }}
           </button>
         </template>
       </AdminDataTable>
@@ -92,6 +92,7 @@ import {
 } from '@/data/tresorerie-config.js'
 import { formatAmountWithConversion } from '@/data/currency.js'
 import { useTresorerieStore } from '@/store/tresorerie.js'
+import { TASK_ESTIMATE_MS, useUploadQueue } from '@/store/uploadQueue.js'
 import AdminDataTable from './AdminDataTable.vue'
 
 const props = defineProps({
@@ -99,7 +100,11 @@ const props = defineProps({
 })
 
 const store = useTresorerieStore()
-const marking = ref(null)
+const uploads = useUploadQueue()
+
+function validationPending(ref) {
+  return uploads.activeMeta('validation', 'ref').has(ref)
+}
 
 const columns = [
   { key: 'reference', label: 'Réf.' },
@@ -144,12 +149,17 @@ function daysSince(iso) {
   return Math.floor((Date.now() - new Date(iso).getTime()) / 86400000)
 }
 
-async function markPaid(reference) {
-  marking.value = reference
-  try {
-    await store.markReimbursed(reference)
-  } finally {
-    marking.value = null
-  }
+function markPaid(reference) {
+  uploads.enqueue({
+    kind: 'validation',
+    label: `Remboursement · ${reference}`,
+    meta: { ref: reference },
+    hasFile: false,
+    abortable: false,
+    estimateMs: TASK_ESTIMATE_MS.validation,
+    run: () => store.markReimbursed(reference, { background: true }),
+    describe: () => ({ text: `${reference} marquée remboursée.`, copyText: reference }),
+    onSuccess: () => store.refreshReimbursements()
+  })
 }
 </script>

@@ -582,11 +582,6 @@ async function focusYear(y) {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
-function slug(t) {
-  const s = String(t || 'piece').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
-    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
-  return (s || 'piece').slice(0, 48).replace(/-+$/g, '')
-}
 function amount(r) {
   if (isPrimaryAmount(r, 'pen') && r.pen != null) {
     return `${r.pen.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} S/.`

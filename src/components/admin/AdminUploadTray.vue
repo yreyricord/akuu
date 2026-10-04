@@ -3,7 +3,7 @@
     v-if="queue.visibleJobs.length"
     class="upload-tray fixed inset-x-0 z-[45] px-3 sm:left-auto sm:right-4 sm:w-[24rem] sm:px-0"
     :style="{ bottom: aboveNav ? 'calc(4.5rem + env(safe-area-inset-bottom, 0px))' : 'calc(1rem + env(safe-area-inset-bottom, 0px))' }"
-    aria-label="Envois de fichiers"
+    aria-label="Tâches en cours"
   >
     <!-- Annonce lecteur d'écran : seulement les changements d'étape, pas chaque % -->
     <p class="sr-only" aria-live="polite">{{ liveText }}</p>
@@ -59,8 +59,8 @@
                 >
                   <div class="h-full rounded-full bg-forest transition-[width] duration-300 ease-out" :style="{ width: job.progress + '%' }" />
                 </div>
-                <p v-if="job.phase === 'upload'" class="mt-1.5 text-xs text-night-400">
-                  Vous pouvez continuer à utiliser l'espace adhérent pendant l'envoi.
+                <p v-if="job.phase === 'upload' || job.phase === 'processing'" class="mt-1.5 text-xs text-night-400">
+                  Vous pouvez continuer à naviguer pendant le traitement.
                 </p>
               </template>
 
@@ -73,9 +73,9 @@
                 </li>
               </ul>
 
-              <div v-if="!isActive(job) || job.controller" class="mt-2 flex flex-wrap gap-2">
+              <div v-if="!isActive(job) || (isActive(job) && job.abortable !== false)" class="mt-2 flex flex-wrap gap-2">
                 <button
-                  v-if="isActive(job)"
+                  v-if="isActive(job) && job.abortable !== false"
                   type="button"
                   class="tray-btn bg-white border-night-200 text-night-600"
                   @click="queue.cancel(job.id)"
@@ -151,17 +151,31 @@ const now = ref(Date.now())
 const copiedId = ref(null)
 let clock = null
 
-const ACTIVE = new Set(['queued', 'prepare', 'encode', 'upload'])
+const ACTIVE = new Set(['queued', 'prepare', 'encode', 'upload', 'processing'])
+const UPLOAD_KINDS = new Set(['attach', 'facture', 'demande', 'expense', 'releve'])
+
 function isActive(job) {
   return ACTIVE.has(job.phase)
 }
 
+function isUploadJob(job) {
+  if (job.hasFile === true) return true
+  if (job.hasFile === false) return false
+  return UPLOAD_KINDS.has(job.kind) || (job.kind === 'journal' && job.fileCount > 0)
+}
+
 const headerText = computed(() => {
   const n = queue.activeJobs.length
-  if (n) return n > 1 ? `${n} envois en cours` : 'Envoi en cours'
+  if (n) {
+    const uploads = queue.activeJobs.filter(isUploadJob).length
+    const mods = n - uploads
+    if (uploads && mods) return `${n} tâches en cours`
+    if (mods) return n > 1 ? `${n} modifications en cours` : 'Modification en cours'
+    return n > 1 ? `${n} envois en cours` : 'Envoi en cours'
+  }
   const errors = queue.visibleJobs.filter((j) => j.phase === 'error').length
-  if (errors) return errors > 1 ? `${errors} envois en échec` : 'Envoi en échec'
-  return 'Envois terminés'
+  if (errors) return errors > 1 ? `${errors} tâches en échec` : 'Tâche en échec'
+  return 'Tâches terminées'
 })
 
 const overallProgress = computed(() => {

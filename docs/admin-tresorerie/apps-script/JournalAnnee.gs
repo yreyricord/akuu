@@ -731,7 +731,7 @@ function createJournalEntry_(session, body) {
     payment_method: source === 'terrain' ? readPaymentMethod_(obj) : null,
     pen: pen || null,
     eur: eur || null,
-    url: driveInfo.drive_file_url
+    url: obj.drive_file_url || ''
   };
 }
 

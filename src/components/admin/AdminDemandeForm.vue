@@ -91,9 +91,10 @@
         <textarea v-model="form.justification" required rows="2" class="admin-input" placeholder="Lien avec le projet choisi" />
       </label>
 
-      <button type="submit" class="btn-primary w-full sm:w-auto" :disabled="store.loading">
-        {{ store.loading ? 'Envoi…' : 'Envoyer au trésorier' }}
+      <button type="submit" class="btn-primary w-full sm:w-auto">
+        Envoyer au trésorier
       </button>
+      <p v-if="submitHint" class="text-sm text-forest-700">{{ submitHint }}</p>
     </form>
 
     <section class="border-t border-night-100 pt-6">
@@ -130,10 +131,10 @@
             <button
               type="button"
               class="rounded-full bg-forest px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
-              :disabled="store.loading || !(devisResubmitFiles[d.reference]?.length >= MIN_DEVIS_ATTACHMENTS)"
+              :disabled="devisBusy(d.reference) || !(devisResubmitFiles[d.reference]?.length >= MIN_DEVIS_ATTACHMENTS)"
               @click="resubmitDevis(d.reference)"
             >
-              Renvoyer les devis
+              {{ devisBusy(d.reference) ? 'Envoi…' : 'Renvoyer les devis' }}
             </button>
           </div>
           <p v-else-if="d.reject_reason" class="mt-2 text-sm text-terracotta">Refus : {{ d.reject_reason }}</p>
@@ -167,6 +168,7 @@ import {
 import { eurToPen, normalizeCurrency, CURRENCY_PEN, formatAmountWithConversion } from '@/data/currency.js'
 import { useTresorerieStore } from '@/store/tresorerie.js'
 import { useAuthStore } from '@/store/auth.js'
+import { useUploadQueue } from '@/store/uploadQueue.js'
 import AdminStatusBadge from './AdminStatusBadge.vue'
 import AdminFileCapture from './AdminFileCapture.vue'
 import AdminCurrencyAmountField from './AdminCurrencyAmountField.vue'
@@ -175,7 +177,9 @@ const emit = defineEmits(['submitted'])
 
 const store = useTresorerieStore()
 const auth = useAuthStore()
+const uploads = useUploadQueue()
 const resubmitParentId = ref(null)
+const submitHint = ref('')
 const dateError = ref('')
 const devisError = ref('')
 const devisFiles = ref([])
@@ -255,7 +259,11 @@ function validateDevis() {
   return true
 }
 
-async function onSubmit() {
+function devisBusy(reference) {
+  return uploads.isBusy('demande', (m) => m.ref === reference)
+}
+
+function onSubmit() {
   if (!validateNeededByDate() || !validateDevis()) return
   const payload = {
     project: form.project,
@@ -268,11 +276,35 @@ async function onSubmit() {
     justification: form.justification
   }
   const files = needsDevisPhotos.value ? [...devisFiles.value] : []
-  if (resubmitParentId.value) {
-    await store.resubmitDemande(resubmitParentId.value, payload, files)
-  } else {
-    await store.submitDemande(payload, files)
-  }
+  const parentId = resubmitParentId.value
+  const label = parentId
+    ? `Nouvelle version · ${form.description.slice(0, 40)}`
+    : `Demande · ${form.description.slice(0, 40)}`
+  uploads.enqueue({
+    kind: 'demande',
+    label,
+    hasFile: files.length > 0,
+    fileCount: files.length || 1,
+    meta: { type: parentId ? 'resubmit' : 'create' },
+    run: ({ onProgress, signal }) =>
+      parentId
+        ? store.resubmitDemande(parentId, payload, files, { background: true, onProgress, signal })
+        : store.submitDemande(payload, files, { background: true, onProgress, signal }),
+    describe: (created) => ({
+      text: parentId
+        ? `Nouvelle version ${created.reference} envoyée.`
+        : `Demande ${created.reference} envoyée au trésorier.`,
+      copyText: created.reference
+    }),
+    onSuccess: async () => {
+      submitHint.value = ''
+      await store.refreshMine(true)
+    },
+    onError: () => {
+      submitHint.value = ''
+    }
+  })
+  submitHint.value = 'Envoi lancé — suivez la progression en bas de l\'écran.'
   resetForm()
   emit('submitted')
 }
@@ -292,10 +324,25 @@ function prefillResubmit(d) {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
-async function resubmitDevis(reference) {
+function resubmitDevis(reference) {
   const files = devisResubmitFiles.value[reference] || []
-  await store.resubmitDemandeDevis(reference, files)
-  devisResubmitFiles.value[reference] = []
+  uploads.enqueue({
+    kind: 'demande',
+    label: `Devis · ${reference}`,
+    hasFile: true,
+    fileCount: files.length,
+    meta: { ref: reference },
+    run: ({ onProgress, signal }) =>
+      store.resubmitDemandeDevis(reference, files, { background: true, onProgress, signal }),
+    describe: () => ({
+      text: `Nouveaux devis envoyés pour ${reference}.`,
+      copyText: reference
+    }),
+    onSuccess: async () => {
+      devisResubmitFiles.value[reference] = []
+      await store.refreshMine(true)
+    }
+  })
 }
 
 onMounted(async () => {
