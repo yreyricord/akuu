@@ -10,9 +10,9 @@
           Argent investi à Puerto Miguel
         </h3>
         <p class="mt-1 max-w-xl text-sm text-night-500">
-          Chaque exercice compare ce qui est affecté aux projets locaux — dépenses terrain payées en
-          soles (onglet « Dépenses Caisse Pérou ») et charges du journal portant un code projet — au
-          reste des dépenses de l'association. Tout est ramené en euros au taux de change de l'exercice.
+          Chaque exercice compare ce qui est affecté aux projets locaux dépenses terrain payées en
+          soles (onglet « Dépenses Caisse Pérou ») et charges du journal portant un code projet au
+          reste des dépenses de l'association.
         </p>
       </div>
       <div class="text-right">
@@ -21,7 +21,7 @@
         </p>
         <p class="font-serif text-3xl font-bold text-forest-700">{{ formatEur(totalProjets) }}</p>
         <p class="text-xs text-night-400">
-          {{ formatPen(totalPen) }} de terrain · sur {{ formatEur(totalGeneral) }} dépensés
+          sur {{ formatEur(totalGeneral) }} dépensés
         </p>
       </div>
     </div>
