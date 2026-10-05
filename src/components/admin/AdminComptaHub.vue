@@ -64,6 +64,7 @@
 
 <script setup>
 import { computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import {
   TRESORERIE_PROJECTS,
   TRESORERIE_CATEGORIES,
@@ -86,6 +87,7 @@ import AdminTasksIndicator from './AdminTasksIndicator.vue'
 import driveHealthData from '@/data/drive-health.json'
 
 const store = useTresorerieStore()
+const route = useRoute()
 const driveHealth = driveHealthData?.ok != null ? driveHealthData : null
 const loading = ref(false)
 const error = ref(null)
@@ -93,8 +95,12 @@ const filterProject = ref('')
 const filterYear = ref('')
 const filterMonth = ref('')
 const journalSectionRef = ref(null)
-const view = ref('overview')
-const ecrituresYear = ref(String(new Date().getFullYear()))
+/** Exercice transmis par l'onglet Bilan (?year=AAAA) : on ouvre directement ses écritures. */
+const yearFromQuery = computed(() =>
+  typeof route.query.year === 'string' && /^\d{4}$/.test(route.query.year) ? route.query.year : ''
+)
+const view = ref(yearFromQuery.value ? 'ecritures' : 'overview')
+const ecrituresYear = ref(yearFromQuery.value || String(new Date().getFullYear()))
 const caisseRefreshKey = ref(0)
 const journalRefreshKey = ref(0)
 const metaVersion = ref(0)

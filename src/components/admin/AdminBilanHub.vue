@@ -29,6 +29,60 @@
       </nav>
     </header>
 
+    <!-- Argent investi à Puerto Miguel : synthèse pluriannuelle des dépenses terrain -->
+    <section
+      v-if="puertoMiguel.years.length"
+      class="rounded-2xl border border-night-100 bg-white p-5 shadow-sm sm:p-6"
+      aria-labelledby="pm-title"
+    >
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h3 id="pm-title" class="text-base font-semibold text-forest-700">Argent investi à Puerto Miguel</h3>
+          <p class="mt-1 max-w-xl text-sm text-night-500">
+            Dépenses terrain payées en soles (onglet « Dépenses Caisse Pérou »), hors AKUUVision,
+            Fonctionnement et Divers — soit l'argent réellement affecté aux projets locaux.
+          </p>
+        </div>
+        <div class="text-right">
+          <p class="text-xs font-semibold uppercase tracking-wide text-night-500">
+            Total {{ puertoMiguel.firstYear }}–{{ puertoMiguel.lastYear }}
+          </p>
+          <p class="font-serif text-3xl font-bold text-forest-700">{{ formatPen(puertoMiguel.total) }}</p>
+          <p class="text-xs text-night-400">
+            {{ puertoMiguel.years.length }} exercice(s) avec dépenses terrain
+          </p>
+        </div>
+      </div>
+
+      <ul class="mt-5 space-y-2">
+        <li v-for="y in puertoMiguel.years" :key="y.year" class="flex items-center gap-3">
+          <button
+            type="button"
+            class="w-12 shrink-0 text-left text-sm font-semibold tabular-nums"
+            :class="String(y.year) === selectedYear ? 'text-forest-700' : 'text-night-500 hover:text-night'"
+            :aria-pressed="String(y.year) === selectedYear"
+            @click="selectedYear = String(y.year)"
+          >
+            {{ y.year }}
+          </button>
+          <span class="h-6 flex-1 overflow-hidden rounded-full bg-cream-200">
+            <span class="block h-full rounded-full bg-forest/80" :style="{ width: pmBarWidth(y.total) }" />
+          </span>
+          <span class="w-32 shrink-0 text-right text-sm tabular-nums text-night-700">{{ formatPen(y.total) }}</span>
+        </li>
+      </ul>
+
+      <div v-if="puertoMiguelProjets.length" class="mt-6 border-t border-night-100 pt-4">
+        <h4 class="text-sm font-semibold text-night-700">Détail {{ selectedYear }} par projet</h4>
+        <ul class="mt-3 grid gap-2 sm:grid-cols-2">
+          <li v-for="p in puertoMiguelProjets" :key="p.project" class="flex items-baseline justify-between gap-3 text-sm">
+            <span class="text-night-600">{{ p.project }}</span>
+            <span class="font-semibold tabular-nums text-night-800">{{ formatPen(p.pen) }}</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
     <AdminLoadingPanel
       v-if="loadingExercices"
       title="Lecture des journaux Google"
@@ -267,14 +321,21 @@
         <h3 class="text-base font-semibold text-forest-700">Télécharger</h3>
         <div class="mt-4 grid gap-3 sm:grid-cols-2">
           <p
-            v-if="isLiveYear"
+            v-if="isEditableYear"
             class="rounded-xl bg-bleu-50 px-4 py-3 text-sm text-night sm:col-span-2"
           >
-            Exercice en cours : les fichiers sont générés à partir du journal Google au moment du téléchargement.
-            Le dossier de clôture et la synthèse AG seront créés à la clôture de l'année.
+            <template v-if="currentExercice?.statut === 'rouvert'">
+              Exercice {{ selectedYear }} rouvert : les fichiers sont générés à partir du journal Google
+              au moment du téléchargement, corrections comprises. Le dossier Cloture et la synthèse AG
+              seront régénérés à la reclôture.
+            </template>
+            <template v-else>
+              Exercice en cours : les fichiers sont générés à partir du journal Google au moment du téléchargement.
+              Le dossier de clôture et la synthèse AG seront créés à la clôture de l'année.
+            </template>
           </p>
           <button
-            v-if="isLiveYear"
+            v-if="isEditableYear"
             type="button"
             :class="dlClass + ' text-left'"
             :disabled="exporting === 'journal'"
@@ -289,7 +350,7 @@
             </span>
           </button>
           <button
-            v-if="isLiveYear"
+            v-if="isEditableYear"
             type="button"
             :class="dlClass + ' text-left'"
             :disabled="exporting === 'registre'"
@@ -306,7 +367,7 @@
           <p v-if="exportError" class="text-sm text-terracotta-700 sm:col-span-2">{{ exportError }}</p>
           <p v-if="busy" class="text-sm text-night-500 sm:col-span-2" role="status">Préparation du fichier…</p>
           <button
-            v-if="!isLiveYear && yearData.download_cloture?.pdf"
+            v-if="!isEditableYear && yearData.download_cloture?.pdf"
             type="button"
             :disabled="!!busy"
             @click="getArchive(yearData.download_cloture.pdf)"
@@ -320,7 +381,7 @@
               <span class="text-sm text-forest-100">PDF · recettes et dépenses, bilan, trésorerie · à joindre à la convocation</span>
             </span>
           </button>
-          <button v-if="!isLiveYear && yearData.download_cloture?.path" type="button" :disabled="!!busy" :class="dlClass + ' text-left'" @click="getArchive(yearData.download_cloture.path)">
+          <button v-if="!isEditableYear && yearData.download_cloture?.path" type="button" :disabled="!!busy" :class="dlClass + ' text-left'" @click="getArchive(yearData.download_cloture.path)">
             <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-forest-100 text-forest-700">
               <PhFileZip :size="24" aria-hidden="true" />
             </span>
@@ -329,7 +390,7 @@
               <span class="text-sm text-night-500">ZIP · 7 tableaux + note d'audit · {{ yearData.download_cloture.size_kb }} Ko</span>
             </span>
           </button>
-          <button v-if="!isLiveYear && journalFile" type="button" :disabled="!!busy" :class="dlClass + ' text-left'" @click="getArchive(journalFile.path)">
+          <button v-if="!isEditableYear && journalFile" type="button" :disabled="!!busy" :class="dlClass + ' text-left'" @click="getArchive(journalFile.path)">
             <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-bleu-100 text-bleu-700">
               <PhTable :size="24" aria-hidden="true" />
             </span>
@@ -463,6 +524,7 @@ watch(selectedYear, (year) => {
   if (route.query.year === year) return
   router.replace({ query: { ...route.query, year } })
   loadHistorique(year)
+  loadLiveRows(Number(year) || new Date().getFullYear())
 })
 
 const historique = ref([])
@@ -485,7 +547,8 @@ async function doRouvrir() {
     await tresorerieApi.rouvrirExercice(selectedYear.value, rouvrirMotif.value.trim())
     showRouvrir.value = false
     rouvrirMotif.value = ''
-    await refreshLive()
+    // force : le statut vient de changer, les caches front (exercices + journal) sont périmés.
+    await refreshLive(true)
     await loadHistorique(selectedYear.value)
   } catch (e) {
     exerciceActionError.value = e.message
@@ -514,7 +577,7 @@ async function doRecloturer(reportOpening) {
     } else if (res.regeneration?.pending) {
       regenerationMessage.value = res.regeneration.error || 'Reclôture OK — régénération du dossier à relancer manuellement.'
     }
-    await refreshLive()
+    await refreshLive(true)
     await loadHistorique(selectedYear.value)
   } catch (e) {
     exerciceActionError.value = e.message
@@ -547,7 +610,7 @@ async function doRegenerer(force) {
       return
     }
     regenerationMessage.value = `Dossier Cloture ${selectedYear.value} régénéré (${(res.files || []).length} fichiers sur le Drive).`
-    await refreshLive()
+    await refreshLive(true)
     await loadHistorique(selectedYear.value)
   } catch (e) {
     const msg = e?.message || String(e)
@@ -578,6 +641,48 @@ const currentExercice = computed(() =>
   exercices.value?.years?.find((ex) => ex.year === Number(selectedYear.value)) ?? null
 )
 
+/**
+ * Projets exclus du total « investi à Puerto Miguel » : AKUUVision n'est pas un projet local,
+ * Fonctionnement est un frais de structure et Divers n'est pas affecté.
+ */
+const PM_EXCLUDED_PROJECTS = ['AKUUVision', 'Fonctionnement', 'Divers / non affecté']
+
+/**
+ * Argent réellement investi à Puerto Miguel : dépenses terrain (Detail_PM, en soles) affectées à
+ * un projet local, par exercice, plus le cumul sur tous les exercices.
+ */
+const puertoMiguel = computed(() => {
+  const rows = (exercices.value?.years ?? [])
+    .map((ex) => {
+      const total = Object.entries(ex.terrain_pen || {}).reduce(
+        (sum, [project, pen]) => (PM_EXCLUDED_PROJECTS.includes(project) ? sum : sum + (Number(pen) || 0)),
+        0
+      )
+      return { year: ex.year, total: Math.round(total * 100) / 100 }
+    })
+    .filter((r) => r.total > 0)
+    .sort((a, b) => a.year - b.year)
+  return {
+    years: rows,
+    total: Math.round(rows.reduce((s, r) => s + r.total, 0) * 100) / 100,
+    max: Math.max(...rows.map((r) => r.total), 1),
+    firstYear: rows[0]?.year ?? '',
+    lastYear: rows[rows.length - 1]?.year ?? ''
+  }
+})
+
+function pmBarWidth(total) {
+  return `${Math.max((total / puertoMiguel.value.max) * 100, 3)}%`
+}
+
+/** Détail par projet de l'exercice affiché (mêmes exclusions). */
+const puertoMiguelProjets = computed(() =>
+  Object.entries(currentExercice.value?.terrain_pen || {})
+    .map(([project, pen]) => ({ project, pen: Number(pen) || 0 }))
+    .filter((r) => r.pen > 0 && !PM_EXCLUDED_PROJECTS.includes(r.project))
+    .sort((a, b) => b.pen - a.pen)
+)
+
 const rouvertBanner = computed(() => {
   const ex = currentExercice.value
   if (ex?.statut !== 'rouvert') return ''
@@ -588,18 +693,25 @@ const rouvertBanner = computed(() => {
   return `Exercice ${selectedYear.value} rouvert le ${when} par ${who}${motif}. Version ${ex.version || 2}, à présenter à la prochaine AG.`
 })
 
-const isLiveYear = computed(() =>
-  Boolean(currentExercice.value?.live && yearData.value?.cloture?.provisoire)
+/**
+ * Exercice encore alimenté par le journal Google : année en cours (ouvert) ou exercice rouvert.
+ * Un exercice clos reste en mode archive (téléchargements générés à la clôture).
+ */
+const isEditableYear = computed(() =>
+  Boolean(currentExercice.value?.live && yearData.value?.cloture?.editable)
 )
 
-/** Dépôt / remplacement relevé : exercice en cours (année calendaire). */
+const isCurrentYear = computed(() => Number(selectedYear.value) === new Date().getFullYear())
+
+/**
+ * Dépôt / remplacement de relevé : autorisé tant que l'exercice n'est pas clos — donc aussi
+ * pour un exercice rouvert, pas seulement pour l'année calendaire en cours.
+ */
 const showReleveImport = computed(() => {
   if (!(auth.isAdmin || auth.isTreasurer)) return false
-  const y = Number(selectedYear.value)
-  if (y !== new Date().getFullYear()) return false
   const ex = currentExercice.value
   if (!ex) return false
-  return ex.statut === 'ouvert' || ex.statut === 'rouvert' || Boolean(yearData.value?.cloture?.provisoire)
+  return ex.statut === 'ouvert' || ex.statut === 'rouvert'
 })
 
 function scrollToReleveImport() {
@@ -617,7 +729,7 @@ const lastReleveLive = computed(() => {
 const bankKpi = computed(() => {
   const calc = treso.value?.fin_eur
   const rel = lastReleveLive.value
-  if (isLiveYear.value) {
+  if (isEditableYear.value) {
     if (rel?.solde_fin != null) {
       const mois = rel.mois ? String(rel.mois).slice(5, 7) + '/' + String(rel.mois).slice(0, 4) : ''
       return {
@@ -653,16 +765,23 @@ const cr = computed(() => yearData.value?.cloture?.compte_resultat ?? null)
 const treso = computed(() => {
   const t = yearData.value?.cloture?.tresorerie
   if (!t) return null
-  if (isLiveYear.value) return { ...t, calcule: true }
+  if (isEditableYear.value) return { ...t, calcule: true }
   return t
 })
 
 const liveRows = ref([])
-async function refreshLive(force = false) {
-  if (force) tresorerieApi.invalidateExercicesCache?.()
-  await loadExercices(force)
-  const y = new Date().getFullYear()
+async function loadLiveRows(y, force = false) {
   try { liveRows.value = (await tresorerieApi.getJournalAnnee(y, { force }))?.rows ?? [] } catch { liveRows.value = [] }
+}
+async function refreshLive(force = false) {
+  if (force) {
+    tresorerieApi.invalidateExercicesCache?.()
+    tresorerieApi.invalidateJournalCache?.(selectedYear.value)
+  }
+  await loadExercices(force)
+  // liveRows sert à détecter les doublons à l'import : il doit porter sur l'exercice sélectionné,
+  // pas sur l'année calendaire.
+  await loadLiveRows(Number(selectedYear.value) || new Date().getFullYear(), force)
 }
 onMounted(async () => {
   await refreshLive()
@@ -723,7 +842,7 @@ const liveRelevesStatus = computed(() => {
 const rappro = computed(() => {
   const y = yearData.value
   if (!y) return {}
-  if (isLiveYear.value) {
+  if (isEditableYear.value) {
     const r = lastReleveLive.value
     const rp = currentExercice.value?.rapprochement || {}
     if (!r || r.solde_fin == null) {
@@ -856,15 +975,32 @@ const relevesByMonth = computed(() => {
   return map
 })
 
+/** Mois attendus pour l'exercice (2017 : compte ouvert en février ; année en cours : mois écoulés). */
+const moisAttendus = computed(() => {
+  const y = Number(selectedYear.value)
+  if (!liveRelevesStatus.value?.expected) return []
+  const start = y === 2017 ? 2 : 1
+  const end = isCurrentYear.value ? new Date().getMonth() : 12
+  const out = []
+  for (let m = start; m <= end; m++) out.push(m)
+  return out
+})
+
+/** Chips des mois : affichés pour tout exercice encore modifiable (année en cours ou rouvert). */
 const moisDeposes = computed(() => {
   const status = liveRelevesStatus.value
-  if (!yearData.value?.cloture?.provisoire || !status?.expected) return []
+  if (!isEditableYear.value || !status?.expected) return []
   const present = new Set(status.months_present || [])
-  return MOIS.slice(0, status.expected).map((label, i) => {
-    const monthNum = i + 1
+  return moisAttendus.value.map((monthNum) => {
     const mois = `${selectedYear.value}-${String(monthNum).padStart(2, '0')}`
     const rel = relevesByMonth.value[monthNum]
-    return { mois, label, ok: present.has(monthNum), url: rel?.url || '', solde_fin: rel?.solde_fin ?? null }
+    return {
+      mois,
+      label: MOIS[monthNum - 1],
+      ok: present.has(monthNum),
+      url: rel?.url || '',
+      solde_fin: rel?.solde_fin ?? null
+    }
   })
 })
 

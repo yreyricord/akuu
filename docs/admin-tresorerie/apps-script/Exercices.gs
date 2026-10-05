@@ -95,15 +95,27 @@ function completerOngletsCloture() {
   }
   Logger.log('Cloture complétée pour : ' + done.join(', '));
   invalidateExercicesCache_();
+  done.forEach(function (y) { invalidateExerciceSnapshot_(y); });
   return { years: done };
 }
 
-function invalidateExercicesCache_() {
+/**
+ * Purge les caches d'exercices.
+ * `year` : purge ciblée (snapshot persistant + cache du journal de l'année) — à utiliser dès
+ * qu'un exercice change d'état (réouverture, reclôture, import de relevé).
+ * Sans année : seuls les caches memoire (CacheService) sont vidés ; les snapshots sont conservés
+ * car ils sont validés à la lecture par exerciceSnapshotStillValid_.
+ */
+function invalidateExercicesCache_(year) {
   var cache = CacheService.getScriptCache();
   cache.remove('exercices_all');
   cache.remove('finances_publiques');
   for (var y = EXERCICES_FIRST_YEAR_; y <= new Date().getFullYear() + 1; y++) {
     cache.remove('exercice_' + y);
+  }
+  if (year) {
+    invalidateExerciceSnapshot_(year);
+    if (typeof invalidateJournalApiCache_ === 'function') invalidateJournalApiCache_(Number(year));
   }
 }
 
@@ -359,7 +371,7 @@ function computeComptaFromJournal_(ss) {
     }
   });
   var terrain = {};
-  var pm = ss.getSheetByName('Detail_PM');
+  var pm = journalTabSheet_(ss, DETAIL_PM_TAB);
   (pm ? tabRows_(pm).rows : []).forEach(function (r) {
     if (String(r.category) === 'Facture cataloguée' || normTxt_(r.entry_type) === 'recette') return;
     var pen = num_(r.amount_pen);
@@ -453,6 +465,32 @@ function exerciceSnapshotKey_(year) {
   return 'EXERCICE_SNAPSHOT_' + year;
 }
 
+/** Supprime le snapshot persistant d'un exercice (il prime sur le contenu réel du Sheet). */
+function invalidateExerciceSnapshot_(year) {
+  year = Number(year);
+  if (!year) return;
+  try {
+    PropertiesService.getScriptProperties().deleteProperty(exerciceSnapshotKey_(year));
+  } catch (e) {
+    Logger.log('exercice snapshot delete ' + year + ': ' + e);
+  }
+}
+
+/**
+ * Un snapshot n'est valable que si l'onglet Cloture n'a pas bougé depuis sa construction.
+ * Lire cet onglet coûte quelques appels, reconstruire tout le payload en coûte des milliers
+ * (Journal + Detail_PM + Releves + Drive) : c'est ce contrôle qui évite qu'un exercice rouvert
+ * continue d'être servi comme « clos ».
+ */
+function exerciceSnapshotStillValid_(year, snap) {
+  var ss = openYearJournal_(year);
+  if (!ss) return false;
+  var map = clotureMap_(ss);
+  var statut = exerciceStatut_(map, year);
+  var version = Number(clotureStr_(map, 'version') || 1);
+  return String(snap.statut || '') === statut && Number(snap.version || 1) === version;
+}
+
 function readExercice_(year) {
   year = Number(year);
   var cache = CacheService.getScriptCache();
@@ -468,8 +506,12 @@ function readExercice_(year) {
     if (snap) {
       try {
         var parsed = JSON.parse(snap);
-        cache.put(key, snap, EXERCICES_CACHE_TTL_);
-        return parsed;
+        if (exerciceSnapshotStillValid_(year, parsed)) {
+          cache.put(key, snap, EXERCICES_CACHE_TTL_);
+          return parsed;
+        }
+        // Statut ou version modifiés (réouverture, reclôture…) : le snapshot est périmé.
+        try { props.deleteProperty(snapKey); } catch (e2) { /* ignore */ }
       } catch (e) { /* recalc */ }
     }
   }
@@ -478,7 +520,8 @@ function readExercice_(year) {
   var payload = buildExercicePayload_(year, ss);
   var json = JSON.stringify(payload);
   cache.put(key, json, EXERCICES_CACHE_TTL_);
-  if (payload.statut === 'clos' || year < new Date().getFullYear()) {
+  // Seul un exercice clos est figé : un exercice ouvert ou rouvert doit rester relu en direct.
+  if (payload.statut === 'clos') {
     try { props.setProperty(snapKey, json); } catch (e) { Logger.log('exercice snapshot ' + year + ': ' + e); }
   }
   return payload;

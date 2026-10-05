@@ -206,7 +206,7 @@ function importReleveImpl_(session, body) {
   var added = 0, skipped = 0;
   var seen = {};
   var newRows = [];
-  ops.forEach(function (o, i) {
+  ops.forEach(function (o) {
     var key = releveKey_(o.date, o.amount, o.label);
     seen[key] = (seen[key] || 0) + 1;
     if ((existing[key] || 0) >= seen[key]) { skipped++; return; }
@@ -226,7 +226,6 @@ function importReleveImpl_(session, body) {
       piece_filename: '',
       drive_file_url: '',
       source_file: fileName,
-      source_line: i + 1,
       needs_review: o.project ? '' : 'oui',
       notes: 'Importé du relevé ' + month + '/' + year + ' depuis le site (' + session.email + ')'
     };
@@ -256,7 +255,7 @@ function importReleveImpl_(session, body) {
     }
   }
   if (!replaced) rel.appendRow(line);
-  if (typeof invalidateExercicesCache_ === 'function') invalidateExercicesCache_();
+  if (typeof invalidateExercicesCache_ === 'function') invalidateExercicesCache_(year);
   appendAudit_(session.email, 'releve_imported', 'releve', year + '-' + month,
     { added: added, skipped: skipped, replaced: replacing, cleared: cleared });
   return {
@@ -317,6 +316,8 @@ function uploadReleveArchive_(session, body) {
     uploaded_at: new Date().toISOString(), uploaded_by: session.email, status: 'pending' };
   appendRow_('RelevesArchives', row, RELEVES_ARCHIVES_HEADERS);
   appendAudit_(session.email, 'releve_archive_uploaded', 'releve', year + '-' + mm, { file: fileName });
+  // Le PDF ajouté change le statut des relevés de l'exercice : le snapshot (exercice clos) est périmé.
+  if (typeof invalidateExercicesCache_ === 'function') invalidateExercicesCache_(year);
   return {
     filename: fileName, url: file.getUrl(), year: year, month: month,
     hint: 'Rangé dans 3_Trésorerie/' + year + '/Documents/Releves_bancaires. Le bilan ' + year +

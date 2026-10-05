@@ -506,7 +506,7 @@ function genererClotureAnneeCore_(session, body) {
     }
   }
   appendAudit_(session.email, 'cloture_generee', 'journal', String(year), { files: written.length, statut: statut });
-  invalidateExercicesCache_();
+  invalidateExercicesCache_(year);
 
   return {
     ok: true, year: year, files: written, summary: summary, verification: verification, banner: banner

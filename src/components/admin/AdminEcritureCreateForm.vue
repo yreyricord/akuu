@@ -135,7 +135,7 @@ function setOpen(v) {
 }
 
 const SOURCES = [
-  { id: 'terrain', label: 'Terrain (Detail_PM)' },
+  { id: 'terrain', label: 'Terrain (Dépenses Caisse Pérou)' },
   { id: 'banque', label: 'Banque (Journal)' }
 ]
 const TERRAIN_PAYMENTS = PAYMENT_METHODS.filter((m) =>

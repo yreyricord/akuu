@@ -491,6 +491,10 @@ export const tresorerieApi = {
     _exercicesCache.inflight = null
   },
 
+  invalidateJournalCache(year) {
+    invalidateJournalCache(year)
+  },
+
   getExercice(year) {
     if (isMockMode()) return Promise.resolve({ year, live: false })
     return remoteRequest(`/exercices/${year}`)
@@ -504,16 +508,19 @@ export const tresorerieApi = {
   rouvrirExercice(year, motif) {
     if (isMockMode()) return Promise.reject(new Error('Réouverture disponible une fois l\'application connectée'))
     return remoteRequest('/exercice/rouvrir', { method: 'POST', body: { year: Number(year), motif } })
+      .then((res) => { invalidateExercicesCache(); invalidateJournalCache(year); return res })
   },
 
   recloturerExercice(year, opts = {}) {
     if (isMockMode()) return Promise.reject(new Error('Reclôture disponible une fois l\'application connectée'))
     return remoteRequest('/exercice/recloturer', { method: 'POST', body: { year: Number(year), ...opts } })
+      .then((res) => { invalidateExercicesCache(); invalidateJournalCache(year); return res })
   },
 
   regenererCloture(year, opts = {}) {
     if (isMockMode()) return Promise.reject(new Error('Régénération disponible une fois l\'application connectée'))
     return remoteRequest('/exercice/regenerer', { method: 'POST', body: { year: Number(year), ...opts } })
+      .then((res) => { invalidateExercicesCache(); invalidateJournalCache(year); return res })
   },
 
   getFinancesPubliques() {

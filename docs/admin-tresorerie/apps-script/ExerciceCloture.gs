@@ -54,7 +54,7 @@ function collectReclotureProblems_(year, ss) {
     }
   }
   JOURNAL_TABS.forEach(function (tab) {
-    var sh = ss.getSheetByName(tab);
+    var sh = journalTabSheet_(ss, tab);
     if (!sh) return;
     tabRows_(sh).rows.forEach(function (r) {
       var type = String(r.entry_type || '').toLowerCase();
@@ -111,7 +111,10 @@ function rouvrirExercice_(session, body) {
   });
   appendHistoriqueJournal_(ss, session.email, 'rouverture', '', {}, { version: version, motif: motif }, motif);
   appendAudit_(session.email, 'exercice_rouvert', 'journal', String(year), { version: version, motif: motif });
-  invalidateExercicesCache_();
+  // Purge ciblée : sans elle, le snapshot persistant et le cache journal (7 j pour un exercice clos)
+  // continueraient de servir l'exercice comme « clos » après la réouverture.
+  invalidateExercicesCache_(year);
+  if (typeof invalidateJournalCaches_ === 'function') invalidateJournalCaches_(ss);
   return readExercice_(year);
 }
 
@@ -164,7 +167,8 @@ function recloturerExercice_(session, body) {
   } catch (regErr) {
     regeneration = { ok: false, error: regErr.message || String(regErr), pending: true };
   }
-  invalidateExercicesCache_();
+  invalidateExercicesCache_(year);
+  if (typeof invalidateJournalCaches_ === 'function') invalidateJournalCaches_(ss);
   return {
     ok: true, year: year, version: version,
     produits_eur: ex.produits_eur, charges_eur: ex.charges_eur, resultat_eur: ex.resultat_eur,

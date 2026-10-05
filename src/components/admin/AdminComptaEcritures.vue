@@ -108,11 +108,18 @@
       {{ year }} en direct depuis le journal Google — projet, montants et mode de paiement modifiables (badge « Caisse » = espèces comptées au Pérou)
       <a :href="live.sheet_url" target="_blank" rel="noopener noreferrer" class="font-semibold text-bleu hover:underline">Ouvrir le journal</a>
     </p>
+    <p
+      v-if="estRouvert && canEdit"
+      class="rounded-xl border border-ochre-200 bg-ochre-50 px-4 py-3 text-sm text-ochre-900"
+    >
+      Exercice {{ year }} rouvert — corrections possibles : projet, montants, mode de paiement,
+      ajout et suppression d'écritures.
+    </p>
     <p v-else-if="!journalLoading && year >= String(new Date().getFullYear() - 1)" class="rounded-xl border border-ochre-200 bg-ochre-50 px-4 py-3 text-sm text-ochre-900">
       Journal {{ year }} introuvable — vérifiez que <strong>Journal_AKUU_{{ year }}</strong> existe sur le Drive (Google Sheet) et que l’Apps Script est déployé.
     </p>
-    <p v-else-if="!journalLoading && exerciceStatuts[year] === 'clos'" class="rounded-xl border border-night-200 bg-cream-100 px-4 py-3 text-sm text-night-700">
-      Exercice {{ year }} clôturé — modifications impossibles. Demandez une réouverture dans l’onglet Exercices.
+    <p v-else-if="!journalLoading && statutExercice === 'clos'" class="rounded-xl border border-night-200 bg-cream-100 px-4 py-3 text-sm text-night-700">
+      Exercice {{ year }} clôturé — modifications impossibles. Demandez une réouverture dans l’onglet Bilan.
     </p>
     <p v-if="saveOk" class="text-sm text-forest-700">{{ saveOk }}</p>
     <p v-if="saveError" class="text-sm text-terracotta-700">{{ saveError }}</p>
@@ -324,8 +331,8 @@
       @created="onCreated"
     />
 
-    <p v-else-if="exerciceStatuts[year] === 'clos'" class="rounded-xl border border-night-200 bg-cream-100 px-4 py-3 text-sm text-night-600">
-      Exercice {{ year }} clôturé — rouvrez-le dans Réglages pour ajouter des écritures.
+    <p v-else-if="statutExercice === 'clos'" class="rounded-xl border border-night-200 bg-cream-100 px-4 py-3 text-sm text-night-600">
+      Exercice {{ year }} clôturé — rouvrez-le dans l’onglet Bilan pour ajouter des écritures.
     </p>
 
     <div
@@ -498,22 +505,23 @@ const toDelete = ref(null)
 const deleteReason = ref('')
 const deleteError = ref('')
 const exerciceStatuts = ref({})
+/** Statut de l'exercice affiché : ouvert / rouvert = modifiable, clos = lecture seule. */
+const statutExercice = computed(() => exerciceStatuts.value[year.value])
+const estRouvert = computed(() => statutExercice.value === 'rouvert')
+
 async function loadExerciceStatut(y) {
   try {
     const ex = await tresorerieApi.getExercice(y)
     exerciceStatuts.value = { ...exerciceStatuts.value, [y]: ex.statut }
   } catch { /* ignore */ }
 }
-const canDelete = computed(() => {
-  const s = exerciceStatuts.value[year.value]
-  return s === 'ouvert' || s === 'rouvert'
-})
+const canDelete = computed(() => statutExercice.value === 'ouvert' || statutExercice.value === 'rouvert')
 /** Bouton + sauf exercice explicitement clôturé (statut encore en chargement → on affiche quand même). */
-const canAddEcriture = computed(() => exerciceStatuts.value[year.value] !== 'clos')
+const canAddEcriture = computed(() => statutExercice.value !== 'clos')
 const canEdit = computed(() => {
-  if (!live.value?.live || year.value !== String(live.value.year)) return false
-  const s = exerciceStatuts.value[year.value]
-  return s !== 'clos'
+  if (statutExercice.value === 'clos') return false
+  // Un exercice rouvert s'édite comme l'année en cours : seul le journal doit être chargé.
+  return Boolean(live.value?.live && year.value === String(live.value.year))
 })
 const addFormOpen = ref(false)
 

@@ -112,7 +112,7 @@
 
     <!-- Ajouter dépense -->
     <details class="mt-4 rounded-xl border border-night-100 px-3 py-2">
-      <summary class="cursor-pointer text-xs font-semibold text-night">+ Ajouter une dépense terrain (Detail_PM)</summary>
+      <summary class="cursor-pointer text-xs font-semibold text-night">+ Ajouter une dépense terrain (Dépenses Caisse Pérou)</summary>
       <form class="mt-3 grid gap-2 sm:grid-cols-2" @submit.prevent="submitAdd">
         <input v-model="addForm.expense_date" type="date" required class="admin-input text-sm" />
         <input v-model="addForm.amount_pen" type="number" step="0.01" placeholder="Montant PEN" required class="admin-input text-sm" />

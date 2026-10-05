@@ -1,7 +1,7 @@
 /**
  * Journal de l'année en cours dans Google Sheets (source unique pour l'année ouverte).
  *
- * - Un Google Sheet par année : 3_Trésorerie/<année>/Journal_AKUU_<année> (onglets Journal + Detail_PM,
+ * - Un Google Sheet par année : 3_Trésorerie/<année>/Journal_AKUU_<année> (onglets Journal + Dépenses Caisse Pérou,
  *   mêmes colonnes que les journaux Excel des années clôturées).
  * - L'application y écrit directement : factures validées, saisies directes, suppressions, factures ajoutées.
  * - Le site le lit en direct (GET journal-annee?year=AAAA).
@@ -13,12 +13,60 @@
 
 var JOURNAL_COLUMNS = [
   'reference', 'expense_date', 'label', 'vendor_name', 'project', 'category', 'amount_eur', 'amount_pen',
-  'currency', 'entry_source', 'entry_type', 'piece_filename', 'drive_file_url', 'source_file', 'source_line',
+  'currency', 'entry_source', 'entry_type', 'piece_filename', 'drive_file_url', 'source_file',
   'needs_review', 'notes', 'payment_method'
 ];
 var PAYMENT_METHOD_CAISSE_ = { especes: true, yape_plin: true };
 var PAYMENT_METHOD_HORS_CAISSE_ = { cb: true, virement: true, paypal: true, autre: true, avance: true };
-var JOURNAL_TABS = ['Journal', 'Detail_PM'];
+/**
+ * Onglet des dépenses terrain en soles. Le nom est comparé en normalisé (voir isDetailPMTab_) :
+ * « Dépenses Caisse Pérou », « Depense Caisse Perou » et l'ancien « Detail_PM » sont tous reconnus.
+ * Toujours passer par journalTabSheet_() / isDetailPMTab_() plutôt que par getSheetByName() ou
+ * une comparaison de nom en dur.
+ */
+var DETAIL_PM_TAB = 'Dépenses Caisse Pérou';
+var DETAIL_PM_TAB_LEGACY_ = 'Detail_PM';
+var JOURNAL_TABS = ['Journal', DETAIL_PM_TAB];
+
+/**
+ * Normalise un nom d'onglet pour comparaison : minuscules, sans accents ni ponctuation.
+ * « Dépenses Caisse Pérou », « depenses caisse perou » et « DEPENSES  CAISSE  PEROU » matchent.
+ */
+var TAB_ACCENTS_ = {
+  'à': 'a', 'â': 'a', 'ä': 'a', 'á': 'a', 'ã': 'a', 'é': 'e', 'è': 'e', 'ê': 'e', 'ë': 'e',
+  'î': 'i', 'ï': 'i', 'í': 'i', 'ô': 'o', 'ö': 'o', 'ó': 'o', 'õ': 'o', 'ù': 'u', 'û': 'u',
+  'ü': 'u', 'ú': 'u', 'ç': 'c', 'ñ': 'n', '’': '', "'": ''
+};
+
+function normTabName_(name) {
+  var s = String(name || '').toLowerCase();
+  s = s.replace(/[àâäáãéèêëîïíôöóõùûüúçñ'’]/g, function (c) { return TAB_ACCENTS_[c] || c; });
+  return s.replace(/[^a-z0-9]+/g, '');
+}
+
+/** Résout un onglet du journal, en tolérant l'ancien nom de l'onglet terrain. */
+function journalTabSheet_(ss, tab) {
+  var sh = ss.getSheetByName(tab);
+  if (sh) return sh;
+  if (!isDetailPMTab_(tab)) return null;
+  var want = normTabName_(DETAIL_PM_TAB);
+  var legacy = normTabName_(DETAIL_PM_TAB_LEGACY_);
+  var sheets = ss.getSheets();
+  for (var i = 0; i < sheets.length; i++) {
+    var n = normTabName_(sheets[i].getName());
+    if (n === want || n === legacy) return sheets[i];
+  }
+  return null;
+}
+
+/** Vrai si le nom d'onglet désigne les dépenses terrain (nouveau nom ou ancien). */
+function isDetailPMTab_(name) {
+  var n = normTabName_(name);
+  if (!n) return false;
+  if (n === normTabName_(DETAIL_PM_TAB_LEGACY_)) return true;         // « Detail_PM »
+  // « Dépenses/Dépense Caisse Pérou », accents et singulier/pluriel indifférents.
+  return n.indexOf('caisse') >= 0 && (n.indexOf('perou') >= 0 || n.indexOf('peru') >= 0);
+}
 
 var PROJECT_CODES_ = {
   musee: 'MUSEE', maison: 'MAISON', akuuvision: 'AKUUVISION', anglais: 'ANGLAIS', hydrama: 'HYDRAMA',
@@ -130,10 +178,10 @@ function initJournalAnnee_(year) {
     ss = SpreadsheetApp.create('Journal_AKUU_' + year);
     DriveApp.getFileById(ss.getId()).moveTo(yearFolder);
     ss.getSheets()[0].setName('Journal');
-    ss.insertSheet('Detail_PM');
+    ss.insertSheet(DETAIL_PM_TAB);
   }
   JOURNAL_TABS.forEach(function (tab) {
-    var sh = ss.getSheetByName(tab) || ss.insertSheet(tab);
+    var sh = journalTabSheet_(ss, tab) || ss.insertSheet(tab);
     if (sh.getLastRow() === 0) sh.appendRow(JOURNAL_COLUMNS);
     sh.setFrozenRows(1);
   });
@@ -220,7 +268,7 @@ function num_(v) {
 /** Colonne optionnelle sur les journaux existants (Detail_PM surtout). */
 function ensurePaymentMethodColumn_(ss) {
   JOURNAL_TABS.forEach(function (tab) {
-    var sh = ss.getSheetByName(tab);
+    var sh = journalTabSheet_(ss, tab);
     if (!sh || sh.getLastRow() === 0) return;
     var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
     if (headers.indexOf('payment_method') >= 0) return;
@@ -370,7 +418,7 @@ function updateJournalLine_(year, reference, actor, patch) {
     after.category = String(patch.category);
     set('category', after.category);
   }
-  if (patch.payment_method && hit.sheet.getName() === 'Detail_PM') {
+  if (patch.payment_method && isDetailPMTab_(hit.sheet.getName())) {
     var pmPatch = applyPaymentMethodPatch_(hit.row, patch.payment_method);
     Object.keys(pmPatch).forEach(function (k) {
       after[k] = pmPatch[k];
@@ -402,7 +450,7 @@ function updateJournalLine_(year, reference, actor, patch) {
       after.amount_pen = '';
       set('amount_pen', '');
     }
-    if (after.currency === 'PEN' && patch.amount_eur === undefined && hit.sheet.getName() === 'Detail_PM') {
+    if (after.currency === 'PEN' && patch.amount_eur === undefined && isDetailPMTab_(hit.sheet.getName())) {
       after.amount_eur = '';
       set('amount_eur', '');
     }
@@ -446,7 +494,7 @@ function getJournalAnnee_(session, year) {
   }
   var out = [];
   JOURNAL_TABS.forEach(function (tab) {
-    var sh = ss.getSheetByName(tab);
+    var sh = journalTabSheet_(ss, tab);
     if (!sh) return;
     var src = tab === 'Journal' ? 'banque' : 'terrain';
     tabRows_(sh).rows.forEach(function (r) {
@@ -487,7 +535,7 @@ function buildJournalRowIndex_(ss) {
   if (_journalRowIndex_[id]) return _journalRowIndex_[id];
   var index = {};
   for (var t = 0; t < JOURNAL_TABS.length; t++) {
-    var sh = ss.getSheetByName(JOURNAL_TABS[t]);
+    var sh = journalTabSheet_(ss, JOURNAL_TABS[t]);
     if (!sh) continue;
     var tr = tabRows_(sh);
     for (var i = 0; i < tr.rows.length; i++) {
@@ -578,8 +626,8 @@ function maxRefNumberInSheet_(sh, prefix, year) {
 }
 
 function nextYearJournalReference_(ss, tab, year) {
-  var prefix = tab === 'Detail_PM' ? 'AKUU-PM' : 'AKUU-IMP';
-  var sh = ss.getSheetByName(tab);
+  var prefix = isDetailPMTab_(tab) ? 'AKUU-PM' : 'AKUU-IMP';
+  var sh = journalTabSheet_(ss, tab);
   return prefix + '-' + year + '-' + pad4_(maxRefNumberInSheet_(sh, prefix, year) + 1);
 }
 
@@ -605,8 +653,8 @@ function createJournalEntry_(session, body) {
   }
 
   ensurePaymentMethodColumn_(ss);
-  var tab = source === 'terrain' ? 'Detail_PM' : 'Journal';
-  var sh = ss.getSheetByName(tab);
+  var tab = source === 'terrain' ? DETAIL_PM_TAB : 'Journal';
+  var sh = journalTabSheet_(ss, tab);
   if (!sh) throw apiError_('NOT_FOUND', 'Onglet ' + tab + ' absent', 404);
   var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
   var reference = nextYearJournalReference_(ss, tab, year);
@@ -639,7 +687,6 @@ function createJournalEntry_(session, body) {
       piece_filename: '',
       drive_file_url: '',
       source_file: 'Écritures · site trésorerie',
-      source_line: '',
       needs_review: 'non',
       payment_method: pm,
       notes: noteBase
@@ -667,7 +714,6 @@ function createJournalEntry_(session, body) {
       piece_filename: '',
       drive_file_url: '',
       source_file: 'Écritures · site trésorerie',
-      source_line: '',
       needs_review: 'non',
       payment_method: '',
       notes: noteBase
@@ -742,7 +788,7 @@ function appendToYearJournal_(f) {
   var ss = openYearJournal_(year);
   if (!ss) return false;
   ensurePaymentMethodColumn_(ss);
-  var sh = ss.getSheetByName('Detail_PM');
+  var sh = journalTabSheet_(ss, DETAIL_PM_TAB);
   var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
   var pen = num_(f.amount_pen);
   var isPen = String(f.currency || '').toUpperCase() === 'PEN' && pen;
@@ -763,7 +809,6 @@ function appendToYearJournal_(f) {
     piece_filename: f.file_name || '',
     drive_file_url: f.drive_file_url || '',
     source_file: 'Application trésorerie',
-    source_line: '',
     needs_review: '',
     payment_method: String(f.payment_method || (isPen ? 'especes' : 'cb')),
     notes: 'Saisie application · ' + (f.category || '') + ' · ' + (f.submitter_email || '') +

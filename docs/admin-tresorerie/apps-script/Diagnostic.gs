@@ -119,7 +119,7 @@ function remplacerSeptembreProvisoire2026() {
     }
   });
   if (typeof invalidateJournalCaches_ === 'function') invalidateJournalCaches_(openYearJournal_(year));
-  if (typeof invalidateExercicesCache_ === 'function') invalidateExercicesCache_();
+  if (typeof invalidateExercicesCache_ === 'function') invalidateExercicesCache_(year);
   Logger.log('');
   Logger.log('Résumé : ' + removed.length + ' supprimée(s), ' + missing.length + ' absente(s), ' + errors.length + ' erreur(s).');
   Logger.log('➡️ Maintenant : site admin → Bilan 2026 → Import relevé → PDF septembre → Ajouter au journal.');
@@ -153,7 +153,7 @@ function auditJournalAnnee_(year) {
   var yearJournalRefs = {};
 
   JOURNAL_TABS.forEach(function (tabName) {
-    var sh = ss.getSheetByName(tabName);
+    var sh = journalTabSheet_(ss, tabName);
     if (!sh) {
       out.warnings.push('Onglet ' + tabName + ' absent');
       Logger.log('⚠️ Onglet ' + tabName + ' absent');

@@ -107,7 +107,7 @@ function basculeAnnee_(session, body) {
   var previous = journalSheetId_(year);
   var ss = basculeConvertJournal_(journalBlob, yearFolder, year);
   JOURNAL_TABS.forEach(function (tab) {
-    var sh = ss.getSheetByName(tab) || ss.insertSheet(tab);
+    var sh = journalTabSheet_(ss, tab) || ss.insertSheet(tab);
     if (sh.getLastRow() === 0) sh.appendRow(JOURNAL_COLUMNS);
     sh.setFrozenRows(1);
   });

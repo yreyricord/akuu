@@ -10,6 +10,12 @@ export function mapExerciceToBilanYear(ex, jsonYear = null) {
       provisoire,
       clos: ex.statut === 'clos',
       rouvert: ex.statut === 'rouvert',
+      ouvert: ex.statut === 'ouvert',
+      /**
+       * Un exercice non clos (année en cours ou exercice rouvert) reste alimenté par le journal
+       * Google : dépôt de relevés, exports et corrections y sont possibles.
+       */
+      editable: ex.statut !== 'clos',
       version: ex.version || 1,
       status: ex.statut === 'clos' ? 'pret' : undefined,
       compte_resultat: {
@@ -30,6 +36,8 @@ export function mapExerciceToBilanYear(ex, jsonYear = null) {
       rouvert_motif: ex.cloture_meta?.rouvert_motif || ''
     },
     releves_status: ex.releves_status,
+    /** Dépenses terrain Detail_PM de l'exercice : { « Musée Shapishiko »: 12 345.6, … } en soles. */
+    terrain_pen: ex.terrain_pen,
     downloads: jsonYear?.downloads ?? [],
     download_releves: jsonYear?.download_releves,
     download_cloture: jsonYear?.download_cloture ?? {
@@ -48,6 +56,9 @@ export function mapExerciceToComptaYear(ex) {
     year: ex.year,
     live: ex.live,
     provisoire,
+    clos: ex.statut === 'clos',
+    rouvert: ex.statut === 'rouvert',
+    editable: ex.statut !== 'clos',
     produits_eur: ex.produits_eur,
     charges_eur: ex.charges_eur,
     resultat_eur: ex.resultat_eur,
