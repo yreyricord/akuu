@@ -62,6 +62,67 @@
       </div>
 
       <div
+        v-if="selectedDemande"
+        class="rounded-xl border border-night/10 bg-sand/30 px-4 py-3"
+      >
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <p class="text-xs text-night-500">
+            Ce devis n'est plus à facturer ? Fermez-le : il sort de cette liste (réversible).
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <button
+              type="button"
+              class="rounded-full border border-night/20 bg-white px-3 py-1.5 text-xs font-semibold text-night-600 hover:bg-night/5"
+              @click="openDevisAction('close')"
+            >
+              Fermer ce devis
+            </button>
+            <button
+              v-if="auth.isSuperAdminUser"
+              type="button"
+              class="rounded-full border border-terracotta/40 bg-white px-3 py-1.5 text-xs font-semibold text-terracotta-700 hover:bg-terracotta/5"
+              @click="openDevisAction('delete')"
+            >
+              Supprimer
+            </button>
+          </div>
+        </div>
+
+        <div v-if="devisAction" class="mt-3 space-y-2 border-t border-night/10 pt-3">
+          <p v-if="devisAction === 'close'" class="text-sm text-night-700">
+            Fermer <strong>{{ selectedDemande.reference }}</strong> ? Elle ne sera plus proposée pour
+            facturation et restera visible dans l'historique.
+          </p>
+          <p v-else class="text-sm text-terracotta-700">
+            Supprimer définitivement <strong>{{ selectedDemande.reference }}</strong> ? La demande et
+            ses pièces sont retirées — une copie intégrale reste dans l'audit.
+          </p>
+          <label v-if="devisAction === 'close'" class="block space-y-1">
+            <span class="text-xs font-semibold uppercase tracking-wide text-night-400">Motif (facultatif)</span>
+            <input
+              v-model="devisActionReason"
+              class="admin-input"
+              placeholder="Ex. achat annulé, devis abandonné…"
+            />
+          </label>
+          <p v-if="devisActionError" class="text-sm text-terracotta-700" role="alert">{{ devisActionError }}</p>
+          <div class="flex flex-wrap gap-2">
+            <button type="button" class="btn-primary" :disabled="devisActionBusy" @click="confirmDevisAction">
+              {{ devisActionBusy ? 'Traitement…' : (devisAction === 'close' ? 'Confirmer la fermeture' : 'Supprimer définitivement') }}
+            </button>
+            <button
+              type="button"
+              class="rounded-full border border-night/20 bg-white px-4 py-2 text-sm font-semibold text-night-600"
+              :disabled="devisActionBusy"
+              @click="cancelDevisAction"
+            >
+              Annuler
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
         v-if="sendingThisDemande"
         class="rounded-xl border border-bleu/30 bg-bleu/10 px-4 py-3 text-sm text-night"
         role="status"
@@ -258,6 +319,7 @@ import {
 } from '@/data/currency.js'
 import { penToEur } from '@/api/tresorerie/exchangeRate.js'
 import { useTresorerieStore } from '@/store/tresorerie.js'
+import { useAuthStore } from '@/store/auth.js'
 import { TASK_ESTIMATE_MS, useUploadQueue } from '@/store/uploadQueue.js'
 import { markDataStale, onPendingRefresh } from '@/composables/usePendingRefresh.js'
 import AdminFileCapture from './AdminFileCapture.vue'
@@ -266,6 +328,7 @@ import AdminCurrencyAmountField from './AdminCurrencyAmountField.vue'
 const emit = defineEmits(['closed'])
 
 const store = useTresorerieStore()
+const auth = useAuthStore()
 const uploads = useUploadQueue()
 const postSubmitChoice = ref(false)
 const savedDemandRef = ref('')
@@ -444,10 +507,47 @@ function closeInvoicing() {
   })
 }
 
+/** Fermeture / suppression du devis sélectionné, depuis la liste des devis facturables. */
+const devisAction = ref(null)
+const devisActionReason = ref('')
+const devisActionBusy = ref(false)
+const devisActionError = ref('')
+
+function openDevisAction(kind) {
+  devisAction.value = kind
+  devisActionReason.value = ''
+  devisActionError.value = ''
+}
+
+function cancelDevisAction() {
+  devisAction.value = null
+  devisActionError.value = ''
+}
+
+async function confirmDevisAction() {
+  const reference = form.demand_reference
+  if (!reference || devisActionBusy.value) return
+  devisActionBusy.value = true
+  devisActionError.value = ''
+  try {
+    if (devisAction.value === 'close') {
+      await store.closeDemandeDevis(reference, devisActionReason.value.trim())
+    } else {
+      await store.deleteDemande(reference)
+    }
+    devisAction.value = null
+    resetFormFields(true)
+    emit('closed')
+  } catch (e) {
+    devisActionError.value = e.message || 'Action impossible.'
+  } finally {
+    devisActionBusy.value = false
+  }
+}
+
 function resetLines() {
   lines.value = [createLine()]
 }
-
 function addLine() {
   lines.value.push(createLine())
 }

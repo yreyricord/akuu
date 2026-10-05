@@ -69,6 +69,7 @@
         <AdminDirectExpenseForm v-else-if="activeTab === 'fonctionnement'" @submitted="goAfterDirectExpense" />
         <AdminComptaHub v-else-if="activeTab === 'compta'" />
         <AdminBilanHub v-else-if="activeTab === 'bilan'" />
+        <AdminTransparenceView v-else-if="activeTab === 'transparence'" />
         <AdminHistoryView v-else-if="activeTab === 'historique'" />
         <AdminAccessQueue v-else-if="activeTab === 'acces'" />
       </template>
@@ -208,6 +209,7 @@ import {
   PhUserPlus,
   PhSquaresFour,
   PhBank,
+  PhEye,
   PhDotsThreeCircle
 } from '@phosphor-icons/vue'
 import { useAuthStore } from '@/store/auth.js'
@@ -226,6 +228,7 @@ import AdminValidationQueue from '@/components/admin/AdminValidationQueue.vue'
 import AdminHistoryView from '@/components/admin/AdminHistoryView.vue'
 import AdminComptaHub from '@/components/admin/AdminComptaHub.vue'
 import AdminBilanHub from '@/components/admin/AdminBilanHub.vue'
+import AdminTransparenceView from '@/components/admin/AdminTransparenceView.vue'
 import AdminHubView from '@/components/admin/AdminHubView.vue'
 import AdminTresorerieGuideView from '@/components/admin/AdminTresorerieGuideView.vue'
 import AdminAccessQueue from '@/components/admin/AdminAccessQueue.vue'
@@ -258,6 +261,7 @@ const tabIcons = {
   bilan: PhChartBar,
   fonctionnement: PhBank,
   historique: PhClockCounterClockwise,
+  transparence: PhEye,
   acces: PhUserPlus
 }
 

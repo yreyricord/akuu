@@ -555,8 +555,59 @@ function getExercices_(session) {
   return out;
 }
 
-/** Contrôle admin : compare les totaux journal aux valeurs de référence 2017–2025. */
-function verifierExercicesControle_(session) {
+/**
+ * Clés d'un exercice diffusables à tous les membres connectés (onglet Transparence).
+ * Liste blanche volontaire : toute nouvelle clé de buildExercicePayload_ reste privée
+ * tant qu'elle n'est pas ajoutée ici. Ne jamais y mettre sheet_url, releves, rapprochement,
+ * releves_status ni cloture_meta (email du trésorier ayant rouvert l'exercice).
+ */
+var MEMBER_EXERCICE_KEYS_ = [
+  'year', 'statut', 'provisoire', 'approuve_en_ag', 'updated_at',
+  'produits_eur', 'charges_eur', 'resultat_eur',
+  'produits_postes', 'charges_postes', 'recettes_groupes',
+  'loyers_maison_eur', 'charges_projets', 'terrain_pen', 'tresorerie'
+];
+
+/** Réduit un payload exercice à ses agrégats publiables. */
+function sanitizeExerciceForMembers_(ex) {
+  var out = {};
+  for (var i = 0; i < MEMBER_EXERCICE_KEYS_.length; i++) {
+    var k = MEMBER_EXERCICE_KEYS_[i];
+    if (ex[k] !== undefined) out[k] = ex[k];
+  }
+  return out;
+}
+
+/**
+ * Transparence : tout membre connecté (bénévole compris) consulte les agrégats par exercice —
+ * produits, charges, résultat, trésorerie et dépenses terrain en soles, sans aucune ligne
+ * nominative, URL de feuille ni relevé bancaire. Lecture seule.
+ */
+function getExercicesTransparence_(session) {
+  if (!session || !session.email) throw apiError_('UNAUTHORIZED', 'Session requise', 401);
+
+  var cache = CacheService.getScriptCache();
+  var cached = cache.get('transparence_exercices');
+  if (cached) {
+    try { return JSON.parse(cached); } catch (e) { /* recalc */ }
+  }
+
+  var current = new Date().getFullYear();
+  var years = [];
+  for (var y = EXERCICES_FIRST_YEAR_; y <= current; y++) {
+    var ex = readExercice_(y);
+    if (ex.live) years.push(sanitizeExerciceForMembers_(ex));
+  }
+  var out = {
+    generated_at: new Date().toISOString(),
+    source: 'google_sheets',
+    years: years
+  };
+  cache.put('transparence_exercices', JSON.stringify(out), EXERCICES_CACHE_TTL_);
+  return out;
+}
+
+/** Contrôle admin : compare les totaux journal aux valeurs de référence 2017–2025. */function verifierExercicesControle_(session) {
   requireAdmin_(session);
   var rows = [];
   for (var y = EXERCICES_FIRST_YEAR_; y <= 2025; y++) {

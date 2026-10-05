@@ -12,6 +12,7 @@ export const TREASORERIE_TABS = [
   { id: 'compta', label: 'Compta', roles: ['tresorier', 'admin'] },
   { id: 'bilan', label: 'Bilan', roles: ['tresorier', 'admin'] },
   { id: 'acces', label: 'Accès', roles: ['admin'], superAdminOnly: true },
+  { id: 'transparence', label: 'Transparence', roles: ['benevole', 'tresorier', 'admin'] },
   { id: 'historique', label: 'Historique', roles: ['benevole', 'tresorier', 'admin'] }
 ]
 

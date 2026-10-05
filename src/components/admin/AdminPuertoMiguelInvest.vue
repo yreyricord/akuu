@@ -8,36 +8,62 @@
       <div>
         <h3 id="pm-title" class="text-base font-semibold text-forest-700">Argent investi à Puerto Miguel</h3>
         <p class="mt-1 max-w-xl text-sm text-night-500">
-          Dépenses terrain payées en soles (onglet « Dépenses Caisse Pérou »), hors AKUUVision,
-          Fonctionnement et Divers — soit l'argent réellement affecté aux projets locaux.
+          Dépenses terrain payées en soles (onglet « Dépenses Caisse Pérou »). Chaque exercice compare
+          l'argent réellement affecté aux projets locaux à ce qui reste sur la même caisse
+          (AKUUVision, Fonctionnement, Divers).
         </p>
       </div>
       <div class="text-right">
         <p class="text-xs font-semibold uppercase tracking-wide text-night-500">
           Total {{ firstYear }}–{{ lastYear }}
         </p>
-        <p class="font-serif text-3xl font-bold text-forest-700">{{ formatPen(total) }}</p>
+        <p class="font-serif text-3xl font-bold text-forest-700">{{ formatPen(totalProjets) }}</p>
         <p class="text-xs text-night-400">
-          {{ series.length }} exercice(s) avec dépenses terrain
+          sur {{ formatPen(totalPerou) }} dépensés en Caisse Pérou · {{ series.length }} exercice(s)
         </p>
       </div>
     </div>
 
-    <ul class="mt-5 space-y-2">
-      <li v-for="y in series" :key="y.year" class="flex items-center gap-3">
+    <ul class="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-xs text-night-500">
+      <li class="flex items-center gap-1.5">
+        <span class="h-2.5 w-2.5 rounded-full bg-forest/80" aria-hidden="true" />
+        Projets locaux ({{ pmShare }} %)
+      </li>
+      <li class="flex items-center gap-1.5">
+        <span class="h-2.5 w-2.5 rounded-full bg-ochre-300" aria-hidden="true" />
+        Reste de la caisse Pérou
+      </li>
+    </ul>
+
+    <ul class="mt-5 space-y-3">
+      <li v-for="y in series" :key="y.year" class="flex items-start gap-3">
         <button
           type="button"
-          class="w-12 shrink-0 text-left text-sm font-semibold tabular-nums"
+          class="w-12 shrink-0 pt-0.5 text-left text-sm font-semibold tabular-nums"
           :class="String(y.year) === activeYear ? 'text-forest-700' : 'text-night-500 hover:text-night'"
           :aria-pressed="String(y.year) === activeYear"
           @click="activeYear = String(y.year)"
         >
           {{ y.year }}
         </button>
-        <span class="h-6 flex-1 overflow-hidden rounded-full bg-cream-200">
-          <span class="block h-full rounded-full bg-forest/80" :style="{ width: barWidth(y.total) }" />
-        </span>
-        <span class="w-32 shrink-0 text-right text-sm tabular-nums text-night-700">{{ formatPen(y.total) }}</span>
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center gap-2">
+            <span class="h-6 flex-1 overflow-hidden rounded-full bg-cream-200">
+              <span class="flex h-full overflow-hidden rounded-full" :style="{ width: barWidth(y.total) }">
+                <span class="h-full bg-forest/80" :style="{ width: share(y.projets, y.total) }" />
+                <span class="h-full bg-ochre-300" :style="{ width: share(y.reste, y.total) }" />
+              </span>
+            </span>
+            <span class="w-28 shrink-0 text-right text-sm tabular-nums text-night-700">
+              {{ formatPen(y.total) }}
+            </span>
+          </div>
+          <p class="mt-1 text-xs text-night-500">
+            <span class="font-semibold text-forest-700">{{ formatPen(y.projets) }}</span> projets locaux
+            · <span class="font-semibold text-night-600">{{ formatPen(y.reste) }}</span> reste
+            <span class="text-night-400">({{ Math.round(ratio(y.projets, y.total) * 100) }} %)</span>
+          </p>
+        </div>
       </li>
     </ul>
 
@@ -60,6 +86,8 @@ import { formatPen } from '@/data/tresorerie-config.js'
 /**
  * Projets exclus du total « investi à Puerto Miguel » : AKUUVision n'est pas un projet local,
  * Fonctionnement est un frais de structure et Divers n'est pas affecté.
+ * Ces montants ne sont pas perdus : ils forment « le reste » de la caisse Pérou, auquel
+ * chaque exercice est comparé.
  */
 const PM_EXCLUDED_PROJECTS = ['AKUUVision', 'Fonctionnement', 'Divers / non affecté']
 
@@ -70,21 +98,29 @@ const props = defineProps({
 
 const activeYear = ref('')
 
-/** Série pluriannuelle : total soles par exercice, hors projets exclus, années sans dépense omises. */
+const round2 = (value) => Math.round(value * 100) / 100
+
+/** Série pluriannuelle : projets locaux vs reste de la caisse Pérou, années sans dépense omises. */
 const series = computed(() =>
   props.years
     .map((ex) => {
-      const total = Object.entries(ex.terrain_pen || {}).reduce(
-        (sum, [project, pen]) => (PM_EXCLUDED_PROJECTS.includes(project) ? sum : sum + (Number(pen) || 0)),
-        0
-      )
-      return { year: ex.year, total: Math.round(total * 100) / 100 }
+      let projets = 0
+      let reste = 0
+      for (const [project, pen] of Object.entries(ex.terrain_pen || {})) {
+        const value = Number(pen) || 0
+        if (PM_EXCLUDED_PROJECTS.includes(project)) reste += value
+        else projets += value
+      }
+      return { year: ex.year, projets: round2(projets), reste: round2(reste), total: round2(projets + reste) }
     })
     .filter((r) => r.total > 0)
     .sort((a, b) => a.year - b.year)
 )
 
-const total = computed(() => Math.round(series.value.reduce((s, r) => s + r.total, 0) * 100) / 100)
+const totalProjets = computed(() => round2(series.value.reduce((s, r) => s + r.projets, 0)))
+const totalPerou = computed(() => round2(series.value.reduce((s, r) => s + r.total, 0)))
+/** Part des projets locaux sur l'ensemble de la période, en %. */
+const pmShare = computed(() => Math.round(ratio(totalProjets.value, totalPerou.value) * 100))
 const max = computed(() => Math.max(...series.value.map((r) => r.total), 1))
 const firstYear = computed(() => series.value[0]?.year ?? '')
 const lastYear = computed(() => series.value.at(-1)?.year ?? '')
@@ -113,7 +149,17 @@ const projects = computed(() => {
     .sort((a, b) => b.pen - a.pen)
 })
 
+function ratio(part, whole) {
+  return whole > 0 ? part / whole : 0
+}
+
+/** Largeur de la barre entière, pour garder la comparaison entre exercices. */
 function barWidth(value) {
   return `${Math.max((value / max.value) * 100, 3)}%`
+}
+
+/** Largeur d'un segment à l'intérieur de la barre. */
+function share(part, whole) {
+  return `${ratio(part, whole) * 100}%`
 }
 </script>

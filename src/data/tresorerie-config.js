@@ -61,6 +61,7 @@ export const PAYMENT_METHODS = [
 export const DEMANDE_STATUSES = {
   awaiting_approval: { label: 'En attente', color: 'ochre' },
   approved: { label: 'Approuvée', color: 'leaf' },
+  closed: { label: 'Fermée', color: 'night' },
   rejected: { label: 'Refusée', color: 'terracotta' },
   cancelled: { label: 'Annulée', color: 'night' }
 }

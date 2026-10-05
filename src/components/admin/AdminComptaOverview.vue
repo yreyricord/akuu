@@ -68,9 +68,6 @@
       </article>
     </section>
 
-    <!-- Synthèse pluriannuelle des dépenses terrain (indépendante de la période sélectionnée) -->
-    <AdminPuertoMiguelInvest :years="allYears" />
-
     <!-- Produits / charges -->
     <section class="rounded-2xl border border-night-100 bg-white p-5 shadow-sm">
       <div class="flex flex-wrap items-baseline justify-between gap-3">
@@ -362,6 +359,9 @@
       </div>
       </div>
     </section>
+
+    <!-- Synthèse pluriannuelle des dépenses terrain (indépendante de la période sélectionnée) -->
+    <AdminPuertoMiguelInvest :years="allYears" />
 
     <p
       v-if="offlineFallback"

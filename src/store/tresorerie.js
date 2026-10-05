@@ -452,6 +452,88 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
     }
   }
 
+  /** Ferme un devis approuvé : il sort du sélecteur de facturation (réversible). */
+  async function closeDemandeDevis(reference, reason, opts = {}) {
+    const background = Boolean(opts.background)
+    if (!background) {
+      clearMessages()
+      loading.value = true
+    }
+    try {
+      const res = await tresorerieApi.closeDemandeDevis(reference, reason)
+      if (!background) {
+        successMessage.value = `Devis ${reference} fermé.`
+        delete _fetchedAt.approved
+        delete _fetchedAt.mine
+        await Promise.all([loadApprovedDemandes(true), refreshMine(true)])
+      } else {
+        delete _fetchedAt.approved
+        delete _fetchedAt.mine
+      }
+      return res
+    } catch (e) {
+      if (!background) error.value = e.message
+      throw e
+    } finally {
+      if (!background) loading.value = false
+    }
+  }
+
+  async function reopenDemandeDevis(reference, opts = {}) {
+    const background = Boolean(opts.background)
+    if (!background) {
+      clearMessages()
+      loading.value = true
+    }
+    try {
+      const res = await tresorerieApi.reopenDemandeDevis(reference)
+      if (!background) {
+        successMessage.value = `Devis ${reference} rouvert.`
+        delete _fetchedAt.approved
+        delete _fetchedAt.mine
+        await Promise.all([loadApprovedDemandes(true), refreshMine(true)])
+      } else {
+        delete _fetchedAt.approved
+        delete _fetchedAt.mine
+      }
+      return res
+    } catch (e) {
+      if (!background) error.value = e.message
+      throw e
+    } finally {
+      if (!background) loading.value = false
+    }
+  }
+
+  /** Suppression définitive (admin) — une copie reste dans l'audit. */
+  async function deleteDemande(reference, opts = {}) {
+    const background = Boolean(opts.background)
+    if (!background) {
+      clearMessages()
+      loading.value = true
+    }
+    try {
+      const res = await tresorerieApi.deleteDemande(reference)
+      if (!background) {
+        successMessage.value = `Demande ${reference} supprimée · copie conservée dans l'audit.`
+        delete _fetchedAt.approved
+        delete _fetchedAt.mine
+        delete _fetchedAt.history
+        await Promise.all([loadApprovedDemandes(true), refreshMine(true)])
+      } else {
+        delete _fetchedAt.approved
+        delete _fetchedAt.mine
+        delete _fetchedAt.history
+      }
+      return res
+    } catch (e) {
+      if (!background) error.value = e.message
+      throw e
+    } finally {
+      if (!background) loading.value = false
+    }
+  }
+
   async function validateDemandeFactures(reference, opts = {}) {
     const background = Boolean(opts.background)
     if (!background) {
@@ -663,6 +745,9 @@ export const useTresorerieStore = defineStore('tresorerie', () => {
     rejectDemande,
     validateFacture,
     closeDemandeInvoicing,
+    closeDemandeDevis,
+    reopenDemandeDevis,
+    deleteDemande,
     validateDemandeFactures,
     markReimbursed,
     rejectFacture,

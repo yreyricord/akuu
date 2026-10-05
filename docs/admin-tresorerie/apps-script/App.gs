@@ -89,6 +89,10 @@ function route_(method, path, body, e, param) {
     if (path === 'exchange-rate/pen-eur' && method === 'GET') {
       return jsonResponse({ ok: true, data: getExchangeRate_() });
     }
+    // Transparence : agrégats par exercice, accessibles à tout membre connecté (lecture seule).
+    if (path === 'transparence' && method === 'GET') {
+      return jsonResponse({ ok: true, data: getExercicesTransparence_(session) });
+    }
     if (path === 'demandes/mine' && method === 'GET') {
       return jsonResponse({ ok: true, data: getDemandesMine_(session) });
     }
@@ -141,6 +145,22 @@ function route_(method, path, body, e, param) {
       requireTreasurer_(session);
       var refVf = extractRef_(path, '/validate-factures');
       return jsonResponse({ ok: true, data: validateDemandeFactures_(session, refVf) });
+    }
+    // Doit rester après /close-invoicing : '/close' est un préfixe de '/close-invoicing'.
+    if (path.indexOf('demandes/') === 0 && path.indexOf('/close') > 0 && method === 'POST') {
+      requireTreasurer_(session);
+      var refCl = extractRef_(path, '/close');
+      return jsonResponse({ ok: true, data: closeDemandeDevis_(session, refCl, body.reason) });
+    }
+    if (path.indexOf('demandes/') === 0 && path.indexOf('/reopen') > 0 && method === 'POST') {
+      requireTreasurer_(session);
+      var refRo = extractRef_(path, '/reopen');
+      return jsonResponse({ ok: true, data: reopenDemandeDevis_(session, refRo) });
+    }
+    if (path.indexOf('demandes/') === 0 && path.indexOf('/delete') > 0 && method === 'POST') {
+      requireAdmin_(session);
+      var refDl = extractRef_(path, '/delete');
+      return jsonResponse({ ok: true, data: deleteDemande_(session, refDl) });
     }
     if (path.indexOf('demandes/') === 0 && path.indexOf('/reject') > 0 && method === 'POST') {
       requireTreasurer_(session);

@@ -285,6 +285,21 @@ function updateRowByColumn_(sheetName, keyColumn, keyValue, updates) {
 }
 
 /**
+ * Supprime définitivement la ligne portant cette référence.
+ * @returns {object|null} la ligne supprimée (toutes colonnes), ou null si absente.
+ */
+function deleteRowByReference_(sheetName, reference) {
+  var ctx = buildRefRowIndex_(sheetName, "reference");
+  var rowNum = ctx.index[reference];
+  if (!rowNum) return null;
+  var removed = {};
+  for (var j = 0; j < ctx.headers.length; j++) removed[ctx.headers[j]] = ctx.data[rowNum - 1][j];
+  ctx.sheet.deleteRow(rowNum);
+  invalidateSheetCache_(sheetName);
+  return removed;
+}
+
+/**
  * Met à jour plusieurs lignes en une passe (1 getDataRange + 1 setValues).
  * updatesList : [{ reference, updates }] ou [{ id, updates }] si keyColumn = 'id'.
  */

@@ -623,6 +623,69 @@ export const mockBackend = {
     })
   },
 
+  async closeDemandeDevis(reference, reason) {
+    const session = requireAuth('treasurer')
+    const store = loadStore()
+    const demande = store.demandes.find((d) => d.reference === reference)
+    if (!demande) throw apiError('DEMAND_NOT_FOUND', 'Demande introuvable')
+    if (demande.status !== 'approved') {
+      throw apiError('VALIDATION_FAILED', 'Seule une demande approuvée peut être fermée.')
+    }
+    if (demande.invoicing_status === 'submitted') {
+      throw apiError('CONFLICT', 'Ce devis est déjà clôturé et envoyé au trésorier.', 409)
+    }
+    const drafts = store.factures.filter((f) => f.demand_reference === reference && f.status === 'draft')
+    if (drafts.length) {
+      throw apiError('VALIDATION_FAILED', `Ce devis porte ${drafts.length} facture(s) en brouillon.`)
+    }
+    demande.status = 'closed'
+    demande.invoicing_status = 'closed'
+    demande.decided_at = new Date().toISOString()
+    demande.reject_reason = reason || ''
+    appendAudit(store, session.email, 'demande_closed', 'demande', demande.id, {
+      reference,
+      reason: reason || ''
+    })
+    saveStore(store)
+    return ok({ reference, status: 'closed' })
+  },
+
+  async reopenDemandeDevis(reference) {
+    const session = requireAuth('treasurer')
+    const store = loadStore()
+    const demande = store.demandes.find((d) => d.reference === reference)
+    if (!demande) throw apiError('DEMAND_NOT_FOUND', 'Demande introuvable')
+    if (demande.status !== 'closed') throw apiError('VALIDATION_FAILED', 'Ce devis n\'est pas fermé.')
+    demande.status = 'approved'
+    demande.invoicing_status = 'open'
+    demande.decided_at = new Date().toISOString()
+    demande.reject_reason = ''
+    appendAudit(store, session.email, 'demande_reopened', 'demande', demande.id, { reference })
+    saveStore(store)
+    return ok({ reference, status: 'approved' })
+  },
+
+  async deleteDemande(reference) {
+    const session = requireAuth('admin')
+    const store = loadStore()
+    const idx = store.demandes.findIndex((d) => d.reference === reference)
+    if (idx < 0) throw apiError('DEMAND_NOT_FOUND', 'Demande introuvable')
+    const demande = store.demandes[idx]
+    const attached = store.factures.filter((f) => f.demand_reference === reference)
+    const blocking = attached.filter((f) => f.status !== 'draft')
+    if (blocking.length) {
+      throw apiError('VALIDATION_FAILED', `Cette demande porte ${blocking.length} facture(s) enregistrée(s).`)
+    }
+    appendAudit(store, session.email, 'demande_deleted', 'demande', demande.id, {
+      ...demande,
+      deleted_factures: attached.map((f) => f.reference)
+    })
+    store.factures = store.factures.filter((f) => f.demand_reference !== reference)
+    store.demandes.splice(idx, 1)
+    saveStore(store)
+    return ok({ reference, deleted: true, deleted_factures: attached.map((f) => f.reference) })
+  },
+
   async validateDemandeFactures(reference) {
     const session = requireAuth('treasurer')
     const store = loadStore()

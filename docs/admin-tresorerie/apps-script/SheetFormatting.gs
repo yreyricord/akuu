@@ -133,6 +133,7 @@ function formatDemandesSheet_(sheet, headers, lastRow) {
   applyStatusRules_(sheet, headers, 'status', lastRow, {
     approved: AKUU_COLORS.validated,
     awaiting_approval: AKUU_COLORS.pending,
+    closed: AKUU_COLORS.creamAlt,
     rejected: AKUU_COLORS.rejected,
     cancelled: AKUU_COLORS.creamAlt
   });

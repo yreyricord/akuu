@@ -384,6 +384,105 @@ function resubmitDemande_(session, parentId, body) {
   return createDemande_(session, body, true);
 }
 
+/**
+ * Ferme un devis approuvé sans l'envoyer au trésorier.
+ * La demande passe au statut « closed » : elle sort du sélecteur de facturation
+ * (getApprovedDemandes_ n'accepte que le statut « approved ») et reste dans l'historique.
+ * Réversible : rouvrir la demande avec reopenDemandeDevis_.
+ */
+function closeDemandeDevis_(session, reference, reason) {
+  var d = findByReference_('Demandes', reference);
+  if (!d) throw apiError_('DEMAND_NOT_FOUND', 'Demande introuvable');
+  if (normStatus_(d.status) !== 'approved') {
+    throw apiError_('VALIDATION_FAILED', 'Seule une demande approuvée peut être fermée.');
+  }
+  if (normInvoicingStatus_(d) === 'submitted') {
+    throw apiError_('CONFLICT', 'Ce devis est déjà clôturé et envoyé au trésorier.', 409);
+  }
+  var ref = normDemandRef_(reference);
+  var drafts = readAll_('Factures').filter(function (f) {
+    return normDemandRef_(f.demand_reference) === ref && normStatus_(f.status) === 'draft';
+  });
+  if (drafts.length) {
+    throw apiError_('VALIDATION_FAILED',
+      'Ce devis porte ' + drafts.length + ' facture(s) en brouillon. Supprimez-les ou clôturez le devis avant de le fermer.');
+  }
+  var closedAt = new Date().toISOString();
+  updateRowByReference_('Demandes', reference, {
+    status: 'closed',
+    invoicing_status: 'closed',
+    decided_at: closedAt,
+    reject_reason: clip_(reason, 500)
+  });
+  appendAudit_(session.email, 'demande_closed', 'demande', d.id, {
+    reference: reference,
+    reason: clip_(reason, 500),
+    remaining_pen: getDemandeRemainingPen_(d, readAll_('Factures'))
+  });
+  return { reference: reference, status: 'closed', closed_at: closedAt };
+}
+
+/**
+ * Rouvre un devis fermé par erreur (trésorier ou admin).
+ */
+function reopenDemandeDevis_(session, reference) {
+  var d = findByReference_('Demandes', reference);
+  if (!d) throw apiError_('DEMAND_NOT_FOUND', 'Demande introuvable');
+  if (normStatus_(d.status) !== 'closed') {
+    throw apiError_('VALIDATION_FAILED', 'Ce devis n\'est pas fermé.');
+  }
+  updateRowByReference_('Demandes', reference, {
+    status: 'approved',
+    invoicing_status: 'open',
+    decided_at: new Date().toISOString(),
+    reject_reason: ''
+  });
+  appendAudit_(session.email, 'demande_reopened', 'demande', d.id, { reference: reference });
+  return { reference: reference, status: 'approved' };
+}
+
+/**
+ * Suppression définitive d'une demande (admin uniquement), avec copie intégrale dans l'audit.
+ * Refusée dès qu'une facture réelle est rattachée (brouillons mis à part : ils sont supprimés avec la demande),
+ * pour ne jamais détacher une pièce déjà enregistrée en comptabilité.
+ */
+function deleteDemande_(session, reference) {
+  var d = findByReference_('Demandes', reference);
+  if (!d) throw apiError_('DEMAND_NOT_FOUND', 'Demande introuvable');
+
+  var ref = normDemandRef_(reference);
+  var attached = readAll_('Factures').filter(function (f) {
+    return normDemandRef_(f.demand_reference) === ref;
+  });
+  var blocking = attached.filter(function (f) { return normStatus_(f.status) !== 'draft'; });
+  if (blocking.length) {
+    throw apiError_('VALIDATION_FAILED',
+      'Cette demande porte ' + blocking.length + ' facture(s) enregistrée(s) : passez par les corrections comptables avant de la supprimer.');
+  }
+
+  // Copie intégrale avant toute destruction : la demande reste consultable dans l'audit.
+  var snapshot = {};
+  Object.keys(d).forEach(function (k) { snapshot[k] = d[k]; });
+  snapshot.deleted_factures = attached.map(function (f) { return f.reference; });
+  appendAudit_(session.email, 'demande_deleted', 'demande', d.id, snapshot);
+
+  attached.forEach(function (f) {
+    if (f.drive_file_id) trashUploaded_([f]);
+    deleteRowByReference_('Factures', f.reference);
+  });
+
+  var devisFiles = [];
+  try { devisFiles = JSON.parse(d.devis_attachments_json || '[]'); } catch (e) { devisFiles = []; }
+  trashUploaded_(devisFiles);
+
+  deleteRowByReference_('Demandes', reference);
+  return {
+    reference: reference,
+    deleted: true,
+    deleted_factures: snapshot.deleted_factures
+  };
+}
+
 function createFacture_(session, body) {
   var demande = findByReference_('Demandes', body.demand_reference);
   if (!demande) throw apiError_('DEMAND_NOT_FOUND', 'Référence demande introuvable');

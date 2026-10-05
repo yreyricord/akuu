@@ -9,8 +9,10 @@ const AUTH_KEY = 'akuu_tresorerie_auth'
 const mockCorrections = []
 const JOURNAL_CACHE_TTL_MS = 3 * 60 * 1000
 const EXERCICES_CACHE_TTL_MS = 5 * 60 * 1000
+const TRANSPARENCE_CACHE_TTL_MS = 5 * 60 * 1000
 const _journalCache = {}
 const _exercicesCache = { at: 0, data: null, inflight: null }
+const _transparenceCache = { at: 0, data: null, inflight: null }
 
 function journalCacheHit(year) {
   const e = _journalCache[String(year)]
@@ -389,6 +391,24 @@ export const tresorerieApi = {
     return remoteRequest(`/demandes/${reference}/close-invoicing`, { method: 'POST' })
   },
 
+  /** Ferme un devis approuvé : il sort du sélecteur de facturation sans être envoyé au trésorier. */
+  closeDemandeDevis(reference, reason) {
+    if (isMockMode()) return mockCall(mockBackend.closeDemandeDevis, reference, reason)
+    return remoteRequest(`/demandes/${reference}/close`, { method: 'POST', body: { reason } })
+  },
+
+  /** Rouvre un devis fermé par erreur. */
+  reopenDemandeDevis(reference) {
+    if (isMockMode()) return mockCall(mockBackend.reopenDemandeDevis, reference)
+    return remoteRequest(`/demandes/${reference}/reopen`, { method: 'POST' })
+  },
+
+  /** Suppression définitive (admin) — une copie reste dans l'audit. */
+  deleteDemande(reference) {
+    if (isMockMode()) return mockCall(mockBackend.deleteDemande, reference)
+    return remoteRequest(`/demandes/${reference}/delete`, { method: 'POST' })
+  },
+
   validateDemandeFactures(reference) {
     if (isMockMode()) return mockCall(mockBackend.validateDemandeFactures, reference)
     return remoteRequest(`/demandes/${reference}/validate-factures`, { method: 'POST' })
@@ -489,6 +509,36 @@ export const tresorerieApi = {
     _exercicesCache.at = 0
     _exercicesCache.data = null
     _exercicesCache.inflight = null
+  },
+
+  /**
+   * Agrégats par exercice pour l'onglet Transparence — tout membre connecté.
+   * Côté serveur la réponse ne contient aucune ligne nominative, URL de feuille ni relevé bancaire.
+   */
+  getTransparenceExercices({ force = false } = {}) {
+    if (isMockMode()) return Promise.resolve({ source: 'mock', years: [] })
+    if (!force && _transparenceCache.data && Date.now() - _transparenceCache.at < TRANSPARENCE_CACHE_TTL_MS) {
+      return Promise.resolve(_transparenceCache.data)
+    }
+    if (!force && _transparenceCache.inflight) return _transparenceCache.inflight
+    _transparenceCache.inflight = remoteRequest('/transparence')
+      .then((data) => {
+        _transparenceCache.data = data
+        _transparenceCache.at = Date.now()
+        _transparenceCache.inflight = null
+        return data
+      })
+      .catch((e) => {
+        _transparenceCache.inflight = null
+        throw e
+      })
+    return _transparenceCache.inflight
+  },
+
+  invalidateTransparenceCache() {
+    _transparenceCache.at = 0
+    _transparenceCache.data = null
+    _transparenceCache.inflight = null
   },
 
   invalidateJournalCache(year) {
