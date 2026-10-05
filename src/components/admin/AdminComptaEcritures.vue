@@ -355,7 +355,7 @@
 import { computed, onMounted, ref, watch } from 'vue'
 import { PhArrowSquareOut, PhPlus, PhTrash } from '@phosphor-icons/vue'
 import { bindLoadingProgress } from '@/composables/useLoadingProgress.js'
-import { useDebouncedJournalRefresh } from '@/composables/useDebouncedJournalRefresh.js'
+import { useJournalRefreshOnDemand } from '@/composables/useJournalRefreshOnDemand.js'
 import { TRESORERIE_PROJECTS, PAYMENT_METHODS } from '@/data/tresorerie-config.js'
 import { useUploadQueue } from '@/store/uploadQueue.js'
 import { CURRENCY_EUR, CURRENCY_PEN, normalizeCurrency } from '@/data/currency.js'
@@ -532,7 +532,7 @@ function openAddForm() {
   })
 }
 const taskQueue = useUploadQueue()
-const journalRefresh = useDebouncedJournalRefresh((y, opts) => loadLive(y, opts))
+const journalRefresh = useJournalRefreshOnDemand((y, opts) => loadLive(y, opts))
 const journalPendingRefs = computed(() => taskQueue.activeMeta('journal', 'ref'))
 const saveError = ref('')
 const amountDrafts = ref({})

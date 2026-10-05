@@ -84,6 +84,7 @@ import AdminComptaFactures from './AdminComptaFactures.vue'
 import AdminCaissePerouPanel from './AdminCaissePerouPanel.vue'
 import AdminTresorerieMeta from './AdminTresorerieMeta.vue'
 import AdminTasksIndicator from './AdminTasksIndicator.vue'
+import { clearDataPending } from '@/composables/usePendingRefresh.js'
 import driveHealthData from '@/data/drive-health.json'
 
 const store = useTresorerieStore()
@@ -108,6 +109,7 @@ const metaVersion = ref(0)
 function refreshAll() {
   journalRefreshKey.value += 1
   caisseRefreshKey.value += 1
+  clearDataPending()
 }
 const views = [
   { id: 'overview', label: "Vue d'ensemble" },

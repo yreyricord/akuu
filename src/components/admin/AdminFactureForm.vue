@@ -259,6 +259,7 @@ import {
 import { penToEur } from '@/api/tresorerie/exchangeRate.js'
 import { useTresorerieStore } from '@/store/tresorerie.js'
 import { TASK_ESTIMATE_MS, useUploadQueue } from '@/store/uploadQueue.js'
+import { markDataStale, onPendingRefresh } from '@/composables/usePendingRefresh.js'
 import AdminFileCapture from './AdminFileCapture.vue'
 import AdminCurrencyAmountField from './AdminCurrencyAmountField.vue'
 
@@ -434,10 +435,10 @@ function closeInvoicing() {
       text: `Devis ${ref} clôturé — ${demande?.pending_facture_count ?? ''} facture(s) chez le trésorier.`,
       copyText: ref
     }),
-    onSuccess: async () => {
+    onSuccess: () => {
       postSubmitChoice.value = false
       resetFormFields(true)
-      await store.loadApprovedDemandes(true)
+      markDataStale()
       emit('closed')
     }
   })
@@ -531,8 +532,8 @@ async function onSubmit() {
         link: (created || []).find((f) => f.drive_file_url)?.drive_file_url || null
       }
     },
-    onSuccess: async () => {
-      await store.loadApprovedDemandes(true)
+    onSuccess: () => {
+      markDataStale()
       if (!mounted || form.demand_reference !== refBefore) return
       savedDemandRef.value = refBefore
       form.payment_method = shared.payment_method
@@ -550,4 +551,7 @@ async function onSubmit() {
 onMounted(async () => {
   await Promise.all([store.loadExchangeRate(), store.loadApprovedDemandes()])
 })
+
+// Rechargement manuel depuis la barre de tâches (voir usePendingRefresh).
+onPendingRefresh(() => store.loadApprovedDemandes(true))
 </script>

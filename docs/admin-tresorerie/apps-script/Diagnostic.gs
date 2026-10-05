@@ -418,7 +418,10 @@ function diagnosticConnexion() {
     ['SheetsRepo.gs', function () { return typeof getSpreadsheet_ === 'function'; }],
     ['Security.gs', function () { return typeof assertLoginAllowed_ === 'function'; }],
     ['Auth.gs', function () { return typeof authLogin_ === 'function'; }],
-    ['App.gs', function () { return typeof handleRequest === 'function'; }]
+    ['App.gs', function () { return typeof handleRequest === 'function'; }],
+    ['JournalAnnee.gs', function () { return typeof openYearJournal_ === 'function'; }],
+    ['Exercices.gs', function () { return typeof getExercices_ === 'function'; }],
+    ['Releves.gs', function () { return typeof importReleveImpl_ === 'function'; }]
   ];
   requiredFiles.forEach(function (entry) {
     var label = entry[0];
@@ -468,6 +471,49 @@ function diagnosticConnexion() {
     if (!sh) throw new Error("Onglet Users absent — exécutez setupTresorerieSheets puis setupUsersFromWhitelist");
     var n = Math.max(0, sh.getLastRow() - 1);
     return n + " compte(s)";
+  });
+  // — Journal par année : c'est ici que se voit une migration d'onglet incomplète. —
+  check("JournalAnnee.gs à jour (onglet dépenses terrain)", function () {
+    if (typeof journalTabSheet_ !== "function" || typeof isDetailPMTab_ !== "function") {
+      throw new Error("JournalAnnee.gs n'est pas à jour — recopiez-le depuis docs/admin-tresorerie/apps-script/JournalAnnee.gs");
+    }
+    if (typeof DETAIL_PM_TAB !== "string" || !DETAIL_PM_TAB) {
+      throw new Error("DETAIL_PM_TAB absent de JournalAnnee.gs");
+    }
+    return "DETAIL_PM_TAB = « " + DETAIL_PM_TAB + " » · JOURNAL_TABS = " + JOURNAL_TABS.join(" + ");
+  });
+  check("Journaux Google des exercices 2017 → année en cours", function () {
+    var current = new Date().getFullYear();
+    var found = [], missing = [];
+    for (var y = 2017; y <= current; y++) { (openYearJournal_(y) ? found : missing).push(y); }
+    if (missing.length) {
+      throw new Error("Journal_AKUU_<année> introuvable pour : " + missing.join(", ") +
+        " — dossier 3_Trésorerie/<année>/ ou exécuter initJournalAnnee_(<année>)");
+    }
+    return found.join(", ");
+  });
+  check("Onglets du journal de l'année en cours", function () {
+    var y = new Date().getFullYear();
+    var ss = openYearJournal_(y);
+    var names = ss.getSheets().map(function (s) { return s.getName(); });
+    var absent = JOURNAL_TABS.filter(function (t) { return !journalTabSheet_(ss, t); });
+    // Message volontairement explicite : il nomme les onglets réels pour repérer un renommage raté.
+    if (absent.length) {
+      throw new Error("Onglet(s) attendu(s) introuvable(s) : " + absent.join(", ") +
+        " — onglets réellement présents : " + names.join(" | "));
+    }
+    return names.join(" | ");
+  });
+  check("Lecture d'un exercice (readExercice_ → /exercices)", function () {
+    var y = new Date().getFullYear();
+    try {
+      var ex = readExercice_(y);
+      return "statut=" + ex.statut + " · live=" + ex.live +
+        " · projets terrain=" + Object.keys(ex.terrain_pen || {}).length;
+    } catch (e) {
+      var line = String((e && e.stack) || "").split("\n")[1] || "";
+      throw new Error(String((e && e.message) || e) + " @" + line.trim());
+    }
   });
   check("Route auth/login (mot de passe faux → INVALID_CREDENTIALS)", function () {
     try {

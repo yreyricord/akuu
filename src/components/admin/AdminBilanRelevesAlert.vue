@@ -108,6 +108,7 @@ import { computed, ref, watch } from 'vue'
 import { tresorerieApi } from '@/api/tresorerie/client.js'
 import { markReleveUploaded, useRelevesPending } from '@/composables/useRelevesPending.js'
 import { TASK_ESTIMATE_MS, useUploadQueue } from '@/store/uploadQueue.js'
+import { markDataStale, onPendingRefresh } from '@/composables/usePendingRefresh.js'
 
 const props = defineProps({
   year: { type: [String, Number], required: true },
@@ -123,6 +124,8 @@ async function loadServer() {
   try { serverList.value = await tresorerieApi.listRelevesArchives() } catch { serverList.value = [] }
 }
 loadServer()
+// Rechargement manuel depuis la barre de tâches (voir usePendingRefresh).
+onPendingRefresh(() => loadServer())
 function serverRow(month) {
   return serverList.value.find((r) => Number(r.year) === Number(props.year) && Number(r.month) === Number(month))
 }
@@ -202,6 +205,7 @@ function submit() {
       lastUpload.value = { ...result, month }
       uploadDone.value = true
       loadServer()
+      markDataStale()
       file.value = null
       if (fileInput.value) fileInput.value.value = ''
       emit('uploaded', result)

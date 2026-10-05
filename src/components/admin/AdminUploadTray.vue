@@ -1,6 +1,6 @@
 <template>
   <section
-    v-if="queue.visibleJobs.length"
+    v-if="queue.visibleJobs.length || showRefresh"
     class="upload-tray fixed inset-x-0 z-[45] px-3 sm:left-auto sm:right-4 sm:w-[24rem] sm:px-0"
     :style="{ bottom: aboveNav ? 'calc(4.5rem + env(safe-area-inset-bottom, 0px))' : 'calc(1rem + env(safe-area-inset-bottom, 0px))' }"
     aria-label="Tâches en cours"
@@ -18,6 +18,7 @@
           {{ overallProgress }} %
         </span>
         <button
+          v-if="queue.visibleJobs.length"
           type="button"
           class="touch-target shrink-0 rounded-full text-night-500 hover:bg-night-50"
           :aria-expanded="!minimized"
@@ -121,6 +122,26 @@
           </div>
         </li>
       </ul>
+
+      <!-- Les tâches ne rechargent plus l'écran : c'est ici, et seulement ici, que ça se fait. -->
+      <div
+        v-if="showRefresh"
+        class="flex flex-wrap items-center justify-between gap-2 border-t border-night-50 bg-cream-100 px-4 py-2"
+      >
+        <p class="text-xs text-night-600">
+          {{ queue.hasActive ? 'Des tâches modifient le journal.' : 'Journal modifié depuis l\'affichage.' }}
+        </p>
+        <button
+          type="button"
+          class="tray-btn border-forest bg-forest text-white disabled:opacity-50"
+          :disabled="queue.hasActive || refreshing"
+          :title="queue.hasActive ? 'Attendez la fin des tâches en cours' : 'Recharger les données affichées'"
+          @click="refresh"
+        >
+          <PhArrowClockwise :size="14" weight="bold" aria-hidden="true" />
+          {{ refreshing ? 'Mise à jour…' : 'Mettre à jour la page' }}
+        </button>
+      </div>
     </div>
   </section>
 </template>
@@ -139,6 +160,7 @@ import {
   PhX
 } from '@phosphor-icons/vue'
 import { UPLOAD_PHASES, useUploadQueue } from '@/store/uploadQueue.js'
+import { dataPending, runPendingRefresh } from '@/composables/usePendingRefresh.js'
 
 defineProps({
   /** Placer la barre au-dessus de la navigation basse de l'admin. */
@@ -149,7 +171,21 @@ const queue = useUploadQueue()
 const minimized = ref(false)
 const now = ref(Date.now())
 const copiedId = ref(null)
+const refreshing = ref(false)
 let clock = null
+
+/** Le bandeau de mise à jour reste visible tant que le journal n'a pas été rechargé. */
+const showRefresh = computed(() => dataPending.value)
+
+async function refresh() {
+  if (refreshing.value || queue.hasActive) return
+  refreshing.value = true
+  try {
+    await runPendingRefresh()
+  } finally {
+    refreshing.value = false
+  }
+}
 
 const ACTIVE = new Set(['queued', 'prepare', 'encode', 'upload', 'processing'])
 const UPLOAD_KINDS = new Set(['attach', 'facture', 'demande', 'expense', 'releve'])
@@ -175,6 +211,7 @@ const headerText = computed(() => {
   }
   const errors = queue.visibleJobs.filter((j) => j.phase === 'error').length
   if (errors) return errors > 1 ? `${errors} tâches en échec` : 'Tâche en échec'
+  if (!queue.visibleJobs.length) return 'Données à actualiser'
   return 'Tâches terminées'
 })
 

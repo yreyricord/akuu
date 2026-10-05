@@ -29,60 +29,6 @@
       </nav>
     </header>
 
-    <!-- Argent investi à Puerto Miguel : synthèse pluriannuelle des dépenses terrain -->
-    <section
-      v-if="puertoMiguel.years.length"
-      class="rounded-2xl border border-night-100 bg-white p-5 shadow-sm sm:p-6"
-      aria-labelledby="pm-title"
-    >
-      <div class="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h3 id="pm-title" class="text-base font-semibold text-forest-700">Argent investi à Puerto Miguel</h3>
-          <p class="mt-1 max-w-xl text-sm text-night-500">
-            Dépenses terrain payées en soles (onglet « Dépenses Caisse Pérou »), hors AKUUVision,
-            Fonctionnement et Divers — soit l'argent réellement affecté aux projets locaux.
-          </p>
-        </div>
-        <div class="text-right">
-          <p class="text-xs font-semibold uppercase tracking-wide text-night-500">
-            Total {{ puertoMiguel.firstYear }}–{{ puertoMiguel.lastYear }}
-          </p>
-          <p class="font-serif text-3xl font-bold text-forest-700">{{ formatPen(puertoMiguel.total) }}</p>
-          <p class="text-xs text-night-400">
-            {{ puertoMiguel.years.length }} exercice(s) avec dépenses terrain
-          </p>
-        </div>
-      </div>
-
-      <ul class="mt-5 space-y-2">
-        <li v-for="y in puertoMiguel.years" :key="y.year" class="flex items-center gap-3">
-          <button
-            type="button"
-            class="w-12 shrink-0 text-left text-sm font-semibold tabular-nums"
-            :class="String(y.year) === selectedYear ? 'text-forest-700' : 'text-night-500 hover:text-night'"
-            :aria-pressed="String(y.year) === selectedYear"
-            @click="selectedYear = String(y.year)"
-          >
-            {{ y.year }}
-          </button>
-          <span class="h-6 flex-1 overflow-hidden rounded-full bg-cream-200">
-            <span class="block h-full rounded-full bg-forest/80" :style="{ width: pmBarWidth(y.total) }" />
-          </span>
-          <span class="w-32 shrink-0 text-right text-sm tabular-nums text-night-700">{{ formatPen(y.total) }}</span>
-        </li>
-      </ul>
-
-      <div v-if="puertoMiguelProjets.length" class="mt-6 border-t border-night-100 pt-4">
-        <h4 class="text-sm font-semibold text-night-700">Détail {{ selectedYear }} par projet</h4>
-        <ul class="mt-3 grid gap-2 sm:grid-cols-2">
-          <li v-for="p in puertoMiguelProjets" :key="p.project" class="flex items-baseline justify-between gap-3 text-sm">
-            <span class="text-night-600">{{ p.project }}</span>
-            <span class="font-semibold tabular-nums text-night-800">{{ formatPen(p.pen) }}</span>
-          </li>
-        </ul>
-      </div>
-    </section>
-
     <AdminLoadingPanel
       v-if="loadingExercices"
       title="Lecture des journaux Google"
@@ -130,7 +76,7 @@
               v-if="currentExercice.statut === 'clos'"
               type="button"
               class="min-h-[44px] rounded-xl border border-ochre-300 bg-ochre-50 px-4 text-sm font-semibold text-ochre-800 hover:bg-ochre-100 disabled:opacity-50"
-              :disabled="!!exerciceBusy"
+              :disabled="!!exerciceBusy || reopenBusy"
               @click="showRouvrir = true"
             >
               Rouvrir l'exercice
@@ -192,10 +138,10 @@
             <button
               type="button"
               class="min-h-[40px] rounded-xl bg-ochre-600 px-4 text-sm font-semibold text-white disabled:opacity-50"
-              :disabled="rouvrirMotif.trim().length < 10 || exerciceBusy === 'rouvrir'"
+              :disabled="rouvrirMotif.trim().length < 10"
               @click="doRouvrir"
             >
-              {{ exerciceBusy === 'rouvrir' ? 'Ouverture…' : 'Confirmer la réouverture' }}
+              Confirmer la réouverture
             </button>
           </div>
         </div>
@@ -463,17 +409,20 @@ import { tresorerieGoogle } from '@/config/tresorerie-google.js'
 import { tresorerieApi } from '@/api/tresorerie/client.js'
 import { mapExerciceToBilanYear } from '@/api/tresorerie/exercicesMap.js'
 import { downloadBase64, openBase64Pdf } from '@/api/tresorerie/downloadBase64.js'
-import { formatEur, formatPen } from '@/data/tresorerie-config.js'
+import { formatEur } from '@/data/tresorerie-config.js'
 import driveHealth from '@/data/drive-health.json'
 import AdminReleveImport from './AdminReleveImport.vue'
 import AdminBilanRelevesAlert from './AdminBilanRelevesAlert.vue'
 import AdminLoadingPanel from './AdminLoadingPanel.vue'
 import { bindLoadingProgress } from '@/composables/useLoadingProgress.js'
+import { markDataStale, onPendingRefresh } from '@/composables/usePendingRefresh.js'
+import { TASK_ESTIMATE_MS, useUploadQueue } from '@/store/uploadQueue.js'
 import { useAuthStore } from '@/store/auth.js'
 
 const route = useRoute()
 const router = useRouter()
 const auth = useAuthStore()
+const uploads = useUploadQueue()
 
 const exercices = ref(null)
 const loadingExercices = ref(true)
@@ -535,26 +484,43 @@ const exerciceActionError = ref('')
 const reclotureProblems = ref([])
 const regenerationMessage = ref('')
 
+/** Une réouverture est déjà en cours pour l'exercice affiché (tâche de fond). */
+const reopenBusy = computed(() =>
+  uploads.isBusy('journal', (m) => m.action === 'reopen' && m.year === String(selectedYear.value))
+)
+
 async function loadHistorique(year) {
   try { historique.value = await tresorerieApi.getExerciceHistorique(year) } catch { historique.value = [] }
 }
 
-async function doRouvrir() {
-  exerciceBusy.value = 'rouvrir'
+/**
+ * La réouverture se fait en tâche de fond : la modale se ferme tout de suite, la progression
+ * s'affiche dans la barre du bas, et c'est l'utilisateur qui recharge l'écran quand il le veut
+ * (le statut de l'exercice change, donc les chiffres affichés deviennent faux entre-temps).
+ */
+function doRouvrir() {
+  const motif = rouvrirMotif.value.trim()
+  if (motif.length < 10 || exerciceBusy.value) return
+  const year = selectedYear.value
   exerciceActionError.value = ''
   reclotureProblems.value = []
-  try {
-    await tresorerieApi.rouvrirExercice(selectedYear.value, rouvrirMotif.value.trim())
-    showRouvrir.value = false
-    rouvrirMotif.value = ''
-    // force : le statut vient de changer, les caches front (exercices + journal) sont périmés.
-    await refreshLive(true)
-    await loadHistorique(selectedYear.value)
-  } catch (e) {
-    exerciceActionError.value = e.message
-  } finally {
-    exerciceBusy.value = ''
-  }
+  showRouvrir.value = false
+  rouvrirMotif.value = ''
+  uploads.enqueue({
+    kind: 'journal',
+    label: `Réouverture de l'exercice ${year}`,
+    meta: { action: 'reopen', year: String(year) },
+    hasFile: false,
+    abortable: false,
+    fileCount: 0,
+    estimateMs: TASK_ESTIMATE_MS.sync,
+    run: () => tresorerieApi.rouvrirExercice(year, motif),
+    describe: () => ({ text: `Exercice ${year} rouvert — corrections possibles.` }),
+    onSuccess: () => markDataStale(),
+    onError: (e) => {
+      exerciceActionError.value = e.message || 'Réouverture impossible'
+    }
+  })
 }
 
 async function doRecloturer(reportOpening) {
@@ -639,48 +605,6 @@ const exporting = ref('')
 const exportError = ref('')
 const currentExercice = computed(() =>
   exercices.value?.years?.find((ex) => ex.year === Number(selectedYear.value)) ?? null
-)
-
-/**
- * Projets exclus du total « investi à Puerto Miguel » : AKUUVision n'est pas un projet local,
- * Fonctionnement est un frais de structure et Divers n'est pas affecté.
- */
-const PM_EXCLUDED_PROJECTS = ['AKUUVision', 'Fonctionnement', 'Divers / non affecté']
-
-/**
- * Argent réellement investi à Puerto Miguel : dépenses terrain (Detail_PM, en soles) affectées à
- * un projet local, par exercice, plus le cumul sur tous les exercices.
- */
-const puertoMiguel = computed(() => {
-  const rows = (exercices.value?.years ?? [])
-    .map((ex) => {
-      const total = Object.entries(ex.terrain_pen || {}).reduce(
-        (sum, [project, pen]) => (PM_EXCLUDED_PROJECTS.includes(project) ? sum : sum + (Number(pen) || 0)),
-        0
-      )
-      return { year: ex.year, total: Math.round(total * 100) / 100 }
-    })
-    .filter((r) => r.total > 0)
-    .sort((a, b) => a.year - b.year)
-  return {
-    years: rows,
-    total: Math.round(rows.reduce((s, r) => s + r.total, 0) * 100) / 100,
-    max: Math.max(...rows.map((r) => r.total), 1),
-    firstYear: rows[0]?.year ?? '',
-    lastYear: rows[rows.length - 1]?.year ?? ''
-  }
-})
-
-function pmBarWidth(total) {
-  return `${Math.max((total / puertoMiguel.value.max) * 100, 3)}%`
-}
-
-/** Détail par projet de l'exercice affiché (mêmes exclusions). */
-const puertoMiguelProjets = computed(() =>
-  Object.entries(currentExercice.value?.terrain_pen || {})
-    .map(([project, pen]) => ({ project, pen: Number(pen) || 0 }))
-    .filter((r) => r.pen > 0 && !PM_EXCLUDED_PROJECTS.includes(r.project))
-    .sort((a, b) => b.pen - a.pen)
 )
 
 const rouvertBanner = computed(() => {
@@ -785,6 +709,12 @@ async function refreshLive(force = false) {
 }
 onMounted(async () => {
   await refreshLive()
+  await loadHistorique(selectedYear.value)
+})
+
+// Rechargement manuel depuis la barre de tâches (voir usePendingRefresh).
+onPendingRefresh(async () => {
+  await refreshLive(true)
   await loadHistorique(selectedYear.value)
 })
 

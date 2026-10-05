@@ -230,7 +230,7 @@ import { formatEur, formatPen, PAYMENT_METHODS } from '@/data/tresorerie-config.
 import { penToEur } from '@/api/tresorerie/exchangeRate.js'
 import { tresorerieApi } from '@/api/tresorerie/client.js'
 import { bindLoadingProgress } from '@/composables/useLoadingProgress.js'
-import { useDebouncedJournalRefresh } from '@/composables/useDebouncedJournalRefresh.js'
+import { useJournalRefreshOnDemand } from '@/composables/useJournalRefreshOnDemand.js'
 import { useUploadQueue } from '@/store/uploadQueue.js'
 import AdminLoadingPanel from './AdminLoadingPanel.vue'
 
@@ -245,7 +245,7 @@ const TERRAIN_MODES = PAYMENT_METHODS.filter((m) =>
 )
 const year = ref(String(new Date().getFullYear()))
 const taskQueue = useUploadQueue()
-const caisseRefresh = useDebouncedJournalRefresh((y) => load(Number(y)))
+const caisseRefresh = useJournalRefreshOnDemand((y) => load(Number(y)))
 const journalPendingRefs = computed(() => taskQueue.activeMeta('journal', 'ref'))
 const penDrafts = ref({})
 const loading = ref(false)

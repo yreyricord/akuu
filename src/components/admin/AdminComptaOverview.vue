@@ -68,6 +68,9 @@
       </article>
     </section>
 
+    <!-- Synthèse pluriannuelle des dépenses terrain (indépendante de la période sélectionnée) -->
+    <AdminPuertoMiguelInvest :years="allYears" />
+
     <!-- Produits / charges -->
     <section class="rounded-2xl border border-night-100 bg-white p-5 shadow-sm">
       <div class="flex flex-wrap items-baseline justify-between gap-3">
@@ -384,7 +387,9 @@ import { computed, onMounted, ref } from 'vue'
 import { tresorerieApi } from '@/api/tresorerie/client.js'
 import { mapExerciceToComptaYear } from '@/api/tresorerie/exercicesMap.js'
 import { bindLoadingProgress } from '@/composables/useLoadingProgress.js'
+import { onPendingRefresh } from '@/composables/usePendingRefresh.js'
 import AdminLoadingPanel from './AdminLoadingPanel.vue'
+import AdminPuertoMiguelInvest from './AdminPuertoMiguelInvest.vue'
 
 const yearsData = ref([])
 const offlineFallback = ref(false)
@@ -396,7 +401,7 @@ const loadProg = bindLoadingProgress(loading, {
   label: 'Exercices et totaux…'
 })
 
-onMounted(async () => {
+async function load() {
   try {
     const res = await tresorerieApi.getExercices()
     if (res?.years?.length) {
@@ -412,6 +417,14 @@ onMounted(async () => {
   } finally {
     loading.value = false
   }
+}
+
+onMounted(load)
+
+// Rechargement manuel depuis la barre de tâches (voir usePendingRefresh).
+onPendingRefresh(async () => {
+  tresorerieApi.invalidateExercicesCache?.()
+  await load()
 })
 const allYears = computed(() => yearsData.value)
 const selected = ref([])

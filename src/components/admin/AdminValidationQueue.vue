@@ -394,6 +394,7 @@ import { formatAmountWithConversion } from '@/data/currency.js'
 import { useTresorerieStore } from '@/store/tresorerie.js'
 import { useAuthStore } from '@/store/auth.js'
 import { TASK_ESTIMATE_MS, useUploadQueue } from '@/store/uploadQueue.js'
+import { markDataStale, onPendingRefresh } from '@/composables/usePendingRefresh.js'
 import AdminStatusBadge from './AdminStatusBadge.vue'
 import AdminPaymentBadge from './AdminPaymentBadge.vue'
 import AdminReimbursementBadge from './AdminReimbursementBadge.vue'
@@ -434,6 +435,12 @@ const liveNotice = ref('')
 const refreshing = ref(false)
 
 onMounted(() => scrollToValidationRef(route.query.ref))
+
+// Rechargement manuel depuis la barre de tâches (voir usePendingRefresh).
+onPendingRefresh(async () => {
+  await store.refreshPending(true)
+  await store.refreshReimbursements()
+})
 
 function isOwnSubmission(email) {
   return String(email || '').toLowerCase() === String(auth.user?.email || '').toLowerCase()
@@ -501,10 +508,7 @@ function enqueueValidation({ label, ref, run, describe }) {
     estimateMs: TASK_ESTIMATE_MS.validation,
     run: () => run({ background: true }),
     describe,
-    onSuccess: async () => {
-      await store.refreshPending(true)
-      await store.refreshReimbursements()
-    }
+    onSuccess: () => markDataStale()
   })
 }
 

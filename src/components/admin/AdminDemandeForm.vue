@@ -169,6 +169,7 @@ import { eurToPen, normalizeCurrency, CURRENCY_PEN, formatAmountWithConversion }
 import { useTresorerieStore } from '@/store/tresorerie.js'
 import { useAuthStore } from '@/store/auth.js'
 import { useUploadQueue } from '@/store/uploadQueue.js'
+import { markDataStale, onPendingRefresh } from '@/composables/usePendingRefresh.js'
 import AdminStatusBadge from './AdminStatusBadge.vue'
 import AdminFileCapture from './AdminFileCapture.vue'
 import AdminCurrencyAmountField from './AdminCurrencyAmountField.vue'
@@ -296,9 +297,9 @@ function onSubmit() {
         : `Demande ${created.reference} envoyée au trésorier.`,
       copyText: created.reference
     }),
-    onSuccess: async () => {
+    onSuccess: () => {
       submitHint.value = ''
-      await store.refreshMine(true)
+      markDataStale()
     },
     onError: () => {
       submitHint.value = ''
@@ -338,9 +339,9 @@ function resubmitDevis(reference) {
       text: `Nouveaux devis envoyés pour ${reference}.`,
       copyText: reference
     }),
-    onSuccess: async () => {
+    onSuccess: () => {
       devisResubmitFiles.value[reference] = []
-      await store.refreshMine(true)
+      markDataStale()
     }
   })
 }
@@ -349,4 +350,7 @@ onMounted(async () => {
   await store.loadExchangeRate()
   await store.refreshMine()
 })
+
+// Rechargement manuel depuis la barre de tâches (voir usePendingRefresh).
+onPendingRefresh(() => store.refreshMine(true))
 </script>

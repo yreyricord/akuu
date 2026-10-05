@@ -286,6 +286,7 @@ import { CURRENCY_EUR, CURRENCY_PEN, normalizeCurrency } from '@/data/currency.j
 import AdminLoadingPanel from './AdminLoadingPanel.vue'
 import { bindLoadingProgress } from '@/composables/useLoadingProgress.js'
 import { useUploadQueue } from '@/store/uploadQueue.js'
+import { markDataStale, onPendingRefresh } from '@/composables/usePendingRefresh.js'
 
 /** Catégories pour lesquelles le relevé bancaire suffit (pas de facture attendue) */
 const NO_INVOICE = ['frais bancaires', 'transferts et retraits terrain', 'virements internes', 'prêts / avances', 'remboursements de prêts / avances']
@@ -349,6 +350,12 @@ onMounted(async () => {
   await loadLive(year.value)
   pickBestYear()
   reloadAllInBackground()
+})
+
+// Rechargement manuel depuis la barre de tâches (voir usePendingRefresh).
+onPendingRefresh(async () => {
+  tresorerieApi.invalidateJournalCache?.(year.value)
+  await loadLive(year.value, { quiet: true })
 })
 
 /** Choisit la première année utilisable (manques > 0, sinon journal live). */
@@ -538,9 +545,9 @@ function send() {
       link: c.drive_file_url,
       copyText: c.file_name
     }),
-    onSuccess: async (c) => {
+    onSuccess: (c) => {
       corrections.value = [...corrections.value, c]
-      await loadLive(String(expenseYear), { quiet: true })
+      markDataStale()
     }
   })
   message.value = {

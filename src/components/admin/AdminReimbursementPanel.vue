@@ -93,6 +93,7 @@ import {
 import { formatAmountWithConversion } from '@/data/currency.js'
 import { useTresorerieStore } from '@/store/tresorerie.js'
 import { TASK_ESTIMATE_MS, useUploadQueue } from '@/store/uploadQueue.js'
+import { markDataStale } from '@/composables/usePendingRefresh.js'
 import AdminDataTable from './AdminDataTable.vue'
 
 const props = defineProps({
@@ -159,7 +160,7 @@ function markPaid(reference) {
     estimateMs: TASK_ESTIMATE_MS.validation,
     run: () => store.markReimbursed(reference, { background: true }),
     describe: () => ({ text: `${reference} marquée remboursée.`, copyText: reference }),
-    onSuccess: () => store.refreshReimbursements()
+    onSuccess: () => markDataStale()
   })
 }
 </script>
