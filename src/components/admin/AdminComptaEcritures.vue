@@ -105,7 +105,7 @@
 
     <p v-if="live && year === String(live.year)" class="flex flex-wrap items-center gap-2 text-xs text-forest-700">
       <span class="inline-block h-2 w-2 rounded-full bg-forest" aria-hidden="true" />
-      {{ year }} en direct depuis le journal Google — projet, montants et mode de paiement modifiables (badge « Caisse » = espèces comptées au Pérou)
+      {{ year }} · projet, montants et mode de paiement modifiables (badge « Caisse » = espèces comptées au Pérou)
       <a :href="live.sheet_url" target="_blank" rel="noopener noreferrer" class="font-semibold text-bleu hover:underline">Ouvrir le journal</a>
     </p>
     <p
@@ -127,7 +127,7 @@
       v-if="journalLoading && yearRows.length"
       variant="inline"
       title="Mise à jour du journal"
-      :detail="`Année ${year} · Google Drive`"
+      :detail="`Année ${year}`"
       :progress="journalProg.progress"
       :step-label="journalProg.stepLabel"
       hint=""
@@ -135,7 +135,7 @@
     <AdminLoadingPanel
       v-if="journalLoading && !yearRows.length"
       title="Chargement des écritures"
-      :detail="`Lecture du journal ${year} sur Google Drive…`"
+      :detail="`Lecture des écritures ${year}…`"
       hint="La première lecture peut prendre 10 à 30 secondes."
       :progress="journalProg.progress"
       :step-label="journalProg.stepLabel"
@@ -409,7 +409,7 @@ const data = ref(null)
 const journalLoading = ref(false)
 const journalProg = bindLoadingProgress(journalLoading, {
   estimateMs: 28_000,
-  label: 'Lecture du journal Google…'
+  label: 'Lecture des écritures…'
 })
 const year = ref(props.initialYear || String(new Date().getFullYear()))
 const month = ref('')

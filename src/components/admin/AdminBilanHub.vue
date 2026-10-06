@@ -784,8 +784,7 @@ const rappro = computed(() => {
         return rapproExercice(y)
       }
       return {
-        vide: 'Rapprochement banque France (Crédit Coop) : déposez les relevés PDF via l’onglet Bilan · Import relevé. ' +
-          'Ce bloc ne concerne pas la caisse espèces au Pérou (onglet Compta → Suivi terrain).'
+        vide: 'Rapprochement banque France (Crédit Coop) : déposez les relevés PDF via l’onglet Bilan · Import relevé.'
       }
     }
     if (prevFin.value == null) return { vide: "Solde de fin d'année précédente inconnu : rapprochement impossible." }

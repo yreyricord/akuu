@@ -3,7 +3,7 @@
     <div>
       <h3 class="text-sm font-semibold uppercase tracking-wide text-night">Projets & catégories</h3>
       <p class="mt-1 text-xs text-night-500">
-        Listes utilisées dans les écritures, demandes et factures. Enregistré dans le tableur application (onglet Config).
+        Listes utilisées dans les écritures, demandes et factures.
       </p>
     </div>
 

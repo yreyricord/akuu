@@ -12,7 +12,7 @@
         <p class="mt-1 max-w-xl text-sm text-night-500">
           Part des dépenses de chaque exercice affectée aux projets locaux (musée, maison
           communautaire, cours d'anglais…), par opposition à la structure, aux frais bancaires et aux
-          dépenses non affectées. Montants en euros, identiques au journal comptable.
+          dépenses non affectées.
         </p>
       </div>
       <div class="text-right">

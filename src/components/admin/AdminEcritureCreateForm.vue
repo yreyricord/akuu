@@ -7,7 +7,7 @@
     <div class="mb-4 flex items-start justify-between gap-3">
       <div>
         <h3 class="text-sm font-bold text-forest-800">Nouvelle écriture</h3>
-        <p class="mt-0.5 text-xs text-night-500">Terrain ou banque · montant en € ou S/. · enregistrée dans le journal Google</p>
+        <p class="mt-0.5 text-xs text-night-500">Terrain ou banque · montant en € ou S/.</p>
       </div>
       <button type="button" class="rounded-lg px-2 py-1 text-sm text-night-500 hover:bg-cream-200" @click="setOpen(false)">
         Fermer

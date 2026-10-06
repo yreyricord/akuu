@@ -3,7 +3,7 @@
     <AdminLoadingPanel
       v-if="loading"
       title="Lecture des journaux Google"
-      detail="Calcul des totaux et graphiques depuis les Google Sheets…"
+      detail="Calcul des totaux et graphiques…"
       :progress="loadProg.progress"
       :step-label="loadProg.stepLabel"
     />
@@ -367,16 +367,11 @@
       v-if="offlineFallback"
       class="rounded-xl border border-ochre-200 bg-ochre-50 px-4 py-3 text-sm text-ochre-800"
     >
-      Connexion au journal Google indisponible — chiffres du dernier export ({{ generatedAt }}).
+      Totaux du dernier export ({{ generatedAt }}) — reconnectez-vous ou vérifiez le déploiement Web App.
     </p>
 
-    <p class="text-xs text-night-400">
-      <template v-if="liveSource">
-        Chiffres en direct depuis les Google Sheets · mis à jour {{ generatedAt }}
-      </template>
-      <template v-else>
-        Journal Google indisponible — reconnectez-vous ou vérifiez le déploiement Web App.
-      </template>
+    <p v-else-if="liveSource" class="text-xs text-night-400">
+      Mis à jour le {{ generatedAt }}
     </p>
     </template>
   </div>
@@ -391,17 +386,6 @@ import { onPendingRefresh } from '@/composables/usePendingRefresh.js'
 import AdminLoadingPanel from './AdminLoadingPanel.vue'
 import AdminPuertoMiguelInvest from './AdminPuertoMiguelInvest.vue'
 
-const props = defineProps({
-  /**
-   * 'compta'      → endpoint trésorier (/exercices), toutes les données d'exercice.
-   * 'transparence' → endpoint adhérent (/transparence), mêmes agrégats mais passés par
-   *                  une liste blanche côté serveur : aucun lien de relevé ni donnée nominative.
-   */
-  variant: { type: String, default: 'compta' }
-})
-
-const isTransparence = computed(() => props.variant === 'transparence')
-
 const yearsData = ref([])
 const offlineFallback = ref(false)
 const liveSource = ref(false)
@@ -414,9 +398,7 @@ const loadProg = bindLoadingProgress(loading, {
 
 async function load() {
   try {
-    const res = isTransparence.value
-      ? await tresorerieApi.getTransparenceExercices()
-      : await tresorerieApi.getExercices()
+    const res = await tresorerieApi.getTransparenceExercices()
     if (res?.years?.length) {
       yearsData.value = res.years.map(mapExerciceToComptaYear)
       generatedAtIso.value = res.generated_at
@@ -436,8 +418,7 @@ onMounted(load)
 
 // Rechargement manuel depuis la barre de tâches (voir usePendingRefresh).
 onPendingRefresh(async () => {
-  if (isTransparence.value) tresorerieApi.invalidateTransparenceCache?.()
-  else tresorerieApi.invalidateExercicesCache?.()
+  tresorerieApi.invalidateTransparenceCache?.()
   await load()
 })
 const allYears = computed(() => yearsData.value)
@@ -453,7 +434,7 @@ const tresoNote = computed(() => {
   const y = lastYear.value
   const t = y?.tresorerie
   if (!y || !t) return ''
-  if (t.calcule) return `${y.year} en cours · calculé depuis le journal`
+  if (t.calcule) return `${y.year} en cours`
   if (y.provisoire) return `fin du dernier relevé ${y.year}`
   const ecart = Math.round((t.ecart_eur || 0) * 100) / 100
   if (!ecart) return `au 31/12/${y.year} · égal au relevé`
