@@ -391,6 +391,17 @@ import { onPendingRefresh } from '@/composables/usePendingRefresh.js'
 import AdminLoadingPanel from './AdminLoadingPanel.vue'
 import AdminPuertoMiguelInvest from './AdminPuertoMiguelInvest.vue'
 
+const props = defineProps({
+  /**
+   * 'compta'      → endpoint trésorier (/exercices), toutes les données d'exercice.
+   * 'transparence' → endpoint adhérent (/transparence), mêmes agrégats mais passés par
+   *                  une liste blanche côté serveur : aucun lien de relevé ni donnée nominative.
+   */
+  variant: { type: String, default: 'compta' }
+})
+
+const isTransparence = computed(() => props.variant === 'transparence')
+
 const yearsData = ref([])
 const offlineFallback = ref(false)
 const liveSource = ref(false)
@@ -403,7 +414,9 @@ const loadProg = bindLoadingProgress(loading, {
 
 async function load() {
   try {
-    const res = await tresorerieApi.getExercices()
+    const res = isTransparence.value
+      ? await tresorerieApi.getTransparenceExercices()
+      : await tresorerieApi.getExercices()
     if (res?.years?.length) {
       yearsData.value = res.years.map(mapExerciceToComptaYear)
       generatedAtIso.value = res.generated_at
@@ -423,7 +436,8 @@ onMounted(load)
 
 // Rechargement manuel depuis la barre de tâches (voir usePendingRefresh).
 onPendingRefresh(async () => {
-  tresorerieApi.invalidateExercicesCache?.()
+  if (isTransparence.value) tresorerieApi.invalidateTransparenceCache?.()
+  else tresorerieApi.invalidateExercicesCache?.()
   await load()
 })
 const allYears = computed(() => yearsData.value)

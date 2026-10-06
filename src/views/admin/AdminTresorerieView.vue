@@ -328,7 +328,9 @@ const activeTab = computed(() => {
 })
 
 const isWideLayout = computed(
-  () => activeModule.value === 'tresorerie' && (activeTab.value === 'compta' || activeTab.value === 'bilan')
+  () =>
+    activeModule.value === 'tresorerie' &&
+    (activeTab.value === 'compta' || activeTab.value === 'bilan' || activeTab.value === 'transparence')
 )
 
 const pendingCount = computed(() => {
